@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="admin/bbsuser" title="论坛用户" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.bbs.usermanage.pojo.BbsUser</pojo>
+			<orderBy>BbsUser.nickname</orderBy>
+			<quickFilter>BbsUser.nickname like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="昵称" name="nickname"/>
+			<column title="发帖数" name="postCount" align="center" width="80"/>
+			<column title="回帖数" name="replyCount" align="center" width="80"/>
+			<column title="积分" name="point" align="center" width="80"/>
+		</columns>
+	</view>
+</views>

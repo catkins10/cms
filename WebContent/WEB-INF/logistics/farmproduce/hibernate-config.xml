@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--农产品-->
+	<class name="com.yuanluesoft.logistics.farmproduce.pojo.LogisticsFarmProduce" table="logistics_farm_produce">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--农产品名称,varchar(200)-->
+		<property name="quantity"/> <!--数量,numeric(8,3)-->
+		<property name="unit"/> <!--单位,吨,米,立方米,车,方,件,个,台,包,辆,箱,瓶,套,盒,支,只,varchar(20)-->
+		<property name="freight"/> <!--单价,0表示面议,numeric(8,2)-->
+		<property name="address"/> <!--地点,varchar(200)-->
+		<property name="linkman"/> <!--联系人,varchar(50)-->
+		<property name="linkmanTel"/> <!--联系电话,varchar(100)-->
+		<property name="creatorId"/> <!--登记人ID,numeric(20)-->
+		<property name="creator"/> <!--登记人,varchar(200)-->
+		<property name="created"/> <!--登记时间,timestamp null-->
+		<property name="remark"/> <!--备注,varchar(200)-->
+	</class>
+</hibernate-mapping>

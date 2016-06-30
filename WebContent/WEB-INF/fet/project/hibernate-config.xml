@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--项目管理:项目-->
+	<class name="com.yuanluesoft.fet.project.pojo.FetProject" table="fet_project">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--项目名称-->
+		<property name="status"/> <!--项目进展情况-->
+		<property name="manageUnit"/> <!--项目主管单位-->
+		<property name="created"/> <!--填报日期-->
+		<property name="fairId"/> <!--活动ID-->
+		<property name="fairName"/> <!--活动名称-->
+		<property name="fairNumber"/> <!--届别-->
+		<property name="address"/> <!--项目地址-->
+		<property name="linkman"/> <!--联系人-->
+		<property name="tel"/> <!--联系电话-->
+		<property name="fax"/> <!--传真-->
+		<property name="country"/> <!--外方国别地区-->
+		<property name="investmentType"/> <!--投资方式-->
+		<property name="industry"/> <!--行业-->
+		<property name="foreignCompany"/> <!--外方单位-->
+		<property name="chineseCompany"/> <!--中方单位-->
+		<property name="businessScope"/> <!--经营范围-->
+		<property name="enterpriseScale"/> <!--生产建设规模-->
+		<property name="sign"/> <!--签约情况-->
+		<property name="totalInvestment"/> <!--总投资-->
+		<property name="bargainInvestment"/> <!--合同外资-->
+		<property name="registInvestment"/> <!--注册外资-->
+		<property name="toSubmitTime"/> <!--拟报批时间-->
+		<property name="toSubmitType"/> <!--拟报批类型-->
+		<property name="toSubmitEvolve"/> <!--未报批项目进展说明-->
+		<property name="approvalTime"/> <!--批准时间-->
+		<property name="approvalTotalInvestment"/> <!--批准总投资-->
+		<property name="approvalBargainInvestment"/> <!--批准合同外资-->
+		<property name="approvalRegistInvestment"/> <!--批准注册外资-->
+		<property name="organizationCode"/> <!--企业代码-->
+		<property name="companyName"/> <!--企业名称-->
+		<property name="toBuildingDate"/> <!--拟开工时间-->
+		<property name="getLicenseTime"/> <!--领照时间-->
+		<property name="receivedInvestment"/> <!--已到资金-->
+		<property name="buildingDate"/> <!--开工时间-->
+		<property name="compeletTime"/> <!--竣工时间-->
+		<property name="remark"/> <!--备注-->
+		<property name="county"/> <!--县别-->
+		<property name="approvalUnit"/> <!--审批单位-->
+		<property name="signCategory"/> <!--签约种类-->
+		<property name="consult"/> <!--对接洽谈情况-->
+		<property name="upgradeDate"/> <!--升格时间-->
+		<property name="receivedChecked"/> <!--已验资金-->
+		<set cascade="delete" inverse="true" lazy="true" name="investments" table="fet_project_investment" order-by="receiveTime desc">
+			<key column="projectId"/>
+			<one-to-many class="com.yuanluesoft.fet.project.pojo.FetProjectInvestment"/>
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="problems" table="fet_project_problem" order-by="created desc">
+			<key column="projectId"/>
+			<one-to-many class="com.yuanluesoft.fet.project.pojo.FetProjectProblem"/>
+		</set>
+	</class>
+	
+	<!--项目管理:活动-->
+	<class name="com.yuanluesoft.fet.project.pojo.FetProjectFair" table="fet_project_fair">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--活动名称-->
+		<property name="shortName"/> <!--简写-->
+		<property name="fairNumber"/> <!--当前第几届-->
+		<property name="category"/> <!--类别-->
+	</class>
+	
+	<!--项目管理:参加活动目标任务-->
+	<class name="com.yuanluesoft.fet.project.pojo.FetProjectTarget" table="fet_project_target">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="fairName"/> <!--活动名称-->
+		<property name="fairId"/> <!--活动ID-->
+		<property name="fairNumber"/> <!--届别-->
+		<property name="county"/> <!--区县-->
+		<property name="signTarget"/> <!--总签约目标-->
+		<property name="contractTarget"/> <!--合同项目目标-->
+		<property name="orderTarget"/> <!--意向项目目标-->
+	</class>
+	
+	<!--项目管理:资金到达情况-->
+	<class name="com.yuanluesoft.fet.project.pojo.FetProjectInvestment" table="fet_project_investment">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="receiveTime"/> <!--时间-->
+		<property name="money"/> <!--金额-->
+		<property name="moneyChecked"/> <!--已验资资金-->
+	</class>
+	
+	<!--项目管理:项目存在的问题-->
+	<class name="com.yuanluesoft.fet.project.pojo.FetProjectProblem" table="fet_project_problem">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="problem"/> <!--问题描述-->
+		<property name="created"/> <!--录入时间-->
+	</class>
+	
+	<!--项目管理:客商信息-->
+	<class name="com.yuanluesoft.fet.project.pojo.FetMerchant" table="fet_project_merchant">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--客商姓名-->
+		<property name="company"/> <!--公司名称-->
+		<property name="duty"/> <!--公司职务-->
+		<property name="otherDuties"/> <!--其他职衔-->
+		<property name="country"/> <!--所在国别或地区-->
+		<property name="industry"/> <!--行业类别-->
+		<property name="businessScope"/> <!--经营范围-->
+		<property name="address"/> <!--公司地址-->
+		<property name="tel"/> <!--电话-->
+		<property name="fax"/> <!--传真-->
+		<property name="mail"/> <!--电子邮件-->
+		<property name="mobile"/> <!--手机-->
+		<property name="webSite"/> <!--网址-->
+		<property name="investmentAreas"/> <!--已投资区域-->
+		<property name="investmentPorjects"/> <!--已投资项目-->
+		<property name="investmentOrder"/> <!--投资意向-->
+		<property name="background"/> <!--公司背景资料-->
+		<property name="enterpriseScale"/> <!--规模-->
+		<property name="companyCreated"/> <!--公司成立时间-->
+		<property name="created"/> <!--录入时间-->
+		<property name="creator"/> <!--录入人-->
+		<property name="creatorId"/> <!--录入人ID-->
+		<property name="linkman"/> <!--联络人姓名-->
+		<property name="linkmanDuty"/> <!--联络人公司职务-->
+		<property name="linkmanTel"/> <!--联络人电话-->
+		<property name="linkmanFax"/> <!--联络人传真-->
+		<property name="linkmanMobile"/> <!--联络人手机-->
+		<property name="remark"/> <!--备注-->
+	</class>
+	
+	<!--项目管理:利用外资计划-->
+	<class name="com.yuanluesoft.fet.project.pojo.FetPlan" table="fet_project_plan">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="county"/> <!--区县-->
+		<property name="planYear"/> <!--年度-->
+		<property name="planMonth"/> <!--月份-->
+		<property name="contractCheckPlan"/> <!--合同外资计划(验资口径)-->
+		<property name="receiveCheckPlan"/> <!--实际到资计划(验资口径)-->
+		<property name="contractPlan"/> <!--合同外资计划(可比口径)-->
+		<property name="receivePlan"/> <!--实际到资计划(可比口径)-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="考核配置" class="com.yuanluesoft.railway.evaluation.pojo.RailwayEvaluationParameter">
+		<field name="eventLevelADeduct" title="铁路局问题A扣分" type="number" inputMode="text" length="5,2"/>
+		<field name="eventLevelBDeduct" title="铁路局问题B扣分" type="number" inputMode="text" length="5,2"/>
+		<field name="eventLevelCDeduct" title="铁路局问题C扣分" type="number" inputMode="text" length="5,2"/>
+		<field name="eventLevelDDeduct" title="铁路局问题D扣分" type="number" inputMode="text" length="5,2"/>
+		<field name="eventDeductLimit" title="铁路局问题扣分上限" type="number" inputMode="text" length="5,2"/>
+		<field name="mutualEvaluationRaise" title="互评靠前加分" type="number" inputMode="text" length="5,2"/>
+		<field name="mutualEvaluationDeduct" title="互评靠后减分" type="number" inputMode="text" length="5,2"/>
+		<field name="testLackDeduct" title="考试题量未完成扣分" type="number" inputMode="text" length="5,2"/>
+		<field name="testRaise" title="考分靠前加分" type="number" inputMode="text" length="5,2"/>
+		<field name="testDeduct" title="考分靠后减分" type="number" inputMode="text" length="5,2"/>
+	</businessObject>
+	
+	<businessObject title="综合评价" class="com.yuanluesoft.railway.evaluation.model.RailwayEvaluation">
+		<field name="year" title="年度" type="number" inputMode="readonly"/>
+		<field name="month" title="月份" type="number" inputMode="readonly"/>
+		<field name="personId" title="用户ID" type="number" inputMode="none"/>
+		<field name="personName" title="用户名" type="string" inputMode="readonly"/>
+		<field name="postId" title="岗位ID" type="number" inputMode="none"/>
+		<field name="postName" title="岗位名称" type="number" inputMode="readonly"/>
+		<field name="departmentId" title="部门ID" type="number" inputMode="none"/>
+		<field name="departmentName" title="部门名称" type="string" inputMode="readonly"/>
+		<field name="workload" title="工作量" type="string" inputMode="readonly"/>
+		<field name="departmentWeight" title="部门权重" type="string" inputMode="readonly"/>
+		<field name="monthTestQuestionNumber" title="每月需要完成的题量" type="number" inputMode="readonly"/>
+		<field name="testedQuestionNumber" title="完成的题量" type="number" inputMode="readonly"/>
+		<field name="testScore" title="考试总分" type="number" inputMode="readonly"/>
+		<field name="testMaxScore" title="本岗位考试最高分" type="number" inputMode="readonly"/>
+		<field name="testMinScore" title="本岗位考试最低分" type="number" inputMode="readonly"/>
+		<field name="testAverageScore" title="本岗位考试平均分" type="number" inputMode="readonly"/>
+		<field name="testPosition" title="考试名次" type="number" inputMode="readonly"/>
+		<field name="testReward" title="考试奖励/处罚" type="number" inputMode="readonly"/>
+		<field name="mutualEvaluationVoteNumber" title="互评投票数" type="number" inputMode="readonly"/>
+		<field name="mutualEvaluationHighNumber" title="互评靠前数" type="number" inputMode="readonly"/>
+		<field name="mutualEvaluationLowNumber" title="互评靠后数" type="number" inputMode="readonly"/>
+		<field name="mutualEvaluationNumber" title="互评情况" type="string" inputMode="readonly"/>
+		<field name="mutualEvaluationReward" title="互评奖励/处罚" type="number" inputMode="readonly"/>
+		<field name="eventLevelANumber" title="铁路局问题A个数" type="number" inputMode="readonly"/>
+		<field name="eventLevelBNumber" title="铁路局问题B个数" type="number" inputMode="readonly"/>
+		<field name="eventLevelCNumber" title="铁路局问题C个数" type="number" inputMode="readonly"/>
+		<field name="eventLevelDNumber" title="铁路局问题D个数" type="number" inputMode="readonly"/>
+		<field name="eventLevelNumber" title="铁路局问题总数" type="string" inputMode="readonly"/>
+		<field name="eventPunish" title="铁路局问题处罚" type="number" inputMode="readonly"/>
+		<field name="score" title="综合评价成绩" type="string" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

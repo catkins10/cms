@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 留言板 -->
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/messageboard"/>
+		
+		<page name="message" title="留言" url="/cms/messageboard/message.shtml"/>
+		
+		<page name="messageSubmitted" title="留言提交完成"/>
+		
+		<page name="fullyMessage" title="留言查看" url="/cms/messageboard/message.shtml" systemLink="false">
+			<subPage title="留言查看" name="fullyMessage" type="template"/>
+			<field title="主题" name="subject"/>
+			<field title="正文" name="htmlContent" type="html"/>
+			<field title="留言人" name="creator"/>
+			<field title="留言时间" name="created" type="timestamp"/>
+			<field title="留言人邮箱" name="creatorMail"/>
+			<field title="联系电话" name="creatorTel"/>
+			<field title="留言人手机" name="creatorMobile"/>
+			<field title="所在单位" name="creatorJob"/>
+			<field title="批转意见" name="批转意见" type="html"/>
+			<field title="办理意见" name="办理意见" type="html"/>
+			<field title="部门办理意见" name="部门办理意见" type="html"/>
+			<field title="部门审核意见" name="部门审核意见" type="html"/>
+			<field title="回复审核意见" name="回复审核意见" type="html"/>
+			<field title="领导批示意见" name="领导批示意见" type="html"/>
+		</page>
+		
+		<page name="messageBoardSearch" title="搜索" searchPage="true" searchResults="messageBoards" url="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/messageboard&amp;pageName=messageBoardSearch"/>
+	</pages>
+	
+	<recordLists>
+		<recordList title="留言列表" name="messageBoards" recordPage="fullyMessage" hostPage="index"/>
+	</recordLists>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="messageBoards" processor="publicServicesProcessor"/> <!-- 留言列表处理器 -->
+	</pageElements>
+</application>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<recordList title="信息公开意见" name="publicOpinions">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.opinion.pojo.PublicOpinion</pojo>
+			<where>PublicOpinion.publicPass='1' and PublicOpinion.isDeleted=0</where>
+			<orderBy>PublicOpinion.created DESC</orderBy>
+			<quickFilter>PublicOpinion.subject like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="信息公开意见">/cms/infopublic/opinion/opinion.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/infopublic/opinion</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSiteRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</recordList>
+
+	<view name="admin/todoOpinion" form="admin/opinion" title="待办" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.opinion.pojo.PublicOpinion</pojo>
+			<where>PublicOpinion.isDeleted=0</where>
+			<orderBy>PublicOpinion.created DESC</orderBy>
+			<quickFilter>PublicOpinion.subject like '%{KEY}%' or PublicOpinion.creator like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="创建人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessOpinion" form="admin/opinion" title="在办" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.opinion.pojo.PublicOpinion</pojo>
+			<where>PublicOpinion.isDeleted=0</where>
+			<orderBy>PublicOpinion.created DESC</orderBy>
+			<quickFilter>PublicOpinion.subject like '%{KEY}%' or PublicOpinion.creator like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="创建人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedOpinion" form="admin/opinion" title="已办" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.opinion.pojo.PublicOpinion</pojo>
+			<where>PublicOpinion.isDeleted=0</where>
+			<filter>COMPLETED</filter>
+			<quickFilter>PublicOpinion.subject like '%{KEY}%' or PublicOpinion.creator like '%{KEY}%'</quickFilter>
+			<orderBy>PublicOpinion.created DESC</orderBy>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="创建人" name="creator" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allOpinion" form="admin/opinion" title="所有" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.opinion.pojo.PublicOpinion</pojo>
+			<where>PublicOpinion.isDeleted=0</where>
+			<filter>READABLE</filter>
+			<quickFilter>PublicOpinion.subject like '%{KEY}%' or PublicOpinion.creator like '%{KEY}%'</quickFilter>
+			<orderBy>PublicOpinion.created DESC</orderBy>
+		</data>
+		<actions>
+			<action title="意见授权" hide="noPrivilege(application_manager)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/publicservice/admin/readersModifyOption.shtml?applicationName={PARAMETER:applicationName}', 430, 200)"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="创建人" name="creator" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/deleted" form="admin/opinion" title="已删除" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.opinion.pojo.PublicOpinion</pojo>
+			<where>PublicOpinion.isDeleted=1</where>
+			<filter>READABLE</filter>
+			<quickFilter>PublicOpinion.subject like '%{KEY}%' or PublicOpinion.creator like '%{KEY}%'</quickFilter>
+			<orderBy>PublicOpinion.created DESC</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="创建人" name="creator" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+</views>

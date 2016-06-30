@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="registUser" action="/lss/insurance/doRegistUser.shtml" class="com.yuanluesoft.lss.insurance.forms.RegistUser" title="用户注册" js="/lss/insurance/js/registUser.js" pojo="com.yuanluesoft.lss.insurance.pojo.InsuranceUser">
+	   <formFields>
+			<field title="姓名" name="name" required="true"/>
+		</formFields>
+	   <actions>
+			<action title="注册" execute="doRegist()"/>
+		</actions>
+	</form>
+
+	<form name="admin/importData" class="com.yuanluesoft.lss.insurance.forms.admin.ImportData" title="数据导入">
+	   <formFields>
+	   		<field name="data" title="数据文件" type="attachment" inputMode="attachment" length="1">
+				<parameter name="fileExtension">Microsoft Access 数据库|*.mdb|</parameter>
+				<parameter name="simpleMode">true</parameter>
+			</field>
+	   </formFields>
+	   <actions>
+			<action title="导入" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/user" class="com.yuanluesoft.lss.insurance.forms.admin.User" title="用户" pojo="com.yuanluesoft.lss.insurance.pojo.InsuranceUser">
+	   <actions>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteUser')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

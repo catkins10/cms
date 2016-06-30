@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminAdvertSpace" type="com.yuanluesoft.cms.advert.forms.admin.AdvertSpace"/>
+  <form-bean name="adminAdvertPutPage" type="com.yuanluesoft.cms.advert.forms.admin.AdvertPutPage"/>
+  <form-bean name="adminAdvertCustomer" type="com.yuanluesoft.cms.advert.forms.admin.AdvertCustomer"/>
+  <form-bean name="adminAdvert" type="com.yuanluesoft.cms.advert.forms.admin.Advert"/>
+  <form-bean name="adminAdvertPut" type="com.yuanluesoft.cms.advert.forms.admin.AdvertPut"/>
+  <form-bean name="loadAdverts" type="com.yuanluesoft.cms.advert.forms.LoadAdverts"/>
+  <form-bean name="selectAdvert" type="com.yuanluesoft.cms.advert.forms.SelectAdvert"/>
+  <form-bean name="insertAdvertSpace" type="com.yuanluesoft.cms.advert.forms.admin.InsertAdvertSpace"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminAdvertSpace" path="/admin/advertSpace"
+   scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advertspace.admin.Load" validate="false">
+   <forward name="load" path="/admin/advertSpace.jsp"/>
+  </action>
+  <action input="/admin/advertSpace.jsp" name="adminAdvertSpace"
+   path="/admin/saveAdvertSpace" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advertspace.admin.Save" validate="false"/>
+  <action input="/admin/advertSpace.jsp" name="adminAdvertSpace"
+   path="/admin/deleteAdvertSpace" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advertspace.admin.Delete" validate="false"/>
+  <action name="adminAdvertSpace"
+   path="/admin/selectAdvertSpaceAttachment" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advertspace.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="adminAdvert" path="/admin/selectAdvertAttachment"
+   scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advert.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="adminAdvertPutPage" path="/admin/advertPutPage"
+   scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advertspace.admin.putpage.Load" validate="false">
+   <forward name="load" path="/admin/advertPutPage.jsp"/>
+  </action>
+  <action input="/admin/advertPutPage.jsp" name="adminAdvertPutPage"
+   path="/admin/saveAdvertPutPage" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advertspace.admin.putpage.Save" validate="false"/>
+  <action input="/admin/advertPutPage.jsp" name="adminAdvertPutPage"
+   path="/admin/deleteAdvertPutPage" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advertspace.admin.putpage.Delete" validate="false"/>
+  <action input="/admin/advertSpace.jsp" name="adminAdvertSpace"
+   path="/admin/refreshAdvertSpace" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advertspace.admin.Refresh" validate="false"/>
+  <action name="adminAdvertCustomer" path="/admin/advertCustomer"
+   scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advertcustomer.admin.Load" validate="false">
+   <forward name="load" path="/admin/advertCustomer.jsp"/>
+  </action>
+  <action input="/admin/advertCustomer.jsp" name="adminAdvertCustomer"
+   path="/admin/saveAdvertCustomer" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advertcustomer.admin.Save" validate="false"/>
+  <action input="/admin/advertCustomer.jsp" name="adminAdvertCustomer"
+   path="/admin/deleteAdvertCustomer" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advertcustomer.admin.Delete" validate="false"/>
+  <action input="/admin/advertCustomer.jsp" name="adminAdvertCustomer"
+   path="/admin/refreshAdvertCustomer" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advertcustomer.admin.Refresh" validate="false"/>
+  <action name="adminAdvert" path="/admin/advert" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advert.admin.Load" validate="false">
+   <forward name="load" path="/admin/advert.jsp"/>
+  </action>
+  <action input="/admin/advert.jsp" name="adminAdvert"
+   path="/admin/saveAdvert" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advert.admin.Save" validate="false"/>
+  <action input="/admin/advert.jsp" name="adminAdvert"
+   path="/admin/deleteAdvert" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advert.admin.Delete" validate="false"/>
+  <action name="adminAdvertPut" path="/admin/advertPut" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advertput.admin.Load" validate="false">
+   <forward name="load" path="/admin/advertPut.jsp"/>
+  </action>
+  <action input="/admin/advertPut.jsp" name="adminAdvertPut"
+   path="/admin/saveAdvertPut" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advertput.admin.Save" validate="false"/>
+  <action input="/admin/advertPut.jsp" name="adminAdvertPut"
+   path="/admin/finishAdvertPut" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advertput.admin.Finish" validate="false"/>
+  <action name="loadAdverts" path="/loadAdverts.js" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.loadadverts.Load" validate="false"/>
+  <action path="/advert" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.advert.Load" validate="false"/>
+  <action name="selectAdvert" path="/selectAdvert" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.selectadvert.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="selectAdvert" path="/listAdverts" scope="request"
+   type="com.yuanluesoft.cms.advert.actions.selectadvert.ListAdverts" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action name="insertAdvertSpace"
+   path="/templatemanage/insertAdvertSpace" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertAdvertSpace.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

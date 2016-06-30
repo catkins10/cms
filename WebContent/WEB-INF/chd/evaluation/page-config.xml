@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="plant" title="发电企业首页(外部用户)" recordClass="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlant" url="/chd/evaluation/plantIndex.shtml">
+			<link title="企业首页" url="/chd/evaluation/plantIndex.shtml?plantId={PARAMETER:plantId}"/>
+			<link title="修改企业信息" url="/chd/evaluation/plant.shtml?id={PARAMETER:plantId}"/>
+			<link title="必备条件完成情况" url="/chd/evaluation/plantPrerequisitesData.shtml?plantId={PARAMETER:plantId}"/>
+			<link title="管理评价" url="/chd/evaluation/plantDirectory.shtml?plantId={PARAMETER:plantId}&amp;contentPage=/chd/evaluation/directory.shtml%3FdirectoryId%3D{PARAMETER:plantId}"/>
+			<link title="管理评价自查" url="/chd/evaluation/plantDirectory.shtml?plantId={PARAMETER:plantId}&amp;contentPage=/chd/evaluation/directory.shtml%3FdirectoryId%3D{PARAMETER:plantId}%26selfEval%3Dtrue"/>
+			<link title="指标评价" url="/chd/evaluation/plantDirectory.shtml?plantId={PARAMETER:plantId}&amp;contentPage=/chd/evaluation/directory.shtml%3FdirectoryId%3D{PARAMETER:plantId}%26indicatorData%3Dtrue"/>
+		</page>
+		
+		<page name="myPlant" title="发电企业首页(内部用户)" recordClass="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlant" url="/chd/evaluation/plantIndex.shtml">
+			<link title="企业首页" url="/chd/evaluation/plantIndex.shtml?plantId={PARAMETER:plantId}"/>
+			<link title="修改企业信息" url="/chd/evaluation/plant.shtml?id={PARAMETER:plantId}"/>
+			<link title="必备条件完成情况" url="/chd/evaluation/plantPrerequisitesData.shtml?plantId={PARAMETER:plantId}"/>
+			<link title="管理评价" url="/chd/evaluation/plantDirectory.shtml?plantId={PARAMETER:plantId}&amp;contentPage=/chd/evaluation/directory.shtml%3FdirectoryId%3D{PARAMETER:plantId}"/>
+			<link title="管理评价自查" url="/chd/evaluation/plantDirectory.shtml?plantId={PARAMETER:plantId}&amp;contentPage=/chd/evaluation/directory.shtml%3FdirectoryId%3D{PARAMETER:plantId}%26selfEval%3Dtrue"/>
+			<link title="指标评价" url="/chd/evaluation/plantDirectory.shtml?plantId={PARAMETER:plantId}&amp;contentPage=/chd/evaluation/directory.shtml%3FdirectoryId%3D{PARAMETER:plantId}%26indicatorData%3Dtrue"/>
+		</page>
+		
+		<page name="plantPrerequisitesData" title="必备条件完成情况" recordClass="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlant">
+			<link title="提交必备条件完成情况" url="/chd/evaluation/data/prerequisitesData.shtml?plantId={PARAMETER:plantId}"/>
+			<link title="企业首页" url="/chd/evaluation/plantIndex.shtml?plantId={PARAMETER:plantId}"/>
+		</page>
+
+		<page name="plantDirectory" title="评价体系目录" recordClass="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlant">
+			<subPage name="directoryTree" title="评价体系目录树" type="iframe" iframeUrl="/chd/evaluation/plantDirectoryTree.shtml" normalCssFile="/jeaf/tree/css/tree.css"/> <!-- 子表单,显示在系统预置页面中,采用iframe模式显示-->
+			<subPage name="content" title="内容页面" type="iframe" iframeUrl="{PARAMETER:contentPage}"/> <!-- 子表单,显示在系统预置页面中,采用iframe模式显示 -->
+			<link title="企业首页" url="/chd/evaluation/plantIndex.shtml?plantId={PARAMETER:plantId}"/>
+			<link title="修改企业信息" url="/chd/evaluation/plant.shtml?id={PARAMETER:plantId}"/>
+			<link title="必备条件完成情况" url="/chd/evaluation/plantPrerequisitesData.shtml?plantId={PARAMETER:plantId}"/>
+			<link title="管理评价" url="/chd/evaluation/plantDirectory.shtml?plantId={PARAMETER:plantId}&amp;contentPage=/chd/evaluation/directory.shtml%3FdirectoryId%3D{PARAMETER:plantId}"/>
+			<link title="管理评价自查" url="/chd/evaluation/plantDirectory.shtml?plantId={PARAMETER:plantId}&amp;contentPage=/chd/evaluation/directory.shtml%3FdirectoryId%3D{PARAMETER:plantId}%26selfEval%3Dtrue"/>
+			<link title="指标评价" url="/chd/evaluation/plantDirectory.shtml?plantId={PARAMETER:plantId}&amp;contentPage=/chd/evaluation/directory.shtml%3FdirectoryId%3D{PARAMETER:plantId}%26indicatorData%3Dtrue"/>
+		</page>
+
+		<page name="managementRule" title="评价体系目录:管理评价项目" recordClass="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationRule">
+			<link title="自查情况" url="/chd/evaluation/directory.shtml?directoryId={PARAMETER:directoryId}&amp;selfEval=true"/>
+		</page>
+
+		<page name="detail" title="评价体系目录:管理评价细则" recordClass="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationDetail">
+			<link title="资料提交" url="/chd/evaluation/data/data.shtml?directoryId={PARAMETER:directoryId}"/>
+			<link title="自查情况" url="/chd/evaluation/directory.shtml?directoryId={PARAMETER:directoryId}&amp;selfEval=true"/>
+		</page>
+
+		<page name="selfEval" title="评价体系目录:管理评价自查" recordClass="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationDirectory">
+			<link title="自查提交" url="/chd/evaluation/selfeval/selfEval.shtml?directoryId={PARAMETER:directoryId}"/>
+			<link title="资料提交情况" url="/chd/evaluation/directory.shtml?directoryId={PARAMETER:directoryId}"/>
+		</page>
+
+		<page name="indicatorRule" title="评价体系目录:指标评价" recordClass="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationRule">
+			<link title="提交指标完成情况" url="/chd/evaluation/data/indicatorData.shtml?directoryId={PARAMETER:directoryId}"/>
+		</page>
+		
+		<page name="todoList" title="待办事宜列表" url="/chd/evaluation/list.shtml?pageName=todoList">
+			<link title="企业首页" url="/chd/evaluation/plantIndex.shtml"/>
+		</page>
+		
+		<page name="todoDataList" title="待处理资料列表" url="/chd/evaluation/list.shtml?pageName=todoDataList">
+			<link title="企业首页" url="/chd/evaluation/plantIndex.shtml"/>
+		</page>
+		
+		<page name="processingDataList" title="在处理资料列表" url="/chd/evaluation/list.shtml?pageName=processingDataList">
+			<link title="企业首页" url="/chd/evaluation/plantIndex.shtml"/>
+		</page>
+		
+		<page name="todoSelfEvalList" title="待处理自查列表" url="/chd/evaluation/list.shtml?pageName=todoSelfEvalList">
+			<link title="企业首页" url="/chd/evaluation/plantIndex.shtml"/>
+		</page>
+		
+		<page name="processingSelfEvalList" title="在处理自查列表" url="/chd/evaluation/list.shtml?pageName=processingSelfEvalList">
+			<link title="企业首页" url="/chd/evaluation/plantIndex.shtml"/>
+		</page>
+		
+		<page name="plantSubmit" title="发电企业资料提交" recordClass="com.yuanluesoft.chd.evaluation.forms.Plant">
+			<subPage name="base" title="提交资料" normalCssFile="/cms/css/application.css"/>
+			<link title="企业首页" url="/chd/evaluation/plantIndex.shtml?plantId={PARAMETER:id}"/>
+		</page>
+		
+		<page name="prerequisitesDataSubmit" title="必备条件完成情况提交" recordClass="com.yuanluesoft.chd.evaluation.data.forms.PrerequisitesData">
+			<subPage name="base" title="提交必备条件完成情况" normalCssFile="/cms/css/application.css"/>
+			<link title="企业首页" url="/chd/evaluation/plantIndex.shtml"/>
+		</page>
+		
+		<page name="indicatorDataSubmit" title="指标完成情况提交" recordClass="com.yuanluesoft.chd.evaluation.data.forms.IndicatorData">
+			<subPage name="base" title="提交指标完成情况" normalCssFile="/cms/css/application.css"/>
+			<link title="企业首页" url="/chd/evaluation/plantIndex.shtml"/>
+		</page>
+
+		<page name="dataSubmit" title="资料提交" recordClass="com.yuanluesoft.chd.evaluation.data.forms.Data">
+			<subPage name="base" title="提交资料" normalCssFile="/cms/css/application.css"/>
+			<link title="企业首页" url="/chd/evaluation/plantIndex.shtml"/>
+		</page>
+		
+		<page name="selfEvalSubmit" title="自查提交" recordClass="com.yuanluesoft.chd.evaluation.selfeval.forms.SelfEval">
+			<subPage name="base" title="提交自查" normalCssFile="/cms/css/application.css"/>
+			<link title="企业首页" url="/chd/evaluation/plantIndex.shtml"/>
+		</page>
+	</pages>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<!-- pageElement name="plants" processor="plantsProcessor"/--> <!-- 发电企业列表 -->
+	</pageElements>
+</application>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="员工信息管理" class="com.yuanluesoft.emp.pojo.Employeea" >
+		<field name="departId" title="部门id" length="20" type="number" inputMode="hidden"/>
+		<field name="empname" title="姓名" length="8" required="true" type="string" inputMode="text"/>
+		<field name="sex" title="性别" required="true" length="2" type="string" inputMode="radio">
+			<parameter name="itemsText">男|M\0女|F\0未知|N</parameter>
+		</field>
+		<field name="age" title="年龄" required="true" length="2" type="number" inputMode="text"/>
+		<field name="birthday" title="出生日期" type="date" inputMode="date"/>
+		<field name="phone" title="电话" length="100" type="phone" inputMode="text"/>
+		<field name="address" title="联系地址" length="100" type="string" inputMode="text"/>
+		<field name="email" title="邮箱" length="100" type="email" inputMode="text"/>
+	</businessObject>
+	<businessObject title="部门信息管理" class="com.yuanluesoft.emp.pojo.Department">
+		<field name="departName" title="部门名称" length="10" required="true" type="string" inputMode="text"/>
+		<field name="description" title="描述" length="1000" type="string" inputMode="textarea"/>
+		<field name="emps" title="下辖员工" type="components">
+			<parameter name="class">com.yuanluesoft.emp.pojo.Employeea</parameter>
+		</field>
+	</businessObject>
+	
+</businessObjects>

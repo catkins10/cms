@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--论坛:用户管理-->
+	<class name="com.yuanluesoft.bbs.usermanage.pojo.BbsUser" table="bbs_user">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="nickname"/> <!--昵称-->
+		<property name="vip"/> <!--VIP用户-->
+		<property name="point"/> <!--积分-->
+		<property name="status"/> <!--状态-->
+		<property name="replyCount" column="reply"/> <!--回帖数-->
+		<property name="postCount" column="post"/> <!--发帖数-->
+		<property name="type"/> <!--用户类型,系统用户/1,网上注册用户/2-->
+	</class>
+</hibernate-mapping>

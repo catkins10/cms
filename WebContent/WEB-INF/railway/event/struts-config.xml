@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminImportData" type="com.yuanluesoft.railway.event.forms.admin.ImportData"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminImportData" path="/admin/importData"
+   scope="request"
+   type="com.yuanluesoft.railway.event.actions.importdata.admin.Load" validate="false">
+   <forward name="load" path="/admin/importData.jsp"/>
+  </action>
+  <action input="/admin/importData.jsp" name="adminImportData"
+   path="/admin/doImportData" scope="request"
+   type="com.yuanluesoft.railway.event.actions.importdata.admin.DoImport" validate="false"/>
+  <action input="/admin/importData.jsp" name="adminImportData"
+   path="/admin/deleteImportData" scope="request"
+   type="com.yuanluesoft.railway.event.actions.importdata.admin.Delete" validate="false"/>
+  <action name="adminImportData" path="/admin/attachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.railway.event.actions.importdata.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

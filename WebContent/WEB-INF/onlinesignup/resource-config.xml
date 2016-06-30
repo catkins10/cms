@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Application>
+	<Actions>
+		<Action Name="审核" Send="true"/>
+		<Action Name="删除" DeleteAction="true"/>
+	</Actions>
+	<ProgrammingParticipants/>
+	<SubForms>
+		<SubForm Id="Edit" Name="新建"/>
+		<SubForm Id="Read" Name="审批"/>
+		<SubForm Id="Read" Name="只读"/>
+	</SubForms>
+	<TypeDeclarations>
+		<TypeDeclaration Id="result" Name="审批结果">
+			<SchemaType>
+				<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+					elementFormDefault="qualified" 
+					attributeFormDefault="unqualified">
+					<xsd:element name="result">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="同意"/>
+								<xsd:enumeration value="不同意"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+	</TypeDeclarations>
+	<DataFields/>
+	<Applications>
+		<!--Application Id="publish" Name="发布到网站">
+			<FormalParameters>
+				<FormalParameter Id="isWorkflowTest" Index="1" Mode="IN">
+					<DataType>
+						<BasicType Type="BOOLEAN"/>
+					</DataType>
+					<Description>是否工作流测试</Description>
+				</FormalParameter>
+			</FormalParameters>
+			<ExtendedAttributes>
+				<ExtendedAttribute Name="type">procedure</ExtendedAttribute>
+				<ExtendedAttribute Name="finishMode">Automatic</ExtendedAttribute>
+				<ExtendedAttribute Name="service">complaintService</ExtendedAttribute>
+				<ExtendedAttribute Name="function">publish</ExtendedAttribute>
+			</ExtendedAttributes>
+		</Application-->
+	</Applications>
+</Application>

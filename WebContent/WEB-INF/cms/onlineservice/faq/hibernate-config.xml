@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--常见问题解答-->
+	<class name="com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaq" table="onlineservice_faq">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="question"/> <!--问题,VARCHAR(600)-->
+		<property name="questionSpell"/> <!--问题的拼音,只保留50个字母,VARCHAR(50)-->
+		<property name="answer"/> <!--解答,TEXT-->
+		<property name="creator"/> <!--创建人,VARCHAR(30)-->
+		<property name="creatorId"/> <!--创建人ID,NUMERIC(20,0)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="issueTime"/> <!--发布时间,timestamp null-->
+		<property name="issuePersonId"/> <!--发布人ID,NUMERIC(20,0)-->
+		<property name="status"/> <!--状态,0/撤销发布,1/待处理,2/退回、取回修改,3/已发布,4/办结未发布,5/已删除,CHAR(1)-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID,VARCHAR(32)-->
+		<property name="askTimes"/> <!--被提问次数,NUMERIC(8)-->
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+		<set name="opinions" table="onlineservice_faq_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaqOpinion" />
+		</set>
+		<set name="visitors" table="onlineservice_faq_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaqPrivilege" />
+		</set>
+		<!-- 隶属目录列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="subjections" table="onlineservice_faq_subjection" order-by="id">
+			<key column="faqId"/>
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaqSubjection"/>
+		</set>
+		<!-- 隶属事项列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="subjectionItems" table="onlineservice_faq_item" order-by="id">
+			<key column="faqId"/>
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaqItem"/>
+		</set>
+		<!-- 相关问题 -->
+		<set cascade="delete" inverse="true" lazy="true" name="relations" table="onlineservice_faq_relation">
+			<key column="faqId" />
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaqRelation" />
+		</set>
+		<!-- 被关联问题 -->
+		<set cascade="delete" inverse="true" lazy="true" name="beRelations" table="onlineservice_faq_relation">
+			<key column="relationFaqId" />
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaqRelation" />
+		</set>
+		<!-- 访问统计 -->
+		<set cascade="delete" inverse="true" lazy="true" name="accessStats" table="stat_access">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.stat.pojo.AccessStat" />
+		</set>
+	</class>
+
+	<!--常见问题解答隶属目录-->
+	<class name="com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaqSubjection" table="onlineservice_faq_subjection">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="faqId"/> <!--FAQID,NUMERIC(20,0)-->
+		<property name="directoryId"/> <!--隶属目录ID,NUMERIC(20,0)-->
+	</class>
+	
+	<!--常见问题解答隶属事项-->
+	<class name="com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaqItem" table="onlineservice_faq_item">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="faqId"/> <!--FAQID,NUMERIC(20,0)-->
+		<property name="itemId"/> <!--办理事项ID,NUMERIC(20,0)-->
+		<property name="itemName"/> <!--办理事项名称,VARCHAR(200)-->
+	</class>
+	
+	<!--常见问题解答权限控制-->
+	<class name="com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaqPrivilege" table="onlineservice_faq_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,NUMERIC(20,0)-->
+		<property name="accessLevel"/> <!--访问级别,CHAR(1)-->
+		<property name="recordId"/> <!--主记录ID,NUMERIC(20,0)-->
+	</class>
+	
+	<!--常见问题解答审核意见-->
+	<class name="com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaqOpinion" table="onlineservice_faq_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID,NUMERIC(20,0)-->
+		<property name="workItemId"/> <!--工作项ID,VARCHAR(32)-->
+		<property name="activityName"/> <!--环节名称,VARCHAR(50)-->
+		<property name="activityId"/> <!--环节ID,VARCHAR(32)-->
+		<property name="personId"/> <!--填写人ID,NUMERIC(20,0)-->
+		<property name="personName"/> <!--填写人姓名,VARCHAR(32)-->
+		<property name="agentId"/> <!--代理人ID,NUMERIC(20,0)-->
+		<property name="agentName"/> <!--代理人姓名,VARCHAR(32)-->
+		<property name="opinion"/> <!--意见内容,VARCHAR(2000)-->
+		<property name="opinionType"/> <!--意见类型,VARCHAR(20)-->
+		<property name="created"/> <!--填写时间,timestamp null-->
+	</class>
+	
+	<!--常见问题解答相关问题-->
+	<class name="com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaqRelation" table="onlineservice_faq_relation">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="faqId"/> <!--问题ID,NUMERIC(20,0)-->
+		<property name="relationFaqId"/> <!--关联问题ID,NUMERIC(20)-->
+	</class>
+</hibernate-mapping>

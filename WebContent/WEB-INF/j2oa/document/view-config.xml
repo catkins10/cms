@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="keyword" form="keyword" title="主题词配置" pageRows="20" hide="noPrivilege(application_manager)" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.document.pojo.KeywordCategory</pojo>
+			<orderBy>KeywordCategory.district,KeywordCategory.category</orderBy>
+			<quickFilter>KeywordCategory like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有主题词" beginCategory="ROOT">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.document.pojo.KeywordCategory</pojo>
+			</data>
+			<category value="district"> <!--value必须有型-->
+				<data>KeywordCategory.district={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="新增主题词" execute="PageUtils.newrecord('j2oa/document', 'keyword', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="区域分类" name="district" width="150"/>
+			<column title="类别词" name="category" width="80"/>
+			<column title="主题词" name="keywords.keyword" separator=" "/>
+		</columns>
+	</view>
+</views>

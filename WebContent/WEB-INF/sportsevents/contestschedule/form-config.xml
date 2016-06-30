@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+
+	<form name="admin/schedule" class="com.yuanluesoft.sportsevents.contestschedule.forms.ContestSchedule" title="赛程安排" pojo="com.yuanluesoft.sportsevents.contestschedule.pojo.ContestSchedule">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="notEditable()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="isNew() or noPrivilege(application_manager)" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteSchedule')"/>
+		</actions>
+	</form>
+	
+	<form name="ccheduleCalendar" class="com.yuanluesoft.sportsevents.contestschedule.forms.ScheduleCalendar" title="赛程安排">
+
+	</form>
+	
+	<form name="admin/score" class="com.yuanluesoft.sportsevents.contestschedule.forms.Score" title="比赛成绩" pojo="com.yuanluesoft.sportsevents.contestschedule.pojo.Score">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="notEditable()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="isNew() or noPrivilege(application_manager)" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteScore')"/>
+		</actions>
+	</form>
+</forms>

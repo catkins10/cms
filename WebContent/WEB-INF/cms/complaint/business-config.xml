@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="投诉" class="com.yuanluesoft.cms.complaint.pojo.Complaint" businessServiceName="complaintService">
+		<field name="content" title="正文" persistence="false" type="string" inputMode="textarea">
+			<parameter name="rssDescriptionField">true</parameter>
+			<parameter name="referenceFields">lazyBody</parameter>
+			<parameter name="rows">8</parameter>
+		</field>
+		<field name="type" title="事件类型" length="30" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">complaintService</parameter>
+		</field>
+		<field name="popedom" title="事件辖区" length="20" type="string" inputMode="text"/>
+		<field name="area" title="事件地点" length="200" required="true" type="string" inputMode="text"/>
+		<field name="happenTime" title="事件时间" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="attachment" title="附件" type="attachment" inputMode="attachment" length="5"/>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">办公室,回复,批转,效能催办,部门办理|required,部门审核,回复审核,领导批示,领导</parameter>
+			<parameter name="class">com.yuanluesoft.cms.publicservice.pojo.PublicServiceOpinion</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="投诉类型配置" class="com.yuanluesoft.cms.complaint.pojo.ComplaintType" businessServiceName="complaintService">
+		<field name="type" title="类型" length="20" required="true" type="string" inputMode="text"/>
+		<field name="workingDay" title="工作日" length="3" required="true" type="number" inputMode="text"/>
+	</businessObject>
+</businessObjects>

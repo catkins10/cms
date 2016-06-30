@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form title="发文单" name="dispatch" class="com.yuanluesoft.j2oa.dispatch.forms.Dispatch" pojo="com.yuanluesoft.j2oa.dispatch.pojo.Dispatch">
+		<formFields>
+			<field title="内部分发用户" name="interSendVisitors" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field title="访问者" name="readerNames" type="string" inputMode="readonly"/>
+			<field title="附件" name="attachments" type="string" inputMode="readonly"/>
+			<field title="HTML正文" name="htmlBody" type="string" inputMode="htmleditor"/>
+			<field title="办理单" name="handling" type="string" inputMode="htmleditor">
+				<parameter name="fullPage">true</parameter>
+			</field>
+			<field title="归档选项" name="filingOption" type="component">
+				<parameter name="class">com.yuanluesoft.archives.administrative.model.FilingOption</parameter>
+			</field>
+			<field title="归档配置" name="filingConfig" type="component">
+				<parameter name="class">com.yuanluesoft.j2oa.dispatch.pojo.DispatchFilingConfig</parameter>
+			</field>
+			<field name="filingConfig.toArchives" title="是否归档到文书档案" length="1" type="char" inputMode="hidden"/>
+			<field name="filingConfig.toDatabank" title="是否归档到资料库" length="1" type="char" inputMode="hidden"/>
+			<field name="filingConfig.createDirectoryByYear" title="是否自动按年创建目录" length="1" type="char" inputMode="hidden"/>
+			<field name="filingConfig.directoryId" title="归档目录ID" type="number" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="签发" hide="workflow()" execute="FormUtils.doAction('sign')"/>
+			<action title="调整文件字" hide="workflow()" execute="DialogUtils.openDialog('{CONTEXTPATH}/j2oa/dispatch/adjustDocWord.shtml?act=edit&amp;id={PARAMETER:id}', 430, 230)"/>
+			<action title="生成正式文件" hide="workflow()" execute="DocumentUtils.openRemoteDocument('editDocument', 'alwaysSubmit=true&amp;generateOffical=true', 'FormUtils.doAction(&quot;completeGenerateOffical&quot;)', 'editBody')"/>
+			<action title="分发" hide="workflow()" execute="FormUtils.doAction('distribute')"/>
+			<action title="分发并发送" hide="workflow()" execute="FormUtils.doAction('distributeAndSend')"/>
+			<action title="归档" hide="workflow()" execute="FormUtils.doAction('setFilingOption')"/>
+			<action title="作废" hide="isNew() or workflow() and noPrivilege(application_manager)" execute="if(confirm('是否确定要作废？'))FormUtils.doAction('delete')"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="wordFields">subject,docType,secureLevel,secureTerm,priority,mainSend,copySend,keyword,docMark,docWord,printNumber,draftDepartment,draftPerson,draftDate,signPerson,signDate,remark,attachment,body,distributeDate</parameter> <!-- WORD需要使用的字段 -->
+		</extendedParameters>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.dispatch.forms.TemplateConfig" title="模板配置" pojo="com.yuanluesoft.j2oa.dispatch.pojo.DispatchTemplateConfig">
+		<formFields>
+			<field title="所有文种" name="allDocTypes" type="string" inputMode="hidden"/>
+			<field title="所有文件字" name="allDocWords" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="isNew()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteTemplateConfig')"/>
+			<action title="配置WORD模板" execute="DocumentUtils.openRemoteDocument('editTemplate', '', 'FormUtils.doAction(&quot;saveTemplate&quot;)', 'editTemplate')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.dispatch.forms.DocWordConfig" title="文件字配置" pojo="com.yuanluesoft.j2oa.dispatch.pojo.DispatchDocWordConfig">
+		<formFields>
+			<field title="联合编号的文件字" name="unionDocWords" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.openSelectDialog('j2oa/dispatch','docWordConfig',500,360,true,'unionDocWords{docWord},unionDocWords{docWord|联合编号的文件字|100%}')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="isNew()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteDocWordConfig')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.dispatch.forms.FilingConfig" title="归档配置" pojo="com.yuanluesoft.j2oa.dispatch.pojo.DispatchFilingConfig">
+		<formFields>
+			<field title="归档目录" name="directoryName" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/j2oa/databank/js/directory.js</parameter>
+				<parameter name="execute">selectDirectory(550, 350, false, 'directoryId{id},directoryName{name}')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+</forms>

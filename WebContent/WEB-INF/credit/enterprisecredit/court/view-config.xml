@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/courtPerson" form="admin/court" title="法院失信被执行人名单(自然人)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.court.pojo.Court</pojo>
+			<where>Court.type = '自然人'</where>
+			<orderBy>Court.created DESC</orderBy>
+			<quickFilter>Court.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_court)" execute="PageUtils.newrecord('credit/enterprisecredit/court', 'admin/courtImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_court)" execute="PageUtils.newrecord('credit/enterprisecredit/court','admin/court','mode=fullscreen')"/>
+			<action title="批量删除" hide="noPrivilege(manageUnit_court)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/court/batchOperate.shtml?pojoName=Court')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="姓名／名称"/>
+			<column name="type" title="类型"  align="center"/>
+			<column name="code" title="执行案号" align="center"/>
+			<column name="court" title="执行法院" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/court" form="admin/court" title="法院失信被执行人名单（法人或其他组织）" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.court.pojo.Court</pojo>
+			<where>Court.type = '法人或其他组织'</where>
+			<orderBy>Court.created DESC</orderBy>
+			<quickFilter>Court.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_court)" execute="PageUtils.newrecord('credit/enterprisecredit/court', 'admin/courtImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_court)" execute="PageUtils.newrecord('credit/enterprisecredit/court','admin/court','mode=fullscreen')"/>
+			<action title="批量删除" hide="noPrivilege(manageUnit_court)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/court/batchOperate.shtml?pojoName=Court')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="姓名／名称"/>
+			<column name="type" title="类型"  align="center"/>
+			<column name="code" title="执行案号" align="center"/>
+			<column name="court" title="执行法院" align="center"/>
+		</columns>
+	</view>
+	
+	
+</views>

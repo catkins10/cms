@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="companyIndex" title="企业主页" url="/job/company/companyIndex.shtml">
+			<link title="企业信息修改" url="/job/company/company.shtml?id={USERID}"/>
+			<link title="面试邀请函、录用通知邮件模板配置" url="javascript:DialogUtils.openDialog('{CONTEXTPATH}/job/company/mailTemplate.shtml?companyId={USERID}', 720, 360)"/>
+			<link title="发布职位" url="/job/company/job.shtml?companyId={USERID}"/>
+			<link title="刷新所有有效职位" url="javascript:DialogUtils.openDialog('{CONTEXTPATH}/job/company/refreshAllJobs.shtml', 400, 200)"/>
+		</page>
+		<page name="registCompany" title="企业注册" url="/job/company/company.shtml"/>
+		<page name="companyRegistted" title="企业注册完成提示"/>
+		<page name="editCompany" title="企业信息修改"/>
+		<page name="companySubmitted" title="企业信息修改完成提示"/>
+		<page name="company" title="企业查看"  recordClass="com.yuanluesoft.job.company.pojo.JobCompany"/>
+		<page name="jobEdit" title="职位编辑"/>
+		<page name="jobSaved" title="职位提交成功提示"/>
+		<page name="jobDeleted" title="职位删除成功提示"/>
+		<page name="job" title="职位查看" recordClass="com.yuanluesoft.job.company.pojo.Job">
+			<link title="申请职位" url="/job/apply/apply.shtml?jobId={PARAMETER:id}"/>
+			<link title="收藏" url="/job/apply/addFavorite.shtml?jobId={PARAMETER:id}"/>
+			<link title="取消收藏" url="/job/apply/removeFavorite.shtml?jobId={PARAMETER:id}"/>
+			<link title="查看公司信息" url="/job/company/company.shtml?id={PARAMETER:companyId}"/>
+			<link title="查看同类职位" url="/cms/sitemanage/applicationPage.shtml?applicationName=job/company&amp;pageName=congenerJobs&amp;id={PARAMETER:id}"/>
+		</page>
+		<page name="congenerJobs" title="同类职位查看"/>
+		<page name="companyJobs" title="职位列表(企业后台)" url="/job/company/companyJobs.shtml"/>
+		
+		<page name="jobs" title="职位列表" url="/job/company/jobs.shtml"/>
+		
+		
+		<page name="jobSearch" title="职位搜索" searchPage="true" searchResults="jobs" url="/cms/sitemanage/applicationSearch.shtml?applicationName=job/company&amp;pageName=jobSearch"/>
+		<page name="jobAdvancedSearch" title="职位高级搜索" searchPage="true" searchResults="jobs" url="/cms/sitemanage/applicationSearch.shtml?applicationName=job/company&amp;pageName=jobAdvancedSearch"/>
+		
+		<page name="companies" title="企业推荐" url="/job/company/companies.shtml"/>
+	</pages>
+</application>

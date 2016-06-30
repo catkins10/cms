@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="telexConfigure" class="com.yuanluesoft.telex.base.forms.TelexConfigure" title="参数配置">
+		<formFields>
+			<field name="securityLevels" title="电报密级列表" type="string" inputMode="text"/>
+			<field name="levels" title="电报级别列表" type="string" inputMode="text"/>
+			<field name="categories" title="电报分类列表" type="string" inputMode="text"/>
+			<field name="currentSendSn" title="当前电报发送顺序号" type="number" inputMode="text"/>
+			<field name="currentCrypticSendSn" title="当前电报加密发送顺序号" type="number" inputMode="text"/>
+			<field name="currentReceiveSn" title="当前电报接收顺序号" type="number" inputMode="text"/>
+			<field name="currentCrypticReceiveSn" title="当前电报加密接收顺序号" type="number" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="telegramUnit" class="com.yuanluesoft.telex.base.forms.TelegramUnit" title="接收单位" pojo="com.yuanluesoft.telex.base.pojo.TelegramUnit">
+		<actions>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="新增下一个" hide="isOld()" execute="FormUtils.doAction('createNextTelegramUnit')"/>
+			<action title="删除" hide="deleteDisable()" execute="deleteUnit()"/>
+		</actions>
+	</form>
+	
+	<form name="leaderAgent" class="com.yuanluesoft.telex.base.forms.LeaderAgent" title="领导代理" pojo="com.yuanluesoft.telex.base.pojo.TelegramLeaderAgent">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteLeaderAgent')"/>
+		</actions>
+	</form>
+	
+	<form name="transactionSheet" class="com.yuanluesoft.telex.base.forms.TransactionSheet" title="办理单配置" pojo="com.yuanluesoft.telex.base.pojo.TelegramTransactionSheet">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteTransactionSheet')"/>
+		</actions>
+	</form>
+	
+	<form name="total" class="com.yuanluesoft.telex.base.forms.Total" title="电报统计">
+		<formFields>
+			<field name="beginDate" title="开始时间" type="date" inputMode="date"/>
+			<field name="endDate" title="结束时间" type="date" inputMode="date"/>
+			<field name="fromUnitId" title="发电单位ID" type="number" inputMode="hidden"/>
+			<field name="fromUnitName" title="发电单位名称" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(500, 320, false, 'fromUnitId{id},fromUnitName{name}', '', 'unit')</parameter>
+			</field>
+			<field name="selectedTelegramLevels" title="等级" type="string[]" inputMode="multibox">
+				<parameter name="itemsServiceName">telexService</parameter>
+				<parameter name="itemsName">telegramLevels</parameter>
+			</field>
+			<field name="selectedSecurityLevels" title="密级" type="string[]" inputMode="multibox">
+				<parameter name="itemsServiceName">telexService</parameter>
+				<parameter name="itemsName">telegramSecurityLevels</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="统计" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+</forms>

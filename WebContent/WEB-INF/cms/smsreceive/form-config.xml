@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/message" class="com.yuanluesoft.cms.smsreceive.forms.admin.SmsReceiveMessage" title="接收短信" pojo="com.yuanluesoft.cms.smsreceive.pojo.SmsReceiveMessage">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteMessage')"/>
+			<action title="送审核" hide="workflow()" execute="FormUtils.doAction('runMessage', 'workflowAction=send')"/>
+			<action title="审核" hide="workflow()" execute="FormUtils.doAction('runMessage', 'workflowAction=approval')"/>
+			<action title="回复短信" hide="workflow()" execute="FormUtils.doAction('replyMessage')"/>
+		</actions>
+	</form>
+
+	<form name="admin/workflowConfig" class="com.yuanluesoft.cms.smsreceive.forms.admin.SmsReceiveWorkflow" title="流程配置" pojo="com.yuanluesoft.cms.smsreceive.pojo.SmsReceiveWorkflow">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteWorkflowConfig')"/>
+		</actions>
+	</form>
+</forms>

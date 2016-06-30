@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/license" class="com.yuanluesoft.credit.enterprisecredit.license.forms.License" title="排污许可证核发情况表" pojo="com.yuanluesoft.credit.enterprisecredit.license.pojo.License">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteLicense')"/>
+		</actions>
+	</form>
+	
+	 <!-- Excel导入表单 -->
+	<form name="admin/licenseImportData" class="com.yuanluesoft.credit.enterprisecredit.license.forms.ImportDateExcel" title="排污许可证核发情况表">
+	   <formFields>
+	   		<field name="data" title="数据文件" type="attachment" inputMode="attachment" length="1"><!-- 附件操作，length是个数 -->
+				<parameter name="fileExtension">Excel表格|*.xls;*.xlsx|</parameter><!-- 指定过滤文件 -->
+				<parameter name="simpleMode">true</parameter><!-- 简单模式 -->
+			</field>
+	   </formFields>
+	   <actions>
+			<action title="导入" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/municipal" class="com.yuanluesoft.credit.enterprisecredit.municipal.forms.Municipal" title="龙海市行政处罚案件统计报表" pojo="com.yuanluesoft.credit.enterprisecredit.municipal.pojo.Municipal">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteMunicipal')"/>
+		</actions>
+	</form>
+	
+	<!-- Excel导入表单 -->
+	<form name="admin/municipalImportData" class="com.yuanluesoft.credit.enterprisecredit.municipal.forms.ImportDateExcel" title="龙海市行政处罚案件统计报表">
+	   <formFields>
+	   		<field name="data" title="数据文件" type="attachment" inputMode="attachment" length="1"><!-- 附件操作，length是个数 -->
+				<parameter name="fileExtension">Excel表格|*.xls;*.xlsx|</parameter><!-- 指定过滤文件 -->
+				<parameter name="simpleMode">true</parameter><!-- 简单模式 -->
+				<parameter name="attachmentEditor">attachmentmEditor.shtml</parameter>
+			</field>
+	   </formFields>
+	   <actions>
+			<action title="导入" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.jeaf.dialog.forms.SelectDialog" title="选择对话框">
+		<formFields>
+			<field name="multiSelect" title="是否多选" type="string" inputMode="hidden"/>
+			<field name="param" title="参数" type="string" inputMode="hidden"/>
+			<field name="script" title="选择后执行的脚本" type="string" inputMode="hidden"/>
+			<field name="title" title="对话框标题" type="string" inputMode="hidden"/>
+			<field name="key" title="对话框过滤" type="string" inputMode="text"/>
+			<field name="separator" title="分隔符,缺省为逗号" type="string" inputMode="hidden"/>
+			<field name="anonymousAlways" title="是否强制为匿名访问" type="string" inputMode="hidden"/>
+			<field name="closeDialogOnOK" title="“确定”后关闭对话框" type="string" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.dialog.forms.ViewSelectDialog" title="视图选择对话框">
+		<formFields>
+			<field name="applicationName" title="应用名称" type="string" inputMode="hidden"/>
+			<field name="viewName" title="视图名称" type="string" inputMode="hidden"/>
+			<field name="paging" title="是否分页显示" type="string" inputMode="hidden"/>
+			<field name="viewPackage" title="视图包" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.view.model.ViewPackage</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.dialog.forms.TreeDialog" title="树形选择对话框">
+		<formFields>
+			<field name="parentNodeId" title="父目录ID" type="string" inputMode="readonly"/>
+			<field name="selectNodeTypes" title="选择的节点类型" type="string" inputMode="readonly"/>
+			<field name="leafNodeOnly" title="是否只允许选择叶节点" type="string" inputMode="hidden"/>
+			<field name="listChildNodesUrl" title="获取子节点的URL" type="string" inputMode="hidden"/>
+			<field name="childNodes" title="获取下级节点列表" type="components">
+				<parameter name="class">com.yuanluesoft.jeaf.tree.model.TreeNode</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.dialog.forms.ListDialog" title="列表选择对话框">
+		<formFields>
+			<field name="source" title="对话框数据源" type="string" inputMode="hidden"/>
+			<field name="itemsText" title="选择项条目" type="string" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.dialog.forms.InputDialog" title="输入对话框">
+		<formFields>
+			<field name="script" title="选择后执行的脚本" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.dialog.forms.MessageDialog" title="消息对话框">
+		<formFields>
+			<field name="message" title="消息" type="string" inputMode="readonly"/>
+			<field name="type" title="对话框类型" type="string" inputMode="readonly"/>
+			<field name="buttonNames" title="按钮列表" type="string" inputMode="readonly"/>
+			<field name="script" title="选择后执行的脚本" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.dialog.forms.ColorDialog" title="颜色选择">
+		<formFields>
+			<field name="colorValue" title="颜色值" type="string" inputMode="text"/>
+			<field name="script" title="选择后执行的脚本" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="赛程安排" class="com.yuanluesoft.sportsevents.contestschedule.pojo.ContestSchedule" >
+        <field name="gameName" title="比赛名称"  required="true" type="string" inputMode="text"/>
+        <field name="address" title="比赛地点"  required="true" type="string" inputMode="text"/>
+		<field name="beginTime" title="开始时间" type="timestamp" inputMode="datetime" required="true"/>
+		<field name="endTime" title="结束时间" type="timestamp" inputMode="datetime" required="true"/>
+		<field name="created" title="发布时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="creatorId" title="发布人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="发布人" length="30" type="string" inputMode="readonly">
+		    <parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="比赛成绩分数" class="com.yuanluesoft.sportsevents.contestschedule.pojo.Score" >
+        <field name="player" title="参赛代表团"  required="true" type="string" inputMode="text"/>
+        <field name="gameName" title="比赛项目名称"  required="true" type="string" inputMode="select">
+            <parameter name="execute">DialogUtils.openSelectDialog('sportsevents/contestschedule', 'admin/scheduleForScore', 400, 300, false, 'gameId{id},gameName{gameName}','','','','',true)</parameter>
+		    <parameter name="selectOnly">true</parameter>
+        </field>
+		<field name="gameId" title="比赛项目ID" type="number" inputMode="hidden" />
+		<field name="score" title="总分数" type="number" length="6,3" inputMode="text" required="true"/>
+		<field name="goldMedalCount" title="金牌数" type="number" inputMode="text"/>
+		<field name="silverMedalCount" title="银牌数" type="number" inputMode="text"/>
+		<field name="bronzeMedalCount" title="铜牌数"  type="number" inputMode="text"/>
+		<field name="medalCount" title="奖牌总数"  type="number" inputMode="readonly" persistence="false"/><!-- 不是持久字段 -->
+		<!--  用于统计获取的奖牌数.view中可直接使用，和普通字段一样。pojo调用setExtendPropertyValue()设置相关属性就行。但前台不适用。
+		<extendParameters>
+			<parameter name="medalCount" title="奖牌总数"/>  
+		</extendParameters>
+		-->
+	</businessObject>
+</businessObjects>

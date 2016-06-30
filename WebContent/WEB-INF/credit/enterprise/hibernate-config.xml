@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--企业信息-->
+	<class name="com.yuanluesoft.credit.enterprise.pojo.Enterprise" table="credit_enterprise">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="loginName"/> <!-- 登录用户名 -->
+		<property name="password"/><!-- 密码 -->
+		
+		<property name="registCode"/> <!-- 注册号 -->
+		<property name="name"/> <!-- 名称 -->
+		<property name="composition"/> <!-- 组成形式 -->
+		<property name="worth"/> <!-- 资金数额(万元) -->
+		<property name="addr"/> <!-- 经营场所 -->
+		
+		<property name="doorType"/> <!-- 行业门类 -->
+		<property name="industry"/> <!-- 行业类别 -->
+		<property name="code"/> <!--行业代码  -->
+		<property name="businessScope"/> <!-- 经营范围 -->
+		<property name="person"/> <!-- 经营者 -->
+		<property name="tel"/> <!-- 联系电话 -->
+		
+		<property name="openDate"/> <!--开业日期  -->
+		<property name="approvalDate"/> <!-- 核准日期 -->
+		<property name="ascription"/> <!-- 属地工商所 -->
+		<property name="area"/> <!-- 片区 -->
+		
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+	</class>
+	
+	<!--内资企业信息-->
+	<class name="com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn" table="credit_enterprise_in">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="loginName"/> <!-- 登录用户名 -->
+		<property name="password"/><!-- 密码 -->
+	
+		<property name="registCode"/> <!-- 注册号 -->
+		<property name="creditCode"/> <!-- 统一社会信用代码 -->
+		<property name="name"/> <!-- 登记名称 -->
+		<property name="category"/> <!-- 企业类别 -->
+		<property name="registType"/> <!-- 登记类型 -->
+		<property name="type"/> <!-- 企业类型 -->
+		<property name="person"/> <!-- 法定代表人\负责人 -->
+		<property name="worth"/> <!--注册资本(万元)  -->
+		<property name="tel"/> <!-- 联系电话 -->
+		<property name="linkMan"/> <!-- 公示联络员 -->
+		
+		<property name="linkTel"/> <!-- 联络员电话 -->
+		<property name="doorType"/> <!-- 行业门类 -->
+		<property name="industry"/> <!-- 行业类别 -->
+		<property name="code"/> <!-- 行业代码 -->
+		<property name="businessScope"/> <!-- 经营范围 -->
+		
+		<property name="startDate"/> <!--成立日期  -->
+		<property name="limitDate"/> <!-- 营业期限 -->
+		<property name="approvalDate"/> <!-- 核准日期 -->
+		<property name="addr"/> <!-- 住所 -->
+		<property name="ascription"/> <!-- 管片工商所 -->
+
+		<property name="area"/> <!-- 片区 -->
+		
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+	</class>
+	
+	<!--外资企业信息-->
+	<class name="com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut" table="credit_enterprise_out">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="loginName"/> <!-- 登录用户名 -->
+		<property name="password"/><!-- 密码 -->
+		<property name="registCode"/> <!-- 注册号 -->
+		<property name="creditCode"/> <!-- 统一社会信用代码 -->
+		<property name="name"/> <!-- 企业名称 -->
+		<property name="registType"/> <!-- 登记类型 -->
+		<property name="type"/> <!-- 企业类型 -->
+		<property name="country"/> <!-- 外企国别 -->
+		<property name="person"/> <!-- 法定代表人\负责人 -->
+		<property name="invest"/> <!-- 投资总额(万美元) -->
+		<property name="worth"/> <!--注册资本(万美元)  -->
+		<property name="realWorth"/> <!--实收资本(万美元)  -->
+		
+		<property name="outWorth"/> <!--外方认缴资本(万美元) -->
+		<property name="tel"/> <!-- 联系电话 -->
+		<property name="linkMan"/> <!-- 公示联络员 -->
+		<property name="linkTel"/> <!-- 联络员电话 -->
+		<property name="doorType"/> <!-- 行业门类 -->
+		<property name="industry"/> <!-- 行业类别 -->
+		<property name="code"/> <!-- 行业代码 -->
+		<property name="businessScope"/> <!-- 经营范围 -->
+		<property name="startDate"/> <!--成立日期  -->
+		<property name="limitDate"/> <!-- 营业期限 -->
+		
+		<property name="approvalDate"/> <!-- 核准日期 -->
+		<property name="addr"/> <!-- 住所 -->
+		<property name="ascription"/> <!-- 管片工商所 -->
+		<property name="area"/> <!-- 片区 -->
+		
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+	</class>
+	
+	<!--融资需求-->
+	<class name="com.yuanluesoft.credit.enterprise.financing.pojo.Financing" table="credit_financing">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectName"/> <!-- 融资项目名称 -->
+		<property name="amount"/><!-- 资金需求额度-->
+		<property name="purpose"/> <!-- 资金用途 -->
+		<property name="type"/> <!-- 资金需求种类 -->
+		<property name="guarantyType"/> <!-- 可提供担保方式 -->
+		<property name="introduction"/> <!-- 简介 -->
+		
+		
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+	</class>
+	
+	
+	
+	
+</hibernate-mapping>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- SQL视图服务-->
+	<bean id="sqlViewService" class="com.yuanluesoft.jeaf.view.sqlview.service.spring.SqlViewServiceImpl">
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="sqlQueryService"><ref bean="sqlQueryService"/></property>
+	</bean>
+</beans>

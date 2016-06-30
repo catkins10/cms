@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--厂商-->
+	<class name="com.yuanluesoft.aic.barcode.pojo.BarcodeCompany" table="barcode_company">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="loginName"/> <!--登录用户名,varchar(32)-->
+		<property name="password"/> <!--登录密码,varchar(50)-->
+		<property name="isHalt"/> <!--是否停用,char(1)-->
+		<property name="code"/> <!--厂商识别代码,企业产品条形码由13位组成，前1-3位为前缀码，表示分配代码的国家或地区，我们国家大陆地区的是690-695；包括前缀码的前7-9位为厂商识别码。如山东银鹭食品有限公司的产商识别码为：69456957,varchar(13)-->
+		<property name="name"/> <!--名称,varchar(200)-->
+		<property name="registrationNumber"/> <!--企业注册号,varchar(100)-->
+		<property name="address"/> <!--地址,varchar(200)-->
+		<property name="tel"/> <!--联系电话,varchar(100)-->
+		<property name="creatorId"/> <!--注册人ID,numeric(20)-->
+		<property name="creator"/> <!--注册人姓名,varchar(50)-->
+		<property name="created"/> <!--注册时间,timestamp null-->
+		<property name="remark"/> <!--备注,varchar(200)-->
+		<set name="barcodes" table="barcode_barcode" lazy="true" inverse="true" cascade="delete">
+			<key column="companyId" />
+			<one-to-many class="com.yuanluesoft.aic.barcode.pojo.Barcode" />
+		</set>
+	</class>
+	
+	<!--产品条码-->
+	<class name="com.yuanluesoft.aic.barcode.pojo.Barcode" table="barcode_barcode">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="companyId"/> <!--厂商ID,numeric(20)-->
+		<property name="barcode"/> <!--条码,企业产品条形码包括前缀码的前7-9位为厂商识别码，从产商信息中直接读取，不用重复录入。厂商识别码后到第12位为产品代码，第13位为校验码，通过固定的算法得出，用于校验前12位数据录入正确，算法附在补充说明中,varchar(13)-->
+		<many-to-one name="company" class="com.yuanluesoft.aic.barcode.pojo.BarcodeCompany" column="companyId" update="false" insert="false"/>
+	</class>
+</hibernate-mapping>

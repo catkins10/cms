@@ -1,0 +1,31 @@
+<html>
+<SCRIPT>
+if (window.DeviceMotionEvent) {
+  window.addEventListener('devicemotion',deviceMotionHandler, false);  
+ }  
+ window.onerror = function() {
+ };
+var SHAKE_THRESHOLD = 800; 
+var lastUpdate = 0;
+var x, y, z, last_x, last_y, last_z;
+function deviceMotionHandler(eventData) { 
+	var acceleration = eventData.accelerationIncludingGravity;  
+    var curTime = new Date().getTime();  
+    if ((curTime - lastUpdate)> 100) {
+    	var diffTime = curTime -lastUpdate;  
+        lastUpdate = curTime; 
+        x = acceleration.x;
+        y = acceleration.y;
+        z = acceleration.z;
+	//alert(acceleration.x + "," + acceleration.y + "," + acceleration.z);
+        var speed = Math.abs(x +y + z - last_x - last_y - last_z) / diffTime * 10000;
+        if (speed > SHAKE_THRESHOLD) {  
+			alert("shaked!");   
+		} 
+        last_x = x;
+        last_y = y;
+        last_z = z;
+    }
+}  
+</SCRIPT>
+</html>

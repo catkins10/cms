@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--国土资源局违法案件结果公开-->
+	<class name="com.yuanluesoft.credit.enterprisecredit.landresources.pojo.LandResources" table="credit_land_credit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="person"/> <!-- 违法当事人 -->
+		<property name="reason"/><!-- 案由 -->
+		<property name="addr"/> <!-- 违法地点 -->
+		<property name="filingTime"/> <!-- 批准立案时间 -->
+		<property name="basis"/> <!-- 处罚依据 -->
+		<property name="result"/> <!-- 处罚情况 -->
+		<property name="punishTime"/> <!-- 处罚时间 -->
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+	</class>
+	
+	
+</hibernate-mapping>

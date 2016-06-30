@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="todoReimburse" form="reimburse" title="待处理报销单" pageRows="25" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.reimburse.pojo.Reimburse</pojo>
+			<quickFilter>Reimburse.description like '%{KEY}%' 
+				or Reimburse.journey like '%{KEY}%' 
+				or Reimburse.remark like '%{KEY}%'
+				or Reimburse.projectName like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="新建报销单" type="workflow" module="reimburse"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="事件描述" name="description"/>
+			<column title="报销金额" name="money" align="center" width="70"/>
+			<column title="报销人" name="personName" align="center" width="60"/>
+			<column title="报销时间" name="reimburseDate" align="center" width="80"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="105" display="normal,print,portlet"/>
+			<column title="发送人" name="workflowSender" align="center" width="50" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="120" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="inProcessReimburse" form="reimburse" title="在办报销单" pageRows="25" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.reimburse.pojo.Reimburse</pojo>
+			<orderBy>Reimburse.reimburseDate DESC</orderBy>
+			<quickFilter>Reimburse.description like '%{KEY}%' 
+				or Reimburse.journey like '%{KEY}%' 
+				or Reimburse.remark like '%{KEY}%'
+				or Reimburse.projectName like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="新建报销单" type="workflow" module="reimburse"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="事件描述" name="description"/>
+			<column title="报销金额" name="money" align="center" width="70"/>
+			<column title="报销人" name="personName" align="center" width="60"/>
+			<column title="报销时间" name="reimburseDate" align="center" width="80"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="105" display="normal,print,portlet"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="80" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="120" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="allReimburse" form="reimburse" title="所有报销单" pageRows="25" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.reimburse.pojo.Reimburse</pojo>
+			<orderBy>Reimburse.reimburseDate DESC</orderBy>
+			<quickFilter>Reimburse.description like '%{KEY}%' 
+				or Reimburse.journey like '%{KEY}%' 
+				or Reimburse.remark like '%{KEY}%'
+				or Reimburse.projectName like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="新建报销单" type="workflow" module="reimburse"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="事件描述" name="description"/>
+			<column title="报销金额" name="money" align="center" width="70"/>
+			<column title="报销人" name="personName" align="center" width="60"/>
+			<column title="报销时间" name="reimburseDate" align="center" width="80"/>
+		</columns>
+	</view>
+	
+	<view name="chargeStandard" form="chargeStandard" hide="noPrivilege(application_manager)" title="费用标准" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.reimburse.pojo.ReimburseChargeStandard</pojo>
+			<orderBy>ReimburseChargeStandard.userName, ReimburseChargeStandard.chargeCategory.category</orderBy>
+			<quickFilter>ReimburseChargeStandard.userName like '%{KEY}%' or ReimburseChargeStandard.chargeCategory.category like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建标准" execute="PageUtils.newrecord('j2oa/reimburse', 'chargeStandard', 'width=720,height=480')" hide="noPrivilege(application_manager)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="用户名称" name="userName" width="100"/>
+			<column title="费用类别" name="chargeCategory.category"/>
+			<column title="费用标准" name="money" align="center" width="100"/>
+			<column title="单位" name="chargeCategory.unit" align="center" width="60"/>
+		</columns>
+	</view>
+	
+	<view title="费用类别" name="chargeCategory" form="chargeCategory" hide="noPrivilege(application_manager)" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.reimburse.pojo.ReimburseChargeCategory</pojo>
+			<orderBy>ReimburseChargeCategory.category</orderBy>
+			<quickFilter>ChargeCategory.category like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建类别" execute="PageUtils.newrecord('j2oa/reimburse', 'chargeCategory', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="费用类别" name="category"/>
+			<column title="费用标准" name="money" align="center" width="100"/>
+			<column title="单位" name="unit" align="center" width="60"/>
+		</columns>
+	</view>
+</views>

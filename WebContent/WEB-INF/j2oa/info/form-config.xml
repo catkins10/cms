@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="infoReceive" class="com.yuanluesoft.j2oa.info.forms.InfoReceive" title="来稿" pojo="com.yuanluesoft.j2oa.info.pojo.InfoReceive">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteInfoReceive')"/>
+			<action title="上一篇" execute="location.href='infoReceive.shtml?act=edit&amp;id={PARAMETER:previousInfoId}';"/>
+			<action title="下一篇" execute="location.href='infoReceive.shtml?act=edit&amp;id={PARAMETER:nextInfoId}';"/>
+			<action title="筛选" hide="isRead()" execute="PageUtils.editrecord('j2oa/info', 'infoFilter', '{PARAMETER:id}', 'mode=dialog,width=500,height=300')"/>
+			<action title="退改稿" hide="isRead()" execute="PageUtils.newrecord('j2oa/info', 'reviseInfo', 'mode=dialog,width=430,height=300', 'isReceive=1&amp;infoId={PARAMETER:id}')"/>
+		</actions>
+	</form>
+
+	<form name="infoFilter" class="com.yuanluesoft.j2oa.info.forms.InfoFilter" title="筛选" pojo="com.yuanluesoft.j2oa.info.pojo.InfoReceive">
+		<formFields>
+			<field title="刊型" name="magazineIds" type="number[]" inputMode="multibox">
+				<parameter name="itemsHql">select InfoMagazineDefine.name, InfoMagazineDefine.id from InfoMagazineDefine InfoMagazineDefine order by InfoMagazineDefine.name</parameter>
+			</field>
+			<field name="level" title="采用级别" length="10" type="string" inputMode="radio">
+				<parameter name="itemsText">普通\0优先</parameter>
+			</field>
+			<field name="isBrief" title="是否简讯" length="1" type="number" inputMode="radio">
+				<parameter name="itemsText">不是|0\0是|1</parameter>
+			</field>
+			<field name="isVerified" title="是否核实" length="1" type="number" inputMode="radio">
+				<parameter name="itemsText">未核实|0\0已核实|1</parameter>
+			</field>
+			<field name="isCircular" title="是否通报" length="1" type="number" inputMode="radio">
+				<parameter name="itemsText">不是|0\0是|1</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="取消" execute="window.close()"/>
+			<action title="完成筛选" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="info" class="com.yuanluesoft.j2oa.info.forms.Info" title="稿件" pojo="com.yuanluesoft.j2oa.info.pojo.InfoFilter">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteInfo')"/>
+			<action title="送审核" hide="workflow()" execute="FormUtils.doAction('runInfo', 'workflowAction=send')"/>
+			<action title="审核" hide="workflow()" execute="FormUtils.doAction('infoApproval', 'workflowAction=approval')"/>
+			<action title="退改稿" hide="workflow()" execute="PageUtils.newrecord('j2oa/info', 'reviseInfo', 'mode=dialog,width=430,height=300', 'isReceive=0&amp;infoId={PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="reviseInfo" class="com.yuanluesoft.j2oa.info.forms.ReviseInfo" title="退改稿" pojo="com.yuanluesoft.j2oa.info.pojo.InfoRevise">
+		<actions>
+			<action title="取消" execute="window.close()"/>
+			<action title="确定" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="sendHigher" class="com.yuanluesoft.j2oa.info.forms.SendHigher" title="报送情况" pojo="com.yuanluesoft.j2oa.info.pojo.InfoFilter">
+		<formFields>
+			<field name="sendHigher" title="报送情况" type="component">
+				<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoSendHigher</parameter>
+			</field>
+			<field name="used" title="采用情况" type="boolean" inputMode="radio">
+				<parameter name="itemsText">已采用|true\0未采用|false</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteSendHigher')"/>
+		</actions>
+	</form>
+	
+	<form name="instruct" class="com.yuanluesoft.j2oa.info.forms.Instruct" title="领导批示" pojo="com.yuanluesoft.j2oa.info.pojo.InfoFilter">
+		<formFields>
+			<field name="instruct" title="领导批示" type="component">
+				<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoInstruct</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteInstruct')"/>
+		</actions>
+	</form>
+	
+	<form name="magazine" class="com.yuanluesoft.j2oa.info.forms.Magazine" title="刊物" pojo="com.yuanluesoft.j2oa.info.pojo.InfoMagazine">
+		<formFields>
+			<field name="magazineColumns" title="栏目列表" type="components">
+				<parameter name="class">com.yuanluesoft.j2oa.info.model.MagazineColumn</parameter>
+			</field>
+			<field name="toTypesetInfos" title="待排版稿件（非简讯）列表" type="components">
+				<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoFilter</parameter>
+			</field>
+			<field name="toTypesetBriefs" title="待排版稿件（简讯）列表" type="components">
+				<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoFilter</parameter>
+			</field>
+			<field title="使用的稿件ID" name="useInfoIds" type="string" inputMode="hidden"/>
+			<field title="使用的稿件标题" name="useInfoSubjects" type="string" inputMode="hidden"/>
+			<field title="当前栏目" name="currentColumn" type="string" inputMode="hidden"/>
+			<field title="记录列表变化情况" name="recordListChange" type="string" inputMode="hidden"/>
+			<field title="发布范围" name="issueRanges" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteMagazine')"/>
+			<action title="生成正式刊物" hide="workflow()" execute="DocumentUtils.openRemoteDocument('editDocument', 'alwaysSubmit=true&amp;generateOffical=true', 'FormUtils.doAction(&quot;completeGenerateOfficialMagazine&quot;)', 'editMagazineBody')"/>
+			<action title="定版" hide="workflow()" execute="DocumentUtils.openRemoteDocument('editDocument', 'alwaysSubmit=true&amp;generateOffical=true', 'FormUtils.doAction(&quot;issueMagazine&quot;)', 'editMagazineBody')"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="wordFields">name,sn,snTotal,typesetTime</parameter> <!-- WORD需要使用的字段 -->
+			<parameter name="wordRecordLists">magazineColumns</parameter> <!-- WORD需要使用的记录列表 -->
+			<parameter name="magazineColumns_childRecordLists">columnUseInfos,columnUseBriefs</parameter> <!-- 子记录列表 -->
+			<parameter name="magazineColumns_fields">columnName</parameter> <!-- 记录列表字段 -->
+			<parameter name="magazineColumns_columnUseInfos_fields">subject,body,infoReceive.fromUnit,infoReceive.contributeTime</parameter> <!-- 子记录列表字段  -->
+			<parameter name="magazineColumns_columnUseBriefs_fields">subject,body,infoReceive.fromUnit,infoReceive.contributeTime</parameter> <!-- 子记录列表字段  -->
+			<parameter name="magazineColumns_columnUseInfos_adjust">true</parameter> <!-- 记录列表允许调整  -->
+			<parameter name="magazineColumns_columnUseBriefs_adjust">true</parameter> <!-- 记录列表允许调整  -->
+			<parameter name="magazineColumns_columnUseInfos_source">toTypesetInfos</parameter> <!-- 记录列表数据源 -->
+			<parameter name="magazineColumns_columnUseBriefs_source">toTypesetBriefs</parameter> <!-- 记录列表数据源 -->
+		</extendedParameters>
+	</form>
+	
+	<form name="magazineDefine" class="com.yuanluesoft.j2oa.info.forms.MagazineDefine" title="刊物配置" pojo="com.yuanluesoft.j2oa.info.pojo.InfoMagazineDefine">
+		<formFields>
+			<field title="发布范围" name="issueRanges" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field title="编辑" name="editors" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field title="主编" name="chiefEditors" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteMagazineDefine')"/>
+			<action title="模板配置" hide="isRead()" execute="DocumentUtils.openRemoteDocument('editTemplate', '', 'FormUtils.doAction(&quot;saveTemplate&quot;)', 'editTemplate')"/>
+		</actions>
+	</form>
+	
+	<form name="point" class="com.yuanluesoft.j2oa.info.forms.Point" title="积分和稿酬" pojo="com.yuanluesoft.j2oa.info.pojo.InfoPoint">
+		<formFields>
+			<field title="刊物名称" name="higherMagazineNames" type="string" length="500" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deletePoint')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.info.forms.IssueStatistic" title="采用统计">
+		<formFields>
+			<field title="开始时间" name="beginDate" type="date" inputMode="date"/>
+			<field title="结束时间" name="endDate" type="date" inputMode="date"/>
+			<field title="是否显示单位分类" name="showCategory" type="boolean" inputMode="checkbox">
+				<parameter name="value">true</parameter>
+				<parameter name="label">显示单位分类</parameter>
+			</field>
+			<field title="是否隐藏空记录" name="hideEmpty" type="boolean" inputMode="checkbox">
+				<parameter name="value">true</parameter>
+				<parameter name="label">隐藏空记录</parameter>
+			</field>
+			
+			<field title="组织机构ID" name="parentOrgId" type="number" inputMode="hidden"/>
+			<field title="组织机构名称" name="parentOrgName" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, "parentOrgId{id},parentOrgName{name}", "", "root,category,area")</parameter>
+			</field>
+		</formFields>
+	</form>
+</forms>

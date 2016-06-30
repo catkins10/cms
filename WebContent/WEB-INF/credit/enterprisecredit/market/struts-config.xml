@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="importEnterpriseDateExcel" type="com.yuanluesoft.credit.enterprisecredit.market.forms.ImportEnterpriseDateExcel"/>
+  <form-bean name="importPersonDateExcel" type="com.yuanluesoft.credit.enterprisecredit.market.forms.ImportPersonDateExcel"/>
+  <form-bean name="marketEnterprise" type="com.yuanluesoft.credit.enterprisecredit.market.forms.MarketEnterprise"/>
+  <form-bean name="marketPerson" type="com.yuanluesoft.credit.enterprisecredit.market.forms.MarketPerson"/>
+  <form-bean name="applicationView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+ <!-- 企业 -->
+  <action name="marketEnterprise" path="/admin/marketEnterprise" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.market.actions.enterprise.Load" validate="false">
+   <forward name="load" path="/marketEnterprise.jsp"/>
+  </action>
+  <action input="/marketEnterprise.jsp" name="marketEnterprise" path="/admin/saveMarketEnterprise" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.market.actions.enterprise.Save" validate="false"/>
+  <action input="/marketEnterprise.jsp" name="marketEnterprise" path="/admin/deleteMarketEnterprise"
+   scope="request" type="com.yuanluesoft.credit.enterprisecredit.market.actions.enterprise.Delete" validate="false"/>
+  <!-- 个体 -->
+  <action name="marketPerson" path="/admin/marketPerson" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.market.actions.person.Load" validate="false">
+   <forward name="load" path="/marketPerson.jsp"/>
+  </action>
+  <action input="/marketPerson.jsp" name="marketPerson" path="/admin/saveMarketPerson" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.market.actions.person.Save" validate="false"/>
+  <action input="/marketPerson.jsp" name="marketPerson" path="/admin/deleteMarketPerson"
+   scope="request" type="com.yuanluesoft.credit.enterprisecredit.market.actions.person.Delete" validate="false"/>
+  <!-- 附件选择处理。页面的data标签加载时跳转该path调用相应action处理附件页面 -->
+  <action name="importEnterpriseDateExcel" path="/admin/attachmentEditor" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.localtax.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <!-- excel数据导入页面加载 -->
+   <action name="importEnterpriseDateExcel" path="/admin/marketEnterpriseImportData" scope="request" validate="false"
+   type="com.yuanluesoft.credit.enterprisecredit.market.actions.enterprise.excelimport.Load">
+   <forward name="load" path="/importEnterpriseData.jsp"/>
+   </action>
+   
+   <action name="importEnterpriseDateExcel" path="/admin/doMarketEnterpriseImportData" scope="request" validate="false" input="/importEnterpriseData.jsp"
+   type="com.yuanluesoft.credit.enterprisecredit.market.actions.enterprise.excelimport.DoImportData"/>
+   
+   <!-- 附件选择处理。页面的data标签加载时跳转该path调用相应action处理附件页面 -->
+  <action name="importPersonDateExcel" path="/admin/personAttachmentEditor" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.localtax.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+   <action name="importPersonDateExcel" path="/admin/marketPersonImportData" scope="request" validate="false"
+   type="com.yuanluesoft.credit.enterprisecredit.market.actions.person.excelimport.Load">
+   <forward name="load" path="/importPersonData.jsp"/>
+   </action>
+   
+   <action name="importPersonDateExcel" path="/admin/doMarketPersonImportData" scope="request" validate="false" input="/importPersonData.jsp"
+   type="com.yuanluesoft.credit.enterprisecredit.market.actions.person.excelimport.DoImportData"/>
+   
+   <!-- 批量删除操作 -->
+   <action input="/../../../jeaf/application/applicationView.jsp" name="applicationView" 
+   path="/batchOperate" scope="request" 
+   type="com.yuanluesoft.credit.enterprisecredit.batchoperate.BatchOperate" validate="false" />
+   
+ </action-mappings>
+ <controller/>
+</struts-config>

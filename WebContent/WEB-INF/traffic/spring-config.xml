@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- hibernate会话 -->
+	<bean id="trafficSessionFactory" class="org.springframework.orm.hibernate.LocalSessionFactoryBean">
+		<property name="mappingResources">
+			<list/>
+		</property>
+		<property name="dataSource"> 
+			<ref local="trafficDataSource"/>
+		</property> 
+		<property name="hibernateProperties"> 
+			<props> 
+				<!-- prop key="hibernate.dialect">net.sf.hibernate.dialect.MySQLDialect</prop -->
+				<prop key="hibernate.dialect">net.sf.hibernate.dialect.Oracle9Dialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- hibernate数据源 -->
+	<bean id="trafficDataSource" class="com.yuanluesoft.jeaf.database.SecurityDataSource" destroy-method="close"> 
+	    <property name="driverClassName"><value>a70WF6aM3UutHlUXLeJzimtnFNmC7LD36VTL/cKYDno=</value></property>
+	    <property name="url"><value>PvpT49TK+kNg16YTd97iTkJQNL5apucOSQI42KpSUBBYHlLgsmkS2w==</value></property>
+	    <property name="username"><value>URV4e6AuOHw=</value></property>
+	    <property name="password"><value>URV4e6AuOHw=</value></property>
+	    <property name="maxActive"><value>100</value></property> <!-- 连接池支持的最大连接数 -->
+	    <property name="minIdle"><value>5</value></property> <!-- 连接池中最少空闲maxIdle个连接 -->
+	    <property name="maxIdle"><value>10</value></property> <!-- 连接池中最多可空闲maxIdle个连接 -->
+	    <property name="maxWait"><value>30000</value></property> <!-- 连接池中连接用完时,新的请求等待时间,毫秒 -->
+	    <property name="removeAbandoned"><value>true</value></property> <!--是否清理removeAbandonedTimeout秒没有使用的活动连接,清理后并没有放回连接池,当连接数快要到达maxActive时启动清理-->
+	    <property name="removeAbandonedTimeout"><value>20</value></property> <!-- 活动连接的最大空闲时间 -->
+	    <property name="logAbandoned"><value>true</value></property> <!-- 连接池收回空闲的活动连接时是否打印消息 -->
+	</bean>
+	
+	<!-- hibernate事务管理 -->
+	<bean id="trafficTransactionManager" class="org.springframework.orm.hibernate.HibernateTransactionManager">
+		<property name="sessionFactory"><ref local="trafficSessionFactory"/></property>
+	</bean>
+	
+	<!-- 数据库方言 -->
+	<bean id="trafficDatabaseDialect" class="com.yuanluesoft.jeaf.database.dialect.oracle.OracleDatabaseDialect"/> <!--  init-method="init" -->
+
+	<!-- 数据库服务 -->
+	<bean id="trafficDatabaseService" class="com.yuanluesoft.jeaf.database.hibernate.DatabaseServiceImpl">
+		<property name="sessionFactory"><ref local="trafficSessionFactory"/></property>
+		<property name="databaseDialect"><ref local="trafficDatabaseDialect"/></property>
+	</bean>
+	
+	<!-- SQL查询服务 -->
+	<bean id="trafficSqlQueryService" class="com.yuanluesoft.jeaf.business.service.spring.SqlQueryServiceImpl">
+		<property name="databaseService"><ref bean="trafficDatabaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+	</bean>
+	
+	<!-- SQL视图服务-->
+	<bean id="trafficSqlViewService" class="com.yuanluesoft.jeaf.view.sqlview.service.spring.SqlViewServiceImpl">
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="trafficDatabaseService"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="sqlQueryService"><ref bean="trafficSqlQueryService"/></property>
+	</bean>
+	
+	<!-- 照片服务-->
+	<bean id="trafficImageService" class="com.yuanluesoft.traffic.service.spring.TrafficImageServiceImpl">
+		<property name="databaseService"><ref bean="trafficDatabaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="fileDownloadService"><ref bean="fileDownloadService"/></property>
+	</bean>
+</beans>

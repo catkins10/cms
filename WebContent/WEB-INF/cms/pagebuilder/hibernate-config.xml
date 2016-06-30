@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--静态页面生成-->
+	<class name="com.yuanluesoft.cms.pagebuilder.pojo.StaticPage" table="cms_static_page">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="dynamicUrl"/> <!--动态页面URL-->
+		<property name="dynamicUrlHash"/> <!--动态页面URL哈希编码 NUMERIC(10) -->
+		<property name="staticUrl"/> <!--静态页面URL-->
+		<property name="realtimeStaticPage"/> <!--是否实时生成静态页面-->
+		<property name="staticPageDisabled"/> <!--是否禁止生成静态页面-->
+		<property name="recordId"/> <!--记录ID-->
+		<property name="recordClassName"/> <!--记录类名称-->
+		<property name="applicationName"/> <!--应用名称-->
+		<property name="pageName"/> <!--页面名称-->
+		<property name="siteId"/> <!--隶属站点ID-->
+		<property name="columnId"/> <!--隶属栏目ID-->
+		<property name="created"/> <!--生成日期-->
+		<property name="expiresTime"/> <!--有效期,不为空时，由定时器自动更新-->
+		<set cascade="delete" inverse="true" lazy="true" name="templates" table="cms_static_page_template">
+			<key column="pageId" />
+			<one-to-many class="com.yuanluesoft.cms.pagebuilder.pojo.StaticPageTemplate" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="pageElements" table="cms_static_page_element">
+			<key column="pageId" />
+			<one-to-many class="com.yuanluesoft.cms.pagebuilder.pojo.StaticPageElement" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="recordLists" table="cms_static_page_record_list">
+			<key column="pageId" />
+			<one-to-many class="com.yuanluesoft.cms.pagebuilder.pojo.StaticPageRecordList" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="jsElements" table="cms_static_page_js_element">
+			<key column="pageId" />
+			<one-to-many class="com.yuanluesoft.cms.pagebuilder.pojo.StaticPageJsElement" />
+		</set>
+	</class>
+	
+	<!--静态页面:使用到的模板-->
+	<class name="com.yuanluesoft.cms.pagebuilder.pojo.StaticPageTemplate" table="cms_static_page_template">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="pageId"/> <!--静态页面ID-->
+		<property name="templateId"/> <!--使用的模板ID-->
+	</class>
+	
+	<!--静态页面:使用到的页面元素(不含记录列表)-->
+	<class name="com.yuanluesoft.cms.pagebuilder.pojo.StaticPageElement" table="cms_static_page_element">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="pageId"/> <!--页面ID,bigint unsigned-->
+		<property name="elementName"/> <!--页面元素名称,varchar(50)-->
+		<property name="siteId"/> <!--隶属的站点/栏目ID,bigint unsigned-->
+		
+		<!--静态页面:使用到的网上办事位置-->
+		<joined-subclass name="com.yuanluesoft.cms.onlineservice.pojo.StaticPageOnlineServiceLocation" table="cms_static_service_location">
+			<key><column name="id" /></key>
+			<property name="directoryId"/> <!--目录ID,bigint unsigned-->
+		</joined-subclass>
+	</class>
+	
+	<!--静态页面:使用到的记录列表-->
+	<class name="com.yuanluesoft.cms.pagebuilder.pojo.StaticPageRecordList" table="cms_static_page_record_list">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="pageId"/> <!--页面ID,bigint unsigned-->
+		<property name="recordClassName"/> <!--记录类名称,varchar(100)-->
+		<property name="processorClassName"/> <!--处理器类名称,varchar(100)-->
+		<property name="siteId"/> <!--隶属的站点/栏目ID,bigint unsigned-->
+		
+		<!--静态页面:使用到的栏目列表-->
+		<joined-subclass name="com.yuanluesoft.cms.sitemanage.pojo.StaticPageColumns" table="cms_static_page_columns">
+			<key><column name="id" /></key>
+			<property name="columnType"/> <!--栏目类型,0/子栏目,1/父栏目,2/兄弟栏目,char(1)-->
+		</joined-subclass>
+		
+		<!--静态页面:使用到的政府信息资源-->
+		<joined-subclass name="com.yuanluesoft.cms.infopublic.pojo.StaticPageInfos" table="cms_static_page_infos">
+			<key><column name="id" /></key>
+			<property name="directoryId"/> <!--隶属的信息公开目录ID,bigint unsigned-->
+		</joined-subclass>
+		
+		<!--静态页面:使用到的论坛文章-->
+		<joined-subclass name="com.yuanluesoft.bbs.article.pojo.StaticPageBbsArticles" table="cms_static_page_bbs_articles">
+			<key><column name="id" /></key>
+			<property name="directoryId"/> <!--隶属的论坛目录ID,bigint unsigned-->
+		</joined-subclass>
+	
+		<!--静态页面:使用到的网上办事目录-->
+		<joined-subclass name="com.yuanluesoft.cms.onlineservice.pojo.StaticPageOnlineServiceDirectories" table="cms_static_page_service_dirs">
+			<key><column name="id" /></key>
+			<property name="directoryId"/> <!--目录ID,bigint unsigned-->
+			<property name="directoryType"/> <!--目录类型,0/子目录,1/父目录,2/兄弟目录,char(1)-->
+		</joined-subclass>
+	
+		<!--静态页面:使用到的网上办事事项-->
+		<joined-subclass name="com.yuanluesoft.cms.onlineservice.pojo.StaticPageOnlineServiceItems" table="cms_static_page_service_items">
+			<key><column name="id" /></key>
+			<property name="directoryId"/> <!--隶属的目录ID,bigint unsigned-->
+			<property name="itemTypes"/> <!--事项类型,VARCHAR(300)-->
+		</joined-subclass>
+		
+		<!--静态页面:使用到的网上办事互动-->
+		<joined-subclass name="com.yuanluesoft.cms.onlineservice.interactive.processor.StaticPageOnlineServiceInteractives" table="cms_static_service_interactive">
+			<key><column name="id" /></key>
+			<property name="directoryId"/> <!--隶属的目录ID,numeric(20,0)-->
+			<property name="itemId"/> <!--隶属的事项ID,numeric(20,0)-->
+		</joined-subclass>
+	</class>
+	
+	<!--静态页面:用JS输出的页面元素-->
+	<class name="com.yuanluesoft.cms.pagebuilder.pojo.StaticPageJsElement" table="cms_static_page_js_element">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="pageId"/> <!--静态页面ID,bigint unsigned-->
+		<property name="elementHtml" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--页面元素HTML,mediumtext-->
+		<property name="queryString"/> <!--请求参数,用来和请求参数比对,varchar(2000)-->
+	</class>
+	
+	<!--静态页面生成任务-->
+	<class name="com.yuanluesoft.cms.pagebuilder.pojo.StaticPageTask" table="cms_page_task">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="startupTime"/> <!--启动时间,timestamp null-->
+		<property name="startup"/> <!--是否启动,numeric(1)-->
+		<property name="priority"/> <!--优先级,numeric(7,4)-->
+		
+		<!--静态页面生成任务:按URL-->
+		<joined-subclass name="com.yuanluesoft.cms.pagebuilder.pojo.StaticPageTaskByUrl" table="cms_page_task_by_url">
+			<key><column name="id" /></key>
+			<property name="url"/> <!--URL,varchar(800)-->
+		</joined-subclass>
+		
+		<!--静态页面生成任务:按记录-->
+		<joined-subclass name="com.yuanluesoft.cms.pagebuilder.pojo.StaticPageTaskByRecord" table="cms_page_task_by_record">
+			<key><column name="id" /></key>
+			<property name="recordId"/> <!--记录ID,numeric(20,0)-->
+			<property name="recordClassName"/> <!--记录类名称,varchar(100)-->
+			<property name="modifyAction"/> <!--记录操作,varchar(20)-->
+			<property name="recordDetail" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--记录明细,mediumtext-->
+		</joined-subclass>
+		
+		<!--静态页面生成任务:按模板-->
+		<joined-subclass name="com.yuanluesoft.cms.pagebuilder.pojo.StaticPageTaskByTemplate" table="cms_page_task_by_template">
+			<key><column name="id" /></key>
+			<property name="applicationName"/> <!--应用名称,varchar(60)-->
+			<property name="pageName"/> <!--页面名称,varchar(60)-->
+			<property name="templateId"/> <!--模板ID,numeric(20)-->
+			<property name="webDirectoryId"/> <!--站点目录ID,numeric(20)-->
+			<property name="includeSubdirectory"/> <!--是否更新子目录,numeric(1)-->
+		</joined-subclass>
+		
+		<!--静态页面生成任务:按主题-->
+		<joined-subclass name="com.yuanluesoft.cms.pagebuilder.pojo.StaticPageTaskByTheme" table="cms_page_task_by_theme">
+			<key><column name="id" /></key>
+			<property name="themeId"/> <!--主题ID,numeric(20,0)-->
+			<property name="siteId"/> <!--站点ID,numeric(20,0)-->
+			<property name="notUseThemePage"/> <!--重建没有使用主题的,numeric(1)-->
+			<property name="realtimeStaticPageOnly"/> <!--只更新实时页面,numeric(1)-->
+		</joined-subclass>
+	</class>
+</hibernate-mapping>

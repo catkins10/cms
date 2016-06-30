@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../jeaf/form/error.jsp" SHAPE="32,32,160,21"
+  TARGET="page9" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../jeaf/form/result.jsp" SHAPE="32,96,160,21" TARGET="page0"
+  TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#archivesFonds"
+  NAME="action0" PATH="/archivesFonds" SHAPE="32,176,160,41"
+  TITLE="archivesFonds" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/archivesFonds.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#archivesSecureLevel"
+  NAME="action1" PATH="/archivesSecureLevel" SHAPE="32,328,160,41"
+  TITLE="archivesSecureLevel" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/archivesSecureLevel.jsp" TARGET="page3"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#archivesRotentionPeriod"
+  NAME="action2" PATH="/archivesRotentionPeriod" SHAPE="32,536,160,41"
+  TITLE="archivesRotentionPeriod" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/archivesRotentionPeriod.jsp" TARGET="page4"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#archivesCategory"
+  NAME="action3" PATH="/archivesCategory" SHAPE="32,736,160,41"
+  TITLE="archivesCategory" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/archivesCategory.jsp" TARGET="page5"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#archivesUnit"
+  NAME="action4" PATH="/archivesUnit" SHAPE="32,936,160,41"
+  TITLE="archivesUnit" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/archivesUnit.jsp" TARGET="page6" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/archivesFonds.jsp" SHAPE="296,192,56,55" SUBTYPE="jsp"
+  TITLE="fondsConfig.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/deleteArchivesFonds" TARGET="action20"
+   TITLE="/saveFondsConfig.do" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/archivesSecureLevel.jsp" SHAPE="296,344,56,55" SUBTYPE="jsp"
+  TITLE="secureLevelConfig.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteArchivesSecureLevel" TARGET="action19"
+   TITLE="deleteSecureLevelConfig" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/createNextArchivesSecureLevel" TARGET="action11"
+   TITLE="createNextArchivesSecureLevel" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/archivesRotentionPeriod.jsp" SHAPE="296,552,56,55"
+  SUBTYPE="jsp" TITLE="rotentionPeriodConfig.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteArchivesRotentionPeriod" TARGET="action18"
+   TITLE="deleteRotentionPeriodConfig" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/createNextArchivesRotentionPeriod" TARGET="action17"
+   TITLE="createNextArchivesRotentionPeriod" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/archivesCategory.jsp" SHAPE="296,752,56,55" SUBTYPE="jsp"
+  TITLE="categoryConfig.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteArchivesCategory" TARGET="action16"
+   TITLE="deleteCategoryConfig" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/createNextArchivesCategory" TARGET="action21"
+   TITLE="createNextArchivesCategory" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/archivesUnit.jsp" SHAPE="296,952,56,55" SUBTYPE="jsp"
+  TITLE="unitConfig.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/deleteArchivesUnit" TARGET="action15"
+   TITLE="/saveArchivesUnitConfig.do" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/createNextArchivesUnit" TARGET="action22"
+   TITLE="createNextArchivesUnit" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveArchivesFonds"
+  NAME="action5" PATH="/saveArchivesFonds" SHAPE="496,208,160,25"
+  TITLE="archivesFonds" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveArchivesSecureLevel"
+  NAME="action6" PATH="/saveArchivesSecureLevel" SHAPE="496,360,160,25"
+  TITLE="archivesSecureLevel" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#saveArchivesRotentionPeriod" NAME="action7"
+  PATH="/saveArchivesRotentionPeriod" SHAPE="496,568,160,25"
+  TITLE="archivesRotentionPeriod" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveArchivesCategory"
+  NAME="action8" PATH="/saveArchivesCategory" SHAPE="496,768,160,25"
+  TITLE="archivesCategory" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveArchivesUnit"
+  NAME="action9" PATH="/saveArchivesUnit" SHAPE="496,968,160,25"
+  TITLE="archivesUnit" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#archivesCode"
+  NAME="action12" PATH="/archivesCode" SHAPE="32,1136,159,41"
+  TITLE="archivesCode" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/archivesCode.jsp" TARGET="page8" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page8"
+  PATH="/archivesCode.jsp" SHAPE="296,1152,56,70" SUBTYPE="jsp"
+  TITLE="archivesCodeConfig.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/deleteArchivesCode" TARGET="action14"
+   TITLE="/saveArchivesCodeConfig.do" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/createNextArchivesCode" TARGET="action10"
+   TITLE="createNextArchivesCode" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveArchivesCode"
+  NAME="action13" PATH="/saveArchivesCode" SHAPE="496,1168,160,25"
+  TITLE="archivesCode" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteArchivesCode"
+  NAME="action14" PATH="/deleteArchivesCode" SHAPE="496,1224,159,25"
+  TITLE="archivesCode" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteArchivesUnit"
+  NAME="action15" PATH="/deleteArchivesUnit" SHAPE="496,1024,160,25"
+  TITLE="archivesUnit" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteArchivesCategory"
+  NAME="action16" PATH="/deleteArchivesCategory" SHAPE="496,824,160,25"
+  TITLE="archivesCategory" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#deleteArchivesRotentionPeriod" NAME="action18"
+  PATH="/deleteArchivesRotentionPeriod" SHAPE="496,624,160,25"
+  TITLE="archivesRotentionPeriod" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#deleteArchivesSecureLevel" NAME="action19"
+  PATH="/deleteArchivesSecureLevel" SHAPE="496,416,160,25"
+  TITLE="archivesSecureLevel" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteArchivesFonds"
+  NAME="action20" PATH="/deleteArchivesFonds" SHAPE="496,264,160,25"
+  TITLE="archivesFonds" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page9"
+  PATH="/../jeaf/form/error.jsp" SHAPE="296,32,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../jeaf/form/result.jsp" SHAPE="296,96,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#createNextArchivesCode"
+  NAME="action10" PATH="/createNextArchivesCode" SHAPE="496,1288,161,25"
+  TITLE="archivesCode" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#createNextArchivesSecureLevel" NAME="action11"
+  PATH="/createNextArchivesSecureLevel" SHAPE="496,472,161,25"
+  TITLE="archivesSecureLevel" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#createNextArchivesRotentionPeriod" NAME="action17"
+  PATH="/createNextArchivesRotentionPeriod" SHAPE="496,688,161,25"
+  TITLE="archivesRotentionPeriod" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#createNextArchivesCategory" NAME="action21"
+  PATH="/createNextArchivesCategory" SHAPE="496,888,161,25"
+  TITLE="archivesCategory" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#createNextArchivesUnit"
+  NAME="action22" PATH="/createNextArchivesUnit" SHAPE="496,1080,161,25"
+  TITLE="archivesUnit" TYPE="action"/>
+</PROCESS>

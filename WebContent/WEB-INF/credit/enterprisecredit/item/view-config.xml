@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/bigstandard" form="admin/bigstandard" title="工贸行业标准化网上申报通过名单" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.item.pojo.BigStandard</pojo>
+			<orderBy>BigStandard.created</orderBy>
+			<quickFilter>BigStandard.unit like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_item)" execute="PageUtils.newrecord('credit/enterprisecredit/item', 'admin/importData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_item)" execute="PageUtils.newrecord('credit/enterprisecredit/item','admin/bigstandard','mode=fullscreen')"/>
+			<action title="批量删除" hide="noPrivilege(manageUnit_item)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/item/batchOperate.shtml?pojoName=BigStandard')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="unit" title="单位"/>
+			<column name="name" title="企业名称"  align="center"/>
+			<column name="industry" title="行业" align="center"/>
+			<column name="level" title="拟达标等级" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/punish" form="admin/punish" title="安监局行政处罚情况统计" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.item.pojo.Punish</pojo>
+			<orderBy>Punish.created</orderBy>
+			<quickFilter>Punish.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_item)" execute="PageUtils.newrecord('credit/enterprisecredit/item', 'admin/importData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_item)" execute="PageUtils.newrecord('credit/enterprisecredit/item','admin/punish','mode=fullscreen')"/>
+			<action title="批量删除" hide="noPrivilege(manageUnit_item)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/item/batchOperate.shtml?pojoName=Punish')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="案件名称"/>
+			<column name="unit" title="处罚单位或个人名称"  align="center"/>
+			<column name="reason" title="案件事由" align="center"/>
+			<column name="person" title="法定代表人（负责人）姓名" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/permit" form="admin/permit" title="安监局行政许可情况统计" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.item.pojo.Permit</pojo>
+			<orderBy>Permit.created</orderBy>
+			<quickFilter>Permit.permitNum like '%{KEY}%' or Permit.unit like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_item)" execute="PageUtils.newrecord('credit/enterprisecredit/item', 'admin/importData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_item)" execute="PageUtils.newrecord('credit/enterprisecredit/item','admin/permit','mode=fullscreen')"/>
+			<action title="批量删除" hide="noPrivilege(manageUnit_item)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/item/batchOperate.shtml?pojoName=Permit')"/>
+		</actions>
+		
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="permitNum" title="许可证号"/>
+			<column name="unit" title="单位名称"  align="center"/>
+			<column name="range" title="许可经营范围" align="center"/>
+			<column name="overTime" title="办结时间" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/handle" form="admin/handle" title="安监局事故调查处理情况统计" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.item.pojo.Handle</pojo>
+			<orderBy>Handle.created</orderBy>
+			<quickFilter>Handle.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_item)" execute="PageUtils.newrecord('credit/enterprisecredit/item', 'admin/importData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_item)" execute="PageUtils.newrecord('credit/enterprisecredit/item','admin/handle','mode=fullscreen')"/>
+			<action title="批量删除" hide="noPrivilege(manageUnit_item)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/item/batchOperate.shtml?pojoName=Handle')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="案件名称"/>
+			<column name="unit" title="行政处罚单位或个人名称"  align="center"/>
+			<column name="reason" title="处罚事由" align="center"/>
+			<column name="person" title="法定代表人（负责人）姓名" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/smallstandard" form="admin/smallstandard" title="小、微型企业标准化网上申报通过名单" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.item.pojo.SmallStandard</pojo>
+			<orderBy>SmallStandard.created</orderBy>
+			<quickFilter>SmallStandard.unit like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_item)" execute="PageUtils.newrecord('credit/enterprisecredit/item', 'admin/importData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_item)" execute="PageUtils.newrecord('credit/enterprisecredit/item','admin/smallstandard','mode=fullscreen')"/>
+			<action title="批量删除" hide="noPrivilege(manageUnit_item)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/item/batchOperate.shtml?pojoName=SmallStandard')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="unit" title="单位名称"/>
+			<column name="industry" title="行业"  align="center"/>
+			<column name="level" title="所属乡镇" align="center"/>
+			<column name="bookNum" title="证书编号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/linkperson" form="admin/linkperson" title="联系人" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.item.pojo.LinkPerson</pojo>
+			<orderBy>LinkPerson.created</orderBy>
+			<quickFilter>SmallStandard.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_item)" execute="PageUtils.newrecord('credit/enterprisecredit/item', 'admin/importData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_item)" execute="PageUtils.newrecord('credit/enterprisecredit/item','admin/linkperson','mode=fullscreen')"/>
+			<action title="批量删除" hide="noPrivilege(manageUnit_item)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/item/batchOperate.shtml?pojoName=LinkPerson')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="role" title="角色"/>
+			<column name="name" title="姓名"  align="center"/>
+			<column name="job" title="职务" align="center"/>
+			<column name="tel" title="联系电话" align="center"/>
+		</columns>
+	</view>
+	
+</views>

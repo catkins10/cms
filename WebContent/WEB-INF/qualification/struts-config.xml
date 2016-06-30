@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="qualification" type="com.yuanluesoft.qualification.forms.Qualification"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="qualification" path="/qualification" scope="request"
+   type="com.yuanluesoft.qualification.actions.Load" validate="false">
+   <forward name="load" path="/qualification.jsp"/>
+  </action>
+  <action input="/qualification.jsp" name="qualification" path="/saveQualification" scope="request"
+   type="com.yuanluesoft.qualification.actions.Save" validate="false"/>
+  <action input="/qualification.jsp" name="qualification" path="/deleteQualification"
+   scope="request" type="com.yuanluesoft.qualification.actions.Delete" validate="false"/>
+   <action input="/qualification.jsp" name="qualification" path="/run" scope="request"
+   type="com.yuanluesoft.qualification.actions.Run" validate="false"/>
+   
+   <action name="qualification" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.qualification.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="qualification" path="/selectAttachment" scope="request"
+   type="com.yuanluesoft.qualification.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

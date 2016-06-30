@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="抓取任务" class="com.yuanluesoft.cms.capture.pojo.CmsCaptureTask" businessServiceName="captureService">
+		<field name="siteId" title="站点ID" length="20" type="number" inputMode="hidden"/>
+		<field name="description" title="描述" length="200" required="true" type="string" inputMode="text"/>
+		<field name="category" title="分类" length="60" type="string" inputMode="dropdown">
+			<parameter name="itemsHql">select distinct CmsCaptureTask.category from CmsCaptureTask CmsCaptureTask</parameter>
+		</field>
+		<field name="businessClassName" title="业务对象类名称" length="200" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="businessTitle" title="对应的内容" length="50" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">captureService</parameter>
+			<parameter name="valueField">businessClassName</parameter>
+			<parameter name="itemsName">captureBusinessObjects</parameter>
+		</field>
+		<field name="websiteCharset" title="字符集" length="50" type="string" inputMode="dropdown">
+			<parameter name="itemsText">utf-8\0 gbk\0 iso-8859-1\0 utf-16</parameter>
+		</field>
+		<field name="captureURL" title="被抓取页面URL" length="1000" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="extendedParameters" title="扩展参数配置" length="4000" type="string" inputMode="hidden"/>
+		<field name="recordPageURLDirection" title="记录页面URL获取方式" length="1" required="true" type="char" inputMode="radio">
+			<parameter name="itemsText">从页面获取|0\0根据记录ID生成|1</parameter>
+		</field>
+		<field name="recordPageURL" title="记录页面URL格式" length="1000" type="string" inputMode="textarea">
+			<parameter name="singleByteCharacters">true</parameter>
+			<parameter name="rows">2</parameter>
+		</field>
+		<field name="nextPageDirection" title="下一页抓取方式" length="1" required="true" type="char" inputMode="radio">
+			<parameter name="itemsText">不抓取|0\0URL上加页码|1\0链接|2</parameter>
+		</field>
+		<field name="nextPageURL" title="分页URL格式" length="1000" type="string" inputMode="textarea">
+			<parameter name="singleByteCharacters">true</parameter>
+			<parameter name="rows">2</parameter>
+		</field>
+		<field name="beginPage" title="分页URL起始页码" length="5" type="number" inputMode="text"/>
+		<field name="enabled" title="是否启用" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">启用|1\0禁用|0</parameter>
+		</field>
+		<field name="schedule" title="抓取安排" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">手动|0\0指定时间|1\0指定时间间隔|2</parameter>
+		</field>
+		<field name="captureTime" title="抓取时间" length="5" type="string" inputMode="time">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="captureInterval" title="抓取时间间隔" length="2" type="number" inputMode="text"/>
+		<field name="nextCaptureTime" title="下一次抓取时间" type="timestamp" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="fields" title="字段配置" type="components">
+			<parameter name="class">com.yuanluesoft.cms.capture.pojo.CmsCaptureField</parameter>
+		</field>
+		<field name="listPage" title="列表页面" type="attachment" inputMode="attachment">
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="contentPage" title="内容页面" type="attachment" inputMode="attachment">
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="字段配置" class="com.yuanluesoft.cms.capture.pojo.CmsCaptureField">
+		<field name="taskId" title="任务ID" length="20" type="number" inputMode="hidden"/>
+		<field name="isListPage" title="是否列表页面" length="1" type="number" inputMode="hidden"/>
+		<field name="fieldName" title="字段名称" length="300" type="string" inputMode="hidden"/>
+		<field name="fieldBegin" title="开始位置" length="1000" required="true" type="string" inputMode="textarea"/>
+		<field name="fieldEnd" title="结束位置" length="1000" required="true" type="string" inputMode="textarea"/>
+		<field name="arraySeparator" title="数组分隔符" length="1000" required="true" type="string" inputMode="textarea"/>
+		<field name="fieldFormat" title="格式" length="100" type="string" inputMode="text"/>
+		<field name="priority" title="优先级" length="7,4" type="numner" inputMode="none"/>
+		<field name="value" title="设定值" length="300" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="抓取日志" class="com.yuanluesoft.cms.capture.pojo.CmsCaptureLog">
+		<field name="captureTaskId" title="任务ID" type="number" length="20" inputMode="none"/>
+		<field name="captureTaskDescription" title="任务描述" type="string" length="200" inputMode="readonly"/>
+		<field name="captureTime" title="抓取时间" type="timestamp" inputMode="readonly"/>
+		<field name="captureHourMinute" title="抓取时段" type="string" length="5" inputMode="time"/>
+		<field name="captureUrl" title="抓取的URL" length="1000" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="captureSuccess" title="抓取是否成功" length="1" type="char" inputMode="readonly"/>
+		<field name="success" title="抓取是否成功" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">captureSuccess</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

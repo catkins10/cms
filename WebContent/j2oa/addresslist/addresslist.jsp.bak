@@ -1,0 +1,17 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib uri="/WEB-INF/struts-html" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-ext" prefix="ext" %>
+<%@ taglib uri="/WEB-INF/struts-logic" prefix="logic" %>
+
+<html:html>
+<head>
+	<title><logic:notEmpty name="addresslist" property="name"><ext:write property="name"/> - </logic:notEmpty><ext:write property="formTitle"/></title>
+	<jsp:include page="/jeaf/form/style.jsp" />
+</head>
+<body>
+	<ext:form action="/saveAddressList" focus="name" onsubmit="return formOnSubmit();">
+	   	<br><!--center class="title"><ext:write property="formTitle"/></center><br-->
+	   	<jsp:include page="<%=((com.yuanluesoft.jeaf.form.ActionForm)request.getAttribute(org.apache.struts.taglib.html.Constants.BEAN_KEY)).getSubForm()%>" />
+	</ext:form>
+</body>
+</html:html>

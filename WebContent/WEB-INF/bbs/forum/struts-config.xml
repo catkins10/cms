@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="forum" type="com.yuanluesoft.bbs.forum.forms.Forum"/>
+  <form-bean name="category" type="com.yuanluesoft.bbs.forum.forms.Category"/>
+  <form-bean name="adminForum" type="com.yuanluesoft.bbs.forum.forms.admin.Forum"/>
+  <form-bean name="adminCategory" type="com.yuanluesoft.bbs.forum.forms.admin.Category"/>
+  <form-bean name="adminBbs" type="com.yuanluesoft.bbs.forum.forms.admin.Bbs"/>
+  <form-bean name="adminListSubDirectories" type="com.yuanluesoft.bbs.forum.forms.admin.ListSubDirectories"/>
+  <form-bean name="bbs" type="com.yuanluesoft.bbs.forum.forms.Bbs"/>
+  <form-bean name="adjustPriority" type="com.yuanluesoft.jeaf.dialog.forms.AdjustPriority"/>
+  <form-bean name="select" type="com.yuanluesoft.bbs.forum.forms.Select"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminCategory" path="/admin/category" scope="request"
+   type="com.yuanluesoft.bbs.forum.actions.admin.directory.Load" validate="false">
+   <forward name="load" path="/admin/category.jsp"/>
+  </action>
+  <action input="/admin/category.jsp" name="adminCategory"
+   path="/admin/saveCategory" scope="request"
+   type="com.yuanluesoft.bbs.forum.actions.admin.directory.Save" validate="false"/>
+  <action input="/admin/category.jsp" name="adminCategory"
+   path="/admin/deleteCategory" scope="request"
+   type="com.yuanluesoft.bbs.forum.actions.admin.directory.Delete" validate="false"/>
+  <action name="adminForum" path="/admin/forum" scope="request"
+   type="com.yuanluesoft.bbs.forum.actions.admin.forum.Load" validate="false">
+   <forward name="load" path="/admin/forum.jsp"/>
+  </action>
+  <action input="/admin/forum.jsp" name="adminForum"
+   path="/admin/saveForum" scope="request"
+   type="com.yuanluesoft.bbs.forum.actions.admin.forum.Save" validate="false"/>
+  <action input="/admin/forum.jsp" name="adminForum"
+   path="/admin/deleteForum" scope="request"
+   type="com.yuanluesoft.bbs.forum.actions.admin.forum.Delete" validate="false"/>
+  <action name="adminBbs" path="/admin/bbs" scope="request"
+   type="com.yuanluesoft.bbs.forum.actions.admin.directory.Load" validate="false">
+   <forward name="load" path="/admin/bbs.jsp"/>
+  </action>
+  <action input="/admin/bbs.jsp" name="adminBbs" path="/admin/saveBbs"
+   scope="request"
+   type="com.yuanluesoft.bbs.forum.actions.admin.directory.Save" validate="false"/>
+  <action input="/admin/bbs.jsp" name="adminBbs" path="/admin/deleteBbs"
+   scope="request"
+   type="com.yuanluesoft.bbs.forum.actions.admin.directory.Delete" validate="false"/>
+  <action name="bbs" path="/bbs" scope="request"
+   type="com.yuanluesoft.bbs.forum.actions.bbs.Load" validate="false">
+   <forward name="load" path="/bbs.jsp"/>
+  </action>
+  <action name="forum" path="/forum" scope="request"
+   type="com.yuanluesoft.bbs.forum.actions.forum.Load" validate="false">
+   <forward name="load" path="/forum.jsp"/>
+  </action>
+  <action name="index" path="/index" scope="request"
+   type="com.yuanluesoft.bbs.forum.actions.admin.index.Load" validate="false">
+   <forward name="index" path="/index.jsp"/>
+  </action>
+  <action name="bbs" path="/displayBbs" scope="request" validate="false"/>
+  <action name="forum" path="/displayForum" scope="request" validate="false"/>
+  <action name="adjustPriority" path="/admin/adjustDirectoryPriority"
+   scope="request"
+   type="com.yuanluesoft.bbs.forum.actions.admin.adjustdirectorypriority.AdjustDirectoryPriorityAction" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/adjustpriority/adjustPriority.jsp"/>
+  </action>
+  <action name="select" path="/select" scope="request"
+   type="com.yuanluesoft.bbs.forum.actions.select.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="select" path="/listChildren" scope="request"
+   type="com.yuanluesoft.bbs.forum.actions.select.ListChildDirectories" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

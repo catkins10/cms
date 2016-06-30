@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminSupervision" type="com.yuanluesoft.cms.supervision.forms.admin.Supervision"/>
+  <form-bean name="supervision" type="com.yuanluesoft.cms.supervision.forms.Supervision"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="supervision" path="/supervision" scope="request"
+   type="com.yuanluesoft.cms.supervision.actions.supervision.Load" validate="false">
+   <forward name="load" path="/supervision.jsp"/>
+  </action>
+  <action input="/supervision.jsp" name="supervision"
+   path="/saveSupervision" scope="request"
+   type="com.yuanluesoft.cms.supervision.actions.supervision.Save" validate="false">
+   <forward name="result" path="/supervisionSubmitted.jsp"/>
+  </action>
+  <action name="adminSupervision" path="/admin/supervision"
+   scope="request"
+   type="com.yuanluesoft.cms.supervision.actions.supervision.admin.Load" validate="false">
+   <forward name="load" path="/admin/supervision.jsp"/>
+  </action>
+  <action input="/admin/supervision.jsp" name="adminSupervision"
+   path="/admin/saveSupervision" scope="request"
+   type="com.yuanluesoft.cms.supervision.actions.supervision.admin.Save" validate="false"/>
+  <action input="/admin/supervision.jsp" name="adminSupervision"
+   path="/admin/runSupervision" scope="request"
+   type="com.yuanluesoft.cms.supervision.actions.supervision.admin.Run" validate="false"/>
+  <action input="/admin/supervision.jsp" name="adminSupervision"
+   path="/admin/deleteSupervision" scope="request"
+   type="com.yuanluesoft.cms.supervision.actions.supervision.admin.Delete" validate="false"/>
+  <action input="/admin/supervision.jsp" name="adminSupervision"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.cms.supervision.actions.supervision.admin.WriteOpinion" validate="false"/>
+  <action input="/admin/supervision.jsp" name="adminSupervision"
+   path="/admin/setPublishOption" scope="request"
+   type="com.yuanluesoft.cms.supervision.actions.supervision.admin.SetPublishOption" validate="false"/>
+  <action input="/admin/supervision.jsp" name="adminSupervision"
+   path="/admin/publish" scope="request"
+   type="com.yuanluesoft.cms.supervision.actions.supervision.admin.Publish" validate="false"/>
+  <action name="supervision" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.cms.supervision.actions.supervision.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="adminSupervision" path="/admin/printSupervision"
+   scope="request"
+   type="com.yuanluesoft.cms.supervision.actions.supervision.admin.Print" validate="false">
+   <forward name="load" path="/admin/supervision.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

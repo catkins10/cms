@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 市政设施监控服务 -->
+	<bean id="facilitiesService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.municipal.facilities.service.spring.FacilitiesServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+				<property name="sessionService"><ref bean="sessionService"/></property>
+				<property name="attachmentService"><ref bean="attachmentService"/></property>
+				<property name="facilitiesSoapPassport"><ref bean="facilitiesSoapPassport"/></property>
+				<property name="soapConnectionPool"><ref bean="soapConnectionPool"/></property>
+				<property name="facilitiesAttachmentPath"><value>E:/RSDATA/</value></property>
+				<property name="photoSynchDelay"><value>30</value></property>
+				<property name="numerationService"><ref bean="numerationService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="report*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="complete*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- PDA用户视图数据服务 -->
+	<bean id="pdaUserViewService" class="com.yuanluesoft.municipal.facilities.service.spring.PdaUserViewServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="facilitiesService"><ref bean="facilitiesService"/></property>
+	</bean>
+	
+	<!-- 市政设施监控PDA服务SOAP地址 -->
+	<bean class="com.yuanluesoft.jeaf.soap.SoapPassport" id="facilitiesSoapPassport">
+		<property name="url"><value>http://125.77.109.83/PDAService/</value></property>
+		<property name="namespaceURI"><value>http://www.topevery.com/</value></property>
+		<property name="userName"><value/></property>
+		<property name="password"><value/></property>
+	</bean>
+</beans>

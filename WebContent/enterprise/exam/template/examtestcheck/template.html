@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <title>考卷复核</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script type="text/javascript">window.onerror=function(){return true;}</script>
+        <style type="text/css">
+        	body, .form, .form td {
+				LINE-HEIGHT: 18pt; FONT-FAMILY: 宋体; FONT-SIZE: 12pt
+			}
+			.answerArea {
+				PADDING-BOTTOM: 8px; PADDING-LEFT: 3px; PADDING-RIGHT: 3px; DISPLAY: block; PADDING-TOP: 5px
+			}
+			.answerArea .spanAnswerLabel {
+				
+			}
+			.answerArea .blankLabel {
+				
+			}
+			.answerArea .blankLabel {
+				
+			}
+			.answerArea .blankInput {
+				
+			}
+			.answerArea .optionLabel {
+				
+			}
+			.correctScore {
+				WIDTH: 50px
+			}
+		</style>
+    </head>
+    <body>
+        <form id="examTest" class="form" title="表单:答卷" action="applicationName=enterprise/exam" style="border-bottom: #ffc0c0 1px dotted; border-left: #ffc0c0 1px dotted; margin: 0px; border-top: #ffc0c0 1px dotted; border-right: #ffc0c0 1px dotted">
+            <div style="text-align: center; font-family: 黑体; font-size: 18pt"><a id="field" urn="name=examPaper.examPaperName">&lt;考卷_考卷名称&gt;</a>(<a id="field" urn="name=personName">&lt;用户名&gt;</a>)<br />
+            <br />
+            </div>
+            <table border="1" cellspacing="0" bordercolor="#000000" cellpadding="3" style="border-collapse: collapse; font-size: 14px">
+                <tbody>
+                    <tr align="center">
+                        <td width="67">题号</td>
+                        <td valign="middle" width="67"><a id="recordList" urn="recordListName=examTestQuestionTypes&amp;privateRecordList=true&amp;recordClassName=com.yuanluesoft.enterprise.exam.pojo.ExamTest&amp;applicationName=enterprise/exam&amp;recordCount=100&amp;recordFormat=&lt;A id%3Dfield urn%3Dname%3DrecordNumber%26amp;link%3Dtrue%26amp;chineseNumber%3Dtrue%26amp;insteadImageWidth%3D%26amp;insteadImageHeight%3D%26amp;insteadImageAlign%3Dabsmiddle&gt;%26lt;序号%26gt;&lt;/A&gt;&amp;separatorMode=tile&amp;separatorHeight=5&amp;linkOpenMode=_blank&amp;emptyPrompt=&amp;extendProperties=">&lt;题型列表&gt;</a></td>
+                        <td width="67">总分</td>
+                    </tr>
+                    <tr align="center">
+                        <td>分数</td>
+                        <td valign="middle"><a id="recordList" urn="recordListName=examTestQuestionTypes&amp;privateRecordList=true&amp;recordClassName=com.yuanluesoft.enterprise.exam.pojo.ExamTest&amp;applicationName=enterprise/exam&amp;recordCount=100&amp;recordFormat=&lt;A id%3Dfield urn%3Dname%3DtestScore%26amp;link%3Dtrue&gt;%26lt;得分%26gt;&lt;/A&gt;&amp;separatorMode=tile&amp;separatorHeight=5&amp;linkOpenMode=_blank&amp;emptyPrompt=&amp;extendProperties=">&lt;题型列表&gt;</a></td>
+                        <td>&nbsp;<a id="field" urn="name=scoreAsText">&lt;成绩(文本格式)&gt;</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <div align="left"><b><span style="font-size: 10pt">注意事项：1．答卷前将装订线左边的项目填写清楚。</span></b></div>
+            <div align="left"><b><span style="font-size: 10pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2</span></b><b><span style="font-size: 10pt">．答卷必须用蓝色或黑色钢笔、圆珠笔，不许用铅笔或红笔。<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></b><b><span style="font-size: 10pt">3</span><span style="font-size: 10pt">．本份试卷共<a id="field" urn="name=questionTypeNumber">&lt;题型数&gt;</a>道大题，满分<a id="field" urn="name=examPaper.score">&lt;考卷_总分&gt;</a>&nbsp;分，考试时间<a id="field" urn="name=examPaper.exam.examTime">&lt;考卷_考试_考试时长&gt;</a>分钟。</span> </b><br />
+            <br />
+            <a id="recordList" urn="recordListName=examTestQuestionTypes&amp;privateRecordList=true&amp;recordClassName=com.yuanluesoft.enterprise.exam.pojo.ExamTest&amp;applicationName=enterprise/exam&amp;recordCount=500&amp;recordFormat=&lt;TABLE style%3D&quot;BORDER-COLLAPSE: collapse; FONT-SIZE: 14px&quot; border%3D1 cellSpacing%3D0 borderColor%3D#000000 cellPadding%3D3&gt;             &lt;TBODY&gt;             &lt;TR align%3Dcenter&gt;             &lt;TD width%3D67&gt;得分&lt;/TD&gt;             &lt;TD width%3D93&gt;阅卷人&lt;/TD&gt;&lt;/TR&gt;             &lt;TR align%3Dcenter&gt;             &lt;TD&gt;&lt;A id%3Dfield urn%3Dname%3DtestScore%26amp;link%3Dtrue&gt;%26lt;得分%26gt;&lt;/A&gt;&lt;/TD&gt;             &lt;TD&gt;&lt;A id%3Dfield urn%3Dname%3Dcorrectors%26amp;link%3Dtrue&gt;%26lt;批改人%26gt;&lt;/A&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TBODY&gt;&lt;/TABLE&gt;             &lt;P&gt;&lt;B&gt;&lt;A id%3Dfield urn%3Dname%3DrecordNumber%26amp;chineseNumber%3Dtrue%26amp;insteadImageWidth%3D%26amp;insteadImageHeight%3D%26amp;insteadImageAlign%3Dabsmiddle&gt;%26lt;序号%26gt;&lt;/A&gt;、&lt;A id%3Dfield urn%3Dname%3DquestionType%26amp;link%3Dtrue&gt;%26lt;题型%26gt;&lt;/A&gt;（共&lt;A id%3Dfield urn%3Dname%3DquestionNumber%26amp;link%3Dtrue&gt;%26lt;题目数%26gt;&lt;/A&gt;题，&lt;A id%3Dfield urn%3Dname%3Dscore%26amp;link%3Dtrue&gt;%26lt;分数%26gt;&lt;/A&gt;分）&lt;/B&gt;&lt;/P&gt;             &lt;P&gt;&lt;A id%3DrecordList urn%3D&quot;recordListName%3DexamTestQuestions%26amp;privateRecordList%3Dtrue%26amp;recordClassName%3Dcom.yuanluesoft.enterprise.exam.model.ExamTestQuestionType%26amp;applicationName%3Denterprise/exam%26amp;recordCount%3D500%26amp;recordFormat%3D&lt;A id%253Dfield urn%253Dname%253DrecordNumber%2526amp;link%253Dtrue%2526amp;insteadImageWidth%253D%2526amp;insteadImageHeight%253D%2526amp;insteadImageAlign%253Dabsmiddle&gt;%2526lt;序号%2526gt;&lt;/A&gt;、（&lt;A id%253Dfield urn%253Dname%253DquestionScore%2526amp;link%253Dtrue&gt;%2526lt;题目分值%2526gt;&lt;/A&gt;分） &lt;A id%253Dfield urn%253Dname%253Dquestion.questionContent%2526amp;link%253Dtrue&gt;%2526lt;题目_试题内容%2526gt;&lt;/A&gt;&lt;BR&gt;&lt;B&gt;作答：&lt;A id%253Dfield urn%253Dname%253DexamTestAnswer.answer%2526amp;link%253Dtrue&gt;%2526lt;作答_答案%2526gt;&lt;/A&gt;&lt;BR&gt;参考答案：&lt;A id%253Dfield urn%253Dname%253Dquestion.questionAnswer%2526amp;link%253Dtrue&gt;%2526lt;题目_试题答案%2526gt;&lt;/A&gt;&lt;BR&gt;得分：&lt;A id%253Dfield urn%253Dname%253DexamTestAnswer.score%2526amp;link%253Dtrue&gt;%2526lt;作答_得分%2526gt;&lt;/A&gt;%2526nbsp;&lt;A id%253Dfield urn%253Dname%253DexamTestAnswer.remark%2526amp;link%253Dtrue&gt;%2526lt;作答_批改说明%2526gt;&lt;/A&gt;&lt;/B&gt;%26amp;separatorMode%3DnewLine%26amp;separatorHeight%3D5%26amp;linkOpenMode%3D_blank%26amp;emptyPrompt%3D%26amp;extendProperties%3D&quot;&gt;%26lt;出题记录%26gt;&lt;/A&gt;&lt;/P&gt;&amp;separatorMode=newLine&amp;separatorHeight=5&amp;linkOpenMode=_blank&amp;emptyPrompt=&amp;extendProperties=">&lt;题型列表&gt;</a><br />
+            <br />
+            </div>
+            <input id="button" title="完成复核" tabindex="0" type="button" class="submitButton" value="完成复核" />
+        </form>
+    </body>
+</html>

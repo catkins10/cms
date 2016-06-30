@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="mutualEvaluations" form="evaluation" title="已完成互评">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.evaluation.mutual.pojo.MutualEvaluation</pojo>
+			<where>MutualEvaluation.creatorId={USERID}</where>
+			<orderBy>MutualEvaluation.evaluationYear DESC, MutualEvaluation.evaluationMonth DESC</orderBy>
+		</data>
+	</view>
+	
+	<statisticView name="myEvaluationTotal" title="我的互评统计">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.evaluation.mutual.pojo.MutualEvaluationResult</pojo>
+			<where>MutualEvaluationResult.personId={USERID}</where>
+			<orderBy>evaluation.evaluationYear DESC, evaluation.evaluationMonth DESC</orderBy>
+		</data>
+		<statistics hideDetail="true">
+			<statistic>
+				<groupFields>
+					<groupField name="evaluation.evaluationYear"/>
+					<groupField name="evaluation.evaluationMonth"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="highEvaluateLevelCount" function="count(MutualEvaluationResult.id)" whereExtend="MutualEvaluationResult.evaluateLevel=2"/> <!-- 靠前数量 -->
+					<statisticColumn name="lowEvaluateLevelCount" function="count(MutualEvaluationResult.id)" whereExtend="MutualEvaluationResult.evaluateLevel=0"/> <!-- 靠后数量 -->
+				</statisticColumns>
+			</statistic>
+		</statistics>
+	</statisticView>
+
+	<view name="admin/mutualEvaluation" form="admin/evaluation" title="互评" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.evaluation.mutual.pojo.MutualEvaluation</pojo>
+			<orderBy>MutualEvaluation.evaluationYear DESC, MutualEvaluation.evaluationMonth DESC</orderBy>
+			<quickFilter>MutualEvaluation.orgName like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有互评" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.enterprise.evaluation.mutual.pojo.MutualEvaluation</pojo>
+			</data>
+			<category value="MutualEvaluation.evaluationYear"> <!--value必须有-->
+				<data>MutualEvaluation.evaluationYear={CATEGORYVALUE}</data>
+			</category>
+			<category value="MutualEvaluation.evaluationMonth"> <!--value必须有-->
+				<where>MutualEvaluation.evaluationYear={PARENTVALUE}</where>
+				<data>MutualEvaluation.evaluationYear={CATEGORY1VALUE} and MutualEvaluation.evaluationMonth={CATEGORYVALUE}</data>
+			</category>
+			<category value="MutualEvaluation.orgId" title="MutualEvaluation.orgName"> <!--value必须有-->
+				<where>MutualEvaluation.evaluationYear={CATEGORY1VALUE} and MutualEvaluation.evaluationMonth={CATEGORY2VALUE}</where>
+				<data>MutualEvaluation.evaluationYear={CATEGORY1VALUE} and MutualEvaluation.evaluationMonth={CATEGORY2VALUE} and MutualEvaluation.orgId={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="考核年度" name="evaluationYear" width="100" align="center"/>
+			<column title="考核月份" name="evaluationMonth" width="100" align="center"/>
+			<column title="评价人" name="creator"/>
+			<column title="评价时间" name="created" width="110" align="center"/>
+		</columns>
+	</view>
+</views>

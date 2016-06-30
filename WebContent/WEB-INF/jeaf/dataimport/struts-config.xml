@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="importData" type="com.yuanluesoft.jeaf.dataimport.forms.ImportData"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action path="/refreshAttachments" scope="request"
+   type="com.yuanluesoft.jeaf.dataimport.actions.RefreshAttachments" validate="false"/>
+  <action name="importData" path="/importData" scope="request"
+   type="com.yuanluesoft.jeaf.dataimport.actions.Load" validate="false">
+   <forward name="load" path="/importData.jsp"/>
+  </action>
+  <action name="importData" path="/doImportData" scope="request"
+   type="com.yuanluesoft.jeaf.dataimport.actions.ImportData" validate="false"/>
+  <action input="/importData.jsp" name="importData" path="/saveDataTree"
+   scope="request"
+   type="com.yuanluesoft.jeaf.dataimport.actions.SaveDataTree" validate="false"/>
+  <action name="importData" path="/listChildNodes" scope="request"
+   type="com.yuanluesoft.jeaf.dataimport.actions.ListChildNodes" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action input="/importData.jsp" name="importData"
+   path="/saveParameter" scope="request"
+   type="com.yuanluesoft.jeaf.dataimport.actions.SaveParameter" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

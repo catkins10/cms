@@ -1,0 +1,132 @@
+﻿<html>
+	<head>
+		<script>
+			function xslt() {
+				var xmlDoc = new ActiveXObject('Microsoft.XMLDOM');
+		        var xslDoc = new ActiveXObject('Microsoft.XMLDOM'); 
+		        xmlDoc.async = false;
+		        xslDoc.async = false;
+		        xmlDoc.load(document.getElementsByName("pdmFileName")[0].value);
+		        
+		        var xsl = '<?xml version="1.0" encoding="utf-8" ?>' +
+						  '<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:a="attribute" xmlns:c="collection" xmlns:o="object">' +
+						  '<xsl:output method="xml" version="1.0" encoding="utf-8" indent="yes"/>' +
+						  '<xsl:template match="Model">' +
+						  '<hibernate-mapping>' +
+						  '	<xsl:apply-templates select="o:RootObject/c:Children/o:Model/c:Tables/o:Table[starts-with(a:Code,\'' + document.getElementsByName("startWith")[0].value + '\')]"/>' +
+						  '</hibernate-mapping>' +
+						  '</xsl:template>' +
+						  '<xsl:template match="o:Table">' +
+						  ' <xsl:comment> <xsl:value-of select="a:Name"/> </xsl:comment>' +
+						  ' <xsl:element name="class">' +
+						  '	<xsl:attribute name="name"><xsl:value-of select="a:Code"/></xsl:attribute>' +
+						  '	<xsl:attribute name="table"><xsl:value-of select="a:Code"/></xsl:attribute>' +
+						  '	<id name="id" column="id" type="long">' +
+						  '   		<generator class="assigned"/>' +
+						  '  	</id>' +
+						  '  	<xsl:for-each select="c:Columns/o:Column[a:Code!=\'id\']">' +
+						  '		<xsl:element name="property"><xsl:attribute name="name"><xsl:value-of select="a:Code"/></xsl:attribute></xsl:element> <xsl:comment> <xsl:value-of select="a:Name"/><xsl:if test="a:Comment">,<xsl:value-of select="a:Comment"/></xsl:if>,<xsl:value-of select="a:DataType"/> </xsl:comment>' +
+						  '  	</xsl:for-each>' +
+						  ' </xsl:element>' +
+						  '</xsl:template>' +
+						  '</xsl:stylesheet>';
+		        xslDoc.loadXML(xsl);
+		        //document.getElementsByName("hibernate")[0].value = xmlDoc.documentElement.transformNode(xslDoc);
+		        var result = new ActiveXObject("Microsoft.XMLDOM");
+      			result.async = false;
+      			result.validateOnParse = true;
+      			xmlDoc.documentElement.transformNodeToObject(xslDoc, result);
+      			document.getElementsByName("hibernate")[0].value = result.xml.replace(new RegExp('>\r\n\t\t<!--', 'g'), '> <!--');
+		        
+		        var xsl = '<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">\n' +
+						  '<xsl:output method="text" version="1.0" encoding="utf-8" indent="yes"/>\n' +
+						  '<xsl:template match="Model" xmlns:a="attribute" xmlns:c="collection" xmlns:o="object">\n' +
+						  '<xsl:for-each select="o:RootObject/c:Children/o:Model/c:Tables/o:Table[starts-with(a:Code,\'' + document.getElementsByName("startWith")[0].value + '\')]" xmlns:a="attribute" xmlns:c="collection" xmlns:o="object">\n' +
+						  '/**\n' +
+						  ' * <xsl:value-of select="a:Name"/>(<xsl:value-of select="a:Code"/>)\n' +
+						  ' * @author linchuan\n' +
+						  ' *\n' +
+						  ' */\n' +
+						  'public class <xsl:value-of select="a:Code"/> {\n' +
+						  '	<xsl:for-each select="c:Columns/o:Column" xmlns:a="attribute" xmlns:c="collection" xmlns:o="object">\n' +
+						  '	private <xsl:value-of select="a:DataType"/> <xsl:value-of select="a:Code"/>; //<xsl:value-of select="a:Name"/><xsl:if test="a:Comment">,<xsl:value-of select="a:Comment"/></xsl:if>\n' +
+						  '  	</xsl:for-each>\n' +
+						  '}\n' +
+						  '\n' +
+						  '</xsl:for-each>\n' +
+						  '</xsl:template>\n' +
+						  '</xsl:stylesheet>';
+		        xslDoc.loadXML(xsl);
+		        var code = xmlDoc.documentElement.transformNode(xslDoc);
+				document.getElementsByName("pojo")[0].value = code.replace(/varchar(.*)\)/g, "String ").replace(/date null/g, "Date ").replace(/timestamp null/g, "Timestamp ").replace(/timestamp/g, "Timestamp ").replace(/bigint unsigned/g, "long ").replace(/numeric\(20\)/g, "long ").replace(/numeric\(20,0\)/g, "long ").replace(/char\(1\)/g, "char ").replace(/numeric\((\d)\)/g, "int ").replace(/numeric\(1(\d)\)/g, "int ").replace(/numeric\((\d),(\d*)\)/g, "double ").replace(/text/g, "String ");
+			}
+			function xsltOracle() {
+				var xmlDoc = new ActiveXObject('Microsoft.XMLDOM');
+		        var xslDoc = new ActiveXObject('Microsoft.XMLDOM'); 
+		        xmlDoc.async = false;
+		        xslDoc.async = false;
+		        xmlDoc.load(document.getElementsByName("pdmFileName")[0].value);
+		        
+		        var xsl = '<?xml version="1.0" encoding="utf-8" ?>' +
+						  '<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:a="attribute" xmlns:c="collection" xmlns:o="object">' +
+						  '<xsl:output method="xml" version="1.0" encoding="utf-8" indent="yes"/>' +
+						  '<xsl:template match="Model">' +
+						  '<hibernate-mapping>' +
+						  '	<xsl:apply-templates select="o:RootObject/c:Children/o:Model/c:Tables/o:Table[starts-with(a:Code,\'' + document.getElementsByName("startWith")[0].value + '\')]"/>' +
+						  '</hibernate-mapping>' +
+						  '</xsl:template>' +
+						  '<xsl:template match="o:Table">' +
+						  ' <xsl:comment> <xsl:value-of select="a:Name"/> </xsl:comment>' +
+						  ' <xsl:element name="class">' +
+						  '	<xsl:attribute name="name"><xsl:value-of select="a:Code"/></xsl:attribute>' +
+						  '	<xsl:attribute name="table"><xsl:value-of select="a:Code"/></xsl:attribute>' +
+						  '	<id name="id" column="id" type="long">' +
+						  '   		<generator class="assigned"/>' +
+						  '  	</id>' +
+						  '  	<xsl:for-each select="c:Columns/o:Column[a:Code!=\'id\']">' +
+						  '		<xsl:element name="property"><xsl:attribute name="name"><xsl:value-of select="a:Code"/></xsl:attribute></xsl:element> <xsl:comment> <xsl:value-of select="a:Name"/><xsl:if test="a:Comment">,<xsl:value-of select="a:Comment"/></xsl:if>,<xsl:value-of select="a:DataType"/> </xsl:comment>' +
+						  '  	</xsl:for-each>' +
+						  ' </xsl:element>' +
+						  '</xsl:template>' +
+						  '</xsl:stylesheet>';
+		        xslDoc.loadXML(xsl);
+		        //document.getElementsByName("hibernate")[0].value = xmlDoc.documentElement.transformNode(xslDoc);
+		        var result = new ActiveXObject("Microsoft.XMLDOM");
+      			result.async = false;
+      			result.validateOnParse = true;
+      			xmlDoc.documentElement.transformNodeToObject(xslDoc, result);
+      			document.getElementsByName("hibernate")[0].value = result.xml.replace(new RegExp('>\r\n\t\t<!--', 'g'), '> <!--');
+		        
+		        var xsl = '<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">\n' +
+						  '<xsl:output method="text" version="1.0" encoding="utf-8" indent="yes"/>\n' +
+						  '<xsl:template match="Model" xmlns:a="attribute" xmlns:c="collection" xmlns:o="object">\n' +
+						  '<xsl:for-each select="o:RootObject/c:Children/o:Model/c:Tables/o:Table[starts-with(a:Code,\'' + document.getElementsByName("startWith")[0].value + '\')]" xmlns:a="attribute" xmlns:c="collection" xmlns:o="object">\n' +
+						  '/**\n' +
+						  ' * <xsl:value-of select="a:Name"/>(<xsl:value-of select="a:Code"/>)\n' +
+						  ' * @author linchuan\n' +
+						  ' *\n' +
+						  ' */\n' +
+						  'public class <xsl:value-of select="a:Code"/> {\n' +
+						  '	<xsl:for-each select="c:Columns/o:Column" xmlns:a="attribute" xmlns:c="collection" xmlns:o="object">\n' +
+						  '	private <xsl:value-of select="a:DataType"/> <xsl:value-of select="a:Code"/>; //<xsl:value-of select="a:Name"/><xsl:if test="a:Comment">,<xsl:value-of select="a:Comment"/></xsl:if>\n' +
+						  '  	</xsl:for-each>\n' +
+						  '}\n' +
+						  '\n' +
+						  '</xsl:for-each>\n' +
+						  '</xsl:template>\n' +
+						  '</xsl:stylesheet>';
+		        xslDoc.loadXML(xsl);
+		        var code = xmlDoc.documentElement.transformNode(xslDoc);
+				document.getElementsByName("pojo")[0].value = code.replace(/VARCHAR(.*)\)/g, "String ").replace(/DATE/g, "Date ").replace(/TIMESTAMP/g, "Timestamp ").replace(/NUMBER\(30\)/g, "long ").replace(/NUMBER\(20\)/g, "long ").replace(/NUMERIC\(30\)/g, "long ").replace(/NUMERIC\(20\)/g, "long ").replace(/CHAR\(1\)/g, "char ").replace(/NUMBER\((\d)\)/g, "int ").replace(/NUMERIC\((\d)\)/g, "int ").replace(/NUMBER\(1(\d)\)/g, "int ").replace(/NUMERIC\(1(\d)\)/g, "int ").replace(/NUMBER\((\d),(\d*)\)/g, "double ").replace(/NUMERIC\((\d),(\d*)\)/g, "double ").replace(/CLOB/g, "String ");
+			}
+		</script>
+	</head>
+	<body style="font-family:宋体;font-size:12px">
+		PDM文件名：<input type="text" name="pdmFileName" style="border: 1 solid gray;font-family:宋体;font-size:12px" value="cms.pdm">
+		表名起始字符串：<input type="text" name="startWith" style="border: 1 solid gray;font-family:宋体;font-size:12px">
+		&nbsp;<input type="checkbox" name="isOracle">Oracle
+		<input type="button" onclick="if(document.getElementsByName('isOracle')[0].checked){xsltOracle()}else{xslt();}" value="转换" style="font-family:宋体;font-size:12px">
+		<textarea name="hibernate" rows="18" style="width:100%; border: 1 solid gray;font-family:宋体;font-size:12px"></textarea>
+		<textarea name="pojo" rows="18" style="width:100%; border: 1 solid gray;font-family:宋体;font-size:12px"></textarea>
+	</body>
+</html>

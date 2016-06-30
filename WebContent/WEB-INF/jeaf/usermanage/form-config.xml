@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="loginForm" title="用户登录" action="{WEBAPPLICATIONSAFEURL}/jeaf/sso/submitlogin.shtml" class="com.yuanluesoft.jeaf.sso.forms.LoginForm" method="post" js="/jeaf/common/js/common.js,/jeaf/common/js/md5.js,/jeaf/sso/js/login.js">
+		<formFields>
+			<field title="用户名" name="userName"/>
+			<field title="密码" name="password" inputMode="password"/>
+			<field title="是否记住用户名" name="rememberUserName" type="boolean" inputMode="checkbox">
+				<parameter name="value">true</parameter>
+				<parameter name="label">记住我</parameter>
+			</field>
+			<field title="重定向URL" name="redirect" type="string" inputMode="hidden"/>
+			<field title="登录页面" name="loginPage" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="登录" execute="doLogin('{FORMID}')"/>
+			<action title="密码重置" execute="var userName=document.getElementsByName('userName')[0];DialogUtils.openDialog('{WEBAPPLICATIONSAFEURL}/jeaf/sso/forgetPassword.shtml?siteId={PARAMETER:siteId}' + (userName ? '&amp;userName=' + StringUtils.utf8Encode(userName.value) : ''), 450, 260);"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="dialogURL">/jeaf/usermanage/templatemanage/insertLoginForm.shtml</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="changePassword" title="修改密码" class="com.yuanluesoft.jeaf.sso.forms.ChangePassword">
+		<formFields>
+			<field title="用户名" name="userName" type="string" inputMode="readonly"/>
+			<field title="旧密码" name="oldPassword" type="string" inputMode="password" required="true"/>
+			<field title="新密码" name="newPassword" type="string" inputMode="password" required="true"/>
+			<field title="密码强度" name="passwordStrength" type="number" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm();"/>
+			<action title="取消" execute="window.close();"/>
+		</actions>
+	</form>
+	
+	<form name="forgetPassword" title="密码重置" class="com.yuanluesoft.jeaf.sso.forms.ForgetPassword">
+		<formFields>
+			<field title="用户名" name="userName" type="string" inputMode="text"/>
+			<field title="邮件地址" name="mailAddress" type="string" inputMode="hidden"/>
+			<field title="重置验证码" name="code" type="string" inputMode="text" required="true"/>
+			<field title="新密码" name="newPassword" type="string" inputMode="password" required="true"/>
+			<field title="密码强度" name="passwordStrength" type="number" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="下一步" execute="FormUtils.submitForm();"/>
+			<action title="确定" execute="FormUtils.submitForm();"/>
+			<action title="取消" execute="window.close();"/>
+		</actions>
+	</form>
+
+	<form name="admin/root" class="com.yuanluesoft.jeaf.usermanage.forms.admin.Root" title="根组织" pojo="com.yuanluesoft.jeaf.usermanage.pojo.OrgRoot">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="模板配置" hide="isNew() or isRead()" execute="DialogUtils.userPageTemplateConfigure('{PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/category" class="com.yuanluesoft.jeaf.usermanage.forms.admin.Category" title="分类" pojo="com.yuanluesoft.jeaf.usermanage.pojo.OrgCategory">
+		<formFields>
+			<field title="上级机构" name="parentDirectoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'parentDirectoryId{id},parentDirectoryName{fullText}', '', 'root,area,unit,category')</parameter>
+			</field>
+			<field title="分类成员" name="linkedDirectoryNames" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, true, 'linkedDirectoryIds{id},linkedDirectoryNames{name|成员|100%}', '', 'unit,unitDepartment')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="注册下一个" hide="isOld()" execute="FormUtils.doAction('registNextCategory')"/>
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，所有的下级组织及其用户都将被删除，是否确定要删除？'))FormUtils.doAction('deleteCategory')"/>
+			<action title="模板配置" hide="isNew() or isRead()" execute="DialogUtils.userPageTemplateConfigure('{PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/area" class="com.yuanluesoft.jeaf.usermanage.forms.admin.Area" title="区域" pojo="com.yuanluesoft.jeaf.usermanage.pojo.Area">
+		<formFields>
+			<field title="所在区域" name="parentDirectoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'parentDirectoryId{id},parentDirectoryName{fullText}', '', 'root,area')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="注册下一个" hide="isOld()" execute="FormUtils.doAction('registNextArea')"/>
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，所有的下级组织及其用户都将被删除，是否确定要删除？'))FormUtils.doAction('deleteArea')"/>
+			<action title="模板配置" hide="isNew() or isRead()" execute="DialogUtils.userPageTemplateConfigure('{PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/unit" class="com.yuanluesoft.jeaf.usermanage.forms.admin.Unit" title="单位" pojo="com.yuanluesoft.jeaf.usermanage.pojo.Unit">
+		<formFields>
+			<field title="上级机构" name="parentDirectoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'parentDirectoryId{id},parentDirectoryName{fullText}', '', 'root,area,unit,category')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="注册下一个" hide="isOld()" execute="FormUtils.doAction('registNextUnit')"/>
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，所有的下级组织及其用户都将被删除，是否确定要删除？'))FormUtils.doAction('deleteUnit')"/>
+			<action title="模板配置" hide="isNew() or isRead()" execute="DialogUtils.userPageTemplateConfigure('{PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/unitDepartment" class="com.yuanluesoft.jeaf.usermanage.forms.admin.UnitDepartment" title="部门" pojo="com.yuanluesoft.jeaf.usermanage.pojo.UnitDepartment">
+		<formFields>
+			<field title="所在单位/上级部门" name="parentDirectoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'parentDirectoryId{id},parentDirectoryName{fullText}', '', 'unit,unitDepartment')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="注册下一个" hide="isOld()" execute="FormUtils.doAction('registNextUnitDepartment')"/>
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，所有的用户都将被删除，是否确定要删除？'))FormUtils.doAction('deleteUnitDepartment')"/>
+			<action title="模板配置" hide="isNew() or isRead()" execute="DialogUtils.userPageTemplateConfigure('{PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/school" class="com.yuanluesoft.jeaf.usermanage.forms.admin.School" title="学校" pojo="com.yuanluesoft.jeaf.usermanage.pojo.School">
+		<formFields>
+			<field title="所在区域" name="parentDirectoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'parentDirectoryId{id},parentDirectoryName{fullText}', '', 'root,area,category')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<!-- action title="注册下一个" hide="isOld()" execute="FormUtils.doAction('registNextSchool')"/ -->
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，所有的下级组织及其用户都将被删除，是否确定要删除？'))FormUtils.doAction('deleteSchool')"/>
+			<action title="重发注册邮件" hide="isNew() or isRead()" execute="if(confirm('是否确定要重发注册邮件？'))FormUtils.doAction('resendRegistMail')"/>
+			<action title="显示注册信息" hide="isNew() or isRead()" execute="FormUtils.doAction('displayRegistInfo')"/>
+			<action title="模板配置" hide="isNew() or isRead()" execute="DialogUtils.userPageTemplateConfigure('{PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/schoolDepartment" class="com.yuanluesoft.jeaf.usermanage.forms.admin.SchoolDepartment" title="部门" pojo="com.yuanluesoft.jeaf.usermanage.pojo.SchoolDepartment">
+		<formFields>
+			<field title="所在学校/上级部门" name="parentDirectoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'parentDirectoryId{id},parentDirectoryName{fullText}', '', 'school,schoolDepartment')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="注册下一个" hide="isOld()" execute="FormUtils.doAction('registNextSchoolDepartment')"/>
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，所有的用户都将被删除，是否确定要删除？'))FormUtils.doAction('deleteSchoolDepartment')"/>
+			<action title="模板配置" hide="isNew() or isRead()" execute="DialogUtils.userPageTemplateConfigure('{PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/schoolGrade" class="com.yuanluesoft.jeaf.usermanage.forms.admin.SchoolGrade" title="注册年段" pojo="com.yuanluesoft.jeaf.usermanage.pojo.SchoolClass">
+		<formFields>
+			<field property="enrollTime" title="入学年份" required="true"/>
+			<field property="classCount" title="班级数量" required="true"/>
+			<field property="gradeName" title="年段名称" required="true"/>
+			<field property="lengthOfSchooling" title="学制" required="true"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="注册下一个" hide="isOld()" execute="FormUtils.doAction('registNextSchoolGrade')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/schoolClass" class="com.yuanluesoft.jeaf.usermanage.forms.admin.SchoolClass" title="班级" pojo="com.yuanluesoft.jeaf.usermanage.pojo.SchoolClass">
+		<formFields>
+			<field title="所在学校" name="parentDirectoryName" type="string" inputMode="readonly"/>
+			<field title="教师ID" name="teacherId" type="number" inputMode="hidden"/>
+			<field title="教师" name="teacherName" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectPerson(520, 320, false, 'teacherId{id},teacherName{name}', '', 'teacher', '', ',')</parameter>
+			</field>
+			<field title="教师称谓" name="teacherTitle" type="string" inputMode="dropdown">
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="注册下一个" hide="isOld()" execute="FormUtils.doAction('registNextClass')"/>
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="重发家长短信" hide="isNew() or isRead()" execute="javascript:if(confirm('是否确定要重发短信给所有家长？'))FormUtils.doAction('resendSmsToGenearch')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，所有的学生和家长都将被删除，是否确定要删除？'))FormUtils.doAction('deleteSchoolClass')"/>
+			<action title="模板配置" hide="isNew() or isRead()" execute="DialogUtils.userPageTemplateConfigure('{PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/employee" class="com.yuanluesoft.jeaf.usermanage.forms.admin.Employee" title="用户" pojo="com.yuanluesoft.jeaf.usermanage.pojo.Employee">
+		<formFields>
+			<field title="所在单位/部门ID" name="orgId" type="number" inputMode="hidden"/>
+			<field title="所在单位/部门" name="orgFullName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'orgId{id},orgFullName{fullText}', '', 'root,school,schoolDepartment,unit,unitDepartment')</parameter>
+			</field>
+			<field title="所属其他部门ID" name="otherOrgIds" type="string" inputMode="hidden"/>
+			<field title="所属其他部门" name="otherOrgNames" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(640, 400, true, 'otherOrgIds{id},otherOrgNames{name|部门名称|100%}', '', 'school,schoolDepartment,unit,unitDepartment')</parameter>
+			</field>
+			<field name="halt" title="是否停用" length="1" type="char" inputMode="radio">
+				<parameter name="itemsText">是|1\0否|0</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="注册下一个" hide="isOld()" execute="FormUtils.doAction('registNextEmployee')"/>
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteEmployee')"/>
+			<action title="模板配置" hide="isNew() or isRead()" execute="DialogUtils.userPageTemplateConfigure('{PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/batchRegistEmployees" class="com.yuanluesoft.jeaf.usermanage.forms.admin.BatchRegistEmployees" title="批量注册用户" pojo="com.yuanluesoft.jeaf.usermanage.pojo.Employee">
+		<formFields>
+			<field name="data" title="用户清单" type="attachment" length="1" inputMode="attachment">
+				<parameter name="fileExtension">用户清单|*.xls;*.xlsx|</parameter>
+				<parameter name="maxUploadSize">50000000</parameter>
+				<parameter name="simpleMode">true</parameter>
+				<parameter name="attachmentEditor">uploadRegistEmployees.shtml</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/teacher" class="com.yuanluesoft.jeaf.usermanage.forms.admin.Teacher" title="教师" pojo="com.yuanluesoft.jeaf.usermanage.pojo.Teacher">
+		<formFields>
+			<field title="所在学校/部门ID" name="orgId" type="number" inputMode="hidden"/>
+			<field title="所在学校/部门" name="orgFullName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'orgId{id},orgFullName{fullName}', '', 'unit,unitDepartment,school,schoolDepartment')</parameter>
+			</field>
+			<field title="所属其他部门ID" name="otherOrgIds" type="string" inputMode="hidden"/>
+			<field title="所属其他部门" name="otherOrgNames" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(500,300,true,'otherDepartmentIds{id},otherDepartmentNames{name|部门名称|100%}')</parameter>
+			</field>
+			<field name="halt" title="是否停用" length="1" type="char" inputMode="radio">
+				<parameter name="itemsText">是|1\0否|0</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="注册下一个" hide="isOld()" execute="FormUtils.doAction('registNextTeacher')"/>
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteTeacher')"/>
+			<action title="模板配置" hide="isNew() or isRead()" execute="DialogUtils.userPageTemplateConfigure('{PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/student" class="com.yuanluesoft.jeaf.usermanage.forms.admin.Student" title="学生" pojo="com.yuanluesoft.jeaf.usermanage.pojo.Student">
+		<formFields>
+			<field title="所在班级ID" name="orgId" type="number" inputMode="hidden"/>
+			<field title="所在班级" name="orgFullName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'orgId{id},orgFullName{fullName}', '', 'class')</parameter>
+			</field>
+			<field name="halt" title="是否停用" length="1" type="char" inputMode="radio">
+				<parameter name="itemsText">是|1\0否|0</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="注册下一个" hide="isOld()" execute="FormUtils.doAction('registNextStudent')"/>
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteStudent')"/>
+			<action title="模板配置" hide="isNew() or isRead()" execute="DialogUtils.userPageTemplateConfigure('{PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/genearch" class="com.yuanluesoft.jeaf.usermanage.forms.admin.Genearch" title="家长" pojo="com.yuanluesoft.jeaf.usermanage.pojo.Genearch">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteGenearch')"/>
+			<action title="模板配置" hide="isNew() or isRead()" execute="DialogUtils.userPageTemplateConfigure('{PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/role" class="com.yuanluesoft.jeaf.usermanage.forms.admin.Role" title="角色/岗位" pojo="com.yuanluesoft.jeaf.usermanage.pojo.Role">
+		<formFields>
+			<field title="成员列表ID" name="memberIds" type="string" inputMode="hidden"/>
+			<field title="成员列表" name="memberNames" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectPerson(600,400,true,'memberIds{id},memberNames{name|成员姓名|100%}')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action name="close" title="关闭" execute="window.close()"/>
+			<action name="save" title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action name="next" title="新建下一个" hide="isOld()" execute="FormUtils.doAction('createNextRole')"/>
+			<action name="delete" title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteRole')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.usermanage.forms.PersonalData" title="个人资料" pojo="com.yuanluesoft.jeaf.usermanage.pojo.Person">
+		<formFields>
+			<field title="所在组织机构全场" name="orgFullName" type="string" inputMode="readonly"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.usermanage.forms.RegistStudent" title="注册学生" pojo="com.yuanluesoft.jeaf.usermanage.pojo.RegistStudent">
+		<formFields>
+			<field property="orgFullName" depends="required">
+				<arg0 key="班级" resource="false" />
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.usermanage.forms.Questionnaire" title="调查文卷" pojo="com.yuanluesoft.jeaf.usermanage.pojo.Questionnaire">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.usermanage.forms.RegistTeacher" title="注册教师" pojo="com.yuanluesoft.jeaf.usermanage.pojo.RegistTeacher">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.usermanage.forms.SchoolRegistCode" title="学校注册码" pojo="com.yuanluesoft.jeaf.usermanage.pojo.SchoolRegistCode"/>
+	
+	<form name="schoolDepartment" class="com.yuanluesoft.jeaf.usermanage.forms.SchoolDepartment" title="部门/教研组" pojo="com.yuanluesoft.jeaf.usermanage.pojo.SchoolDepartment">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="注册下一个" hide="isOld()" execute="FormUtils.doAction('registNextSchoolDepartment')"/>
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，所有的用户都将被删除，是否确定要删除？'))FormUtils.doAction('deleteSchoolDepartment')"/>
+		</actions>
+	</form>
+	
+	<form name="schoolClass" class="com.yuanluesoft.jeaf.usermanage.forms.SchoolClass" title="班级" pojo="com.yuanluesoft.jeaf.usermanage.pojo.SchoolClass">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="注册下一个" hide="isOld()" execute="FormUtils.doAction('registNextSchoolClass')"/>
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，所有的用户都将被删除，是否确定要删除？'))FormUtils.doAction('deleteSchoolClass')"/>
+		</actions>
+	</form>
+	
+	<form name="schoolGrade" class="com.yuanluesoft.jeaf.usermanage.forms.SchoolGrade" title="年段" pojo="com.yuanluesoft.jeaf.usermanage.pojo.SchoolClass">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="注册下一个" hide="isOld()" execute="FormUtils.doAction('registNextSchoolGrade')"/>
+		</actions>
+	</form>
+	
+	<form name="teacher" class="com.yuanluesoft.jeaf.usermanage.forms.Teacher" title="教师" pojo="com.yuanluesoft.jeaf.usermanage.pojo.Teacher">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteTeacher')"/>
+		</actions>
+	</form>
+	
+	<form name="student" class="com.yuanluesoft.jeaf.usermanage.forms.Student" title="学生" pojo="com.yuanluesoft.jeaf.usermanage.pojo.Student">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="从本班中删除" hide="deleteDisable()" execute="if(confirm('是否确定要从本班中删除？'))FormUtils.doAction('deleteFromClass')"/>
+		</actions>
+	</form>
+	
+	<form name="genearch" class="com.yuanluesoft.jeaf.usermanage.forms.Genearch" title="家长" pojo="com.yuanluesoft.jeaf.usermanage.pojo.Genearch">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<!--action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteGenearch')"/-->
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.usermanage.forms.admin.UserReplicate" title="用户复制">
+		<actions>
+			<action name="close" title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.usermanage.forms.admin.PersonView" title="用户视图">
+		<formFields>
+			<field name="orgId" title="组织机构ID" type="number" inputMode="hidden"/>
+			<field name="searchChildren" title="是否搜索子栏目" type="string" inputMode="hidden"/>
+			<field name="webApplicationSafeUrl" title="应用URL" type="string" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.usermanage.forms.admin.RoleView" title="角色视图">
+		<formFields>
+			<field name="orgId" title="组织机构ID" type="number" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.usermanage.forms.SetAgent" title="设置的代理人">
+		<formFields>
+			<field title="用户名" name="userName" type="string" inputMode="readonly"/>
+			<field title="代理人ID" name="agentIds" type="string" inputMode="hidden"/>
+			<field title="代理人" name="agentNames" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectPerson(550, 330, true, 'agentIds{id},agentNames{name|代理人|100%}')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="portrait" class="com.yuanluesoft.jeaf.usermanage.forms.Portrait" title="用户头像" pojo="com.yuanluesoft.jeaf.usermanage.pojo.Person"/>
+	
+	<form name="admin/template" class="com.yuanluesoft.jeaf.usermanage.forms.admin.UserPageTemplate" title="用户页面模板" pojo="com.yuanluesoft.jeaf.usermanage.pojo.UserPageTemplate"/>
+	
+	<form name="admin/loginTemplate" class="com.yuanluesoft.jeaf.usermanage.forms.admin.UserLoginTemplate" title="用户登录模板" pojo="com.yuanluesoft.jeaf.usermanage.pojo.UserLoginTemplate"/>
+
+	<form class="com.yuanluesoft.jeaf.usermanage.forms.admin.OrgRelationConfigView" title="组织机构相关配置视图">
+		<formFields>
+			<field name="applicationName" title="应用名称" type="string" inputMode="hidden"/>
+			<field name="viewApplicationName" title="视图所在应用名称" type="string" inputMode="hidden"/>
+			<field name="viewName" title="视图名称" type="string" inputMode="hidden"/>
+			<field name="orgId" title="机构ID" type="number" inputMode="hidden"/>
+			<field name="orgTypes" title="机构类型" type="string" inputMode="hidden"/>
+			<field name="popedomNames" title="权限类型" type="string" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.usermanage.forms.admin.InsertLoginForm" title="插入登录表单">
+		<formFields>
+			<field title="重定向页面" name="redirectMode" type="string" inputMode="radio">
+				<parameter name="itemsText">默认|default\0自定义|custom</parameter>
+				<parameter name="defaultValue">default</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

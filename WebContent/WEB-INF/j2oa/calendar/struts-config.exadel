@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="24,33,128,27" TARGET="page1" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="24,105,128,27"
+  TARGET="page3" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#calendar" NAME="action0"
+  PATH="/calendar" SHAPE="24,201,128,43" TITLE="calendarform" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/calendar.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/calendar.jsp" SHAPE="232,218,56,30" SUBTYPE="jsp"
+  TITLE="calendar.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveCalendar" TARGET="action1" TITLE="saveCalendar" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/publishCalendar" TARGET="action2" TITLE="publishCalendar" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/deleteCalendar" TARGET="action3" TITLE="deleteCalendar" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/unpublishCalendar" TARGET="action4" TITLE="unpublishCalendar" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveCalendar"
+  NAME="action1" PATH="/saveCalendar" SHAPE="384,233,136,27"
+  TITLE="calendarform" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#publishCalendar"
+  NAME="action2" PATH="/publishCalendar" SHAPE="384,289,136,27"
+  TITLE="calendarform" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteCalendar"
+  NAME="action3" PATH="/deleteCalendar" SHAPE="384,401,136,27"
+  TITLE="calendarform" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#unpublishCalendar"
+  NAME="action4" PATH="/unpublishCalendar" SHAPE="384,345,136,27"
+  TITLE="calendarform" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="232,104,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="232,32,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+</PROCESS>

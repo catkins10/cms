@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 招投标:工程管理 -->
+<application>
+	<pages>
+		<page name="biddingAsk" title="提问" url="/bidding/project/ask/ask.shtml" systemLink="false" recordClass="com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAsk">
+			<field title="项目名称" name="projectName"/>
+			<field title="内容" name="question"/>
+			<field title="答复" name="reply"/>
+			<field title="招标方式" name="biddingMode"/>
+			<field title="企业名称" name="enterpriseName"/>
+			<field title="提问用户名称" name="askPersonName"/>
+			<field title="提问时间" name="askTime" type="timestamp"/>
+			<field title="流程状态" name="workflowStatus"/>
+			<subPage name="base" title="提问"/>
+		</page>
+		<page title="问题列表" name="biddingAsks" url="/bidding/project/ask/listAsks.shtml"/>
+		<page title="我提的问题列表" name="myBiddingAsks" url="/bidding/project/ask/listAsks.shtml?type=myBiddingAsks"/>
+		<page title="待处理问题列表" name="todoBiddingAsks" url="/bidding/project/ask/listAsks.shtml?type=todoBiddingAsks"/>
+		<page title="在处理问题列表" name="processingBiddingAsks" url="/bidding/project/ask/listAsks.shtml?type=processingBiddingAsks"/>
+		<page title="已办结问题列表" name="completedBiddingAsks" url="/bidding/project/ask/listAsks.shtml?type=completedBiddingAsks"/>
+		<page title="参与处理的问题列表" name="readabledBiddingAsks" url="/bidding/project/ask/listAsks.shtml?type=readabledBiddingAsks"/>
+	</pages>
+</application>

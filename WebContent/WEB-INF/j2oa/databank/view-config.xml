@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<views>
+	<view name="data" form="data" title="资料" pageRows="25" openFeatures="width=780,height=550">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.databank.pojo.DatabankData</pojo>
+			<orderBy>DatabankData.created DESC</orderBy>
+			<quickFilter>DatabankData.subject like '%{KEY}%' or DatabankData.docmark like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="标题" name="subject"/>
+			<column title="成文日期" name="created" format="yyyy-MM-dd" align="center" width="68"/>
+			<column title="文件字" name="docmark" width="120"/>
+		</columns>
+	</view>
+	
+	<view name="directory" form="directory" hide="noPrivilege(application_visitor)" title="目录" pageRows="25" openFeatures="width=750,height=550">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.databank.pojo.DatabankDirectory</pojo>
+			<orderBy>DatabankDirectory.priority DESC, DatabankDirectory.directoryName</orderBy>
+			<quickFilter>DatabankDirectory.directoryName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/>
+			<column title="名称" name="directoryName"/>
+		</columns>
+	</view>
+</views>

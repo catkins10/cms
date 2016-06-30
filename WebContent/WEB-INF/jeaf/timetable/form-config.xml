@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.jeaf.timetable.forms.Timetable" title="作息时间" pojo="com.yuanluesoft.jeaf.timetable.pojo.Timetable">
+		<formFields>
+			<field title="适用的用户" name="timetableVisitors" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteTimetable')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.timetable.forms.CommuteTime" title="上下班时间" pojo="com.yuanluesoft.jeaf.timetable.pojo.Timetable">
+		<formFields>
+			<field name="commuteTime" title="上下班时间" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.timetable.pojo.TimetableCommuteTime</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteCommuteTime')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.timetable.forms.Festival" title="节假日" pojo="com.yuanluesoft.jeaf.timetable.pojo.Timetable">
+		<formFields>
+			<field name="festival" title="节假日" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.timetable.pojo.TimetableFestival</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="添加调休时间" hide="isRead() or isNew()" execute="PageUtils.newrecord('jeaf/timetable', 'festivalAdjust', 'width=430,height=120,mode=dialog', 'id={PARAMETER:timetableId}&amp;adjust.festivalId={PARAMETER:id}')"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteFestival')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.timetable.forms.FestivalAdjust" title="节假日调休" pojo="com.yuanluesoft.jeaf.timetable.pojo.Timetable">
+		<formFields>
+			<field name="adjust" title="节假日调休" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.timetable.pojo.TimetableFestivalAdjust</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteFestivalAdjust')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.timetable.forms.OffDay" title="日常休息时间" pojo="com.yuanluesoft.jeaf.timetable.pojo.Timetable">
+		<formFields>
+			<field name="offDay" title="日常休息时间" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.timetable.pojo.TimetableOffDay</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteOffDay')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.timetable.forms.Overtime" title="加班时长设置" pojo="com.yuanluesoft.jeaf.timetable.pojo.Timetable">
+		<formFields>
+			<field name="overtime" title="加班时长设置" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.timetable.pojo.TimetableOvertime</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteOvertime')"/>
+		</actions>
+	</form>
+</forms>

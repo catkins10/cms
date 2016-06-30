@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="account" class="com.yuanluesoft.wechat.forms.Account" title="公众号配置" pojo="com.yuanluesoft.wechat.pojo.WechatAccount">
+		<formFields>
+			<field name="unitName" title="单位名称" type="string" inputMode="readonly"/>
+			<field name="receiveMessageURL" title="消息接收URL" type="string" inputMode="readonly"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="menuItem" class="com.yuanluesoft.wechat.forms.MenuItem" title="菜单项" pojo="com.yuanluesoft.wechat.pojo.WechatAccount">
+		<formFields>
+			<field name="menuItem" title="菜单项" type="component">
+				<parameter name="class">com.yuanluesoft.wechat.pojo.WechatMenuItem</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteMenuItem')"/>
+		</actions>
+	</form>
+	
+	<form name="sendMessage" class="com.yuanluesoft.wechat.forms.SendMessage" title="发送消息" pojo="com.yuanluesoft.wechat.pojo.WechatMessageSend">
+	 	<formFields>
+			<field name="messageReceive" title="接收到的消息" type="component" inputMode="readonly">
+				<parameter name="class">com.yuanluesoft.wechat.pojo.WechatMessageReceive</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteSendMessage')"/>
+			<action title="送审核" hide="workflow()" execute="FormUtils.doAction('runSendMessage', 'workflowAction=send')"/>
+			<action title="审核" hide="workflow()" execute="FormUtils.doAction('approvalSendMessage', 'workflowAction=approval')"/>
+			<action title="完成审核" hide="workflow()" execute="FormUtils.doAction('runSendMessage', 'workflowAction=send')"/>
+			<action title="发布" hide="workflow()" execute="if(confirm('是否确定发布？'))FormUtils.doAction('doSendMessage')"/>
+		</actions>
+	</form>
+
+	<form name="receivedMessage" class="com.yuanluesoft.wechat.forms.ReceivedMessage" title="接收消息" pojo="com.yuanluesoft.wechat.pojo.WechatMessageReceive">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteReceivedMessage')"/>
+			<action title="发送客服消息" execute="location.href='sendMessage.shtml?receiveMessageId={PARAMETER:id}'"/>
+		</actions>
+	</form>
+	
+	<form name="user" class="com.yuanluesoft.wechat.forms.User" title="微信用户" pojo="com.yuanluesoft.wechat.pojo.WechatUser">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteUser')"/>
+		</actions>
+	</form>
+	
+	<form name="userGroup" class="com.yuanluesoft.wechat.forms.UserGroup" title="用户分组" pojo="com.yuanluesoft.wechat.pojo.WechatUserGroup">
+		<formFields>
+			<field name="memberIds" title="成员ID列表" type="string" inputMode="hidden"/>
+			<field name="memberNicknames" title="成员昵称" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.openSelectDialog('wechat', 'selectUser', 640, 400, true, 'memberIds{id},memberNicknames{nickname|用户昵称|100%}', '', '', '', ',', true, 'unitId={PARAMETER:unitId}')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteUserGroup')"/>
+		</actions>
+	</form>
+	
+	<form name="responseMessage" class="com.yuanluesoft.wechat.forms.ResponseMessage" title="自动应答" pojo="com.yuanluesoft.wechat.pojo.WechatMessageResponse">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteResponseMessage')"/>
+		</actions>
+	</form>
+	
+	<form name="sendMessageNews" class="com.yuanluesoft.wechat.forms.SendMessageNews" title="图文消息" pojo="com.yuanluesoft.wechat.pojo.WechatMessageSend">
+		<formFields>
+			<field name="messageNews" title="图文消息" type="component">
+				<parameter name="class">com.yuanluesoft.wechat.pojo.WechatMessageNews</parameter>
+			</field>
+			<field name="messageNews.title" title="标题" length="200" type="string" required="true" inputMode="select">
+				<parameter name="js">/cms/js/reference.js</parameter>
+				<parameter name="execute">reference(this, 'messageNews.url', 'messageNews.title', 'FormUtils.doAction("retrieveSendMessageNews")')</parameter>
+			</field>
+			<field name="messageNews.image" title="图片" type="image" inputMode="attachment" length="1"> <!-- 应答消息：支持JPG、PNG格式，较好的效果为大图360*200，小图200*200, 客服消息：支持JPG、PNG格式，较好的效果为大图640*320，小图80*80, 群发消息：128K-->
+				<parameter name="fileExtension">JPG图片|*.jpg|</parameter>
+				<parameter name="maxSaveSize">64000</parameter>
+				<parameter name="attachmentEditor">/wechat/sendMessageNewsAttachmentEditor.shtml</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteSendMessageNews')"/>
+		</actions>
+	</form>
+	
+	<form name="responseMessageNews" class="com.yuanluesoft.wechat.forms.ResponseMessageNews" title="自动应答图文消息" pojo="com.yuanluesoft.wechat.pojo.WechatMessageResponse">
+		<formFields>
+			<field name="messageNews" title="图文消息" type="component">
+				<parameter name="class">com.yuanluesoft.wechat.pojo.WechatMessageNews</parameter>
+			</field>
+			<field name="messageNews.title" title="标题" length="200" type="string" required="true" inputMode="select">
+				<parameter name="js">/cms/js/reference.js</parameter>
+				<parameter name="execute">reference(this, 'messageNews.url', 'messageNews.title', 'FormUtils.doAction("retrieveResponseMessageNews")')</parameter>
+			</field>
+			<field name="messageNews.image" title="图片" type="image" inputMode="attachment" length="1"> <!-- 应答消息：支持JPG、PNG格式，较好的效果为大图360*200，小图200*200, 客服消息：支持JPG、PNG格式，较好的效果为大图640*320，小图80*80, 群发消息：128K-->
+				<parameter name="fileExtension">JPG图片|*.jpg|</parameter>
+				<parameter name="maxSaveSize">128000</parameter> 
+				<parameter name="attachmentEditor">/wechat/responseMessageNewsAttachmentEditor.shtml</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteResponseMessageNews')"/>
+		</actions>
+	</form>
+</forms>

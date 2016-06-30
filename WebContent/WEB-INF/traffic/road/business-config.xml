@@ -1,0 +1,1901 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="出租车辆" class="TAXVECINFO" businessServiceName="trafficSqlQueryService">
+		<field name="CMVECID" title="车辆ID" type="string" columnType="VARCHAR2(50)">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="CHESEATS" title="核定座位" type="number" columnType="NUMBER(6)"/>
+		<field name="COLSEATS" title="计征座位" type="number" columnType="NUMBER(6)"/>
+		<field name="BUSPROWORD" title="经营权证字" type="string" columnType="VARCHAR2(10)"/>
+		<field name="BUSPRONUM" title="经营权证号" type="string" columnType="VARCHAR2(20)"/>
+		<field name="EDIUSRCODE" title="修改者编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="EDIDATE" title="修改日期" type="string" columnType="CHAR(10)"/>
+		<field name="EDITIME" title="修改时间" type="string" columnType="CHAR(8)"/>
+		<field name="STARLEVEL" title="车辆星级" type="string" columnType="VARCHAR2(2)"/>
+		<field name="ISJDC" title="是否接待车" type="string" columnType="VARCHAR2(2)" inputMode="radio">
+			<parameter name="itemsText">否|0\0是|1</parameter>
+		</field>
+		<!-- 
+			SELECT T2.BRAPREFIX||T2.BRANUM AS 车牌号码,R.DEPNAME AS 管理机构,T1.CLITNAME  AS  业户名称,T2.FACTYPE||T2.MODEL AS 厂牌型号,T2.TRANO AS 运输证号,T2.TRAWORD||T2.TRANO,T2.VINNEXTDATE,T2.VECBUSSTATUS,T2.CHETONORSEATS
+			FROM CMVEC T2 
+			LEFT OUTER JOIN CMCLT T1 ON T2.CMCLTID=T1.CMCLTID
+			LEFT OUTER JOIN CMCLT T5 ON T5.CMCLTID = T2.CSGUNIT  
+			INNER JOIN TAXVECINFO T3 ON T2.CMVECID = T3.CMVECID 
+			LEFT OUTER JOIN COUCANCODE T4 ON T2.VECADDR=T4.CANCODE 
+			LEFT JOIN T_PF_DEP R ON R.DEPCODE = T2.DEPCODE 
+			WHERE T2.ISEFFECT='0' AND T2.VECBUSSTATUS='10'
+			
+			SELECT DISTINCT V.CMVECID 车辆ID, V.BRAPREFIX||V.BRANUM 车牌号码,
+			(SELECT DEPNAME FROM T_PF_DEP T WHERE T.DEPCODE=V.DEPCODE) 管辖机构,
+			V2.CLITNAME 业户名称, V.FACTYPE||V.MODEL 厂牌型号, V.TRANO 运输证号 ,V.GRADEPCODE 核发机关,V.GRADATE 核发日期,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='VECBUSSTATUS' AND CODE=V.VECBUSSTATUS) 营运状态
+			FROM CMVEC V,CMCLT V2,TAXVECINFO V1
+			WHERE V.CMCLTID=V2.CMCLTID AND V.CMVECID=V1.CMVECID
+			AND V.BNSCOPE='09100' AND (V.VECBUSSTATUS='10' OR V.VECBUSSTATUS='21') AND V.ISEFFECT=0
+		 -->
+		<parameter name="sqlFrom">TAXVECINFO T3</parameter>
+		<parameter name="sqlWhere">T2.ISEFFECT='0' AND T2.VECBUSSTATUS='10'</parameter>
+		<field name="T2" type="component" title="车辆基本信息">
+			<parameter name="class">CMVEC</parameter>
+			<parameter name="sqlJoin">INNER JOIN CMVEC T2 ON T2.CMVECID=T3.CMVECID</parameter>
+		</field>
+		<field name="T1" type="component" title="业户基本信息">
+			<parameter name="class">CMCLT</parameter>
+			<parameter name="sqlJoin">LEFT OUTER JOIN CMCLT T1 ON T2.CMCLTID=T1.CMCLTID</parameter>
+		</field>
+		<field name="T5" type="component" title="委托单位">
+			<parameter name="class">CMCLT</parameter>
+			<parameter name="sqlJoin">LEFT OUTER JOIN CMCLT T5 ON T5.CMCLTID=T2.CSGUNIT</parameter>
+		</field>
+		<field name="T4" type="component" title="车籍地">
+			<parameter name="class">COUCANCODE</parameter>
+			<parameter name="sqlJoin">LEFT OUTER JOIN COUCANCODE T4 ON T2.VECADDR=T4.CANCODE</parameter>
+		</field>
+		<field name="ENPSNDRIVERS" type="components" title="出租车驾驶员列表">
+			<parameter name="class">ENPSNDRIVER</parameter>
+			<parameter name="sqlWhere">T6.CMVECID='{PARAMETER:CMVECID}'</parameter>
+			<parameter name="url">/traffic/detail.shtml?applicationName=traffic/road&amp;pageName=ENPSNDRIVER&amp;id={PARAMETER:id}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="出租车驾驶员" class="ENPSNDRIVER" businessServiceName="trafficSqlQueryService">
+		<field name="BEWORID" title="从业资格证编号" type="string" columnType="VARCHAR2(50)">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="DEPCODE" title="所属地区" type="string" columnType="VARCHAR2(10)"/>
+		<field name="DRICARDNO" title="驾驶证号" type="string" columnType="VARCHAR2(18)"/>
+		<field name="PERDRITYPE" title="准驾车型" type="string" columnType="VARCHAR2(14)"/>
+		<field name="DRISTADATE" title="驾驶证初领时间" type="string" columnType="VARCHAR2(10)"/>
+		<field name="CREUSRCODE" title="创建者编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="CREDATE" title="创建日期" type="string" columnType="CHAR(10)"/>
+		<field name="CRETIME" title="创建时间" type="string" columnType="CHAR(8)"/>
+		<field name="EDIUSRCODE" title="修改者编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="EDIDATE" title="修改日期" type="string" columnType="CHAR(10)"/>
+		<field name="EDITIME" title="修改时间" type="string" columnType="CHAR(8)"/>
+		<field name="REMARKDOC" title="备注" type="string" columnType="VARCHAR2(500)"/>
+		<!--
+			SELECT T.CMPSNID,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='BRACOLOR' AND CODE=T6.BRACOLOR)||'  '||T6.BRAPREFIX||T6.BRANUM AS 车牌,
+			T7.CLITNAME AS 企业名称,T8.CLITNAME AS 委托管理单位,T3.DEPCODE,T.NAME AS 姓名,T.PHONE AS 驾驶员电话,
+			T.SEX,T.CARDNO,T2.TITNO, T2.BEWORID AS S_1BEWORID,T1.TAXDRISERCARSTATUS,T1.ISTAXMEMBER
+			FROM CMPSN T LEFT OUTER JOIN ENBEWOR T2 ON T2.CMPSNID=T.CMPSNID AND T2.ISEFFECT='0'
+			LEFT OUTER JOIN ENPSNDRIVER T3 ON T3.BEWORID=T2.BEWORID
+			LEFT OUTER JOIN TAXDRISERCARD T1 ON T1.TAXDRISERCADNO=T2.TITNO
+			LEFT OUTER JOIN BUSREACTC T4 ON T4.BUSREACTCID=T1.BUSREACTCID
+			LEFT OUTER JOIN CMVEC T6 ON T4.CMVECID=T6.CMVECID
+			LEFT OUTER JOIN CMCLT T7 ON T4.CMCLTID=T7.CMCLTID
+			LEFT OUTER JOIN CMCLT T8 ON T6.CSGUNIT =T8.CMCLTID
+			WHERE T2.LICSTATUS='0' AND T2.WORTYPE='0' AND T.TAXLESSON = '0' AND T.ISEFFECT='0' AND (T2.BEWORSCOPE IN('004','005','006','007') OR T2.APPIXSCOPE IN('004','005','006','007')) 
+			 AND INSTR('35010000,35010200,35010300,35010400,35010500,35011100,35012100,35012200,35012300,35012400,35012500,35012800,35019900,35018100,35018200',T3.DEPCODE)>0 
+			AND T1.TAXDRISERCARSTATUS='0'
+			ORDER BY T1.TAXDRISERCARSTATUS,T2.TITNO
+			
+			SELECT T.CMPSNID 人员ID,T6.CMVECID 车辆ID,T1.TAXDRISERCADID 服务监督卡ID,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='BRACOLOR' AND CODE=T6.BRACOLOR)
+			||'  '||T6.BRAPREFIX||T6.BRANUM AS 车牌号码,
+			T.NAME AS 姓名,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='SEX' AND CODE=T.SEX) 性别,
+			T3.PERDRITYPE 准驾车型,
+			T1.TAXDRISERCADNO 服务监督卡号, 
+			T2.ENDDATE 有效限期止
+			FROM CMPSN T 
+			LEFT OUTER JOIN ENBEWOR T2 ON T2.CMPSNID=T.CMPSNID
+			LEFT OUTER JOIN ENPSNDRIVER T3 ON T3.BEWORID=T2.BEWORID
+			LEFT OUTER JOIN TAXDRISERCARD T1 ON T1.TAXDRISERCADNO=T2.TITNO
+			LEFT OUTER JOIN BUSREACTC T4 ON T4.BUSREACTCID=T1.BUSREACTCID
+			LEFT OUTER JOIN CMVEC T6 ON T4.CMVECID=T6.CMVECID
+			WHERE T2.LICSTATUS='0' AND T2.WORTYPE='0' AND T.TAXLESSON = '0' 
+			AND INSTR('35010000,35010200,35010300,35010400,35010500,35011100,35012100,35012200,35012300,35012400,35012500,35012800,35013100,35018100,35018200',T3.DEPCODE)>0 
+			AND T1.TAXDRISERCARSTATUS='0' and T4.Buyreastatus=0
+		 -->
+		<parameter name="sqlFrom">ENPSNDRIVER T3</parameter>
+		<parameter name="sqlWhere">T2.LICSTATUS='0' AND T2.WORTYPE='0' AND T.TAXLESSON = '0' AND T.ISEFFECT='0' AND (T2.BEWORSCOPE IN('004','005','006','007') OR T2.APPIXSCOPE IN('004','005','006','007')) 
+			AND INSTR('35010000,35010200,35010300,35010400,35010500,35011100,35012100,35012200,35012300,35012400,35012500,35012800,35019900,35018100,35018200',T3.DEPCODE)>0 
+			AND T1.TAXDRISERCARSTATUS='0'</parameter>
+		<parameter name="sqlOrderBy">T1.TAXDRISERCARSTATUS,T2.TITNO</parameter>
+		<field name="T2" type="component" title="从业资格证">
+			<parameter name="class">ENBEWOR</parameter>
+			<parameter name="sqlJoin">LEFT OUTER JOIN ENBEWOR T2 ON T3.BEWORID=T2.BEWORID</parameter>
+		</field>
+		<field name="T" type="component" title="从业人员">
+			<parameter name="class">CMPSN</parameter>
+			<parameter name="sqlJoin">INNER JOIN CMPSN T ON T2.CMPSNID=T.CMPSNID</parameter>
+		</field>
+		<field name="T1" type="component" title="出租车驾驶员服务监督卡">
+			<parameter name="class">TAXDRISERCARD</parameter>
+			<parameter name="sqlJoin">LEFT OUTER JOIN TAXDRISERCARD T1 ON T1.TAXDRISERCADNO=T2.TITNO</parameter>
+		</field>
+		<field name="T4" type="component" title="出租车经营权证">
+			<parameter name="class">BUSREACTC</parameter>
+			<parameter name="sqlJoin">LEFT OUTER JOIN BUSREACTC T4 ON T4.BUSREACTCID=T1.BUSREACTCID</parameter>
+		</field>
+		<field name="T6" type="component" title="车辆基本信息">
+			<parameter name="class">CMVEC</parameter>
+			<parameter name="sqlJoin">LEFT OUTER JOIN CMVEC T6 ON T4.CMVECID=T6.CMVECID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="出租车业户" class="TAXCLT" businessServiceName="trafficSqlQueryService">
+		<field name="CMCLTID" title="业户ID" type="string" columnType="VARCHAR2(50)">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="ARCHISN" title="档案编号" type="string" columnType="VARCHAR2(50)" remark="archives serial number"/>			
+		<field name="AUHFILENO" title="批准文号" type="string" columnType="VARCHAR2(50)" remark="authorize file no"/>			
+		<field name="QUAGRADE" title="资质等级" type="string" columnType="VARCHAR2(8)" remark="quality grade"/>			
+		<field name="CALTYPE" title="核算形式" type="string" columnType="VARCHAR2(20)" remark="balance type" inputMode="none"/>
+		<field name="CALTYPE_TITLE" type="string" columnType="VARCHAR2(20)" title="核算形式">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='CALTYPE' AND CODE={ALIAS}.CALTYPE</parameter>
+		</field>		
+		<field name="AUHDATE" title="批准日期" type="string" columnType="CHAR(10)" remark="authorize date"/>			
+		<field name="BNBGNDATE" title="开业日期" type="string" columnType="CHAR(10)" remark="business begin date"/>			
+		<field name="FOREIGNPRI" title="外方经营者" type="string" columnType="VARCHAR2(20)" remark="foreign principal"/>			
+		<field name="NATIVEPRI" title="中方经营者" type="string" columnType="VARCHAR2(20)" remark="native principal"/>			
+		<field name="BNBANK" title="开户银行" type="string" columnType="VARCHAR2(50)" remark="business bank"/>			
+		<field name="ACCOUNT" title="银行账号" type="string" columnType="VARCHAR2(30)" remark=""/>			
+		<field name="CAPITALSUM" title="注册资金(万元)" type="string" columnType="VARCHAR2(10)" remark="capital sum"/>			
+		<field name="FORCAPITAL" title="外方注册资金" type="string" columnType="VARCHAR2(10)" remark="froeign capital"/>			
+		<field name="FXNOWCAPTL" title="固定资产净值" type="string" columnType="VARCHAR2(10)" remark="fixed now capital"/>			
+		<field name="FXBEGCAPTL" title="固定资产原值" type="string" columnType="VARCHAR2(10)" remark="fixed begin capital"/>			
+		<field name="FLOWCAPTL" title="流动资金" type="string" columnType="VARCHAR2(10)" remark="flow capital"/>			
+		<field name="RPTCHKDATE" title="质量信誉考核日期" type="string" columnType="CHAR(10)" remark="reputation check date"/>			
+		<field name="RPTCHKRSU" title="质量信誉考核结果" type="string" columnType="CHAR(1)" remark=""/>			
+		<field name="RPTCHKDESC" title="质量信誉考核说明" type="string" columnType="VARCHAR2(500)" remark=""/>			
+		<field name="EDIUSRCODE" title="编辑人员" type="string" columnType="VARCHAR2(50)" remark="编辑用户帐号，取登录用户i帐号 edit user code"/>			
+		<field name="EDIDATE" title="编辑日期" type="string" columnType="CHAR(10)" remark=""/>			
+		<field name="EDITIME" title="编辑时间" type="string" columnType="CHAR(10)" remark="编辑时间,取DBMS系统time"/>			
+		<field name="REMARKDOC" title="备注" type="string" columnType="VARCHAR2(500)" remark="remark document"/>			
+		<field name="PERCLT" title="是否个体业户" type="string" columnType="CHAR(1)" remark=""/>			
+		<!--field name="CLTSEX" title="业户性别" type="string" columnType="CHAR(1)" remark="1 代表男  2代表女"/-->
+		<field name="CLTSEX" title="业户性别" type="string" columnType="CHAR(1)" inputMode="radio">
+			<parameter name="itemsText">男|1\0女|2</parameter>
+		</field>			
+		<!--field name="ISJDC" title="是否接待车 1是 0否" type="string" columnType="VARCHAR2(2)" remark=""/-->
+		<field name="ISJDC" title="是否接待车" type="string" columnType="VARCHAR2(2)" inputMode="radio">
+			<parameter name="itemsText">否|0\0是|1</parameter>
+		</field>
+		<!-- 
+			SELECT (SELECT T1.DEPNAME FROM T_PF_DEP T1 WHERE T1.DEPCODE=T.DEPCODE AND UPPER(T1.PRDCODE)='FZRTMIS') AS 受理机构 , 
+			CLITNAME AS 业户名称, 
+			T.ADDRESS AS 联系地址,
+			PERWORD || PERNUM AS 许可证号,
+			(SELECT D.NAME FROM T_PF_DATADICT D WHERE D.DDFLD = 'ECOTYPE' AND D.CODE=ECOTYPE ) AS 经济类型,
+			PHONE AS 联系电话,
+			T.ADDRESS,T.MAICODING,T.JURPERSON,T.PHONE,T.FAXPHONE,T.MOBILE,T.EMIAL
+			FROM    CMCLT T 
+			WHERE   ISEFFECT='0' AND CLTBUSSTATUS='1' 
+			AND EXISTS (SELECT T.CMCLTID FROM TAXCLT T2 WHERE ); SQL不合理,已调整
+			
+			select distinct a.cmcltid 业户ID,
+			(SELECT DEPNAME FROM T_PF_DEP T WHERE T.DEPCODE=a.DEPCODE) 受理机构, 
+			a.clitname 业户名称,a.pernum 经营许可证号,a.address 地址, 
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='ECOTYPE' AND CODE=a.ecotype) 经济类型, 
+			a.phone 联系电话 
+			from cmclt a,taxclt b
+			where a.cmcltid=b.cmcltid and  a.cltbusstatus=1 and a.ISEFFECT=0 and a.depcode is not null
+		 -->	
+		<parameter name="sqlFrom">TAXCLT T2</parameter>
+		<parameter name="sqlWhere">ISEFFECT='0' AND CLTBUSSTATUS='1'</parameter>
+		<field name="T" type="component" title="业户基本信息">
+			<parameter name="class">CMCLT</parameter>
+			<parameter name="sqlJoin">LEFT OUTER JOIN CMCLT T ON T2.CMCLTID=T.CMCLTID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="客运场站" class="ENCLTPASSTA" businessServiceName="trafficSqlQueryService">
+		<field name="CMCLTID" type="string" columnType="VARCHAR2(50)" title="业户ID（对应CMCLT表ID）">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="ARCHISN" type="string" columnType="VARCHAR2(50)" title="档案编号"/>
+		<field name="PASSTAGRADE" type="string" columnType="VARCHAR2(8)" title="客运站级别" inputMode="none"/>
+		<field name="PASSTAGRADE_TITLE" type="string" columnType="VARCHAR2(8)" title="客运站级别">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='PASSTAGRADE' AND CODE={ALIAS}.PASSTAGRADE</parameter>
+		</field>
+		<field name="RPTCHKDATE" type="string" columnType="CHAR(10)" title="质量信誉考核日期"/>
+		<field name="RPTCHKRSU" type="string" columnType="CHAR(1)" title="质量信誉考核结果"/>
+		<field name="RPTCHKDESC" type="string" columnType="VARCHAR2(500)" title="质量信誉考核说明"/>
+		<field name="BUIDATE" type="string" columnType="CHAR(10)" title="建站日期"/>
+		<field name="CPLDATE" type="string" columnType="CHAR(10)" title="竣工日期"/>
+		<field name="CHKACPDATE" type="string" columnType="CHAR(10)" title="验收日期"/>
+		<field name="SERVICDATE" type="string" columnType="CHAR(10)" title="投入营运日期"/>
+		<field name="INVSTSCALE" type="number" columnType="NUMBER(9,2)" title="投资规模"/>
+		<field name="CONFIRMNO" type="string" columnType="VARCHAR2(30)" title="批准文号"/>
+		<field name="OCUAREA" type="number" columnType="NUMBER(9,2)" title="占地面积"/>
+		<field name="BUILDAREA" type="number" columnType="NUMBER(9,2)" title="建筑面积"/>
+		<field name="DAYCAPACITY" type="number" columnType="NUMBER(7)" title="设计年度平均日旅客"/>
+		<field name="DESIGNNUM" type="number" columnType="NUMBER(6)" title="设计班次"/>
+		<field name="YEARCAPACITY" type="number" columnType="NUMBER(6)" title="设计年度旅客发送量"/>
+		<field name="SERTYPE" type="string" columnType="VARCHAR2(10)" title="车站服务方式" inputMode="none"/>
+		<field name="SERTYPE_TITLE" type="string" columnType="VARCHAR2(10)" title="车站服务方式">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='SERTYPE' AND CODE={ALIAS}.SERTYPE</parameter>
+		</field>
+		<field name="STASCALE" type="string" columnType="VARCHAR2(8)" title="车站规模" inputMode="none"/>
+		<field name="STASCALE_TITLE" type="string" columnType="VARCHAR2(8)" title="车站规模">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='STASCALE' AND CODE={ALIAS}.STASCALE</parameter>
+		</field>
+		<field name="STACHARACT" type="string" columnType="VARCHAR2(200)" title="车站位置和特点"/>
+		<field name="SUPERVISER" type="number" columnType="NUMBER(6)" title="管理人员"/>
+		<field name="STAJOBER" type="number" columnType="NUMBER(6)" title="站务人员"/>
+		<field name="OTHERPSNS" type="number" columnType="NUMBER(6)" title="其他人员"/>
+		<field name="REMARKDOC" type="string" columnType="VARCHAR2(500)" title="备注"/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title="编辑人员"/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title="编辑日期"/>
+		<field name="EDITIME" type="string" columnType="CHAR(10)" title="编辑时间"/>
+		<field name="AUDITDATE" type="string" columnType="CHAR(10)" title="审核日期"/>
+		<field name="SQUAREAREA" type="number" columnType="NUMBER(9,2)" title="站前广场面积"/>
+		<field name="PARKAREA" type="number" columnType="NUMBER(9,2)" title="停车场面积"/>
+		<field name="PARKAREA1" type="number" columnType="NUMBER(9,2)" title="发车位面积"/>
+		<field name="PARKNUM" type="number" columnType="NUMBER(9)" title="发车位数"/>
+		<field name="OFFICESPACE" type="number" columnType="NUMBER(9,2)" title="候车厅面积"/>
+		<field name="SEATS" type="number" columnType="NUMBER(9)" title="座位数"/>
+		<field name="OFFICEAREA" type="number" columnType="NUMBER(9,2)" title="办公用房面积"/>
+		<field name="ROOMAREA" type="number" columnType="NUMBER(9,2)" title="站务员室面积"/>
+		<field name="DANGDETE" type="number" columnType="NUMBER(6)" title="危险品检测仪"/>
+		<!--
+			SELECT 	CLITNAME AS 业户名称,
+			(SELECT T1.DEPNAME FROM T_PF_DEP T1 WHERE T1.DEPCODE=T.DEPCODE AND UPPER(T1.PRDCODE)='FZRTMIS') AS 受理机构,
+			T.PERWORD||T.PERNUM AS PERNUM,
+			T.ADDRESS,BNSCOPE AS 经营范围,
+			PHONE AS 联系电话,T.ADDRESS,T.MAICODING,T.JURPERSON,T.PHONE,T.FAXPHONE,T.MOBILE,T.EMIAL
+			FROM 		CMCLT T WHERE ISEFFECT='0' 
+			AND CLTBUSSTATUS='1' AND (INSTR(T.BNSCOPE,'06100')>0) 
+			AND EXISTS (SELECT T.CMCLTID FROM ENCLTPASSTA T2 
+			WHERE 	T2.CMCLTID=T.CMCLTID)
+
+			select V.CMCLTID 业户ID,
+			(SELECT DEPNAME FROM T_PF_DEP T WHERE T.DEPCODE=V.DEPCODE) 受理机构,
+			V.CLITNAME 业户名称,
+			V.ADDRESS  	地址, 
+			V.PHONE	联系电话, 
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='PASSTAGRADE' AND CODE=V2.PASSTAGRADE) 客运站级别,
+			V.PERNUM 许可证号
+			FROM CMCLT V,ENCLTPASSTA V2
+			WHERE V.CMCLTID=V2.CMCLTID AND V.ISEFFECT=0
+		 -->
+		<parameter name="sqlFrom">ENCLTPASSTA T2</parameter>
+		<parameter name="sqlWhere">ISEFFECT='0' AND CLTBUSSTATUS='1' AND (INSTR(T.BNSCOPE,'06100')>0) </parameter>
+		<field name="T" type="component" title="业户基本信息">
+			<parameter name="class">CMCLT</parameter>
+			<parameter name="sqlJoin">LEFT OUTER JOIN CMCLT T ON T2.CMCLTID=T.CMCLTID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="驾校" class="ENCLTDRVSCH" businessServiceName="trafficSqlQueryService">
+		<field name="CMCLTID" type="string" columnType="VARCHAR2(50) not null" title="引用表《CMCLT》ID">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="ARCHISN" type="string" columnType="VARCHAR2(50)" title="档案编号"/>
+		<field name="DRVSCHSORT" type="string" columnType="VARCHAR2(4)" title="驾校类别"/>
+		<field name="RPTCHKDATE" type="string" columnType="CHAR(10)" title="质量信誉考核日期"/>
+		<field name="RPTCHKRSU" type="string" columnType="CHAR(1)" title="质量信誉考核结果"/>
+		<field name="RPTCHKDESC" type="string" columnType="VARCHAR2(500)" title="质量信誉考核说明"/>
+		<field name="AUHDATE" type="string" columnType="CHAR(10)" title="批准日期"/>
+		<field name="AUHFILENO" type="string" columnType="VARCHAR2(50)" title="批准文号"/>
+		<field name="BNBGNDATE" type="string" columnType="CHAR(10)" title="开业日期"/>
+		<field name="OCPYAREA" type="number" columnType="NUMBER(9,2)" title="总占地面积"/>
+		<field name="CLRMAREA" type="number" columnType="NUMBER(9,2)" title="教室面积"/>
+		<field name="COCHAREA" type="number" columnType="NUMBER(9,2)" title="教练场地面积"/>
+		<field name="DORMAREA" type="number" columnType="NUMBER(9,2)" title="宿舍面积"/>
+		<field name="MESSAREA" type="number" columnType="NUMBER(9,2)" title="食堂面积"/>
+		<field name="OTRAREA" type="number" columnType="NUMBER(9,2)" title="其它面积"/>
+		<field name="BNBANK" type="string" columnType="VARCHAR2(50)" title="开户银行"/>
+		<field name="ACCOUNT" type="string" columnType="VARCHAR2(30)" title="银行账号"/>
+		<field name="CAPITALSUM" type="number" columnType="NUMBER(6)" title="注册资金(万元)"/>
+		<field name="FXCAPTLSUM" type="number" columnType="NUMBER(6)" title="固定资金(万元)"/>
+		<field name="FWCAPTLSUM" type="number" columnType="NUMBER(6)" title="流动资金(万元)"/>
+		<field name="YRINCOMSUM" type="number" columnType="NUMBER(6)" title="年总收入(万元)"/>
+		<field name="YRADMFSUM" type="number" columnType="NUMBER(6)" title="年管理费(万元)"/>
+		<field name="CALTYPE" type="string" columnType="VARCHAR2(20)" title="核算形式" inputMode="none"/>
+		<field name="CALTYPE_TITLE" type="string" columnType="VARCHAR2(20)" title="核算形式">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='CALTYPE' AND CODE={ALIAS}.CALTYPE</parameter>
+		</field>
+		<field name="THYCOASUM" type="number" columnType="NUMBER(6)" title="理论教员数"/>
+		<field name="DRVOPCOAS" type="number" columnType="NUMBER(6)" title="驾驶操作教员数"/>
+		<field name="ADMPSNSUM" type="number" columnType="NUMBER(6)" title="管理人员数"/>
+		<field name="OTRPSNSUM" type="number" columnType="NUMBER(6)" title="其他人员"/>
+		<field name="BIGPASCARS" type="number" columnType="NUMBER(6)" title="大型客车总数"/>
+		<field name="MIDPASCARS" type="number" columnType="NUMBER(6)" title="中型客车总数"/>
+		<field name="SMLPASCARS" type="number" columnType="NUMBER(6)" title="小型客车总数"/>
+		<field name="BIGFRETRUKS" type="number" columnType="NUMBER(6)" title="大型货车总数"/>
+		<field name="MIDFRETRUKS" type="number" columnType="NUMBER(6)" title="中型货车总数"/>
+		<field name="SMLFRETRUKS" type="number" columnType="NUMBER(6)" title="小型货车总数"/>
+		<field name="TRACTORS" type="number" columnType="NUMBER(6)" title="牵引车总数"/>
+		<field name="TRAILERS" type="number" columnType="NUMBER(6)" title="挂车总数"/>
+		<field name="SMLAUTOCARS" type="number" columnType="NUMBER(6)" title="小型自动档汽车"/>
+		<field name="MOTORSUM" type="number" columnType="NUMBER(6)" title="摩托车"/>
+		<field name="OTRVECSUM" type="number" columnType="NUMBER(6)" title="其他车型"/>
+		<field name="REMARKDOC" type="string" columnType="VARCHAR2(500)" title="备注"/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title="编辑人员"/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title="编辑日期"/>
+		<field name="EDITIME" type="string" columnType="CHAR(10)" title="编辑时间"/>
+		<field name="MLMANUALCARS" type="number" columnType="NUMBER(6)" title="小型手动档汽车"/>
+		<field name="SMLMANUALCARS" type="number" columnType="NUMBER(6)" title="小型手动档汽车"/>
+		<!--
+			SELECT 	CLITNAME AS 业户名称,
+			(SELECT T1.DEPNAME FROM T_PF_DEP T1 WHERE T1.DEPCODE=T.DEPCODE AND UPPER(T1.PRDCODE)='FZRTMIS') AS 受理机构, 
+			T.ADDRESS AS 地址,BNSCOPE AS 经营范围,PHONE AS 联系电话, T.ADDRESS,T.MAICODING,T.JURPERSON,T.PHONE,T.FAXPHONE,T.MOBILE,T.EMIAL
+			FROM 		CMCLT T WHERE ISEFFECT='0' 
+			AND CLTBUSSTATUS='1' AND EXISTS (SELECT T.CMCLTID FROM ENCLTDRVSCH T2  WHERE 	T2.CMCLTID=T.CMCLTID) 
+		
+			select distinct v.cmcltid 业户ID,
+			(SELECT DEPNAME FROM T_PF_DEP T WHERE T.DEPCODE=V.DEPCODE) 受理机构,
+			V.CLITNAME 业户名称,
+			BNSCOPE 经营范围,
+			address 地址,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='ECOTYPE' AND CODE=V.ECOTYPE) 经济类型,
+			phone 联系电话,
+			V.PERNUM 许可证号
+			FROM cmclt V,ENCLTDRVSCH V2
+			WHERE V.CMCLTID=V2.CMCLTID
+		 -->
+		<parameter name="sqlFrom">ENCLTDRVSCH T2</parameter>
+		<parameter name="sqlWhere">ISEFFECT='0' AND CLTBUSSTATUS='1'</parameter>
+		<field name="T" type="component" title="业户基本信息">
+			<parameter name="class">CMCLT</parameter>
+			<parameter name="sqlJoin">LEFT OUTER JOIN CMCLT T ON T2.CMCLTID=T.CMCLTID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="教练车" class="ENVECCOACH" businessServiceName="trafficSqlQueryService">
+		<field name="CMVECID" type="string" columnType="VARCHAR2(50) not null" title="ID">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="COAVECTYPE" type="string" columnType="VARCHAR2(10)" title=""/>
+		<field name="CHETON" type="number" columnType="NUMBER(5,1)" title=""/>
+		<field name="CHESEATS" type="number" columnType="NUMBER(6)" title=""/>
+		<field name="CHECHEST" type="number" columnType="NUMBER(6)" title=""/>
+		<field name="POTBASE" type="number" columnType="NUMBER(5,1)" title=""/>
+		<field name="COAVECCARNO" type="string" columnType="VARCHAR2(20)" title="教练车标识牌号"/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title=""/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title=""/>
+		<field name="EDITIME" type="string" columnType="CHAR(8)" title=""/>
+		<field name="VICEBRAKE" type="string" columnType="VARCHAR2(10)" title=""/>
+		<field name="TRIANGLE" type="string" columnType="VARCHAR2(10)" title=""/>
+		<!--
+			SELECT 	T1.CLITNAME AS 驾校名称,T2.BRAPREFIX || T2.BRANUM AS 车牌号, T2.FACTYPE || T2.MODEL AS 厂牌,T2.SETDATE AS 出厂日期,
+			(SELECT T1.DEPNAME FROM T_PF_DEP T1 WHERE T1.DEPCODE=T2.DEPCODE AND UPPER(T1.PRDCODE)='FZRTMIS') AS 受理机构,T2.TRAWORD||T2.TRANO,T2.VINNEXTDATE,T2.VECBUSSTATUS,T2.CHETONORSEATS
+			FROM 	CMVEC T2 
+			LEFT OUTER JOIN CMCLT T1 ON T2.CMCLTID =T1.CMCLTID 
+			LEFT OUTER JOIN COUCANCODE T4 ON T1.DEPCODE=T4.CANCODE 
+			WHERE T2.ISEFFECT='0'  AND EXISTS (SELECT CMVECID FROM ENVECCOACH T3 WHERE T3.CMVECID=T2.CMVECID)
+			
+			SELECT DISTINCT V.CMVECID 车辆ID,V.CMCLTID 业户ID,
+			(SELECT DEPNAME FROM T_PF_DEP T WHERE T.DEPCODE=V.DEPCODE) 管辖机构,
+			CLITNAME 业户名称,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='BRACOLOR' AND CODE=V.BRACOLOR)||V.BRAPREFIX||V.BRANUM 车牌号码,
+			V3.COAVECCARNO 教练车标识牌号,
+			FACTYPE||MODEL 厂牌型号,
+			PRODATE 出厂日期,
+			CHETODATE 本次年审日期,VINNEXTDATE 下次二级维护日期,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='TECGRD' AND CODE=V.TECGRD) 车辆技术等级
+			FROM CMVEC V,CMCLT V2,ENVECCOACH V3
+			WHERE V.CMCLTID=V2.CMCLTID AND V.CMVECID=V3.CMVECID
+			AND (V.VECBUSSTATUS='10' or V.VECBUSSTATUS='21') AND  V.iseffect=0
+		 -->
+		<parameter name="sqlFrom">ENVECCOACH T3</parameter>
+		<parameter name="sqlWhere">T2.ISEFFECT='0'</parameter>
+		<field name="T2" type="component" title="车辆基本信息">
+			<parameter name="class">CMVEC</parameter>
+			<parameter name="sqlJoin">INNER JOIN CMVEC T2 ON T3.CMVECID=T2.CMVECID</parameter>
+		</field>
+		<field name="T1" type="component" title="业户基本信息">
+			<parameter name="class">CMCLT</parameter>
+			<parameter name="sqlJoin">LEFT OUTER JOIN CMCLT T1 ON T2.CMCLTID=T1.CMCLTID</parameter>
+		</field>
+		<field name="T4" type="component" title="车籍地">
+			<parameter name="class">COUCANCODE</parameter>
+			<parameter name="sqlJoin">LEFT OUTER JOIN COUCANCODE T4 ON T1.DEPCODE=T4.CANCODE</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="教练员" class="ENPSNCOACH" businessServiceName="trafficSqlQueryService">
+		<field name="BEWORID" type="string" columnType="VARCHAR2(50)" title="从业资格证编号">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="TEATYPE" type="string" columnType="VARCHAR2(8)" title="准教类别" inputMode="none"/>
+		<field name="TEATYPE_TITLE" type="string" title="准教类别">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='TEATYPE' AND CODE={ALIAS}.TEATYPE</parameter>
+		</field>
+		<field name="PERCOAVECTYPE" type="string" columnType="VARCHAR2(14)" title="准教车型" inputMode="none"/>
+		<field name="PERCOAVECTYPE_TITLE" type="string" columnType="VARCHAR2(14)" title="准教车型">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='PERCOAVECTYPE' AND CODE={ALIAS}.PERCOAVECTYPE</parameter>
+		</field>
+		<field name="BEWORFRIDATE" type="string" columnType="CHAR(10)" title="从业资格证初领时间"/>
+		<field name="GRADATE" type="string" columnType="CHAR(10)" title="从业资格证发放时间"/>
+		<field name="ENDDATE" type="string" columnType="CHAR(10)" title="证件有效期至"/>
+		<field name="DRICARDNO" type="string" columnType="VARCHAR2(18)" title="驾驶证号"/>
+		<field name="PERDRITYPE" type="string" columnType="VARCHAR2(14)" title="准驾车型"/>
+		<field name="DRISTADATE" type="string" columnType="VARCHAR2(10)" title="驾驶证初领时间"/>
+		<field name="CREUSRCODE" type="string" columnType="VARCHAR2(50)" title="创建者编号"/>
+		<field name="CREDATE" type="string" columnType="CHAR(10)" title="创建日期"/>
+		<field name="CRETIME" type="string" columnType="CHAR(8)" title="创建时间"/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title="修改者编号"/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title="修改日期"/>
+		<field name="EDITIME" type="string" columnType="CHAR(8)" title="修改时间"/>
+		<field name="REMARKDOC" type="string" columnType="VARCHAR2(500)" title="备注"/>
+		<field name="ENPSNCOACHNO" type="string" columnType="CHAR(10)" title="教练证号"/>
+		<field name="ORG" type="string" columnType="CHAR(10)" title="教练证发证机关"/>
+		<field name="COACHENDDATE" type="string" columnType="CHAR(10)" title="教练证有效期止"/>
+		<field name="YEAR" type="string" columnType="CHAR(10)" title="教练证发放年度"/>
+		<field name="ENTERDATE" type="string" columnType="CHAR(10)" title="入校日期"/>
+		<!-- 
+			SELECT 	T4.CLITNAME AS 服务单位,T1.NAME AS 姓名,T1.SEX AS 性别,T1.BIRTHDAY AS 出生日期, T3.TEATYPE AS 准教类别,T3.PERCOAVECTYPE AS 准教车型,T3.ENPSNCOACHNO AS 准教证号 ,T2.TITNO,T1.CARDNO,T1.NATION,T1.NATPLACE,T1.PHONE,T2.BEWORSCOPE,T4.CLITNAME
+			FROM  CMPSN T1
+			INNER JOIN ENBEWOR T2 ON T1.CMPSNID=T2.CMPSNID AND T2.ISEFFECT='0' 
+			INNER JOIN ENPSNCOACH T3 ON T2.BEWORID=T3.BEWORID 
+			LEFT OUTER JOIN CMCLT T4 ON T1.CMCLTID=T4.CMCLTID 
+			WHERE T1.ISEFFECT=0  OR T4.DEPCODE IS NULL
+			
+			SELECT V.CMPSNID 人员ID,
+			(select clitname from cmclt c where v.cmcltid=c.cmcltid) 驾校名称,
+			V.NAME 	姓名,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='SEX' AND CODE=V.SEX) 性别,
+			substr(V.BIRTHDAY,1,4) 出生年份,
+			V.CARDNO 身份证号码,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='BEWORSCOPE' AND CODE=V2.BEWORSCOPE) 从业资格范围,
+			V3.ENPSNCOACHNO 教练证号,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='TEATYPE' AND CODE=V3.TEATYPE) 准教类别,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='PERCOAVECTYPE' AND CODE=V3.PERCOAVECTYPE)  准教车型,
+			V3.YEAR 教练证发放年度,
+			V3.ENTERDATE 入校日期,
+			(select clitname from cmclt where cmcltid=v.cmcltid) 服务单位名称
+			FROM CMPSN V,ENBEWOR V2,ENPSNCOACH V3
+			WHERE V.CMPSNID=V2.CMPSNID AND V2.BEWORID=V3.BEWORID
+		 -->
+		<parameter name="sqlFrom">ENPSNCOACH T3</parameter>
+		<parameter name="sqlWhere">T1.ISEFFECT=0  OR T4.DEPCODE IS NULL</parameter>
+		<field name="T2" type="component" title="从业资格证">
+			<parameter name="class">ENBEWOR</parameter>
+			<parameter name="sqlJoin">INNER JOIN ENBEWOR T2 ON T2.BEWORID=T3.BEWORID</parameter>
+		</field>
+		<field name="T1" type="component" title="从业人员">
+			<parameter name="class">CMPSN</parameter>
+			<parameter name="sqlJoin">INNER JOIN CMPSN T1 ON T1.CMPSNID=T2.CMPSNID AND T2.ISEFFECT='0'</parameter>
+		</field>
+		<field name="T4" type="component" title="驾校">
+			<parameter name="class">CMCLT</parameter>
+			<parameter name="sqlJoin">LEFT OUTER JOIN CMCLT T4 ON T1.CMCLTID=T4.CMCLTID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="维修业户" class="ENCLTMTN" businessServiceName="trafficSqlQueryService">
+		<field name="CMCLTID" type="string" columnType="VARCHAR2(50)" title="业户ID（对应CMCLT表ID）">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="ARCHISN" type="string" columnType="VARCHAR2(50)" title="档案编号"/>
+		<field name="MINSORT" type="string" columnType="VARCHAR2(4)" title="维修类别" inputMode="none"/>
+		<field name="MINSORT_TITLE" type="string" title="维修类别">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='MINSORT' AND CODE={ALIAS}.MINSORT</parameter>
+		</field>
+		<field name="SIGN" type="string" columnType="VARCHAR2(10)" title="机动车维修标志牌号"/>
+		<field name="ISONO" type="string" columnType="VARCHAR2(50)" title="质量体系认证号"/>
+		<field name="MATAOBJ" type="string" columnType="VARCHAR2(20)" title="维修对象"/>
+		<field name="BNBGNDATE" type="string" columnType="CHAR(10)" title="开业日期"/>
+		<field name="AUHFILENO" type="string" columnType="VARCHAR2(50)" title="批准文号"/>
+		<field name="AUHDATE" type="string" columnType="CHAR(10)" title="批准日期"/>
+		<field name="CALTYPE" type="string" columnType="VARCHAR2(20)" title="核算形式" inputMode="none"/>
+		<field name="CALTYPE_TITLE" type="string" columnType="VARCHAR2(20)" title="核算形式">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='CALTYPE' AND CODE={ALIAS}.CALTYPE</parameter>
+		</field>
+		<field name="FXCAPTLSUM" type="string" columnType="VARCHAR2(10)" title="固定资产(万元)"/>
+		<field name="BNBANK" type="string" columnType="VARCHAR2(50)" title="开户银行"/>
+		<field name="ACCOUNT" type="string" columnType="VARCHAR2(30)" title="银行账号"/>
+		<field name="CAPITALSUM" type="string" columnType="VARCHAR2(10)" title="注册资金(万元)"/>
+		<field name="FXNOWCAPTL" type="string" columnType="VARCHAR2(10)" title="固定资产净值"/>
+		<field name="FXBEGCAPTL" type="string" columnType="VARCHAR2(10)" title="固定资产原值"/>
+		<field name="FLOWCAPTL" type="string" columnType="VARCHAR2(10)" title="流动资金"/>
+		<field name="RPTCHKDATE" type="string" columnType="CHAR(10)" title="质量信誉考核日期"/>
+		<field name="RPTCHKRSU" type="string" columnType="CHAR(1)" title="质量信誉考核结果"/>
+		<field name="RPTCHKDESC" type="string" columnType="VARCHAR2(500)" title="质量信誉考核说明"/>
+		<field name="MANAGER" type="number" columnType="NUMBER(6)" title="管理人员"/>
+		<field name="TECHNIC" type="number" columnType="NUMBER(6)" title="技术负责人员"/>
+		<field name="MINTECPSN" type="number" columnType="NUMBER(6)" title="维修技术人员"/>
+		<field name="IDENTIFIER" type="number" columnType="NUMBER(6)" title="质量检验人员"/>
+		<field name="CHIEFIDENTIFIER" type="number" columnType="NUMBER(6)" title="总质量检验人员"/>
+		<field name="BALANCE" type="number" columnType="NUMBER(6)" title="价格结算人员"/>
+		<field name="ELSEONE" type="number" columnType="NUMBER(6)" title="其他人员"/>
+		<field name="REMARKDOC" type="string" columnType="VARCHAR2(500)" title="备注"/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title="编辑人员"/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title="编辑日期"/>
+		<field name="EDITIME" type="string" columnType="CHAR(10)" title="编辑时间"/>
+		<!-- 
+			SELECT 	CLITNAME AS 业户名称,(SELECT T1.DEPNAME FROM T_PF_DEP T1 WHERE T1.DEPCODE=T.DEPCODE AND UPPER(T1.PRDCODE)='FZRTMIS') AS 受理机构,
+			T3.MINSORT AS 维修类别, 
+			TPD.NAME AS 经营范围 ,PHONE,T.ADDRESS,T.MAICODING,T.JURPERSON,T.PHONE,T.FAXPHONE,T.MOBILE,T.EMIAL
+			FROM CMCLT T 
+			LEFT JOIN ENCLTMTN T3 ON T3.CMCLTID = T.CMCLTID
+			JOIN T_PF_DATADICT TPD ON TPD.DDFLD = 'BNSCOPE' AND TPD.CODE = T.BNSCOPE
+			WHERE ISEFFECT='0' AND CLTBUSSTATUS='1' 
+			AND EXISTS (SELECT T.CMCLTID FROM ENCLTMTN T2 WHERE T2.CMCLTID=T.CMCLTID)
+			
+			select distinct v.cmcltid 业户ID,
+			(SELECT DEPNAME FROM T_PF_DEP T WHERE T.DEPCODE=V.DEPCODE) 受理机构,
+			V.CLITNAME 业户名称,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='MINSORT' AND CODE=V2.MINSORT) 维修类别,
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(BNSCOPE,'04000','机动车维修'),'04100','一类汽车维修'),'04101','大中型客车维修'),'04102','大中型货车维修'),
+			'04103','小型车辆维修'),'04104','危险货物运输车辆维修'),'04200','二类汽车维修'),'04201','大中型客车维修'),
+			'04202','大中型货车维修'),'04203','小型车辆维修'),'04300','三类汽车维修'),'04301','发动机维修'),
+			'04302','车身维修'),'04303','电气系统维修'),'04304','自动变速器维修'),
+			'04305','车身清洁维护'),'04306','涂漆'),'04307','轮胎动平衡及修补'),
+			'04308','四轮定位检测调整'),'04309','供油系统维护及油品更换'),'04310','喷油泵和喷油觜维修'),
+			'04311','曲轴修磨'),'04312','气缸镗磨'),'04313','散热器（水箱）修理'),'04314','空调维修'),
+			'04315','车辆装潢（蓬布、坐垫及内饰）'),'04316','车辆玻璃安装'),
+			'04400','一类摩托车维修'),'04401','总成大修'),'04402','维护'),
+			'04403','小修'),'04500','二类摩托车维修'),'04501','维护'),
+			'04502','小修'),'04600','其它机动车维修'),'04601','其它机动车维修'),
+			'05000','机动车驾驶员培训'),'05100','普通机动车驾驶员培训'),'05111','A1'),'05112','A2'),
+			'05113','A3'),'05121','B1'),'05122','B2'),'05131','C1'),'05132','C2'),'05133','C3'),'05134','C4'),
+			'05140','D'),'05150','E'),'05160','F'),'05170','M'),'05200','道路运输驾驶员从业资格培训'),
+			'05201','道路运输驾驶员从业资格培训（客运）'),'05202','道路运输驾驶员从业资格培训（货运）'),
+			'05203','道路运输驾驶员从业资格培训（危险货运）'),'05204','道路运输驾驶员从业资格培训（其他）'),
+			'05300','机动车驾驶员培训教练场'),'05301','机动车驾驶员培训教练场'))
+			经营范围, 
+			address 地址,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='ECOTYPE' AND CODE=V.ECOTYPE) 经济类型,
+			phone 联系电话,
+			V.PERNUM 许可证号
+			FROM cmclt V,ENCLTMTN V2
+			WHERE V.CMCLTID=V2.CMCLTID
+		 -->
+		<parameter name="sqlFrom">ENCLTMTN T3</parameter>
+		<parameter name="sqlWhere">ISEFFECT='0' AND CLTBUSSTATUS='1'</parameter>
+		<field name="T" type="component" title="业户基本信息">
+			<parameter name="class">CMCLT</parameter>
+			<parameter name="sqlJoin">INNER JOIN CMCLT T ON T3.CMCLTID=T.CMCLTID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="客运业户" class="ENCLTPAS" businessServiceName="trafficSqlQueryService">
+		<field name="CMCLTID" type="string" columnType="VARCHAR2(50)" title="客运业户ID（对应CMCLT表ID）">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="ARCHISN" type="string" columnType="VARCHAR2(50)" title="档案编号"/>
+		<field name="RPTCHKDATE" type="string" columnType="CHAR(10)" title="质量信誉考核日期"/>
+		<field name="RPTCHKRSU" type="string" columnType="CHAR(1)" title="质量信誉考核结果"/>
+		<field name="RPTCHKDESC" type="string" columnType="VARCHAR2(500)" title="质量信誉考核说明"/>
+		<field name="QUAGRADE" type="string" columnType="VARCHAR2(8)" title="资质等级"/>
+		<field name="CALTYPE" type="string" columnType="VARCHAR2(20)" title="核算形式" inputMode="none"/>
+		<field name="CALTYPE_TITLE" type="string" columnType="VARCHAR2(20)" title="核算形式">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='CALTYPE' AND CODE={ALIAS}.CALTYPE</parameter>
+		</field>
+		<field name="AUHDATE" type="string" columnType="CHAR(10)" title="批准日期"/>
+		<field name="AUHFILENO" type="string" columnType="VARCHAR2(50)" title="批准文号"/>
+		<field name="BNBGNDATE" type="string" columnType="CHAR(10)" title="开业日期"/>
+		<field name="FOREIGNPRI" type="string" columnType="VARCHAR2(20)" title="外方经营者"/>
+		<field name="NATIVEPRI" type="string" columnType="VARCHAR2(20)" title="中方经营者"/>
+		<field name="BNBANK" type="string" columnType="VARCHAR2(50)" title="开户银行"/>
+		<field name="ACCOUNT" type="string" columnType="VARCHAR2(30)" title="银行账号"/>
+		<field name="CAPITALSUM" type="string" columnType="VARCHAR2(10)" title="注册资金(万元)"/>
+		<field name="FORCAPITAL" type="string" columnType="VARCHAR2(10)" title="外方注册资金"/>
+		<field name="FXNOWCAPTL" type="string" columnType="VARCHAR2(10)" title="固定资产净值"/>
+		<field name="FXBEGCAPTL" type="string" columnType="VARCHAR2(10)" title="固定资产原值"/>
+		<field name="FLOWCAPTL" type="string" columnType="VARCHAR2(10)" title="流动资金"/>
+		<field name="REMARKDOC" type="string" columnType="VARCHAR2(500)" title="备注"/>
+		<field name="STAFFSUM" type="number" columnType="NUMBER(6)" title="职工总数"/>
+		<field name="JOBERSUM" type="number" columnType="NUMBER(6)" title="从业人员数"/>
+		<field name="SPERSUM" type="number" columnType="NUMBER(6)" title="管理人员数"/>
+		<field name="DRIVERSUM" type="number" columnType="NUMBER(6)" title="驾驶员数"/>
+		<field name="SERPSNSUM" type="number" columnType="NUMBER(6)" title="乘务员数"/>
+		<field name="OTRPSNSUM" type="number" columnType="NUMBER(6)" title="其他人员"/>
+		<field name="PASVECSUM" type="number" columnType="NUMBER(6)" title="客车总数"/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title="编辑人员"/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title="编辑日期"/>
+		<field name="EDITIME" type="string" columnType="CHAR(10)" title="编辑时间"/>
+		<!-- 
+			SELECT 	CLITNAME AS 业户名称,(SELECT T1.DEPNAME FROM T_PF_DEP T1 WHERE T1.DEPCODE=T.DEPCODE AND UPPER(T1.PRDCODE)='FZRTMIS') AS 受理机构, 
+			T.ADDRESS AS 地址,PHONE AS 联系电话,BNSCOPE AS 经营范围,T.ADDRESS,T.MAICODING,T.JURPERSON,T.PHONE,T.FAXPHONE,T.MOBILE,T.EMIAL
+			FROM CMCLT T 
+			WHERE ISEFFECT='0' 
+			AND CLTBUSSTATUS='1' AND EXISTS (SELECT T.CMCLTID FROM ENCLTPAS T2 WHERE T2.CMCLTID=T.CMCLTID)
+			
+			
+			select distinct a.cmcltid 业户ID,
+			(SELECT DEPNAME FROM T_PF_DEP T WHERE T.DEPCODE=a.DEPCODE) 受理机构, 
+			a.clitname 业户名称,
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(a.bnscope,'01000','道路旅客运输'),'01100','班车客运'),'01101','县内班车客运'),
+			'01102','县际班车客运'),'01103','市际班车客运'),'01104','省际班车客运'),'01200','包车客运'),
+			'01201','县内包车客运'),'01202','县际包车客运'),'01203','市际包车客运'),'01204','省际包车客运'),
+			'01300','旅游包车客运'),'01301','县内（旅游）包车客运'),'01302','县际（旅游）包车客运'),
+			'01303','市际（旅游）包车客运'),'01304','省际（旅游）包车客运'),'01400','闽港（澳）直通客运'),
+			'01500','国际运输'),'01501','国际定期班车客运'),'01502','国际不定期班车客运'),'02000','道路普通货物运输'),
+			'02100','普通货物运输'),'02101','普通货运'),'02102','搬家运输'),'02200','货物专用运输'),
+			'02201','货物专用运输（集装箱）'),'02202','货物专用运输（冷藏保鲜设备）'),'02203','货物专用运输（罐式容器）'),
+			'02300','大型物件运输'),'02301','大型物件运输（一类）'),'02302','大型物件运输（二类）'),
+			'02303','大型物件运输（三类）'),'02304','大型物件运输（四类）'),'02400','闽港(澳)直通货运'),'02500','国际货物运输'),
+			'03000','道路危险货物运输'),'03100','经营性道路危险货物运输'),'03111','危险货物运输（1类1项）'),
+			'03112','危险货物运输（1类2项）'),'03113','危险货物运输（1类3项）'),'03114','危险货物运输（1类4项）'),
+			'03115','危险货物运输（1类5项）'),'03116','危险货物运输（1类6项）'),'03121','危险货物运输（2类1项）'),
+			'03122','危险货物运输（2类2项）'),'03123','危险货物运输（2类3项）'),'03131','危险货物运输（3类）'),
+			'03141','危险货物运输（4类1项）'),'03142','危险货物运输（4类2项）'),'03143','危险货物运输（4类3项）'),
+			'03151','危险货物运输（5类1项）'),'03152','危险货物运输（5类2项）'),'03161','危险货物运输（6类1项）'),
+			'03162','危险货物运输（6类2项）'),'03170','危险货物运输（7类）'),'03181','危险货物运输（8类）'),'03191',
+			'危险货物运输（9类）'),'03200','非经营性道路危险货物运输'),'03211','危险货物运输（1类1项）'),
+			'03212','危险货物运输（1类2项）'),'03213','危险货物运输（1类3项）'),'03214','危险货物运输（1类4项）'),
+			'03215','危险货物运输（1类5项）'),'03216','危险货物运输（1类6项）'),'03221','危险货物运输（2类1项）'),
+			'03222','危险货物运输（2类2项）'),'03223','危险货物运输（2类3项）'),'03231','危险货物运输（3类）'),'03241','危险货物运输（4类1项）'),'03242','危险货物运输（4类2项）'),'03243','危险货物运输（4类3项）'),
+			'03251','危险货物运输（5类1项）'),'03252','危险货物运输（5类2项）'),'03261','危险货物运输（6类1项）'),'03262',
+			'危险货物运输（6类2项）'),'03270','危险货物运输（7类）'),'03281','危险货物运输（8类）'),'03291','危险货物运输（9类）'),
+			'03300','国际危险货物运输'),'09100','出租客运运输'),'09300','出租客运运输（接待车）'),'09200','出租货运运输'))  经营范围,
+			a.address 地址,(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='ECOTYPE' AND CODE=a.ecotype) 经济类型,a.phone 联系电话,
+			a.pernum 经营许可证号
+			from cmclt a,ENCLTPAS b
+			where a.cmcltid=b.cmcltid and  a.cltbusstatus=1 and a.ISEFFECT=0 and a.depcode is not null
+		 -->
+		<parameter name="sqlFrom">ENCLTPAS T2</parameter>
+		<parameter name="sqlWhere">T.ISEFFECT='0' and T.CLTBUSSTATUS='1'</parameter>
+		<field name="T" type="component" title="业户基本信息">
+			<parameter name="class">CMCLT</parameter>
+			<parameter name="sqlJoin">INNER JOIN CMCLT T ON T2.CMCLTID=T.CMCLTID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="客运车辆" class="ENTVECPASSER" businessServiceName="trafficSqlQueryService">
+		<field name="CMVECID" type="string" columnType="VARCHAR2(50)" title="客运车辆编号（对应车辆表）">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="CHESEATS" type="number" columnType="NUMBER(6)" title="核定座位"/>
+		<field name="COLSEATS" type="number" columnType="NUMBER(6)" title="计征座位"/>
+		<field name="PASGRADE" type="string" columnType="CHAR(1)" title="客车等级" inputMode="none"/>
+		<field name="PASGRADE_TITLE" type="string" columnType="CHAR(1)" title="客车等级">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='PASGRADE' and CODE={ALIAS}.PASGRADE</parameter>
+		</field>
+		<field name="PASGRANEXDATE" type="string" columnType="CHAR(10)" title="客车等级"/>
+		<field name="TRATIMES" type="number" columnType="NUMBER(6)" title="补换证次数"/>
+		<field name="REPTIMES" type="number" columnType="NUMBER(6)" title="大修次数"/>
+		<field name="LINCARID" type="string" columnType="VARCHAR2(50)" title="线路牌ID"/>
+		<field name="DRIVERNAME1" type="string" columnType="VARCHAR2(20)" title="驾驶人员1"/>
+		<field name="QUANO1" type="string" columnType="VARCHAR2(20)" title="从业许可证号码1"/>
+		<field name="DRIVERNAME2" type="string" columnType="VARCHAR2(20)" title="驾驶人员2"/>
+		<field name="QUANO2" type="string" columnType="VARCHAR2(20)" title="从业许可证号码2"/>
+		<field name="DRIVERNAME3" type="string" columnType="VARCHAR2(20)" title="驾驶人员3"/>
+		<field name="QUANO3" type="string" columnType="VARCHAR2(20)" title="从业许可证号码3"/>
+		<field name="DRIVERNAME4" type="string" columnType="VARCHAR2(20)" title="驾驶人员4"/>
+		<field name="QUANO4" type="string" columnType="VARCHAR2(20)" title="从业许可证号码4"/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title="修改者编号"/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title="修改日期"/>
+		<field name="EDITIME" type="string" columnType="CHAR(8)" title="修改时间"/>
+		<!-- 
+			SELECT 	T1.CLITNAME AS 车主名称,T2.BRAPREFIX || T2.BRANUM AS 车牌号码,T2.VECTYPE AS 车辆类型,
+			T2.FACTYPE||T2.MODEL AS 厂牌型号,T3.CHESEATS AS 核定座位,T2.VECBUSSTATUS AS 营运状态,
+			T4.CANNAME AS 车籍地, T1.PERNUM AS 运输证号,T2.TRAWORD||T2.TRANO,T2.VINNEXTDATE,T2.VECBUSSTATUS,T2.CHETONORSEATS
+			FROM CMVEC T2 LEFT OUTER JOIN CMCLT T1 ON T2.CMCLTID=T1.CMCLTID 
+			INNER JOIN ENTVECPASSER T3 ON T3.CMVECID=T2.CMVECID 
+			LEFT OUTER JOIN COUCANCODE T4 ON T2.VECADDR=T4.CANCODE WHERE T2.ISEFFECT='0' 
+			AND (T2.VECBUSSTATUS = '10' OR T2.VECBUSSTATUS = '21') ORDER BY T2.CSGUNIT DESC
+		
+			select distinct a.cmvecid 车辆ID,(SELECT DEPNAME FROM T_PF_DEP T WHERE T.DEPCODE=a.DEPCODE) 管辖机构, 
+			b.clitname 业户名称,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='BRACOLOR' AND CODE=a.BRACOLOR)||BRAPREFIX||BRANUM 车牌号码,
+			(SELECT NAME FROM T_PF_DATADICT C WHERE DDFLD='VECTYPE' and CODE=a.VECTYPE) 车辆类型,FACTYPE||MODEL 厂牌型号,
+			TRANO 运输证号,a.GRADEPCODE 核发机关,
+			a.gradate 核发日期,
+			(SELECT NAME FROM T_PF_DATADICT C WHERE DDFLD='VECBUSSTATUS' and CODE=a.VECBUSSTATUS) 营运状态,
+			(SELECT NAME FROM T_PF_DATADICT C WHERE DDFLD='PASGRADE' and CODE=c.PASGRADE) 客车档次等级 ,
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(a.bnscope,'01000','道路旅客运输'),'01100','班车客运'),'01101','县内班车客运'),
+			'01102','县际班车客运'),'01103','市际班车客运'),'01104','省际班车客运'),'01200','包车客运'),
+			'01201','县内包车客运'),'01202','县际包车客运'),'01203','市际包车客运'),'01204','省际包车客运'),
+			'01300','旅游包车客运'),'01301','县内（旅游）包车客运'),'01302','县际（旅游）包车客运'),
+			'01303','市际（旅游）包车客运'),'01304','省际（旅游）包车客运'),'01400','闽港（澳）直通客运'),
+			'01500','国际运输'),'01501','国际定期班车客运'),'01502','国际不定期班车客运'),'02000','道路普通货物运输'),
+			'02100','普通货物运输'),'02101','普通货运'),'02102','搬家运输'),'02200','货物专用运输'),
+			'02201','货物专用运输（集装箱）'),'02202','货物专用运输（冷藏保鲜设备）'),'02203','货物专用运输（罐式容器）'),
+			'02300','大型物件运输'),'02301','大型物件运输（一类）'),'02302','大型物件运输（二类）'),
+			'02303','大型物件运输（三类）'),'02304','大型物件运输（四类）'),'02400','闽港(澳)直通货运'),'02500','国际货物运输'),
+			'03000','道路危险货物运输'),'03100','经营性道路危险货物运输'),'03111','危险货物运输（1类1项）'),
+			'03112','危险货物运输（1类2项）'),'03113','危险货物运输（1类3项）'),'03114','危险货物运输（1类4项）'),
+			'03115','危险货物运输（1类5项）'),'03116','危险货物运输（1类6项）'),'03121','危险货物运输（2类1项）'),
+			'03122','危险货物运输（2类2项）'),'03123','危险货物运输（2类3项）'),'03131','危险货物运输（3类）'),
+			'03141','危险货物运输（4类1项）'),'03142','危险货物运输（4类2项）'),'03143','危险货物运输（4类3项）'),
+			'03151','危险货物运输（5类1项）'),'03152','危险货物运输（5类2项）'),'03161','危险货物运输（6类1项）'),
+			'03162','危险货物运输（6类2项）'),'03170','危险货物运输（7类）'),'03181','危险货物运输（8类）'),'03191',
+			'危险货物运输（9类）'),'03200','非经营性道路危险货物运输'),'03211','危险货物运输（1类1项）'),
+			'03212','危险货物运输（1类2项）'),'03213','危险货物运输（1类3项）'),'03214','危险货物运输（1类4项）'),
+			'03215','危险货物运输（1类5项）'),'03216','危险货物运输（1类6项）'),'03221','危险货物运输（2类1项）'),
+			'03222','危险货物运输（2类2项）'),'03223','危险货物运输（2类3项）'),'03231','危险货物运输（3类）'),'03241','危险货物运输（4类1项）'),'03242','危险货物运输（4类2项）'),'03243','危险货物运输（4类3项）'),
+			'03251','危险货物运输（5类1项）'),'03252','危险货物运输（5类2项）'),'03261','危险货物运输（6类1项）'),'03262',
+			'危险货物运输（6类2项）'),'03270','危险货物运输（7类）'),'03281','危险货物运输（8类）'),'03291','危险货物运输（9类）'),
+			'03300','国际危险货物运输'),'09100','出租客运运输'),'09300','出租客运运输（接待车）'),'09200','出租货运运输'))  经营范围,
+			c.cheseats 核定座位,a.TRAINSENDDATE 承运人责任险至,a.THRINSENDDATE  第三者保险至
+			from cmvec a,cmclt b,ENTVECPASSER c
+			where  a.cmcltid=b.cmcltid  and  a.VECENTYPE='1'  and  (a.VECBUSSTATUS='10' or a.VECBUSSTATUS='21')
+			and a.ISEFFECT='0' and a.depcode is not null  and a.ISEXPATRIATE  is  null  and  c.cmvecid=a.cmvecid
+		 -->
+		<parameter name="sqlFrom">ENTVECPASSER T3</parameter>
+		<parameter name="sqlWhere">T2.ISEFFECT='0' AND (T2.VECBUSSTATUS = '10' OR T2.VECBUSSTATUS = '21')</parameter>
+		<parameter name="sqlOrderBy">T2.CSGUNIT DESC</parameter>
+		<field name="T2" type="component" title="车辆基本信息">
+			<parameter name="class">CMVEC</parameter>
+			<parameter name="sqlJoin">INNER JOIN CMVEC T2 ON T3.CMVECID=T2.CMVECID</parameter>
+		</field>
+		<field name="T1" type="component" title="业户基本信息">
+			<parameter name="class">CMCLT</parameter>
+			<parameter name="sqlJoin">LEFT OUTER JOIN CMCLT T1 ON T2.CMCLTID=T1.CMCLTID</parameter>
+		</field>
+		<field name="T4" type="component" title="车籍地">
+			<parameter name="class">COUCANCODE</parameter>
+			<parameter name="sqlJoin">LEFT OUTER JOIN COUCANCODE T4 ON T2.VECADDR=T4.CANCODE</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="普货经营性运输企业/普货经营性运输个体业户" class="ENCLTFRE" businessServiceName="trafficSqlQueryService">
+		<field name="CMCLTID" type="string" columnType="VARCHAR2(50)" title="普货业户ID（对应CMCLTID） ">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="ARCHISN" type="string" columnType="VARCHAR2(50)" title="档案编号 "/>
+		<field name="RPTCHKDATE" type="string" columnType="CHAR(10)" title="质量信誉考核日期 "/>
+		<field name="RPTCHKRSU" type="string" columnType="CHAR(1)" title="质量信誉考核结果 "/>
+		<field name="RPTCHKDESC" type="string" columnType="VARCHAR2(500)" title="质量信誉考核说明 "/>
+		<field name="QUAGRADE" type="string" columnType="VARCHAR2(8)" title="资质等级"/>
+		<field name="CALTYPE" type="string" columnType="VARCHAR2(20)" title="核算形式" inputMode="none"/>
+		<field name="CALTYPE_TITLE" type="string" columnType="VARCHAR2(20)" title="核算形式">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='CALTYPE' AND CODE={ALIAS}.CALTYPE</parameter>
+		</field>
+		<field name="AUHDATE" type="string" columnType="CHAR(10)" title="批准日期 "/>
+		<field name="AUHFILENO" type="string" columnType="VARCHAR2(50)" title="批准文号 "/>
+		<field name="BNBGNDATE" type="string" columnType="CHAR(10)" title="开业日期 "/>
+		<field name="FOREIGNPRI" type="string" columnType="VARCHAR2(20)" title="外方经营者 "/>
+		<field name="NATIVEPRI" type="string" columnType="VARCHAR2(20)" title="中方经营者 "/>
+		<field name="BNBANK" type="string" columnType="VARCHAR2(50)" title="开户银行 "/>
+		<field name="ACCOUNT" type="string" columnType="VARCHAR2(30)" title="银行账号 "/>
+		<field name="CAPITALSUM" type="string" columnType="VARCHAR2(10)" title="注册资金(万元) "/>
+		<field name="FORCAPITAL" type="string" columnType="VARCHAR2(10)" title="外方注册资金 "/>
+		<field name="FXNOWCAPTL" type="string" columnType="VARCHAR2(10)" title="固定资产净值 "/>
+		<field name="FXBEGCAPTL" type="string" columnType="VARCHAR2(10)" title="固定资产原值 "/>
+		<field name="FLOWCAPTL" type="string" columnType="VARCHAR2(10)" title="流动资金 "/>
+		<field name="REMARKDOC" type="string" columnType="VARCHAR2(500)" title="备注 "/>
+		<field name="STAFFSUM" type="number" columnType="NUMBER(6)" title="职工总数 "/>
+		<field name="JOBERSUM" type="number" columnType="NUMBER(6)" title="从业人员数 "/>
+		<field name="SPERSUM" type="number" columnType="NUMBER(6)" title="管理人员数 "/>
+		<field name="DRIVERSUM" type="number" columnType="NUMBER(6)" title="驾驶员数 "/>
+		<field name="STWDSUM" type="number" columnType="NUMBER(6)" title="搬运装卸员数 "/>
+		<field name="OTRPSNSUM" type="number" columnType="NUMBER(6)" title="其他人员 "/>
+		<field name="TRANGOODS" type="string" columnType="VARCHAR2(500)" title="承运物品 "/>
+		<field name="FREVECSUM" type="number" columnType="NUMBER(6)" title="车总数 "/>
+		<field name="NORVECSUM" type="number" columnType="NUMBER(6)" title="普通载货汽车总数 "/>
+		<field name="EXPVECSUM" type="number" columnType="NUMBER(6)" title="专用载货汽车总数 "/>
+		<field name="BIGVECSUM" type="number" columnType="NUMBER(6)" title="大件运输汽车总数 "/>
+		<field name="OTHVECSUM" type="number" columnType="NUMBER(6)" title="其他载货汽车总数 "/>
+		<field name="FREVECTNSUM" type="number" columnType="NUMBER(9,2)" title="车辆总吨位 "/>
+		<field name="NORVECTNSUM" type="number" columnType="NUMBER(9,2)" title="普通载货汽车总吨位"/>
+		<field name="EXPVECTNSUM" type="number" columnType="NUMBER(9,2)" title="专用载货汽车总吨位"/>
+		<field name="BIGVECTNSUM" type="number" columnType="NUMBER(9,2)" title="大件运输汽车总吨位"/>
+		<field name="OTHVECTNSUM" type="number" columnType="NUMBER(9,2)" title="其他载货汽车总吨位"/>
+		<field name="TRACTORSUM" type="number" columnType="NUMBER(6)" title="拖拉机总数 "/>
+		<field name="TRACTORTNSUM" type="number" columnType="NUMBER(9,2)" title="拖拉机总吨位 "/>
+		<field name="BNAREA" type="number" columnType="NUMBER(9,2)" title="经营场地面积 "/>
+		<field name="OFAREA" type="number" columnType="NUMBER(9,2)" title="办公面积 "/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title="编辑人员 "/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title="编辑日期 "/>
+		<field name="EDITIME" type="string" columnType="CHAR(10)" title="编辑时间 "/>
+		<!-- 
+			SELECT 	CLITNAME AS 业户名称,(SELECT T1.DEPNAME FROM T_PF_DEP T1 WHERE T1.DEPCODE=T.DEPCODE AND UPPER(T1.PRDCODE)='FZRTMIS') AS 受理机构, 
+			T.ADDRESS AS 地址,TPD.NAME AS 经营范围,ECOTYPE AS 经济类型,T.ADDRESS,T.MAICODING,T.JURPERSON,T.PHONE,T.FAXPHONE,T.MOBILE,T.EMIAL
+			
+			FROM CMCLT T JOIN T_PF_DATADICT TPD ON TPD.DDFLD = 'BNSCOPE' AND TPD.CODE = T.BNSCOPE
+			WHERE ISEFFECT='0' 
+			AND ENTERPRISETYPE ='1' 1企业 2个体户
+			AND EXISTS (SELECT T.CMCLTID FROM ENCLTFRE T2 WHERE T2.CMCLTID=T.CMCLTID)
+			
+			SELECT distinct V.cmcltid 业户ID,
+			(SELECT DEPNAME FROM T_PF_DEP T WHERE T.DEPCODE=V.DEPCODE) 受理机构,
+			V.CLITNAME 业户名称,
+			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(bnscope,'01000','道路旅客运输'),'01100','班车客运'),'01101','县内班车客运'),'01102','县际班车客运'),
+			'01103','市际班车客运'),'01104','省际班车客运'),'01200','包车客运'),'01201','县内包车客运'),
+			'01202','县际包车客运'),'01203','市际包车客运'),'01204','省际包车客运'),'01300','旅游包车客运'),
+			'01301','县内（旅游）包车客运'),'01302','县际（旅游）包车客运'),'01303','市际（旅游）包车客运'),
+			'01304','省际（旅游）包车客运'),'01400','闽港（澳）直通客运'),'01500','国际运输'),
+			'01501','国际定期班车客运'),'01502','国际不定期班车客运'),'02000','道路普通货物运输'),
+			'02100','普通货物运输'),'02101','普通货运'),'02102','搬家运输'),'02200','货物专用运输'),
+			'02201','货物专用运输（集装箱）'),'02202','货物专用运输（冷藏保鲜设备）'),
+			'02203','货物专用运输（罐式容器）'),'02300','大型物件运输'),'02301','大型物件运输（一类）'),
+			'02302','大型物件运输（二类）'),'02303','大型物件运输（三类）'),'02304','大型物件运输（四类）'),
+			'02400','闽港(澳)直通货运'),'02500','国际货物运输'),'03000','道路危险货物运输'),
+			'03100','经营性道路危险货物运输'),'03111','危险货物运输（1类1项）'),'03112','危险货物运输（1类2项）'),'03113','危险货物运输（1类3项）'),
+			'03114','危险货物运输（1类4项）'),'03115','危险货物运输（1类5项）'),'03116','危险货物运输（1类6项）'),'03121','危险货物运输（2类1项）'),'03122','危险货物运输（2类2项）'),'03123','危险货物运输（2类3项）'),'03131','危险货物运输（3类）'),'03141','危险货物运输（4类1项）'),'03142','危险货物运输（4类2项）'),'03143','危险货物运输（4类3项）'),'03151','危险货物运输（5类1项）'),'03152','危险货物运输（5类2项）'),'03161','危险货物运输（6类1项）'),'03162','危险货物运输（6类2项）'),'03170','危险货物运输（7类）'),'03181','危险货物运输（8类）'),'03191','危险货物运输（9类）'),'03200','非经营性道路危险货物运输'),'03211','危险货物运输（1类1项）'),'03212','危险货物运输（1类2项）'),'03213','危险货物运输（1类3项）'),'03214','危险货物运输（1类4项）'),'03215','危险货物运输（1类5项）'),'03216','危险货物运输（1类6项）'),'03221','危险货物运输（2类1项）'),'03222','危险货物运输（2类2项）'),'03223','危险货物运输（2类3项）'),'03231','危险货物运输（3类）'),'03241','危险货物运输（4类1项）'),'03242','危险货物运输（4类2项）'),
+			'03243','危险货物运输（4类3项）'),'03251','危险货物运输（5类1项）'),'03252','危险货物运输（5类2项）'),
+			'03261','危险货物运输（6类1项）'),'03262','危险货物运输（6类2项）'),'03270','危险货物运输（7类）'),
+			'03281','危险货物运输（8类）'),'03291','危险货物运输（9类）'),'03300','国际危险货物运输')
+			经营范围, 
+			V.ADDRESS  地址,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='ECOTYPE' AND CODE=V.ECOTYPE) 经济类型,
+			V.MAICODING 邮政编码,V.PHONE 联系电话,
+			V.PERNUM 许可证号
+			FROM cmclt V,ENCLTFRE E
+			WHERE v.cmcltid=e.cmcltid and iseffect=0 and V.ENTERPRISETYPE=1
+		 -->
+		<parameter name="sqlFrom">ENCLTFRE T2</parameter>
+		<parameter name="sqlWhere">ISEFFECT='0' </parameter>
+		<field name="T" type="component" title="业户基本信息">
+			<parameter name="class">CMCLT</parameter>
+			<parameter name="sqlJoin">INNER JOIN CMCLT T ON T2.CMCLTID=T.CMCLTID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="危货企业" class="ENCLTDAGFRE" businessServiceName="trafficSqlQueryService">
+		<field name="CMCLTID" type="string" columnType="VARCHAR2(50)" title="业户ID（对应CMCLTID）">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="ARCHISN" type="string" columnType="VARCHAR2(50)" title="档案编号"/>
+		<field name="RPTCHKDATE" type="string" columnType="CHAR(10)" title="质量信誉考核日期"/>
+		<field name="RPTCHKRSU" type="string" columnType="CHAR(1)" title="质量信誉考核结果"/>
+		<field name="RPTCHKDESC" type="string" columnType="VARCHAR2(500)" title="质量信誉考核说明"/>
+		<field name="QUAGRADE" type="string" columnType="VARCHAR2(8)" title="资质等级"/>
+		<field name="CALTYPE" type="string" columnType="VARCHAR2(20)" title="核算形式" inputMode="none"/>
+		<field name="CALTYPE_TITLE" type="string" columnType="VARCHAR2(20)" title="核算形式">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='CALTYPE' AND CODE={ALIAS}.CALTYPE</parameter>
+		</field>
+		<field name="AUHDATE" type="string" columnType="CHAR(10)" title="批准日期"/>
+		<field name="AUHFILENO" type="string" columnType="VARCHAR2(50)" title="批准文号"/>
+		<field name="BNBGNDATE" type="string" columnType="CHAR(10)" title="开业日期"/>
+		<field name="FOREIGNPRI" type="string" columnType="VARCHAR2(20)" title="外方经营者"/>
+		<field name="NATIVEPRI" type="string" columnType="VARCHAR2(20)" title="中方经营者"/>
+		<field name="BNBANK" type="string" columnType="VARCHAR2(50)" title="开户银行"/>
+		<field name="ACCOUNT" type="string" columnType="VARCHAR2(30)" title="银行账号"/>
+		<field name="CAPITALSUM" type="string" columnType="VARCHAR2(10)" title="注册资金(万元)"/>
+		<field name="FORCAPITAL" type="string" columnType="VARCHAR2(10)" title="外方注册资金"/>
+		<field name="FXNOWCAPTL" type="string" columnType="VARCHAR2(10)" title="固定资产净值"/>
+		<field name="FXBEGCAPTL" type="string" columnType="VARCHAR2(10)" title="固定资产原值"/>
+		<field name="FLOWCAPTL" type="string" columnType="VARCHAR2(10)" title="流动资金"/>
+		<field name="DAGVECSUM" type="number" columnType="NUMBER(6)" title="车辆总数"/>
+		<field name="POTVECSUM" type="number" columnType="NUMBER(6)" title="罐式车辆总数"/>
+		<field name="BOXVECSUM" type="number" columnType="NUMBER(6)" title="集装箱车辆总数"/>
+		<field name="DAGVECTNSUM" type="number" columnType="NUMBER(9,2)" title="车辆总吨位"/>
+		<field name="PRKLOTAREA" type="number" columnType="NUMBER(9,2)" title="停车场地总面积"/>
+		<field name="SPEPRKAREA" type="number" columnType="NUMBER(9,2)" title="专用停车区域面积"/>
+		<field name="SPECLEEQ" type="number" columnType="NUMBER(6)" title="专用清洗设备总数"/>
+		<field name="SLGCBKEQ" type="number" columnType="NUMBER(6)" title="污水回收设备总数"/>
+		<field name="FIREEQUIP" type="number" columnType="NUMBER(6)" title="消防设备总数"/>
+		<field name="SAFEEQUIP" type="number" columnType="NUMBER(6)" title="安全防护设备总数"/>
+		<field name="STAFFSUM" type="number" columnType="NUMBER(6)" title="职工总数"/>
+		<field name="JOBERSUM" type="number" columnType="NUMBER(6)" title="从业人员数"/>
+		<field name="SUPERVISER" type="number" columnType="NUMBER(6)" title="管理人员"/>
+		<field name="DAGDRIVER" type="number" columnType="NUMBER(6)" title="危险货物运输驾驶人员"/>
+		<field name="STVSPRVER" type="number" columnType="NUMBER(6)" title="装卸管理人员"/>
+		<field name="ESCORT" type="number" columnType="NUMBER(6)" title="押运人员"/>
+		<field name="OTHERPSNS" type="number" columnType="NUMBER(6)" title="其他人员"/>
+		<field name="BNAREA" type="number" columnType="NUMBER(9,2)" title="经营场地面积"/>
+		<field name="OFAREA" type="number" columnType="NUMBER(9,2)" title="办公面积"/>
+		<field name="REMARKDOC" type="string" columnType="VARCHAR2(500)" title="备注"/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title="编辑人员"/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title="编辑日期"/>
+		<field name="EDITIME" type="string" columnType="CHAR(10)" title="编辑时间"/>
+		<!-- 
+			SELECT 	CLITNAME AS 业户名称,(SELECT T1.DEPNAME FROM T_PF_DEP T1 WHERE T1.DEPCODE=T.DEPCODE AND UPPER(T1.PRDCODE)='FZRTMIS') AS 受理机构, 
+			T.ADDRESS AS 地址,ECOTYPE AS 经营类型,PHONE AS 联系电话,T.ADDRESS,T.MAICODING,T.JURPERSON,T.PHONE,T.FAXPHONE,T.MOBILE,T.EMIAL
+			FROM CMCLT T 
+			WHERE ISEFFECT='0' AND CLTBUSSTATUS='1' 
+			AND EXISTS (SELECT T.CMCLTID FROM ENCLTDAGFRE T2 WHERE T2.CMCLTID=T.CMCLTID)
+			
+			SELECT distinct V.cmcltid 业户ID,
+			(SELECT DEPNAME FROM T_PF_DEP T WHERE T.DEPCODE=V.DEPCODE) 受理机构,
+			V.CLITNAME 业户名称,
+			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(replace(replace(replace(replace(replace(replace(replace(replace(replace
+			(bnscope,'01000','道路旅客运输'),'01100','班车客运'),'01101','县内班车客运'),'01102','县际班车客运'),
+			'01103','市际班车客运'),'01104','省际班车客运'),'01200','包车客运'),'01201','县内包车客运'),
+			'01202','县际包车客运'),'01203','市际包车客运'),'01204','省际包车客运'),'01300','旅游包车客运'),
+			'01301','县内（旅游）包车客运'),'01302','县际（旅游）包车客运'),'01303','市际（旅游）包车客运'),
+			'01304','省际（旅游）包车客运'),'01400','闽港（澳）直通客运'),'01500','国际运输'),
+			'01501','国际定期班车客运'),'01502','国际不定期班车客运'),'02000','道路普通货物运输'),
+			'02100','普通货物运输'),'02101','普通货运'),'02102','搬家运输'),'02200','货物专用运输'),
+			'02201','货物专用运输（集装箱）'),'02202','货物专用运输（冷藏保鲜设备）'),
+			'02203','货物专用运输（罐式容器）'),'02300','大型物件运输'),'02301','大型物件运输（一类）'),
+			'02302','大型物件运输（二类）'),'02303','大型物件运输（三类）'),'02304','大型物件运输（四类）'),
+			'02400','闽港(澳)直通货运'),'02500','国际货物运输'),'03000','道路危险货物运输'),
+			'03100','经营性道路危险货物运输'),'03111','危险货物运输（1类1项）'),'03112','危险货物运输（1类2项）'),'03113','危险货物运输（1类3项）'),
+			'03114','危险货物运输（1类4项）'),'03115','危险货物运输（1类5项）'),'03116','危险货物运输（1类6项）'),'03121','危险货物运输（2类1项）'),'03122','危险货物运输（2类2项）'),'03123','危险货物运输（2类3项）'),'03131','危险货物运输（3类）'),'03141','危险货物运输（4类1项）'),'03142','危险货物运输（4类2项）'),'03143','危险货物运输（4类3项）'),'03151','危险货物运输（5类1项）'),'03152','危险货物运输（5类2项）'),'03161','危险货物运输（6类1项）'),'03162','危险货物运输（6类2项）'),'03170','危险货物运输（7类）'),'03181','危险货物运输（8类）'),'03191','危险货物运输（9类）'),'03200','非经营性道路危险货物运输'),'03211','危险货物运输（1类1项）'),'03212','危险货物运输（1类2项）'),'03213','危险货物运输（1类3项）'),'03214','危险货物运输（1类4项）'),'03215','危险货物运输（1类5项）'),'03216','危险货物运输（1类6项）'),'03221','危险货物运输（2类1项）'),'03222','危险货物运输（2类2项）'),'03223','危险货物运输（2类3项）'),'03231','危险货物运输（3类）'),'03241','危险货物运输（4类1项）'),'03242','危险货物运输（4类2项）'),
+			'03243','危险货物运输（4类3项）'),'03251','危险货物运输（5类1项）'),'03252','危险货物运输（5类2项）'),
+			'03261','危险货物运输（6类1项）'),'03262','危险货物运输（6类2项）'),'03270','危险货物运输（7类）'),
+			'03281','危险货物运输（8类）'),'03291','危险货物运输（9类）'),'03300','国际危险货物运输')
+			经营范围, 
+			V.ADDRESS  地址,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='ECOTYPE' AND CODE=V.ECOTYPE) 经济类型,
+			V.PHONE 联系电话,
+			V.PERNUM 许可证号
+			FROM cmclt V,ENCLTDAGFRE E
+			WHERE v.cmcltid=e.cmcltid and iseffect=0			
+		 -->
+		<parameter name="sqlFrom">ENCLTDAGFRE T2</parameter>
+		<parameter name="sqlWhere">ISEFFECT='0' AND CLTBUSSTATUS='1'</parameter>
+		<field name="T" type="component" title="业户基本信息">
+			<parameter name="class">CMCLT</parameter>
+			<parameter name="sqlJoin">INNER JOIN CMCLT T ON T2.CMCLTID=T.CMCLTID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="普通货运车辆" class="ENTVECFREIGHT" businessServiceName="trafficSqlQueryService">
+		<field name="CMVECID" title="车辆编号" type="string" columnType="VARCHAR2(50)">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="TON" title="计征吨位" type="number" columnType="NUMBER(7,3)"/>
+		<field name="CHETON" title="核定吨位" type="number" columnType="NUMBER(7,3)"/>
+		<field name="TRATIMES" title="补换证次数" type="number" columnType="NUMBER(6)"/>
+		<field name="REPTIMES" title="大修次数" type="number" columnType="NUMBER(6)"/>
+		<field name="EDIUSRCODE" title="修改者编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="EDIDATE" title="修改日期" type="string" columnType="CHAR(10)"/>
+		<field name="EDITIME" title="修改时间" type="string" columnType="CHAR(8)"/>
+		<field name="ISGUA" title="是否挂车" type="string" columnType="VARCHAR2(2)"/>
+		<!-- 
+			SELECT 	T3.CLITNAME AS 业户名称,T1.BRAPREFIX||T1.BRANUM AS 车牌号码,T1.VECTYPE AS 车辆类型,
+			T1.FACTYPE||T1.MODEL AS 厂牌型号,T2.CHETON AS 核定吨位,T1.VECBUSSTATUS AS 营运状态,T3.PERNUM AS 运输证号,
+			T1.TRAWORD||T1.TRANO,T1.VINNEXTDATE,T1.VECBUSSTATUS,T1.CHETONORSEATS
+			FROM CMVEC T1
+			JOIN ENTVECFREIGHT T2 ON T1.CMVECID = T2.CMVECID
+			JOIN CMCLT T3 ON T1.CMCLTID = T3.CMCLTID
+			WHERE T1.ISEFFECT='0' AND (T1.VECBUSSTATUS = '10' OR T1.VECBUSSTATUS = '21')
+		
+			SELECT DISTINCT V.CMVECID 车辆ID,
+			(SELECT DEPNAME FROM T_PF_DEP T WHERE T.DEPCODE=V.DEPCODE) 管辖机构,
+			CLITNAME 业户名称,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='BRACOLOR' AND CODE=V.BRACOLOR)||V.BRAPREFIX||V.BRANUM 车牌号码,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='VECTYPE' AND CODE=V.VECTYPE) 车辆类型,
+			FACTYPE||MODEL 厂牌型号,V.TRANO 运输证号,
+			V.GRADEPCODE 核发机关,V.GRADATE 核发日期,
+			(SELECT NAME FROM T_PF_DATADICT C WHERE DDFLD='VECBUSSTATUS' and CODE=V.VECBUSSTATUS) 营运状态,
+			V3.CHETON 核定吨位,
+			V.VECLENGTH 车长,V.VECWIDE 车宽,V.VECHIGH 车高,
+			V.SETDATE 首次报牌日期
+			FROM CMVEC V,CMCLT V2,ENTVECFREIGHT V3
+			WHERE V.CMCLTID=V2.CMCLTID AND V.CMVECID=V3.CMVECID
+			AND (V.VECBUSSTATUS='10' or V.VECBUSSTATUS='21') AND  V.iseffect=0
+		 -->
+		<parameter name="sqlFrom">ENTVECFREIGHT T2</parameter>
+		<parameter name="sqlWhere">T1.ISEFFECT='0' AND (T1.VECBUSSTATUS = '10' OR T1.VECBUSSTATUS = '21')</parameter>
+		<field name="T1" type="component" title="车辆基本信息">
+			<parameter name="class">CMVEC</parameter>
+			<parameter name="sqlJoin">INNER JOIN CMVEC T1 ON T1.CMVECID=T2.CMVECID</parameter>
+		</field>
+		<field name="T3" type="component" title="业户基本信息">
+			<parameter name="class">CMCLT</parameter>
+			<parameter name="sqlJoin">JOIN CMCLT T3 ON T1.CMCLTID=T3.CMCLTID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="危货车辆" class="ENTVECDANFREIGHT" businessServiceName="trafficSqlQueryService">
+		<field name="CMVECID" type="string" columnType="VARCHAR2(50)" title="车辆编号（对应车辆CMVEC表ID）">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="TON" type="number" columnType="NUMBER(7,3)" title="计征吨位"/>
+		<field name="CHETON" type="number" columnType="NUMBER(7,3)" title="核定吨位"/>
+		<field name="TRATIMES" type="number" columnType="NUMBER(6)" title="补换证次数"/>
+		<field name="REPTIMES" type="number" columnType="NUMBER(6)" title="大修次数"/>
+		<field name="DRIVERNAME1" type="string" columnType="VARCHAR2(20)" title="驾驶人员1"/>
+		<field name="QUANO1" type="string" columnType="VARCHAR2(20)" title="从业许可证号码1"/>
+		<field name="ESCNAME" type="string" columnType="VARCHAR2(20)" title="押运人员"/>
+		<field name="QUANO2" type="string" columnType="VARCHAR2(20)" title="从业许可证号码2"/>
+		<field name="FRETRATYPE" type="string" columnType="VARCHAR2(10)" title="承运货物类别"/>
+		<field name="DANFREGRADE" type="string" columnType="VARCHAR2(4)" title="承运危货等级" inputMode="none"/>
+		<field name="DANFREGRADE_TITLE" type="string" columnType="VARCHAR2(10)" title="承运危货等级">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='DANFREGRADE' AND CODE={ALIAS}.DANFREGRADE</parameter>
+		</field>
+		<field name="DAGVECCARNO" type="string" columnType="VARCHAR2(30)" title="危货车辆标识"/>
+		<field name="CONTYPE" type="string" columnType="CHAR(1)" title="货箱类型"/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title="修改者编号"/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title="修改日期"/>
+		<field name="EDITIME" type="string" columnType="CHAR(8)" title="修改时间"/>
+		<field name="ISGUA" type="string" columnType="VARCHAR2(2)" title="是否挂车"/>
+		<!-- 
+			SELECT 	T3.CLITNAME AS 业户名称,T1.BRAPREFIX||T1.BRANUM AS 车牌号码,T1.VECTYPE AS 车辆类型,
+			T1.FACTYPE||T1.MODEL AS 厂牌型号,T2.CHETON AS 核定吨位,T1.VECBUSSTATUS AS 营运状态,T3.PERNUM AS 运输证号,T1.TRAWORD||T1.TRANO,T1.VINNEXTDATE,T1.VECBUSSTATUS,T1.CHETONORSEATS
+			FROM CMVEC T1
+			JOIN ENTVECDANFREIGHT T2 ON T1.CMVECID=T2.CMVECID
+			JOIN CMCLT T3 ON T1.CMCLTID=T3.CMCLTID
+			WHERE T1.ISEFFECT='0' AND (T1.VECBUSSTATUS = '10' OR T1.VECBUSSTATUS = '21')
+			
+			SELECT DISTINCT 
+			V.CMVECID 车辆ID,
+			(SELECT DEPNAME FROM T_PF_DEP T WHERE T.DEPCODE=V.DEPCODE) 管辖机构,
+			CLITNAME 业户名称,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='BRACOLOR' AND CODE=V.BRACOLOR)||V.BRAPREFIX||V.BRANUM 车牌号码,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='VECTYPE' AND CODE=V.VECTYPE) 车辆类型,
+			FACTYPE||MODEL 厂牌型号,V.TRANO 运输证号,
+			V.GRADEPCODE 核发机关
+			FROM CMVEC V,CMCLT V2,ENTVECDANFREIGHT V3
+			WHERE V.CMCLTID=V2.CMCLTID AND V.CMVECID=V3.CMVECID
+			AND (V.VECBUSSTATUS='10' or V.VECBUSSTATUS='21') 
+			AND  V.iseffect=0			
+		 -->
+		<parameter name="sqlFrom">ENTVECDANFREIGHT T2</parameter>
+		<parameter name="sqlWhere">T1.ISEFFECT='0' AND (T1.VECBUSSTATUS = '10' OR T1.VECBUSSTATUS = '21')</parameter>
+		<field name="T1" type="component" title="车辆基本信息">
+			<parameter name="class">CMVEC</parameter>
+			<parameter name="sqlJoin">INNER JOIN CMVEC T1 ON T1.CMVECID=T2.CMVECID</parameter>
+		</field>
+		<field name="T3" type="component" title="业户基本信息">
+			<parameter name="class">CMCLT</parameter>
+			<parameter name="sqlJoin">JOIN CMCLT T3 ON T1.CMCLTID=T3.CMCLTID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="从业人员" class="CMPSN" businessServiceName="trafficSqlQueryService">
+		<field name="CMPSNID" title="人员编号" type="string" columnType="VARCHAR2(50)">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="NAME" title="姓名" type="string" columnType="VARCHAR2(30)"/>
+		<field name="SEX" title="性别" type="string" columnType="CHAR(1)" inputMode="radio">
+			<parameter name="itemsText">男|1\0女|2</parameter>
+		</field>
+		<field name="BIRTHDAY" title="出生日期" type="string" columnType="CHAR(10)"/>
+		<field name="CARDNO" title="身份证号码" type="string" columnType="VARCHAR2(18)"/>
+		<field name="NATION" title="民族" type="string" columnType="VARCHAR2(10)" inputMode="none"/>
+		<field name="NATION_TITLE" type="string" columnType="VARCHAR2(10)" title="民族">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='NATION' AND CODE={ALIAS}.NATION</parameter>
+		</field>
+		<field name="NATPLACE" title="籍贯" type="string" columnType="VARCHAR2(50)" inputMode="none"/>
+		<field name="NATPLACE_TITLE" type="string" columnType="VARCHAR2(50)" title="籍贯">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='NATPLACE' AND CODE={ALIAS}.NATPLACE</parameter>
+		</field>
+		<field name="PHONE" title="联系电话" type="string" columnType="VARCHAR2(30)"/>
+		<field name="ADDRESS" title="联系地址" type="string" columnType="VARCHAR2(100)"/>
+		<field name="EMAIL" title="电子邮件" type="string" columnType="VARCHAR2(50)"/>
+		<field name="MAICODING" title="邮件编码" type="string" columnType="VARCHAR2(6)"/>
+		<field name="EDUCATION" title="文件程度" type="string" columnType="VARCHAR2(20) 研究生毕业、研究生肄业等" inputMode="none"/>
+		<field name="EDUCATION_TITLE" type="string" columnType="VARCHAR2(20)" title="文化程度">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='EDUCATION' AND CODE={ALIAS}.EDUCATION</parameter>
+		</field>
+		<field name="TECCLASS" title="技术职称" type="string" columnType="VARCHAR2(20)，初级、中级、高级" inputMode="none"/>
+		<field name="TECCLASS_TITLE" type="string" columnType="VARCHAR2(20)" title="技术职称">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='TECCLASS' AND CODE={ALIAS}.TECCLASS</parameter>
+		</field>
+		<field name="HEALTH" title="健康状况" type="string" columnType="VARCHAR2(10)" inputMode="none"/>
+		<field name="HEALTH_TITLE" type="string" columnType="VARCHAR2(10)" title="健康状况">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='HEALTH' AND CODE={ALIAS}.HEALTH</parameter>
+		</field>
+		<field name="CREUSRCODE" title="创建人员编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="CREDATE" title="创建日期" type="string" columnType="CHAR(10)"/>
+		<field name="CRETIME" title="创建时间" type="string" columnType="CHAR(8)"/>
+		<field name="EDIUSRCODE" title="变更人员编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="EDIDATE" title="变更日期" type="string" columnType="CHAR(10)"/>
+		<field name="EDITIME" title="变更时间" type="string" columnType="CHAR(8)"/>
+		<field name="CMCLTID" title="业户编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="WORSTATUS" title="从业状态" type="string" columnType="VARCHAR2(8)" inputMode="none"/>
+		<field name="WORSTATUS_TITLE" type="string" columnType="VARCHAR2(10)" title="从业状态">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='WORSTATUS' AND CODE={ALIAS}.WORSTATUS</parameter>
+		</field>
+		<field name="STUTIMES" title="培训次数" type="number" columnType="NUMBER(6)"/>
+		<field name="DF1" title="理论成绩" type="string" columnType="VARCHAR2(50)"/>
+		<field name="DF2" title="专业知识应用能力成绩" type="string" columnType="VARCHAR2(50)"/>
+		<field name="DF3" title="DF3" type="string" columnType="VARCHAR2(50)"/>
+		<field name="DF4" title="DF4" type="string" columnType="VARCHAR2(50)"/>
+		<field name="DF5" title="DF5" type="string" columnType="VARCHAR2(50)"/>
+		<field name="DF6" title="DF6" type="string" columnType="VARCHAR2(50)"/>
+		<field name="ENTYPE" title="实体类型" type="string" columnType="INT"/>
+		<field name="STATUS" title="状态" type="string" columnType="VARCHAR2(2)"/>
+		<field name="ISEFFECT" title="是否有效" type="number" columnType="NUMBER(1)"/>
+		<field name="TAXLESSON" title="出租车培训" type="string" columnType="CHAR(1)" inputMode="radio">
+			<parameter name="itemsText">有|0\0没有|1</parameter>
+		</field>
+		<field name="ISFOREIGN" title="是否外籍人员" type="string" columnType="CHAR(1)" inputMode="radio">
+			<parameter name="itemsText">是|Y\0不是|N</parameter>
+		</field>
+		<field name="PHOTO" title="照片" type="image">
+			<parameter name="serviceName">trafficImageService</parameter>
+		</field>
+		<!-- 
+			SELECT 	T.NAME AS 姓名, T.SEX AS AS性别,T.BIRTHDAY AS 出生日期,T4.WORTYPE AS 从业资格类型,T4.BEWORSCOPE AS 从业资格范围,T4.TITNO AS 从业资格证号,T4.TITNO,T.CARDNO,T.NATION,T.NATPLACE,T.PHONE,T2.CLITNAME
+			FROM CMPSN T 
+			LEFT OUTER JOIN CMCLT T2 ON T.CMCLTID=T2.CMCLTID 
+			LEFT OUTER JOIN ENBEWOR T4 ON T.CMPSNID=T4.CMPSNID 
+			JOIN T_PF_DATADICT TPD ON TPD.DDFLD = ‘BEWORSCOPE’ AND TPD.CODE = T4. BEWORSCOPE
+			WHERE ((ISFOREIGN IS NULL) OR (ISFOREIGN <> 'Y')) AND T.ISEFFECT=0 AND T4.ISEFFECT=0
+			
+			SELECT V.CMPSNID 人员ID,
+			V.NAME 	姓名,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='SEX' AND CODE=V.SEX) 性别,
+			substr(V.BIRTHDAY,1,4) 出生年份,
+			V.CARDNO 身份证号码,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='WORTYPE' AND CODE=V2.WORTYPE)  从业资格类别,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='BEWORSCOPE' AND CODE=V2.BEWORSCOPE)  从业资格范围,
+			V2.TITNO 从业资格证号
+			FROM CMPSN V,ENBEWOR V2
+			WHERE V.CMPSNID=V2.CMPSNID 
+			AND V.ISEFFECT=0
+		 -->
+		<parameter name="sqlFrom">CMPSN T</parameter>
+		<parameter name="sqlWhere">T.ISEFFECT=0 AND T4.ISEFFECT=0</parameter>
+		<field name="T2" type="component" title="业户基本信息">
+			<parameter name="class">CMCLT</parameter>
+			<parameter name="sqlJoin">LEFT OUTER JOIN CMCLT T2 ON T.CMCLTID=T2.CMCLTID</parameter>
+		</field>
+		<field name="T4" type="component" title="从业资格证">
+			<parameter name="class">ENBEWOR</parameter>
+			<parameter name="sqlJoin">LEFT OUTER JOIN ENBEWOR T4 ON T.CMPSNID=T4.CMPSNID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="营运车辆技术档案" class="TECHNICINFO" businessServiceName="trafficSqlQueryService">
+		<field name="TECHNICINFO" type="string" columnType="VARCHAR2(50)" title="技术信息ID">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="CMVECID" type="string" columnType="VARCHAR2(50)" title="车辆ID(对应车辆CMVEC表ID)"/>
+		<field name="OPERATEID" type="string" columnType="VARCHAR2(50)" title="操作ID"/>
+		<field name="OPERATETYPE" type="string" columnType="VARCHAR2(1)" title="记录类型编码"/>
+		<field name="CMCLTID" type="string" columnType="VARCHAR2(50)" title="维修业户ID（对应业户CMCLT表ID）"/>
+		<field name="VINDDATE" type="string" columnType="CHAR(10)（评定日期、客车档次评定日期）" title="本次二级维护日期 "/>
+		<field name="VINDNEXTDATE" type="string" columnType="CHAR(10)" title="下次二级维护日期"/>
+		<field name="VINREGDATE" type="string" columnType="CHAR(10)" title="登记日期（检测日期）"/>
+		<field name="VINDCONNO" type="string" columnType="VARCHAR2(50)" title="维修合同号"/>
+		<field name="VINDREPNO" type="string" columnType="VARCHAR2(50)" title="竣工检测报告单号"/>
+		<field name="VINDGRDNO" type="string" columnType="VARCHAR2(50)" title="竣工出厂合格证号"/>
+		<field name="CHECKWRITDATEC" type="string" columnType="VARCHAR2(50)" title="稽查文书登记年度"/>
+		<field name="CHECKDECIDENOC" type="string" columnType="VARCHAR2(50)" title="稽查决定书号"/>
+		<field name="CHECKCASEADDRESSC" type="string" columnType="VARCHAR2(150)" title="稽查案件处罚地"/>
+		<field name="REMARKC" type="string" columnType="VARCHAR2(500)" title="备注"/>
+		<field name="TECID" type="string" columnType="VARCHAR2(50)" title="技术等级评定ID"/>
+		<field name="DETRESULT" type="string" columnType="VARCHAR2(50)" title="综合性能检测结果"/>
+		<field name="GRADE" type="string" columnType="VARCHAR2(50)" title="客车档次等级"/>
+		<field name="ACCEPTWHEEL" type="string" columnType="VARCHAR2(50)" title="受理机构"/>
+		<field name="OPERATEDATE" type="string" columnType="CHAR(10)" title="操作日期"/>
+		<field name="BOOKERID" type="string" columnType="VARCHAR2(50)" title="登记人员"/>
+		<field name="OPERATETIME" type="string" columnType="CHAR(8)" title="操作时间"/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title="编辑人员"/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title="编辑日期"/>
+		<field name="EDITIME" type="string" columnType="CHAR(8)" title="编辑时间"/>
+		<!-- 
+			SELECT 	T1.BRAPREFIX||T1.BRANUM AS 车牌号码,T2.CLITNAME AS 业户名称, D.DEPNAME AS 管理机构,T2.PERNUM AS 管理机构,T1.VINNEXTDATE AS 下次二维日期, T1.NEXTECGRDTODATE AS 技术等级评定日期 ,T1.TRAWORD||T1.TRANO,T1.VINNEXTDATE,T1.VECBUSSTATUS,T1.CHETONORSEATS
+			FROM  CMVEC T1,CMCLT T2,ENTVECPASSER T3,COUCANCODE T4,.T_PF_DEP D
+			WHERE T1.ISEFFECT=0 AND T1.CMCLTID=T2.CMCLTID(+) AND T1.CMVECID=T3.CMVECID(+) AND T1.VECADDR=T4.CANCODE(+) 
+			AND T1.DEPCODE = D.DEPCODE(+)
+			AND T1.VECBUSSTATUS='10' 
+			ORDER BY T1.BRANUM
+		 -->
+		<parameter name="sqlFrom">TECHNICINFO T</parameter>
+		<parameter name="sqlWhere">T.CMVECID=T1.CMVECID AND T1.ISEFFECT=0 AND T1.CMCLTID=T2.CMCLTID(+) AND T1.CMVECID=T3.CMVECID(+) AND T1.VECADDR=T4.CANCODE(+) AND T1.VECBUSSTATUS='10'</parameter>
+		<field name="T1" type="component" title="车辆基本信息">
+			<parameter name="class">CMVEC</parameter>
+			<parameter name="sqlJoin">,CMVEC T1</parameter>
+		</field>
+		<field name="T2" type="component" title="业户基本信息">
+			<parameter name="class">CMCLT</parameter>
+			<parameter name="sqlJoin">,CMCLT T2</parameter>
+		</field>
+		<field name="T3" type="component" title="客运车辆">
+			<parameter name="class">ENTVECPASSER</parameter>
+			<parameter name="sqlJoin">,ENTVECPASSER T3</parameter>
+		</field>
+		<field name="T4" type="component" title="车籍地">
+			<parameter name="class">COUCANCODE</parameter>
+			<parameter name="sqlJoin">,COUCANCODE T4</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="营运车辆年度审验" class="VECEXA" businessServiceName="trafficSqlQueryService">
+		<field name="YEAEXAID" type="string" columnType="VARCHAR2(50)" title="年审ID（主键）">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="EXAMINERES" type="string" columnType="VARCHAR2(50)" title="年审结果" inputMode="radio">
+			<parameter name="itemsText">不合格|1\0合格|0</parameter>
+		</field>
+		<field name="CMVECID" type="string" columnType="VARCHAR2(50)" title="车辆信息ID（对应CMVEC表ID）"/>
+		<field name="EXAMINEDATE" type="string" columnType="CHAR(10)" title="年审日期"/>
+		<field name="GOOUTCAUSE" type="string" columnType="VARCHAR2(50)" title="备注"/>
+		<field name="CREUSRCODE" type="string" columnType="VARCHAR2(50)" title="创建人员"/>
+		<field name="CREDATE" type="string" columnType="CHAR(10)" title="创建日期"/>
+		<field name="CRETIME" type="string" columnType="CHAR(10)" title="创建时间"/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title="修改人员"/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title="修改日期"/>
+		<field name="EDITIME" type="string" columnType="CHAR(10)" title="修改时间"/>
+		<!-- 
+			SELECT 	T1.BRAPREFIX||T1.BRANUM AS 车牌号码 ,T3.CLITNAME AS  业户名称, D.DEPNAME AS 管理机构,
+			       	T3.PERNUM AS 经营许可证号,T1.FACTYPE||T1.MODEL AS 厂牌型号,T1.TRANO AS 运输证号,T2.EXAMINERES AS 年审结果,
+			       	T1.TRAWORD||T1.TRANO,T1.VINNEXTDATE,T1.VECBUSSTATUS,T1.CHETONORSEATS,T2.EXAMINEDATE,T2.EXAMINEDATEEND
+			FROM CMVEC T1
+			JOIN VECEXA T2 ON T1.CMVECID = T2.CMVECID
+			JOIN CMCLT T3 ON T1.CMCLTID = T3.CMCLTID
+			JOIN T_PF_DEP D ON D.DEPCODE= T1.DEPCODE
+			WHERE T1.ISEFFECT = '0'
+			
+			select distinct a.cmcltid  车辆ID,(SELECT DEPNAME FROM T_PF_DEP T WHERE T.DEPCODE=a.DEPCODE) 管辖机构, 
+			b.clitname 业户名称,b.pernum 经营许可证号,
+			(SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='BRACOLOR' AND CODE=a.BRACOLOR)||BRAPREFIX||BRANUM 车牌号码,FACTYPE||MODEL 厂牌型号,
+			TRANO 运输证号,CHETODATE 审验日期,
+			case c.examineres  when '1' then '不合格' when '0' then '合格'  end  as  审验结果,
+			c.gooutcause 备注
+			from cmvec a,cmclt b,VECEXA c
+			where  a.cmcltid=b.cmcltid  and a.cmvecid=c.cmvecid  and  a.VECENTYPE='1'  and  (a.VECBUSSTATUS='10' or a.VECBUSSTATUS='21')
+			and a.ISEFFECT='0' and a.depcode is not null  and a.ISEXPATRIATE  is  null  and c.examinedate=a.CHETODATE	
+		 -->
+		<parameter name="sqlFrom">VECEXA T2</parameter>
+		<parameter name="sqlWhere">T1.ISEFFECT = '0'</parameter>
+		<field name="T1" type="component" title="车辆基本信息">
+			<parameter name="class">CMVEC</parameter>
+			<parameter name="sqlJoin">JOIN CMVEC T1 ON T1.CMVECID=T2.CMVECID</parameter>
+		</field>
+		<field name="T3" type="component" title="业户基本信息">
+			<parameter name="class">CMCLT</parameter>
+			<parameter name="sqlJoin">JOIN CMCLT T3 ON T1.CMCLTID = T3.CMCLTID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="出租车驾驶员服务监督卡" class="TAXDRISERCARD" businessServiceName="trafficSqlQueryService">
+		<field name="TAXDRISERCADID" title="出租车驾驶员服务卡ID" type="string" columnType="VARCHAR2(50)">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="BUSREACTCID" title="经营权证信息ID" type="string" columnType="VARCHAR2(50)"/>
+		<field name="BEWORID" title="从业资格证编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="TAXDRISERCADNO" title="服务监督卡号码" type="string" columnType="VARCHAR2(20)"/>
+		<field name="TAXDRISERCADNOTION" title="所属部分审核意见" type="string" columnType="VARCHAR2(500)"/>
+		<field name="TAXDRIPROSTATION" title="办理情况" type="string" columnType="CHAR(1)"/>
+		<field name="TAXDRISERSTADATE" title="有效限期始" type="string" columnType="CHAR(10)"/>
+		<field name="TAXDRISERENDDATE" title="有效限期止" type="string" columnType="CHAR(10)"/>
+		<field name="TAXDRISERCARSTATUS" title="状态" type="string" columnType="CHAR(1),0 正常,1 注销" inputMode="radio">
+			<parameter name="itemsText">正常|0\0注销|1</parameter>
+		</field>
+		<field name="LOGOUTCASUE" title="注销原因" type="string" columnType="VARCHAR2(50)"/>
+		<field name="LOGOUTDATE" title="注销时间" type="string" columnType="CHAR(10)"/>
+		<field name="REMARKDOC" title="备注" type="string" columnType="VARCHAR2(500)"/>
+		<field name="CREUSRCODE" title="创建者" type="string" columnType="VARCHAR2(50)"/>
+		<field name="CREDATE" title="创建日期" type="string" columnType="CHAR(10)"/>
+		<field name="CRETIME" title="创建时间" type="string" columnType="CHAR(8)"/>
+		<field name="EDIUSRCODE" title="编辑人员" type="string" columnType="VARCHAR2(50), edit user code,编辑用户帐号，取登录用户i帐号"/>
+		<field name="EDIDATE" title="编辑日期" type="string" columnType="CHAR(10)"/>
+		<field name="EDITIME" title="编辑时间, 编辑时间,取DBMS系统time" type="string" columnType="CHAR(8)"/>
+	</businessObject>
+	
+	<businessObject title="组织机构" class="T_PF_DEP" businessServiceName="trafficSqlQueryService">
+		<field name="EMAIL" title="EMAIL地址" type="string" columnType="VARCHAR2(50)"/>
+		<field name="PRDCODE" title="产品代码" type="string" columnType="VARCHAR2(20)"/>
+		<field name="FAX" title="传真号码" type="string" columnType="VARCHAR2(50)"/>
+		<field name="PARDEPID" title="父组织机构ID" type="string" columnType="VARCHAR2(50)"/>
+		<field name="DEPID" title="组织机构ID" type="string" columnType="VARCHAR2(50)"/>
+		<field name="DEPCODE" title="组织机构代码" type="string" columnType="VARCHAR2(20)"/>
+		<field name="DEPNAME" title="组织机构名称" type="string" columnType="VARCHAR2(100)"/>
+		<field name="STATUS" title="组织机构状态，0-正常1-注销" type="string" columnType="VARCHAR2(1)"/>
+		<field name="" title="" type="string" columnType=""/>
+		<field name="LINKERMAN" title="联系人" type="string" columnType="VARCHAR2(20)"/>
+		<field name="ADDRESS" title="联系地址" type="string" columnType="VARCHAR2(100)"/>
+		<field name="TEL" title="联系电话" type="string" columnType="VARCHAR2(50)"/>
+		<field name="DESCR" title="说明，remark document，备注" type="string" columnType="VARCHAR2(500)"/>
+		<field name="POSTCODE" title="邮政编码，单位邮政编码" type="string" columnType="VARCHAR2(6)"/>
+	</businessObject>
+	
+	<businessObject title="驾驶员诚信表" class="DRIVERTRUST" businessServiceName="trafficSqlQueryService">
+		<field name="LINKAGECOUNT" title="12345联动" type="string" columnType="VARCHAR(5)"/>
+		<field name="LINKAGEPOINT" title="12345联动记分" type="string" columnType="VARCHAR(5)"/>
+		<field name="ILLEGACOUNT" title="交通违章" type="string" columnType="VARCHAR(5)"/>
+		<field name="ILLEGAPOINT" title="交通违章记分" type="string" columnType="VARCHAR(5)"/>
+		<field name="ENPCOUNT" title="企业管理" type="string" columnType="VARCHAR(5)"/>
+		<field name="ENPPOINT" title="企业管理记分" type="string" columnType="VARCHAR(5)"/>
+		<field name="EDIDATE" title="修改日期" type="string" columnType="CHAR(10)"/>
+		<field name="EDITIME" title="修改时间" type="string" columnType="CHAR(8)"/>
+		<field name="EDIUSRCODE" title="修改者编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="CREDATE" title="创建日期" type="string" columnType="CHAR(10)"/>
+		<field name="CRETIME" title="创建时间" type="string" columnType="CHAR(8)"/>
+		<field name="CREUSRCODE" title="创建者编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="REMARKDOC" title="备注" type="string" columnType="VARCHAR2(500)"/>
+		<field name="GOODJOBCOUNT" title="好人好事" type="string" columnType="VARCHAR(5)"/>
+		<field name="GOODJOBPOINT" title="好人好事记分" type="string" columnType="VARCHAR(5)"/>
+		<field name="SAFECOUNT" title="安全事故" type="string" columnType="VARCHAR(5)"/>
+		<field name="SAFEPOINT" title="安全事故记分" type="string" columnType="VARCHAR(5)"/>
+		<field name="TOTALSCORE" title="总分值" type="string" columnType="VARCHAR2(10)"/>
+		<field name="APPEALCOUNT" title="投诉举报" type="string" columnType="VARCHAR(5)"/>
+		<field name="APPEALPOINT" title="投诉举报记分" type="string" columnType="VARCHAR(5)"/>
+		<field name="ISEFFECT" title="是否有效" type="string" columnType="CHAR(1)"/>
+		<field name="TRUSTENDDATE" title="生成时间止" type="string" columnType="VARCHAR2(10)"/>
+		<field name="TRUSTSTARTDATE" title="生成时间起" type="string" columnType="VARCHAR2(10)"/>
+		<field name="TRUSTLEVEL" title="等级" type="string" columnType="VARCHAR2(10)"/>
+		<field name="ORGANCODE" title="管理机构" type="string" columnType="VARCHAR2(8)"/>
+		<field name="BUSINESSCOUNT" title="经营违章" type="string" columnType="VARCHAR(5)"/>
+		<field name="BUSINESSPOINT" title="经营违章记分" type="string" columnType="VARCHAR(5)"/>
+		<field name="DRTID" title="编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="EXCELLENTCOUNT" title="评优评先" type="string" columnType="VARCHAR(5)"/>
+		<field name="EXCELLENTPOINT" title="评优评先记分" type="string" columnType="VARCHAR(5)"/>
+		<field name="TITNO" title="驾驶员从业资格证号" type="string" columnType="VARCHAR2(20)"/>
+		<field name="SEX" title="驾驶员姓别" type="string" columnType="VARCHAR2(1)" inputMode="radio">
+			<parameter name="itemsText">男|1\0女|2</parameter>
+		</field>
+		<field name="NAME" title="驾驶员姓名" type="string" columnType="VARCHAR2(30)"/>
+		<field name="CMPSNID" title="驾驶员编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="PHONE" title="驾驶员联系电话" type="string" columnType="VARCHAR2(30)"/>
+		<field name="CARDNO" title="驾驶员身份证号" type="string" columnType="VARCHAR2(20)"/>
+	</businessObject>
+	 
+	<businessObject title="驾驶员诚信细表" class="DRIVERTRUSTDETAIL" businessServiceName="trafficSqlQueryService">
+		<field name="INCIDENTSPOT" title="事件地点" type="string" columnType="varchar2(100)"/>
+		<field name="INCIDENTDATE" title="事件日期" type="string" columnType="VARCHAR(10)"/>
+		<field name="INCIDENTTIME" title="事件时间" type="string" columnType="VARCHAR(8)"/>
+		<field name="EDIDATE" title="修改日期" type="string" columnType="CHAR(10)"/>
+		<field name="EDITIME" title="修改时间" type="string" columnType="CHAR(8)"/>
+		<field name="EDIUSRCODE" title="修改者编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="APPCASCONTENT" title="内容" type="string" columnType="VARCHAR2(200)"/>
+		<field name="CREDATE" title="创建日期" type="string" columnType="CHAR(10)"/>
+		<field name="CRETIME" title="创建时间" type="string" columnType="CHAR(8)"/>
+		<field name="CREUSRCODE" title="创建者编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="CMPSNID" title="员工编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="SCORECONTENT" title="处罚标准/奖励情节" type="string" columnType="VARCHAR2(200)"/>
+		<field name="APPREMARK" title="备注" type="string" columnType="VARCHAR2(200)"/>
+		<field name="ISEFFECT" title="是否有效" type="string" columnType="CHAR(1)"/>
+		<field name="SOURCEID" title="来源对象ID" type="string" columnType="VARCHAR2(50)"/>
+		<field name="SOURCETYPE" title="来源类别" type="string" columnType="VARCHAR2(2)"/>
+		<field name="ORGANCODE" title="管理机构" type="string" columnType="VARCHAR2(8)"/>
+		<field name="DRTDID" title="编号" type="string" columnType="VARCHAR(50)"/>
+		<field name="SCORE" title="记分" type="string" columnType="VARCHAR2(5)"/>
+		<field name="SCORERECORDID" title="记分ID" type="string" columnType="VARCHAR(50)"/>
+		<field name="SCORECODE" title="记分代码" type="string" columnType="VARCHAR2(12)"/>
+		<field name="SCCREDATE" title="记分登记日期" type="string" columnType="VARCHAR2(10)"/>
+		<field name="SCORETYPE" title="记分类型" type="string" columnType="CHAR(1)，1表示扣分标准，2表示加分标准"/>
+		<field name="BRAPREFIX" title="车牌号字" type="string" columnType="VARCHAR2(8)"/>
+		<field name="BRANUM" title="车牌号码" type="string" columnType="VARCHAR2(12)"/>
+		<field name="BRACOLOR" title="蓝牌、黄牌等，单选" type="string" columnType="VARCHAR2(4)"/>
+		<field name="CMVECID" title="车辆ID" type="string" columnType="VARCHAR2(50)"/>
+		<field name="PUNISHSTANDARD" title="违章行为" type="string" columnType="VARCHAR2(200)"/>
+		<field name="CMCLTID" title="驾驶员业户ID" type="string" columnType="VARCHAR2(50)"/>
+		<field name="DRTID" title="驾驶员诚信表编号" type="string" columnType="VARCHAR(50)"/>
+	</businessObject>
+	
+	<businessObject title="出租车记分记录表" class="SCORERECORD" businessServiceName="trafficSqlQueryService">
+		<field name="SCORERECORDID" title="ID" type="string" columnType="VARCHAR2(50)"/>
+		<field name="CLITNAME" title="业户名称或委托管理名称" type="string" columnType="VARCHAR2(100)"/>
+		<field name="INCIDENTSPOT" title="事发地点" type="string" columnType="VARCHAR2(100)"/>
+		<field name="INCIDENTDATE" title="事发日期" type="string" columnType="CHAR(10)"/>
+		<field name="INCIDENTTIME" title="事发时间" type="string" columnType="CHAR(8)"/>
+		<field name="FACTDESC" title="事实描述/评优评先内容" type="string" columnType="VARCHAR2(1000)"/>
+		<field name="CMPSNID" title="人员编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="TITNO" title="从业资格证号" type="string" columnType="VARCHAR2(20)"/>
+		<field name="BEWORID" title="从业资格证编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="CMCLTID" title="企业ID(业户ID或委托管理ID)" type="string" columnType="VARCHAR2(50)"/>
+		<field name="BIRTHDAY" title="出生日期" type="string" columnType="CHAR(10)"/>
+		<field name="CREUSRCODE" title="创建人员编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="CREDATE" title="创建日期" type="string" columnType="CHAR(10)"/>
+		<field name="CRETIME" title="创建时间" type="string" columnType="CHAR(8)"/>
+		<field name="EDIUSRCODE" title="变更人员编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="EDIDATE" title="变更日期" type="string" columnType="CHAR(10)"/>
+		<field name="EDITIME" title="变更时间" type="string" columnType="CHAR(8)"/>
+		<field name="REMARKDOC" title="备注" type="string" columnType="VARCHAR2(500)"/>
+		<field name="NAME" title="姓名" type="string" columnType="VARCHAR2(30)"/>
+		<field name="CHECKMAN" title="审核人" type="string" columnType="varchar2(50)"/>
+		<field name="CHECKCONTENT" title="审核内容" type="string" columnType="varchar2(500)"/>
+		<field name="CHECKDATE" title="审核日期" type="string" columnType="char(10)"/>
+		<field name="CHECKSTATUS" title="审核状态" type="string" columnType="char(1), 0 通过  1 未通过"/>
+		<!--field name="SEX" title="性别" type="string" columnType="CHAR(1)"/-->
+		<field name="SEX" title="性别" type="string" columnType="CHAR(1)" inputMode="radio">
+			<parameter name="itemsText">男|1\0女|2</parameter>
+		</field>
+		<field name="ISEFFECT" title="是否有效" type="string" columnType="CHAR(1)"/>
+		<field name="SOURCETYPE" title="来源类别" type="string" columnType="VARCHAR2(2)"/>
+		<field name="ITEMVALUE" title="物品价值" type="string" columnType="VARCHAR2(20)"/>
+		<field name="REGISTERPER" title="登记人员" type="string" columnType="VARCHAR2(30)"/>
+		<field name="REGISTERDATE" title="登记日期" type="string" columnType="CHAR(10)"/>
+		<field name="ORGANCODE" title="管理机构" type="string" columnType="VARCHAR2(8)"/>
+		<field name="SCORERECORDNO" title="编号" type="string" columnType="VARCHAR2(20), 年份+来源类别+机构编码+6位流水号"/>
+		<field name="PHONE" title="联系电话" type="string" columnType="VARCHAR2(30)"/>
+		<field name="SCORE" title="记分" type="string" columnType="VARCHAR2(5)"/>
+		<field name="SCORECODE" title="记分代码" type="string" columnType="VARCHAR2(10)"/>
+		<field name="EPID" title="记分企业ID" type="string" columnType="VARCHAR2(50)"/>
+		<field name="EPNAME" title="记分企业名称" type="string" columnType="VARCHAR2(100)"/>
+		<field name="SCORECRITERIAID" title="记分标准基础ID" type="string" columnType="VARCHAR2(50)"/>
+		<field name="SCORETYPE" title="记分类型" type="string" columnType="CHAR(1), 1表示扣分标准，2表示加分标准"/>
+		<field name="ADVANCEDYEAR" title="评优年度" type="string" columnType="VARCHAR2(4)"/>
+		<field name="CARDNO" title="身份证号码" type="string" columnType="VARCHAR2(18)"/>
+		<field name="BRAPREFIX" title="车牌号字" type="string" columnType="VARCHAR2(8)"/>
+		<field name="BRANUM" title="车牌号码" type="string" columnType="VARCHAR2(15)"/>
+		<field name="BRACOLOR" title="车牌颜色" type="string" columnType="VARCHAR(2)"/>
+		<field name="CMVECID" title="车辆ID" type="string" columnType="VARCHAR2(50)"/>
+	</businessObject>
+	
+	<businessObject title="企业考核评定最后得分记录主表" class="ENPFINALSCORE" businessServiceName="trafficSqlQueryService">
+		<field name="SCOREFIVE" title="企业管理水平得分" type="string" columnType="VARCHAR2(5)"/>
+		<field name="SCOREFOUR" title="履行管理责任得分" type="string" columnType="VARCHAR2(5)"/>
+		<field name="SCOREONE" title="基本条件得分" type="string" columnType="VARCHAR2(5)"/>
+		<field name="SCORESIX" title="加分项目得分" type="string" columnType="VARCHAR2(5)"/>
+		<field name="SCORETHREE" title="安全生产得分" type="string" columnType="VARCHAR2(5)"/>
+		<field name="SCORETWO" title="经营行为得分" type="string" columnType="VARCHAR2(5)"/>
+		<field name="PREYEARSITUATION" title="上年度经营行为,安全生产,履行责任和管理水平情况" type="string" columnType="VARCHAR2(500)"/>
+		<field name="EPNAME" title="企业名称" type="string" columnType="VARCHAR2(50)"/>
+		<field name="EPADDRESS" title="企业地址" type="string" columnType="VARCHAR2(100)"/>
+		<field name="MANAGERNUM" title="企业管理人员数" type="string" columnType="VARCHAR2(10)"/>
+		<field name="LEADTERMOPINION" title="企业管理目标考核领导小组意见" type="string" columnType="VARCHAR2(500)"/>
+		<field name="EPID" title="企业编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="EDIDATE" title="修改日期" type="string" columnType="VARCHAR2(10)"/>
+		<field name="EDITIME" title="修改时间" type="string" columnType="VARCHAR2(8)"/>
+		<field name="EDIUSRCODE" title="修改者" type="string" columnType="VARCHAR2(50)"/>
+		<field name="OWNTAXI" title="其中自有出租车" type="string" columnType="VARCHAR2(6)"/>
+		<field name="TAXIBRIGADEOPINION" title="出租车大队初审意见" type="string" columnType="VARCHAR2(500)"/>
+		<field name="SERVICESTATIONADDRESS" title="出租车服务站地址" type="string" columnType="VARCHAR2(200)"/>
+		<field name="CREDATE" title="创建日期" type="string" columnType="VARCHAR2(10)"/>
+		<field name="CRETIME" title="创建时间" type="string" columnType="VARCHAR2(8)"/>
+		<field name="CREUSRCODE" title="创建者" type="string" columnType="VARCHAR2(50)"/>
+		<field name="OFFICEAREA" title="办公场所面积" type="string" columnType="VARCHAR2(10)"/>
+		<field name="REMARK" title="备注" type="string" columnType="VARCHAR2(500)"/>
+		<field name="TRAININGAREA" title="学习培训场所面积" type="string" columnType="VARCHAR2(10)"/>
+		<field name="YEARFINALSCORE" title="年度企业管理目标考核分值" type="string" columnType="VARCHAR2(10)"/>
+		<field name="QUALIFICATIONLEVEL" title="拟申报出租车企业资质等级" type="string" columnType="VARCHAR2(2)"/>
+		<field name="ISEFFECT" title="是否有效" type="string" columnType="VARCHAR2(1)"/>
+		<field name="SERVICESTATIONAREA" title="服务场所和出租车服务站面积" type="string" columnType="VARCHAR2(10)"/>
+		<field name="SSWORKNUM" title="服务站工作人员数" type="string" columnType="VARCHAR2(10)"/>
+		<field name="JURPERSON" title="法人代表" type="string" columnType="VARCHAR2(30)"/>
+		<field name="ASSESSMENTYEAR" title="目标考核年度" type="string" columnType="VARCHAR2(10)"/>
+		<field name="BNSCOPE" title="经营范围" type="string" columnType="VARCHAR2(500)"/>
+		<field name="ENPFINALSCOREID" title="编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="CMVECNUM" title="车辆总数" type="string" columnType="VARCHAR2(6)"/>
+		<field name="OPERATIONSTATUS" title="运营状况" type="string" columnType="VARCHAR2(500)"/>
+	</businessObject>
+	
+	<businessObject title="出租车经营权证" class="BUSREACTC" businessServiceName="trafficSqlQueryService">
+		<field name="BUSREACTCID" title="经营权证信息ID" type="string" columnType="VARCHAR2(50)"/>
+		<field name="TAXBUSREAID" title="出租车经营权ID" type="string" columnType="VARCHAR2(50)"/>
+		<field name="TAXBUSREAWORD" title="经营权证字" type="string" columnType="VARCHAR2(10)"/>
+		<field name="TAXBUSREANO" title="经营权证号" type="string" columnType="VARCHAR2(10)"/>
+		<field name="CMCLTID" title="业户ID" type="string" columnType="VARCHAR2(50)"/>
+		<field name="VECOWENAME" title="车主姓名" type="string" columnType="VARCHAR2(30)"/>
+		<field name="JURCTCTYPE" title="证件类别" type="string" columnType="VARCHAR2(4), 身份证、法人代码证"/>
+		<field name="CTCNO" title="证件号码" type="string" columnType="VARCHAR2(20)"/>
+		<field name="CMVECID" title="车辆ID" type="string" columnType="VARCHAR2(50)"/>
+		<field name="BUYREASOURCE" title="权证来源" type="string" columnType="CHAR(1), 0有偿使用 1无偿划拨"/>
+		<field name="ACCREALDATE" title="受让日期" type="string" columnType="CHAR(10)"/>
+		<field name="BUYVALUES" title="买受价格" type="number" columnType="NUMBER(10)"/>
+		<field name="BUSREAREMARK" title="注记事项" type="string" columnType="VARCHAR2(500)"/>
+		<field name="CMVECVALUS" title="车辆价格" type="number" columnType="NUMBER(10)"/>
+		<field name="BUYREASTATUS" title="权证状态" type="string" columnType="CHAR(1), 0/正常,1/作废,2/抵押"/>
+		<field name="GRACTC" title="发证日期" type="string" columnType="CHAR(10)"/>
+		<field name="GRACTCDEPCODE" title="发证单位" type="string" columnType="VARCHAR2(20)"/>
+		<field name="CREUSRCODE" title="创建者" type="string" columnType="VARCHAR2(50)"/>
+		<field name="CREDATE" title="创建日期" type="string" columnType="CHAR(10)"/>
+		<field name="CRETIME" title="创建时间" type="string" columnType="CHAR(8)"/>
+		<field name="EDIUSRCODE" title="编辑人员" type="string" columnType="VARCHAR2(50), edit user code,编辑用户帐号，取登录用户i帐号"/>
+		<field name="EDIDATE" title="编辑日期" type="string" columnType="CHAR(10)"/>
+		<field name="EDITIME" title="编辑时间" type="string" columnType="CHAR(8), 编辑时间,取DBMS系统time"/>
+	</businessObject>
+	
+	<businessObject title="照片列表" class="PICLIST" businessServiceName="trafficSqlQueryService">
+		<field name="PICLISID" title="照片列表ID" type="string" columnType="VARCHAR2(50)"/>
+		<field name="PICTYPE" title="照片类型" type="string" columnType="CHAR(1)"/>
+		<field name="OJBID" title="对象ID" type="string" columnType="VARCHAR2(50)"/>
+		<field name="PICNAME" title="照片名称" type="string" columnType="VARCHAR2(20)"/>
+		<field name="PIC" title="照片" type="binary" columnType="LONG RAW，行驶证、车辆正面照、侧面"/>
+		<field name="ISEFFECT" title="是否有效" type="string" columnType="CHAR(1)"/>
+		<field name="REMARKDOC" title="备注" type="string" columnType="VARCHAR2(50)"/>
+		<field name="CREUSRCODE" title="创建者编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="CREDATE" title="创建日期" type="string" columnType="CHAR(10)"/>
+		<field name="CRETIME" title="创建时间" type="string" columnType="CHAR(8)"/>
+	</businessObject>
+	
+	<businessObject title="企业考核评定最后得分细表" class="ENPFINALSCOREDETAIL" businessServiceName="trafficSqlQueryService">
+		<field name="TOTALSCORE" title="一级考核总分值" type="string" columnType="VARCHAR2(5)"/>
+		<field name="ENPFINALSCOREID" title="主表编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="TOTALSCORESECOND" title="二级考核总分值" type="string" columnType="VARCHAR2(5)"/>
+		<field name="EPID" title="企业编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="EDIDATE" title="修改日期" type="string" columnType="VARCHAR2(10)"/>
+		<field name="EDITIME" title="修改时间" type="string" columnType="VARCHAR2(8)"/>
+		<field name="EDIUSRCODE" title="修改者" type="string" columnType="VARCHAR2(50)"/>
+		<field name="CREDATE" title="创建日期" type="string" columnType="VARCHAR2(10)"/>
+		<field name="CRETIME" title="创建时间" type="string" columnType="VARCHAR2(8)"/>
+		<field name="CREUSRCODE" title="创建者" type="string" columnType="VARCHAR2(50)"/>
+		<field name="DETAILREMARK" title="备注" type="string" columnType="VARCHAR2(500)"/>
+		<field name="GETSCORE" title="所得分数" type="string" columnType="VARCHAR2(5)"/>
+		<field name="TSSDSCORE" title="明细记分" type="string" columnType="VARCHAR2(5)"/>
+		<field name="ISEFFECT" title="是否有效" type="string" columnType="VARCHAR2(1)"/>
+		<field name="SERIALNUMBER" title="流水号" type="string" columnType="VARCHAR2(10)"/>
+		<field name="TDSN" title="流水号2" type="string" columnType="VARCHAR2(10)"/>
+		<field name="TSSDTYPE" title="类型" type="string" columnType="VARCHAR2(2)"/>
+		<field name="SYSSCORE" title="系统得分" type="string" columnType="VARCHAR2(5)"/>
+		<field name="ENPFINALSCOREDETAILID" title="编号" type="string" columnType="VARCHAR2(50)"/>
+		<field name="TSSDID" title="编号2" type="string" columnType="VARCHAR2(50)"/>
+		<field name="TAXITARGETSCORESTANDARDID" title="编号3" type="string" columnType="VARCHAR2(50)"/>
+		<field name="PROFIRSTCODE" title="考核一级项目值" type="string" columnType="VARCHAR2(5)"/>
+		<field name="PROFIRSTNAME" title="考核一级项目名称" type="string" columnType="VARCHAR2(50)"/>
+		<field name="PROTHIRDNAME" title="考核三级项目内容" type="string" columnType="VARCHAR2(500)"/>
+		<field name="PROSECONDNAME" title="考核二级项目名称" type="string" columnType="VARCHAR2(50)"/>
+		<field name="ASSESSMENTYEAR" title="考核年度" type="string" columnType="VARCHAR2(10)"/>
+		<field name="SCORDSTANDARDDETAIL" title="记分标准明细内容" type="string" columnType="VARCHAR2(200)"/>
+	</businessObject>
+	
+	<!-- 基础信息表 -->
+	<businessObject title="车辆基本信息" class="CMVEC" businessServiceName="trafficSqlQueryService">
+		<field name="CMVECID" type="string" columnType="VARCHAR2(50) not null" title="车辆ID">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="CMCLTID" type="string" columnType="VARCHAR2(50)" title="业户ID；与CMCLT表的CMCLTID对应"/>
+		<field name="DEPCODE" type="string" columnType="VARCHAR2(10)" title="所属行政机构ID" inputMode="none"/>
+		<field name="DEPCODE_TITLE" type="string" columnType="VARCHAR2(10)" title="所属行政机构">
+			<parameter name="sql">SELECT DEPNAME FROM T_PF_DEP WHERE DEPCODE={ALIAS}.DEPCODE</parameter>
+		</field>
+		<field name="VECADDR" type="string" columnType="VARCHAR2(6)" title="车籍地"/>
+		<field name="TRAWORD" type="string" columnType="VARCHAR2(4)" title="道路运输证字"/>
+		<field name="TRANO" type="string" columnType="VARCHAR2(20)" title="道路运输证号"/>
+		<field name="GRADEPCODE" type="string" columnType="VARCHAR2(50)；与机构表对应" title="发证机构"/>
+		<field name="GRADATE" type="string" columnType="CHAR(10)" title="核发日期"/>
+		<field name="STADATE" type="string" columnType="CHAR(10)" title="有效期起"/>
+		<field name="ENDDATE" type="string" columnType="CHAR(10)" title="有效期止"/>
+		<field name="REGYPE" type="string" columnType="VARCHAR2(4)(1新增2转籍3过户4更新)" title="登记类型"/>
+		<field name="BRACOLOR" type="string" columnType="VARCHAR2(4)" title="车牌颜色" inputMode="radio">
+			<parameter name="itemsText">蓝色|1\0黄色|2\0黑色|3\0白色|4\0农蓝|5\0农黄|6\0农绿|7\0其他|9</parameter>
+		</field>
+		<field name="BRAPREFIX" type="string" columnType="VARCHAR2(8)" title="车牌号字" inputMode="none"/>
+		<field name="BRANUM" type="string" columnType="VARCHAR2(12)" title="车牌号码" inputMode="none"/>
+		<field name="BRAPREFIX_BRANUM" type="string" title="车牌号码">
+			<parameter name="sql">{ALIAS}.BRAPREFIX||{ALIAS}.BRANUM</parameter>
+		</field>
+		<field name="FACTYPE" type="string" columnType="VARCHAR2(30)" title="厂牌" inputMode="none"/>
+		<field name="MODEL" type="string" columnType="VARCHAR2(30)" title="型号" inputMode="none"/>
+		<field name="FACTYPE_MODEL" type="string" title="厂牌型号">
+			<parameter name="sql">{ALIAS}.FACTYPE||{ALIAS}.MODEL</parameter>
+		</field>
+		<field name="VECENTYPE" type="string" columnType="VARCHAR2(50)（1客车2普货3危货4出租车5出租车9其他）" title="实体类别"/>
+		<field name="VECTYPE" type="string" columnType="VARCHAR2(14)(客车、货车、教练车等)" title="车辆类型" inputMode="none"/>
+		<field name="VECTYPE_TITLE" type="string" title="车辆类型">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='VECTYPE' and CODE={ALIAS}.VECTYPE</parameter>
+		</field>
+		<field name="VECCOLOR" type="string" columnType="VARCHAR2(20)" title="车身颜色"/>
+		<field name="ENGTYPE" type="string" columnType="VARCHAR2(20)" title="发动机型号"/>
+		<field name="ENGNUM" type="string" columnType="VARCHAR2(50)" title="发动机号"/>
+		<field name="FRANUM" type="string" columnType="VARCHAR2(50)" title="车架号"/>
+		<field name="VINNUM" type="string" columnType="VARCHAR2(17)" title="车辆识别码"/>
+		<field name="ELDTYPE" type="string" columnType="VARCHAR2(6)" title="燃料类型"/>
+		<field name="ENGPOWER" type="number" columnType="NUMBER(6,1)" title="发动机功率"/>
+		<field name="CHEPOWER" type="number" columnType="NUMBER(6,1)" title="发动机核定功率"/>
+		<field name="SELVECSHOP" type="string" columnType="VARCHAR2(50)" title="售车单位"/>
+		<field name="PRODATE" type="string" columnType="CHAR(10)" title="出厂日期"/>
+		<field name="BUYDATE" type="string" columnType="CHAR(10)" title="购车日期"/>
+		<field name="SETDATE" type="string" columnType="CHAR(10)" title="落户日期"/>
+		<field name="WHETREAD" type="number" columnType="NUMBER(6)" title="轮距"/>
+		<field name="WHEBASE" type="number" columnType="NUMBER(6)" title="轴距"/>
+		<field name="TYRENUM" type="number" columnType="NUMBER(3)" title="轮胎数"/>
+		<field name="VECLENGTH" type="number" columnType="NUMBER(6)" title="车长"/>
+		<field name="VECHIGH" type="number" columnType="NUMBER(6)" title="车高"/>
+		<field name="VECWIDE" type="number" columnType="NUMBER(6)" title="车宽"/>
+		<field name="AXLNUM" type="number" columnType="NUMBER(6)" title="车轴数"/>
+		<field name="SPRNUM" type="number" columnType="NUMBER(6)" title="后轴钢板弹簧片数"/>
+		<field name="ARCSPLACE" type="string" columnType="VARCHAR2(10)" title="档位"/>
+		<field name="TRAMASS" type="number" columnType="NUMBER(6)" title="准牵引总质量"/>
+		<field name="CREDATE" type="string" columnType="CHAR(10)" title="车辆建档日期"/>
+		<field name="CRETIME" type="string" columnType="CHAR(8)" title="车辆建档时间"/>
+		<field name="CREUSRCODE" type="string" columnType="VARCHAR2(50)" title="车辆建档人员编号"/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title="车辆档案变更日期"/>
+		<field name="EDITIME" type="string" columnType="CHAR(8)" title="车辆档案变更时间"/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title="车辆档案变更人员编号"/>
+		<field name="DF1" type="string" columnType="VARCHAR2(50)" title="启用为正常车辆建档还是特殊车辆建档，前者为空，后者为1"/>
+		<field name="DF2" type="string" columnType="VARCHAR2(50)" title="为'1'时，综合车辆"/>
+		<field name="DF3" type="string" columnType="VARCHAR2(50)" title="备用3"/>
+		<field name="DF4" type="string" columnType="VARCHAR2(50)" title="备用4"/>
+		<field name="DF5" type="string" columnType="VARCHAR2(50)" title="备用5"/>
+		<field name="DF6" type="string" columnType="VARCHAR2(50)" title="备用6"/>
+		<field name="HUNMILUSEOIL" type="number" columnType="NUMBER(5,1)" title="百公里耗油"/>
+		<field name="DRITYPE" type="string" columnType="VARCHAR2(10)" title="驱动方式"/>
+		<field name="MILAGE" type="number" columnType="NUMBER(8,1)" title="里程数"/>
+		<field name="VECBUSSTATUS" type="string" columnType="VARCHAR2(2)(10营运、21停运、31迁出(过户)、32迁出(转籍)、33报废、34歇业、80注销、90其他)" title="营运状态" inputMode="none"/>
+		<field name="VECBUSSTATUS_TITLE" type="string" title="营运状态">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='VECBUSSTATUS' and CODE={ALIAS}.VECBUSSTATUS</parameter>
+		</field>
+		<field name="YEARS" type="string" columnType="INTEGER" title="报废年限"/>
+		<field name="TECGRD" type="string" columnType="VARCHAR2(6)" title="车辆技术等级"/>
+		<field name="NEXTECGRDTODATE" type="string" columnType="CHAR(10)" title="下次技术等级评定日期"/>
+		<field name="VINNEXTDATE" type="string" columnType="CHAR(10)" title="二级下次维护到期日期"/>
+		<field name="COLTODATE" type="string" columnType="CHAR(10)" title="缴纳规费到日期"/>
+		<field name="CHETODATE" type="string" columnType="CHAR(10)" title="本次年审日期"/>
+		<field name="STACOLDATE" type="string" columnType="CHAR(10)" title="规费开征日期"/>
+		<field name="COSSTATE" type="string" columnType="CHAR(1)" title="规费缴纳状态"/>
+		<field name="TRASTATE" type="string" columnType="CHAR(1)" title="稽查处理状态"/>
+		<field name="SLITIMES" type="number" columnType="NUMBER(6)" title="交通事故次数"/>
+		<field name="VECOWENAME" type="string" columnType="VARCHAR2(200)" title="车主姓名"/>
+		<field name="VECOWEPHONE" type="string" columnType="VARCHAR2(20)" title="车主联系电话"/>
+		<field name="BUSTYPE" type="string" columnType="VARCHAR2(2)" title="经营方式"/>
+		<field name="ISEFFECT" type="number" columnType="NUMBER(1)" title="是否有效（1有效0无效）"/>
+		<field name="THRINSMONEY" type="string" columnType="VARCHAR2(6)" title="第三者责任保险实际投保金额"/>
+		<field name="THRINSAMOUNT" type="string" columnType="VARCHAR2(4)" title="第三者责任保险实际投保数量"/>
+		<field name="THRINSNO" type="string" columnType="VARCHAR2(30)" title="第三者保险保单号"/>
+		<field name="THRINSENDDATE" type="string" columnType="CHAR(10)" title="第三者保险有效期"/>
+		<field name="TRAINSMONEY" type="string" columnType="VARCHAR2(6)" title="承运人责任保险实际投保金额"/>
+		<field name="TRAINSAMOUNT" type="string" columnType="VARCHAR2(4)" title="承运人责任保险实际投保数量"/>
+		<field name="TRAINSNO" type="string" columnType="VARCHAR2(30)" title="承运人保险保单号"/>
+		<field name="TRAINSENDDATE" type="string" columnType="CHAR(10)" title="承运人保险有效期"/>
+		<field name="FULTON" type="number" columnType="NUMBER(8)" title="满载总质量KG"/>
+		<field name="FULEQUIP" type="number" columnType="NUMBER(8)" title="整备总质量KG"/>
+		<field name="ARCNO" type="string" columnType="VARCHAR2(12)" title="车辆档案号"/>
+		<field name="BNSCOPE" type="string" columnType="VARCHAR2(50)" title="经营范围"/>
+		<field name="ISINOUT" type="string" columnType="CHAR(1)" title="是否出入境"/>
+		<field name="ISCOMMTOOL" type="string" columnType="CHAR(1)" title="是否配备有效通讯工具"/>
+		<field name="COMMTOOL" type="string" columnType="VARCHAR2(30)" title="有效通讯工具号码"/>
+		<field name="ISLOGAPPL" type="string" columnType="CHAR(1)" title="是否安装行驶记录仪"/>
+		<field name="ISGOTOSYS" type="string" columnType="CHAR(1)" title="是否安装定位系统"/>
+		<field name="LOGAPPSTAT" type="string" columnType="VARCHAR2(14)" title="行车记录仪安装状态"/>
+		<field name="GOTOSYSSTAT" type="string" columnType="VARCHAR2(14)" title="定位系统安装状态"/>
+		<field name="CSGUNIT" type="string" columnType="VARCHAR2(50)" title="委托单位"/>
+		<field name="FRICREDOCDATE" type="string" columnType="CHAR(10)" title="初步建档日期"/>
+		<field name="ISFOREIGN" type="string" columnType="CHAR(1)" title="国产/进口(0/国产1/进口)"/>
+		<field name="ENGDISMOMENT" type="number" columnType="NUMBER(13,3)" title="发动机排量"/>
+		<field name="RATROTSPEED" type="number" columnType="NUMBER(12,2)" title="额定转速"/>
+		<field name="ENGTORMOMENT" type="number" columnType="NUMBER(8,3)" title="发动机扭矩"/>
+		<field name="ENGTORMOMROTSPEED" type="number" columnType="NUMBER(13,3)" title="额定扭矩转速"/>
+		<field name="TURFORMAT" type="string" columnType="VARCHAR2(2)" title="方向盘、方向把"/>
+		<field name="CHELODMASS" type="number" columnType="NUMBER(13,3)" title="核定载质量"/>
+		<field name="TYRSTANDARD" type="string" columnType="VARCHAR2(40)" title="轮胎规格"/>
+		<field name="CHEPSNNUM" type="number" columnType="NUMBER(3)" title="核定乘员数"/>
+		<field name="MSTHIGSPEED" type="number" columnType="NUMBER(13,3)" title="最高车速"/>
+		<field name="WITTRAANGLE" type="number" columnType="NUMBER(7,3)" title="内转向轮转角"/>
+		<field name="WOTTRAANGLE" type="number" columnType="NUMBER(7,3)" title="外转向轮转角"/>
+		<field name="VINDATNUM" type="number" columnType="NUMBER(3)" title="二级维护周期"/>
+		<field name="TSMFORMAT" type="string" columnType="CHAR(1)" title="手动、自动或手自动一体化"/>
+		<field name="BEFPDTFORMAT" type="string" columnType="CHAR(1)" title="独立或非独立"/>
+		<field name="AFTPDTFORMAT" type="string" columnType="CHAR(1)" title="独立或非独立"/>
+		<field name="FUESPOUTFORMAT" type="string" columnType="CHAR(1)" title="有或无（电子控制喷射）"/>
+		<field name="BEFLAPFORMAT" type="string" columnType="CHAR(1)" title="两灯制或四灯制"/>
+		<field name="HYDFORMAT" type="string" columnType="VARCHAR2(20)" title="气/液压制动"/>
+		<field name="HAVABS" type="string" columnType="CHAR(1)" title="有或无ABS"/>
+		<field name="INSVECCARLONG" type="number" columnType="NUMBER(6)" title="货厢内部长度"/>
+		<field name="INSVECCARWIDE" type="number" columnType="NUMBER(6)" title="货厢内部宽度"/>
+		<field name="INSVECCARHIGH" type="number" columnType="NUMBER(6)" title="货厢内部高度"/>
+		<field name="PRDFACTORY" type="string" columnType="VARCHAR2(50)" title="制造厂名称"/>
+		<field name="BEFWHETREAD" type="number" columnType="NUMBER(6)" title="后轮距"/>
+		<field name="TRANCHA" type="string" columnType="VARCHAR2(2)" title="运输性质"/>
+		<field name="BUYPRICE" type="number" columnType="NUMBER(10,2)" title="购车价格(万元)"/>
+		<field name="DF7" type="string" columnType="VARCHAR2(50)" title=""/>
+		<field name="DF8" type="string" columnType="VARCHAR2(50)" title=""/>
+		<field name="DF9" type="string" columnType="VARCHAR2(50)" title=""/>
+		<field name="DF10" type="string" columnType="VARCHAR2(50)" title=""/>
+		<field name="DF11" type="string" columnType="VARCHAR2(50)" title="用做二维超期的是否已经上传的 0 否 1 是"/>
+		<field name="DF12" type="string" columnType="VARCHAR2(50)" title=""/>
+		<field name="DF13" type="string" columnType="VARCHAR2(50)" title=""/>
+		<field name="DF14" type="string" columnType="VARCHAR2(50)" title=""/>
+		<field name="DF15" type="string" columnType="VARCHAR2(50)" title="暂时存放县区导入数据的发动机号，2008年10月后可以使用，使用前请清除。"/>
+		<field name="DF16" type="string" columnType="VARCHAR2(50)" title="暂时存放县区导入数据的车架号，2008年10月后可以使用，使用前请清除。"/>
+		<field name="DF17" type="string" columnType="VARCHAR2(50)" title=""/>
+		<field name="DF18" type="string" columnType="VARCHAR2(50)" title=""/>
+		<field name="DF19" type="string" columnType="VARCHAR2(50)" title=""/>
+		<field name="DF20" type="string" columnType="VARCHAR2(50)" title=""/>
+		<field name="DF21" type="string" columnType="VARCHAR2(50)" title="暂时存放县区导入数据的标识，2008年12月后可以使用，使用前请清除。"/>
+		<field name="DF22" type="string" columnType="VARCHAR2(500)" title=""/>
+		<field name="ISEXPATRIATE" type="string" columnType="VARCHAR2(1)" title=""/>
+		<field name="PRINTSIGN" type="string" columnType="VARCHAR2(2)" title="打印标志"/>
+		<field name="MAINBNSCOPE" type="string" columnType="VARCHAR2(50)" title="主经营范围"/>
+		<field name="REGDEP" type="string" columnType="VARCHAR2(10)" title="登记单位"/>
+		<field name="RESIDENT" type="string" columnType="VARCHAR2(1)" title="是否驻地车,Y是 N否"/>
+		<field name="CONTENT" type="string" columnType="VARCHAR2(4000)" title="案件处理情况"/>
+		<field name="UPDATESTATE" type="string" columnType="CHAR(1)" title="更新状态 1-有更新 0-没更新"/>
+		<field name="USERNATURE" type="string" columnType="VARCHAR2(2)" title=""/>
+		<field name="SAFEDATE" type="string" columnType="CHAR(10)" title=""/>
+		<field name="FIRE" type="string" columnType="VARCHAR2(10)" title=""/>
+		<!-- field name="LASTFINISHDATE" type="string" columnType="VARCHAR2(10)" title="上次二维完成时间"/-->
+		<!-- field name="TMSTATUS" type="string" columnType="VARCHAR2(2)" title="二维超期状态"/ -->
+		<!-- field name="STATUSEDTTIME" type="string" columnType="VARCHAR2(19)" title="二维超期状态更新时间"/-->
+	</businessObject>
+
+	<businessObject title="业户基本信息" class="CMCLT" businessServiceName="trafficSqlQueryService">
+		<field name="CMCLTID" type="string" columnType="VARCHAR2(50) not null" title="业户编号（主键）">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="CLTTYPE" type="string" columnType="VARCHAR2(50) default ''" title="行业类别"/>
+		<field name="BNSCOPE" type="string" columnType="VARCHAR2(500) default ''" title="经营范围ID" inputMode="none"/>
+		<field name="BNSCOPE_TITLE" type="string" title="经营范围">
+			<parameter name="sql">replace(replace(replace(replace(replace(replace(replace(replace(replace
+				(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+				(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+				(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+				(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+				(replace(replace(replace(replace(replace(replace(replace(replace(replace
+				(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+				(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+				(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+				(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+				(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+				(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+				(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace
+				(replace(replace(replace(replace(replace(replace(replace(replace(replace
+				({ALIAS}.BNSCOPE,'01000','道路旅客运输'),'01100','班车客运'),'01101','县内班车客运'),
+				'01102','县际班车客运'),'01103','市际班车客运'),'01104','省际班车客运'),'01200','包车客运'),
+				'01201','县内包车客运'),'01202','县际包车客运'),'01203','市际包车客运'),'01204','省际包车客运'),
+				'01300','旅游包车客运'),'01301','县内（旅游）包车客运'),'01302','县际（旅游）包车客运'),
+				'01303','市际（旅游）包车客运'),'01304','省际（旅游）包车客运'),'01400','闽港（澳）直通客运'),
+				'01500','国际运输'),'01501','国际定期班车客运'),'01502','国际不定期班车客运'),'02000','道路普通货物运输'),
+				'02100','普通货物运输'),'02101','普通货运'),'02102','搬家运输'),'02200','货物专用运输'),
+				'02201','货物专用运输（集装箱）'),'02202','货物专用运输（冷藏保鲜设备）'),'02203','货物专用运输（罐式容器）'),
+				'02300','大型物件运输'),'02301','大型物件运输（一类）'),'02302','大型物件运输（二类）'),
+				'02303','大型物件运输（三类）'),'02304','大型物件运输（四类）'),'02400','闽港(澳)直通货运'),'02500','国际货物运输'),
+				'03000','道路危险货物运输'),'03100','经营性道路危险货物运输'),'03111','危险货物运输（1类1项）'),
+				'03112','危险货物运输（1类2项）'),'03113','危险货物运输（1类3项）'),'03114','危险货物运输（1类4项）'),
+				'03115','危险货物运输（1类5项）'),'03116','危险货物运输（1类6项）'),'03121','危险货物运输（2类1项）'),
+				'03122','危险货物运输（2类2项）'),'03123','危险货物运输（2类3项）'),'03131','危险货物运输（3类）'),
+				'03141','危险货物运输（4类1项）'),'03142','危险货物运输（4类2项）'),'03143','危险货物运输（4类3项）'),
+				'03151','危险货物运输（5类1项）'),'03152','危险货物运输（5类2项）'),'03161','危险货物运输（6类1项）'),
+				'03162','危险货物运输（6类2项）'),'03170','危险货物运输（7类）'),'03181','危险货物运输（8类）'),'03191',
+				'危险货物运输（9类）'),'03200','非经营性道路危险货物运输'),'03211','危险货物运输（1类1项）'),
+				'03212','危险货物运输（1类2项）'),'03213','危险货物运输（1类3项）'),'03214','危险货物运输（1类4项）'),
+				'03215','危险货物运输（1类5项）'),'03216','危险货物运输（1类6项）'),'03221','危险货物运输（2类1项）'),
+				'03222','危险货物运输（2类2项）'),'03223','危险货物运输（2类3项）'),'03231','危险货物运输（3类）'),'03241','危险货物运输（4类1项）'),'03242','危险货物运输（4类2项）'),'03243','危险货物运输（4类3项）'),
+				'03251','危险货物运输（5类1项）'),'03252','危险货物运输（5类2项）'),'03261','危险货物运输（6类1项）'),'03262',
+				'危险货物运输（6类2项）'),'03270','危险货物运输（7类）'),'03281','危险货物运输（8类）'),'03291','危险货物运输（9类）'),
+				'03300','国际危险货物运输'),'09100','出租客运运输'),'09300','出租客运运输（接待车）'),'09200','出租货运运输'),
+				'04000','机动车维修'),'04100','一类汽车维修'),'04101','大中型客车维修'),'04102','大中型货车维修'),
+				'04103','小型车辆维修'),'04104','危险货物运输车辆维修'),'04200','二类汽车维修'),'04201','大中型客车维修'),
+				'04202','大中型货车维修'),'04203','小型车辆维修'),'04300','三类汽车维修'),'04301','发动机维修'),
+				'04302','车身维修'),'04303','电气系统维修'),'04304','自动变速器维修'),
+				'04305','车身清洁维护'),'04306','涂漆'),'04307','轮胎动平衡及修补'),
+				'04308','四轮定位检测调整'),'04309','供油系统维护及油品更换'),'04310','喷油泵和喷油觜维修'),
+				'04311','曲轴修磨'),'04312','气缸镗磨'),'04313','散热器（水箱）修理'),'04314','空调维修'),
+				'04315','车辆装潢（蓬布、坐垫及内饰）'),'04316','车辆玻璃安装'),
+				'04400','一类摩托车维修'),'04401','总成大修'),'04402','维护'),
+				'04403','小修'),'04500','二类摩托车维修'),'04501','维护'),
+				'04502','小修'),'04600','其它机动车维修'),'04601','其它机动车维修'),
+				'05000','机动车驾驶员培训'),'05100','普通机动车驾驶员培训'),'05111','A1'),'05112','A2'),
+				'05113','A3'),'05121','B1'),'05122','B2'),'05131','C1'),'05132','C2'),'05133','C3'),'05134','C4'),
+				'05140','D'),'05150','E'),'05160','F'),'05170','M'),'05200','道路运输驾驶员从业资格培训'),
+				'05201','道路运输驾驶员从业资格培训（客运）'),'05202','道路运输驾驶员从业资格培训（货运）'),
+				'05203','道路运输驾驶员从业资格培训（危险货运）'),'05204','道路运输驾驶员从业资格培训（其他）'),
+				'05300','机动车驾驶员培训教练场'),'05301','机动车驾驶员培训教练场')</parameter>
+		</field>
+		<field name="PERDECNO" type="string" columnType="VARCHAR2(30)" title="许可决定书号码"/>
+		<field name="PERWORD" type="string" columnType="VARCHAR2(4)" title="许可证字" inputMode="none"/>
+		<field name="PERNUM" type="string" columnType="VARCHAR2(20)" title="许可证号" inputMode="none"/>
+		<field name="PERWORD_PERNUM" type="string" title="许可证号">
+			<parameter name="sql">{ALIAS}.PERWORD || {ALIAS}.PERNUM</parameter>
+		</field>
+		<field name="GRADATE" type="string" columnType="CHAR(10)" title="核发日期"/>
+		<field name="EFFSTADATE" type="string" columnType="CHAR(10)" title="有效期起"/>
+		<field name="EFFENDDATE" type="string" columnType="CHAR(10)" title="有效期止"/>
+		<field name="GRADEPCODE" type="string" columnType="VARCHAR2(50)" title="发证机关"/>
+		<field name="CLITNAME" type="string" columnType="VARCHAR2(500)" title="业户名称"/>
+		<field name="DEPCODE" type="string" columnType="VARCHAR2(10)" title="受理机构ID" inputMode="none"/>
+		<field name="DEPCODE_TITLE" type="string" columnType="VARCHAR2(10)" title="受理机构">
+			<parameter name="sql">SELECT DEPNAME FROM T_PF_DEP WHERE DEPCODE={ALIAS}.DEPCODE AND UPPER(PRDCODE)='FZRTMIS'</parameter>
+		</field>
+		<field name="SUPCMCLTID" type="string" columnType="VARCHAR2(50)" title="上级业户编号"/>
+		<field name="FILNO" type="string" columnType="VARCHAR2(10)" title="分支机构编码"/>
+		<field name="ADDRESS" type="string" columnType="VARCHAR2(80)" title="地址"/>
+		<field name="MAICODING" type="string" columnType="VARCHAR2(10)" title="邮政编码"/>
+		<field name="CANCODE" type="string" columnType="VARCHAR2(10)" title="行政区划编号"/>
+		<field name="ECOTYPE" type="string" columnType="VARCHAR2(4)" title="国有全资、私有、有限责任" inputMode="none"/>
+		<field name="ECOTYPE_TITLE" type="string" columnType="VARCHAR2(4)" title="经济类型">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='ECOTYPE' AND CODE={ALIAS}.ECOTYPE</parameter>
+		</field>
+		<field name="JURPERSON" type="string" columnType="VARCHAR2(20)" title="法定代表人"/>
+		<field name="JURCTCTYPE" type="string" columnType="VARCHAR2(4)" title="身份证、法人代码证"/>
+		<field name="CTCNO" type="string" columnType="VARCHAR2(20)" title="法定代表人证件号码"/>
+		<field name="JURPIC" type="string" columnType="VARCHAR2(100)" title="法定代表人身份证照片"/>
+		<field name="PRINCIPAL" type="string" columnType="VARCHAR2(20)" title="经营负责人"/>
+		<field name="PHONE" type="string" columnType="VARCHAR2(20)" title="联系电话"/>
+		<field name="FAXPHONE" type="string" columnType="VARCHAR2(20)" title="传真电话"/>
+		<field name="MOBILE" type="string" columnType="VARCHAR2(20)" title="手机号码"/>
+		<field name="EMIAL" type="string" columnType="VARCHAR2(30)" title="电子邮箱"/>
+		<field name="HOMPAGE" type="string" columnType="VARCHAR2(30)" title="业户主页"/>
+		<field name="CLTBUSSTATUS" type="string" columnType="CHAR(1)" title="营业状态" inputMode="none"/>
+		<field name="CLTBUSSTATUS_TITLE" type="string" columnType="VARCHAR2(10)" title="营业状态">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='CLTBUSSTATUS' AND CODE={ALIAS}.CLTBUSSTATUS</parameter>
+		</field>
+		<field name="BUSLICNO" type="string" columnType="VARCHAR2(30)" title="工商营业执照号"/>
+		<field name="TAXREGNO" type="string" columnType="VARCHAR2(30)" title="税务登记证号"/>
+		<field name="CREUSRCODE" type="string" columnType="VARCHAR2(50)" title="创建者编号"/>
+		<field name="CREDATE" type="string" columnType="CHAR(10)" title="创建日期"/>
+		<field name="CRETIME" type="string" columnType="CHAR(8)" title="创建时间"/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title="修改者编号"/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title="修改日期"/>
+		<field name="EDITIME" type="string" columnType="CHAR(8)" title="修改时间"/>
+		<field name="ISEFFECT" type="number" columnType="NUMBER(1)" title="是否有效"/>
+		<field name="REMARKDOC" type="string" columnType="VARCHAR2(500)" title="备注"/>
+		<field name="DF1" type="string" columnType="VARCHAR2(50)" title="启用为企业投诉电话"/>
+		<field name="DF2" type="string" columnType="VARCHAR2(50)" title="启用为是通过普通业户建档方式和综合业务建档方式，前者为空，后者为1"/>
+		<field name="DF3" type="string" columnType="VARCHAR2(50)" title=""/>
+		<field name="DF4" type="string" columnType="VARCHAR2(50)" title=""/>
+		<field name="DF5" type="string" columnType="VARCHAR2(50)" title=""/>
+		<field name="DF6" type="string" columnType="VARCHAR2(50)" title="暂时存放县区导入数据的标识，2008年12月后可以使用，使用前请清除。"/>
+		<field name="ENTERPRISETYPE" type="string" columnType="VARCHAR2(50)(1建档/综合运输企业、2/个体、3/非运输企业)" title="业户企业类型"/>
+		<field name="ISEXPATRIATE" type="string" columnType="CHAR(1) 1.为外籍车" title="判断是否为外籍车"/>
+		<field name="JURPHONE" type="string" columnType="VARCHAR2(20)" title="法定代表人联系电话"/>
+		<field name="MAINBNSCOPE" type="string" columnType="VARCHAR2(50)" title="主经营范围"/>
+		<field name="REGDEP" type="string" columnType="VARCHAR2(10)" title="登记单位"/>
+		<field name="RESIDENT" type="string" columnType="VARCHAR2(1),Y是 N否" title="是否驻地车业户"/>
+		<field name="UPDATESTATE" type="string" columnType="CHAR(1) 1-有更新 0-没更新" title="更新状态"/>
+	</businessObject>
+	
+	<businessObject title="从业资格证" class="ENBEWOR" businessServiceName="trafficSqlQueryService">
+		<field name="BEWORID" type="string" columnType="VARCHAR2(50)" title="从业资格证编号（主键）"/>
+		<field name="CMPSNID" type="string" columnType="VARCHAR2(50)" title="人员编号（对应CMPSN表ID）"/>
+		<field name="WORTYPE" type="string" columnType="VARCHAR2(30)" title="从业资格类别" inputMode="none"/>
+		<field name="WORTYPE_TITLE" type="string" title="从业资格类别">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='WORTYPE' AND CODE={ALIAS}.WORTYPE</parameter>
+		</field>
+		<field name="TITNO" type="string" columnType="VARCHAR2(20)" title="从业资格证号"/>
+		<field name="STARTDATE" type="string" columnType="CHAR(10)" title="从业资格证初领时间"/>
+		<field name="GRADATE" type="string" columnType="CHAR(10)" title="从业资格证发放时间"/>
+		<field name="ENDDATE" type="string" columnType="CHAR(10)" title="证件有效期至"/>
+		<field name="LICSTATUS" type="string" columnType="VARCHAR2(4)" title="证照状态"/>
+		<field name="ORG" type="string" columnType="VARCHAR2(50)" title="发证机关"/>
+		<field name="TRATIMES" type="number" columnType="NUMBER(6)" title="补换证次数"/>
+		<field name="CREUSRCODE" type="string" columnType="VARCHAR2(50)" title="创建者编号"/>
+		<field name="CREDATE" type="string" columnType="CHAR(10)" title="创建日期"/>
+		<field name="CRETIME" type="string" columnType="CHAR(8)" title="创建时间"/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title="修改者编号"/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title="修改日期"/>
+		<field name="EDITIME" type="string" columnType="CHAR(8)" title="修改时间"/>
+		<field name="REMARKDOC" type="string" columnType="VARCHAR2(500)" title="备注"/>
+		<field name="BEWORSCOPE" type="string" columnType="VARCHAR2(14)" title="从业资格范围" inputMode="none"/>
+		<field name="BEWORSCOPE_TITLE" type="string" title="从业资格范围">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='BEWORSCOPE' AND CODE={ALIAS}.BEWORSCOPE</parameter>
+		</field>
+		<field name="CHESTATUS" type="string" columnType="VARCHAR2(1)" title="稽查处理状态"/>
+		<field name="ISEFFECT" type="number" columnType="NUMBER(1)" title="是否有效"/>
+		<field name="APPIXSCOPE" type="string" columnType="VARCHAR2(14)" title="附属资格范围"/>
+		<field name="BEWORLEVEL" type="string" columnType="VARCHAR2(50)" title="资格等级"/>
+		<field name="AREASERIAL" type="string" columnType="VARCHAR2(50)" title="全国流水号"/>
+		<field name="DOCNO" type="string" columnType="VARCHAR2(50)" title="档案号"/>
+	</businessObject>
+	
+	<businessObject title="数据字典" class="T_PF_DATADICT" businessServiceName="trafficSqlQueryService">
+		<field name="PRDCODE" title="产品代码" type="string" columnType="VARCHAR2(20)"/>
+		<field name="CODE" title="代码" type="string" columnType="VARCHAR2(50)"/>
+		<field name="DDFLD" title="代码字段名" type="string" columnType="VARCHAR2(50)"/>
+		<field name="NAME" title="名称" type="string" columnType="VARCHAR2(50)"/>
+		<field name="DATADICTID" title="数据字典ID" type="string" columnType="VARCHAR2(50)"/>
+		<field name="ISEDIT" title="是否可编辑" type="string" columnType="VARCHAR2(1)，0——不可编辑；1——可编辑"/>
+		<field name="ISVALID" title="0——无效；1——有效" type="string" columnType="VARCHAR2(1)"/>
+		<field name="ISDEFAULT" title="是否缺省值" type="string" columnType="VARCHAR2(1)"/>
+		<field name="SHOWORDER" title="显示序号" type="number" columnType="NUMBER(4), 0——不是缺省值；1——是缺省值"/>
+		<field name="DF5" title="自字义字段5" type="string" columnType="VARCHAR2(200)"/>
+		<field name="DF1" title="自定义字段1" type="string" columnType="VARCHAR2(200), 启用作为助记符，在行业类别CLTTYPE中启用为打印经营许可证时对应的行业类别值"/>
+		<field name="DF2" title="自定义字段2" type="string" columnType="VARCHAR2(200)"/>
+		<field name="DF3" title="自定义字段3" type="string" columnType="VARCHAR2(200)"/>
+		<field name="DF4" title="自定义字段4" type="string" columnType="VARCHAR2(200)"/>
+		<field name="DF6" title="自定义字段6" type="string" columnType="VARCHAR2(200)"/>
+	</businessObject>
+	
+	<businessObject title="车籍地" class="COUCANCODE" businessServiceName="trafficSqlQueryService">
+		<field name="CANID" type="string" columnType="VARCHAR2(50) not null" title=""/>
+		<field name="CANNAME" type="string" columnType="VARCHAR2(20)" title=""/>
+		<field name="CANCODE" type="string" columnType="VARCHAR2(10)" title=""/>
+		<field name="SHOTITLE" type="string" columnType="VARCHAR2(10)" title=""/>
+		<field name="EASTOFIND" type="string" columnType="VARCHAR2(8)" title=""/>
+		<field name="SUPCANCODE" type="string" columnType="VARCHAR2(10)" title=""/>
+		<field name="CREUSRCODE" type="string" columnType="VARCHAR2(50)" title=""/>
+		<field name="CREDATE" type="string" columnType="CHAR(10)" title=""/>
+		<field name="CRETIME" type="string" columnType="CHAR(8)" title=""/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title=""/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title=""/>
+		<field name="EDITIME" type="string" columnType="CHAR(8)" title=""/>
+		<field name="REMARKDOC" type="string" columnType="VARCHAR2(500)" title=""/>
+	</businessObject>
+</businessObjects>

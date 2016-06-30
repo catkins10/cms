@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/todoMessage" form="admin/message" title="待办短信" pageRows="20" viewServiceName="smsSendViewService" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.smssend.pojo.SmsSendMessage</pojo>
+			<orderBy>SmsSendMessage.created DESC</orderBy>
+			<quickFilter>SmsSendMessage.content like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="添加短信" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="内容" name="content"/>
+			<column title="发送人" name="workflowSender" align="center" width="66" display="normal,print"/>
+			<column title="创建时间" name="created" width="110" align="center"/>
+			<column title="创建人" name="creator" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/processingMessage" form="admin/message" title="在办短信" pageRows="20" viewServiceName="smsSendViewService" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.smssend.pojo.SmsSendMessage</pojo>
+			<orderBy>SmsSendMessage.created DESC</orderBy>
+			<quickFilter>SmsSendMessage.content like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="添加短信" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="内容" name="content"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="创建时间" name="created" width="110" align="center"/>
+			<column title="创建人" name="creator" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/sentMessage" form="admin/message" title="已发短信" pageRows="20" viewServiceName="smsSendViewService" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.smssend.pojo.SmsSendMessage</pojo>
+			<where>not SmsSendMessage.sendTime is null</where>
+			<orderBy>SmsSendMessage.created DESC</orderBy>
+			<quickFilter>SmsSendMessage.content like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="添加短信" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="内容" name="content"/>
+			<column title="发送时间" name="sendTime" width="110" align="center"/>
+			<column title="创建时间" name="created" width="110" align="center"/>
+			<column title="创建人" name="creator" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allMessage" form="admin/message" title="所有短信" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="smsSendViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.smssend.pojo.SmsSendMessage</pojo>
+			<orderBy>SmsSendMessage.created DESC</orderBy>
+			<quickFilter>SmsSendMessage.content like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="添加短信" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="内容" name="content"/>
+			<column title="发送时间" name="sendTime" width="110" align="center"/>
+			<column title="创建时间" name="created" width="110" align="center"/>
+			<column title="创建人" name="creator" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/workflowConfig" form="admin/workflowConfig" title="流程配置" hide="isNotOrgManager(root,category,area,unit)" pageRows="20" viewServiceName="smsSendViewService" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.smssend.pojo.SmsSendWorkflow</pojo>
+			<orderBy>SmsSendWorkflow.orgName</orderBy>
+			<quickFilter>SmsSendWorkflow.orgName like '%{KEY}%' or SmsSendWorkflow.workflowName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加流程" execute="PageUtils.newrecord('cms/smssend', 'admin/workflowConfig', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="机构名称" name="orgName"/>
+			<column title="流程名称" name="workflowName"/>
+		</columns>
+	</view>
+	
+	<view name="admin/chargeStandard" form="admin/chargeStandard" title="短信计费配置" hide="noPrivilege(manageUnit_charge)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.smssend.pojo.SmsChargeStandard</pojo>
+			<orderBy>SmsChargeStandard.orgName</orderBy>
+			<quickFilter>SmsChargeStandard.orgName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加配置" execute="PageUtils.newrecord('cms/smssend', 'admin/chargeStandard', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="机构名称" name="orgName"/>
+			<column title="计费方式" name="chargeMode" align="center" width="80"/>
+			<column title="价格" name="price" align="center" width="60"/>
+			<column title="折扣" name="discount" align="center" width="60"/>
+		</columns>
+	</view>
+</views>

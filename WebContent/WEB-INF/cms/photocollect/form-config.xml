@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="photoCollect" title="图片征集" method="post" action="/cms/photocollect/savePhotoCollect.shtml" class="com.yuanluesoft.cms.photocollect.forms.PhotoCollect" pojo="com.yuanluesoft.cms.photocollect.pojo.PhotoCollect">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="photoCollectSearch" title="搜索" method="get" action="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/photocollect&amp;pageName=photoCollectSearch">
+		<formFields>
+			<field title="主题" name="subject" type="string"/>
+			<field name="category" title="分类" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">photoCollectService</parameter>
+			</field>
+			<field title="开始时间" name="createdBegin" type="date"/>
+			<field title="结束时间" name="createdEnd" type="date"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="admin/photoCollect" class="com.yuanluesoft.cms.photocollect.forms.admin.PhotoCollect" title="图片征集" pojo="com.yuanluesoft.cms.photocollect.pojo.PhotoCollect">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="批转" hide="workflow()" execute="FormUtils.doAction('runPhotoCollect', 'workflowAction=send')"/>
+			<action title="公布到网站" hide="workflow() and noPrivilege(application_manager) and noPrivilege(site_manager)  and noPrivilege(publish)" execute="FormUtils.doAction('setPublishOption')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deletePhotoCollect')"/>
+			<action title="永久删除" hide="isNew()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deletePhotoCollect', 'physical=true')"/>
+			<action title="撤销删除" hide="isNew()" execute="FormUtils.doAction('undeletePhotoCollect')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/photoCollectCategory" class="com.yuanluesoft.cms.photocollect.forms.admin.PhotoCollectCategory" title="图片征集分类" pojo="com.yuanluesoft.cms.photocollect.pojo.PhotoCollectCategory">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deletePhotoCollectCategory')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.photocollect.forms.admin.InsertPhotoCollects" title="插入图片征集列表">
+		<formFields>
+			<field name="photoCollectCategories" title="图片征集分类" type="string" inputMode="select">
+				<parameter name="execute">selectPhotoCollectCategories()</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.photocollect.forms.admin.InsertPhotoCollectsLink" title="插入图片征集列表链接">
+		<formFields>
+			<field title="隶属站点" name="relationSite" type="string" inputMode="radio">
+				<parameter name="itemsText">当前站点|currentSite\0指定站点|specialSite</parameter>
+				<parameter name="defaultValue">currentSite</parameter>
+			</field>		
+			<field title="隶属站点ID" name="relationSiteId" type="string" inputMode="hidden"/>
+			<field title="隶属站点名称" name="relationSiteName" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 300, false, 'relationSiteId{id},relationSiteName{name}', '', '', '', 'site')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="photoCollectCategory" title="图片分类" length="30" type="string" inputMode="select">
+				<parameter name="execute">selectPhotoCollectCategory()</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

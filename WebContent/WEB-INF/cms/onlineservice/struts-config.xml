@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminDirectory" type="com.yuanluesoft.cms.onlineservice.forms.admin.Directory"/>
+  <form-bean name="adjustPriority" type="com.yuanluesoft.jeaf.dialog.forms.AdjustPriority"/>
+  <form-bean name="adminServiceItem" type="com.yuanluesoft.cms.onlineservice.forms.admin.ServiceItem"/>
+  <form-bean name="selectDirectory" type="com.yuanluesoft.cms.onlineservice.forms.SelectDirectory"/>
+  <form-bean name="adminServiceItemView" type="com.yuanluesoft.cms.onlineservice.forms.admin.ServiceItemView"/>
+  <form-bean name="adminCopyDirectory" type="com.yuanluesoft.cms.onlineservice.forms.admin.CopyDirectory"/>
+  <form-bean name="adminMainDirectory" type="com.yuanluesoft.cms.onlineservice.forms.admin.MainDirectory"/>
+  <form-bean name="adminServiceItemMaterial" type="com.yuanluesoft.cms.onlineservice.forms.admin.ServiceItemMaterial"/>
+  <form-bean name="adminTemplate" type="com.yuanluesoft.cms.onlineservice.forms.admin.Template"/>
+  <form-bean name="selectServiceItem" type="com.yuanluesoft.cms.onlineservice.forms.SelectServiceItem"/>
+  <form-bean name="adminServiceItemComplaint" type="com.yuanluesoft.cms.onlineservice.forms.admin.ServiceItemComplaint"/>
+  <form-bean name="adminServiceItemConsult" type="com.yuanluesoft.cms.onlineservice.forms.admin.ServiceItemConsult"/>
+  <form-bean name="adminImportItems" type="com.yuanluesoft.cms.onlineservice.forms.admin.ImportItems"/>
+  <form-bean name="adminServiceItemFaq" type="com.yuanluesoft.cms.onlineservice.forms.admin.ServiceItemFaq"/>
+  <form-bean name="adminServiceItemCodeRule" type="com.yuanluesoft.cms.onlineservice.forms.admin.ServiceItemCodeRule"/>
+  <form-bean name="adminImportAuthority" type="com.yuanluesoft.cms.onlineservice.forms.admin.ImportAuthority"/>
+  <form-bean name="insertDirectories" type="com.yuanluesoft.cms.onlineservice.forms.admin.InsertDirectories"/>
+  <form-bean name="insertServiceItems" type="com.yuanluesoft.cms.onlineservice.forms.admin.InsertServiceItems"/>
+  <form-bean name="insertAuthorityTypes" type="com.yuanluesoft.cms.onlineservice.forms.admin.InsertAuthorityTypes"/>
+  <form-bean name="insertAuthorityDirectories" type="com.yuanluesoft.cms.onlineservice.forms.admin.InsertAuthorityDirectories"/>
+  <form-bean name="insertAuthorityItems" type="com.yuanluesoft.cms.onlineservice.forms.admin.InsertAuthorityItems"/>
+  <form-bean name="insertInteractiveForm" type="com.yuanluesoft.cms.onlineservice.forms.admin.InsertInteractiveForm"/>
+  <form-bean name="insertDirectoryLink" type="com.yuanluesoft.cms.onlineservice.forms.admin.InsertDirectoryLink"/>
+  <form-bean name="insertLocation" type="com.yuanluesoft.cms.onlineservice.forms.admin.InsertLocation"/>
+  <form-bean name="insertSearchDirectoryField" type="com.yuanluesoft.cms.onlineservice.forms.admin.InsertSearchDirectoryField"/>
+  <form-bean name="insertAuthorityDirectoryLink" type="com.yuanluesoft.cms.onlineservice.forms.admin.InsertAuthorityDirectoryLink"/>
+  <form-bean name="selectItemType" type="com.yuanluesoft.jeaf.dialog.forms.ListDialog"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminDirectory" path="/admin/directory" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.directory.Load" validate="false">
+   <forward name="load" path="/admin/directory.jsp"/>
+  </action>
+  <action input="/admin/directory.jsp" name="adminDirectory"
+   path="/admin/saveDirectory" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.directory.Save" validate="false"/>
+  <action input="/admin/directory.jsp" name="adminDirectory"
+   path="/admin/deleteDirectory" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.directory.Delete" validate="false"/>
+  <action name="adjustPriority" path="/admin/adjustDirectoryPriority"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.adjustdirectorypriority.AdjustDirectoryPriorityAction" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/adjustpriority/adjustPriority.jsp"/>
+  </action>
+  <action name="adminServiceItem" path="/admin/serviceItem"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.Load" validate="false">
+   <forward name="load" path="/admin/serviceItem.jsp"/>
+  </action>
+  <action input="/admin/serviceItem.jsp" name="adminServiceItem"
+   path="/admin/saveServiceItem" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.Save" validate="false"/>
+   <action input="/admin/serviceItem.jsp" name="adminServiceItem"
+   path="/admin/updateSameNames" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.UpdateSameNames" validate="false"/>
+  <action input="/admin/serviceItem.jsp" name="adminServiceItem"
+   path="/admin/deleteServiceItem" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.Delete" validate="false"/>
+  <action name="adminServiceItem" path="/admin/selectAttachment"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="selectDirectory" path="/selectDirectory" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.selectdirectory.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="selectDirectory" path="/listChildDirectories"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.selectdirectory.ListChildDirectories" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action name="adminServiceItemView" path="/admin/serviceItemView"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitemview.ServiceItemViewAction" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action input="/admin/directory.jsp" name="adminDirectory"
+   path="/admin/createNextDirectory" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.directory.CreateNext" validate="false"/>
+  <action name="adminCopyDirectory" path="/admin/copyDirectory"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.copydirectory.Load" validate="false">
+   <forward name="load" path="/admin/copyDirectory.jsp"/>
+  </action>
+  <action input="/admin/copyDirectory.jsp" name="adminCopyDirectory"
+   path="/admin/doCopyDirectory" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.copydirectory.Copy" validate="false"/>
+  <action name="adminMainDirectory" path="/admin/mainDirectory"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.directory.Load" validate="false">
+   <forward name="load" path="/admin/mainDirectory.jsp"/>
+  </action>
+  <action input="/admin/mainDirectory.jsp" name="adminMainDirectory"
+   path="/admin/saveMainDirectory" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.directory.Save" validate="false"/>
+  <action input="/admin/mainDirectory.jsp" name="adminMainDirectory"
+   path="/admin/deleteMainDirectory" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.directory.Delete" validate="false"/>
+  <action input="/admin/mainDirectory.jsp" name="adminMainDirectory"
+   path="/admin/createNextMainDirectory" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.directory.CreateNext" validate="false"/>
+  <action name="adminServiceItemMaterial"
+   path="/admin/serviceItemMaterial" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.material.Load" validate="false">
+   <forward name="load" path="/admin/serviceItemMaterial.jsp"/>
+  </action>
+  <action input="/admin/serviceItemMaterial.jsp"
+   name="adminServiceItemMaterial" path="/admin/saveServiceItemMaterial"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.material.Save" validate="false"/>
+   <action input="/admin/serviceItemMaterial.jsp"
+   name="adminServiceItemMaterial" path="/admin/updateSameMaterial"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.material.UpdateSameMaterial" validate="false"/>
+  <action input="/admin/serviceItemMaterial.jsp"
+   name="adminServiceItemMaterial"
+   path="/admin/deleteServiceItemMaterial" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.material.Delete" validate="false"/>
+  <action input="/admin/serviceItem.jsp" name="adminServiceItem"
+   path="/admin/refreshServiceItem" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.Refresh" validate="false"/>
+  <action input="/admin/directory.jsp" name="adminDirectory"
+   path="/admin/directoryWorkflowConfig" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.directory.WorkflowConfig" validate="false"/>
+  <action input="/admin/mainDirectory.jsp" name="adminMainDirectory"
+   path="/admin/mainDirectoryWorkflowConfig" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.directory.WorkflowConfig" validate="false"/>
+  <action input="/admin/serviceItem.jsp" name="adminServiceItem"
+   path="/admin/serviceItemWorkflowConfig" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.WorkflowConfig" validate="false"/>
+  <action path="/directory" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.directory.Load" validate="false"/>
+  <action name="adminTemplate" path="/admin/template" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Load" validate="false">
+   <forward name="load" path="/../../cms/templatemanage/template.jsp"/>
+  </action>
+  <action input="/../../cms/templatemanage/template.jsp"
+   name="adminTemplate" path="/admin/saveTemplate" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Save" validate="false"/>
+  <action input="/../../cms/templatemanage/template.jsp"
+   name="adminTemplate" path="/admin/deleteTemplate" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Delete" validate="false"/>
+  <action path="/guide" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.guide.Load" validate="false"/>
+  <action path="/download" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.download.Load" validate="false"/>
+  <action path="/faq" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.faq.Load" validate="false"/>
+  <action path="/unit" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.unit.Load" validate="false"/>
+  <action path="/search" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.search.Load" validate="false"/>
+  <action path="/downloads" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.downloads.Load" validate="false"/>
+  <action path="/downloadSearch" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.downloadsearch.Load" validate="false"/>
+  <action path="/listInteractives" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.actions.listinteractives.Load" validate="false"/>
+  <action name="selectServiceItem" path="/selectServiceItem"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.selectserviceitem.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="selectServiceItem" path="/listServiceItems"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.selectserviceitem.ListServiceItems" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="adminServiceItemView" path="/admin/importServiceItems"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitemview.ImportServiceItems" validate="false"/>
+  <action name="adminServiceItemComplaint"
+   path="/admin/serviceItemComplaint" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.complaint.Load" validate="false">
+   <forward name="load" path="/admin/serviceItemComplaint.jsp"/>
+  </action>
+  <action input="/admin/serviceItemComplaint.jsp"
+   name="adminServiceItemComplaint"
+   path="/admin/saveServiceItemComplaint" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.complaint.Save" validate="false"/>
+  <action input="/admin/serviceItemComplaint.jsp"
+   name="adminServiceItemComplaint"
+   path="/admin/deleteServiceItemComplaint" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.complaint.Delete" validate="false"/>
+  <action name="adminServiceItemConsult"
+   path="/admin/serviceItemConsult" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.consult.Load" validate="false">
+   <forward name="load" path="/admin/serviceItemConsult.jsp"/>
+  </action>
+  <action input="/admin/serviceItemConsult.jsp"
+   name="adminServiceItemConsult" path="/admin/saveServiceItemConsult"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.consult.Save" validate="false"/>
+  <action input="/admin/serviceItemConsult.jsp"
+   name="adminServiceItemConsult" path="/admin/deleteServiceItemConsult"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.consult.Delete" validate="false"/>
+  <action name="adminImportItems" path="/admin/importItems"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.importitems.admin.Load" validate="false">
+   <forward name="load" path="/admin/importItems.jsp"/>
+  </action>
+  <action input="/admin/importItems.jsp" name="adminImportItems"
+   path="/admin/doImportItems" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.importitems.admin.DoImport" validate="false"/>
+  <action name="adminImportItems"
+   path="/admin/importItemsAttachmentEditor" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.importitems.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="adminServiceItemFaq" path="/admin/serviceItemFaq"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.faq.Load" validate="false">
+   <forward name="load" path="/admin/serviceItemFaq.jsp"/>
+  </action>
+  <action input="/admin/serviceItemFaq.jsp" name="adminServiceItemFaq"
+   path="/admin/saveServiceItemFaq" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.faq.Save" validate="false"/>
+  <action input="/admin/serviceItemFaq.jsp" name="adminServiceItemFaq"
+   path="/admin/deleteServiceItemFaq" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitem.faq.Delete" validate="false"/>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="adminServiceItemView" path="/admin/moveServiceItems"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitemview.MoveServiceItems" validate="false"/>
+  <action name="adminServiceItemCodeRule"
+   path="/admin/serviceItemCodeRule" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitemcoderule.Load" validate="false">
+   <forward name="load" path="/admin/serviceItemCodeRule.jsp"/>
+  </action>
+  <action input="/admin/serviceItemCodeRule.jsp"
+   name="adminServiceItemCodeRule" path="/admin/saveServiceItemCodeRule"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitemcoderule.Save" validate="false"/>
+  <action input="/admin/serviceItemCodeRule.jsp"
+   name="adminServiceItemCodeRule"
+   path="/admin/deleteServiceItemCodeRule" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.admin.serviceitemcoderule.Delete" validate="false"/>
+  <action name="adminImportAuthority" path="/admin/importAuthority"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.importauthority.admin.Load" validate="false">
+   <forward name="load" path="/admin/importAuthority.jsp"/>
+  </action>
+  <action name="adminImportAuthority"
+   path="/admin/importAuthorityAttachmentEditor" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.importauthority.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action input="/admin/importAuthority.jsp" name="adminImportAuthority"
+   path="/admin/doImportAuthority" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.importauthority.admin.DoImport" validate="false"/>
+  <action path="/authorityDirectory" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.authoritydirectory.Load" validate="false"/>
+  <action path="/authoritySearch" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.authoritysearch.Load" validate="false"/>
+  <action name="insertDirectories"
+   path="/templatemanage/insertDirectories" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertDirectories.jsp"/>
+  </action>
+  <action name="insertServiceItems"
+   path="/templatemanage/insertServiceItems" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertServiceItems.jsp"/>
+  </action>
+  <action name="insertAuthorityTypes"
+   path="/templatemanage/insertAuthorityTypes" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertAuthorityTypes.jsp"/>
+  </action>
+  <action name="insertAuthorityDirectories"
+   path="/templatemanage/insertAuthorityDirectories" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertAuthorityDirectories.jsp"/>
+  </action>
+  <action name="insertAuthorityItems"
+   path="/templatemanage/insertAuthorityItems" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertAuthorityItems.jsp"/>
+  </action>
+  <action name="insertInteractiveForm"
+   path="/templatemanage/insertInteractiveForm" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertInteractiveForm.jsp"/>
+  </action>
+  <action name="insertDirectoryLink"
+   path="/templatemanage/insertDirectoryLink" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertDirectoryLink.jsp"/>
+  </action>
+  <action name="insertLocation" path="/templatemanage/insertLocation"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertLocation.jsp"/>
+  </action>
+  <action name="insertSearchDirectoryField"
+   path="/templatemanage/insertSearchDirectoryField" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertSearchDirectoryField.jsp"/>
+  </action>
+  <action name="insertAuthorityDirectoryLink"
+   path="/templatemanage/insertAuthorityDirectoryLink" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertAuthorityDirectoryLink.jsp"/>
+  </action>
+  <action name="selectItemType" path="/selectItemType" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.actions.selectitemtype.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/listdialog/listDialog.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>	
+	<!-- 项目管理视图服务 -->
+	<bean id="fdiProjectViewService" class="com.yuanluesoft.fdi.project.service.spring.FdiProjectViewServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="accessControlService"><ref bean="accessControlService"/></property>
+		<property name="fdiIndustryService"><ref bean="fdiIndustryService"/></property>
+	</bean>
+</beans>

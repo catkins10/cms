@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="archivesFonds" form="archivesFonds" title="全宗设置" pageRows="20" hide="noPrivilege(application_manager)" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.archives.pojo.ArchivesFonds</pojo>
+			<quickFilter>ArchivesFonds.fondsCode like '%{KEY}%' or ArchivesFonds.fondsName like '%{KEY}%'</quickFilter>
+			<orderBy>ArchivesFonds.fondsCode</orderBy>
+		</data>
+		<actions>
+			<action title="新增全宗" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('archives', 'archivesFonds', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="全宗号" name="fondsCode" width="60" align="center"/>
+			<column title="全宗名称" name="fondsName" width="100%"/>
+		</columns>
+	</view>
+	
+	<view name="archivesSecureLevel" form="archivesSecureLevel" title="密级配置" pageRows="20" hide="noPrivilege(application_manager)" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.archives.pojo.ArchivesSecureLevel</pojo>
+			<quickFilter>ArchivesSecureLevel.secureLevelCode like '%{KEY}%' or ArchivesSecureLevel.secureLevel like '%{KEY}%'</quickFilter>
+			<orderBy>ArchivesSecureLevel.secureLevelCode</orderBy>
+		</data>
+		<actions>
+			<action title="新增密级" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('archives', 'archivesSecureLevel', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="编号" name="secureLevelCode" width="60" align="center"/>
+			<column title="密级" name="secureLevel" width="100%"/>
+		</columns>
+	</view>
+	
+	<view name="archivesRotentionPeriod" form="archivesRotentionPeriod" title="保管期限配置" pageRows="20" hide="noPrivilege(application_manager)" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.archives.pojo.ArchivesRotentionPeriod</pojo>
+			<quickFilter>ArchivesRotentionPeriod.rotentionPeriodCode like '%{KEY}%' or ArchivesRotentionPeriod.rotentionPeriod like '%{KEY}%'</quickFilter>
+			<orderBy>ArchivesRotentionPeriod.rotentionPeriodCode</orderBy>
+		</data>
+		<actions>
+			<action title="新增保管期限" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('archives', 'archivesRotentionPeriod', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="编号" name="rotentionPeriodCode" width="60" align="center"/>
+			<column title="保管期限" name="rotentionPeriod" width="100%"/>
+		</columns>
+	</view>
+	
+	<view name="archivesUnit" form="archivesUnit" title="机构或问题配置" pageRows="20" hide="noPrivilege(application_manager)" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.archives.pojo.ArchivesUnit</pojo>
+			<quickFilter>ArchivesUnit.unitCode like '%{KEY}%' or ArchivesUnit.unitName like '%{KEY}%'</quickFilter>
+			<orderBy>ArchivesUnit.unitCode</orderBy>
+		</data>
+		<actions>
+			<action title="新增机构或问题" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('archives', 'archivesUnit', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="编号" name="unitCode" width="60" align="center"/>
+			<column title="机构或问题" name="unit" width="100%"/>
+		</columns>
+	</view>
+	
+	<view name="archivesCategory" form="archivesCategory" title="分类配置" pageRows="20"  hide="noPrivilege(application_manager)" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.archives.pojo.ArchivesCategory</pojo>
+			<orderBy>ArchivesCategory.categoryCode</orderBy>
+			<quickFilter>ArchivesCategory.category like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有分类" beginCategory="ROOT" loop="true">
+			<data>
+				<pojo>com.yuanluesoft.archives.pojo.ArchivesCategory</pojo>
+			</data>
+			<category title="category" titleType="string" value="id" valueType="number"> <!--value必须有-->
+				<where>ArchivesCategory.parentCategoryId=0</where>
+				<orderBy>ArchivesCategory.category</orderBy>
+				<data>ArchivesCategory.parentCategoryId={CATEGORYVALUE} 
+					  or ArchivesCategory.parentCategoryId in (select ArchivesCategory.id from ArchivesCategory ArchivesCategory where ArchivesCategory.parentCategoryId={CATEGORYVALUE})  
+					  or ArchivesCategory.parentCategoryId in (select ArchivesCategory.id from ArchivesCategory ArchivesCategory where ArchivesCategory.parentCategoryId in (select ArchivesCategory.id from ArchivesCategory ArchivesCategory where ArchivesCategory.parentCategoryId={CATEGORYVALUE}))
+				</data>
+			</category>
+			<category title="category" titleType="string" value="id" valueType="number">
+				<where>ArchivesCategory.parentCategoryId={PARENTVALUE}</where>
+				<orderBy>ArchivesCategory.category</orderBy>
+				<data>ArchivesCategory.parentCategoryId={CATEGORYVALUE} 
+					  or ArchivesCategory.parentCategoryId in (select ArchivesCategory.id from ArchivesCategory ArchivesCategory where ArchivesCategory.parentCategoryId={CATEGORYVALUE})  
+					  or ArchivesCategory.parentCategoryId in (select ArchivesCategory.id from ArchivesCategory ArchivesCategory where ArchivesCategory.parentCategoryId in (select ArchivesCategory.id from ArchivesCategory ArchivesCategory where ArchivesCategory.parentCategoryId={CATEGORYVALUE}))
+				</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="新增分类" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('archives', 'archivesCategory', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="编号" name="categoryCode" width="60" align="center"/>
+			<column title="分类" name="category"/>
+		</columns>
+	</view>
+	
+	<view name="archivesCode" form="archivesCode" title="档号配置" pageRows="20" hide="noPrivilege(application_manager)" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.archives.pojo.ArchivesCode</pojo>
+			<quickFilter>ArchivesCode.codeConfig like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新增档号配置" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('archives', 'archivesCode', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="档案类别" name="archivesType" width="100"/>
+			<column title="档号格式" name="codeConfig"/>
+		</columns>
+	</view>
+</views>

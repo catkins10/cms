@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,32,136,21" TARGET="page1" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,96,136,21" TARGET="page3"
+  TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#memorabilia"
+  NAME="action0" PATH="/memorabilia" SHAPE="32,176,136,41"
+  TITLE="memorabilia" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/memorabilia.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/memorabilia.jsp" SHAPE="240,194,56,30" SUBTYPE="jsp"
+  TITLE="memorabilia.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveMemorabilia" TARGET="action1" TITLE="saveMemorabilia" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteMemorabilia" TARGET="action2" TITLE="deleteMemorabilia" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveMemorabilia"
+  NAME="action1" PATH="/saveMemorabilia" SHAPE="364,209,152,27"
+  TITLE="memorabilia" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteMemorabilia"
+  NAME="action2" PATH="/deleteMemorabilia" SHAPE="368,273,152,27"
+  TITLE="memorabilia" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="240,96,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="240,32,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#attachmentEditor"
+  NAME="action3" PATH="/attachmentEditor" SHAPE="32,352,129,41"
+  TITLE="memorabilia" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/attachment.jsp"
+   TARGET="page0" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/attachment/attachment.jsp" SHAPE="240,368,50,25"
+  SUBTYPE="jsp" TITLE="attachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectAttachment"
+  NAME="action4" PATH="/selectAttachment" SHAPE="32,464,129,41"
+  TITLE="memorabilia" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/selectAttachment.jsp"
+   TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/../../jeaf/attachment/selectAttachment.jsp"
+  SHAPE="240,480,50,25" SUBTYPE="jsp" TITLE="selectAttachment.jsp" TYPE="page"/>
+</PROCESS>

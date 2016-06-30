@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminData" type="com.yuanluesoft.chd.evaluation.data.forms.admin.Data"/>
+  <form-bean name="prerequisitesData" type="com.yuanluesoft.chd.evaluation.data.forms.PrerequisitesData"/>
+  <form-bean name="indicatorData" type="com.yuanluesoft.chd.evaluation.data.forms.IndicatorData"/>
+  <form-bean name="data" type="com.yuanluesoft.chd.evaluation.data.forms.Data"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminData" path="/admin/data" scope="request"
+   type="com.yuanluesoft.chd.evaluation.data.actions.admin.data.Load" validate="false">
+   <forward name="load" path="/admin/data.jsp"/>
+  </action>
+  <action input="/admin/data.jsp" name="adminData"
+   path="/admin/saveData" scope="request"
+   type="com.yuanluesoft.chd.evaluation.data.actions.admin.data.Save" validate="false"/>
+  <action input="/admin/data.jsp" name="adminData"
+   path="/admin/deleteData" scope="request"
+   type="com.yuanluesoft.chd.evaluation.data.actions.admin.data.Delete" validate="false"/>
+  <action name="adminData" path="/admin/attachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.chd.evaluation.data.actions.admin.data.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="prerequisitesData" path="/prerequisitesData"
+   scope="request"
+   type="com.yuanluesoft.chd.evaluation.data.actions.prerequisitesdata.Load" validate="false">
+   <forward name="load" path="/prerequisitesData.jsp"/>
+  </action>
+  <action input="/prerequisitesData.jsp" name="prerequisitesData"
+   path="/savePrerequisitesData" scope="request"
+   type="com.yuanluesoft.chd.evaluation.data.actions.prerequisitesdata.Save" validate="false">
+   <forward name="result" path="/result.jsp"/>
+  </action>
+  <action name="indicatorData" path="/indicatorData" scope="request"
+   type="com.yuanluesoft.chd.evaluation.data.actions.indicatordata.Load" validate="false">
+   <forward name="load" path="/indicatorData.jsp"/>
+  </action>
+  <action name="indicatorData" path="/saveIndicatorData" scope="request"
+   type="com.yuanluesoft.chd.evaluation.data.actions.indicatordata.Save" validate="false">
+   <forward name="result" path="/result.jsp"/>
+  </action>
+  <action name="data" path="/data" scope="request"
+   type="com.yuanluesoft.chd.evaluation.data.actions.data.Load" validate="false">
+   <forward name="load" path="/data.jsp"/>
+  </action>
+  <action input="/data.jsp" name="data" path="/saveData" scope="request"
+   type="com.yuanluesoft.chd.evaluation.data.actions.data.Save" validate="false">
+   <forward name="result" path="/result.jsp"/>
+  </action>
+  <action input="/data.jsp" name="data" path="/deleteData"
+   scope="request"
+   type="com.yuanluesoft.chd.evaluation.data.actions.data.Delete" validate="false">
+   <forward name="result" path="/result.jsp"/>
+  </action>
+  <action input="/data.jsp" name="data" path="/runData" scope="request"
+   type="com.yuanluesoft.chd.evaluation.data.actions.data.Run" validate="false">
+   <forward name="result" path="/result.jsp"/>
+  </action>
+  <action input="/data.jsp" name="data" path="/writeDataOpinion"
+   scope="request"
+   type="com.yuanluesoft.chd.evaluation.data.actions.data.WriteOpinion" validate="false"/>
+  <action input="/data.jsp" name="adminData" path="/admin/runData"
+   scope="request"
+   type="com.yuanluesoft.chd.evaluation.data.actions.admin.data.Run" validate="false"/>
+  <action input="/data.jsp" name="adminData"
+   path="/admin/writeDataOpinion" scope="request"
+   type="com.yuanluesoft.chd.evaluation.data.actions.admin.data.WriteOpinion" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

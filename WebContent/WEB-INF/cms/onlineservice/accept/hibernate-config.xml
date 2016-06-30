@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--网上办事:在线受理-->
+	<class name="com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAccept" table="onlineservice_accept" polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="memberId"/> <!--申报人ID-->
+		<property name="member"/> <!--申报人-->
+		<property name="agentorId"/> 
+		<property name="agentor"/> 
+		<property name="sn"/> <!--编号-->
+		<property name="queryPassword"/> <!--查询密码-->
+		<property name="subject"/> <!--主题-->
+		<property name="workingDay"/> <!--指定工作日-->
+		<property name="creator"/> <!--创建人姓名-->
+		<property name="creatorSex"/> <!--创建人性别-->
+		<property name="created"/> <!--创建时间-->
+		<property name="creatorTel"/> <!--联系电话-->
+		<property name="creatorMail"/> <!--邮箱-->
+		<property name="creatorCertificateName"/> <!--创建人证件名称-->
+		<property name="creatorIdentityCard"/> <!--创建人身份证/证件号码-->
+		<property name="creatorIP"/> <!--创建人IP-->
+		<property name="creatorMobile"/> <!--创建人手机-->
+		<property name="creatorFax"/> <!--创建人传真-->
+		<property name="creatorUnit"/> <!--创建人所在单位-->
+		<property name="creatorJob"/> <!--创建人职业-->
+		<property name="creatorAddress"/> <!--创建人地址-->
+		<property name="creatorPostalcode"/> <!--创建人邮编-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<property name="isPublic"/> <!--是否公开-->
+		<property name="remark"/> <!--附注-->
+		<property name="siteId"/> <!--隶属站点ID-->
+		<property name="publicPass"/> <!--同意公开-->
+		<property name="publicBody"/> <!--公开正文-->
+		<property name="publicWorkflow"/> <!--公开办理流程-->
+		<property name="publicSubject"/> <!--公开的主题-->
+		<property name="clientDeviceId"/> <!--客户端设备ID,VARCHAR(100)-->
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+		<set name="visitors" table="onlineservice_accept_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAcceptPrivilege" />
+		</set>
+		<set name="opinions" table="onlineservice_accept_opinion" lazy="true" inverse="true" cascade="delete" order-by="created">
+			<key column="mainRecordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAcceptOpinion" />
+		</set>
+		<set name="lazyBody" table="onlineservice_accept_body" lazy="true" inverse="true" cascade="delete">
+			<key column="id" />
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAcceptBody" />
+		</set>
+		<property name="creatorType"/> <!--申报人类型,0/个人,1/企业,char(1)-->
+		<property name="creatorId"/> <!--创建人ID,网上注册用户ID,numeric(20,0)-->
+		<property name="itemId"/> <!--办理事项ID,numeric(20,0)-->
+		<property name="itemName"/> <!--办理事项名称,varchar(200)-->
+		<property name="caseNumber"/> <!--受理件数,默认是1，集体受理时允许大于1,numeric(6,0)-->
+		<property name="caseAccept"/> <!--是否受理,char(1)-->
+		<property name="caseDeclinedReason"/> <!--不受理原因,varchar(4000)-->
+		<property name="subNo"/> <!--子编号,用于漳州行政服务中心,varchar(20)-->
+		<property name="caseAcceptTime"/> <!--受理时间,timestamp null-->
+		<property name="caseLimitTime"/> <!--受理截止时间,timestamp null-->
+		<property name="caseCompleteTime"/> <!--办结时间,timestamp null-->
+		<property name="pickupTime"/> <!--取件时间,timestamp null-->
+		<property name="price"/> <!--价格,numeric(8,2)-->
+		<property name="businessLicence"/> <!--营业执照号码,varchar(100)-->
+		<property name="legalRepresentative"/> <!--法定代表人,varchar(32)-->
+		<property name="linkman"/> <!--联系人,申报人为企业时有效,varchar(100)-->
+		<property name="acceptStatus"/> <!--办理状态,用于导入的数据,varchar(32)-->
+		<set name="missings" table="onlineservice_accept_missing" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="acceptId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAcceptMissing" />
+		</set>
+	</class>
+	
+	<!--网上办事:在线受理正文-->
+ 	<class name="com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAcceptBody" table="onlineservice_accept_body" polymorphism="explicit">
+ 		<id name="id">
+ 			<generator class="assigned" />
+ 		</id>
+ 		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType" />
+ 	</class>
+
+ 	<!--网上办事:在线受理权限控制-->
+	<class name="com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAcceptPrivilege" table="onlineservice_accept_privilege" polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--网上办事:在线受理办理意见-->
+	<class name="com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAcceptOpinion" table="onlineservice_accept_opinion" polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="created"/> <!--填写时间-->
+	</class>
+
+	<!--网上办事:缺件通知-->
+	<class name="com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAcceptMissing" table="onlineservice_accept_missing">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="acceptId"/> <!--收件ID-->
+		<property name="description"/> <!--缺件说明-->
+		<property name="created"/> <!--创建时间-->
+		<property name="creatorId"/> <!--通知人ID-->
+		<property name="creator"/> <!--通知人-->
+	</class>
+	
+	<!--流水号配置-->
+	<class name="com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.AcceptSerialNumberConfig" table="onlineservice_accept_serialnum">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="content"/> <!--内容格式-->
+	</class>
+</hibernate-mapping>

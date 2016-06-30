@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,161,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="304,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,161,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="304,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#event"
+  NAME="action0" PATH="/admin/event" SHAPE="32,240,161,41"
+  TITLE="adminEvent" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/event.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveEvent"
+  NAME="action1" PATH="/admin/saveEvent" SHAPE="496,272,161,25"
+  TITLE="adminEvent" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteEvent"
+  NAME="action2" PATH="/admin/deleteEvent" SHAPE="496,336,161,25"
+  TITLE="adminEvent" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#attachmentEditor"
+  NAME="action5" PATH="/admin/attachmentEditor" SHAPE="32,784,153,41"
+  TITLE="adminEvent" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/attachment.jsp"
+   TARGET="page3" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#runEvent"
+  NAME="action6" PATH="/admin/runEvent" SHAPE="496,400,161,25"
+  TITLE="adminEvent" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#writeOpinion"
+  NAME="action8" PATH="/admin/writeOpinion" SHAPE="496,464,161,25"
+  TITLE="adminEvent" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/admin/event.jsp" SHAPE="304,256,50,25" SUBTYPE="jsp"
+  TITLE="event.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteEvent" TARGET="action2"
+   TITLE="deleteEvent" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/runEvent" TARGET="action6"
+   TITLE="runEventApproval" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/admin/writeOpinion" TARGET="action8"
+   TITLE="saveOpinion" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link6"
+   PATH="/admin/pdaValidate" TARGET="action12"
+   TITLE="pdaValidate" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/../../jeaf/attachment/attachment.jsp" SHAPE="296,800,50,25"
+  SUBTYPE="jsp" TITLE="attachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#pdaUser"
+  NAME="action3" PATH="/admin/pdaUser" SHAPE="32,920,153,41"
+  TITLE="adminPdaUser" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/pdaUser.jsp" TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/admin/pdaUser.jsp" SHAPE="296,936,50,70" SUBTYPE="jsp"
+  TITLE="pdaUser.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/deletePdaUser" TARGET="action7"
+   TITLE="savePdaUser" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/createNextPdaUser" TARGET="action11"
+   TITLE="createNextPdaUser" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#savePdaUser"
+  NAME="action4" PATH="/admin/savePdaUser" SHAPE="488,952,169,25"
+  TITLE="adminPdaUser" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deletePdaUser"
+  NAME="action7" PATH="/admin/deletePdaUser" SHAPE="488,1024,169,25"
+  TITLE="adminPdaUser" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#createNextPdaUser"
+  NAME="action11" PATH="/admin/createNextPdaUser"
+  SHAPE="488,1096,161,25" TITLE="adminPdaUser" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#pdaValidate"
+  NAME="action12" PATH="/admin/pdaValidate" SHAPE="496,528,161,25"
+  TITLE="adminEvent" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#eventParameter"
+  NAME="action15" PATH="/admin/eventParameter" SHAPE="32,1328,153,41"
+  TITLE="adminEventParameter" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/eventParameter.jsp" TARGET="page6"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/admin/eventParameter.jsp" SHAPE="304,1344,50,40" SUBTYPE="jsp"
+  TITLE="eventParameter.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveEventParameter" TARGET="action16"
+   TITLE="saveEventParameter" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveEventParameter"
+  NAME="action16" PATH="/admin/saveEventParameter"
+  SHAPE="488,1360,161,25" TITLE="adminEventParameter" TYPE="action"/>
+</PROCESS>

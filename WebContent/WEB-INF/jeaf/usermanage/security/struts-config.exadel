@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../../jeaf/form/error.jsp"
+  SHAPE="32,48,209,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../../jeaf/form/error.jsp" SHAPE="336,48,50,25"
+  SUBTYPE="jsp" TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../../jeaf/form/result.jsp" SHAPE="32,128,209,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../../jeaf/form/result.jsp" SHAPE="336,128,50,25"
+  SUBTYPE="jsp" TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#userLoginPolicy"
+  NAME="action0" PATH="/admin/userLoginPolicy" SHAPE="32,240,209,41"
+  TITLE="adminUserLoginPolicy" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/userLoginPolicy.jsp" TARGET="page2"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/admin/userLoginPolicy.jsp" SHAPE="336,256,50,40" SUBTYPE="jsp"
+  TITLE="userLogin.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/saveUserLoginPolicy.shtml" TARGET="action1"
+   TITLE="deleteUserLoginPolicy" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/deleteUserLoginPolicy.shtml" TARGET="action2"
+   TITLE="deleteUserLoginPolicy.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#saveUserLoginPolicy" NAME="action1"
+  PATH="/admin/saveUserLoginPolicy" SHAPE="544,272,209,25"
+  TITLE="adminUserLoginPolicy" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#deleteUserLoginPolicy" NAME="action2"
+  PATH="/admin/deleteUserLoginPolicy" SHAPE="544,328,209,25"
+  TITLE="adminUserLoginPolicy" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#userPasswordPolicy"
+  NAME="action3" PATH="/admin/userPasswordPolicy" SHAPE="32,384,209,41"
+  TITLE="adminUserPasswordPolicy" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/userPasswordPolicy.jsp" TARGET="page3"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/admin/userPasswordPolicy.jsp" SHAPE="336,400,50,25"
+  SUBTYPE="jsp" TITLE="userPasswordPolicy.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveUserPasswordPolicy.shtml" TARGET="action4"
+   TITLE="saveUserPasswordPolicy.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#saveUserPasswordPolicy" NAME="action4"
+  PATH="/admin/saveUserPasswordPolicy" SHAPE="544,416,209,25"
+  TITLE="adminUserPasswordPolicy" TYPE="action"/>
+</PROCESS>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="图片征集" class="com.yuanluesoft.cms.photocollect.pojo.PhotoCollect" businessServiceName="photoCollectService">
+		<field name="creator" title="姓名" length="20" type="string" inputMode="text"/>
+		<field name="category" title="分类" length="30" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">photoCollectService</parameter>
+		</field>
+		<field name="downloadable" title="可否下载" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">可以|1\0不可以|0</parameter>
+		</field>
+		<field name="image" title="图片" type="image" inputMode="attachment"/>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">办公室,回复,批转,效能催办,部门办理|required,部门审核,回复审核,领导批示,领导</parameter>
+			<parameter name="class">com.yuanluesoft.cms.publicservice.pojo.PublicServiceOpinion</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="图片征集分类配置" class="com.yuanluesoft.cms.photocollect.pojo.PhotoCollectCategory" businessServiceName="photoCollectService">
+		<field name="category" title="分类" length="30" required="true" type="string" inputMode="text"/>
+		<field name="columnIds" title="同步栏目ID" length="2000" type="string" inputMode="hidden"/>
+		<field name="columnNames" title="同步栏目名称" length="2000" type="string" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+			<parameter name="execute">selectSite(500, 350, true, 'columnIds{id},columnNames{name|被同步到的栏目|100%}', '', '', '', 'column')</parameter>
+		</field>
+		<field name="siteId" title="站点ID" length="20" type="number" inputMode="hidden"/>
+	</businessObject>
+</businessObjects>

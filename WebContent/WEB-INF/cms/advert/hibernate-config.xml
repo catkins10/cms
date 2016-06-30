@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--广告管理:广告位-->
+	<class name="com.yuanluesoft.cms.advert.pojo.AdvertSpace" table="advert_space">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="siteId"/> <!--站点ID,numeric(20,0)-->
+		<property name="name"/> <!--名称,varchar(100)-->
+		<property name="isFloat"/> <!--是否浮动广告,浮动/固定位置(在页面模板中插入),numeric(1)-->
+		<property name="freeContent" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--无广告时HTML,固定位置时有效，如：虚位以待,mediumtext-->
+		<property name="width"/> <!--宽度,px/pt/%,varchar(10)-->
+		<property name="height"/> <!--高度,px/pt/%,varchar(10)-->
+		<property name="price"/> <!--参考单价,valrchar(300)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="creator"/> <!--创建人,varchar(30)-->
+		<property name="creatorId"/> <!--创建人ID,numeric(20,0)-->
+		<set name="adverts" table="advert_advert" lazy="true" inverse="true" cascade="delete">
+			<key column="spaceId" />
+			<one-to-many class="com.yuanluesoft.cms.advert.pojo.Advert" />
+		</set>
+		<set name="putPages" table="advert_put_page" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="spaceId" />
+			<one-to-many class="com.yuanluesoft.cms.advert.pojo.AdvertPutPage" />
+		</set>
+	</class>
+	
+	<!--广告管理:浮动广告投放页面-->
+	<class name="com.yuanluesoft.cms.advert.pojo.AdvertPutPage" table="advert_put_page">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="spaceId"/> <!--广告位ID,numeric(20,0)-->
+		<property name="siteIds"/> <!--站点/栏目ID,varchar(4000)-->
+		<property name="siteNames"/> <!--站点/栏目名称,varchar(4000)-->
+		<property name="containChildSite"/> <!--含子站/子栏目,numeric(1)-->
+		<property name="pageNames"/> <!--页面名称,varchar(4000)-->
+		<property name="pageTitles"/> <!--页面标题,varchar(4000)-->
+		<property name="clientTypes"/> <!--客户端类型,电脑/computer,手机/phone,微信/wechat,varchar(100)-->
+		<property name="mode" column="putMode"/> <!--投放方式,static/绝对位置,popup/弹出窗口,固定在窗口指定位置(absoluteLeft/左,absoluteRight/右,absoluteTop/上,absoluteBottom/下,absoluteLeftTop/左上,absoluteRightTop/右上,absoluteLeftBottom/左下,absoluteRightBottom/右下),fly/全屏滚动,varchar(20)-->
+		<property name="x"/> <!--水平边距,可以是绝对坐标和相对坐标(按窗口大小),numeric(5)-->
+		<property name="y"/> <!--垂直边距,可以是绝对坐标和相对坐标(按窗口大小),numeric(5)-->
+		<property name="speed"/> <!--移动速度,像数/秒,numeric(6,0)-->
+		<property name="displaySeconds"/> <!--显示时长,以秒为单位,numeric(3)-->
+		<property name="loadMode"/> <!--加载方式,numeric(1)-->
+		<property name="hideMode"/> <!--隐藏方式,numeric(1)-->
+	</class>
+	
+	<!--广告管理:广告客户-->
+	<class name="com.yuanluesoft.cms.advert.pojo.AdvertCustomer" table="advert_customer">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="siteId"/> <!--站点ID,numeric(20,0)-->
+		<property name="name"/> <!--名称,varchar(200)-->
+		<property name="linkman"/> <!--联系人,varchar(60)-->
+		<property name="tel"/> <!--联系电话,varchar(100)-->
+		<property name="account"/> <!--账户余额,numeric(16,2)-->
+		<property name="lastTopupTime"/> <!--最后充值时间,timestamp null-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="creator"/> <!--创建人,varchar(30)-->
+		<property name="creatorId"/> <!--创建人ID,numeric(20,0)-->
+		<set name="adverts" table="advert_advert" lazy="true" inverse="true" cascade="delete">
+			<key column="customerId" />
+			<one-to-many class="com.yuanluesoft.cms.advert.pojo.Advert" />
+		</set>
+	</class>
+	
+	<!--广告管理:广告-->
+	<class name="com.yuanluesoft.cms.advert.pojo.Advert" table="advert_advert">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="siteId"/> <!--站点ID,numeric(20,0)-->
+		<property name="spaceId"/> <!--广告位ID,numeric(20,0)-->
+		<property name="spaceName"/> <!--广告位名称,varchar(100)-->
+		<property name="customerId"/> <!--广告客户ID,numeric(20,0)-->
+		<property name="customerName"/> <!--广告客户名称,varchar(200)-->
+		<property name="name"/> <!--名称,varchar(100)-->
+		<property name="content" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--广告内容HTML,mediumtext-->
+		<property name="minimizeContent" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--最小化时HTML,mediumtext-->
+		<property name="width"/> <!--宽度,varchar(10)-->
+		<property name="height"/> <!--高度,varchar(10)-->
+		<property name="minimizeWidth"/> <!--最小化时宽度,varchar(10)-->
+		<property name="minimizeHeight"/> <!--最小化时高度,varchar(10)-->
+		<property name="href"/> <!--链接,varchar(1000)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="creator"/> <!--创建人,varchar(30)-->
+		<property name="creatorId"/> <!--创建人ID,numeric(20,0)-->
+		<set name="puts" table="advert_put" lazy="true" inverse="true" cascade="delete" order-by="beginTime DESC">
+			<key column="advertId" />
+			<one-to-many class="com.yuanluesoft.cms.advert.pojo.AdvertPut" />
+		</set>
+	</class>
+	
+	<!--广告管理:广告投放-->
+	<class name="com.yuanluesoft.cms.advert.pojo.AdvertPut" table="advert_put">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="advertId"/> <!--广告ID,numeric(20,0)-->
+		<property name="siteId"/> <!--站点ID,numeric(20,0)-->
+		<property name="advertName"/> <!--广告名称,varchar(200)-->
+		<property name="spaceName"/> <!--广告位名称,varchar(200)-->
+		<property name="customerName"/> <!--客户名称,varchar(200)-->
+		<property name="beginTime"/> <!--投放开始时间,timestamp null-->
+		<property name="endTime"/> <!--投放结束时间,timestamp null-->
+		<property name="factEndTime"/> <!--实际结束时间,timestamp null-->
+		<property name="price"/> <!--价格,numeric(10,2)-->
+		<property name="accessTimes"/> <!--点击次数,numeric(10)-->
+		<property name="created"/> <!--登记时间,timestamp null-->
+		<property name="creator"/> <!--登记人,varchar(30)-->
+		<property name="creatorId"/> <!--创建人ID,numeric(20,0)-->
+	</class>
+</hibernate-mapping>

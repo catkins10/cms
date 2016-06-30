@@ -1,0 +1,28 @@
+1、安装jdk1.6
+
+2、安装tomcat5.0, 
+	如果服务不能启动，拷贝jdk\bin\msvcr71.dll到windows目录
+	如果提示jsp不能解析，拷贝jdk\lib\tools.jar 到 tomcat\common\lib
+
+3、安装mysql5.0, 用户名密码都用 root
+   在	my.ini 查找default-character-set，值改成 gbk,有两个地方
+
+4、解压缩j2oa.webapp.rar到d:\，注:打包时已打包目录
+
+5、解压缩j2oa.data.rar到 mysql/data, 重命名目录为 oa
+
+6、修改tomcat, conf/server.xml, 找到<Connector，修改端口80, 增加URIEncoding="utf-8"
+   在</Host>前增加
+	<Context docBase="D:\j2oa" path="" reloadable="true"/>
+
+7、运行   "D:\Tomcat 5.0\bin\tomcat5w.exe" //ES//Tomcat5 ，地址自行修改
+
+	打开java标签，在java options增加：-agentlib:D:\j2oa\WEB-INF\jeaf\security\Decrypt
+	修改 Initial memory pool 为 128
+	修改 Maximun memory poot 为 256
+
+8、以服务方式启动tomcat
+
+9、打开 http://localhost/jeaf/system/regist.shtml 注册系统
+
+10、http://localhost/jeaf/system/initSystem.shtml 初始化

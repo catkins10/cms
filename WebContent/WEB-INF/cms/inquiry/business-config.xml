@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="调查主题" class="com.yuanluesoft.cms.inquiry.pojo.InquirySubject" businessServiceName="inquiryService">
+		<field name="subject" title="主题" length="200" required="true" type="string" inputMode="text">
+			<parameter name="rssTitleField">true</parameter>
+		</field>
+		<field name="description" title="说明" type="html" inputMode="htmleditor">
+			<parameter name="height">200</parameter>
+		</field>
+		<field name="status" title="状态" type="string" inputMode="readonly"/>
+		<field name="endTime" title="调查截止时间" type="timestamp" inputMode="datetime" required="true"/>
+		<field name="isAnonymous" title="是否匿名投票" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">实名|0\0匿名|1</parameter>
+		</field>
+		<field name="publishResult" title="投票结果公示" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">总是公开|2\0投票结束后公开|1\0不对外公开|0</parameter>
+		</field>
+		<field name="isQuestionnaire" title="是否问卷" length="1" type="char" inputMode="hidden">
+			<parameter name="itemsText">不是|0\0是|1</parameter>
+		</field>
+		<field name="ipRestriction" title="IP限制" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">不限制|0\0指定时间内限制|1\0一直限制|2</parameter>
+		</field>
+		<field name="ipRestrictionHours" title="IP限制时间" length="3" type="number" inputMode="text"/>
+		<field name="isPublic" title="是否发布" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">未发布|0\0发布|1</parameter>
+		</field>
+		<field name="siteId" title="站点ID" length="20" type="number" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="rssPubDateField">true</parameter>
+		</field>
+		<field name="inquiries" title="调查列表" type="components">
+			<parameter name="class">com.yuanluesoft.cms.inquiry.pojo.Inquiry</parameter>
+		</field>
+		<field name="feedbacks" title="结果反馈" type="components">
+			<parameter name="class">com.yuanluesoft.cms.inquiry.pojo.InquiryFeedback</parameter>
+		</field>
+		<field name="feedback" title="结果反馈" type="html" inputMode="readonly" persistence="false">
+			<parameter name="referenceFields">feedbacks</parameter>
+			<parameter name="height">300</parameter>
+		</field>
+		<field name="options" title="选项列表" type="components" persistence="false">
+			<parameter name="referenceFields">inquiries</parameter>
+			<parameter name="class">com.yuanluesoft.cms.inquiry.pojo.InquiryOption</parameter>
+			<parameter name="url">{PARAMETER:optionDetailUrl}</parameter>
+		</field>
+		<field name="results" title="投票结果" persistence="false" type="components" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.cms.inquiry.model.InquiryResult</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="serviceName">siteImageService</parameter>
+		</field>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="fileExtension">FLASH文件|*.swf|</parameter>
+			<parameter name="maxUploadSize">1000000</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">500000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+			<parameter name="serviceName">siteVideoService</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="调查" class="com.yuanluesoft.cms.inquiry.pojo.Inquiry" businessServiceName="inquiryService">
+		<field name="subjectId" title="主题ID" type="number" inputMode="hidden"/>
+		<field name="description" title="描述" type="html" inputMode="htmleditor" required="true">
+			<parameter name="height">200px</parameter>
+			<parameter name="enterMode">br</parameter> <!-- 回车方式: p,div,br,默认p -->
+		</field>
+		<field name="isMultiSelect" title="单选/多选" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">单选|0\0多选|1\0填空|2</parameter>
+		</field>
+		<field name="minVote" title="最小投票数" type="number" length="3" inputMode="text"/>
+		<field name="maxVote" title="最大投票数" type="number" length="3" inputMode="text"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="priority" title="优先级" type="number" inputMode="none"/>
+		<field name="inquirySubject" title="调查主题" length="7,4" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.cms.inquiry.pojo.InquiryOption</parameter>
+		</field>
+		<field name="options" title="调查选项" type="components">
+			<parameter name="class">com.yuanluesoft.cms.inquiry.pojo.InquiryOption</parameter>
+			<parameter name="url">{PARAMETER:optionDetailUrl}</parameter>
+			<parameter name="lazyLoad">false</parameter>
+		</field>
+		<field name="results" title="投票结果" persistence="false" type="components" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.cms.inquiry.model.InquiryResult</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="调查选项" class="com.yuanluesoft.cms.inquiry.pojo.InquiryOption" businessServiceName="inquiryService">
+		<field name="inquiryBox" title="选择框" persistence="false" type="html" inputMode="htmleditor"/>
+		<field name="supplementInputBox" title="补充说明输入框" persistence="false" type="html" inputMode="htmleditor">
+			<parameter name="height">200</parameter>
+		</field>
+		<field name="inquiryId" title="调查ID" type="number" inputMode="hidden"/>
+		<field name="inquiryOption" title="选项" length="100" required="true" type="string" inputMode="textarea">
+			<parameter name="singleByteCharacters">true</parameter>
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="needSupplement" title="是否需要补充说明" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">不需要|0\0需要|1</parameter>
+		</field>
+		<field name="description" title="描述" type="html" inputMode="htmleditor">
+			<parameter name="height">220</parameter>
+		</field>
+		<field name="inquiry" title="调查" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.cms.inquiry.pojo.Inquiry</parameter>
+		</field>
+		<field name="votes" title="投票" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.cms.inquiry.pojo.InquiryVote</parameter>
+			<parameter name="lazyLoad">false</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="投票" class="com.yuanluesoft.cms.inquiry.pojo.InquiryVote" businessServiceName="inquiryService">
+		<field name="ip" title="IP" length="20" type="string" inputMode="readonly"/>
+		<field name="optionId" title="选项ID" type="number" inputMode="hidden"/>
+		<field name="voter" title="投票人姓名" length="100" type="string" inputMode="readonly"/>
+		<field name="voterId" title="投票人ID" type="number" inputMode="none"/>
+		<field name="supplement" title="补充说明" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+		<field name="created" title="投票时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="投票结果" class="com.yuanluesoft.cms.inquiry.model.InquiryResult">
+		<field name="optionId" title="选项ID" type="number" inputMode="text"/>
+		<field name="option" title="选项" type="string" inputMode="text"/>
+		<field name="voteNumber" title="投票数" type="number" inputMode="text"/>
+		<field name="votePercent" title="所占百分比" type="number" inputMode="text">
+			<parameter name="displayFormat">###.##%</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="结果反馈" class="com.yuanluesoft.cms.inquiry.pojo.InquiryFeedback" businessServiceName="inquiryService">
+		<field name="subjectId" title="主题ID" type="number" inputMode="hidden"/>
+		<field name="feedback" title="结果反馈" type="html" inputMode="htmleditor">
+			<parameter name="height">320</parameter>
+		</field>
+		<field name="creatorId" title="反馈人ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="反馈人" length="30" type="string" inputMode="readonly"/>
+		<field name="created" title="反馈时间" type="timestamp" inputMode="readonly"/>
+		<field name="inquirySubject" title="调查主题" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.cms.inquiry.pojo.InquirySubject</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="模板配置" class="com.yuanluesoft.cms.inquiry.pojo.InquiryTemplate" businessServiceName="inquiryTemplateService">
+		<field name="subjectId" title="主题ID" type="number" inputMode="hidden"/>
+		<field name="subject" title="主题" length="200" type="string" inputMode="hidden"/>
+	</businessObject>
+</businessObjects>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--投稿-->
+	<class name="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContribute" table="info_contribute">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="subject"/> <!--标题,VARCHAR(200)-->
+		<property name="keywords"/> <!--主题词,VARCHAR(100)-->
+		<property name="presetMagazines"/> <!--预选刊型,VARCHAR(200)-->
+		<property name="secretLevel"/> <!--密级,普通 秘密 机密,VARCHAR(10)-->
+		<property name="fromUnit"/> <!--来稿单位名称,VARCHAR(200)-->
+		<property name="fromUnitId"/> <!--来稿单位ID,NUMERIC(20)-->
+		<property name="source"/> <!--信息来源,VARCHAR(100)-->
+		<property name="sn"/> <!--期数,VARCHAR(20)-->
+		<property name="editor"/> <!--责任编辑,VARCHAR(20)-->
+		<property name="editorTel"/> <!--电话,VARCHAR(30)-->
+		<property name="signer"/> <!--签发领导,VARCHAR(20)-->
+		<property name="signerTel"/> <!--签发领导电话,VARCHAR(30)-->
+		<property name="creatorId"/> <!--创建人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--创建人,VARCHAR(30)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+		<property name="contributeTime"/> <!--投稿时间,TIMESTAMP-->
+		<property name="supplementTime"/> <!--补录时间,TIMESTAMP-->
+		<!-- 正文 -->
+		<set name="lazyBody" cascade="delete" inverse="true" lazy="true" table="info_contribute_body">
+			<key column="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeBody"/>
+		</set>
+		<!--接收单位-->
+		<set name="receiveUnits" cascade="delete" inverse="true" lazy="true" table="info_contribute_receive_unit">
+			<key column="infoId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeReceiveUnit"/>
+		</set>
+		<!-- 退改稿 -->
+		<set name="revises" table="info_contribute_revise" lazy="true" inverse="true" cascade="delete" order-by="reviseTime desc">
+			<key column="infoId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeRevise"/>
+		</set>
+		<!-- 采用情况 -->
+		<set name="uses" table="info_contribute_use" lazy="true" inverse="true" cascade="delete" order-by="sendTime desc, useTime desc">
+			<key column="infoId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeUse"/>
+		</set>
+		<!-- 领导批示 -->
+		<set name="instructs" table="info_contribute_instruct" lazy="true" inverse="true" cascade="delete" order-by="instructTime desc">
+			<key column="infoId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeInstruct"/>
+		</set>
+	</class>
+	
+	<!--投稿:正文-->
+	<class name="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeBody" table="info_contribute_body">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="body"  type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文,TEXT-->
+	</class>
+	
+	<!--投稿:接收单位-->
+	<class name="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeReceiveUnit" table="info_contribute_receive_unit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="infoId"/> <!--稿件ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(100)-->
+	</class>
+	
+	<!--投稿:退改稿-->
+	<class name="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeRevise" table="info_contribute_revise">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="subject"/> <!--稿件标题,VARCHAR(200)-->
+		<property name="infoId"/> <!--稿件ID,原始稿件ID或者录用稿件ID,NUMERIC(20)-->
+		<property name="revisePersonId"/> <!--退改稿人ID,NUMERIC(20)-->
+		<property name="revisePerson"/> <!--退改稿人,VARCHAR(30)-->
+		<property name="revisePersonTel"/> <!--退改稿人电话,VARCHAR(30)-->
+		<property name="reviseOpinion"/> <!--退改稿意见,VARCHAR(1000)-->
+		<property name="reviseTime"/> <!--退改稿时间,TIMESTAMP-->
+		<property name="newBody" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--修改后的正文,TEXT-->
+		<property name="editTime"/> <!--修改时间,TIMESTAMP-->
+		<property name="editorId"/> <!--修改人ID,NUMERIC(20)-->
+		<property name="editor"/> <!--修改人,VARCHAR(30)-->
+		<many-to-one name="info" class="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContribute" column="infoId" update="false" insert="false"/> <!-- 投稿 -->
+	</class>
+	
+	<!--投稿:采用情况-->
+	<class name="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeUse" table="info_contribute_use">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="infoId"/> <!--稿件ID,NUMERIC(20)-->
+		<property name="useId"/> <!--采用情况ID,采编端ID,NUMERIC(20)-->
+		<property name="level" column="sendLevel"/> <!--报送级别,1/县办,2/市办,3/省办,4/国办,NUMERIC(1)-->
+		<property name="sendTime"/> <!--报送时间,TIMESTAMP-->
+		<property name="useTime"/> <!--采用时间,TIMESTAMP-->
+		<property name="magazineId"/> <!--采用刊物ID,NUMERIC(20)-->
+		<property name="magazine"/> <!--采用刊物名称,VARCHAR(30)-->
+		<many-to-one name="info" class="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContribute" column="infoId" update="false" insert="false"/> <!-- 投稿 -->
+	</class>
+	
+	<!--投稿:领导批示-->
+	<class name="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeInstruct" table="info_contribute_instruct">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="infoId"/> <!--稿件ID,NUMERIC(20)-->
+		<property name="instructId"/> <!--批示ID,采编端ID,NUMERIC(20)-->
+		<property name="leader"/> <!--领导姓名,VARCHAR(20)-->
+		<property name="level" column="leaderLevel"/> <!--领导级别,1/县,2/市,3/省,4/国,NUMERIC(1)-->
+		<property name="instruct" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--批示内容,TEXT-->
+		<property name="instructTime"/> <!--批示时间,TIMESTAMP-->
+		<property name="creatorId"/> <!--录入人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--录入人,VARCHAR(30)-->
+		<property name="created"/> <!--录入时间,TIMESTAMP-->
+		<many-to-one name="info" class="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContribute" column="infoId" update="false" insert="false"/> <!-- 投稿 -->
+	</class>
+	
+	<!--投稿:刊物-->
+	<class name="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeMagazineDefine" table="info_contribute_magazine_define">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--名称,VARCHAR(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(100)-->
+	</class>
+	
+	<!--刊物发布-->
+	<class name="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeMagazine" table="info_contribute_magazine">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--名称,VARCHAR(30)-->
+		<property name="issueTime"/> <!--发布时间,TIMESTAMP-->
+		<property name="sn"/> <!--期数,NUMERIC(20)-->
+		<property name="snTotal"/> <!--总期数,NUMERIC(20)-->
+		<!-- 访问者 -->
+		<set name="visitors" table="info_contribute_magazine_priv" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeMagazinePrivilege"/>
+		</set>
+	</class>
+	
+	<!--刊物发布:权限控制信息-->
+	<class name="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeMagazinePrivilege" table="info_contribute_magazine_priv">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,numeric(20)-->
+		<property name="accessLevel"/> <!--访问级别,CHAR(1)-->
+		<property name="recordId"/> <!--主记录ID,numeric(20)-->
+	</class>
+</hibernate-mapping>

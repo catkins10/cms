@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,161,21" TARGET="page1" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,112,161,21"
+  TARGET="page5" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#vnetOrder" NAME="action0"
+  PATH="/vnetOrder" SHAPE="32,232,161,41" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#completeVnetOrder"
+  NAME="action1" PATH="/completeVnetOrder" SHAPE="32,320,161,25"
+  TITLE="vnetOrder" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="failed"
+   NAME="forward0" PATH="/vnetOrderFailed.jsp" TARGET="page2"
+   TITLE="failed" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/vnetOrderFailed.jsp" SHAPE="320,336,50,25" SUBTYPE="jsp"
+  TITLE="vnetOrderFailed.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#cancelVnetOrder"
+  NAME="action2" PATH="/cancelVnetOrder" SHAPE="32,432,161,25"
+  TITLE="cancelVnetOrder" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/cancelVnetOrder.jsp" TARGET="page3"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/cancelVnetOrder.jsp" SHAPE="320,448,50,25" SUBTYPE="jsp"
+  TITLE="cancelVnetOrder.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/doCancelVnetOrder" SUBTYPE="confirmed" TARGET="action3"
+   TITLE="/doCancelVnetOrder" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#doCancelVnetOrder"
+  NAME="action3" PATH="/doCancelVnetOrder" SHAPE="528,464,161,25"
+  TITLE="cancelVnetOrder" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/vnetOrderCanceled.jsp" TARGET="page4"
+   TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/vnetOrderCanceled.jsp" SHAPE="816,480,50,25" SUBTYPE="jsp"
+  TITLE="vnetOrderCanceled.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#vnetLogin" NAME="action4"
+  PATH="/vnetLogin" SHAPE="32,544,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#vnetUserInfo"
+  NAME="action5" PATH="/vnetUserInfo" SHAPE="32,624,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="320,112,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="320,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+</PROCESS>

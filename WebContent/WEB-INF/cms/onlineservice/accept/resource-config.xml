@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Application>
+	<Actions>
+		<Action Name="提交" Send="true"/>
+		<Action Name="受理申报" Send="true" Reverse="true"/>
+		<Action Name="删除" DeleteAction="true"/>
+	</Actions>
+	<ProgrammingParticipants>
+		<ProgrammingParticipant Id="transactor" Name="网上办事经办"/>
+		<ProgrammingParticipant Id="manager" Name="网上办事管理员"/>
+	</ProgrammingParticipants>
+	<SubForms>
+		<SubForm Id="Edit" Name="申报"/>
+		<SubForm Id="Approval" Name="办理"/>
+		<SubForm Id="Read" Name="只读"/>
+	</SubForms>
+	<TypeDeclarations>
+		<TypeDeclaration Id="acceptResult" Name="受理结果">
+			<SchemaType>
+				<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+					elementFormDefault="qualified" 
+					attributeFormDefault="unqualified">
+					<xsd:element name="result">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="受理"/>
+								<xsd:enumeration value="不受理"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+	</TypeDeclarations>
+	<DataFields>
+		<DataField Id="acceptResult" Name="受理结果">
+			<DataType>
+				<DeclaredType Id="acceptResult"/>
+			</DataType>
+		</DataField>
+		<DataField Id="itemName" Name="办理事项名称">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="sn" Name="受理编号">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+	</DataFields>
+	<Applications/>
+</Application>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Application>
+	<Actions>
+		<!--Action Prompt="尚未归档" Necessary="true" PromptOnCreate="true" Name="归档" Send="true"/-->
+		<Action Name="签发" Send="true"/>
+		<Action Name="调整文件字"/>
+		<Action Name="生成正式文件" Prompt="尚未生成正式文件" Necessary="true"/>
+		<Action Name="归档" Send="true"/> <!-- Prompt="尚未归档" Necessary="true"  -->
+		<Action Name="分发" Prompt="尚未分发"/> <!--Send="true"-->
+		<Action Name="分发并发送" Send="true"/>
+		<Action Name="作废" DeleteAction="true"/>
+	</Actions>
+	<SubForms>
+		<SubForm Id="Draft" Name="起草"/>
+		<SubForm Id="Approval" Name="审核"/>
+		<SubForm Id="Distribute" Name="分发"/>
+		<SubForm Id="Read" Name="只读"/>
+	</SubForms>
+	<TypeDeclarations>
+		<TypeDeclaration Id="result" Name="审批结果/签发结果">
+			<SchemaType>
+				<xsd:schema 
+					xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+					elementFormDefault="qualified" 
+					attributeFormDefault="unqualified">
+					<xsd:element name="result">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="同意"/>
+								<xsd:enumeration value="不同意"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+	</TypeDeclarations>
+	<DataFields>
+		<DataField Id="subject" Name="主题">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="secureLevel" Name="密级">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="mainSend" Name="主送">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="keyword" Name="主题词">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="docWord" Name="发文编号">
+			<DataType>
+				<BasicType Type="INTEGER"/>
+			</DataType>
+			<InitialValue>1</InitialValue>
+			<Length>5</Length>
+		</DataField>
+	</DataFields>
+	<Applications>
+		<Application Id="generateDocWord" Name="编号">
+			<FormalParameters>
+				<FormalParameter Id="isWorkflowTest" Index="1" Mode="IN">
+					<DataType>
+						<BasicType Type="BOOLEAN"/>
+					</DataType>
+					<Description>是否工作流测试</Description>
+				</FormalParameter>
+			</FormalParameters>
+			<ExtendedAttributes>
+				<!--类型:procedure/内部过程,application/外部应用,decision/判断-->
+				<ExtendedAttribute Name="type">procedure</ExtendedAttribute>
+				<!--结束方式:Automatic/自动,Manual/人工-->
+				<ExtendedAttribute Name="finishMode">Automatic</ExtendedAttribute>
+				<ExtendedAttribute Name="service">dispatchDocWordService</ExtendedAttribute>
+				<ExtendedAttribute Name="function">generateDocWord</ExtendedAttribute>
+			</ExtendedAttributes>
+		</Application>
+	</Applications>
+</Application>

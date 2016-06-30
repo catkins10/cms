@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="portletEntities" form="portletEntity" title="PORTLET" pageRows="20" openFeatures="mode=dialog,width=450,height=200">
+		<data>
+			<pojo>com.yuanluesoft.portal.container.pojo.PortletEntity</pojo>
+			<where>PortletEntity.orgId={PARAMETER:orgId|-1} and PortletEntity.siteId={PARAMETER:siteId|-1}</where>
+			<orderBy>PortletEntity.category, PortletEntity.entityName</orderBy>
+			<quickFilter>PortletEntity.entityName like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有PORTLET" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.portal.container.pojo.PortletEntity</pojo>
+			</data>
+			<category value="PortletEntity.category"> <!--value必须有-->
+				<where>PortletEntity.orgId={PARAMETER:orgId|-1} and PortletEntity.siteId={PARAMETER:siteId|-1}</where>
+				<data>PortletEntity.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="添加PORTLET" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/portal/selectPortlet.shtml?selectNodeTypes=portlet&amp;script=PageUtils.newrecord(&quot;portal&quot;, &quot;portletEntity&quot;, &quot;mode=dialog,width=450,height=200&quot;, &quot;orgId={PARAMETER:orgId}%26siteId={PARAMETER:siteId}%26portletApplication={applicationName}%26portletName={id}&quot;)', 600, 350)"/>
+			<action title="PORTAL配置" execute="window.open('{PARAMETER:siteId}'=='-1' ? '{WEBAPPLICATIONURL}/jeaf/usermanage/personalIndex.shtml?orgId={PARAMETER:orgId}&amp;editPortal=true' : '{WEBAPPLICATIONURL}/jeaf/usermanage/member/index.shtml?siteId={PARAMETER:siteId}&amp;editPortal=true')"/>
+			<action title="删除PORTLET" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('deletePortletEntities')"/>
+			<action title="修改分类" execute="DialogUtils.openInputDialog('修改分类', [{name:'category', title:'新分类名称', inputMode:'text'}], 350, 120, 'document.getElementsByName(&quot;category&quot;)[0].value={value}.category;FormUtils.doAction(&quot;modifyCategory&quot;)', null, 'text', 1, true)"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="entityName" width="120"/>
+			<column title="描述" name="description"/>
+			<column title="分类" name="category"  width="120"/>
+		</columns>
+	</view>
+	
+	<view name="portalPages" title="PORTAL页面列表" viewServiceName="portalPageViewService">
+		<data>
+			<pojo>com.yuanluesoft.portal.server.model.PortalPage</pojo>
+		</data>
+		<links>
+			<link title="PORTAL页面">javascript:window.portal.openPage('{PARAMETER:id}')</link>
+		</links>
+	</view>
+</views>

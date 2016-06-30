@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/evaluationTopic" class="com.yuanluesoft.cms.evaluation.forms.admin.EvaluationTopic" title="测评主题" pojo="com.yuanluesoft.cms.evaluation.pojo.EvaluationTopic">
+		<formFields>
+			<field title="被测评人" name="targetPersons" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field title="被测评人" name="targetPersons.visitorNames" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectPerson(500,300,true,'targetPersons.visitorIds{id},targetPersons.visitorNames{name|被测评人|100%},targetPersons.visitorIds{id|ID|0}');</parameter>
+			</field>
+			<field title="测评人" name="evaluatePersons" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteEvaluationTopic')"/>
+			<action title="发布" hide="noPrivilege(issue)" execute="FormUtils.doAction('issueEvaluationTopic')"/>
+			<action title="撤销发布" hide="noPrivilege(unissue)" execute="FormUtils.doAction('unissueEvaluationTopic')"/>
+			<action title="复制" hide="noPrivilege(issue) and noPrivilege(unissue)" execute="FormUtils.doAction('copyEvaluationTopic')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/evaluationItem" class="com.yuanluesoft.cms.evaluation.forms.admin.EvaluationItem" title="测评项目" pojo="com.yuanluesoft.cms.evaluation.pojo.EvaluationTopic">
+		<formFields>
+			<field name="item" title="测评项目" type="component">
+				<parameter name="class">com.yuanluesoft.cms.evaluation.pojo.EvaluationItem</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteEvaluationItem')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/evaluationOption" class="com.yuanluesoft.cms.evaluation.forms.admin.EvaluationOption" title="测评选择项" pojo="com.yuanluesoft.cms.evaluation.pojo.EvaluationTopic">
+		<formFields>
+			<field name="option" title="测评选择项" type="component">
+				<parameter name="class">com.yuanluesoft.cms.evaluation.pojo.EvaluationOption</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteEvaluationOption')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/evaluation" class="com.yuanluesoft.cms.evaluation.forms.admin.Evaluation" title="测评" pojo="com.yuanluesoft.cms.evaluation.pojo.EvaluationMark">
+		<formFields>
+			<field title="测评主题" name="topic" type="component">
+				<parameter name="class">com.yuanluesoft.cms.evaluation.pojo.EvaluationTopic</parameter>
+			</field>
+			<field name="targetPersonOrg" title="被评测用户所在部门" type="string" inputMode="readonly"/>
+		</formFields>
+	</form>
+	
+	<form name="evaluationTopic" class="com.yuanluesoft.cms.evaluation.forms.EvaluationTopic" title="测评主题" pojo="com.yuanluesoft.cms.evaluation.pojo.EvaluationTopic">
+		<formFields>
+			<field title="待测评用户列表" name="toEvaluateTargetPersons" type="components">
+				<parameter name="class">com.yuanluesoft.cms.evaluation.model.EvaluationTargetPerson</parameter>
+				<parameter name="url">/cms/evaluation/evaluation.shtml?topicId={PARAMETER:id}&amp;targetPersonId={PARAMETER:personId}</parameter>
+			</field>
+			<field title="已测评用户列表" name="evaluatedTargetPersons" type="components">
+				<parameter name="class">com.yuanluesoft.cms.evaluation.model.EvaluationTargetPerson</parameter>
+				<parameter name="url">/cms/evaluation/evaluation.shtml?topicId={PARAMETER:id}&amp;targetPersonId={PARAMETER:personId}</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form name="evaluation" class="com.yuanluesoft.cms.evaluation.forms.Evaluation" title="测评" pojo="com.yuanluesoft.cms.evaluation.pojo.EvaluationMark"/>
+</forms>

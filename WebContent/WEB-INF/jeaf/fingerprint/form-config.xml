@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/enroll" title="指纹采集" class="com.yuanluesoft.jeaf.fingerprint.forms.admin.Enroll" pojo="com.yuanluesoft.jeaf.fingerprint.pojo.FingerprintTemplate">
+		<formFields>
+			<field name="selfEnroll" title="是否采集自己的指纹" type="boolean" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="提交" execute="saveTempdateData(true)"/>
+			<action title="重新采集" execute="redoEnroll()"/>
+			<action title="关闭" execute="window.close()"/>
+		</actions>
+	</form>
+</forms>

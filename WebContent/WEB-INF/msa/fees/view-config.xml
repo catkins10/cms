@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="todoFees" form="fees" title="待办规费单" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.msa.fees.pojo.MsaFees</pojo>
+			<orderBy>MsaFees.created DESC</orderBy>
+			<quickFilter>MsaFees.name like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="新建规费单" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name"/>
+			<column title="登记人" name="creator" align="center" width="66"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="105" display="normal,print,portlet"/>
+			<column title="发送人" name="workflowSender" align="center" width="66" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="inProcessFees" form="fees" title="在办规费单" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.msa.fees.pojo.MsaFees</pojo>
+			<orderBy>MsaFees.created DESC</orderBy>
+			<quickFilter>MsaFees.name like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="新建规费单" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name"/>
+			<column title="登记人" name="creator" align="center" width="66"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="105" display="normal,print,portlet"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="completedFees" form="fees" title="办结规费单" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.msa.fees.pojo.MsaFees</pojo>
+			<orderBy>MsaFees.created DESC</orderBy>
+			<quickFilter>MsaFees.name like '%{KEY}%'</quickFilter>
+			<filter>COMPLETED</filter>
+		</data>
+		<actions>
+			<action title="新建规费单" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name"/>
+			<column title="登记人" name="creator" align="center" width="66"/>
+			<column title="登记时间" name="created" align="center" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="allFees" form="fees" title="所有规费单" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.msa.fees.pojo.MsaFees</pojo>
+			<orderBy>MsaFees.created DESC</orderBy>
+			<quickFilter>MsaFees.name like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="新建规费单" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name"/>
+			<column title="登记人" name="creator" align="center" width="66"/>
+			<column title="登记时间" name="created" align="center" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="feesItem" title="规费征缴统计" pageRows="50" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.msa.fees.pojo.MsaFeesItem</pojo>
+			<orderBy>MsaFeesItem.examTime</orderBy>
+			<quickFilter>MsaFeesItem.examCategory like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>							
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="时间" name="examTime" align="center" format="yyyy-MM" width="60"/>
+			<column title="期数" name="period" align="center" width="50"/>
+			<column title="院校" name="address"/>
+			<column title="考试类别" name="examCategory"/>
+			<column title="金额" name="charge" align="center" width="60"/>
+			<column title="缴费方式" name="paymentMode" align="center" width="100"/>
+			<column title="负责单位" name="unitName" align="center" width="100"/>
+			<column title="是否办结" name="isComplete" align="center" width="60"/>
+			<column title="备注" name="remark" align="center" width="150"/>
+		</columns>
+	</view>
+</views>

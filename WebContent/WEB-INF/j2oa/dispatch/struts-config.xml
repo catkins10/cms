@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="dispatch" type="com.yuanluesoft.j2oa.dispatch.forms.Dispatch"/>
+  <form-bean name="templateConfig" type="com.yuanluesoft.j2oa.dispatch.forms.TemplateConfig"/>
+  <form-bean name="docWordConfig" type="com.yuanluesoft.j2oa.dispatch.forms.DocWordConfig"/>
+  <form-bean name="filingConfig" type="com.yuanluesoft.j2oa.dispatch.forms.FilingConfig"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="dispatch" path="/dispatch" scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.dispatch.Load" validate="false">
+   <forward name="load" path="/dispatch.jsp"/>
+  </action>
+  <action input="/dispatch.jsp" name="dispatch" path="/save"
+   scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.dispatch.Save" validate="false"/>
+  <action input="/dispatch.jsp" name="dispatch" path="/delete"
+   scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.dispatch.Delete" validate="false"/>
+  <action input="/dispatch.jsp" name="dispatch" path="/run"
+   scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.dispatch.Run" validate="false"/>
+  <action name="templateConfig" path="/templateConfig" scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.templateconfig.Load" validate="false">
+   <forward name="load" path="/templateConfig.jsp"/>
+  </action>
+  <action input="/docWordConfig.jsp" name="docWordConfig"
+   path="/saveDocWordConfig" scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.docwordconfig.Save" validate="false"/>
+  <action name="docWordConfig" path="/docWordConfig" scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.docwordconfig.Load" validate="false">
+   <forward name="load" path="/docWordConfig.jsp"/>
+  </action>
+  <action input="/templateConfig.jsp" name="templateConfig"
+   path="/saveTemplateConfig" scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.templateconfig.Save" validate="false"/>
+  <action input="/docWordConfig.jsp" name="docWordConfig"
+   path="/deleteDocWordConfig" scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.docwordconfig.Delete" validate="false"/>
+  <action input="/dispatch.jsp" name="dispatch" path="/saveBody"
+   scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.dispatch.SaveBody" validate="false"/>
+  <action input="/dispatch.jsp" name="dispatch" path="/writeOpinion"
+   scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.dispatch.WriteOpinion" validate="false"/>
+  <action input="/dispatch.jsp" name="dispatch" path="/sign"
+   scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.dispatch.Sign" validate="false"/>
+  <action input="/dispatch.jsp" name="dispatch" path="/distribute"
+   scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.dispatch.Distribute" validate="false"/>
+  <action input="/dispatch.jsp" name="dispatch" path="/adjustDocWord"
+   scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.dispatch.AdjustDocWord" validate="false">
+   <forward name="load" path="/adjustDocWord.jsp"/>
+  </action>
+  <action input="/dispatch.jsp" name="dispatch" path="/generateDocWord"
+   scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.dispatch.GenerateDocWord" validate="false"/>
+  <action input="/dispatch.jsp" name="dispatch" path="/filing"
+   scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.dispatch.Filing" validate="false"/>
+  <action input="/dispatch.jsp" name="dispatch" path="/setFilingOption"
+   scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.dispatch.SetFilingOption" validate="false"/>
+  <action input="/templateConfig.jsp" name="templateConfig"
+   path="/deleteTemplateConfig" scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.templateconfig.Delete" validate="false"/>
+  <action name="filingConfig" path="/filingConfig" scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.filingconfig.Load" validate="false">
+   <forward name="load" path="/filingConfig.jsp"/>
+  </action>
+  <action input="/filingConfig.jsp" name="filingConfig"
+   path="/saveFilingConfig" scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.filingconfig.Save" validate="false"/>
+  <action name="dispatch" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.dispatch.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action input="/dispatch.jsp" name="dispatch"
+   path="/completeGenerateOffical" scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.dispatch.CompleteGenerateOffical" validate="false"/>
+  <action input="/dispatch.jsp" name="dispatch"
+   path="/distributeAndSend" scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.dispatch.DistributeAndSend" validate="false"/>
+  <action path="/downloadAttachment" scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.dispatch.DownloadAttachment" validate="false"/>
+  <action input="/dispatch.jsp" name="dispatch" path="/editBody"
+   scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.dispatch.EditBody" validate="false"/>
+  <action input="/dispatch.jsp" name="templateConfig"
+   path="/editTemplate" scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.templateconfig.EditTemplate" validate="false"/>
+  <action input="/templateConfig.jsp" name="templateConfig"
+   path="/saveTemplate" scope="request"
+   type="com.yuanluesoft.j2oa.dispatch.actions.templateconfig.SaveTemplate" validate="false"/>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="200M"/>
+</struts-config>

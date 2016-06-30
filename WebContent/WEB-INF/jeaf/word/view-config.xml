@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="word" title="词库" pageRows="20" openFeatures="mode=dialog,width=400,height=200"> <!--  form="word" -->
+		<data>
+			<pojo>com.yuanluesoft.jeaf.word.pojo.ChineseWord</pojo>
+			<orderBy>ChineseWord.word</orderBy>
+			<quickFilter>ChineseWord.word like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="词语" name="word"/>
+		</columns>
+	</view>
+</views>

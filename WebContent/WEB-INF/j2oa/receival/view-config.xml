@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="todoReceival" form="receival" title="待办收文" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.receival.pojo.Receival</pojo>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="登记收文" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="登记人" name="registPerson" align="center" width="70" hideZero="true" displayExcept="portlet"/>
+			<column title="发送人" name="workflowSender" align="center" width="70" displayExcept="condition"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="105" displayExcept="condition"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="inProcessReceival" form="receival" title="在办收文" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.receival.pojo.Receival</pojo>
+			<orderBy>Receival.receivalDate DESC</orderBy>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="登记收文" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="登记人" name="registPerson" align="center" width="70" hideZero="true" displayExcept="portlet"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" displayExcept="condition"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="105" displayExcept="condition"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="allReceival" form="receival" title="所有收文" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.receival.pojo.Receival</pojo>
+			<filter>READABLE</filter>
+			<sort>Receival.registDate DESC</sort>
+		</data>
+		<actions>
+			<action title="登记收文" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="登记时间" name="receivalDate" align="center" width="78"/>
+			<column title="登记人" name="registPerson" align="center" width="70" hideZero="true"/>
+		</columns>
+	</view>
+	
+	<view name="allReceivalByMonth" form="receival" title="所有收文/按年月" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.receival.pojo.Receival</pojo>
+			<filter>READABLE</filter>
+			<sort>Receival.registDate DESC</sort>
+		</data>
+		<categories root="所有收文" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.receival.pojo.Receival</pojo>
+				<filter>READABLE</filter>
+			</data>
+			<category value="year(Receival.receivalDate)"> <!--value必须有-->
+				<orderBy>year(Receival.receivalDate)</orderBy>
+				<data>year(Receival.receivalDate)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(Receival.receivalDate)"> <!--value必须有-->
+				<where>year(Receival.receivalDate)={PARENTVALUE}</where>
+				<orderBy>month(Receival.receivalDate)</orderBy>
+				<data>year(Receival.receivalDate)={CATEGORY1VALUE} and month(Receival.receivalDate)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="登记收文" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="登记时间" name="receivalDate" align="center" width="78"/>
+			<column title="主题" name="subject"/>
+			<column title="文件字" name="docWord" width="100"/>
+			<column title="密级" name="secureLevel"  width="43" align="center"/>
+			<column title="份数" name="receivalCount"  width="43" align="center"/>
+			<column title="主办部门" name="mainDo" width="80"/>
+			<column title="归档日期" name="filingTime" align="center" width="78" format="yyyy-MM-dd"/>
+		</columns>
+	</view>
+	
+	<view name="allReceivalByType" form="receival" title="所有收文/按文件种类" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.receival.pojo.Receival</pojo>
+			<filter>READABLE</filter>
+			<sort>Receival.registDate DESC</sort>
+		</data>
+		<categories root="所有收文" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.receival.pojo.Receival</pojo>
+			</data>
+			<category value="docType"> <!--value必须有-->
+				<orderBy>Receival.docType</orderBy>
+				<data>Receival.docType={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="登记收文" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="登记时间" name="receivalDate" align="center" width="78"/>
+			<column title="主题" name="subject"/>
+			<column title="文件字" name="docWord" width="100"/>
+			<column title="密级" name="secureLevel"  width="43" align="center"/>
+			<column title="份数" name="receivalCount"  width="43" align="center"/>
+			<column title="主办部门" name="mainDo" width="80"/>
+			<column title="归档日期" name="filingTime" align="center" width="78" format="yyyy-MM-dd"/>
+		</columns>
+	</view>
+	
+	<view name="allReceivalByMainDo" form="receival" title="所有收文/按主办部门" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.receival.pojo.Receival</pojo>
+			<filter>READABLE</filter>
+			<sort>Receival.registDate DESC</sort>
+		</data>
+		<categories root="所有收文" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.receival.pojo.Receival</pojo>
+				<filter>READABLE</filter>
+			</data>
+			<category value="Receival.mainDo"> <!--value必须有-->
+				<orderBy>Receival.mainDo</orderBy>
+				<data>Receival.mainDo={CATEGORYVALUE}</data>
+			</category>
+			<category value="year(Receival.receivalDate)"> <!--value必须有-->
+				<where>Receival.mainDo={PARENTVALUE}</where>
+				<orderBy>year(Receival.receivalDate)</orderBy>
+				<data>Receival.mainDo={CATEGORY1VALUE} and year(Receival.receivalDate)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="登记收文" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="登记时间" name="receivalDate" align="center" width="78"/>
+			<column title="主题" name="subject"/>
+			<column title="文件字" name="docWord" width="100"/>
+			<column title="密级" name="secureLevel"  width="43" align="center"/>
+			<column title="份数" name="receivalCount"  width="43" align="center"/>
+			<column title="主办部门" name="mainDo" width="80"/>
+			<column title="归档日期" name="filingTime" align="center" width="78" format="yyyy-MM-dd"/>
+		</columns>
+	</view>
+</views>

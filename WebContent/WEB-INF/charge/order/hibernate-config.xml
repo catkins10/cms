@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	
+	<!--计费:个人订单-->
+	<class name="com.yuanluesoft.charge.order.pojo.PersonalOrder" table="charge_personal_order">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="personId"/> <!--用户ID-->
+		<property name="endWhenNoBalance"/> <!--余额为0时结束订单-->
+		<property name="orderTime"/> <!--订购时间-->
+		<property name="remark"/> <!--备注-->
+		<set cascade="delete" inverse="true" lazy="false" name="orderItems" table="charge_personal_order_item" order-by="id">
+            <key column="orderId" />
+            <one-to-many class="com.yuanluesoft.charge.order.pojo.PersonalOrderItem" />
+        </set>
+        <set cascade="delete" inverse="true" lazy="false" name="orderBalances" table="charge_personal_order_balance" order-by="id">
+            <key column="orderId" />
+            <one-to-many class="com.yuanluesoft.charge.order.pojo.PersonalOrderBalance" />
+        </set>
+		<!--计费:由充值卡自动创建的服务订单-->
+		<joined-subclass name="com.yuanluesoft.charge.topup.pojo.CardPersonalOrder" table="charge_card_personal_order">
+            <key>
+                <column name="id" />
+            </key>
+			<property name="cardId"/> <!--充值卡ID-->
+		</joined-subclass>
+	</class>
+	
+	<!--计费:个人订单包含的服务-->
+	<class name="com.yuanluesoft.charge.order.pojo.PersonalOrderItem" table="charge_personal_order_item">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="orderId"/> <!--订单ID-->
+		<property name="servicePriceId"/> <!--服务报价ID-->
+		<property name="servicePriceName"/> <!--服务报价名称-->
+		<property name="serviceEnd"/> <!--订购截止时间-->
+		<property name="cancelEnable"/> <!--是否允许退订-->
+		<property name="cancelTime"/> <!--退订/结束时间-->
+		<property name="serviceExpiry"/> <!--服务有效期,也就是下一次服务扣款时间-->
+	</class>
+	
+	<!--计费:个人订单余额-->
+	<class name="com.yuanluesoft.charge.order.pojo.PersonalOrderBalance" table="charge_personal_order_balance">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="orderId"/> <!--订单ID-->
+		<property name="balance"/> <!--订单充值余额-->
+		<property name="paymentEnable"/> <!--余额是否允许增值消费-->
+		<property name="accountName"/> <!--充值账户-->
+	</class>
+	
+	<!--计费:用户定购的服务-->
+	<class name="com.yuanluesoft.charge.order.pojo.PersonalService" table="charge_personal_service">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="personId"/> <!--用户ID-->
+		<property name="serviceId"/> <!--服务ID-->
+		<property name="nextDeductionTime"/> <!--下一次扣款时间-->
+		<property name="endDate"/> <!--订购截止日期-->
+	</class>
+</hibernate-mapping>

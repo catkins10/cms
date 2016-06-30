@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/agentSalesReport" title="标书出售汇总表" class="com.yuanluesoft.bidding.project.report.forms.admin.AgentSalesReport">
+		<formFields>
+			<field title="开始时间" name="beginDate" type="date"/>
+			<field title="结束时间" name="endDate" type="date"/>
+			<field title="代理ID" name="agentId" type="number" inputMode="hidden"/>
+			<field title="代理名称" name="agentName" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/bidding/enterprise/js/enterprise.js</parameter>
+				<parameter name="execute">selectEnterprise(500, 300, false, 'agentId{id},agentName{name}')</parameter>
+			</field>
+			<field title="支付银行" name="paymentBanks" type="string[]" inputMode="multibox">
+				<parameter name="itemsServiceName">paymentService</parameter>
+				<parameter name="itemsName">paymentMethodNames</parameter>
+			</field>
+			<field title="地区" name="cities" type="string[]" inputMode="multibox" required="true">
+				<parameter name="itemsServiceName">biddingProjectParameterService</parameter>
+				<parameter name="itemsName">reportVisitableCity</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/projectReport" title="项目报表" class="com.yuanluesoft.bidding.project.report.forms.admin.ProjectReport">
+		<formFields>
+			<field title="开始时间" name="beginDate" type="date"/>
+			<field title="结束时间" name="endDate" type="date"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.bidding.project.report.forms.admin.SignUpView" title="项目报名视图">
+		<formFields>
+			<field name="projectId" title="项目ID" type="number" inputMode="hidden"/>
+		</formFields>
+	</form>
+</forms>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 评论 -->
+<application>
+	<pages>
+		<page name="comment" title="评论">
+			<field title="原文标题" name="pageTitle"/>
+			<field title="原文地址" name="pageUrl"/>
+		</page>
+		<page name="commentSubmitted" title="评论提交完成">
+			<link title="返回评论列表" url="http://localhost/cms/cms/comment/comment.shtml?act=create&amp;applicationName={PARAMETER:applicationName}&amp;pageName={PARAMETER:pageName}&amp;recordId={PARAMETER:recordId}&amp;pageTitle={PARAMETER:pageTitle}&amp;pageUrl={PARAMETER:pageUrl}&amp;page={PARAMETER:page}"/>
+		</page>
+	</pages>
+	
+	<recordLists>
+		<recordList title="评论列表" name="comments" rssSupport="false" dialogExtendURL="/cms/comment/templatemanage/dialog/insertComments.jsp">
+			<field title="评论" name="content" type="html"/>
+			<field title="评论人" name="creator"/>
+			<field title="评论人邮箱" name="creatorMail"/>
+			<field title="评论时间" name="created" type="timestamp"/>
+			<link title="引用"/> <!-- 复制内容到评论正文框,删除上面的所有链接 -->
+		</recordList>
+	</recordLists>
+	
+	<links>
+		<link title="评论" dialogURL="/cms/comment/templatemanage/dialog/insertCommentLink.jsp"/>
+	</links>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="commentLink" processor="commentLinkProcessor"/> <!-- 评论链接处理器 -->
+		<pageElement name="comments" processor="commentListProcessor"/> <!-- 评论列表处理器 -->
+	</pageElements>
+</application>

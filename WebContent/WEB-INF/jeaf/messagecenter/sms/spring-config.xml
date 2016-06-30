@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 短信发送 -->
+	<bean id="smsSender" class="com.yuanluesoft.jeaf.messagecenter.sender.sms.SmsSender" init-method="init">
+		<property name="name"><value>sms</value></property>
+		<property name="description"><value>手机短信</value></property>
+		<property name="feedback"><value>true</value></property>
+		<property name="messageService"><ref bean="messageService"/></property>
+		<property name="smsService"><ref bean="smsService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="orgService"><ref bean="orgService"/></property>
+	</bean>
+</beans>

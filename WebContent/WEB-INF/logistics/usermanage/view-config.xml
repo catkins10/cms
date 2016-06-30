@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="admin/toApproval" form="admin/user" title="待审核用户" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.logistics.usermanage.pojo.LogisticsUser</pojo>
+			<where>LogisticsUser.isApproval='1'</where>
+			<orderBy>LogisticsUser.created DESC</orderBy>
+			<quickFilter>LogisticsUser.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action hide="noPrivilege(manageUnit_regist)" title="注册公司" execute="PageUtils.newrecord('logistics/usermanage','admin/user','mode=fullscreen', 'isCompany=1')"/>
+			<action hide="noPrivilege(manageUnit_regist)" title="注册个人" execute="PageUtils.newrecord('logistics/usermanage','admin/user','mode=fullscreen', 'isCompany=0')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="用户名" name="name"/>
+			<column title="登录用户名" name="loginName" width="68"/>
+			<column title="所在地区" name="area" align="center" width="68"/>
+			<column title="联系人" name="linkman" align="center" width="68"/>
+			<column title="联系电话" name="linkmanTel" align="center" width="100" />
+			<column title="注册时间" name="created" align="center" width="110" />
+		</columns>
+	</view>
+	
+	<view name="admin/user" form="admin/user" title="联盟用户" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.logistics.usermanage.pojo.LogisticsUser</pojo>
+			<where>LogisticsUser.isApproval='0'</where>
+			<orderBy>LogisticsUser.created DESC</orderBy>
+			<quickFilter>LogisticsUser.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action hide="noPrivilege(manageUnit_regist)" title="注册公司" execute="PageUtils.newrecord('logistics/usermanage','admin/user','mode=fullscreen', 'isCompany=1')"/>
+			<action hide="noPrivilege(manageUnit_regist)" title="注册个人" execute="PageUtils.newrecord('logistics/usermanage','admin/user','mode=fullscreen', 'isCompany=0')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="用户名" name="name"/>
+			<column title="登录用户名" name="loginName" width="68"/>
+			<column title="所在地区" name="area" align="center" width="68"/>
+			<column title="联系人" name="linkman" align="center" width="68"/>
+			<column title="联系电话" name="linkmanTel" align="center" width="100" />
+			<column title="注册时间" name="created" align="center" width="110" />
+		</columns>
+	</view>
+	
+	<view name="admin/userCheck" title="物流联盟用户验证" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.logistics.usermanage.pojo.LogisticsUser</pojo>
+			<where>LogisticsUser.isApproval='0' and LogisticsUser.isHalt='0' and LogisticsUser.isDeleted='0'</where>
+			<orderBy>LogisticsUser.name</orderBy>
+			<quickFilter>LogisticsUser.name like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="用户名" name="name"/>
+			<column title="登录用户名" name="loginName" width="68"/>
+			<column title="所在地区" name="area" align="center" width="68"/>
+			<column title="联系人" name="linkman" align="center" width="68"/>
+			<column title="联系电话" name="linkmanTel" align="center" width="100" />
+		</columns>
+	</view>
+	
+	<view name="admin/blacklist" form="admin/blacklist" title="黑名单" pageRows="25" openFeatures="mode=dialog,width=400,height=300" hide="noPrivilege(manageUnit_regist)">
+		<data>
+			<pojo>com.yuanluesoft.logistics.usermanage.pojo.LogisticsBlacklist</pojo>
+			<orderBy>LogisticsBlacklist.blacklistBegin DESC</orderBy>
+			<quickFilter>LogisticsBlacklist.userName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="公司名称/个人姓名" name="userName"/>
+			<column title="列入黑名单时间" name="blacklistBegin" width="110" align="center"/>
+			<column title="黑名单解禁时间" name="blacklistEnd" width="110" align="center"/>
+			<column title="列入原因" name="reason"/>
+		</columns>
+	</view>
+</views>

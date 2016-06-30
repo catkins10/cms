@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="user" action="/logistics/usermanage/doRegist.shtml" class="com.yuanluesoft.logistics.usermanage.forms.User" title="联盟用户注册" pojo="com.yuanluesoft.logistics.usermanage.pojo.LogisticsUser">
+		<formFields>
+			<field name="password" title="登录密码" type="string" inputMode="password" length="20" required="true"/>
+			<field name="passwordConfirm" title="登录密码确认" type="string" inputMode="password" length="20" required="true"/>
+		</formFields>
+		<actions>
+			<action title="注册" type="submit"/>
+		</actions>
+	</form>
+
+	<form name="admin/user" class="com.yuanluesoft.logistics.usermanage.forms.admin.User" title="物流联盟用户" pojo="com.yuanluesoft.logistics.usermanage.pojo.LogisticsUser">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="同意注册" hide="isRead() or isNew()" execute="FormUtils.doAction('approvalUser')"/>
+			<action title="加入黑名单" hide="isRead() or isNew()" execute="DialogUtils.openDialog('{CONTEXTPATH}/logistics/usermanage/admin/blacklist.shtml?userId={PARAMETER:id}', 400, 300)"/>
+			<action title="从黑名单中删除" hide="isRead() or isNew()" execute="DialogUtils.openDialog('{CONTEXTPATH}/logistics/usermanage/admin/blacklist.shtml?userId={PARAMETER:id}', 400, 300)"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteUser')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/blacklist" class="com.yuanluesoft.logistics.usermanage.forms.admin.Blacklist" title="黑名单" pojo="com.yuanluesoft.logistics.usermanage.pojo.LogisticsBlacklist">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead() or isNew()" execute="FormUtils.submitForm()"/>
+			<action title="加入黑名单" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="从黑名单中删除" hide="isRead() or isNew()" execute="FormUtils.doAction('removeFromBlacklist')"/>
+		</actions>
+	</form>
+</forms>

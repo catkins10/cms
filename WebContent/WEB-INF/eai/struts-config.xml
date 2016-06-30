@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="configureForm" type="com.yuanluesoft.eai.server.configure.forms.EAIConfigure"/>
+  <form-bean name="select" type="com.yuanluesoft.eai.client.forms.Select"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="configureForm" path="/eaiconfigure" scope="request"
+   type="com.yuanluesoft.eai.server.configure.actions.Load" validate="false">
+   <forward name="load" path="/../jeaf/graphicseditor/graphicsEditor.jsp"/>
+  </action>
+  <action input="/../jeaf/graphicseditor/graphicsEditor.jsp"
+   name="configureForm" path="/saveConfigure" scope="request"
+   type="com.yuanluesoft.eai.server.configure.actions.Save" validate="false"/>
+  <action path="/workflowConfig" scope="request"
+   type="com.yuanluesoft.eai.server.configure.actions.WorkflowConfig" validate="false"/>
+  <action name="select" path="/select" scope="request"
+   type="com.yuanluesoft.eai.client.actions.select.Load" validate="false">
+   <forward name="load" path="/../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

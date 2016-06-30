@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="workflowConfigure" type="com.yuanluesoft.workflow.server.configure.forms.WorkflowConfigure"/>
+  <form-bean name="workflowInstanceViewer" type="com.yuanluesoft.workflow.server.viewer.forms.WorkflowInstanceViewer"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action input="/../jeaf/graphicseditor/graphicsEditor.jsp"
+   name="workflowConfigure" path="/saveWorkflowConfigure"
+   scope="request"
+   type="com.yuanluesoft.workflow.server.configure.actions.Save" validate="false"/>
+  <action name="workflowConfigure" path="/workflowConfigure"
+   scope="request"
+   type="com.yuanluesoft.workflow.server.configure.actions.Load" validate="false">
+   <forward name="load" path="/../jeaf/graphicseditor/graphicsEditor.jsp"/>
+  </action>
+  <action input="/../jeaf/graphicseditor/graphicsEditor.jsp"
+   name="workflowConfigure" path="/deleteWorkflowConfigure"
+   scope="request"
+   type="com.yuanluesoft.workflow.server.configure.actions.Delete" validate="false"/>
+  <action name="workflowConfigure" path="/configure/setMessageFormat"
+   scope="request"
+   type="com.yuanluesoft.workflow.server.configure.actions.setmessageformat.Load" validate="false">
+   <forward name="load" path="/configure/setMessageFormat.jsp"/>
+  </action>
+  <action name="workflowConfigure" path="/configure/condition"
+   scope="request"
+   type="com.yuanluesoft.workflow.server.configure.actions.condition.Load" validate="false">
+   <forward name="load" path="/configure/condition.jsp"/>
+  </action>
+  <action name="workflowInstanceViewer" path="/workflowInstanceViewer"
+   scope="request"
+   type="com.yuanluesoft.workflow.server.viewer.actions.Load" validate="false">
+   <forward name="load" path="/viewer/workflowInstanceViewer.jsp"/>
+  </action>
+  <action name="workflowInstanceViewer"
+   path="/writeProcessInstanceImage" scope="request"
+   type="com.yuanluesoft.workflow.server.viewer.actions.WriteProcessInstanceImage" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

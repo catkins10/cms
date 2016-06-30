@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--投标报名-->
+	<class name="com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUp" table="bidding_signup">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID,NUMBER(20)-->
+		<property name="projectName"/> <!--工程名称,VARCHAR2(255)-->
+		<property name="signUpNo"/> <!--报名号,项目编号+5位的随机数,VARCHAR2(100)-->
+		<property name="enterpriseId"/> <!--企业ID,NUMBER(20)-->
+		<property name="enterpriseName"/> <!--企业名称,VARCHAR2(100)-->
+		<property name="enterpriseBank"/> <!--开户行,开标后由投标人或代理填写，退还保证金用,VARCHAR2(50)-->
+		<property name="enterpriseAccount"/> <!--帐号,开标后由投标人或代理填写，退还保证金用,VARCHAR2(100)-->
+		<property name="signUpPersonId"/> <!--报名用户ID,NUMBER(20)-->
+		<property name="signUpPersonName"/> <!--报名用户名称,VARCHAR2(30)-->
+		<property name="signUpTime"/> <!--报名时间,timestamp null-->
+		<property name="isInternetPayment"/> <!--是否网络支付,CHAR(1)-->
+		<property name="paymentMoney"/> <!--支付金额,NUMBER(6,2)-->
+		<property name="paymentTime"/> <!--支付时间,timestamp null-->
+		<property name="paymentId"/> <!--支付单ID,网络支付时填写,NUMBER(20)-->
+		<property name="paymentBank"/> <!--银行,非网络支付时填写,VARCHAR2(50)-->
+		<property name="billBack"/> <!--银行回单ID,非网络支付时填写,VARCHAR2(100)-->
+		<property name="recorderId"/> <!--记录人ID,非网络支付时填写,NUMBER(20)-->
+		<property name="recorder"/> <!--记录人姓名,非网络支付时填写,VARCHAR2(30)-->
+		<property name="recordTime"/> <!--记录时间,非网络支付时填写,timestamp null-->
+		<property name="isDrawInternetPayment"/> <!--图纸是否网络支付,CHAR(1)-->
+		<property name="drawPaymentMoney"/> <!--图纸支付金额,NUMBER(12,2)-->
+		<property name="drawPaymentTime"/> <!--图纸支付时间,timestamp null-->
+		<property name="drawPaymentId"/> <!--图纸支付单ID,网络支付时填写,NUMBER(20)-->
+		<property name="drawPaymentBank"/> <!--图纸银行,非网络支付时填写,VARCHAR2(50)-->
+		<property name="drawBillBack"/> <!--图纸银行回单ID,非网络支付时填写,VARCHAR2(100)-->
+		<property name="drawRecorderId"/> <!--图纸支付记录人ID,非网络支付时填写,NUMBER(20)-->
+		<property name="drawRecorder"/> <!--图纸支付记录人姓名,非网络支付时填写,VARCHAR2(30)-->
+		<property name="drawRecordTime"/> <!--图纸支付记录时间,非网络支付时填写,timestamp null-->
+		<property name="isPledgeInternetPayment"/> <!--保证金是否网络支付,CHAR(1)-->
+		<property name="pledgePaymentMoney"/> <!--保证金支付金额,NUMBER(12,2)-->
+		<property name="pledgePaidMoney"/> <!--保证金实收金额,NUMBER(12,2)-->
+		<property name="pledgePaymentTime"/> <!--保证金支付时间,timestamp null-->
+		<property name="pledgePaymentId"/> <!--保证金支付单ID,网络支付时填写,NUMBER(20)-->
+		<property name="pledgePaymentBank"/> <!--保证金银行,非网络支付时填写,VARCHAR2(50)-->
+		<property name="pledgeBillBack"/> <!--保证金银行回单ID,非网络支付时填写,VARCHAR2(100)-->
+		<property name="pledgeBillBackRemark"/> <!--保证金银行回单说明,非网络支付时填写,VARCHAR2(1000)-->
+		<property name="pledgeConfirm"/> <!--保证金确认,CHAR(1)-->
+		<property name="pledgeRecorderId"/> <!--保证金支付记录人ID,非网络支付时填写,NUMBER(20)-->
+		<property name="pledgeRecorder"/> <!--保证金支付记录人姓名,非网络支付时填写,VARCHAR2(30)-->
+		<property name="pledgeRecordTime"/> <!--保证金支付记录时间,非网络支付时填写,timestamp null-->
+		<property name="pledgeReturnEnabled"/> <!--是否允许返还保证金,CHAR(1)-->
+		<property name="pledgeReturnExportTime"/> <!--保证金返还导出时间,timestamp null-->
+		<property name="pledgeReturnTransferTime"/> <!--保证金返还转账时间,timestamp null-->
+		<property name="pledgeReturnTransferError"/> <!--保证金返还转账失败原因,VARCHAR(500)-->
+		<property name="pledgeReturnTime"/> <!--保证金返还时间,timestamp null-->
+		<property name="pledgeReturnTransactorId"/> <!--保证金返还人ID,NUMBER(20)-->
+		<property name="pledgeReturnTransactor"/> <!--保证金返还人,VARCHAR2(30)-->
+		<property name="pledgeReturnRate"/> <!--保证金利率,百分比,NUMBER(7,4)-->
+		<property name="pledgeReturnTax"/> <!--保证金利息所得税率,百分比,NUMBER(7,4)-->
+		<property name="pledgeReturnDays"/> <!--保证金计息天数,NUMBER(7,4)-->
+		<property name="pledgeReturnMoney"/> <!--保证金返还金额,NUMBER(12,2)-->
+		<property name="receivePaperDocumentsTime"/> <!--纸质标书领取时间,给代理使用,timestamp null-->
+		<property name="uploadTime"/> <!--投标书上传时间,timestamp null-->
+		<property name="agentSettleTime"/> <!--代理费用结算时间,暂时未使用,timestamp null-->
+		<property name="agentSettleFee"/> <!--代理结算手续费,暂时未使用,NUMBER(12,2)-->
+		<property name="agentSettleTransactorId"/> <!--代理费用结算人ID,暂时未使用,NUMBER(20)-->
+		<property name="agentSettleTransactor"/> <!--代理费用结算人,暂时未使用,VARCHAR2(30)-->
+		<property name="ranking"/> <!--评标排名,由代理填写，退还保证金时使用,NUMBER(3)-->
+		<many-to-one name="project" class="com.yuanluesoft.bidding.project.pojo.BiddingProject" column="projectId" update="false" insert="false"/>
+		<!--参与人员-->
+		<set name="jobholders" table="bidding_signup_jobholder" lazy="false" inverse="true" cascade="delete" order-by="id">
+			<key column="signUpId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUpJobholder"/>
+		</set>
+	</class>
+	
+	<!--投标:参与人员-->
+	<class name="com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUpJobholder" table="bidding_signup_jobholder">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="signUpId"/> <!--报名ID,NUMBER(20)-->
+		<property name="jobholderCategory"/> <!--人员类别,VARCHAR(30)-->
+		<property name="jobholderId"/> <!--人员ID,NUMBER(20)-->
+		<property name="jobholderName"/> <!--人员姓名,VARCHAR(30)-->
+		<property name="qualification"/> <!--资质等级,VARCHAR(80)-->
+		<property name="certificateNumber"/> <!--资质证书编号,VARCHAR(80)-->
+		<property name="locked"/> <!--是否锁定,NUMBER(1)-->
+		<property name="unlockTime"/> <!--解锁时间,TIMESTAMP-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/cardOrder" class="com.yuanluesoft.charge.topup.forms.admin.CardOrder" title="创建充值卡" pojo="com.yuanluesoft.charge.topup.pojo.CardOrder">
+		<formFields>
+			<field property="cardName" depends="required">
+				<arg0 key="充值卡名称" resource="false" />
+			</field>
+			<field property="cardMoney" depends="required">
+				<arg0 key="充值卡面额" resource="false" />
+			</field>
+			<field property="cardNumber" depends="required">
+				<arg0 key="充值卡数量" resource="false" />
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="创建充值卡" hide="isOld()" execute="if(confirm('是否确定要创建充值卡？'))FormUtils.submitForm()"/>
+			<action title="保存" hide="isNew()" execute="FormUtils.submitForm()"/>
+			<action title="下载充值卡列表" hide="isNew()" execute="window.open('exportCards.shtml?orderId=' + document.getElementsByName('id')[0].value)"/>
+		</actions>
+	</form>
+	
+	<form name="admin/cardAdvanceOrder" class="com.yuanluesoft.charge.topup.forms.admin.CardAdvanceOrder" title="运营商预购" pojo="com.yuanluesoft.charge.topup.pojo.CardAdvanceOrder">
+		<formFields>
+			<field property="carrierName" depends="required">
+				<arg0 key="运营商名称" resource="false" />
+			</field>
+			<field property="money" depends="required">
+				<arg0 key="金额" resource="false" />
+			</field>
+			<field property="cardMoney" depends="required">
+				<arg0 key="充值卡面额" resource="false" />
+			</field>
+			<field property="cardName" depends="required">
+				<arg0 key="充值卡名称" resource="false" />
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="创建充值卡" hide="isOld()" execute="if(confirm('是否确定要创建充值卡？'))FormUtils.submitForm()"/>
+			<action title="保存" hide="isNew()" execute="FormUtils.submitForm()"/>
+			<action title="下载充值卡列表" hide="isNew()" execute="window.open('exportCards.shtml?orderId=' + document.getElementsByName('id')[0].value)"/>
+		</actions>
+	</form>
+	
+	<form name="cardTopUpTransaction" class="com.yuanluesoft.charge.topup.forms.CardTopUpTransaction" title="充值卡充值记录" pojo="com.yuanluesoft.charge.topup.pojo.CardTopUp">
+		<actions/>
+	</form>
+</forms>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 短信服务 -->
+	<bean id="smsService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.jeaf.sms.service.spring.SmsServiceImpl" init-method="startup" destroy-method="showdown">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="memberServiceList"><ref bean="memberServiceList"/></property>
+				<property name="orgService"><ref bean="orgService"/></property>
+				<property name="roleService"><ref bean="roleService"/></property>
+				<property name="businessMode"><value>true</value></property>
+				<property name="smsServiceListenerNames"><value>smsSubscriptionService,smsReceiveService,appraiseService,smsSender</value></property> <!-- 短信接收侦听器,按处理的优先级排列 -->
+				<property name="smsClients">
+					<list>
+						<bean class="com.yuanluesoft.jeaf.sms.client.virtual.SmsClientImpl">
+							<property name="name"><value>华为MAS1</value></property>
+						</bean>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="receive*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="send*">PROPAGATION_NOT_SUPPORTED,-Exception</prop>
+				<prop key="startup">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="registSmsBusiness">PROPAGATION_NEVER,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 短信计费视图服务 -->
+	<bean id="smsChargeViewService" class="com.yuanluesoft.jeaf.sms.service.spring.SmsChargeViewServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+	</bean>
+</beans>

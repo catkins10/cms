@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="login" title="登录">
+			<templatePlugin path="/im/templatemanage/plugin.js" private="true">
+				<pageElementActions>IMDialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="main" title="主页面" recordClass="com.yuanluesoft.im.model.IM">
+			<templatePlugin path="/im/templatemanage/plugin.js" private="true">
+				<pageElementActions>IMDialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<subPage name="personTree" title="用户目录树" type="iframe" iframeUrl="/im/personTree.shtml" normalCssFile="/jeaf/tree/css/tree.css"/> <!-- 子表单,显示在系统预置页面中,采用iframe模式显示-->
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="chat" title="对话" recordClass="com.yuanluesoft.im.model.IMChat">
+			<templatePlugin path="/im/templatemanage/plugin.js" private="true">
+				<pageElementActions>IMDialog,IMChat</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="chatOfSpecialist" title="对话(客服)" recordClass="com.yuanluesoft.im.model.IMChat">
+			<templatePlugin path="/im/templatemanage/plugin.js" private="true">
+				<pageElementActions>IMDialog,IMChat</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="systemMessage" title="系统消息" recordClass="com.yuanluesoft.im.model.SystemMessageDetail">
+			<templatePlugin path="/im/templatemanage/plugin.js" private="true">
+				<pageElementActions>IMDialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<link title="查看" url="{PARAMETER:webLink}"/>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="personalSettingAnonymous" title="个人设置(未登录)" recordClass="com.yuanluesoft.im.pojo.IMPersonalSetting">
+			<templatePlugin path="/im/templatemanage/plugin.js" private="true">
+				<pageElementActions>IMDialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="personalSetting" title="个人设置(已登录)" recordClass="com.yuanluesoft.im.pojo.IMPersonalSetting">
+			<templatePlugin path="/im/templatemanage/plugin.js" private="true">
+				<pageElementActions>IMDialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="personSelect" title="用户选择">
+			<templatePlugin path="/im/templatemanage/plugin.js" private="true">
+				<pageElementActions>IMDialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<subPage title="用户目录树" name="base"/>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+	</pages>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="imOnlinePersons" processor="imPersonsProcessor"/> <!-- 在线用户列表 -->
+		<pageElement name="imRecentPersons" processor="imPersonsProcessor"/> <!-- 最近联系用户列表 -->
+	</pageElements>
+</application>

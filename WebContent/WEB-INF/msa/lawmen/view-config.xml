@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="lawmen" title="执法人员">
+	    <data>
+			<pojo>com.yuanluesoft.msa.lawmen.pojo.MsaLawmen</pojo>
+			<orderBy>MsaLawmen.name</orderBy>
+			<quickFilter>MsaLawmen.name like '%{KEY}%'</quickFilter>
+		</data>
+	</view>
+	
+    <view name="admin/lawmen" form="admin/lawmen" title="执法人员" pageRows="20" openFeatures="mode=dialog,width=430,height=220">
+	    <data>
+			<pojo>com.yuanluesoft.msa.lawmen.pojo.MsaLawmen</pojo>
+			<orderBy>MsaLawmen.priority DESC, MsaLawmen.name</orderBy>
+			<quickFilter>MsaLawmen.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加执法人员" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_regist)" execute="PageUtils.newrecord('msa/lawmen', 'admin/lawmen', 'mode=dialog,width=430,height=220')"/>
+			<action title="导入执法人员" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_regist)" execute="DialogUtils.openDialog('{CONTEXTPATH}/msa/lawmen/admin/importData.shtml?act=create', 430, 180)"/>
+			<action title="调整优先级" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_regist)" execute="DialogUtils.adjustPriority('msa/lawmen', 'admin/lawmen', '执法人员', 800, 480)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="姓名" name="name" width="80"/>
+			<column title="性别" name="sex" width="50" align="center"/>
+			<column title="发证日期" name="certificateDate" width="100" align="center"/>
+			<column title="执法证编号" name="certificateNumber"/>
+		</columns>
+	</view>
+</views>

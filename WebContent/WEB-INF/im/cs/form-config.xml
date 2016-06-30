@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/parameter" class="com.yuanluesoft.im.cs.forms.admin.Parameter" title="参数配置" pojo="com.yuanluesoft.im.cs.pojo.CSParameter">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/reply" class="com.yuanluesoft.im.cs.forms.admin.Reply" title="常用答复" pojo="com.yuanluesoft.im.cs.pojo.CSReply">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteReply')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/specialist" class="com.yuanluesoft.im.cs.forms.admin.Specialist" title="客服人员" pojo="com.yuanluesoft.im.cs.pojo.CSSpecialist">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteSpecialist')"/>
+		</actions>
+	</form>
+	
+	<form name="evaluation" method="post" action="/im/cs/submitEvaluation.shtml" class="com.yuanluesoft.im.cs.forms.Evaluation" title="服务评价" pojo="com.yuanluesoft.im.cs.pojo.CSEvaluation">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+</forms>

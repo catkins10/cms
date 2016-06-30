@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+<!-- 	<view name="employee" form="employee" title="员工信息" pageRows="25" openFeatures="mode=fullscreen" >
+		<data>
+			<pojo>com.yuanluesoft.emp.pojo.Employeea</pojo>
+			<orderBy>Employeea.empname</orderBy>
+		</data>
+		<actions>
+			<action title="添加员工"  execute="PageUtils.newrecord('emp', 'employee', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" width="100"/>
+			<column title="性别" name="sex" width="50"/>
+			<column title="所在部门" name="departName" width="50"/>
+			<column title="出生日期" name="birthday" format="yyyy-MM-dd" align="center" width="100"/>
+		</columns>
+	</view> -->
+	<view name="department" form="department" title="部门信息" pageRows="25" openFeatures="mode=fullscreen" >
+		<data>
+			<pojo>com.yuanluesoft.emp.pojo.Department</pojo>
+			<orderBy>Department.departName</orderBy>
+		</data>
+		<actions>
+			<action title="添加部门"  execute="PageUtils.newrecord('emp', 'department', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="部门名称" name="departName" width="100"/>
+		</columns>
+	</view>
+</views>

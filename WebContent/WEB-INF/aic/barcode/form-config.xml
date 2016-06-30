@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="barcode" title="条码编辑" method="post" action="/aic/barcode/saveBarcode.shtml" class="com.yuanluesoft.aic.barcode.forms.Barcode" pojo="com.yuanluesoft.aic.barcode.pojo.Barcode">
+		<formFields>
+			<field name="barcode" title="条码" type="string" inputMode="textarea" required="true">
+				<parameter name="rows">5</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="提交" type="submit"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定删除？'))FormUtils.doAction('deleteBarcode')"/>
+		</actions>
+	</form>
+	
+	<form name="barcodeSearch" title="条码查询" method="get" action="/cms/sitemanage/applicationSearch.shtml?applicationName=aic/barcode&amp;pageName=barcodeSearch">
+		<formFields>
+			<field title="条码" name="barcode"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="admin/company" class="com.yuanluesoft.aic.barcode.forms.admin.Company" title="厂商" pojo="com.yuanluesoft.aic.barcode.pojo.BarcodeCompany">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteCompany')"/>
+		</actions>
+	</form>
+</forms>

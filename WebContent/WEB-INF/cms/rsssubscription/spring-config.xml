@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- RSS订阅服务 -->
+	<bean id="rssSubscriptionService" class="com.yuanluesoft.cms.rsssubscription.service.spring.RssSubscriptionServiceImpl">
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="rssWriter"><ref bean="rssWriter"/></property>
+		<property name="siteService"><ref bean="siteService"/></property>
+		<property name="viewDefineService"><ref bean="viewDefineService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+	</bean>
+	
+	<!-- RSS订阅页面服务 -->
+	<bean id="rssSubscribePageService" class="com.yuanluesoft.cms.rsssubscription.pages.RssSubscribePageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="siteTemplateService"/></property>
+	</bean>
+	
+	<!-- RSS订阅链接处理器 -->
+	<bean id="rssSubscribeLinkProcessor" class="com.yuanluesoft.cms.rsssubscription.processor.RssSubscribeLinkProcessor">
+		<property name="siteService"><ref bean="siteService"/></property>
+	</bean>
+
+	<!-- RSS频道链接处理器 -->
+	<bean id="rssLinkProcessor" class="com.yuanluesoft.cms.rsssubscription.processor.RssLinkProcessor"/>
+</beans>

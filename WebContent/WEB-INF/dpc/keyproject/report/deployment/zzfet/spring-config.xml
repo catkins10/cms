@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 漳州外经贸重点项目报表服务 -->
+	<bean id="zzfetKeyProjectReportService" class="com.yuanluesoft.dpc.keyproject.report.service.spring.ZzfetKeyProjectReportServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="keyProjectService"><ref bean="keyProjectService"/></property>
+		<property name="excelReportService"><ref bean="excelReportService"/></property>
+		<property name="statusMap"><map>
+			<entry key="zzfet/年度项目明细表.xls"><value>前期,扩建,其它,续建,新开工,在建,促竣工,竣工</value></entry>
+			<entry key="zzfet/旬报表.xls"><value>前期,扩建,其它,续建,新开工,在建,促竣工,竣工</value></entry>
+			<entry key="zzfet/战役项目.xls"><value>前期,扩建,其它,续建,新开工,在建,促竣工,竣工</value></entry>
+			<entry key="zzfet/重大支撑项目表.xls"><value>前期,扩建,其它,续建,新开工,在建,促竣工,竣工</value></entry>
+			<entry key="zzfet/项目目标责任制表.xls.竣工投产"><value>促竣工</value></entry>
+			<entry key="zzfet/项目目标责任制表.xls.加速开工"><value>新开工,续建</value></entry>
+			<entry key="zzfet/项目目标责任制表.xls.加速报批"><value>报批</value></entry>
+			<entry key="zzfet/项目目标责任制表.xls.加速签约"><value>在谈</value></entry>
+		</map></property>
+	</bean>
+</beans>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--短信服务-->
+	<class name="com.yuanluesoft.cms.smssubscription.pojo.SmsService" table="sms_service">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="siteId"/> <!--隶属站点ID-->
+		<property name="contentServiceName"/> <!--短信内容服务名称-->
+		<property name="contentName"/> <!--短信内容名称-->
+		<property name="description"/> <!--描述-->
+		<property name="subscribePrefixRule"/> <!--订阅规则:前缀-->
+		<property name="subscribeBodyRule"/> <!--订阅规则:内容部分-->
+		<property name="unsubscribeRule"/> <!--退订规则-->
+		<property name="chargePeriod"/> <!--计费周期-->
+		<property name="price"/> <!--价格-->
+		<property name="isValid"/> <!--是否生效-->
+	</class>
+	
+	<!--短信订阅记录-->
+	<class name="com.yuanluesoft.cms.smssubscription.pojo.SmsSubscription" table="sms_subscription">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="siteId"/> <!--隶属站点ID-->
+		<property name="subscriberNumber"/> <!--订阅人号码-->
+		<property name="serviceId"/> <!--订阅的服务ID-->
+		<property name="contentName"/> <!--订阅的内容名称-->
+		<property name="subscribeParameter"/> <!--订阅参数-->
+		<property name="subscribeTime"/> <!--订阅时间-->
+		<property name="unsubscribeTime"/> <!--退订时间-->
+		<property name="endTime"/> <!--订阅失效时间-->
+	</class>
+</hibernate-mapping>

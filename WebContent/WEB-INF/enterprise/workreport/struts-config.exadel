@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,161,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="352,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,161,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="352,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#workReport"
+  NAME="action0" PATH="/workReport" SHAPE="32,240,161,41"
+  TITLE="workReport" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/workReport.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveWorkReport"
+  NAME="action1" PATH="/saveWorkReport" SHAPE="560,272,161,25"
+  TITLE="workReport" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#runWorkReport"
+  NAME="action2" PATH="/runWorkReport" SHAPE="560,328,161,25"
+  TITLE="workReport" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteWorkReport"
+  NAME="action3" PATH="/deleteWorkReport" SHAPE="560,384,161,25"
+  TITLE="workReport" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#writeOpinion"
+  NAME="action4" PATH="/writeOpinion" SHAPE="560,440,161,25"
+  TITLE="workReport" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/workReport.jsp" SHAPE="352,256,50,25" SUBTYPE="jsp"
+  TITLE="workReport.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveWorkReport" TARGET="action1"
+   TITLE="saveAssess" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/runWorkReport" TARGET="action2"
+   TITLE="deleteAssess" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/deleteWorkReport" TARGET="action3"
+   TITLE="runAssess" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/writeOpinion" TARGET="action4" TITLE="saveOpinion" TYPE="link"/>
+ </PROCESS-ITEM>
+</PROCESS>

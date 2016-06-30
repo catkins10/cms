@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form title="收文单" class="com.yuanluesoft.j2oa.receival.forms.Receival" pojo="com.yuanluesoft.j2oa.receival.pojo.Receival">
+		<formFields>
+			<field title="新增的访问者ID" name="appendReaderIds" type="string" inputMode="hidden"/>
+			<field title="新增的访问者" name="appendReaderNames" type="string" inputMode="hidden"/>
+			<field title="办理单" name="handling" type="string" inputMode="htmleditor">
+				<parameter name="fullPage">true</parameter>
+			</field>
+			<field title="办理单归档" name="filingHandling" type="string" inputMode="hidden"/>
+			<field title="归档选项" name="filingOption" type="component">
+				<parameter name="class">com.yuanluesoft.archives.administrative.model.FilingOption</parameter>
+			</field>
+			<field title="归档配置" name="filingConfig" type="component">
+				<parameter name="class">com.yuanluesoft.j2oa.receival.pojo.ReceivalFilingConfig</parameter>
+			</field>
+			<field name="filingConfig.toArchives" title="是否归档到文书档案" length="1" type="char" inputMode="hidden"/>
+			<field name="filingConfig.toDatabank" title="是否归档到资料库" length="1" type="char" inputMode="hidden"/>
+			<field name="filingConfig.createDirectoryByYear" title="是否自动按年创建目录" length="1" type="char" inputMode="hidden"/>
+			<field name="filingConfig.directoryId" title="归档目录ID" type="number" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="作废" hide="isNew() or workflow() and noPrivilege(application_manager)" execute="if(confirm('是否确定要作废？'))FormUtils.doAction('delete')"/>
+			<action title="打印办理单" execute="printHandling()"/>
+			<action title="增加传阅人" hide="workflow()" execute="DialogUtils.selectPerson(560, 320, true, &quot;appendReaderIds{id},appendReaderNames{name|用户名|100%}&quot;, &quot;if(document.getElementsByName('appendReaderIds')[0].value!='')FormUtils.doAction('appendReaders')&quot;);"/>
+			<action title="归档" hide="workflow()" execute="document.getElementsByName('filingHandling')[0].value=HtmlEditor.getHtmlContent('handling');FormUtils.doAction('setFilingOption')"/>
+		</actions>
+	</form>
+	
+	<form title="办理单配置" class="com.yuanluesoft.j2oa.receival.forms.TemplateConfig" pojo="com.yuanluesoft.j2oa.receival.pojo.ReceivalTemplateConfig">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form title="归档配置" class="com.yuanluesoft.j2oa.receival.forms.FilingConfig" pojo="com.yuanluesoft.j2oa.receival.pojo.ReceivalFilingConfig">
+		<formFields>
+			<field title="归档目录" name="directoryName" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/j2oa/databank/js/directory.js</parameter>
+				<parameter name="execute">selectDirectory(550, 350, false, 'directoryId{id},directoryName{name}')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+</forms>

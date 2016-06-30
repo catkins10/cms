@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminBusLine" type="com.yuanluesoft.traffic.busline.forms.admin.BusLine"/>
+  <form-bean name="adminStation" type="com.yuanluesoft.traffic.busline.forms.admin.Station"/>
+  <form-bean name="adminChange" type="com.yuanluesoft.traffic.busline.forms.admin.LineChange"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminBusLine" path="/admin/busLine" scope="request"
+   type="com.yuanluesoft.traffic.busline.actions.admin.busline.Load" validate="false">
+   <forward name="load" path="/admin/busLine.jsp"/>
+  </action>
+  <action input="/admin/busLine.jsp" name="adminBusLine"
+   path="/admin/saveBusLine" scope="request"
+   type="com.yuanluesoft.traffic.busline.actions.admin.busline.Save" validate="false"/>
+  <action input="/admin/busLine.jsp" name="adminBusLine"
+   path="/admin/deleteBusLine" scope="request" type="com.yuanluesoft.traffic.busline.actions.admin.busline.Delete"/>
+  <action input="/admin/busLine.jsp" name="adminBusLine"
+   path="/admin/refreshBusLine" scope="request" type="com.yuanluesoft.traffic.busline.actions.admin.busline.Refresh"/>
+  <action name="adminStation" path="/admin/station" scope="request" type="com.yuanluesoft.traffic.busline.actions.admin.busline.station.Load">
+   <forward name="load" path="/admin/station.jsp"/>
+  </action>
+  <action input="/admin/station.jsp" name="adminStation"
+   path="/admin/saveStation" scope="request" type="com.yuanluesoft.traffic.busline.actions.admin.busline.station.Save"/>
+  <action input="/admin/station.jsp" name="adminStation"
+   path="/admin/deleteStation" scope="session" type="com.yuanluesoft.traffic.busline.actions.admin.busline.station.Delete"/>
+  <action name="adminChange" path="/admin/change" scope="request" type="com.yuanluesoft.traffic.busline.actions.admin.busline.change.Load">
+   <forward name="load" path="/admin/change.jsp"/>
+  </action>
+  <action input="/admin/change.jsp" name="adminChange"
+   path="/admin/saveChange" scope="request" type="com.yuanluesoft.traffic.busline.actions.admin.busline.change.Save"/>
+  <action input="/admin/change.jsp" name="adminChange"
+   path="/admin/deleteChange" scope="session" type="com.yuanluesoft.traffic.busline.actions.admin.busline.change.Delete"/>
+  <action path="/busLineQuery" scope="request" type="com.yuanluesoft.traffic.busline.actions.buslinequery.Load"/>
+  <action path="/busLine" scope="request" type="com.yuanluesoft.traffic.busline.actions.busline.Load"/>
+  <action path="/change" scope="request" type="com.yuanluesoft.traffic.busline.actions.change.Load"/>
+  <action path="/admin/busLineImport" scope="request"
+   type="com.yuanluesoft.traffic.busline.actions.admin.buslineimport.DoImport" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

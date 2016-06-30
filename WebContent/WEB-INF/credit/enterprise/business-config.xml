@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="个体企业信息" class="com.yuanluesoft.credit.enterprise.pojo.Enterprise" businessServiceName="registService">
+		<field name="loginName" title="登录用户名" length="80" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="password" title="密码" length="100" required="true" type="password" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="registCode" title="注册号" required="true" length="50" type="string" inputMode="text"/>
+		<field name="name" required="true" title="名称"  length="100" type="string" inputMode="text"/>
+		<field name="composition" title="组成形式"  length="100" type="string" inputMode="text"/>
+		<field name="worth" title="资金数额(万元)" required="true"  type="number" inputMode="text"/>
+		<field name="addr" title="经营场所" required="true" length="100" type="string" inputMode="text"/>
+		
+		<field name="doorType" title="行业门类"  length="100" type="string" inputMode="text"/>
+		<field name="industry" title="行业类别" length="100" type="string" inputMode="text"/>
+		<field name="code" title="行业代码"  length="100" type="string" inputMode="text"/>
+		<field name="businessScope" title="经营范围"  length="100" type="string" inputMode="text"/>
+		<field name="person" title="经营者" length="100"   type="string" inputMode="text"/>
+		
+		<field name="tel" title="联系电话" length="100" required="true"  type="string" inputMode="text"/>
+		<field name="openDate" title="开业日期"   type="date" inputMode="date"/>
+		<field name="approvalDate" title="核准日期"   type="date" inputMode="date"/>
+		<field name="ascription" title="属地工商所" length="100"   type="string" inputMode="text"/>
+		<field name="area" title="片区" length="100" required="true"  type="string" inputMode="text"/>
+		
+		
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="30" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="内资企业信息" class="com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn" businessServiceName="registService">
+		<field name="loginName" title="登录用户名" length="80" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="password" title="密码" length="100" required="true" type="password" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+	
+		<field name="registCode" title="注册号" required="true" length="50" type="string" inputMode="text"/>
+		<field name="creditCode" required="true" title="统一社会信用代码"  length="100" type="string" inputMode="text"/>
+		<field name="name" title="登记名称" required="true" length="100" type="string" inputMode="text"/>
+		<field name="category" title="企业类别" required="true" length="50" type="string" inputMode="text"/>
+		<field name="registType" title="登记类型" required="true" length="100" type="string" inputMode="text"/>
+
+		<field name="type" title="企业类型"  length="100" type="string" inputMode="text"/>
+		<field name="person" title="法定代表人\负责人" required="true" length="100" type="string" inputMode="text"/>
+		<field name="worth" title="注册资本(万元)"   type="number" inputMode="text"/>
+		<field name="tel" title="联系电话"  length="100" type="string" inputMode="text"/>
+		<field name="linkMan" title="公示联络员" length="100"   type="string" inputMode="text"/>
+
+		<field name="linkTel" title="联络员电话" length="100" required="true"  type="string" inputMode="text"/>
+		<field name="doorType" title="行业门类"  length="100" type="string" inputMode="text"/>
+		<field name="industry" title="行业类别"  length="100" type="string" inputMode="text"/>
+		<field name="code" title="行业代码" length="100"   type="string" inputMode="text"/>
+		<field name="businessScope" title="经营范围" length="100" required="true"  type="string" inputMode="text"/>
+		
+		<field name="startDate" title="成立日期"  required="true"  type="date" inputMode="date"/>
+		<field name="limitDate" title="营业期限" required="true" length="100" type="string" inputMode="text"/>
+		<field name="approvalDate" title="核准日期" required="true"  type="date" inputMode="date"/>
+		<field name="addr" title="住所" length="100" required="true"  type="string" inputMode="text"/>
+		<field name="ascription" title="管片工商所" length="100" required="true"  type="string" inputMode="text"/>
+		<field name="area" title="片区" length="100" required="true"  type="string" inputMode="text"/>
+		
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="外资企业信息" class="com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut" businessServiceName="registService">
+		<field name="loginName" title="登录用户名" length="80" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="password" title="密码" length="100" required="true" type="password" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="registCode" title="注册号" required="true" length="50" type="string" inputMode="text"/>
+		<field name="creditCode" required="true" title="统一社会信用代码"  length="100" type="string" inputMode="text"/>
+		<field name="name" title="企业名称" required="true" length="100" type="string" inputMode="text"/>
+		<field name="registType" title="登记类型" required="true" length="100" type="string" inputMode="text"/>
+		<field name="type" title="企业类型" required="true" length="50" type="string" inputMode="text"/>
+		<field name="country" title="外企国别"  length="100" type="string" inputMode="text"/>
+		<field name="person" title="法定代表人\负责人" required="true" length="100" type="string" inputMode="text"/>
+		<field name="invest" title="投资总额(万美元)"   type="number" inputMode="text"/>
+		<field name="worth" title="注册资本(万美元)"   type="number" inputMode="text"/>
+		<field name="realWorth" title="实收资本(万美元)"  type="number" inputMode="text"/>
+		
+		<field name="outWorth" title="外方认缴资本(万美元)"   type="number" inputMode="text"/>
+		<field name="tel" title="联系电话"  length="100" type="string" inputMode="text"/>
+		<field name="linkMan" title="公示联络员" length="100"   type="string" inputMode="text"/>
+		<field name="linkTel" title="联络员电话" length="100" required="true"  type="string" inputMode="text"/>
+		<field name="doorType" title="行业门类"  length="100" type="string" inputMode="text"/>
+		<field name="industry" title="行业类别"  length="100" type="string" inputMode="text"/>
+		<field name="code" title="行业代码" length="100"   type="string" inputMode="text"/>
+		<field name="businessScope" title="经营范围" length="100" required="true"  type="string" inputMode="text"/>
+		<field name="startDate" title="成立日期"  required="true"  type="date" inputMode="date"/>
+		<field name="limitDate" title="营业期限" required="true" length="100" type="string" inputMode="text"/>
+		
+		<field name="approvalDate" title="核准日期" required="true"  type="date" inputMode="date"/>
+		<field name="addr" title="住所" length="100" required="true"  type="string" inputMode="text"/>
+		<field name="ascription" title="管片工商所" length="100" required="true"  type="string" inputMode="text"/>
+		<field name="area" title="片区" length="100" required="true"  type="string" inputMode="text"/>
+		
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="30" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="融资需求信息" class="com.yuanluesoft.credit.enterprise.financing.pojo.Financing" >
+		<field name="projectName" title="融资项目名称" required="true" length="200" type="string" inputMode="text"/>
+		<field name="amount" title="资金需求额度(万元)" required="true"  type="number" inputMode="text"/>
+		<field name="purpose" title="资金用途" required="true" length="100" type="string" inputMode="text"/>
+		<field name="type" title="资金需求种类" required="true" length="50" type="string" inputMode="text"/>
+		<field name="guarantyType" title="可提供担保方式"  required="true" length="50" type="string" inputMode="text"/>
+		<field name="introduction" title="简介"  type="html" inputMode="htmleditor">
+			<parameter name="height">280</parameter>
+			<parameter name="attachmentSelector">financingAttachment.shtml</parameter>
+		</field>
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="30" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="maxSaveSize">10000000</parameter>
+		</field>
+	</businessObject>
+	
+	
+</businessObjects>

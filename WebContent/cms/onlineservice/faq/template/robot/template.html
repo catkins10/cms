@@ -1,0 +1,90 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML>
+    <HEAD>
+        <TITLE>智能互动</TITLE>
+        <META content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <LINK href="{CONTEXTPATH}/cms/onlineservice/faq/template/robot/css/robot.css" rel="stylesheet" type="text/css">
+        <SCRIPT type="text/javascript">window.onerror=function(){return true;}</SCRIPT>
+        <META content="%E6%AC%A2%E8%BF%8E%E4%BD%BF%E7%94%A8%E6%99%BA%E8%83%BD%E4%BA%92%E5%8A%A8%EF%BC%8C%E8%AF%B7%E8%BE%93%E5%85%A5%E6%82%A8%E7%9A%84%E9%97%AE%E9%A2%98%E3%80%82" name="greeting">
+    </HEAD>
+    <BODY>
+        <DIV class="titlePanel" colspan="2" id="titlePanel" nowrap valign="middle">
+        <DIV><IMG alt="" height="36" src="{CONTEXTPATH}/cms/onlineservice/faq/template/robot/images/robot.gif" style="margin-top: 8px; float: left; margin-left: 10px; margin-right: 5px" width="36"><SPAN class="title">智能互动</SPAN></DIV>
+        </DIV>
+        <DIV id="chatPannel" style="width: 1045px; float: left; height: 554px">
+        <DIV id="divChatContent" style="height: 483px; overflow: auto">
+        <TABLE border="0" cellpadding="5" cellspacing="0" height="100%" width="100%">
+            <TBODY>
+                <TR>
+                    <TD valign="top">
+                    <DIV class="robotTalk" id="robotTalkRecord" title="机器发言记录">
+                    <TABLE border="0" cellpadding="0" cellspacing="0">
+                        <TBODY>
+                            <TR>
+                                <TD class="robotPortrait" valign="top"><IMG alt="" height="36" src="{CONTEXTPATH}/cms/onlineservice/faq/template/robot/images/robot.gif" width="36"></TD>
+                                <TD>
+                                <DIV class="robotTalkContent"><SPAN class="robotArrow">&nbsp;</SPAN> <SPAN><A id="talkContent">&lt;发言内容&gt;</A></SPAN></DIV>
+                                <DIV class="robotTalkTime"><A id="talkTime">&lt;发言时间&gt;</A></DIV>
+                                </TD>
+                            </TR>
+                        </TBODY>
+                    </TABLE>
+                    </DIV>
+                    <DIV class="questionerTalk" id="questionerTalkRecord" title="用户发言记录">
+                    <TABLE border="0" cellpadding="0" cellspacing="0">
+                        <TBODY>
+                            <TR>
+                                <TD>
+                                <DIV class="questionerTalkContent"><SPAN class="questionerArrow">&nbsp;</SPAN> <SPAN><A id="talkContent">&lt;发言内容&gt;</A></SPAN></DIV>
+                                <DIV class="questionerTalkTime"><A id="talkTime">&lt;发言时间&gt;</A></DIV>
+                                </TD>
+                                <TD class="questionerPortrait" valign="top"><IMG alt="" height="36" src="{CONTEXTPATH}/cms/onlineservice/faq/template/robot/images/user.png" width="36"></TD>
+                            </TR>
+                        </TBODY>
+                    </TABLE>
+                    </DIV>
+                    </TD>
+                </TR>
+            </TBODY>
+        </TABLE>
+        </DIV>
+        <DIV class="inputPanel" id="inputPanel" nowrap>
+        <FORM action="applicationName=cms/onlineservice/faq" class="form" id="chat" style="border-bottom: #ffc0c0 1px dotted; border-left: #ffc0c0 1px dotted; margin: 0px; border-top: #ffc0c0 1px dotted; border-right: #ffc0c0 1px dotted" title="表单:智能互动提问">
+            <DIV class="chatForm" id="chatForm">
+            <TABLE border="0" cellpadding="5" cellspacing="0" width="100%">
+                <TBODY>
+                    <TR>
+                        <TD width="100%">
+                        <DIV style="position: relative">
+                        <DIV class="questionPrompt" id="promptArea" title="提示信息区域">
+                        <DIV style="padding-bottom: 2px; padding-left: 5px; padding-right: 5px; padding-top: 2px"><A id="recordList" urn="recordListName=hotOnlineServiceFaqs&amp;applicationName=cms/onlineservice/faq&amp;linkTitle=常见问题&amp;recordCount=10&amp;recordFormat=&lt;div style%3D&quot;float:left&quot;&gt;&lt;A id%3Dfield urn%3Dname%3Dquestion%26amp;link%3Dtrue&gt;%26lt;问题%26gt;&lt;/A&gt;&lt;/div&gt;&lt;div style%3D&quot;float:right&quot;&gt;&lt;FONT style%3D&quot;COLOR: green&quot;&gt;约&lt;A id%3Dfield urn%3Dname%3DaskTimes&gt;%26lt;被提问次数%26gt;&lt;/A&gt;次提问&lt;/FONT&gt;&lt;/div&gt;&amp;separatorMode=newLine&amp;separatorHeight=0&amp;linkOpenMode=_blank&amp;simpleMode=true&amp;emptyPrompt=&amp;extendProperties=">&lt;智能互动热点问题&gt;</A></DIV>
+                        </DIV>
+                        <INPUT alt="请输入您的问题" autocomplete="off" class="chatQuestion" id="field" name="question" onblur="document.getElementById('chatForm').className='chatForm';" onfocus="document.getElementById('chatForm').className='chatForm chatFormFocus';" title="问题" type="text" x-webkit-speech=""></DIV>
+                        </TD>
+                        <TD nowrap><BUTTON class="chatSendButton" id="button" tabindex="0" title="发送" type="submit">发送</BUTTON></TD>
+                    </TR>
+                </TBODY>
+            </TABLE>
+            </DIV>
+        </FORM>
+        </DIV>
+        </DIV>
+        <DIV class="relationDataPanel" id="relationDataPanel" style="float: right; height: 554px" valign="top">
+        <DIV class="relationDataCategory">相关问题</DIV>
+        <DIV class="relationDataArea"><A id="recordList" urn="recordListName=relationOnlineServiceFaqs&amp;applicationName=cms/onlineservice/faq&amp;linkTitle=常见问题&amp;recordCount=10&amp;recordFormat=&lt;DIV style%3D&quot;BACKGROUND-IMAGE: url({CONTEXTPATH}/cms/onlineservice/faq/template/robot/images/dot.png); PADDING-LEFT: 12px; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: 3px 9px&quot;&gt;&lt;A id%3Dfield urn%3Dname%3Dquestion%26amp;link%3Dtrue&gt;%26lt;问题%26gt;&lt;/A&gt;&lt;/DIV&gt;&amp;separatorMode=none&amp;separatorHeight=0&amp;linkOpenMode=_blank&amp;simpleMode=true&amp;emptyPrompt=暂时没有相关问题&amp;extendProperties=">&lt;智能互动相关问题&gt;</A></DIV>
+        <DIV class="relationDataCategory">热点问题</DIV>
+        <DIV class="relationDataArea"><A id="recordList" urn="recordListName=hotOnlineServiceFaqs&amp;applicationName=cms/onlineservice/faq&amp;linkTitle=常见问题&amp;recordCount=10&amp;recordFormat=&lt;DIV style%3D&quot;BACKGROUND-IMAGE: url({CONTEXTPATH}/cms/onlineservice/faq/template/robot/images/dot.png); PADDING-LEFT: 12px; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: 3px 9px&quot;&gt;&lt;A id%3Dfield urn%3Dname%3Dquestion%26amp;link%3Dtrue&gt;%26lt;问题%26gt;&lt;/A&gt;&lt;/DIV&gt;&amp;separatorMode=newLine&amp;separatorHeight=0&amp;linkOpenMode=_blank&amp;simpleMode=true&amp;emptyPrompt=暂无问题&amp;extendProperties=">&lt;智能互动热点问题&gt;</A></DIV>
+        </DIV>
+        <SCRIPT type="text/javascript">
+			function onresize() {
+				var chatPannel = document.getElementById('chatPannel');
+				var relationDataPanel = document.getElementById('relationDataPanel');
+				chatPannel.style.height = relationDataPanel.style.height = (document.body.clientHeight - document.getElementById('titlePanel').offsetHeight) + 'px';
+				chatPannel.style.width = (document.body.clientWidth - relationDataPanel.offsetWidth) + 'px';
+				document.getElementById('divChatContent').style.height = (chatPannel.offsetHeight - document.getElementById('inputPanel').offsetHeight) + 'px';
+			}
+			onresize();
+			document.body.onresize = onresize;
+		</SCRIPT> 
+	</BODY>
+</HTML>

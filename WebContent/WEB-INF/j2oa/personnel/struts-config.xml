@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="employee" type="com.yuanluesoft.j2oa.personnel.forms.Employee"/>
+  <form-bean name="dutyChange" type="com.yuanluesoft.j2oa.personnel.forms.DutyChange"/>
+  <form-bean name="rewardsPunishment" type="com.yuanluesoft.j2oa.personnel.forms.RewardsPunishment"/>
+  <form-bean name="education" type="com.yuanluesoft.j2oa.personnel.forms.Education"/>
+  <form-bean name="employment" type="com.yuanluesoft.j2oa.personnel.forms.Employment"/>
+  <form-bean name="training" type="com.yuanluesoft.j2oa.personnel.forms.Training"/>
+  <form-bean name="certificate" type="com.yuanluesoft.j2oa.personnel.forms.Certificate"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="employee" path="/employee" scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.Load" validate="false">
+   <forward name="load" path="/employee.jsp"/>
+  </action>
+  <action input="/employee.jsp" name="employee" path="/saveEmployee"
+   scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.Save" validate="false"/>
+  <action input="/employee.jsp" name="employee" path="/deleteEmployee"
+   scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.Delete" validate="false"/>
+  <action name="dutyChange" path="/dutyChange" scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.dutychange.Load" validate="false">
+   <forward name="load" path="/dutyChange.jsp"/>
+  </action>
+  <action name="rewardsPunishment" path="/rewardsPunishment"
+   scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.rewardspunishment.Load" validate="false">
+   <forward name="load" path="/rewardsPunishment.jsp"/>
+  </action>
+  <action name="education" path="/education" scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.education.Load" validate="false">
+   <forward name="load" path="/education.jsp"/>
+  </action>
+  <action name="employment" path="/employment" scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.employment.Load" validate="false">
+   <forward name="load" path="/employment.jsp"/>
+  </action>
+  <action name="training" path="/training" scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.training.Load" validate="false">
+   <forward name="load" path="/training.jsp"/>
+  </action>
+  <action name="certificate" path="/certificate" scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.certificate.Load" validate="false">
+   <forward name="load" path="/certificate.jsp"/>
+  </action>
+  <action input="/dutyChange.jsp" name="dutyChange"
+   path="/saveDutyChange" scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.dutychange.Save" validate="false"/>
+  <action input="/dutyChange.jsp" name="dutyChange"
+   path="/deleteDutyChange" scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.dutychange.Delete" validate="false"/>
+  <action input="/rewardsPunishment.jsp" name="rewardsPunishment"
+   path="/saveRewardsPunishment" scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.rewardspunishment.Save" validate="false"/>
+  <action input="/rewardsPunishment.jsp" name="rewardsPunishment"
+   path="/deleteRewardsPunishment" scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.rewardspunishment.Delete" validate="false"/>
+  <action input="/education.jsp" name="education" path="/saveEducation"
+   scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.education.Save" validate="false"/>
+  <action input="/education.jsp" name="education"
+   path="/deleteEducation" scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.education.Delete" validate="false"/>
+  <action input="/employment.jsp" name="employment"
+   path="/saveEmployment" scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.employment.Save" validate="false"/>
+  <action input="/employment.jsp" name="employment"
+   path="/deleteEmployment" scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.employment.Delete" validate="false"/>
+  <action input="/training.jsp" name="training" path="/saveTraining"
+   scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.training.Save" validate="false"/>
+  <action input="/training.jsp" name="training" path="/deleteTraining"
+   scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.training.Delete" validate="false"/>
+  <action input="/certificate.jsp" name="certificate"
+   path="/saveCertificate" scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.certificate.Save" validate="false"/>
+  <action input="/certificate.jsp" name="certificate"
+   path="/deleteCertificate" scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.certificate.Delete" validate="false"/>
+  <action input="/employee.jsp" name="employee" path="/refreshEmployee"
+   scope="request"
+   type="com.yuanluesoft.j2oa.personnel.actions.employee.Refresh" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

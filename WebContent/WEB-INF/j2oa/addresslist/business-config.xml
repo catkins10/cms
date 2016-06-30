@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="通讯录" class="com.yuanluesoft.j2oa.addresslist.pojo.AddressList" businessServiceName="addressListService">
+		<field name="name" title="姓名" length="32" required="true" type="string" inputMode="text"/>
+		<field name="category" title="分类" length="32" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">addressListService</parameter>
+		</field>
+		<field name="birthday" title="生日" length="32" type="string" inputMode="date"/>
+		<field name="mobile" title="手机" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="email" title="E-Mail" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="homeAddress" title="住宅地址" length="100" type="string" inputMode="text"/>
+		<field name="homePostalcode" title="邮编" length="20" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="homeTel" title="住宅电话" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="qq" title="QQ" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="msn" title="MSN" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="fax" title="传真" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="homepage" title="网址" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="companyName" title="单位名称" length="100" type="string" inputMode="text"/>
+		<field name="companyAddress" title="单位地址" length="100" type="string" inputMode="text"/>
+		<field name="companyPostalcode" title="单位邮编" length="20" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="department" title="所在部门" length="30" type="string" inputMode="text"/>
+		<field name="companyTel" title="办公室电话" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="job" title="职务" length="20" type="string" inputMode="text"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+		<field name="logs" title="来往记录" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.addresslist.pojo.AddressLog</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="来往记录" class="com.yuanluesoft.j2oa.addresslist.pojo.AddressLog">
+		<field name="personId" title="联系人ID" type="number" inputMode="hidden"/>
+		<field name="time" title="发生时间" type="timestamp" inputMode="datetime"/>
+		<field name="content" title="事件描述" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

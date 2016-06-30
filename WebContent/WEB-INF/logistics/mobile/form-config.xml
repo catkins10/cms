@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="authentication" action="/logistics/mobile/doAuthentication.shtml" method="get" title="身份验证">
+		<formFields>
+			<field name="mobileNumber" title="随车联系人手机号码" type="string" inputMode="text"/>
+			<field name="plateNumber" title="车牌号码" type="string" inputMode="text"/>
+			<field name="licenceNumber" title="行车证号" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="document.forms['logistics/mobile/authentication'].submit()"/>
+		</actions>
+	</form>
+	
+	<form name="supplyQuery" method="get" action="/logistics/mobile/supplyQuery.shtml" class="com.yuanluesoft.logistics.mobile.forms.SupplyQuery" title="货源查询">
+		<formFields>
+			<field name="mobileNumber" title="手机号码" type="string" inputMode="hidden"/>
+			<field name="placeName" title="地名" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="document.forms['logistics/mobile/supplyQuery'].submit()"/>
+		</actions>
+	</form>
+</forms>

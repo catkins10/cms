@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--绩效考核-->
+	<class name="com.yuanluesoft.enterprise.assess.pojo.Assess" table="assess_assess">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="teamId"/> <!--项目组ID-->
+		<property name="projectName"/> <!--项目名称-->
+		<property name="projectStage"/> <!--项目阶段-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="creator"/> <!--创建人-->
+		<property name="created"/> <!--创建时间-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem"/>
+		</set>
+		<set name="opinions" table="assess_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.assess.pojo.AssessOpinion"/>
+		</set>
+		<set name="visitors" table="assess_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.assess.pojo.AssessPrivilege"/>
+		</set>
+		<set name="results" table="assess_result" lazy="true" inverse="true" cascade="delete">
+			<key column="assessId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.assess.pojo.AssessResult"/>
+		</set>
+	</class>
+	
+	<!--绩效考核:权限控制-->
+	<class name="com.yuanluesoft.enterprise.assess.pojo.AssessPrivilege" table="assess_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--绩效考核:审核意见-->
+	<class name="com.yuanluesoft.enterprise.assess.pojo.AssessOpinion" table="assess_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="created"/> <!--填写时间-->
+	</class>
+	
+	<!--绩效考核:个人考核-->
+	<class name="com.yuanluesoft.enterprise.assess.pojo.AssessResult" table="assess_result">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="assessId"/> <!--考核ID-->
+		<property name="personId"/> <!--被考核人ID-->
+		<property name="personName"/> <!--被考核人姓名-->
+		<property name="classifyId"/> <!--考核类型ID-->
+		<property name="result"/> <!--考核成绩-->
+		<property name="remark"/> <!--备注-->
+		<set name="individualResults" table="assess_individual_result" lazy="true" inverse="true" cascade="delete">
+			<key column="resultId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.assess.pojo.AssessIndividualResult"/>
+		</set>
+	</class>
+	
+	<!--绩效考核:各单项成绩-->
+	<class name="com.yuanluesoft.enterprise.assess.pojo.AssessIndividualResult" table="assess_individual_result">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="resultId"/> <!--个人考核ID-->
+		<property name="contentId"/> <!--考核内容ID-->
+		<property name="activityId"/> <!--考核步骤ID-->
+		<property name="result"/> <!--考核成绩-->
+	</class>
+	
+	<!--考核类型-->
+	<class name="com.yuanluesoft.enterprise.assess.pojo.AssessClassify" table="assess_classify">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="classify"/> <!--类型-->
+		<property name="priority"/> <!--优先级-->
+		<property name="selfAssess"/> <!--需要自评-->
+		<property name="projectTeamAccess"/> <!--只适用于项目组-->
+		<set name="assessUsers" table="assess_classify_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.assess.pojo.AssessClassifyPrivilege"/>
+		</set>
+		<set name="standards" table="assess_standard" lazy="true" inverse="true" cascade="delete" order-by="priority,id">
+			<key column="classifyId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.assess.pojo.AssessStandard"/>
+		</set>
+		<set name="activities" table="assess_activity" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="classifyId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.assess.pojo.AssessActivity"/>
+		</set>
+	</class>
+	
+	<!--考核/汇报设置:适用的范围-->
+	<class name="com.yuanluesoft.enterprise.assess.pojo.AssessClassifyPrivilege" table="assess_classify_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--考核/汇报配置:考核内容和标准-->
+	<class name="com.yuanluesoft.enterprise.assess.pojo.AssessStandard" table="assess_standard">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="classifyId"/> <!--考核类型ID-->
+		<property name="content"/> <!--考核内容-->
+		<property name="standard"/> <!--说明及评分标准-->
+		<property name="maxValue"/> <!--最大分值-->
+		<property name="priority"/> <!--顺序号-->
+	</class>
+	
+	<!--考核/汇报配置:考核步骤-->
+	<class name="com.yuanluesoft.enterprise.assess.pojo.AssessActivity" table="assess_activity">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="classifyId"/> <!--考核类型ID-->
+		<property name="activity"/> <!--考核步骤-->
+		<property name="weight"/> <!--权重-->
+	</class>
+</hibernate-mapping>

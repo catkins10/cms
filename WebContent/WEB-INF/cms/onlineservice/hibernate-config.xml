@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--网上办事:目录-->
+	<class name="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectory" table="onlineservice_directory">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryName"/> <!--目录名称-->
+		<property name="parentDirectoryId"/> <!--上级目录ID-->
+		<property name="priority"/> <!--优先级-->
+		<property name="directoryType"/> <!--目录类型-->
+		<property name="creator"/> <!--创建人-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="created"/> <!--创建时间-->
+		<property name="remark"/> <!--备注-->
+		<property name="code"/> <!--编号,用来给事项编号,varchar(30)-->
+		<property name="acceptWorkflowName"/> <!--在线受理流程-->
+		<property name="acceptWorkflowId"/> <!--在线受理流程ID-->
+		<property name="complaintWorkflowName"/> <!--在线投诉流程-->
+		<property name="complaintWorkflowId"/> <!--在线投诉流程ID-->
+		<property name="consultWorkflowName"/> <!--在线咨询流程-->
+		<property name="consultWorkflowId"/> <!--在线咨询流程ID-->
+		<property name="faqWorkflowName"/> <!--常见问题发布流程-->
+		<property name="faqWorkflowId"/> <!--常见问题发布流程ID-->
+		<property name="itemSynchSiteIds"/> <!--办理事项同步的网站栏目,varchar(200)-->
+		<property name="complaintSynchSiteIds"/> <!--投诉同步的网站栏目,varchar(200)-->
+		<property name="consultSynchSiteIds"/> <!--咨询同步的网站栏目,varchar(200)-->
+		<property name="siteId"/> <!--隶属站点ID-->
+		<property name="siteName"/> <!--隶属站点名称-->
+		<property name="halt"/> <!--是否停用,对外不展现,char(1)-->
+		<set cascade="delete" inverse="true" lazy="true" name="directoryPopedoms" table="onlineservice_dir_popedom" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectoryPopedom" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="subjections" table="onlineservice_dir_subjection" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectorySubjection" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="childSubjections" table="onlineservice_dir_subjection">
+			<key column="parentDirectoryId" />
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectorySubjection" />
+		</set>
+		<!--网上办事:主目录-->
+		<joined-subclass name="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceMainDirectory" table="onlineservice_main_directory">
+            <key>
+                <column name="id" />
+            </key>
+        </joined-subclass>
+	</class>
+	
+	<!--网上办事:目录隶属关系-->
+	<class name="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectorySubjection" table="onlineservice_dir_subjection">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID-->
+		<property name="parentDirectoryId"/> <!--上级目录ID-->
+	</class>
+	
+	<!--网上办事:目录权限-->
+	<class name="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectoryPopedom" table="onlineservice_dir_popedom">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID-->
+		<property name="userId"/> <!--用户ID-->
+		<property name="userName"/> <!--用户名-->
+		<property name="popedomName"/> <!--权限-->
+		<property name="isInherit"/> <!--是否从上级目录继承-->
+	</class>
+	
+	<!--网上办事:事项编号规则-->
+	<class name="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemCodeRule" table="onlineservice_item_code_rule">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="itemType"/> <!--事项类型,行政许可|行政处罚|行政确认|行政征收|行政强制|行政裁决|行政监督检查|行政给付|其他行政行为,VARCHAR(80)-->
+		<property name="rule"/> <!--规则,VARCHAR(200)-->
+		<property name="manualCodeEnabled"/> <!--是否允许手工编号,CHAR(1)-->
+	</class>
+	
+	<!--网上办事:办理事项-->
+	<class name="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem" table="onlineservice_item">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="code"/> <!--编号,varchar(100)-->
+		<property name="name"/> <!--名称-->
+		<property name="isPublic"/> <!--是否公开-->
+		<property name="priority"/> <!--优先级-->
+		<property name="itemType"/> <!--事项类型-->
+		<property name="publicServiceType"/> <!--公共服务类别-->
+		<property name="acceptSupport"/> <!--是否支持在线受理-->
+		<property name="acceptWorkflowName"/> <!--在线受理流程-->
+		<property name="acceptWorkflowId"/> <!--在线受理流程ID-->
+		<property name="complaintSupport"/> <!--是否支持在线投诉-->
+		<property name="complaintWorkflowName"/> <!--在线投诉流程-->
+		<property name="complaintWorkflowId"/> <!--在线投诉流程ID-->
+		<property name="consultSupport"/> <!--是否支持在线咨询-->
+		<property name="consultWorkflowName"/> <!--在线咨询流程-->
+		<property name="consultWorkflowId"/> <!--在线咨询流程ID-->
+		<property name="acceptUrl"/> <!--在线受理链接,链接到行政服务中心-->
+		<property name="complaintUrl"/> <!--在线投诉链接,链接到行政服务中心-->
+		<property name="consultUrl"/> <!--在线咨询链接,链接到行政服务中心-->
+		<property name="querySupport"/> <!--是否支持状态查询-->
+		<property name="queryUrl"/> <!--状态查询链接,链接到行政服务中心-->
+		<property name="resultSupport"/> <!--是否支持结果查询-->
+		<property name="resultUrl"/> <!--结果查询链接-->
+		<property name="remark"/> <!--备注-->
+		<property name="creator"/> <!--创建人-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="created"/> <!--创建时间-->
+		<!-- 隶属目录列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="subjections" table="onlineservice_item_subjection" order-by="id">
+			<key column="itemId"/>
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemSubjection"/>
+		</set>
+		<!-- 办理指南 -->
+		<set cascade="delete" inverse="true" lazy="true" name="guide" table="onlineservice_item_guide">
+			<key column="itemId"/>
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemGuide"/>
+		</set>
+		<!-- 材料列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="materials" table="onlineservice_item_material" order-by="priority DESC, name">
+			<key column="itemId"/>
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemMaterial"/>
+		</set>
+		<!-- 办理机构列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="units" table="onlineservice_item_unit" order-by="id">
+			<key column="itemId"/>
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemUnit"/>
+		</set>
+		<!-- 办理人列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="transactors" table="onlineservice_item_transactor" order-by="id">
+			<key column="itemId"/>
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemTransactor"/>
+		</set>
+		<!-- 常见问题解答列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="faqs" table="onlineservice_item_faq" order-by="priority DESC, created">
+			<key column="itemId"/>
+			<one-to-many class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemFaq"/>
+		</set>
+	</class>
+	
+	<!--网上办事:办理事项隶属目录-->
+	<class name="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemSubjection" table="onlineservice_item_subjection">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="itemId"/> <!--办理事项ID-->
+		<property name="directoryId"/> <!--隶属目录ID-->
+	</class>
+	
+	<!--网上办事:办理指南-->
+	<class name="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemGuide" table="onlineservice_item_guide">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="itemId"/> <!--办理事项ID-->
+		<property name="condition" column="serviceCondition"/> <!--申办条件-->
+		<property name="according" column="serviceAccording"/> <!--办理依据-->
+		<property name="program" column="serviceProgram"/> <!--办理程序-->
+		<property name="legalLimit"/> <!--法定时限-->
+		<property name="timeLimit"/> <!--承诺时限-->
+		<property name="chargeAccording"/> <!--收费依据-->
+		<property name="chargeStandard"/> <!--收费标准-->
+		<property name="legalRight"/> <!--法律权利-->
+		<property name="responsibleDepartment"/> <!--责任部门,varchar(200)-->
+		<property name="address"/> <!--办理地点-->
+		<property name="traffic"/> <!--交通线路-->
+		<property name="transactor"/> <!--经办人-->
+		<property name="transactorTel"/> <!--经办人联系电话-->
+		<property name="acceptLimit"/> <!--受理数量限制,varchar(200)-->
+		<property name="acceptTime"/> <!--受理时间,varchar(200)-->
+		<property name="superviseLevel"/> <!--监管等级,varchar(30)-->
+		<property name="complaintTel"/> <!--监督投诉电话,varchar(100)-->
+		<property name="visaState"/> <!--签证情况-->
+		<property name="punishType"/> <!--处罚种类,类别为行政处罚时有效,varchar(200)-->
+		<property name="discretionRule"/> <!--裁量规则,类别为行政处罚、行政强制时有效,varchar(2000)-->
+		<property name="coerciveMeasure"/> <!--强制措施,类别为行政强制时有效,varchar(2000)-->
+		<property name="acceptMode"/> <!--受理形式varchar(100)-->
+		<property name="publicMode"/> <!--公开形式,varchar(100)-->
+		<property name="publicRange"/> <!--公开范围,varchar(100)-->
+		<property name="publicTime"/> <!--公开时间,varchar(100)-->
+	</class>
+	
+	<!--网上办事:申报材料-->
+	<class name="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemMaterial" table="onlineservice_item_material">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="itemId"/> <!--办理事项ID-->
+		<property name="name"/> <!--申报材料名称-->
+		<property name="description"/> <!--申报说明-->
+		<property name="priority"/> <!--优先级-->
+		<property name="tableName"/> <!--表格名称-->
+		<property name="tableURL"/> <!--表格URL-->
+		<property name="exampleURL"/> <!--样表URL-->
+		<property name="remark"/> <!--备注-->
+		<many-to-one name="item" class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem" column="itemId" update="false" insert="false"/>
+	</class>
+	
+	<!--网上办事:办理机构-->
+	<class name="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemUnit" table="onlineservice_item_unit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="itemId"/> <!--办理事项ID-->
+		<property name="unitId"/> <!--单位ID-->
+		<property name="unitName"/> <!--单位名称-->
+	</class>
+	
+	<!--网上办事:办理人-->
+	<class name="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemTransactor" table="onlineservice_item_transactor">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="itemId"/> <!--办理事项ID-->
+		<property name="userId"/> <!--办理人ID-->
+		<property name="userName"/> <!--办理人-->
+	</class>
+	
+	<!--网上办事:常见问题解答-->
+	<class name="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemFaq" table="onlineservice_item_faq">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="itemId"/> <!--办理事项ID,numeric(20,0)-->
+		<property name="question"/> <!--问题,varchar(600)-->
+		<property name="answer" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--解答,mediumtext-->
+		<property name="priority"/> <!--优先级,numeric(7,4)-->
+		<property name="creator"/> <!--创建人,varchar(30)-->
+		<property name="creatorId"/> <!--创建人ID,numeric(20,0)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<many-to-one name="item" class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem" column="itemId" update="false" insert="false"/>
+	</class>
+</hibernate-mapping>

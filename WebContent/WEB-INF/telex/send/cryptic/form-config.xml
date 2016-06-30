@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="sendTelegram" class="com.yuanluesoft.telex.send.cryptic.forms.SendCrypticTelegram" title="发报登记" pojo="com.yuanluesoft.telex.send.base.pojo.SendTelegram">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteSendTelegram')"/>
+		</actions>
+	</form>
+	
+	<form name="exportListing" class="com.yuanluesoft.telex.send.cryptic.forms.ExportListing" title="密码发报核对清单">
+		<formFields>
+			<field name="year" title="年度" type="number" inputMode="text"/>
+			<field name="month" title="月份" type="number" inputMode="dropdown">
+				<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10\0 11\0 12</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="输出清单" execute="FormUtils.submitForm(true)"/>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

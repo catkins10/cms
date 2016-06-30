@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="admin/project" form="admin/project" title="招商项目" pageRows="20" openFeatures="mode=fullscreen" hide="privilege(application_manager) or privilege(manageUnit_manage)">
+		<data>
+			<pojo>com.yuanluesoft.dpc.investmentproject.pojo.InvestmentProject</pojo>
+			<where>InvestmentProject.creatorId={USERID}</where>
+			<orderBy>InvestmentProject.name</orderBy>
+			<quickFilter>InvestmentProject.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action hide="noPrivilege(manageUnit_create)" title="新建项目" execute="PageUtils.newrecord('dpc/investmentproject', 'admin/project', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="name"/>
+			<column title="项目地址" name="address"/>
+			<column title="所属行业" name="industry" align="center" width="68"/>
+			<column title="总投资" name="investment" align="center" width="68"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allProject" form="admin/project" title="所有招商项目" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_manage)">
+		<data>
+			<pojo>com.yuanluesoft.dpc.investmentproject.pojo.InvestmentProject</pojo>
+			<orderBy>InvestmentProject.created DESC</orderBy>
+			<quickFilter>InvestmentProject.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action hide="noPrivilege(manageUnit_create)" title="新建项目" execute="PageUtils.newrecord('dpc/investmentproject', 'admin/project', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="name"/>
+			<column title="项目地址" name="address"/>
+			<column title="所属行业" name="industry" align="center" width="68"/>
+			<column title="总投资" name="investment" align="center" width="68"/>
+		</columns>
+	</view>
+	
+	<view name="industry" form="industry" title="行业" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.dpc.investmentproject.pojo.InvestmentProjectIndustry</pojo>
+			<orderBy>InvestmentProjectIndustry.priority DESC, InvestmentProjectIndustry.industry</orderBy>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="行业" name="industry"/>
+		</columns>
+	</view>
+</views>

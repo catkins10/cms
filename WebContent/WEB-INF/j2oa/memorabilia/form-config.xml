@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.j2oa.memorabilia.forms.MemorabiliaForm" title="大事记" pojo="com.yuanluesoft.j2oa.memorabilia.pojo.Memorabilia">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteMemorabilia')"/>
+		</actions>
+	</form>
+</forms>

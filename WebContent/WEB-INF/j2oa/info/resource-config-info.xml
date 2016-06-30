@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Application>
+	<Actions>
+		<Action Name="删除" DeleteAction="true"/>
+		<Action Name="送审核" Send="true"/>
+		<Action Name="审核" Send="true"/>
+		<Action Name="退改稿"/>
+	</Actions>
+	<ProgrammingParticipants>
+		<ProgrammingParticipant Id="magazineEditor" Name="刊物编辑"/>
+		<ProgrammingParticipant Id="magazineChiefEditor" Name="刊物主编"/>
+	</ProgrammingParticipants>
+	<SubForms>
+		<SubForm Id="Edit" Name="编辑"/>
+		<SubForm Id="Read" Name="只读"/>
+	</SubForms>
+	<TypeDeclarations>
+		<TypeDeclaration Id="result" Name="审核结果">
+			<SchemaType>
+				<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+					elementFormDefault="qualified" 
+					attributeFormDefault="unqualified">
+					<xsd:element name="result">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="同意录用"/>
+								<xsd:enumeration value="不同意录用"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+	</TypeDeclarations>
+	<DataFields>
+		<DataField Id="approvalResult" Name="审核结果">
+			<DataType>
+				<DeclaredType Id="result"/>
+			</DataType>
+		</DataField>
+		<DataField Id="level" Name="采用级别">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+	</DataFields>
+	<Applications>
+		<Application Id="useInfo" Name="录用稿件">
+			<FormalParameters/>
+			<ExtendedAttributes>
+				<!--类型:procedure/内部过程,application/外部应用,decision/判断-->
+				<ExtendedAttribute Name="type">procedure</ExtendedAttribute>
+				<!--结束方式:Automatic/自动,Manual/人工-->
+				<ExtendedAttribute Name="finishMode">Automatic</ExtendedAttribute>
+				<ExtendedAttribute Name="service">infoService</ExtendedAttribute>
+				<ExtendedAttribute Name="function">useInfo</ExtendedAttribute>
+			</ExtendedAttributes>
+		</Application>
+	</Applications>
+</Application>

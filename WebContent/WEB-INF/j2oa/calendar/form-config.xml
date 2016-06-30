@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.j2oa.calendar.forms.CalendarForm" title="领导日程" pojo="com.yuanluesoft.j2oa.calendar.pojo.Calendar">
+		<formFields>
+			<field title="参加人" name="leaders" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field title="参加人" name="leaders.visitorNames" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectPerson(500,300,true,'leaders.visitorIds{id},leaders.visitorNames{name|参加人|100%},leaders.visitorIds{id|ID|0}')</parameter>
+			</field>
+			<field name="creatorName" title="经办人" type="string" inputMode="readonly"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteCalendar')"/>
+			<action title="发布" hide="isRead()" execute="if(confirm('是否确定要发布？'))FormUtils.doAction('publishCalendar')"/>
+			<action title="撤销" hide="notEditable() or isEdit()" execute="if(confirm('是否确定要撤销？'))FormUtils.doAction('unpublishCalendar')"/>
+		</actions>
+	</form>
+</forms>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views>
+	<view name="admin/personalAccount" form="admin/personalAccount" title="个人帐户" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.account.pojo.PersonalAccount</pojo>
+			<orderBy>PersonalAccount.accountName</orderBy>
+			<quickFilter>PersonalAccount.accountName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="账户名" name="accountName"/>
+			<column title="账户余额" name="balance" width="120" align="center"/>
+		</columns>
+	</view>
+</views>

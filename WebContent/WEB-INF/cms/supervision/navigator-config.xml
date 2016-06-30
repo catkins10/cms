@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<application title="效能监督">
+	<viewLink local="admin/todoSupervision" title="待办"/>
+	<viewLink local="admin/inProcessSupervision" title="在办"/>
+	<viewLink local="admin/completedSupervision" title="已办"/>
+	<viewLink local="admin/allSupervision" title="所有"/>
+	<link title="办理流程" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/supervision&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/workflowSetting
+	</link>
+	<link title="办结短信格式" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/supervision&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/smsFormat
+	</link>
+</application>

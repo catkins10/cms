@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--工作量考核-->
+	<class name="com.yuanluesoft.enterprise.workload.pojo.WorkloadAssess" table="workload_assess">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="assessYear"/> <!--年度,NUMERIC(4)-->
+		<property name="assessMonth"/> <!--月份,NUMERIC(2)-->
+		<property name="creatorId"/> <!--考核人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--考核人,VARCHAR(60)-->
+		<property name="created"/> <!--考核时间,TIMESTAMP-->
+		<!-- 成绩列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="results" table="workload_assess_result" order-by="id">
+			<key column="assessId" />
+			<one-to-many class="com.yuanluesoft.enterprise.workload.pojo.WorkloadAssessResult" />
+		</set>
+	</class>
+	
+	<!--工作量考核:成绩-->
+	<class name="com.yuanluesoft.enterprise.workload.pojo.WorkloadAssessResult" table="workload_assess_result">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="assessId"/> <!--考核ID,NUMERIC(20)-->
+		<property name="personId"/> <!--被考核人ID,NUMERIC(20)-->
+		<property name="personName"/> <!--被考核人,VARCHAR(60)-->
+		<property name="workload"/> <!--工作量,NUMERIC(4,1)-->
+		<property name="remark"/> <!--考核说明,VARCHAR(2000)-->
+		<!-- 工作量考核 -->
+		<many-to-one name="assess" class="com.yuanluesoft.enterprise.workload.pojo.WorkloadAssess" column="assessId" update="false" insert="false"/>
+	</class>
+</hibernate-mapping>

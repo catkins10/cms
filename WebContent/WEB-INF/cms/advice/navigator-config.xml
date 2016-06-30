@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<application title="民意征集">
+	<viewLink local="admin/adviceTopic" title="征集主题"/>
+	<viewLink local="admin/todoAdvice" title="待办建议"/>
+	<viewLink local="admin/inProcessAdvice" title="在办建议"/>
+	<viewLink local="admin/completedAdvice" title="办结建议"/>
+	<viewLink local="admin/allAdvice" title="所有建议"/>
+	<link title="受理流程" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/advice&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/workflowSetting
+	</link>
+	<link title="办结短信格式" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/advice&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/smsFormat
+	</link>
+</application>

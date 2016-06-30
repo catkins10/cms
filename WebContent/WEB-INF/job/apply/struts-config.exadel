@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,177,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="336,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,112,177,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="336,112,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#apply" NAME="action0"
+  PATH="/apply" SHAPE="32,192,177,25" TITLE="apply" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/apply.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2" PATH="/apply.jsp"
+  SHAPE="336,208,50,25" SUBTYPE="jsp" TITLE="apply.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveApply.shtml" TARGET="action1" TITLE="saveApply.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/changeApplyStatus.shtml" TARGET="action2"
+   TITLE="removeApply.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/refreshApply.shtml" TARGET="action10"
+   TITLE="refreshApply.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveApply" NAME="action1"
+  PATH="/saveApply" SHAPE="528,224,161,25" TITLE="apply" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/applySubmitted.jsp" TARGET="page3"
+   TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/applySubmitted.jsp" SHAPE="800,240,50,25" SUBTYPE="jsp"
+  TITLE="applySubmitted.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#changeApplyStatus"
+  NAME="action2" PATH="/changeApplyStatus" SHAPE="528,288,161,25"
+  TITLE="apply" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#invitation"
+  NAME="action3" PATH="/invitation" SHAPE="32,400,177,41"
+  TITLE="invitation" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/invitation.jsp" TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/invitation.jsp" SHAPE="336,416,50,40" SUBTYPE="jsp"
+  TITLE="invitation.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/sendInvitation.shtml" TARGET="action4"
+   TITLE="sendInvitation.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#sendInvitation"
+  NAME="action4" PATH="/sendInvitation" SHAPE="528,432,161,25"
+  TITLE="invitation" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#offer" NAME="action5"
+  PATH="/offer" SHAPE="32,512,177,41" TITLE="offer" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/offer.jsp" TARGET="page5" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5" PATH="/offer.jsp"
+  SHAPE="336,528,50,40" SUBTYPE="jsp" TITLE="offer.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/sendOffer.shtml" TARGET="action6" TITLE="sendOffer.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#sendOffer" NAME="action6"
+  PATH="/sendOffer" SHAPE="528,544,161,25" TITLE="offer" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#interview" NAME="action7"
+  PATH="/interview" SHAPE="32,624,177,41" TITLE="interview" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/interview.jsp" TARGET="page6" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/interview.jsp" SHAPE="336,640,50,55" SUBTYPE="jsp"
+  TITLE="interview.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveInterview.shtml" TARGET="action8"
+   TITLE="saveInterview.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteInterview.shtml" TARGET="action9"
+   TITLE="deleteInterview.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveInterview"
+  NAME="action8" PATH="/saveInterview" SHAPE="528,656,161,25"
+  TITLE="interview" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteInterview"
+  NAME="action9" PATH="/deleteInterview" SHAPE="528,704,161,25"
+  TITLE="interview" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#refreshApply"
+  NAME="action10" PATH="/refreshApply" SHAPE="528,336,161,25"
+  TITLE="apply" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#addFavorite"
+  NAME="action11" PATH="/addFavorite" SHAPE="32,752,177,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#removeFavorite"
+  NAME="action12" PATH="/removeFavorite" SHAPE="32,816,177,25" TYPE="action"/>
+</PROCESS>

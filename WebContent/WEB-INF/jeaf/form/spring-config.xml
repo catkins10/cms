@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 表单定义服务 -->	
+	<bean id="formDefineService" class="com.yuanluesoft.jeaf.form.service.spring.FormDefineServiceImpl">
+		<property name="cache"><ref bean="modelCache"/></property>
+		<property name="formDefineParser"><ref bean="formDefineParser"/></property>
+	</bean>
+	
+	<!-- 表单定义解析器 -->
+	<bean id="formDefineParser" class="com.yuanluesoft.jeaf.form.parser.dom4j.FormDefineParserImpl">
+		<property name="businessDefineParser"><ref bean="businessDefineParser"/></property>
+	</bean>
+	
+	<!-- 表单字段服务 -->	
+	<bean id="formFieldService" class="com.yuanluesoft.jeaf.form.service.spring.FormFieldServiceImpl">
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+	</bean>
+	
+	<!-- 表单安全服务 -->
+	<bean id="formSecurityService" class="com.yuanluesoft.jeaf.form.service.spring.FormSecurityServiceImpl">
+		<property name="requestCodeCache"><ref bean="requestCodeCache"/></property>
+	</bean>
+</beans>

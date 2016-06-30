@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=traffic/busline"/>
+		
+		<page name="busLine" title="公交线路" recordClass="com.yuanluesoft.traffic.busline.pojo.BusLine"/>
+		
+		<page name="station" title="公交站点" staticPageSupport="false" searchPage="true" searchResults="busLines"/>
+		
+		<page name="change" title="线路变更通知" recordClass="com.yuanluesoft.traffic.busline.pojo.BusLineChange"/>
+		
+		<page name="busLineNotExists" title="公交线路不存在"/>
+	</pages>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="busLines" processor="busLinesProcessor"/> <!-- 文章列表 -->
+	</pageElements>
+</application>

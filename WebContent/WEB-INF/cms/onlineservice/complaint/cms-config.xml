@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/onlineservice/complaint"/>
+		<page name="onlineServiceComplaint" title="网上办事投诉" url="/cms/onlineservice/complaint/complaint.shtml" systemLink="false">
+			<subPage name="base" title="申报"/>
+			<field title="办理事项名称" name="itemName"/>
+			<field title="编号" name="sn"/>
+			<field title="投诉主题" name="subject"/>
+			<field title="投诉人" name="creator"/>
+			<field title="投诉时间" name="created" type="timestamp"/>
+			<field title="当前状态" name="workflowStatus"/>
+		</page>
+		<page name="onlineServiceComplaintResult" title="投诉完成提示" systemLink="false"/>
+		
+		<page name="onlineServiceComplaints" title="已受理投诉列表" url="/cms/onlineservice/listInteractives.shtml?applicationName=cms/onlineservice/complaint&amp;type=onlineServiceComplaints"/>
+		<page name="onlineServiceMyComplaints" title="我的投诉列表" url="/cms/onlineservice/listInteractives.shtml?applicationName=cms/onlineservice/complaint&amp;type=onlineServiceMyComplaints"/>
+	</pages>
+	
+	<recordLists>
+		<recordList title="网上办事已受理投诉列表" name="onlineServiceComplaints" recordPage="onlineServiceComplaint" hostPage="index"/>
+		<recordList title="我的网上办事投诉列表" totalSupport="false" rssSupport="false" name="onlineServiceMyComplaints" recordPage="onlineServiceComplaint" hostPage="index"/>
+	</recordLists>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="onlineServiceComplaints" processor="publicServicesProcessor"/> <!-- 网上办事已受理投诉列表 -->
+		<pageElement name="onlineServiceMyComplaints" processor="onlineServiceMyInteractivesProcessor"/> <!-- 我的网上办事投诉列表 -->
+	</pageElements>
+</application>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminServiceorg" type="com.yuanluesoft.credit.serviceorg.org.forms.ServiceOrg"/>
+  <form-bean name="adminServiceitem" type="com.yuanluesoft.credit.serviceorg.serviceitem.forms.ServiceItem"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminServiceorg" path="/admin/serviceorg" scope="request"
+   type="com.yuanluesoft.credit.serviceorg.org.actions.Load" validate="false">
+   <forward name="load" path="/admin/serviceorg.jsp"/>
+  </action>
+  <action input="/admin/serviceorg.jsp" name="adminServiceorg" path="/admin/saveServiceorg" scope="request"
+   type="com.yuanluesoft.credit.serviceorg.org.actions.Save" validate="false"/>
+  <action input="/admin/serviceorg.jsp" name="adminServiceorg" path="/admin/deleteServiceorg"
+   scope="request" type="com.yuanluesoft.credit.serviceorg.org.actions.Delete" validate="false"/>
+   <action name="adminServiceorg" path="/admin/serviceorgAttachment" scope="request"
+   type="com.yuanluesoft.credit.serviceorg.org.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+   <!-- 办事事项 -->
+   <action name="adminServiceitem" path="/admin/serviceitem" scope="request"
+   type="com.yuanluesoft.credit.serviceorg.serviceitem.actions.Load" validate="false">
+   <forward name="load" path="/admin/serviceitem.jsp"/>
+  </action>
+  <action input="/admin/serviceitem.jsp" name="adminServiceitem" path="/admin/saveServiceitem" scope="request"
+   type="com.yuanluesoft.credit.serviceorg.serviceitem.actions.Save" validate="false"/>
+  <action input="/admin/serviceitem.jsp" name="adminServiceitem" path="/admin/deleteServiceitem"
+   scope="request" type="com.yuanluesoft.credit.serviceorg.serviceitem.actions.Delete" validate="false"/>
+   
+   <action name="adminServiceitem" path="/admin/serviceTtemAttachment" scope="request"
+   type="com.yuanluesoft.credit.serviceorg.serviceitem.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  
+ </action-mappings>
+ <controller/>
+</struts-config>

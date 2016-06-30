@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 评论 -->
+<application>
+	<pages>
+		<page name="comment" title="评论" realtimeStaticPage="false" recordPage="false" recordClass="com.yuanluesoft.cms.comment.pojo.CmsComment">
+			<field title="原文标题" name="pageTitle"/>
+			<field title="原文地址" name="pageUrl"/>
+		</page>
+		<page name="commentSubmitted" title="评论提交完成">
+			<link title="返回评论列表" url="/cms/comment/comment.shtml?act=create&amp;applicationName={PARAMETER:applicationName}&amp;pageName={PARAMETER:pageName}&amp;recordId={PARAMETER:recordId}&amp;pageTitle={PARAMETER:pageTitle}&amp;pageUrl={PARAMETER:pageUrl}&amp;page={PARAMETER:page}"/>
+		</page>
+	</pages>
+	
+	<links>
+		<link title="评论" dialogURL="/cms/comment/templatemanage/insertCommentLink.shtml"/>
+	</links>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="commentLink" processor="commentLinkProcessor"/> <!-- 评论链接处理器 -->
+		<pageElement name="comments" staticPageSupport="false" processor="commentsProcessor"/> <!-- 评论列表 -->
+		<pageElement name="comment" processor="commentFormProcessor"/> <!-- 评论表单 -->
+	</pageElements>
+</application>

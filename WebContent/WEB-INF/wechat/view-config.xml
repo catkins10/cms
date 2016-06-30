@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="messageReceive" form="receivedMessage" title="消息接收" url="/jeaf/usermanage/admin/orgRelationConfigView.shtml?applicationName=wechat&amp;viewName=messageReceive&amp;orgTypes=unit&amp;popedomNames=wechatMessageManager" hide="noPrivilege(application_manager) and noOrgPopedom(wechatMessageManager)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.wechat.pojo.WechatMessageReceive</pojo>
+			<orderBy>WechatMessageReceive.createTime DESC</orderBy>
+			<quickFilter>WechatMessageReceive.content like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="发送人" name="fromUserNickname" width="100"/>
+			<column title="内容" name="content"/>
+			<column title="发送时间" name="createTime" width="110" align="center"/>
+			<column title="答复时间" name="replyTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="responseMessage" form="responseMessage" title="自动应答" url="/jeaf/usermanage/admin/orgRelationConfigView.shtml?applicationName=wechat&amp;viewName=responseMessage&amp;orgTypes=unit" hide="noPrivilege(application_manager) and isNotOrgManager(unit)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.wechat.pojo.WechatMessageResponse</pojo>
+		</data>
+		<actions>
+			<action title="新建应答消息" execute="PageUtils.newrecord('wechat', 'responseMessage', 'mode=fullscreen', 'unitId={PARAMETER:orgId}')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="应答目标" name="responseType" width="200"/>
+			<column title="关键字" name="keywords"/>
+		</columns>
+	</view>
+	
+	<view name="todoSendMessage" form="sendMessage" title="待处理消息发送" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.wechat.pojo.WechatMessageSend</pojo>
+			<quickFilter>WechatMessageSend.title like '%{KEY}%' or WechatMessageSend.content like '%{KEY}%' or news.title like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="新建消息" execute="PageUtils.newrecord('wechat', 'sendMessage', 'mode=fullscreen')" hide="noMyUnitPopedom(wechatMessageManager)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="创建人" name="creator" align="center" width="66"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="105" display="normal,print,portlet"/>
+			<column title="发送人" name="workflowSender" align="center" width="66" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="inProcessSendMessage" form="sendMessage" title="在处理消息发送" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.wechat.pojo.WechatMessageSend</pojo>
+			<orderBy>WechatMessageSend.created DESC</orderBy>
+			<quickFilter>WechatMessageSend.title like '%{KEY}%' or WechatMessageSend.content like '%{KEY}%' or news.title like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="新建消息" execute="PageUtils.newrecord('wechat', 'sendMessage', 'mode=fullscreen')" hide="noMyUnitPopedom(wechatMessageManager)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="创建人" name="creator" align="center" width="66"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="105" display="normal,print,portlet"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="allSendMessage" form="sendMessage" title="所有消息发送" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.wechat.pojo.WechatMessageSend</pojo>
+			<filter>READABLE</filter>
+			<orderBy>WechatMessageSend.created DESC</orderBy>
+			<quickFilter>WechatMessageSend.title like '%{KEY}%' or WechatMessageSend.content like '%{KEY}%' or news.title like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建消息" execute="PageUtils.newrecord('wechat', 'sendMessage', 'mode=fullscreen')" hide="noMyUnitPopedom(wechatMessageManager)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="创建人" name="creator" align="center" width="66"/>
+			<column title="创建时间" name="created" align="center" width="110"/>
+			<column title="发送时间" name="sendTime" align="center" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="sentMessage" title="已发送消息">
+		<data>
+			<pojo>com.yuanluesoft.wechat.pojo.WechatMessageSend</pojo>
+			<where>WechatMessageSend.unitId={PARAMETER:unitId} and WechatMessageSend.rangeMode=0 and WechatMessageSend.sendTime is not null</where>
+			<orderBy>WechatMessageSend.created DESC</orderBy>
+		</data>
+	</view>
+	
+	<view name="adjustNewsPriority" title="调整图文消息优先级" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.wechat.pojo.WechatMessageNews</pojo>
+			<where>WechatMessageNews.messageId={PARAMETER:messageId}</where>
+			<orderBy>WechatMessageNews.priority DESC, WechatMessageNews.id</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="标题" name="title"/>
+		</columns>
+	</view>
+	
+	<view name="user" form="user" title="微信用户" url="/jeaf/usermanage/admin/orgRelationConfigView.shtml?applicationName=wechat&amp;viewName=user&amp;orgTypes=unit" hide="noPrivilege(application_manager) and isNotOrgManager(unit)" pageRows="20" openFeatures="mode=dialog,width=550,height=300">
+		<data>
+			<pojo>com.yuanluesoft.wechat.pojo.WechatUser</pojo>
+			<orderBy>WechatUser.created DESC</orderBy>
+			<quickFilter>WechatUser.nickname like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="分组管理" execute="location.href='{CONTEXTPATH}/jeaf/usermanage/admin/orgRelationConfigView.shtml?applicationName=wechat&amp;viewName=userGroup&amp;orgTypes=unit&amp;orgId={PARAMETER:orgId}'"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="昵称" name="nickname"/>
+			<column title="真实用户名" name="name" width="80"/>
+			<column title="关注时间" name="subscribeTime" width="110" align="center"/>
+			<column title="取消关注时间" name="unsubscribeTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="selectUser" title="微信用户选择" hide="noPrivilege(application_manager) and isNotOrgManager(unit)" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.wechat.pojo.WechatUser</pojo>
+			<where>WechatUser.unitId={PARAMETER:unitId}</where>
+			<orderBy>WechatUser.nickname</orderBy>
+			<quickFilter>WechatUser.nickname like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="昵称" name="nickname"/>
+			<column title="真实用户名" name="name" width="80"/>
+		</columns>
+	</view>
+	
+	<view name="userGroup" form="userGroup" title="用户分组" url="/jeaf/usermanage/admin/orgRelationConfigView.shtml?applicationName=wechat&amp;viewName=userGroup&amp;orgTypes=unit" hide="noPrivilege(application_manager) and isNotOrgManager(unit)" pageRows="20" openFeatures="mode=dialog,width=430,height=200">
+		<data>
+			<pojo>com.yuanluesoft.wechat.pojo.WechatUserGroup</pojo>
+			<orderBy>WechatUserGroup.name</orderBy>
+			<quickFilter>WechatUserGroup.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建分组" execute="PageUtils.newrecord('wechat', 'userGroup', 'mode=dialog,width=430,height=200', 'unitId={PARAMETER:orgId}')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name" width="100"/>
+			<column title="成员" name="members.memberNickname" length="30" ellipsis="等"/>
+		</columns>
+	</view>
+	
+	<view name="selectMyUnitUser" title="微信用户选择" hide="noMyUnitPopedom(wechatMessageManager)" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.wechat.pojo.WechatUser</pojo>
+			<where>WechatUser.unitId={UNITID}</where>
+			<orderBy>WechatUser.nickname</orderBy>
+			<quickFilter>WechatUser.nickname like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="昵称" name="nickname"/>
+			<column title="真实用户名" name="name" width="80"/>
+		</columns>
+	</view>
+
+	<view name="selectMyUnitUserGroup" title="微信用户组选择" hide="noMyUnitPopedom(wechatMessageManager)" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.wechat.pojo.WechatUserGroup</pojo>
+			<where>WechatUserGroup.unitId={UNITID}</where>
+			<orderBy>WechatUserGroup.name</orderBy>
+			<quickFilter>WechatUserGroup.name like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name" width="100"/>
+			<column title="成员" name="members.memberNickname" length="30" ellipsis="等"/>
+		</columns>
+	</view>
+	
+	<view name="account" form="account" title="公众号配置" url="/jeaf/usermanage/admin/orgRelationConfigView.shtml?applicationName=wechat&amp;viewName=account&amp;orgTypes=unit" hide="noPrivilege(application_manager) and isNotOrgManager(unit)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.wechat.pojo.WechatAccount</pojo>
+			<quickFilter>WechatAccount.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="公众号配置" execute="PageUtils.newrecord('wechat', 'account', 'mode=fullscreen', 'unitId={PARAMETER:orgId}')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name"/>
+		</columns>
+	</view>
+	
+	<view name="workflowConfig" form="workflowConfig" title="流程配置" url="/jeaf/usermanage/admin/orgRelationConfigView.shtml?applicationName=wechat&amp;viewName=workflowConfig&amp;orgTypes=root,category,area,unit" hide="noPrivilege(application_manager) and isNotOrgManager(root,category,area,unit)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.wechat.pojo.WechatWorkflowConfig</pojo>
+			<quickFilter>WechatWorkflowConfig.workflowName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="流程配置" execute="PageUtils.newrecord('wechat', 'workflowConfig', 'mode=fullscreen', 'orgId={PARAMETER:orgId}')"/>
+			<action title="刷新" execute="location.reload()"/>
+		</actions>
+		<links>
+			<link>javascript:PageUtils.newrecord('wechat', 'workflowConfig', 'mode=fullscreen', 'orgId={PARAMETER:orgId}')</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="workflowName"/>
+		</columns>
+	</view>
+</views>

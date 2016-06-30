@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/sceneService" class="com.yuanluesoft.cms.scene.forms.admin.SceneService" title="场景服务" pojo="com.yuanluesoft.cms.scene.pojo.SceneService">
+		<actions>
+			<action title="关闭" execute="window.top.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteSceneService')"/>
+			<action title="添加场景" hide="isNew() or isRead()" execute="location='scene.shtml?act=create&amp;parentDirectoryId={PARAMETER:id}'"/>
+			<action title="添加内容" hide="isNew() or isRead()" execute="location='sceneContent.shtml?act=create&amp;parentDirectoryId={PARAMETER:id}'"/>
+			<action title="添加链接" hide="isNew() or isRead()" execute="location='sceneLink.shtml?act=create&amp;parentDirectoryId={PARAMETER:id}'"/>
+			<action title="调整优先级" hide="isNew() or isRead()" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/scene/admin/adjustScenePriority.shtml?parentDirectoryId={PARAMETER:id}', 640, 400)"/>
+		</actions>
+	</form>
+	
+	<form name="admin/scene" class="com.yuanluesoft.cms.scene.forms.admin.SceneDirectory" title="场景" pojo="com.yuanluesoft.cms.scene.pojo.SceneDirectory">
+		<formFields>
+			<field name="parentDirectoryName" title="上级目录名称" type="string" inputMode="readonly"/>
+			<field name="copyToDirectoryId" title="拷贝目标目录ID" type="number" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.top.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="添加下一个场景" hide="isOld()" execute="FormUtils.doAction('createNextScene')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteScene')"/>
+			<action title="添加场景" hide="isNew() or isRead()" execute="location='scene.shtml?act=create&amp;parentDirectoryId={PARAMETER:id}'"/>
+			<action title="添加内容" hide="isNew() or isRead()" execute="location='sceneContent.shtml?act=create&amp;parentDirectoryId={PARAMETER:id}'"/>
+			<action title="添加链接" hide="isNew() or isRead()" execute="location='sceneLink.shtml?act=create&amp;parentDirectoryId={PARAMETER:id}'"/>
+			<action title="调整优先级" hide="isNew() or isRead()" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/scene/admin/adjustScenePriority.shtml?parentDirectoryId={PARAMETER:id}', 640, 400)"/>
+			<action title="复制到..." hide="isNew() or isRead()" execute="copySceneDirectory('copyScene')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/sceneContent" class="com.yuanluesoft.cms.scene.forms.admin.SceneContent" title="内容" pojo="com.yuanluesoft.cms.scene.pojo.SceneContent">
+		<formFields>
+			<field name="parentDirectoryName" title="上级目录名称" type="string" inputMode="readonly"/>
+			<field name="copyToDirectoryId" title="拷贝目标目录ID" type="number" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.top.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="添加下一个内容" hide="isOld()" execute="FormUtils.doAction('createNextSceneContent')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteSceneContent')"/>
+			<action title="复制到..." hide="isNew() or isRead()" execute="copySceneDirectory('copySceneContent')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/sceneLink" class="com.yuanluesoft.cms.scene.forms.admin.SceneLink" title="链接" pojo="com.yuanluesoft.cms.scene.pojo.SceneLink">
+		<formFields>
+			<field name="parentDirectoryName" title="上级目录名称" type="string" inputMode="readonly"/>
+			<field name="copyToDirectoryId" title="拷贝目标目录ID" type="number" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.top.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="添加下一个链接" hide="isOld()" execute="FormUtils.doAction('createNextSceneLink')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteSceneLink')"/>
+			<action title="复制到..." hide="isNew() or isRead()" execute="copySceneDirectory('copySceneLink')"/>
+		</actions>
+	</form>
+
+	<form name="admin/template" class="com.yuanluesoft.cms.scene.forms.admin.Template" title="模板配置" pojo="com.yuanluesoft.cms.scene.pojo.SceneTemplate"/>
+	
+	<form class="com.yuanluesoft.cms.scene.forms.admin.InsertSceneServiceLink" title="插入场景服务链接">
+		<formFields>
+			<field title="场景服务ID" name="serviceId" type="string" inputMode="hidden"/>
+			<field title="场景服务名称" name="serviceName" type="string" inputMode="select">
+				<parameter name="js">/cms/scene/js/scene.js</parameter>
+				<parameter name="execute">selectScene(500, 320, false, 'serviceId{id},serviceName{name}', '', '', '', 'service')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.scene.forms.admin.InsertSceneLink" title="插入场景链接">
+		<formFields>
+			<field title="场景ID" name="sceneId" type="string" inputMode="hidden"/>
+			<field title="场景名称" name="sceneName" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">sceneService</parameter>
+				<parameter name="itemsName">scenes</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="titleField">sceneName</parameter>
+				<parameter name="valueField">sceneId</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.scene.forms.admin.InsertSceneLocation" title="插入场景位置">
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="论坛主题列表" name="bbsArticles" viewServiceName="bbsArticleViewService">
+		<data>
+			<pojo>com.yuanluesoft.bbs.article.pojo.BbsArticle</pojo>
+			<orderBy>BbsArticle.created DESC</orderBy>
+			<quickFilter>BbsArticle.subject like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link>/bbs/article/viewArticle.shtml</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/bbs/templatemanage/insertBbsArticles.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="rssChannel">false</parameter>
+		</extendParameters>
+	</view>
+</views>

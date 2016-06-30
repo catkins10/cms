@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 短信发送服务 -->
+	<bean id="smsSendService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.cms.smssend.service.spring.SmsSendServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="smsService"><ref bean="smsService"/></property>
+				<property name="recordControlService"><ref bean="recordControlService"/></property>
+				<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="processWorkflow*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="sendMessage">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 短信发送视图服务 -->
+	<bean id="smsSendViewService" class="com.yuanluesoft.cms.smssend.service.spring.SmsSendViewServiceImpl">
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="orgService"><ref bean="orgService"/></property>
+		<property name="smsSendService"><ref bean="smsSendService"/></property>
+	</bean>
+</beans>

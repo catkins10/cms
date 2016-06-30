@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/todoMessage" form="admin/message" title="待办短信" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.smsreceive.pojo.SmsReceiveMessage</pojo>
+			<orderBy>SmsReceiveMessage.receiveTime DESC</orderBy>
+			<quickFilter>SmsReceiveMessage.content like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="内容" name="content"/>
+			<column title="回复内容" name="replyContent"/>
+			<column title="短信接收时间" name="receiveTime" width="110" align="center"/>
+			<column title="短信发送号码" name="senderNumber" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/processingMessage" form="admin/message" title="在办短信" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.smsreceive.pojo.SmsReceiveMessage</pojo>
+			<orderBy>SmsReceiveMessage.receiveTime DESC</orderBy>
+			<quickFilter>SmsReceiveMessage.content like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="内容" name="content"/>
+			<column title="回复内容" name="replyContent"/>
+			<column title="短信接收时间" name="receiveTime" width="110" align="center"/>
+			<column title="短信发送号码" name="senderNumber" width="80" align="center"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/replyMessage" form="admin/message" title="已回短信" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.smsreceive.pojo.SmsReceiveMessage</pojo>
+			<where>not SmsReceiveMessage.replyTime is null</where>
+			<orderBy>SmsReceiveMessage.receiveTime DESC</orderBy>
+			<quickFilter>SmsReceiveMessage.content like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="内容" name="content"/>
+			<column title="回复内容" name="replyContent"/>
+			<column title="短信接收时间" name="receiveTime" width="110" align="center"/>
+			<column title="短信发送号码" name="senderNumber" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allMessage" form="admin/message" title="所有短信" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.smsreceive.pojo.SmsReceiveMessage</pojo>
+			<orderBy>SmsReceiveMessage.receiveTime DESC</orderBy>
+			<quickFilter>SmsReceiveMessage.content like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="内容" name="content"/>
+			<column title="回复内容" name="replyContent"/>
+			<column title="短信接收时间" name="receiveTime" width="110" align="center"/>
+			<column title="短信发送号码" name="senderNumber" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/workflowConfig" form="admin/workflowConfig" title="流程配置" hide="isNotOrgManager(root,category,area,unit)" pageRows="20" viewServiceName="smsReceiveViewService" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.smsreceive.pojo.SmsReceiveWorkflow</pojo>
+			<orderBy>SmsReceiveWorkflow.orgName</orderBy>
+			<quickFilter>SmsReceiveWorkflow.orgName like '%{KEY}%' or SmsReceiveWorkflow.workflowName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加流程" execute="PageUtils.newrecord('cms/smsreceive', 'admin/workflowConfig', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="机构名称" name="orgName"/>
+			<column title="流程名称" name="workflowName"/>
+		</columns>
+	</view>
+</views>

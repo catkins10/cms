@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+			 version="1.0">
+	<portlet>
+		<description>待办事宜</description>
+		<portlet-name>todoThings</portlet-name>
+		<display-name>待办事宜</display-name>
+		<portlet-class>com.yuanluesoft.portal.portlet.ViewPortlet</portlet-class>
+		<init-param>
+			<description>视图名称</description>
+			<name>viewName</name>
+			<value>todo</value>
+		</init-param>
+		<init-param>
+			<description>标题字段名称</description>
+			<name>titleFieldName</name>
+			<value>subject</value>
+		</init-param>
+		<init-param>
+			<description>时间字段名称</description>
+			<name>timeFieldName</name>
+			<value>beginTime</value>
+		</init-param>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>zh</supported-locale>
+		<resource-bundle>Resource</resource-bundle>
+		<portlet-info>
+			<title>待办事宜</title>
+		</portlet-info>
+	</portlet>
+</portlet-app>

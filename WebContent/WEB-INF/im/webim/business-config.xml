@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="WEBIM" class="com.yuanluesoft.im.webim.model.Webim">
+		<field name="onlinePersonCount" title="在线用户数" type="number" inputMode="readonly"/>
+		<field name="userName" title="用户名" type="string" inputMode="readonly"/>
+		<field name="portraitURL" title="用户头像" type="imageName" inputMode="readonly"/>
+		<field name="status" title="用户状态" type="number" inputMode="readonly">
+			<parameter name="itemsText">离线\0在线\0忙碌\0离开</parameter>
+		</field>
+		<field name="unreadSystemMessageCount" title="未读系统消息数量" type="number" inputMode="readonly"/>
+		<field name="chat" title="对话" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.im.model.message.ChatDetail</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="WEBIM对话" class="com.yuanluesoft.im.webim.model.WebimChat">
+		<field name="talks" title="对话记录" type="components" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.im.model.message.TalkDetail</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

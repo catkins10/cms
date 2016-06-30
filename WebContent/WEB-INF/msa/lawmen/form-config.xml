@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="lawmenQuery" title="执法人员查询" method="get" action="/cms/sitemanage/applicationIndex.shtml?applicationName=msa/lawmen&amp;pageName=lawmenQuery">
+		<formFields>
+			<field name="name" title="姓名" length="16" type="string" inputMode="text"/>
+			<field name="certificateNumber" title="执法证编号" length="16" type="string" inputMode="text">
+				<parameter name="singleByteCharacters">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="查询" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+    <form name="admin/lawmen" class="com.yuanluesoft.msa.lawmen.forms.admin.Lawmen" title="执法人员" pojo="com.yuanluesoft.msa.lawmen.pojo.MsaLawmen">		
+	    <actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('deleteLawmen')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/importData" class="com.yuanluesoft.msa.lawmen.forms.admin.ImportData" title="执法人员导入">		
+	   <formFields>
+	   		<field name="data" title="数据文件" length="1" type="attachment" inputMode="attachment">
+				<parameter name="fileExtension">Excel表格|*.xls|</parameter>
+				<parameter name="simpleMode">true</parameter>
+			</field>
+	   </formFields>
+	   <actions>
+			<action title="导入" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

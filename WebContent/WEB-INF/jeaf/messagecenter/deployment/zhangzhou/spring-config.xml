@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 消息服务 -->
+	<bean id="messageService" class="com.yuanluesoft.jeaf.messagecenter.service.spring.MessageServiceImpl" init-method="startup" destroy-method="shutdown">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="distributionService"><ref bean="distributionService"/></property>
+		<property name="serviceSoapPassport"><ref bean="localSoapPassport"/></property>
+		<property name="orgService"><ref bean="orgService"/></property>
+		<property name="roleService"><ref bean="roleService"/></property>
+		<property name="personService"><ref bean="personService"/></property>
+		<property name="senders">
+			<list>
+				<ref bean="messengerSender"/>
+				<ref bean="imSender"/>
+				<ref bean="msnSender"/>
+				<ref bean="smsSender"/>
+			</list>
+		</property>
+		<property name="sendOptions">
+			<list>
+				<ref local="highPriorityOption"/>
+				<ref local="normalPriorityOption"/>
+				<ref local="lowPriorityOption"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 高优先级消息发送选项 -->
+	<bean id="highPriorityOption" class="com.yuanluesoft.jeaf.messagecenter.model.SendOption">
+		<property name="priority"><value>high</value></property>
+		<property name="retry"><value>5</value></property> <!-- 重试5次 -->
+		<property name="retryDelay"><value>600</value></property> <!-- 发送失败后等待10分钟后重试 -->
+		<property name="sendModes">
+			<list>
+				<bean class="com.yuanluesoft.jeaf.messagecenter.model.SendMode">
+					<property name="sender"><ref bean="messengerSender"/></property>
+					<property name="feedbackDelay"><value>60</value></property> <!-- 发送消息到客户端,60秒后没有反馈就继续下一个发送方式 -->
+				</bean>
+				<bean class="com.yuanluesoft.jeaf.messagecenter.model.SendMode">
+					<property name="sender"><ref bean="imSender"/></property>
+					<property name="feedbackDelay"><value>60</value></property> <!-- 发送消息到IM,60秒后没有反馈就继续下一个发送方式 -->
+				</bean>
+				<bean class="com.yuanluesoft.jeaf.messagecenter.model.SendMode">
+					<property name="sender"><ref bean="smsSender"/></property>
+					<property name="feedbackDelay"><value>120</value></property>
+				</bean>
+				<!-- bean class="com.yuanluesoft.jeaf.messagecenter.model.SendMode">
+					<property name="sender"><ref bean="msnSender"/></property>
+					<property name="feedbackDelay"><value>120</value></property>
+				</bean-->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 默认优先级消息发送选项 -->
+	<bean id="normalPriorityOption" class="com.yuanluesoft.jeaf.messagecenter.model.SendOption">
+		<property name="priority"><value>normal</value></property>
+		<property name="retry"><value>3</value></property> <!-- 重试3次 -->
+		<property name="retryDelay"><value>1200</value></property> <!-- 发送失败后等待20分钟后重试 -->
+		<property name="sendModes">
+			<list>
+				<bean class="com.yuanluesoft.jeaf.messagecenter.model.SendMode">
+					<property name="sender"><ref bean="messengerSender"/></property>
+					<property name="feedbackDelay"><value>120</value></property> <!-- 发送消息到客户端,120秒后没有反馈就继续下一个发送方式 -->
+				</bean>
+				<bean class="com.yuanluesoft.jeaf.messagecenter.model.SendMode">
+					<property name="sender"><ref bean="imSender"/></property>
+					<property name="feedbackDelay"><value>60</value></property> <!-- 发送消息到IM,60秒后没有反馈就继续下一个发送方式 -->
+				</bean>
+				<!-- bean class="com.yuanluesoft.jeaf.messagecenter.model.SendMode">
+					<property name="sender"><ref bean="msnSender"/></property>
+					<property name="feedbackDelay"><value>120</value></property> <发送消息到MSN,120秒后没有反馈就继续下一个发送方式>
+				</bean-->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 低优先级消息发送选项 -->
+	<bean id="lowPriorityOption" class="com.yuanluesoft.jeaf.messagecenter.model.SendOption">
+		<property name="priority"><value>low</value></property>
+		<property name="retry"><value>2</value></property> <!-- 重试2次 -->
+		<property name="retryDelay"><value>1800</value></property> <!-- 发送失败后等待30分钟后重试 -->
+		<property name="sendModes">
+			<list>
+				<bean class="com.yuanluesoft.jeaf.messagecenter.model.SendMode">
+					<property name="sender"><ref bean="messengerSender"/></property>
+					<property name="feedbackDelay"><value>120</value></property> <!-- 发送消息到客户端,120秒后没有反馈就继续下一个发送方式 -->
+				</bean>
+				<bean class="com.yuanluesoft.jeaf.messagecenter.model.SendMode">
+					<property name="sender"><ref bean="imSender"/></property>
+					<property name="feedbackDelay"><value>60</value></property> <!-- 发送消息到IM,60秒后没有反馈就继续下一个发送方式 -->
+				</bean>
+				<!-- bean class="com.yuanluesoft.jeaf.messagecenter.model.SendMode">
+					<property name="sender"><ref bean="msnSender"/></property>
+					<property name="feedbackDelay"><value>180</value></property> <发送消息到MSN,180秒后没有反馈就继续下一个发送方式>
+				</bean -->
+			</list>
+		</property>
+	</bean>
+</beans>

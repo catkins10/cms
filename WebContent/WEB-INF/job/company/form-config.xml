@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form title="企业编辑" name="company" method="post" action="/job/company/saveCompany.shtml" class="com.yuanluesoft.job.company.forms.Company" pojo="com.yuanluesoft.job.company.pojo.JobCompany">
+		<formFields>
+			<field name="password" title="登录密码" length="200" required="true" type="string" inputMode="password"/>
+		</formFields>
+		<actions>
+			<action title="注册" type="submit"/>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+	
+	<form title="企业" name="admin/company" class="com.yuanluesoft.job.company.forms.admin.Company" pojo="com.yuanluesoft.job.company.pojo.JobCompany">
+	   <formFields>
+			<field name="industryIds" title="所在行业ID" type="string" inputMode="hidden"/>
+	   		<field name="industryNames" title="所在行业" type="string" required="true" inputMode="select">
+	   			<parameter name="js">/job/company/js/job.js</parameter>
+	   			<parameter name="execute">selectIndustry(640, 400, true, 'industryIds{id},industryNames{name|所属行业|100%}', 'industry')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="approvalPass" title="是否审核通过" type="boolean" inputMode="hidden"/>
+	   </formFields>
+	   <actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确实删除？'))FormUtils.doAction('deleteCompany')"/>
+			<action title="审核" hide="noPrivilege(manageUnit_approval)" execute="approval()"/>
+		</actions>
+	</form>
+	
+	<form title="招聘职位" name="admin/job" class="com.yuanluesoft.job.company.forms.admin.Job" pojo="com.yuanluesoft.job.company.pojo.Job">
+	    <actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="推送" hide="noPrivilege(manageUnit_approval)" execute="DialogUtils.openDialog('{CONTEXTPATH}/job/company/pushJob.shtml?id={PARAMETER:id}&amp;act=createComponent', 500, 300);"/>
+		</actions>
+	</form>
+	
+	<form title="招聘职位编辑" name="job" method="post" action="/job/company/saveJob.shtml" class="com.yuanluesoft.job.company.forms.Job" pojo="com.yuanluesoft.job.company.pojo.Job">
+	   <actions>
+			<action title="发布" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="推送" hide="isNew() and isRead()" execute="DialogUtils.openDialog('{CONTEXTPATH}/job/company/pushJob.shtml?id={PARAMETER:id}&amp;act=createComponent', 500, 300);"/>
+			<action title="保存" hide="isNew()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确实删除？'))FormUtils.doAction('deleteJob')"/>
+			<action title="刷新" hide="isNew()" execute="FormUtils.doAction('refreshJob')"/>
+		</actions>
+	</form>
+	
+	<form title="职位推送" name="pushJob" class="com.yuanluesoft.job.company.forms.PushJob" pojo="com.yuanluesoft.job.company.pojo.Job">
+	   <formFields>
+			<field name="jobPush" title="职位推送" type="component">
+	   			<parameter name="class">com.yuanluesoft.job.company.pojo.JobPush</parameter>
+			</field>
+			<field name="mailSubject" title="邮件标题" type="string" length="200" required="true" inputMode="text"/>
+			<field name="mailContent" title="邮件内容" type="string" length="3000" required="true" inputMode="textarea">
+				<parameter name="rows">8</parameter>
+			</field>
+	   		<field name="range" title="推送范围" type="number" required="true" inputMode="radio">
+	   			<parameter name="itemsText">全部|0\0指定人员|1</parameter>
+	   		</field>
+	   </formFields>
+	   <actions>
+			<action title="取消" execute="window.close()"/>
+			<action title="推送" hide="isOld()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form title="招聘职位搜索" name="jobSearch" method="get" action="/cms/sitemanage/applicationSearch.shtml?applicationName=job/company&amp;pageName=jobSearch">
+		<formFields>
+			<field title="关键字" name="key"/>
+			<field name="areaId" title="工作地点ID" type="number" inputMode="hidden"/>
+	   		<field name="area" title="工作地点" type="string" inputMode="select">
+	   			<parameter name="execute">DialogUtils.selectOrg(600, 360, true, 'areaId{id},area{name|地点|100%}', '', 'area')</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="searchCondition">areas.areaId in (select OrgSubjection.directoryId from OrgSubjection OrgSubjection where OrgSubjection.parentDirectoryId in ({PARAMETER:areaId}))</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+	</form>
+	
+	<form title="招聘职位高级搜索" name="jobAdvancedSearch" method="get" action="/cms/sitemanage/applicationSearch.shtml?applicationName=job/company&amp;pageName=jobAdvancedSearch">
+		<formFields>
+			<field name="name" title="职位名称" length="100" type="string" inputMode="text"/>
+			<field name="company.type" title="公司性质" length="30" type="string" inputMode="dropdown">
+				<parameter name="itemsText">外资（欧美）\0外资（非欧美）\0合资\0国企\0民营公司\0国内上市公司\0外企代表处\0政府机关\0事业单位\0非营利机构\0其它性质\0不限</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="searchCondition">'{PARAMETER:company.type}'='不限' or company.type='{PARAMETER:company.type}'</parameter>
+			</field>
+			<field name="company.scale" title="企业规模" length="1" type="number" inputMode="dropdown">
+				<parameter name="itemsText">1~49人|1\0 50~99人|2\0 100~499人|3\0 500~999人|4\0 1000人以上|5\0不限|0</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="searchCondition">{PARAMETER:company.scale}=0 or company.scale={PARAMETER:company.scale}</parameter>
+			</field>
+			<field name="areaId" title="工作地点ID" type="number" inputMode="hidden"/>
+	   		<field name="area" title="工作地点" type="string" inputMode="select">
+	   			<parameter name="execute">DialogUtils.selectOrg(600, 360, true, 'areaId{id},area{name|地点|100%}', '', 'area')</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="searchCondition">areas.areaId in (select OrgSubjection.directoryId from OrgSubjection OrgSubjection where OrgSubjection.parentDirectoryId in ({PARAMETER:areaId}))</parameter>
+			</field>
+			<field name="postIds" title="职能类别ID" type="string" inputMode="hidden"/>
+			<field name="posts" title="职能类别名称" type="string" inputMode="select">
+				<parameter name="js">/job/company/js/job.js</parameter>
+				<parameter name="execute">selectPost(600, 360, true, 'postIds{id},posts{name|职能类别|100%}')</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="searchCondition">Job.postId in ({PARAMETER:postIds})</parameter>
+			</field>
+			<field name="monthlyPay" title="月薪要求" length="8" type="number" inputMode="dropdown">
+				<parameter name="itemsText">面议|-1\0 1500以下|0\0 1500-1999|1500\0 2000-2999|2000\0 3000-4499|3000\0 4500-5999|4500\0 6000-7999|6000\0 8000-9999|8000\0 10000-14999|10000\0 15000-19999|15000\0 20000-29999|20000 \0 30000-49999|30000\0 50000及以上|50000</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="searchCondition">{PARAMETER:monthlyPay}=-1 or Job.minMonthlyPay>={PARAMETER:monthlyPay} or Job.maxMonthlyPay>={PARAMETER:monthlyPay}</parameter>
+			</field>
+			<field name="target" title="招聘对象" type="string" inputMode="radio">
+				<parameter name="itemsText">社会人士\0应届毕业生\0实习生\0劳务工\0不限</parameter>
+				<parameter name="searchCondition">'{PARAMETER:target}'='不限' or Job.target='不限' or Job.target='{PARAMETER:target}'</parameter>
+			</field>
+			<field name="qualification" title="学历" length="2" type="number" inputMode="dropdown">
+				<parameter name="itemsText">小学|0\0初中|1\0高中|2\0职业高中|3\0职业中专|4\0中专|5\0大专|6\0本科|7\0硕士研究生|8\0博士研究生|9</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="searchCondition">Job.qualification=-1 or Job.qualification&lt;={PARAMETER:qualification}</parameter>
+			</field>
+			<field name="workYear" title="工作年限" length="2" type="number" inputMode="dropdown">
+				<parameter name="itemsText">在读学生|-1\0应届毕业生|0\0 1年|1\0 2年|2\0 3年|3\0 4年|4\0 5年|5\0 6年|6\0 7年|7\0 8年|8\0 9年|9\0 10年以上|10\0</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="searchCondition">Job.workYear=-1 or Job.workYear&lt;={PARAMETER:workYear}</parameter>
+			</field>
+			<field name="sex" title="性别要求" length="1" type="char" inputMode="radio">
+				<parameter name="itemsText">不限|A\0男|M\0女|F</parameter>
+				<parameter name="defaultValue">A</parameter>
+				<parameter name="searchCondition">'{PARAMETER:sex}'='A' or Job.sex='{PARAMETER:sex}'</parameter>
+			</field>
+			<field name="refreshTimeBegin" title="发布时间" type="timestamp" inputMode="readonly"/>
+			<field name="types.type" title="工作性质" type="number[]" inputMode="multibox">
+				<parameter name="itemsText">全职|0\0兼职|1\0实习|2\0暑期工|3</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+	</form>
+	
+	<form title="刷新所有有效职位" name="refreshAllJobs" class="com.yuanluesoft.job.company.forms.RefreshAllJobs">
+	   <formFields>
+			<field name="refreshTimesLeft" title="剩余刷新次数" type="number" inputMode="readonly"/>
+			<field name="lastRefreshTime" title="最后刷新时间" type="timestamp" inputMode="readonly"/>
+	   </formFields>
+	   <actions>
+			<action title="刷新" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="参数设置" name="admin/jobParameter" class="com.yuanluesoft.job.company.forms.admin.JobParameter" pojo="com.yuanluesoft.job.company.pojo.JobParameterDirectory">
+	   <formFields>
+	   		<field name="childParameters" title="列表" type="string" required="true" inputMode="textarea">
+				<parameter name="rows">8</parameter>
+			</field>
+			<field name="directoryType" title="参数类型" type="string" inputMode="hidden"/>
+	   </formFields>
+	   <actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确实删除？'))FormUtils.doAction('deleteJobParameter')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="企业审核设置" name="admin/companyApproval" class="com.yuanluesoft.job.company.forms.admin.CompanyApproval" pojo="com.yuanluesoft.job.company.pojo.JobCompanyApproval">
+		<actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="邮件模板设置" name="mailTemplate" class="com.yuanluesoft.job.company.forms.MailTemplate" pojo="com.yuanluesoft.job.company.pojo.JobCompanyMailTemplate">
+		<actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

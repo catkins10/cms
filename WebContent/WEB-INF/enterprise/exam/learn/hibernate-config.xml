@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--学习:题目浏览-->
+	<class name="com.yuanluesoft.enterprise.exam.learn.pojo.LearnQuestion" table="exam_learn_question">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="personId"/> <!--用户ID,NUMERIC(20)-->
+		<property name="questionId"/> <!--题目ID,NUMERIC(20)-->
+		<property name="learnTime"/> <!--学习时间,TIMESTAMP null-->
+	</class>
+	
+	<!--学习:资料-->
+	<class name="com.yuanluesoft.enterprise.exam.learn.pojo.LearnFile" table="exam_learn_file">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="category"/> <!--分类,VARCHAR(60)-->
+		<property name="name"/> <!--名称,NUMERIC(20)-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文,TEXT-->
+		<property name="creator"/> <!--创建人,VARCHAR(60)-->
+		<property name="creatorId"/> <!--创建人ID,NUMERIC(20)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP null-->
+	</class>
+	
+	<!--学习:任务-->
+	<class name="com.yuanluesoft.enterprise.exam.learn.pojo.LearnMission" table="exam_learn_mission">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--名称,VARCHAR(100)-->
+		<property name="fileId"/> <!--学习资料ID,NUMERIC(20)-->
+		<property name="fileName"/> <!--学习资料名称,VARCHAR(200)-->
+		<property name="beginTime"/> <!--学习开始时间,TIMESTAMP null-->
+		<property name="endTime"/> <!--学习结束时间,如果设置结束时间,达到截止时间后,不允许再进入,TIMESTAMP null-->
+		<property name="learnTime"/> <!--学习时长,以分钟为单位,NUMERIC(3)-->
+		<property name="creator"/> <!--创建人,VARCHAR(60)-->
+		<property name="creatorId"/> <!--创建人ID,NUMERIC(20)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP null-->
+		<!-- 参与人员 -->
+		<set cascade="delete" inverse="true" lazy="true" name="visitors" table="exam_learn_mission_privilege" order-by="id">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.learn.pojo.LearnMissionPrivilege" />
+		</set>
+		<!-- 完成情况 -->
+		<set cascade="delete" inverse="true" lazy="true" name="accomplishs" table="exam_learn_mission_accomplish" order-by="id">
+			<key column="missionId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.learn.pojo.LearnMissionAccomplish" />
+		</set>
+	</class>
+	
+	<!--学习:任务参与者-->
+	<class name="com.yuanluesoft.enterprise.exam.learn.pojo.LearnMissionPrivilege" table="exam_learn_mission_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,numeric(20)-->
+		<property name="accessLevel"/> <!--访问级别,char(1)-->
+		<property name="recordId"/> <!--主记录ID,numeric(20)-->
+	</class>
+	
+	<!--学习:任务完成情况-->
+	<class name="com.yuanluesoft.enterprise.exam.learn.pojo.LearnMissionAccomplish" table="exam_learn_mission_accomplish">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="missionId"/> <!--任务ID,NUMERIC(20)-->
+		<property name="personId"/> <!--用户ID,NUMERIC(20)-->
+		<property name="personName"/> <!--用户名,VARCHAR(60)-->
+		<property name="beginTime"/> <!--开始学习时间,TIMESTAMP null-->
+		<property name="lastTime"/> <!--最后学习时间,TIMESTAMP null-->
+		<property name="learnSeconds"/> <!--已学习时间数,以秒为单位,NUMERIC(6)-->
+		<!-- 学习:任务 -->
+		<many-to-one name="mission" class="com.yuanluesoft.enterprise.exam.learn.pojo.LearnMission" column="missionId" update="false" insert="false"/>
+	</class>
+</hibernate-mapping>

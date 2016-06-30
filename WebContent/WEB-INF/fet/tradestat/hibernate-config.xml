@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--企业信息-->
+	<class name="com.yuanluesoft.fet.tradestat.pojo.FetCompany" table="fet_company">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="code"/> <!--组织海关代码-->
+		<property name="loginName"/> <!--企业帐号-->
+		<property name="password"/> <!--密码-->
+		<property name="name"/> <!--中文名称-->
+		<property name="englishName"/> <!--英文名称-->
+		<property name="created"/> <!--企业成立时间-->
+		<property name="type"/> <!--经济类型-->
+		<property name="address"/> <!--企业通讯地址(中文)-->
+		<property name="englishAddress"/> <!--企业通讯地址(英文)-->
+		<property name="countyId"/> <!--所属县、市ID-->
+		<property name="county"/> <!--所属县、市-->
+		<property name="developmentAreaId"/> <!--所属开发区ID-->
+		<property name="developmentArea"/> <!--所属开发区-->
+		<property name="businessType"/> <!--企业经营性质-->
+		<property name="hasPrivilege"/> <!--有无进出口经营权-->
+		<property name="principalName"/> <!--业务负责人中文名-->
+		<property name="principalEnglishName"/> <!--业务负责人英文名-->
+		<property name="job"/> <!--职务(中文)-->
+		<property name="englishJob"/> <!--职务(英文)-->
+		<property name="totalLastYear"/> <!--上年进出口额-->
+		<property name="registeredCapital"/> <!--注册资金-->
+		<property name="tel"/> <!--联系电话-->
+		<property name="fax"/> <!--传真-->
+		<property name="webSite"/> <!--企业网址-->
+		<property name="email"/> <!--电子邮箱-->
+		<property name="postalCode"/> <!--邮政编码-->
+		<property name="employeeCount"/> <!--员工人数-->
+		<property name="foreignOfficeName"/> <!--境外办事机构(中文)-->
+		<property name="foreignOfficeEnglishName"/> <!--境外办事机构(英文)-->
+		<property name="foreignOfficeCityName"/> <!--所在城市(中文)-->
+		<property name="foreignOfficeCityEnglishName"/> <!--所在城市(英文)-->
+		<property name="motherCompanyName"/> <!--母公司名称(中文)-->
+		<property name="motherCompanyEnglishName"/> <!--母公司名称(英文)-->
+		<property name="remark"/> <!--备注-->
+		<property name="approvalPass"/> <!--审核通过否-->
+	</class>
+	
+	<!--区县信息-->
+	<class name="com.yuanluesoft.fet.tradestat.pojo.FetCounty" table="fet_county">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="code"/> <!--编码-->
+		<property name="name"/> <!--名称-->
+		<property name="loginName"/> <!--帐号-->
+		<property name="password"/> <!--密码-->
+	</class>
+	
+	<!--开发区信息-->
+	<class name="com.yuanluesoft.fet.tradestat.pojo.FetDevelopmentArea" table="fet_development_area">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="code"/> <!--编码-->
+		<property name="name"/> <!--名称-->
+		<property name="loginName"/> <!--帐号-->
+		<property name="password"/> <!--密码-->
+		<property name="webSite"/>
+	</class>
+	
+	<!--数据上传-->
+	<class name="com.yuanluesoft.fet.tradestat.pojo.UploadTradeData" table="tradestat_upload_data">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="transactorId"/> <!--经办人ID-->
+		<property name="transactor"/> <!--经办人-->
+		<property name="uploadTime"/> <!--上传时间-->
+		<property name="isExport"/> <!--进口/出口-->
+		<property name="dataYear"/> <!--年度-->
+		<property name="dataMonth"/> <!--月份-->
+	</class>
+	
+	<!--企业进口数据-->
+	<class name="com.yuanluesoft.fet.tradestat.pojo.TradeImport" table="tradestat_import">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="companyCode"/> <!--企业编号-->
+		<property name="companyName"/> <!--单位名称-->
+		<property name="monthlyTotal"/> <!--本月数-->
+		<property name="yearTotal"/> <!--累计数-->
+		<property name="lastYearMonthlyTotal"/> <!--同期数-->
+		<property name="monthlyGrowthRate"/> <!--比增-->
+		<property name="lastYearTotal"/> <!--同期累计数-->
+		<property name="growthRate"/> <!--累计比增-->
+		<property name="county"/> <!--区县-->
+		<property name="countyCode"/> <!--县码-->
+		<property name="isState"/> <!--国有-->
+		<property name="isMachine"/> <!--机电-->
+		<property name="isImportant"/> <!--重点企业-->
+		<property name="countryCode"/> <!--投资国别-->
+		<property name="developmentAreaCode"/> <!--开发区-->
+		<property name="dataYear"/> <!--年份-->
+		<property name="dataMonth"/> <!--月份-->
+	</class>
+	
+	<!--企业出口数据-->
+	<class name="com.yuanluesoft.fet.tradestat.pojo.TradeExport" table="tradestat_export">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="companyCode"/> <!--企业编号-->
+		<property name="companyName"/> <!--单位名称-->
+		<property name="monthlyTotal"/> <!--本月数-->
+		<property name="yearTotal"/> <!--累计数-->
+		<property name="lastYearMonthlyTotal"/> <!--同期数-->
+		<property name="monthlyGrowthRate"/> <!--比增-->
+		<property name="lastYearTotal"/> <!--同期累计数-->
+		<property name="growthRate"/> <!--累计比增-->
+		<property name="county"/> <!--区县-->
+		<property name="countyCode"/> <!--县码-->
+		<property name="isState"/> <!--国有-->
+		<property name="isMachine"/> <!--机电-->
+		<property name="isImportant"/> <!--重点企业-->
+		<property name="countryCode"/> <!--投资国别-->
+		<property name="developmentAreaCode"/> <!--开发区-->
+		<property name="dataYear"/> <!--年份-->
+		<property name="dataMonth"/> <!--月份-->
+	</class>
+	
+	<!--进出口统计:区县查询权限-->
+	<class name="com.yuanluesoft.fet.tradestat.pojo.FetCountyPrivilege" table="tradequery_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--进出口统计:开发区查询权限-->
+	<class name="com.yuanluesoft.fet.tradestat.pojo.FetDevelopmentAreaPrivilege" table="tradequery_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!-- 船员证申办单位 -->
+	<class name="com.yuanluesoft.msa.seafarer.pojo.MsaSeafarerPassportOrg" table="msa_seafarer_passport_org">
+		<id name="id">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--单位名称,VARCHAR(100)-->
+		<property name="unitNo"/> <!--单位编号,VARCHAR(50)-->
+		<property name="address"/> <!--联系地址,VARCHAR(200)-->
+		<property name="legalRepresentative"/> <!--法人代表,VARCHAR(32)-->
+		<property name="tel"/> <!--联系电话,VARCHAR(100)-->
+		<property name="importId"/> <!--导入记录ID,NUMERIC(20)-->
+	</class>
+	
+	<!-- 服务机构 -->
+	<class name="com.yuanluesoft.msa.seafarer.pojo.MsaServiceOrg" table="msa_service_org">
+		<id name="id">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--机构名称,VARCHAR(100)-->
+		<property name="serviceContent"/> <!--服务内容,VARCHAR(1000)-->
+		<property name="address"/> <!--联系地址,VARCHAR(200)-->
+		<property name="legalRepresentative"/> <!--法人代表,VARCHAR(32)-->
+		<property name="tel"/> <!--联系电话,VARCHAR(100)-->
+		<property name="category"/> <!--类型,VARCHAR(50)-->
+		<property name="licenseNumber"/> <!--许可证号,VARCHAR(50)-->
+		<property name="importId"/> <!--导入记录ID,NUMERIC(20)-->
+	</class>
+	
+	<!-- 培训机构 -->
+	<class name="com.yuanluesoft.msa.seafarer.pojo.MsaTrainOrg" table="msa_train_org">
+		<id name="id">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--名称,VARCHAR(100)-->
+		<property name="address"/> <!--地址,VARCHAR(200)-->
+		<property name="tel"/> <!--联系电话,VARCHAR(100)-->
+		<property name="fax"/> <!--传真,VARCHAR(30)-->
+		<property name="postalcode"/> <!--邮编,VARCHAR(10)-->
+		<property name="legalRepresentative"/> <!--法定代表人,VARCHAR(32)-->
+		<property name="kind"/> <!--性质,VARCHAR(100)-->
+		<property name="licenseNumber"/> <!--许可证号,VARCHAR(50)-->
+		<property name="summarize" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--详细介绍,TEXT-->
+		<property name="importId"/> <!--导入记录ID,NUMERIC(20)-->
+	</class>
+	
+	<!-- 培训船舶 -->
+	<class name="com.yuanluesoft.msa.seafarer.pojo.MsaTrainShip" table="msa_train_ship">
+		<id name="id">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--名称,VARCHAR(100)-->
+		<property name="port"/> <!--船籍港,VARCHAR(20)-->
+		<property name="category"/> <!--船舶种类,VARCHAR(30)-->
+		<property name="tonnage"/> <!--总吨位,VARCHAR(20)-->
+		<property name="power"/> <!--功率,VARCHAR(20)-->
+		<property name="shipBelong"/> <!--船舶所有人,VARCHAR(100)-->
+		<property name="practiceOrg"/> <!--船上培训/见习单位,VARCHAR(100)-->
+		<property name="orgBelong"/> <!--单位所属海事机构,VARCHAR(50)-->
+		<property name="remark"/> <!--备注,VARCHAR(1000)-->
+		<property name="importId"/> <!--导入记录ID,NUMERIC(20)-->
+	</class>
+	
+	<!--合格证书:考试-->
+	<class name="com.yuanluesoft.msa.seafarer.pojo.MsaCertificationExam" table="msa_certification_exam">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="speciality"/> <!--专业,VARCHAR(50)-->
+		<property name="period"/> <!--期数,VARCHAR(100)-->
+		<property name="category"/> <!--类别,VARCHAR(100)-->
+		<property name="examAddress"/> <!--考试地点,VARCHAR(200)-->
+		<property name="importTime"/> <!--导入时间,TIMESTAMP null-->
+		<property name="importId"/> <!--导入记录ID,NUMERIC(20)-->
+		<!-- 合格的考生列表 -->
+		<set name="examinees" table="msa_certification_examinee" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="examId"/>
+			<one-to-many class="com.yuanluesoft.msa.seafarer.pojo.MsaCertificationExaminee"/>
+		</set>
+	</class>
+	
+	<!--合格证书:合格的考生-->
+	<class name="com.yuanluesoft.msa.seafarer.pojo.MsaCertificationExaminee" table="msa_certification_examinee">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="examId"/> <!--考试ID,NUMERIC(20)-->
+		<property name="name"/> <!--姓名,VARCHAR(50)-->
+		<property name="level"/> <!--申考等级,VARCHAR(100)-->
+		<property name="job"/> <!--申考职务,VARCHAR(100)-->
+		<property name="examResult"/> <!--考试结果,VARCHAR(30)-->
+		<property name="result"/> <!--评估结果,VARCHAR(30)-->
+		<property name="sn"/> <!--合格证明序列号,VARCHAR(100)-->
+		<property name="grantDate"/> <!--发放日期,DATE null-->
+		<property name="receiveDate"/> <!--领取日期,DATE null-->
+		<property name="identityCard"/> <!--身份证号码,VARCHAR(30)-->
+		<property name="permit"/> <!--准考证号码,VARCHAR(100)-->
+		<!-- 考试 -->
+		<many-to-one name="exam" class="com.yuanluesoft.msa.seafarer.pojo.MsaCertificationExam" column="examId" update="false" insert="false"/>
+	</class>
+	
+	<!--数据导入日志-->
+	<class name="com.yuanluesoft.msa.seafarer.pojo.MsaImportLog" table="msa_import_log">
+		<id name="id">
+			<generator class="assigned"/>
+		</id>
+		<property name="dataType"/> <!--导入数据类型,培训机构、服务机构等,VARCHAR(20)-->
+		<property name="fileName"/> <!--文件名,VARCHAR(250)-->
+		<property name="importTime"/> <!--导入时间,TIMESTAMP-->
+		<property name="personId"/> <!--操作人ID,NUMERIC(20)-->
+		<property name="personName"/> <!--操作人姓名,VARCHAR(200)-->
+		<property name="remark"/> <!--备注,VARCHAR(200)-->
+	</class>
+</hibernate-mapping>

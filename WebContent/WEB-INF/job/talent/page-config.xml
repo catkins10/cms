@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="talentIndex" title="个人主页" url="/job/talent/talentIndex.shtml">
+			<link title="个人简历修改" url="/job/talent/talent.shtml?id={USERID}"/>
+		</page>
+		
+		<page name="regist" title="注册" url="/job/talent/talent.shtml"/>
+		<page name="registProfileAndIntention" title="注册(填写个人信息和求职意向)"/>
+		<page name="registSchoolingAndCareer" title="注册(填写教育和工作经历)"/>
+		<page name="talentRegistted" title="完成注册"/>
+		
+		<page name="editTalent" title="个人简历修改" recordClass="com.yuanluesoft.job.talent.pojo.JobTalent">
+			<link title="填写就业跟踪调查表" url="javascript:PageUtils.newrecord('job/talent', 'employment', 'mode=dialog,width=800,height=400')"/>
+			<link title="添加求职意向" url="javascript:PageUtils.newrecord('job/talent', 'intention', 'mode=dialog,width=600,height=400')"/>
+			<link title="添加教育经历" url="javascript:PageUtils.newrecord('job/talent', 'schooling', 'mode=dialog,width=600,height=400')"/>
+			<link title="添加培训经历" url="javascript:PageUtils.newrecord('job/talent', 'training', 'mode=dialog,width=600,height=400')"/>
+			<link title="添加语言能力" url="javascript:PageUtils.newrecord('job/talent', 'speech', 'mode=dialog,width=450,height=250')"/>
+			<link title="添加工作经历" url="javascript:PageUtils.newrecord('job/talent', 'career', 'mode=dialog,width=660,height=400')"/>
+			<link title="添加项目经验" url="javascript:PageUtils.newrecord('job/talent', 'project', 'mode=dialog,width=600,height=400')"/>
+			<link title="添加证书" url="javascript:PageUtils.newrecord('job/talent', 'certificate', 'mode=dialog,width=450,height=250')"/>
+			<link title="添加其它技能" url="javascript:PageUtils.newrecord('job/talent', 'ability', 'mode=dialog,width=450,height=400')"/>
+		</page>
+		<page name="talentSubmitted" title="简历修改完成提示"/>
+		
+		<page name="cancelPush" title="取消订阅"/>
+		
+		<page name="talent" title="人才查看(企业)" recordClass="com.yuanluesoft.job.talent.pojo.JobTalent"/>
+		<page name="talentSearch" title="人才搜索(企业)" searchPage="true" searchResults="talents" url="/cms/sitemanage/applicationSearch.shtml?applicationName=job/talent&amp;pageName=talentSearch&amp;anonymous=false"/>
+		
+		<page name="reportPrint" title="就业报到证打印" recordClass="com.yuanluesoft.job.talent.pojo.JobTalentReport"/>
+		<page name="notifyPrint" title="就业通知书打印" recordClass="com.yuanluesoft.job.talent.pojo.JobTalentReport"/>
+	</pages>
+	
+	<pageElements>
+		<pageElement name="recommendJobs" processor="jobTalentsProcessor"/> <!-- 职位推荐(个人) -->
+	</pageElements>
+</application>

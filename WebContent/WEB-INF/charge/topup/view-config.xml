@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views>
+	<view name="admin/cardOrder" form="admin/cardOrder" title="充值卡订单" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.topup.pojo.CardOrder</pojo>
+			<orderBy>CardOrder.created DESC</orderBy>
+		</data>
+		<actions>
+			<action name="create" title="创建充值卡" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('charge/topup','admin/cardOrder','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="充值卡名称" name="cardName"/>
+			<column title="充值卡金额" name="cardMoney" width="120" align="center"/>
+			<column title="充值卡数量" name="cardNumber" width="120" align="center"/>
+			<column title="创建时间" name="created" align="center" width="120"/>
+		</columns>
+	</view>
+	<view name="admin/cardAdvanceOrder" form="admin/cardAdvanceOrder" title="运营商预购单" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.topup.pojo.CardAdvanceOrder</pojo>
+			<orderBy>CardAdvanceOrder.created DESC</orderBy>
+			<quickFilter>CardAdvanceOrder.carrierName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action name="create" title="新建预购单" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('charge/topup','admin/cardAdvanceOrder','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="运营商名称" name="carrierName"  width="120"/>
+			<column title="预购金额" name="money" width="120" align="center"/>
+			<column title="充值卡名称" name="cardName"/>
+			<column title="充值卡金额" name="cardMoney" width="120" align="center"/>
+			<column title="充值卡数量" name="cardNumber" width="120" align="center"/>
+			<column title="创建时间" name="created" width="120" align="center"/>
+		</columns>
+	</view>
+	<view name="admin/card" form="admin/card" title="充值卡" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.topup.pojo.Card</pojo>
+			<orderBy>Card.created DESC</orderBy>
+			<quickFilter>Card.cardNumber={KEY}</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="充值卡序列号" name="cardNumber" />
+			<column title="金额" name="money" width="120" align="center"/>
+			<column title="创建时间" name="created" width="120" align="center"/>
+			<column title="是否已充值" name="topUp" width="100" align="center"/>
+		</columns>
+	</view>
+</views>

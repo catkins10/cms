@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="cardTopUp" type="com.yuanluesoft.charge.topup.forms.CardTopUp"/>
+  <form-bean name="cardTopUpTransaction" type="com.yuanluesoft.charge.topup.forms.CardTopUpTransaction"/>
+  <form-bean name="adminCardOrder" type="com.yuanluesoft.charge.topup.forms.admin.CardOrder"/>
+  <form-bean name="adminImportCards" type="com.yuanluesoft.charge.topup.forms.admin.ImportCards"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminCardAdvanceOrder" path="/admin/cardAdvanceOrder"
+   scope="request"
+   type="com.yuanluesoft.charge.topup.actions.admin.cardadvanceorder.Load" validate="false">
+   <forward name="load" path="/admin/cardAdvanceOrder.jsp"/>
+  </action>
+  <action input="/admin/cardAdvanceOrder.jsp"
+   name="adminCardAdvanceOrder" path="/admin/submitCardAdvanceOrder"
+   scope="request"
+   type="com.yuanluesoft.charge.topup.actions.admin.cardadvanceorder.Submit" validate="false"/>
+  <action name="cardTopUp" path="/cardTopUp" scope="request"
+   type="com.yuanluesoft.charge.topup.actions.cardtopup.Load" validate="false">
+   <forward name="load" path="/cardTopUp.jsp"/>
+  </action>
+  <action input="/cardTopUp.jsp" name="cardTopUp"
+   path="/submitCardTopUp" scope="request"
+   type="com.yuanluesoft.charge.topup.actions.cardtopup.TopUp" validate="false">
+   <forward name="result" path="/actionResultSimple.jsp"/>
+  </action>
+  <action path="/admin/exportCards" scope="request"
+   type="com.yuanluesoft.charge.topup.actions.admin.exportcards.ExportAsExcel" validate="false"/>
+  <action name="cardTopUpTransaction" path="/cardTopUpTransaction"
+   scope="request"
+   type="com.yuanluesoft.charge.topup.actions.cardtopuptransaction.Load" validate="false">
+   <forward name="load" path="/cardTopUpTransaction.jsp"/>
+  </action>
+  <action name="cardTopUpTransaction"
+   path="/displayCardTopUpTransaction" scope="request" validate="false"/>
+  <action name="adminCardOrder" path="/admin/cardOrder" scope="request"
+   type="com.yuanluesoft.charge.topup.actions.admin.cardorder.Load" validate="false">
+   <forward name="load" path="/admin/cardOrder.jsp"/>
+  </action>
+  <action input="/admin/cardOrder.jsp" name="adminCardOrder"
+   path="/admin/submitCardOrder" scope="request"
+   type="com.yuanluesoft.charge.topup.actions.admin.cardorder.Submit" validate="false"/>
+  <action name="adminImportCards" path="/admin/importCards"
+   scope="request"
+   type="com.yuanluesoft.charge.topup.actions.admin.importcards.Load" validate="false">
+   <forward name="load" path="/admin/importCards.jsp"/>
+  </action>
+  <action input="/admin/importCards.jsp" name="adminImportCards"
+   path="/admin/doImportCards" scope="request"
+   type="com.yuanluesoft.charge.topup.actions.admin.importcards.DoImport" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

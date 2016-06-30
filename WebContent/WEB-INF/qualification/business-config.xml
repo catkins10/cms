@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="证书" class="com.yuanluesoft.qualification.pojo.Qualification">
+		<field name="stuId" title="学生id" length="20" type="number" inputMode="hidden">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="stuName" title="学生姓名" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="name" title="名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="level" title="等级" length="50" type="string" inputMode="text"/>
+		<field name="authority" title="颁发机构" length="100" type="string" inputMode="text"/>
+		<field name="obtainTime" title="获得时间" type="date" inputMode="date"/>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="approvalPass" title="是否审核通过" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">通过|1\0不通过|2\0未审核|0</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment"></field>
+	</businessObject>
+</businessObjects>

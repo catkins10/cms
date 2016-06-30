@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--项目管理:项目-->
+	<class name="com.yuanluesoft.enterprise.project.pojo.EnterpriseProject" table="enterprise_project">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--工程名称-->
+		<property name="overview"/> <!--工程概况-->
+		<property name="bridgeScale"/> <!--桥梁规模-->
+		<property name="bridgeWidth"/> <!--桥宽-->
+		<property name="bridgeLength"/> <!--桥长-->
+		<property name="tunnelScale"/> <!--隧道规模-->
+		<property name="tunnelWidth"/> <!--隧道宽-->
+		<property name="tunnelLength"/> <!--隧道长-->
+		<property name="highwayLevel"/> <!--公路等级-->
+		<property name="highwaySpeed"/> <!--公路时速-->
+		<property name="highwayMileage"/> <!--公路里程-->
+		<property name="scale"/> <!--项目规模-->
+		<property name="owner"/> <!--业主单位-->
+		<property name="city"/> <!--所在地区-->
+		<property name="type"/> <!--项目类别-->
+		<property name="beginDate"/> <!--工作开始时间-->
+		<property name="endDate"/> <!--工作结束时间-->
+		<property name="sn"/> <!--文件编号-->
+		<property name="constructionUnit"/> <!--施工单位-->
+		<property name="surveillanceUnit"/> <!--监理单位-->
+		<property name="projectLeader"/> <!--项目负责人-->
+		<property name="completionDate"/> <!--项目建成时间-->
+		<property name="isBidding"/> <!--是否为招标项目-->
+		<property name="biddingNumber"/> <!--招标编号-->
+		<property name="projectStage"/> <!--项目阶段-->
+		<property name="projectProgress"/> <!--项目进展-->
+		<property name="iso"/> <!--是否进行ISO贯标-->
+		<property name="created"/> <!--登记时间-->
+		<property name="creatorId"/> <!--登记人ID-->
+		<property name="creator"/> <!--登记人-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<property name="isContract"/> <!--是否合同审批-->
+		<property name="remark"/> <!--备注-->
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem"/>
+		</set>
+		<set name="opinions" table="enterprise_project_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectOpinion"/>
+		</set>
+		<set name="visitors" table="enterprise_project_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectPrivilege"/>
+		</set>
+		<set name="contracts" table="enterprise_project_contract" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectContract"/>
+		</set>
+		<set name="collects" table="enterprise_project_collect" lazy="true" inverse="true" cascade="delete" order-by="billingDate">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectCollect"/>
+		</set>
+		<set name="paies" table="enterprise_project_pay" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectPay"/>
+		</set>
+		<set name="teams" table="enterprise_project_team" lazy="true" inverse="true" cascade="delete" order-by="created">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectTeam"/>
+		</set>
+	</class>
+	
+	<!--项目管理:权限控制-->
+	<class name="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectPrivilege" table="enterprise_project_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--项目管理:审核意见-->
+	<class name="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectOpinion" table="enterprise_project_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="created"/> <!--填写时间-->
+	</class>
+	
+	<!--项目管理:合同-->
+	<class name="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectContract" table="enterprise_project_contract">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="contractNo"/> <!--合同编号-->
+		<property name="contractUnit"/> <!--合同单位-->
+		<property name="contractName"/> <!--合同名称-->
+		<property name="contractValue"/> <!--合同金额（元）-->
+		<property name="signDate"/> <!--签订时间-->
+		<property name="created"/> <!--创建时间-->
+		<property name="archiveDate"/> <!--存档时间-->
+		<property name="sealDate"/> <!--盖章时间-->
+		<property name="body"/> <!--HTML正文-->
+		<property name="remark"/> <!--备注-->
+		<many-to-one name="project" class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProject" column="projectId" update="false" insert="false"/>
+		<set name="collects" table="enterprise_project_collect" lazy="true" inverse="true" cascade="delete" order-by="billingDate">
+			<key column="contractId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectCollect"/>
+		</set>
+	</class>
+	
+	<!--项目管理:收款-->
+	<class name="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectCollect" table="enterprise_project_collect">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="contractId"/> <!--合同ID-->
+		<property name="clauseName"/> <!--款项名称-->
+		<property name="accountReceivable"/> <!--按合同进度应到款数-->
+		<property name="invoiceAmount"/> <!--开票金额（元）-->
+		<property name="billingDate"/> <!--开票时间-->
+		<property name="receiveAmount"/> <!--到款金额（元）-->
+		<property name="receiveDate"/> <!--到款时间-->
+		<property name="remark"/> <!--备注-->
+		<many-to-one name="project" class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProject" column="projectId" update="false" insert="false"/>
+		<many-to-one name="contract" class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectContract" column="contractId" update="false" insert="false"/>
+	</class>
+	
+	<!--项目管理:付款-->
+	<class name="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectPay" table="enterprise_project_pay">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="clauseName"/> <!--款项名称-->
+		<property name="accountReceivable"/> <!--按合同进度应到款数-->
+		<property name="payDate"/> <!--付款时间-->
+		<property name="invoiceAmount"/> <!--票额-->
+		<property name="billingReceiveDate"/> <!--收票时间-->
+		<property name="receiver"/> <!--接收人-->
+		<property name="isPaid"/> <!--是否已付款-->
+	</class>
+	
+	<!--项目管理:项目组-->
+	<class name="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectTeam" table="enterprise_project_team">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="stage"/> <!--项目阶段-->
+		<property name="workContent"/> <!--工作内容-->
+		<property name="expectingDate"/> <!--计划完成时间-->
+		<property name="completionDate"/> <!--实际完成时间-->
+		<property name="completionDescription"/> <!--实际完成情况-->
+		<property name="designQuality"/> <!--设计质量-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="creator"/> <!--创建人-->
+		<property name="created"/> <!--创建时间-->
+		<property name="remark"/> <!--备注-->
+		<many-to-one name="project" class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProject" column="projectId" update="false" insert="false"/>
+		<set name="members" table="enterprise_project_team_member" lazy="false" inverse="true" cascade="delete" order-by="id">
+			<key column="teamId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectTeamMember"/>
+		</set>
+		<set name="plans" table="enterprise_project_team_plan" lazy="false" inverse="true" cascade="delete" order-by="beginDate,endDate">
+			<key column="teamId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectTeamPlan"/>
+		</set>
+		<set name="qualities" table="enterprise_project_quality" lazy="false" inverse="true" cascade="delete" order-by="completionDate">
+			<key column="teamId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectQuality"/>
+		</set>
+	</class>
+	
+	<!--项目管理:项目组成员-->
+	<class name="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectTeamMember" table="enterprise_project_team_member">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="teamId"/> <!--项目组ID-->
+		<property name="memberId"/> <!--组员ID-->
+		<property name="memberName"/> <!--组员姓名-->
+		<property name="isManager"/> <!--是否项目组负责人-->
+	</class>
+	
+	<!--项目管理:项目组工作计划-->
+	<class name="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectTeamPlan" table="enterprise_project_team_plan">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="teamId"/> <!--项目组ID-->
+		<property name="memberIds"/> <!--参与的项目组成员ID列表-->
+		<property name="memberNames"/> <!--参与的项目组成员列表-->
+		<property name="workContent"/> <!--工作内容-->
+		<property name="beginDate"/> <!--计划开始时间-->
+		<property name="endDate"/> <!--计划结束时间-->
+		<property name="completionDate"/> <!--实际完成时间-->
+		<property name="completionDescription"/> <!--实际完成情况-->
+	</class>
+	
+	<!--项目管理:设计完成情况-->
+	<class name="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectQuality" table="enterprise_project_quality">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="teamId"/> <!--项目ID-->
+		<property name="completionDate"/> <!--设计完成时间-->
+		<property name="completionDescription"/> <!--设计完成情况-->
+		<property name="designQuality"/> <!--设计质量-->
+		<property name="approverId"/> <!--审核人ID-->
+		<property name="approver"/> <!--审核人-->
+		<property name="approvalTime"/> <!--审核时间-->
+	</class>
+	
+	<!--项目管理:项目类型配置-->
+	<class name="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectType" table="enterprise_project_type">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectType"/> <!--项目类型-->
+		<property name="workflowId"/> <!--流程ID-->
+		<property name="workflowName"/> <!--流程名称-->
+		<property name="contractNumberRule"/> <!--合同编号规则-->
+	</class>
+	
+	<!--项目管理:合同模板-->
+	<class name="com.yuanluesoft.enterprise.project.pojo.EnterpriseContractTemplate" table="enterprise_contract_template">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--模板名称-->
+		<property name="appliedProjectTypes"/> <!--适用的项目类型-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="viewSelectDialog" type="com.yuanluesoft.jeaf.dialog.forms.ViewSelectDialog"/>
+  <form-bean name="adjustPriority" type="com.yuanluesoft.jeaf.dialog.forms.AdjustPriority"/>
+  <form-bean name="listDialog" type="com.yuanluesoft.jeaf.dialog.forms.ListDialog"/>
+  <form-bean name="inputDialog" type="com.yuanluesoft.jeaf.dialog.forms.InputDialog"/>
+  <form-bean name="messageDialog" type="com.yuanluesoft.jeaf.dialog.forms.MessageDialog"/>
+  <form-bean name="colorDialog" type="com.yuanluesoft.jeaf.dialog.forms.ColorDialog"/>
+ </form-beans>
+ <global-exceptions/>
+ <global-forwards/>
+ <action-mappings>
+  <action name="viewSelectDialog" path="/showViewSelectDialog" scope="request"/>
+  <action name="viewSelectDialog" path="/viewSelectDialog"
+   scope="request"
+   type="com.yuanluesoft.jeaf.dialog.actions.viewselectdialog.OpenSelectDialog" validate="false">
+   <forward name="load" path="/viewselectdialog/viewSelectDialog.jsp"/>
+  </action>
+  <action name="viewSelectDialog" path="/selectViewData" scope="request"
+   type="com.yuanluesoft.jeaf.dialog.actions.viewselectdialog.LoadSelectViewData" validate="false">
+   <forward name="load" path="/viewselectdialog/selectViewData.jsp"/>
+  </action>
+  <action name="viewSelectDialog" path="/showSelectViewData"
+   scope="request" validate="false"/>
+  <action name="adjustPriority" path="/adjustPriority" scope="request"
+   type="com.yuanluesoft.jeaf.dialog.actions.adjustpriority.AdjustPriorityAction" validate="false">
+   <forward name="load" path="/adjustpriority/adjustPriority.jsp"/>
+  </action>
+  <action name="listDialog" path="/listDialog" scope="request"
+   type="com.yuanluesoft.jeaf.dialog.actions.listdialog.OpenListDialog" validate="false">
+   <forward name="load" path="/listdialog/listDialog.jsp"/>
+  </action>
+  <action path="/dialog" scope="request"
+   type="com.yuanluesoft.jeaf.dialog.actions.dialog.Load" validate="false"/>
+  <action name="inputDialog" path="/inputDialog" scope="request"
+   type="com.yuanluesoft.jeaf.dialog.actions.inputdialog.OpenInputDialog" validate="false">
+   <forward name="load" path="/inputdialog/inputDialog.jsp"/>
+  </action>
+  <action name="messageDialog" path="/messageDialog" scope="request"
+   type="com.yuanluesoft.jeaf.dialog.actions.messagedialog.OpenMessageDialog" validate="false">
+   <forward name="load" path="/messagedialog/messageDialog.jsp"/>
+  </action>
+  <action name="colorDialog" path="/colorDialog" scope="request"
+   type="com.yuanluesoft.jeaf.dialog.actions.colordialog.OpenColorDialog" validate="false">
+   <forward name="load" path="/colordialog/colorDialog.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="personalAddresslist" form="addressList" title="个人通讯录" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.addresslist.pojo.AddressList</pojo>
+			<where>AddressList.isPersonal='1' and AddressList.creatorId={USERID}</where>
+			<orderBy>AddressList.name</orderBy>
+			<quickFilter>AddressList.name like '%{KEY}%' or AddressList.mobile like '%{KEY}%' or AddressList.email like '%{KEY}%' or AddressList.companyTel like '%{KEY}%' or AddressList.homeTel like '%{KEY}%' or AddressList.companyName like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.addresslist.pojo.AddressList</pojo>
+			</data>
+			<category value="category"> <!--value必须有-->
+				<orderBy>AddressList.category</orderBy>
+				<where>(AddressList.isPersonal='0' or AddressList.creatorId={USERID}) and AddressList.category&lt;&gt;''</where>
+				<data>AddressList.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="添加记录" execute="PageUtils.newrecord('j2oa/addresslist','addressList','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="姓名" name="name" width="100"/>
+			<column title="电子邮件" name="email">
+				<link>javascript:PageUtils.sendMail('{PARAMETER:email}', '{PARAMETER:name}')</link>
+			</column>
+			<column title="手机" name="mobile" width="100"/>
+			<column title="单位电话" name="companyTel" width="100"/>
+			<column title="住宅电话" name="homeTel" width="100"/>
+		</columns>
+	</view>
+	
+	<view name="commonAddresslist" form="addressList" title="公共通讯录" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.addresslist.pojo.AddressList</pojo>
+			<where>AddressList.isPersonal='0'</where>
+			<orderBy>AddressList.name</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.addresslist.pojo.AddressList</pojo>
+			</data>
+			<category value="category"> <!--value必须有-->
+				<orderBy>AddressList.category</orderBy>
+				<where>AddressList.isPersonal='0' and AddressList.category&lt;&gt;''</where>
+				<data>AddressList.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="添加记录" hide="noPrivilege(manageUnit_commonaddresslist)"  execute="PageUtils.newrecord('j2oa/addresslist','addressList','width=720,height=480', 'common=true')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="姓名" name="name" width="100"/>
+			<column title="电子邮件" name="email">
+				<link>javascript:PageUtils.sendMail('{PARAMETER:email}', '{PARAMETER:name}')</link>
+			</column>
+			<column title="手机" name="mobile" width="100"/>
+			<column title="单位电话" name="companyTel" width="100"/>
+			<column title="住宅电话" name="homeTel" width="100"/>
+		</columns>
+	</view>
+	
+	<view name="allAddresslist" form="addressList" title="所有通讯录" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.addresslist.pojo.AddressList</pojo>
+			<where>AddressList.isPersonal='0' or AddressList.creatorId={USERID}</where>
+			<orderBy>AddressList.name</orderBy>
+			<quickFilter>AddressList.name like '%{KEY}%' or AddressList.mobile like '%{KEY}%' or AddressList.email like '%{KEY}%' or AddressList.companyTel like '%{KEY}%' or AddressList.homeTel like '%{KEY}%' or AddressList.companyName like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.addresslist.pojo.AddressList</pojo>
+			</data>
+			<category value="category"> <!--value必须有-->
+				<orderBy>AddressList.category</orderBy>
+				<where>(AddressList.isPersonal='0' or AddressList.creatorId={USERID}) and AddressList.category&lt;&gt;''</where>
+				<data>AddressList.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="添加记录" execute="PageUtils.newrecord('j2oa/addresslist','addressList','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="姓名" name="name" width="100"/>
+			<column title="电子邮件" name="email">
+				<link>javascript:PageUtils.sendMail('{PARAMETER:email}', '{PARAMETER:name}')</link>
+			</column>
+			<column title="手机" name="mobile" width="100"/>
+			<column title="单位电话" name="companyTel" width="100"/>
+			<column title="住宅电话" name="homeTel" width="100"/>
+		</columns>
+	</view>
+</views>

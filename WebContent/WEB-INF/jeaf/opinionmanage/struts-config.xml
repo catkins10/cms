@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="opinionType" type="com.yuanluesoft.jeaf.opinionmanage.forms.OpinionType"/>
+  <form-bean name="loadDefault" type="com.yuanluesoft.jeaf.opinionmanage.forms.LoadDefault"/>
+  <form-bean name="adjustPriority" type="com.yuanluesoft.jeaf.dialog.forms.AdjustPriority"/>
+  <form-bean name="opinion" type="com.yuanluesoft.jeaf.opinionmanage.forms.Opinion"/>
+  <form-bean name="insertOpinions" type="com.yuanluesoft.jeaf.opinionmanage.forms.InsertOpinions"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="loadDefault" path="/loadDefault" scope="request"
+   type="com.yuanluesoft.jeaf.opinionmanage.actions.opiniontype.loaddefault.Load" validate="false">
+   <forward name="load" path="/loadDefault.jsp"/>
+  </action>
+  <action name="opinionType" path="/opinionType" scope="request"
+   type="com.yuanluesoft.jeaf.opinionmanage.actions.opiniontype.Load" validate="false">
+   <forward name="load" path="/opinionType.jsp"/>
+  </action>
+  <action input="/opinionType.jsp" name="opinionType"
+   path="/saveOpinionType" scope="request"
+   type="com.yuanluesoft.jeaf.opinionmanage.actions.opiniontype.Save" validate="false"/>
+  <action input="/opinionType.jsp" name="opinionType"
+   path="/deleteOpinionType" scope="request"
+   type="com.yuanluesoft.jeaf.opinionmanage.actions.opiniontype.Delete" validate="false"/>
+  <action input="/loadDefault.jsp" name="loadDefault"
+   path="/doLoadDefault" scope="request"
+   type="com.yuanluesoft.jeaf.opinionmanage.actions.opiniontype.loaddefault.Complete" validate="false"/>
+  <action name="adjustPriority" path="/adjustPriority" scope="request"
+   type="com.yuanluesoft.jeaf.opinionmanage.actions.opiniontype.AdjustPriority" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/adjustpriority/adjustPriority.jsp"/>
+  </action>
+  <action name="opinion" path="/opinion" scope="request"
+   type="com.yuanluesoft.jeaf.opinionmanage.actions.opinion.Load" validate="false">
+   <forward name="load" path="/opinion.jsp"/>
+  </action>
+  <action input="/opinion.jsp" name="opinion" path="/saveOpinion"
+   scope="request"
+   type="com.yuanluesoft.jeaf.opinionmanage.actions.opinion.Save" validate="false"/>
+  <action input="/opinion.jsp" name="opinion" path="/deleteOpinion"
+   scope="request"
+   type="com.yuanluesoft.jeaf.opinionmanage.actions.opinion.Delete" validate="false"/>
+  <action name="insertOpinions" path="/templatemanage/insertOpinions"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertOpinions.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

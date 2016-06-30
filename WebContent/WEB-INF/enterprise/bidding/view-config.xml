@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="bidding" form="bidding" title="招投标项目" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.bidding.pojo.EnterpriseBidding</pojo>
+			<orderBy>EnterpriseBidding.tenderDate DESC</orderBy>
+			<quickFilter>EnterpriseBidding.projectName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="登记" execute="PageUtils.newrecord('enterprise/bidding', 'bidding', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="项目名称" name="projectName"/>
+			<column title="招标时间" name="tenderDate" width="80" align="center"/>
+			<column title="招标编号" name="biddingNumber" width="78" displayExcept="portlet"/>
+			<column title="标的" name="bidTarget" width="100" displayExcept="portlet"/>
+			<column title="资格审查" name="qualificationExamination" width="80" displayExcept="portlet"/>
+			<column title="招标方式" name="tenderingPractice" width="80" displayExcept="portlet"/>
+			<column title="缴纳保证金" name="depositPaidStatus" width="80" displayExcept="portlet" align="center"/>
+		</columns>
+	</view>
+</views>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 工作流客户端 -->
+	<bean id="workflowClient" class="com.yuanluesoft.workflow.client.local.WorkflowClientImpl" singleton="false">
+		<property name="workflowServer"><ref bean="workflowServer"/></property>
+	</bean>
+</beans>

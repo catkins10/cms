@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 公式服务 -->
+	<bean id="formulaService" class="com.yuanluesoft.jeaf.formula.service.spring.FormulaServiceImpl">
+		<property name="formulaMap"><ref bean="formulaMap"/></property>
+	</bean>
+	
+	<!-- 公式和服务映射关系表 -->
+	<bean id="formulaMap" class="java.util.HashMap">
+		<constructor-arg><map>
+			<!-- 权限判断 -->
+			<entry key="privilege"><value>accessControlService</value></entry>
+			<entry key="noPrivilege"><value>accessControlService</value></entry>
+			
+			<!-- 是否某个站点的管理员、编辑 -->
+			<entry key="isNotSiteManager"><value>siteService</value></entry>
+			<entry key="isNotSiteEditor"><value>siteService</value></entry>
+			
+			<!-- 是否某类组织机构的管理员 -->
+			<entry key="isNotOrgManager"><value>orgService</value></entry>
+			<entry key="noOrgPopedom"><value>orgService</value></entry>
+			<entry key="isNotMyUnitManager"><value>orgService</value></entry>
+			<entry key="noMyUnitPopedom"><value>orgService</value></entry>
+		</map></constructor-arg>
+	</bean>
+</beans>

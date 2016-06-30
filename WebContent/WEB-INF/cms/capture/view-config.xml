@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="抓取任务" name="tasks" form="task" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/capture&amp;viewName=tasks" hide="noPrivilege(application_manager) and isNotSiteManager() and isNotSiteEditor()" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.capture.pojo.CmsCaptureTask</pojo>
+			<orderBy>CmsCaptureTask.description</orderBy>
+			<quickFilter>CmsCaptureTask.description like '%{KEY}%' or CmsCaptureTask.captureURL like '%{KEY}%' or CmsCaptureTask.extendedParameters like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有任务" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.capture.pojo.CmsCaptureTask</pojo>
+			</data>
+			<category value="category"> <!--value必须有-->
+				<orderBy>CmsCaptureTask.category</orderBy>
+				<data>CmsCaptureTask.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="添加抓取任务" execute="PageUtils.newrecord('cms/capture','task','mode=fullscreen', 'siteId={PARAMETER:siteId}')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="任务描述" name="description"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view title="抓取日志" name="captureLog" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.cms.capture.pojo.CmsCaptureLog</pojo>
+			<orderBy>CmsCaptureLog.captureTime DESC</orderBy> <!-- CmsCaptureLog.captureSuccess,  -->
+			<quickFilter>CmsCaptureLog.captureUrl like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="删除日志" hide="noPrivilege(application_manager)" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/cms/capture/deleteCaptureLogs.shtml')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="URL" name="captureUrl"/>
+			<column title="成功" name="success" width="36" align="center"/>
+			<column title="抓取时间" name="captureTime" align="center" width="108"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view title="抓取错误日志" name="captureFailedLog">
+		<data>
+			<pojo>com.yuanluesoft.cms.capture.pojo.CmsCaptureLog</pojo>
+			<where>CmsCaptureLog.captureSuccess!='1'</where>
+			<orderBy>CmsCaptureLog.captureTime DESC</orderBy>
+			<quickFilter>CmsCaptureLog.captureUrl like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="删除日志" hide="noPrivilege(application_manager)" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/cms/capture/deleteCaptureLogs.shtml')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="URL" name="captureUrl"/>
+			<column title="抓取时间" name="captureTime" align="center" width="108"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<statisticView name="captureStatistic" title="抓取统计" pageRows="50"  hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.cms.capture.pojo.CmsCaptureLog</pojo>
+			<where>CmsCaptureLog.captureTaskId&gt;0 and CmsCaptureLog.captureSuccess='1'</where>
+			<quickFilter>CmsCaptureLog.captureUrl like '%{KEY}%'</quickFilter>
+		</data>
+		<statistics hideDetail="true">
+			<statistic>
+				<groupFields>
+					<groupField name="captureTaskId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="captureCount" function="count(CmsCaptureLog.id)"/>
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<actions>
+			<action title="导出EXCEL" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="任务" name="captureTaskDescription" />
+			<column title="抓取数量" name="captureCount" type="statistic" width="66" align="center" format="#"/>
+		</columns>
+	</statisticView>
+</views>

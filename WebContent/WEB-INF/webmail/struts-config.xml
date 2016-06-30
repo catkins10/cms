@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="mail" type="com.yuanluesoft.webmail.forms.Mail"/>
+  <form-bean name="mailView" type="com.yuanluesoft.webmail.forms.WebmailViewForm"/>
+  <form-bean name="downloadAttachment" type="com.yuanluesoft.webmail.forms.DownloadAttachment"/>
+  <form-bean name="mailfilter" type="com.yuanluesoft.webmail.forms.MailFilter"/>
+  <form-bean name="mailbox" type="com.yuanluesoft.webmail.forms.Mailbox"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../jeaf/form/error.jsp" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="mailView" path="/openview" scope="request"
+   type="com.yuanluesoft.webmail.actions.view.WebmailViewAction" validate="false">
+   <forward name="load" path="/../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action name="mail" path="/mail" scope="request"
+   type="com.yuanluesoft.webmail.actions.mail.Load" validate="false">
+   <forward name="load" path="/mail.jsp"/>
+  </action>
+  <action input="/mail.jsp" name="mail" path="/send" scope="request"
+   type="com.yuanluesoft.webmail.actions.mail.Send" validate="false"/>
+  <action input="/mail.jsp" name="mail" path="/saveasdraft"
+   scope="request"
+   type="com.yuanluesoft.webmail.actions.mail.SaveAsDraft" validate="false"/>
+  <action input="/mail.jsp" name="mail" path="/sendandsave"
+   scope="request"
+   type="com.yuanluesoft.webmail.actions.mail.SendAndSave" validate="false"/>
+  <action input="/mail.jsp" name="mail" path="/deleteMail"
+   scope="request"
+   type="com.yuanluesoft.webmail.actions.mail.DeleteMail" validate="true"/>
+  <action input="/../jeaf/application/applicationView.jsp"
+   name="mailView" path="/batchdeletemail" scope="request"
+   type="com.yuanluesoft.webmail.actions.view.BatchDeleteMail" validate="false"/>
+  <action input="/../jeaf/application/applicationView.jsp"
+   name="mailView" path="/batchmovemail" scope="request"
+   type="com.yuanluesoft.webmail.actions.view.BatchMoveMail" validate="false"/>
+  <action name="mailfilter" path="/mailFilter" scope="request"
+   type="com.yuanluesoft.webmail.actions.mailfilter.Load" validate="false">
+   <forward name="load" path="/mailFilter.jsp"/>
+  </action>
+  <action input="/mailFilter.jsp" name="mailfilter"
+   path="/saveMailFilter" scope="request"
+   type="com.yuanluesoft.webmail.actions.mailfilter.Save" validate="false"/>
+  <action name="mailfilter" path="/deleteMailFilter" scope="request"
+   type="com.yuanluesoft.webmail.actions.mailfilter.Delete" validate="false"/>
+  <action input="/../jeaf/application/applicationView.jsp"
+   name="mailView" path="/adjustFilterPriority" scope="request"
+   type="com.yuanluesoft.webmail.actions.mailfilter.AdjustFilterPriority" validate="false"/>
+  <action input="/../jeaf/application/applicationView.jsp"
+   name="mailView" path="/batchDeleteMailFilter" scope="request"
+   type="com.yuanluesoft.webmail.actions.mailfilter.BatchDeleteMailFilter" validate="false"/>
+  <action name="mail" path="/replyMail" scope="request"
+   type="com.yuanluesoft.webmail.actions.mail.Reply" validate="false">
+   <forward name="load" path="/mail.jsp"/>
+  </action>
+  <action name="mail" path="/forwardMail" scope="request"
+   type="com.yuanluesoft.webmail.actions.mail.Forward" validate="false">
+   <forward name="load" path="/mail.jsp"/>
+  </action>
+  <action input="/../jeaf/application/applicationView.jsp"
+   name="mailView" path="/addAddressList" scope="request"
+   type="com.yuanluesoft.webmail.actions.view.AddAddressList" validate="false"/>
+  <action name="mail" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.webmail.actions.mail.SelectAttachment" validate="false">
+   <forward name="load" path="/../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="mail" path="/selectAttachment" scope="request"
+   type="com.yuanluesoft.webmail.actions.mail.SelectAttachment" validate="false">
+   <forward name="load" path="/../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="downloadAttachment" path="/downloadAttachment"
+   scope="request"
+   type="com.yuanluesoft.webmail.actions.downloadattachment.Download" validate="false"/>
+  <action name="mailbox" path="/mailbox" scope="request"
+   type="com.yuanluesoft.webmail.actions.mailbox.Load" validate="false">
+   <forward name="load" path="/mailbox.jsp"/>
+  </action>
+  <action input="/mailbox.jsp" name="mailbox" path="/saveMailbox"
+   scope="request" type="com.yuanluesoft.webmail.actions.mailbox.Save" validate="false"/>
+  <action input="/mailbox.jsp" name="mailbox" path="/deleteMailbox"
+   scope="request" type="com.yuanluesoft.webmail.actions.mailbox.Delete" validate="false"/>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="200M"/>
+</struts-config>

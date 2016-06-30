@@ -1,0 +1,178 @@
+package com.yuanluesoft.cms.publicservice.actions;
+
+import com.yuanluesoft.cms.publicservice.forms.PublicServiceForm;
+import com.yuanluesoft.jeaf.base.validator.exception.ValidateException;
+import com.yuanluesoft.jeaf.business.service.BusinessService;
+import com.yuanluesoft.jeaf.database.Record;
+import com.yuanluesoft.jeaf.exception.PrivilegeException;
+import com.yuanluesoft.jeaf.form.actions.FormAction;
+import com.yuanluesoft.jeaf.form.model.Form;
+import com.yuanluesoft.jeaf.image.model.WaterMark;
+import com.yuanluesoft.jeaf.sessionmanage.model.SessionInfo;
+import com.yuanluesoft.jeaf.system.exception.SystemUnregistException;
+import com.yuanluesoft.jeaf.util.DateTimeUtils;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
+public abstract class PublicServiceAction extends FormAction
+{
+  public PublicServiceAction()
+  {
+    this.anonymousAlways = true;
+  }
+
+  protected List getAcl(String applicationName, org.apache.struts.action.ActionForm form, Record record, String openMode, SessionInfo sessionInfo)
+    throws Exception
+  {
+    return new ArrayList();
+  }
+
+  public void initForm(com.yuanluesoft.jeaf.form.ActionForm form, SessionInfo sessionInfo, HttpServletRequest request, HttpServletResponse response)
+    throws Exception
+  {
+    super.initForm(form, sessionInfo, request, response);
+    PublicServiceForm publicServiceForm = (PublicServiceForm)form;
+    publicServiceForm.setCreated(DateTimeUtils.now());
+    publicServiceForm.setIsPublic('1');
+
+    if (publicServiceForm.getSn() == null) {
+      com.yuanluesoft.cms.publicservice.service.PublicService publicService = (com.yuanluesoft.cms.publicservice.service.PublicService)getService("publicService");
+      publicServiceForm.setSn(publicService.getSN());
+    }
+
+    if (publicServiceForm.getCreatorSex() == 0) {
+      publicServiceForm.setCreatorSex('M');
+    }
+
+    if (publicServiceForm.getCreatorCertificateName() == null)
+      publicServiceForm.setCreatorCertificateName("身份证");
+  }
+
+  public void fillForm(com.yuanluesoft.jeaf.form.ActionForm form, Record record, char accessLevel, SessionInfo sessionInfo, HttpServletRequest request, HttpServletResponse response)
+    throws Exception
+  {
+    if (record == null) {
+      return;
+    }
+    super.fillForm(form, record, accessLevel, sessionInfo, request, response);
+  }
+
+  protected String getOpenMode(com.yuanluesoft.jeaf.form.ActionForm form, HttpServletRequest request)
+  {
+	 if(request.getParameter("approvalQuerySN")!=null) {
+      return "open";
+    }
+    return super.getOpenMode(form, request);
+  }
+
+  protected Record loadRecord(com.yuanluesoft.jeaf.form.ActionForm form, Form formDefine, long id, SessionInfo sessionInfo, HttpServletRequest request)
+    throws Exception
+  {
+    PublicServiceForm publicServiceForm = (PublicServiceForm)form;
+    com.yuanluesoft.cms.publicservice.service.PublicService publicService = (com.yuanluesoft.cms.publicservice.service.PublicService)getService("publicService");
+
+    String qureryString = request.getQueryString();
+    if ((qureryString != null) && ((qureryString.indexOf("approvalQuerySN=") != -1) || (qureryString.indexOf("sn=") != -1)))
+    {
+      com.yuanluesoft.cms.publicservice.pojo.PublicService pojoPublicService;
+      if (request.getParameter("approvalQuerySN") != null) {
+        pojoPublicService = publicService.loadPublicService(publicServiceForm.getFormDefine().getRecordClassName(), request.getParameter("approvalQuerySN"), request.getParameter("approvalQueryPassword"));
+      }
+      else
+      {
+        pojoPublicService = publicService.loadPublicService(publicServiceForm.getFormDefine().getRecordClassName(), publicServiceForm.getSn(), publicServiceForm.getQueryPassword());
+      }
+      if (pojoPublicService != null) {
+        pojoPublicService.setPublicPass('1');
+        pojoPublicService.setPublicBody('1');
+        pojoPublicService.setPublicWorkflow('1');
+      }
+      return pojoPublicService;
+    }
+
+    com.yuanluesoft.cms.publicservice.pojo.PublicService pojoPublicService = (com.yuanluesoft.cms.publicservice.pojo.PublicService)super.loadRecord(form, formDefine, id, sessionInfo, request);
+    if (pojoPublicService == null) {
+      return null;
+    }
+    if (request.getAttribute("submit") != null) {
+      return pojoPublicService;
+    }
+
+    String password = request.getParameter("approvalQueryPassword");
+    if (password == null) {
+      password = publicServiceForm.getQueryPassword();
+    }
+    if (password != null) {
+      if (!password.equals(pojoPublicService.getQueryPassword())) {
+        publicServiceForm.setError("密码输入错误");
+        return pojoPublicService;
+      }
+
+      pojoPublicService.setPublicBody('1');
+      pojoPublicService.setPublicWorkflow('1');
+      return pojoPublicService;
+    }
+
+    if (pojoPublicService.getPublicPass() != '1') {
+      throw new PrivilegeException();
+    }
+    pojoPublicService.setQueryPassword(null);
+    return pojoPublicService;
+  }
+
+  protected void validateForm(org.apache.struts.action.ActionForm formToValidate, Record record, String openMode, SessionInfo sessionInfo, ActionMapping mapping, HttpServletRequest request)
+    throws ValidateException, SystemUnregistException
+  {
+    BusinessService businessService = getBusinessService(((com.yuanluesoft.jeaf.form.ActionForm)formToValidate).getFormDefine());
+    this.forceValidateCode = true;
+    if ((businessService instanceof com.yuanluesoft.cms.publicservice.service.PublicService)) {
+      this.forceValidateCode = ((com.yuanluesoft.cms.publicservice.service.PublicService)businessService).isForceValidateCode();
+    }
+    super.validateForm(formToValidate, record, openMode, sessionInfo, mapping, request);
+  }
+
+  public Record saveRecord(com.yuanluesoft.jeaf.form.ActionForm form, Record record, String openMode, HttpServletRequest request, HttpServletResponse response, SessionInfo sessionInfo)
+    throws Exception
+  {
+    if ("create".equals(openMode)) {
+      com.yuanluesoft.cms.publicservice.pojo.PublicService publicServicePojo = (com.yuanluesoft.cms.publicservice.pojo.PublicService)record;
+
+      publicServicePojo.setCreatorIP(request.getRemoteHost());
+
+      publicServicePojo.setCreated(DateTimeUtils.now());
+    }
+    return super.saveRecord(form, record, openMode, request, response, sessionInfo);
+  }
+
+  public ActionForward executeSubmitAction(ActionMapping mapping, org.apache.struts.action.ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    throws Exception
+  {
+    request.setAttribute("submit", "1");
+    return executeSaveAction(mapping, form, request, response, false, null, null, "result");
+  }
+
+  public char checkLoadPrivilege(com.yuanluesoft.jeaf.form.ActionForm form, HttpServletRequest request, Record record, String openMode, List acl, SessionInfo sessionInfo)
+    throws PrivilegeException, SystemUnregistException
+  {
+    if (("create".equals(openMode)) || ((record != null) && (((com.yuanluesoft.cms.publicservice.pojo.PublicService)record).getCreated() == null))) {
+      return '3';
+    }
+    return '2';
+  }
+
+  public void checkDeletePrivilege(com.yuanluesoft.jeaf.form.ActionForm form, HttpServletRequest request, Record record, List acl, SessionInfo sessionInfo)
+    throws PrivilegeException, SystemUnregistException
+  {
+    throw new PrivilegeException();
+  }
+
+  protected WaterMark getWaterMark(com.yuanluesoft.jeaf.form.ActionForm form, HttpServletRequest request)
+    throws Exception
+  {
+    return null;
+  }
+}

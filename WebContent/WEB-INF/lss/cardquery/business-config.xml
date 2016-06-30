@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="社保制卡查询" class="com.yuanluesoft.lss.cardquery.pojo.CardQuery">
+	
+		<field name="securityNumber" title="社会保障号" length="50" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="name" title="姓名" length="20" required="true" type="string" inputMode="text"/>
+		<field name="sex" title="性别" length="1"  type="number" inputMode="radio">
+		  <parameter name="itemsText">男|0\0女|1</parameter>
+		</field>
+		<field name="batchNumber" title="批号"   type="string" inputMode="text"/>
+		<field name="mark" title="数据日期"   type="string" inputMode="text"/>
+		<field name="jurisdiction" title="参保辖区"   type="string" inputMode="text"/>
+		<field name="cardType" title="制卡类型"   type="string" inputMode="dropdown" required="true">
+		    <parameter name="selectOnly">true</parameter>
+		  	<parameter name="itemsHql">select distinct CardQueryConfig.cardType from com.yuanluesoft.lss.cardquery.pojo.CardQueryConfig CardQueryConfig </parameter>
+		</field>
+		<field name="receiveDate" title="接收数据日期"   type="date" inputMode="date"/>
+		<field name="makeCardDate" title="制卡日期"   type="date" inputMode="date"/>
+		<field name="removedCardDate" title="移出卡片日期"   type="date" inputMode="date"/>
+		<field name="creatorId" title="登记人ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		
+	</businessObject>
+	
+	<businessObject title="社保制卡查询备注参数配置" class="com.yuanluesoft.lss.cardquery.pojo.CardQueryConfig">
+			<field name="cardType" title="制卡类型"   type="string" inputMode="text" required="true"/>
+			<field name="receiveMark" title="接收数据备注"   type="string" inputMode="text" required="true"/>
+			<field name="removedCardMark" title="移出卡片备注"   type="string" inputMode="text" required="true"/>
+			<field name="makeCardMark" title="制卡备注"   type="string" inputMode="text" required="true"/>
+            <field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			  <parameter name="defaultValue">{NOW}</parameter>
+		    </field>
+	</businessObject>
+
+
+	<businessObject title="社保卡制卡详细信息" class="com.yuanluesoft.lss.cardquery.page.model.CardQueryModel">	
+		<field name="securityNumber" title="社会保障号"   type="string" inputMode="readonly"/>
+		<field name="name" title="姓名"  required="true" type="string" inputMode="readonly"/>
+		<field name="sexFront" title="性别（前台）"   type="string" inputMode="readonly"/>
+		<field name="batchNumber" title="批号"   type="string" inputMode="readonly"/>
+		<field name="jurisdiction" title="参保辖区"   type="string" inputMode="readonly"/>
+		<field name="cardType" title="制卡类型"   type="string" inputMode="readonly"/>
+		<field name="receiveDate" title="接收数据日期"   type="date" inputMode="readonly"/>
+		<field name="makeCardDate" title="制卡日期"   type="date" inputMode="readonly"/>
+		<field name="removedCardDate" title="移出卡片日期"   type="date" inputMode="readonly"/>
+        <field name="receiveMark" title="接收数据备注"   type="string" inputMode="readonly"/>
+	    <field name="removedCardMark" title="移出卡片备注"   type="string" inputMode="readonly"/>
+	    <field name="makeCardMark" title="制卡备注"   type="string" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="task" type="com.yuanluesoft.cms.capture.forms.Task"/>
+  <form-bean name="listCaptureTest" type="com.yuanluesoft.cms.capture.forms.ListCaptureTest"/>
+  <form-bean name="recordCaptureTest" type="com.yuanluesoft.cms.capture.forms.RecordCaptureTest"/>
+  <form-bean name="applicationView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/>
+  <form-bean name="startupTasks" type="com.yuanluesoft.cms.capture.forms.StartupTasks"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="task" path="/task" scope="request"
+   type="com.yuanluesoft.cms.capture.actions.task.Load" validate="false">
+   <forward name="load" path="/task.jsp"/>
+  </action>
+  <action input="/task.jsp" name="task" path="/saveTask" scope="request"
+   type="com.yuanluesoft.cms.capture.actions.task.Save" validate="false"/>
+  <action input="/task.jsp" name="task" path="/deleteTask"
+   scope="request"
+   type="com.yuanluesoft.cms.capture.actions.task.Delete" validate="false"/>
+  <action input="/task.jsp" name="task" path="/nextStep" scope="request"
+   type="com.yuanluesoft.cms.capture.actions.task.NextStep" validate="false"/>
+  <action name="listCaptureTest" path="/listCaptureTest" scope="request"
+   type="com.yuanluesoft.cms.capture.actions.task.ListCaptureTest" validate="false">
+   <forward name="load" path="/listCaptureTest.jsp"/>
+  </action>
+  <action name="recordCaptureTest" path="/recordCaptureTest"
+   scope="request"
+   type="com.yuanluesoft.cms.capture.actions.task.RecordCaptureTest" validate="false">
+   <forward name="load" path="/recordCaptureTest.jsp"/>
+  </action>
+  <action name="task" path="/startupCapture" scope="request"
+   type="com.yuanluesoft.cms.capture.actions.task.StartupCapture" validate="false">
+   <forward name="load" path="/startupCapture.jsp"/>
+  </action>
+  <action name="task" path="/copyTask" scope="request"
+   type="com.yuanluesoft.cms.capture.actions.task.copytask.Load" validate="false">
+   <forward name="load" path="/copyTask.jsp"/>
+  </action>
+  <action input="/copyTask.jsp" name="task" path="/doCopyTask"
+   scope="request"
+   type="com.yuanluesoft.cms.capture.actions.task.copytask.Copy" validate="false">
+   <forward name="load" path="/completeCopyTask.jsp"/>
+  </action>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="applicationView" path="/deleteCaptureLogs" scope="request"
+   type="com.yuanluesoft.cms.capture.actions.capturelogview.DeleteLogs" validate="false"/>
+  <action name="startupTasks" path="/startupTasks" scope="request"
+   type="com.yuanluesoft.cms.capture.actions.startuptasks.Load" validate="false">
+   <forward name="load" path="/startupTasks.jsp"/>
+  </action>
+  <action input="/startupTasks.jsp" name="startupTasks"
+   path="/doStartupTasks" scope="request"
+   type="com.yuanluesoft.cms.capture.actions.startuptasks.Capture" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

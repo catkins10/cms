@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="公交线路" class="com.yuanluesoft.traffic.busline.pojo.BusLine" businessServiceName="busLineService">
+		<field name="name" title="线路名称" length="50" required="true" type="string" inputMode="text"/>
+		<field name="ticketPrice" title="票价" length="200" required="true" type="string" inputMode="text"/>
+		<field name="summerUplinkFirst" title="夏季首班车(上行)" length="20" required="true" type="string" inputMode="time"/>
+		<field name="summerUplinkLast" title="夏季末班车(上行)" length="20" required="true" type="string" inputMode="time"/>
+		<field name="winterUplinkFirst" title="冬季首班车(上行)" length="20" required="true" type="string" inputMode="time"/>
+		<field name="winterUplinkLast" title="冬季末班车(上行)" length="20" required="true" type="string" inputMode="time"/>
+		<field name="summerDownlinkFirst" title="夏季首班车(下行)" length="20" required="true" type="string" inputMode="time"/>
+		<field name="summerDownlinkLast" title="夏季末班车(下行)" length="20" required="true" type="string" inputMode="time"/>
+		<field name="winterDownlinkFirst" title="冬季首班车(下行)" length="20" required="true" type="string" inputMode="time"/>
+		<field name="winterDownlinkLast" title="冬季末班车(下行)" length="20" required="true" type="string" inputMode="time"/>
+		<field name="uplinkDistance" title="上行线路长度(公里)" length="6,3" type="number" inputMode="text"/>
+		<field name="downlinkDistance" title="下行线路长度(公里)" length="6,3" type="number" inputMode="text"/>
+		<field name="uplinkLine" title="上行主要线路" length="1000" type="string" inputMode="text"/>
+		<field name="downlinkLine" title="下行主要线路" length="1000" type="string" inputMode="text"/>
+		<field name="busTotal" title="配车总数" length="3" type="number" inputMode="text"/>
+		<field name="dutyNumber" title="班次" length="5" type="number" inputMode="text"/>
+		<field name="peakFrequency" title="高峰发车间隔(分钟)" length="3" type="number" inputMode="text"/>
+		<field name="commonFrequency" title="平峰发车间隔(分钟)" length="3" type="number" inputMode="text"/>
+		<field name="modifyPersonId" title="最后更新人ID" type="number" inputMode="none"/>
+		<field name="modifyPerson" title="最后更新人姓名" length="50" type="string" inputMode="readonly"/>
+		<field name="lastModified" title="最后更新时间" type="timestamp" inputMode="dateTime"/>
+		<field name="stations" title="公交站点" type="components">
+			<parameter name="class">com.yuanluesoft.traffic.busline.pojo.BusLineStation</parameter>
+			<parameter name="referenceFields">changes</parameter>
+			<parameter name="url">/traffic/busline/busLineQuery.shtml?stationName={PARAMETER:name}</parameter>
+		</field>
+		<field name="uplinkStations" title="上行站点" type="components">
+			<parameter name="class">com.yuanluesoft.traffic.busline.pojo.BusLineStation</parameter>
+			<parameter name="referenceFields">stations,changes</parameter>
+			<parameter name="url">/traffic/busline/busLineQuery.shtml?stationName={PARAMETER:name}</parameter>
+		</field>
+		<field name="downlinkStations" title="下行站点" type="components">
+			<parameter name="class">com.yuanluesoft.traffic.busline.pojo.BusLineStation</parameter>
+			<parameter name="referenceFields">stations,changes</parameter>
+			<parameter name="url">/traffic/busline/busLineQuery.shtml?stationName={PARAMETER:name}</parameter>
+		</field>
+		<field name="changes" title="线路变更通知" type="components">
+			<parameter name="class">com.yuanluesoft.traffic.busline.pojo.BusLineChange</parameter>
+			<parameter name="url">/traffic/busline/change.shtml</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="公交站点" class="com.yuanluesoft.traffic.busline.pojo.BusLineStation" businessServiceName="busLineService">
+		<field name="buslineId" title="公交线路ID" length="20" type="number" inputMode="hidden"/>
+		<field name="name" title="站点名称" length="50" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsHql">select distinct BusLineStation.name from BusLineStation BusLineStation order by BusLineStation.name</parameter>
+		</field>
+		<field name="fullName" title="站点全称(站名+上下行+状态)" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">name,direction,status</parameter>
+		</field>
+		<field name="direction" title="行驶方向" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">上行|0\0下行|1\0上、下行|2</parameter>
+		</field>
+		<field name="status" title="站点性质" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">正常|0\0临时增加|1\0临时取消|2</parameter>
+		</field>
+		<field name="priority" title="优先级" type="string" inputMode="none"/>
+	</businessObject>
+	<businessObject title="线路变更通知" class="com.yuanluesoft.traffic.busline.pojo.BusLineChange" businessServiceName="busLineService">
+		<field name="buslineId" title="公交线路ID" length="20" type="number" inputMode="hidden"/>
+		<field name="content" title="变更说明" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">12</parameter>
+		</field>
+		<field name="interim" title="是否临时变更" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+		<field name="beginDate" title="开始时间" required="true" type="date" inputMode="date"/>
+		<field name="endDate" title="结束时间" length="10" type="date" inputMode="date"/>
+		<field name="creatorId" title="发布人ID" type="number" inputMode="none"/>
+		<field name="creator" title="发布人姓名" length="50" type="string" inputMode="readonly"/>
+		<field name="created" title="发布时间" required="true" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

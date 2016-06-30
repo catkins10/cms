@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="personalOrder" type="com.yuanluesoft.charge.order.forms.PersonalOrder"/>
+  <form-bean name="listPersonalOrders" type="com.yuanluesoft.charge.order.forms.ListPersonalOrders"/>
+  <form-bean name="personalWebOrder" type="com.yuanluesoft.charge.order.forms.PersonalWebOrder"/>
+  <form-bean name="cancelOrderItem" type="com.yuanluesoft.charge.order.forms.CancelPersonalOrderItem"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+  <forward name="promptReordered" path="/personalweborder/promptReordered.jsp"/>
+  <forward name="promptInsufficientBalance" path="/personalweborder/promptInsufficientBalance.jsp"/>
+  <forward name="confirmPersonalOrder" path="/personalweborder/confirmPersonalOrder.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="listPersonalOrders" path="/listPersonalOrders"
+   scope="request"
+   type="com.yuanluesoft.charge.order.actions.listpersonalorders.ListPersonalOrdersAction" validate="false">
+   <forward name="load" path="/listPersonalOrders.jsp"/>
+  </action>
+  <action name="listPersonalOrders" path="/displayPersonalOrders"
+   scope="request" validate="false"/>
+  <action input="/personalweborder/selectServicePrices.jsp"
+   name="personalWebOrder" path="/personalWebOrder" scope="request"
+   type="com.yuanluesoft.charge.order.actions.personalweborder.Load" validate="false">
+   <forward name="load" path="/personalweborder/selectServicePrices.jsp"/>
+  </action>
+  <action input="/personalweborder/selectServicePrices.jsp"
+   name="personalWebOrder" path="/submitSelectedServicePrices"
+   scope="request"
+   type="com.yuanluesoft.charge.order.actions.personalweborder.SubmitSelectedServicePrices" validate="false"/>
+  <action input="/personalweborder/confirmPersonalOrder.jsp"
+   name="personalWebOrder" path="/submitPersonalWebOrder"
+   scope="request"
+   type="com.yuanluesoft.charge.order.actions.personalweborder.SubmitOrder" validate="false">
+   <forward name="result" path="/personalweborder/personalOrderCreated.jsp"/>
+  </action>
+  <action name="personalWebOrder"
+   path="/continueWhenInsufficientBalance" scope="request"
+   type="com.yuanluesoft.charge.order.actions.personalweborder.ContinueWhenInsufficientBalance" validate="false"/>
+  <action name="personalWebOrder" path="/continueWhenReordered"
+   scope="request"
+   type="com.yuanluesoft.charge.order.actions.personalweborder.ContinueWhenReordered" validate="false"/>
+  <action name="personalOrder" path="/personalOrder" scope="request"
+   type="com.yuanluesoft.charge.order.actions.personalorder.Load" validate="false">
+   <forward name="load" path="/personalOrder.jsp"/>
+  </action>
+  <action name="cancelOrderItem" path="/cancelOrderItem" scope="request"
+   type="com.yuanluesoft.charge.order.actions.cancelpersonalorderitem.Load" validate="false">
+   <forward name="load" path="/cancelOrderItem.jsp"/>
+  </action>
+  <action name="personalOrder" path="/displayPersonalOrder"
+   scope="request" validate="false"/>
+  <action input="/cancelOrderItem.jsp" name="cancelOrderItem"
+   path="/doCancelOrderItem" scope="request"
+   type="com.yuanluesoft.charge.order.actions.cancelpersonalorderitem.Cancel" validate="false">
+   <forward name="result" path="/orderItemCanceled.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

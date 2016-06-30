@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="人才" class="com.yuanluesoft.job.talent.pojo.JobTalent" businessServiceName="jobTalentService">
+		<field name="name" title="姓名" length="30" required="true" type="string" inputMode="text"/>
+		<field name="email" title="邮箱" length="100" required="true" type="email" inputMode="text"/>
+		<field name="password" title="密码" length="100" required="true" type="string" inputMode="password"/>
+		<field name="sex" title="性别" length="1" required="true" type="char" inputMode="radio">
+			<parameter name="itemsText">男|M\0女|F</parameter>
+		</field>
+		<field name="nation" title="民族" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">汉族\0壮族\0满族\0回族\0苗族\0维吾尔族\0土家族\0彝族\0蒙古族\0藏族\0布依族\0侗族\0瑶族\0朝鲜族\0白族\0哈尼族\0哈萨克族\0黎族\0傣族\0畲族\0傈僳族\0仡佬族\0东乡族\0高山族\0拉祜族\0水族\0佤族\0纳西族\0羌族\0土族\0仫佬族\0锡伯族\0柯尔克孜族\0达斡尔族\0景颇族\0毛南族\0撒拉族\0塔吉克族\0阿昌族\0普米族\0鄂温克族\0怒族\0京族\0基诺族\0德昂族\0保安族\0俄罗斯族\0裕固族\0乌兹别克族\0门巴族\0鄂伦春族\0独龙族\0塔塔尔族\0赫哲族\0珞巴族\0布朗族</parameter>
+		</field>
+		<field name="birthday" title="出生日期" type="date" inputMode="date"/>
+		<field name="identificationType" title="证件类型" length="30" required="true" type="string" inputMode="text">
+			<parameter name="defaultValue">身份证</parameter>
+		</field>
+		<field name="identificationNumber" title="证件号码" length="100" required="true" type="string" inputMode="text"/>
+		<field name="maritalStatus" title="婚姻状况" length="1" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">未婚|0\0已婚|1</parameter>
+		</field>
+		<field name="stature" title="身高" length="3" type="number" inputMode="text"/>
+		<field name="politicalStatus" title="政治面貌" length="20" type="string" inputMode="text"/>
+		<field name="workYear" title="工作年限" length="2" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">在读学生|-1\0应届毕业生|0\0 1年|1\0 2年|2\0 3年|3\0 4年|4\0 5年|5\0 6年|6\0 7年|7\0 8年|8\0 9年|9\0 10年以上|10</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="residence" title="户口所在地" length="30" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(600, 360, false, 'residence{name}', '', 'area')</parameter>
+		</field>
+		<field name="studentSource" title="生源所在地" length="30" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(600, 360, false, 'studentSource{name}', '', 'area')</parameter>
+		</field>
+		<field name="isPoor" title="是否困难生" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">不是|0\0是|1</parameter>
+		</field>
+		<field name="areaId" title="居住地ID" length="20" type="number" inputMode="hidden"/>
+		<field name="area" title="居住地名称" length="30" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(600, 360, false, 'areaId{id},area{name}', '', 'area')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="cell" title="手机" length="100" required="true" type="string" inputMode="text"/>
+		<field name="im" title="IM" length="100" type="string" inputMode="text"/>
+		<field name="englishLevel" title="英语等级" length="30" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">未参加\0未通过\0英语四级\0英语六级\0专业四级\0专业八级\0高等学校英语应用能力A级\0高等学校英语应用能力B级</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="japaneseLevel" title="日语等级" length="10" type="string" inputMode="dropdown">
+			<parameter name="itemsText">无\0一级\0二级\0三级\0四级</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="computerLevel" title="计算机水平" length="100" type="string" inputMode="text"/>
+		<field name="drivingLicense" title="驾照" length="3" type="string" inputMode="dropdown">
+			<parameter name="itemsText">A1\0 A2\0 A3\0 C1\0 C2\0 C3\0 C4\0 C5\0 D\0 E\0 F\0 M\0 N\0 P</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="singleByteCharacters">true</parameter>		
+		</field>
+		<field name="selfAppraisal" title="自我评价" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">8</parameter>
+		</field>
+		<field name="receivePushMail" title="接收推送邮件" length="1" type="number" inputMode="checkbox">
+			<parameter name="label">接收推送邮件</parameter>
+			<parameter name="value">1</parameter>
+		</field>
+		<field name="created" title="注册时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="lastModified" title="最后更新时间" type="timestamp" inputMode="readonly"/>
+		<field name="status" title="状态" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">注册|0\0审核通过|1\0审核未通过|2\0停用|3\0审核未通过|4</parameter>
+		</field>
+		<field name="approverId" title="审核人ID" length="20" type="number" inputMode="none"/>
+		<field name="approver" title="审核人" length="50" type="string" inputMode="readonly"/>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="readonly"/>
+		<field name="failedReason" title="审核未通过原因" length="2000" type="string" inputMode="hidden"/>
+		<field name="intentions" title="求职意向" type="components">
+			<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalentIntention</parameter>
+			<parameter name="url">javascript:PageUtils.editrecord('job/talent', 'intention', '{PARAMETER:id}', 'mode=dialog,width=600,height=400')</parameter>
+		</field>
+		<field name="schoolings" title="教育经历" type="components">
+			<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalentSchooling</parameter>
+			<parameter name="url">javascript:PageUtils.editrecord('job/talent', 'schooling', '{PARAMETER:id}', 'mode=dialog,width=600,height=400')</parameter>
+		</field>
+		<field name="trainings" title="培训经历" type="components">
+			<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalentTraining</parameter>
+			<parameter name="url">javascript:PageUtils.editrecord('job/talent', 'training', '{PARAMETER:id}', 'mode=dialog,width=600,height=400')</parameter>
+		</field>
+		<field name="speechs" title="语言能力" type="components">
+			<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalentSpeech</parameter>
+			<parameter name="url">javascript:PageUtils.editrecord('job/talent', 'speech', '{PARAMETER:id}', 'mode=dialog,width=450,height=250')</parameter>
+		</field>
+		<field name="careers" title="工作经历" type="components">
+			<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalentCareer</parameter>
+			<parameter name="url">javascript:PageUtils.editrecord('job/talent', 'career', '{PARAMETER:id}', 'mode=dialog,width=660,height=400')</parameter>
+		</field>
+		<field name="employments" title="就业跟踪调查表" type="components">
+			<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalentEmployment</parameter>
+			<parameter name="url">javascript:PageUtils.editrecord('job/talent', 'employment', '{PARAMETER:id}', 'mode=dialog,width=660,height=400')</parameter>
+		</field>
+		<field name="projects" title="项目经验" type="components">
+			<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalentProject</parameter>
+			<parameter name="url">javascript:PageUtils.editrecord('job/talent', 'project', '{PARAMETER:id}', 'mode=dialog,width=600,height=400')</parameter>
+		</field>
+		<field name="certificates" title="证书" type="components">
+			<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalentCertificate</parameter>
+			<parameter name="url">javascript:PageUtils.editrecord('job/talent', 'certificate', '{PARAMETER:id}', 'mode=dialog,width=450,height=250')</parameter>
+		</field>
+		<field name="abilities" title="其它技能" type="components">
+			<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalentAbility</parameter>
+			<parameter name="url">javascript:PageUtils.editrecord('job/talent', 'abilitie', '{PARAMETER:id}', 'mode=dialog,width=450,height=400')</parameter>
+		</field>
+		<field name="photo" title="照片" type="image" length="1" inputMode="attachment">
+			<parameter name="attachmentEditor">/job/talent/attachmentEditor.shtml</parameter>
+		</field>
+		<parameter name="recordUrl">javascript:PageUtils.editrecord('job/talent', 'admin/talent', '{PARAMETER:id}', 'mode=fullscreen')</parameter>
+	</businessObject>
+	
+	<businessObject title="教育经历" class="com.yuanluesoft.job.talent.pojo.JobTalentSchooling" businessServiceName="jobTalentService">
+		<field name="talentId" title="人才ID" length="20" type="number" inputMode="hidden"/>
+		<field name="startDate" title="开始时间" required="true" type="date" inputMode="date"/>
+		<field name="endDate" title="结束时间" required="true" type="date" inputMode="date"/>
+		<field name="school" title="学校" length="100" required="true" type="string" inputMode="text"/>
+		<field name="department" title="院系" length="100" type="string" inputMode="text"/>
+		<field name="specialty" title="专业" length="50" type="string" inputMode="select">
+			<parameter name="js">/job/company/js/job.js</parameter>
+			<parameter name="execute">selectSpecialty(600, 360, false, 'schooling.specialty{name}', 'specialty')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="schoolClassId" title="所在班级ID" length="20" type="number" inputMode="hidden"/>
+		<field name="schoolClass" title="所在班级" length="60" type="string" inputMode="text"/>
+		<field name="qualification" title="学历" length="2" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">小学|0\0初中|1\0高中|2\0职业高中|3\0职业中专|4\0中专|5\0大专|6\0本科|7\0硕士研究生|8\0博士研究生|9</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="degree" title="学位" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsText">无\0学士\0硕士\0博士</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="description" title="专业描述" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">8</parameter>
+		</field>
+		<field name="abroad" title="海外学习经历" length="1" type="number" inputMode="checkbox">
+			<parameter name="label">海外学习经历</parameter>
+			<parameter name="value">1</parameter>
+		</field>
+		<field name="candidateNumber" title="考生号" length="100" type="string" inputMode="text"/>
+		<field name="studentNumber" title="学号" length="30" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="培训经历" class="com.yuanluesoft.job.talent.pojo.JobTalentTraining" businessServiceName="jobTalentService">
+		<field name="talentId" title="人才ID" length="20" type="number" inputMode="hidden"/>
+		<field name="startDate" title="开始时间" required="true" type="date" inputMode="date"/>
+		<field name="endDate" title="结束时间" type="date" inputMode="date"/>
+		<field name="organization" title="培训机构" length="100" required="true" type="string" inputMode="text"/>
+		<field name="address" title="培训地点" length="200" type="string" inputMode="text"/>
+		<field name="course" title="培训课程" length="200" required="true" type="string" inputMode="text"/>
+		<field name="certificate" title="获得证书" length="100" type="string" inputMode="text"/>
+		<field name="description" title="详细描述" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="showInResume" title="显示在简历中" length="1" type="number" inputMode="checkbox">
+			<parameter name="label">显示在简历中</parameter>
+			<parameter name="value">1</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="求职意向" class="com.yuanluesoft.job.talent.pojo.JobTalentIntention" businessServiceName="jobTalentService">
+		<field name="talentId" title="人才ID" length="20" type="number" inputMode="hidden"/>
+		<field name="companyScale" title="企业规模" length="1" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">1~49人|1\0 50~99人|2\0 100~499人|3\0 500~999人|4\0 1000人以上|5\0 不限|0</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="minMonthlyPay" title="期望最低月薪" length="8" type="number" inputMode="text"/>
+		<field name="maxMonthlyPay" title="期望最高月薪" length="8" type="number" inputMode="text"/>
+		<field name="entryDate" title="到岗时间" type="date" inputMode="date"/>
+		<field name="areas" title="求职意向地点" type="components">
+			<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalentIntentionArea</parameter>
+			<parameter name="url">javascript:PageUtils.editrecord('job/talent', 'intention', '{PARAMETER:intentionId}', 'mode=dialog,width=600,height=400')</parameter>
+		</field>
+		<field name="types" title="求职意向工作性质" type="components">
+			<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalentIntentionType</parameter>
+			<parameter name="url">javascript:PageUtils.editrecord('job/talent', 'intention', '{PARAMETER:intentionId}', 'mode=dialog,width=600,height=400')</parameter>
+		</field>
+		<field name="industries" title="求职意向行业" type="components">
+			<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalentIntentionIndustry</parameter>
+			<parameter name="url">javascript:PageUtils.editrecord('job/talent', 'intention', '{PARAMETER:intentionId}', 'mode=dialog,width=600,height=400')</parameter>
+		</field>
+		<field name="posts" title="求职意向职能类别" type="components">
+			<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalentIntentionPost</parameter>
+			<parameter name="url">javascript:PageUtils.editrecord('job/talent', 'intention', '{PARAMETER:intentionId}', 'mode=dialog,width=600,height=400')</parameter>
+		</field>
+		<field name="companyTypes" title="求职意向公司性质" type="components">
+			<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalentIntentionCompanyType</parameter>
+			<parameter name="url">javascript:PageUtils.editrecord('job/talent', 'intention', '{PARAMETER:intentionId}', 'mode=dialog,width=600,height=400')</parameter>
+		</field>
+		<field name="typeArray" title="工作性质" required="true" persistence="false" type="number[]" inputMode="multibox">
+			<parameter name="itemsText">全职|0\0兼职|1\0实习|2\0暑期工|3</parameter>
+			<parameter name="referenceFields">types</parameter>
+		</field>
+		<field name="areaIds" title="工作地点ID" type="string" persistence="false" inputMode="hidden"/>
+   		<field name="areaNames" title="工作地点" type="string" persistence="false" required="true" inputMode="select">
+   			<parameter name="execute">DialogUtils.selectOrg(600, 360, true, 'intention.areaIds{id},intention.areaNames{name|工作地点|100%}', '', 'area')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="referenceFields">areas</parameter>
+		</field>
+		<field name="industryIds" title="行业ID" length="20" type="number" persistence="false" inputMode="hidden"/>
+		<field name="industryNames" title="行业" length="100" required="true" type="string" persistence="false" inputMode="select">
+			<parameter name="js">/job/company/js/job.js</parameter>
+			<parameter name="execute">selectIndustry(640, 400, true, 'intention.industryIds{id},intention.industryNames{name|行业|100%}', 'industry')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="postIds" title="职能类别ID" length="20" type="number" persistence="false" inputMode="hidden"/>
+		<field name="postNames" title="职能类别" length="100" required="true" type="string" persistence="false" inputMode="select">
+			<parameter name="js">/job/company/js/job.js</parameter>
+			<parameter name="execute">selectPost(600, 400, true, 'intention.postIds{id},intention.postNames{name|职能类别|100%}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="companyTypeArray" title="公司性质" length="30" required="true" persistence="false" type="string[]" inputMode="multibox">
+			<parameter name="itemsText">外资（欧美）\0外资（非欧美）\0合资\0国企\0民营公司\0国内上市公司\0外企代表处\0政府机关\0事业单位\0非营利机构\0其它性质</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="求职意向地点" class="com.yuanluesoft.job.talent.pojo.JobTalentIntentionArea" businessServiceName="jobTalentService">
+		<field name="intentionId" title="求职意向ID" length="20" type="number" inputMode="hidden"/>
+		<field name="areaId" title="地点ID" length="20" type="number" inputMode="hidden"/>
+		<field name="area" title="地点" length="50" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="求职意向工作性质" class="com.yuanluesoft.job.talent.pojo.JobTalentIntentionType" businessServiceName="jobTalentService">
+		<field name="intentionId" title="求职意向ID" length="20" type="number" inputMode="hidden"/>
+		<field name="type" title="工作性质" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">全职|0\0兼职|1\0实习|2\0暑期工|3</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="求职意向行业" class="com.yuanluesoft.job.talent.pojo.JobTalentIntentionIndustry" businessServiceName="jobTalentService">
+		<field name="intentionId" title="求职意向ID" length="20" type="number" inputMode="hidden"/>
+		<field name="intentionId" title="行业ID" length="20" type="number" inputMode="hidden"/>
+		<field name="industry" title="行业" length="100" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="求职意向职能类别" class="com.yuanluesoft.job.talent.pojo.JobTalentIntentionPost" businessServiceName="jobTalentService">
+		<field name="intentionId" title="求职意向ID" length="20" type="number" inputMode="hidden"/>
+		<field name="postId" title="职能类别ID" length="20" type="number" inputMode="hidden"/>
+		<field name="post" title="职能类别" length="100" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="求职意向公司性质" class="com.yuanluesoft.job.talent.pojo.JobTalentIntentionCompanyType" businessServiceName="jobTalentService">
+		<field name="intentionId" title="求职意向ID" length="20" type="number" inputMode="hidden"/>
+		<field name="companyType" title="公司性质" length="30" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">外资（欧美）\0外资（非欧美）\0合资\0国企\0民营公司\0国内上市公司\0外企代表处\0政府机关\0事业单位\0非营利机构\0其它性质</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="语言能力" class="com.yuanluesoft.job.talent.pojo.JobTalentSpeech" businessServiceName="jobTalentService">
+		<field name="talentId" title="人才ID" length="20" type="number" inputMode="hidden"/>
+		<field name="language" title="语言类别" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">英语\0日语\0俄语\0阿拉伯语\0法语\0德语\0西班牙语\0葡萄牙语\0意大利语\0韩语/朝鲜语\0普通话\0粤语\0闽南语\0上海话\0其它</parameter>
+		</field>
+		<field name="level" title="掌握程度" length="10" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">一般\0良好\0熟练\0精通</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="literacy" title="读写能力" length="10" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">一般\0良好\0熟练\0精通</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="spoken" title="听说能力" length="10" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">一般\0良好\0熟练\0精通</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="工作经历" class="com.yuanluesoft.job.talent.pojo.JobTalentCareer" businessServiceName="jobTalentService">
+		<field name="talentId" title="人才ID" length="20" type="number" inputMode="hidden"/>
+		<field name="startDate" title="开始时间" required="true" type="date" inputMode="date"/>
+		<field name="endDate" title="结束时间" type="date" inputMode="date"/>
+		<field name="company" title="公司" length="100" required="true" type="string" inputMode="text"/>
+		<field name="industry" title="行业" length="100" type="string" inputMode="select">
+			<parameter name="js">/job/company/js/job.js</parameter>
+			<parameter name="execute">selectIndustry(640, 360, false, 'career.industry{name}', 'industry')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="scale" title="公司规模" length="1" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">1~49人|1\0 50~99人|2\0 100~499人|3\0 500~999人|4\0 1000人以上|5</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="type" title="公司性质" length="30" type="string" inputMode="dropdown">
+			<parameter name="itemsText">外资（欧美）\0外资（非欧美）\0合资\0国企\0民营公司\0国内上市公司\0外企代表处\0政府机关\0事业单位\0非营利机构\0其它性质</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="area" title="所在地" length="60" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(600, 360, false, 'area{name}', '', 'area')</parameter>
+		</field>
+		<field name="department" title="部门" length="50" type="string" inputMode="text"/>
+		<field name="job" title="职位" length="50" type="string" required="true" inputMode="text"/>
+		<field name="postId" title="职位类别ID" length="20" type="number" inputMode="text"/>
+		<field name="post" title="职位类别" length="100" type="string" inputMode="select">
+			<parameter name="js">/job/company/js/job.js</parameter>
+			<parameter name="execute">selectPost(600, 360, false, 'postId{id},post{name}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="description" title="工作描述" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="monthlyPay" title="月薪" length="8" type="number" inputMode="text"/>
+		<field name="reterence" title="证明人" length="30" type="string" inputMode="text"/>
+		<field name="reterenceJob" title="证明人职务" length="50" type="string" inputMode="text"/>
+		<field name="reterenceTel" title="证明人电话" length="100" type="string" inputMode="text"/>
+		<field name="leaveReason" title="离职原因" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="就业跟踪调查表" class="com.yuanluesoft.job.talent.pojo.JobTalentEmployment" businessServiceName="jobTalentService">
+		<field name="talentId" title="人才ID" length="20" type="number" inputMode="hidden"/>
+		<field name="graduationYear" title="毕业年份" required="true" length="4" type="number" inputMode="text"/>
+		<field name="name" title="姓名" required="true" length="30" type="string" inputMode="text"/>
+		<field name="schoolClass" title="专业（班级）" required="true" length="60" type="string" inputMode="text"/>
+		<field name="studentNumber" title="学号" length="30" type="string" inputMode="text"/>
+		<field name="studentSource" title="生源所在地" length="30" type="string" inputMode="text"/>
+		<field name="tel" title="联系方式" length="100" type="string" inputMode="text"/>
+		<field name="email" title="电子邮箱" length="100" type="string" inputMode="text"/>
+		<field name="employmentType" title="就业类型" required="true" length="2" type="number" inputMode="radio">
+			<parameter name="itemsText">已签约|1\0有接收函|2\0定向委培|3\0灵活就业|4\0升学|5\0出国出境|6\0国家地方项目|7\0参军|8\0暂不就业|9\0待就业|10</parameter>
+		</field>
+		<field name="company" title="单位名称" length="100" type="string" inputMode="text"/>
+		<field name="companyAddress" title="单位地址" length="100" type="string" inputMode="text"/>
+		<field name="post" title="岗位" length="100" type="string" inputMode="text"/>
+		<field name="monthlyPay" title="月薪" length="8" type="number" inputMode="text"/>
+		<field name="counterpart" title="专业是否对口" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">A对口|0\0 B较对口|1\0 C不对口|2\0 D很不对口|3</parameter>
+		</field>
+		<field name="satisfaction" title="就业满意度" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">A满意|0\0 B基本满意|1\0 C不满意|2\0 D很不满意|3</parameter>
+		</field>
+		<field name="changeCompany" title="第几次换单位" length="20" type="string" inputMode="text"/>
+		<field name="leaveReason" title="离职原因" length="2000" type="string" inputMode="text"/>
+		<field name="needHelp" title="是否需要推荐" length="1" type="number" inputMode="checkbox">
+			<parameter name="value">1</parameter>
+			<parameter name="label">需要</parameter>
+		</field>
+		<field name="waitReason" title="暂不就业原因" length="2000" type="string" inputMode="text"/>
+		<field name="isNewest" title="是否最新记录" length="1" type="number" inputMode="none"/>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="remark" title="备注" length="4000" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="就业报到" class="com.yuanluesoft.job.talent.pojo.JobTalentReport" businessServiceName="jobTalentService">
+		<field name="talentId" title="人才ID" length="20" type="number" inputMode="hidden"/>
+		<field name="schoolClassId" title="班级ID" length="20" type="number" inputMode="hidden"/>
+		<field name="schoolClass" title="班级名称" length="100" type="string" inputMode="hidden"/>
+		<field name="company" title="单位名称" length="100" type="string" inputMode="text"/>
+		<field name="companyCode" title="单位组织机构代码" length="100" type="string" inputMode="text"/>
+		<field name="companyType" title="单位性质" length="30" type="string" inputMode="dropdown">
+			<parameter name="itemsText">机关及参公单位\0科研设计单位\0高等教育单位\0中初教育单位\0医疗卫生单位\0其它事业单位\0国有企业\0三资企业\0其它企业\0部队\0农村建制村\0城镇社区</parameter>
+		</field>
+		<field name="companySector" title="单位产业" length="100" type="string" inputMode="dropdown">
+			<parameter name="itemsText">第一产业\0第二产业\0第三产业</parameter>
+		</field>
+		<field name="companyIndustry" title="单位行业" length="100" type="string" inputMode="dropdown">
+			<parameter name="itemsText">农、林、牧、渔业\0采矿业\0制造业\0电力、热力、燃气及水生产和供应业\0建筑业\0批发和零售业\0交通运输、仓储和邮政业\0住宿和餐饮业\0信息传输、软件和信息技术服务业\0金融业\0房地产业\0租赁和商务服务业\0科学研究和技术服务业\0水利、环境和公共设施管理业\0居民服务、修理和其他服务业\0教育\0卫生和社会工作\0文化、体育和娱乐业\0公共管理、社会保障和社会组织\0国际组织\0军队</parameter>
+		</field>
+		<field name="personnelFileCompany" title="档案接收单位" length="100" type="string" inputMode="text"/>
+		<field name="personnelFileAddress" title="档案接收地址" length="100" type="string" inputMode="text"/>
+		<field name="name" title="姓名" length="30" type="string" inputMode="text"/>
+		<field name="sex" title="性别" length="1" type="char" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsText">男|M\0女|F</parameter>
+		</field>
+		<field name="birthday" title="出生年月" type="date" inputMode="date"/>
+		<field name="graduateDate" title="毕业时间" type="date" inputMode="date"/>
+		<field name="residence" title="入学前户口所在地" length="100" type="string" inputMode="text"/>
+		<field name="nation" title="民族" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsText">汉族\0壮族\0满族\0回族\0苗族\0维吾尔族\0土家族\0彝族\0蒙古族\0藏族\0布依族\0侗族\0瑶族\0朝鲜族\0白族\0哈尼族\0哈萨克族\0黎族\0傣族\0畲族\0傈僳族\0仡佬族\0东乡族\0高山族\0拉祜族\0水族\0佤族\0纳西族\0羌族\0土族\0仫佬族\0锡伯族\0柯尔克孜族\0达斡尔族\0景颇族\0毛南族\0撒拉族\0塔吉克族\0阿昌族\0普米族\0鄂温克族\0怒族\0京族\0基诺族\0德昂族\0保安族\0俄罗斯族\0裕固族\0乌兹别克族\0门巴族\0鄂伦春族\0独龙族\0塔塔尔族\0赫哲族\0珞巴族\0布朗族</parameter>
+		</field>
+		<field name="politicalStatus" title="政治面貌" length="30" type="string" inputMode="text"/>
+		<field name="studentNumber" title="学号" length="30" type="string" inputMode="text"/>
+		<field name="schoolingLength" title="学制" length="20" type="string" inputMode="text"/>
+		<field name="qualification" title="学历层次" length="20" type="string" inputMode="text"/>
+		<field name="specialty" title="专业" length="100" type="string" inputMode="text"/>
+		<field name="trainingMode" title="培养方式" length="50" type="string" inputMode="dropdown">
+			<parameter name="itemsText">非定向\0定向\0委培\0自筹</parameter>
+		</field>
+		<field name="tel" title="联系电话" length="100" type="string" inputMode="text"/>
+		<field name="address" title="家庭地址" length="100" type="string" inputMode="text"/>
+		<field name="email" title="电子邮箱" length="100" type="string" inputMode="text"/>
+		<field name="jobType" title="工作职位类别" length="50" type="string" inputMode="dropdown">
+			<parameter name="itemsText">公务员\0科学研究人员\0工程技术人员\0农林牧渔业技术人员\0卫生专业技术人员\0经济业务人员\0法律专业人员\0教学人员\0文学艺术工作人员\0体育工作人员\0新闻出版和文化工作人员\0其他专业技术人员\0办事人员和有关人员\0商业和服务业人员\0生产和运输设备操作人员\0军人\0其他人员</parameter>
+		</field>
+		<field name="reportBegin" title="报到开始时间" type="date" inputMode="date"/>
+		<field name="reportEnd" title="报到截止时间" type="date" inputMode="date"/>
+		<field name="noticeNumber" title="就业通知书编号" length="50" type="string" inputMode="text"/>
+		<field name="reportNumber" title="就业报到证编号" length="50" type="string" inputMode="text"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="项目经验" class="com.yuanluesoft.job.talent.pojo.JobTalentProject" businessServiceName="jobTalentService">
+		<field name="talentId" title="人才ID" length="20" type="number" inputMode="hidden"/>
+		<field name="startDate" title="开始时间" required="true" type="date" inputMode="date"/>
+		<field name="endDate" title="结束时间" type="date" inputMode="date"/>
+		<field name="projectName" title="项目名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="description" title="项目描述" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="duty" title="责任描述" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="showInResume" title="显示在简历中" length="1" type="number" inputMode="checkbox">
+			<parameter name="label">显示在简历中</parameter>
+			<parameter name="value">1</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="证书" class="com.yuanluesoft.job.talent.pojo.JobTalentCertificate" businessServiceName="jobTalentService">
+		<field name="talentId" title="人才ID" length="20" type="number" required="true" inputMode="hidden"/>
+		<field name="gained" title="获得时间" type="date" inputMode="date"/>
+		<field name="certificateName" title="证书名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="mark" title="成绩" length="100" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="其它技能" class="com.yuanluesoft.job.talent.pojo.JobTalentAbility" businessServiceName="jobTalentService">
+		<field name="talentId" title="人才ID" length="20" type="number" inputMode="hidden"/>
+		<field name="name" title="名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="description" title="描述" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="人才审核设置" class="com.yuanluesoft.job.talent.pojo.JobTalentApproval" businessServiceName="jobParameterService">
+		<field name="approvalRequired" title="是否需要审核" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">需要|1\0不需要|0</parameter>
+		</field>
+		<field name="passMailSubject" title="审核通过邮件标题" length="200" required="true" type="string" inputMode="text"/>
+		<field name="passMailTemplate" title="审核通过邮件模板" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">10</parameter>
+		</field>
+		<field name="failedMailSubject" title="审核未通过邮件标题" length="200" required="true" type="string" inputMode="text"/>
+		<field name="failedMailTemplate" title="审核未通过邮件模板" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">10</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

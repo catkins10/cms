@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<application>
+	<viewLink local="admin/todoSituation" title="待办民情"/>
+	<viewLink local="admin/inProcessSituation" title="在办民情"/>
+	<viewLink local="admin/completedSituation" title="已办民情"/>
+	<viewLink local="admin/allSituation" title="所有民情"/>
+	<link title="办理流程" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/situation&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/workflowSetting
+	</link>
+	<link title="办结短信格式" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/situation&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/smsFormat
+	</link>
+</application>

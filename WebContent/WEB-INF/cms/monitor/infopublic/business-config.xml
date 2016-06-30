@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="信息公开" class="com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfo" businessServiceName="monitorService">
+		<field name="subject" title="标题" length="200" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="body" title="正文" type="html" inputMode="htmleditor">
+			<parameter name="height">300</parameter>
+		</field>
+		<field name="infoIndex" title="索引号" length="60" type="string" inputMode="text"/>
+		<field name="infoFrom" title="发布机构" length="60" type="string" inputMode="text"/>
+		<field name="mark" title="文号" length="60" type="string" inputMode="text"/>
+		<field name="generateDate" title="生成日期" type="date" required="true">
+			<parameter name="monitorBegin">true</parameter> <!-- 监察开始时间 -->
+		</field>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="text"/>
+		<field name="created" title="创建时间" type="timestamp">
+			<parameter name="createTime">true</parameter> <!-- 创建时间 -->
+		</field>
+		<field name="issueTime" title="发布时间" type="timestamp">
+			<parameter name="monitorEnd">true</parameter> <!-- 监察结束时间 -->
+		</field>
+		<field name="summarize" title="内容概述" length="500" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="category" title="主题分类" length="100" type="string" inputMode="text"/>
+		<field name="keywords" title="主题词" length="100" type="string" inputMode="text"/>
+		<field name="directoryName" title="目录名称" length="200" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="党务公开" class="com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPartyInfo" businessServiceName="monitorService"/>
+	
+	<businessObject title="信息公开意见箱" class="com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoOpinion" businessServiceName="monitorService">
+		<field name="subject" title="主题" length="2000" type="string" inputMode="text"/>
+		<field name="body" title="正文" type="html">
+			<parameter name="height">300</parameter>
+		</field>
+		<field name="created" title="创建时间" type="timestamp">
+			<parameter name="createTime">true</parameter> <!-- 创建时间 -->
+			<parameter name="monitorBegin">true</parameter> <!-- 监察开始时间 -->
+		</field>
+		<field name="creator" title="创建人姓名" length="100" type="string" inputMode="text"/>
+		<field name="creatorTel" title="联系电话" length="100" type="string" inputMode="text"/>
+		<field name="creatorMail" title="邮箱" length="100" type="string" inputMode="text"/>
+		<field name="creatorIP" title="创建人IP" length="30" type="string" inputMode="text"/>
+		<field name="creatorMobile" title="创建人手机" length="100" type="string" inputMode="text"/>
+		<field name="opinion" title="办理意见" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="transactTime" title="办理时间" type="timestamp">
+			<parameter name="monitorEnd">true</parameter> <!-- 监察结束时间 -->
+		</field>
+		<field name="transactor" title="经办人" length="60" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="依申请公开" class="com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoRequest" businessServiceName="monitorService">
+		<field name="proposerType" title="申请人类型" length="10" type="string" inputMode="text"/>
+		<field name="applyMode" title="申请方式" length="50" type="string" inputMode="text"/>
+		<field name="creator" title="申请人" length="100" type="string" inputMode="text"/>
+		<field name="creatorMobile" title="申请人手机" length="100" type="string" inputMode="text"/>
+		<field name="creatorMail" title="申请人邮箱" length="100" type="string" inputMode="text"/>
+		<field name="creatorTel" title="联系电话" length="100" type="string" inputMode="text"/>
+		<field name="code" title="机构代码" length="100" type="string" inputMode="text"/>
+		<field name="legalRepresentative" title="法人代表" length="300" type="string" inputMode="text"/>
+		<field name="creatorIP" title="申请人IP" length="30" type="string" inputMode="text"/>
+		<field name="content" title="内容描述" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="purpose" title="用途" length="1000" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="created" title="申请时间" type="timestamp">
+			<parameter name="createTime">true</parameter> <!-- 创建时间 -->
+			<parameter name="monitorBegin">true</parameter> <!-- 监察开始时间 -->
+		</field>
+		<field name="medium" title="提供方式" length="100" type="string" inputMode="text"/>
+		<field name="receiveMode" title="获取信息的方式" length="100" type="string" inputMode="text"/>
+		<field name="approvalResult" title="审批结果" length="50" type="string" inputMode="text"/>
+		<field name="notPublicType" title="不公开类别" length="50" type="string" inputMode="text"/>
+		<field name="notPublicReason" title="其他未能提供信息的原因" length="500" type="string" inputMode="text"/>
+		<field name="doneMedium" title="实际提供方式" length="100" type="string" inputMode="text"/>
+		<field name="doneReceiveMode" title="实际信息获取方式" length="100" type="string" inputMode="text"/>
+		<field name="approvalTime" title="审批时间" type="timestamp">
+			<parameter name="monitorEnd">true</parameter> <!-- 监察结束时间 -->
+		</field>
+	</businessObject>
+	
+	<businessObject title="信息公开年度报告" class="com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoReport" businessServiceName="monitorService">
+		<field name="subject" title="标题" length="200" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="body" title="正文" type="html">
+			<parameter name="height">300</parameter>
+		</field>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="text"/>
+		<field name="created" title="创建时间" type="timestamp">
+			<parameter name="createTime">true</parameter> <!-- 创建时间 -->
+		</field>
+		<field name="issueTime" title="发布时间" type="timestamp">
+			<parameter name="monitorEnd">true</parameter> <!-- 监察结束时间 -->
+		</field>
+	</businessObject>
+	
+	<businessObject title="信息公开制度" class="com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoRule" businessServiceName="monitorService">
+		<field name="subject" title="标题" length="200" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="body" title="正文" type="html">
+			<parameter name="height">300</parameter>
+		</field>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="text"/>
+		<field name="created" title="创建时间" type="timestamp">
+			<parameter name="createTime">true</parameter> <!-- 创建时间 -->
+		</field>
+		<field name="issueTime" title="发布时间" type="timestamp"/>
+	</businessObject>
+</businessObjects>

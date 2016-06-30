@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+                       "http://www.springframework.org/dtd/spring-beans.dtd">
+<!-- 内网,天气扒虫列表为空 -->
+<beans>
+	<!-- 天气服务 -->
+	<bean id="weatherService" class="com.yuanluesoft.jeaf.weather.service.spring.WeatherServiceImpl">
+		<property name="distributionService"><ref bean="distributionService"/></property>
+		<property name="webApplicationUrl"><ref bean="webApplicationUrl"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="exchangeClient"><ref bean="exchangeClient"/></property>
+		<property name="smallIconSize"><value>42</value></property>
+		<property name="largeIconSize"><value>128</value></property>
+		<property name="smallIconMap">
+			<map>
+				<entry key="N/A"><value>small/na.png</value></entry>
+				<entry key="白天:晴"><value>small/w0.png</value></entry>
+				<entry key="白天:多云"><value>small/w1.png</value></entry>
+				<entry key="阴"><value>small/w2.png</value></entry>
+				<entry key="白天:阵雨"><value>small/w3.png</value></entry>
+				<entry key="雷阵雨"><value>small/w4.png</value></entry>
+				<entry key="雷阵雨伴有冰雹"><value>small/w5.png</value></entry>
+				<entry key="雨夹雪"><value>small/w6.png</value></entry>
+				<entry key="雨"><value>small/w7.png</value></entry>
+				<entry key="小雨"><value>small/w7.png</value></entry>
+				<entry key="中雨"><value>small/w8.png</value></entry>
+				<entry key="大雨"><value>small/w9.png</value></entry>
+				<entry key="暴雨"><value>small/w10.png</value></entry>
+				<entry key="大暴雨"><value>small/w10.png</value></entry>
+				<entry key="特大暴雨"><value>small/w10.png</value></entry>
+				<entry key="白天:阵雪"><value>small/w13.png</value></entry>
+				<entry key="小雪"><value>small/w14.png</value></entry>
+				<entry key="中雪"><value>small/w15.png</value></entry>
+				<entry key="大雪"><value>small/w16.png</value></entry>
+				<entry key="暴雪"><value>small/w17.png</value></entry>
+				<entry key="白天:雾"><value>small/w18.png</value></entry>
+				<entry key="冰雨"><value>small/w19.png</value></entry>
+				<entry key="白天:沙尘暴"><value>small/w20.png</value></entry>
+				<entry key="白天:强沙尘暴"><value>small/w20.png</value></entry>
+				<entry key="白天:扬沙"><value>small/w29.png</value></entry>
+				<entry key="白天:浮尘"><value>small/w29.png</value></entry>
+				<entry key="夜晚:晴"><value>small/w30.png</value></entry>
+				<entry key="夜晚:多云"><value>small/w31.png</value></entry>
+				<entry key="夜晚:雾"><value>small/w32.png</value></entry>
+				<entry key="夜晚:阵雨"><value>small/w33.png</value></entry>
+				<entry key="夜晚:阵雪"><value>small/w34.png</value></entry>
+				<entry key="夜晚:扬沙"><value>small/w35.png</value></entry>
+				<entry key="夜晚:浮尘"><value>small/w35.png</value></entry>
+				<entry key="夜晚:强扬沙"><value>small/w36.png</value></entry>
+			</map>
+		</property>
+		<property name="largeIconMap">
+			<map>
+				<entry key="N/A"><value>large/na.png</value></entry>
+				<entry key="白天:晴"><value>large/w0.png</value></entry>
+				<entry key="白天:多云"><value>large/w1.png</value></entry>
+				<entry key="阴"><value>large/w2.png</value></entry>
+				<entry key="白天:阵雨"><value>large/w3.png</value></entry>
+				<entry key="雷阵雨"><value>large/w4.png</value></entry>
+				<entry key="雷阵雨伴有冰雹"><value>large/w5.png</value></entry>
+				<entry key="雨夹雪"><value>large/w6.png</value></entry>
+				<entry key="雨"><value>large/w7.png</value></entry>
+				<entry key="小雨"><value>large/w7.png</value></entry>
+				<entry key="中雨"><value>large/w8.png</value></entry>
+				<entry key="大雨"><value>large/w9.png</value></entry>
+				<entry key="暴雨"><value>large/w10.png</value></entry>
+				<entry key="大暴雨"><value>large/w10.png</value></entry>
+				<entry key="特大暴雨"><value>large/w10.png</value></entry>
+				<entry key="白天:阵雪"><value>large/w13.png</value></entry>
+				<entry key="小雪"><value>large/w14.png</value></entry>
+				<entry key="中雪"><value>large/w15.png</value></entry>
+				<entry key="大雪"><value>large/w16.png</value></entry>
+				<entry key="暴雪"><value>large/w17.png</value></entry>
+				<entry key="白天:雾"><value>large/w18.png</value></entry>
+				<entry key="冰雨"><value>large/w19.png</value></entry>
+				<entry key="白天:沙尘暴"><value>large/w20.png</value></entry>
+				<entry key="白天:强沙尘暴"><value>large/w20.png</value></entry>
+				<entry key="白天:扬沙"><value>large/w29.png</value></entry>
+				<entry key="白天:浮尘"><value>large/w29.png</value></entry>
+				<entry key="夜晚:晴"><value>large/w30.png</value></entry>
+				<entry key="夜晚:多云"><value>large/w31.png</value></entry>
+				<entry key="夜晚:雾"><value>large/w32.png</value></entry>
+				<entry key="夜晚:阵雨"><value>large/w33.png</value></entry>
+				<entry key="夜晚:阵雪"><value>large/w34.png</value></entry>
+				<entry key="夜晚:扬沙"><value>large/w35.png</value></entry>
+				<entry key="夜晚:浮尘"><value>large/w35.png</value></entry>
+				<entry key="夜晚:强扬沙"><value>large/w36.png</value></entry>
+			</map>
+		</property>
+		<property name="weatherSpiders">
+			<list> <!-- 优先级高的在前面 -->
+				
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 从中央气象台(www.nmc.cn)获取天气数据 -->
+	<bean id="nmcWeatherSpider" class="com.yuanluesoft.jeaf.weather.spider.nmc.NmcWeatherSpider">
+		<property name="captureService"><ref bean="captureService"/></property>
+		<property name="cache"><ref bean="recordCache"/></property>
+		<property name="serializedWeatherCaptureTasks">
+			<list></list>
+		</property>
+	</bean>
+
+	<!-- 从中国天气网(www.weather.com.cn,tq121.com.cn)获取天气数据 -->
+	<bean id="tq121WeatherSpider" class="com.yuanluesoft.jeaf.weather.spider.tq121.Tq121WeatherSpider">
+		<property name="captureService"><ref bean="captureService"/></property>
+		<property name="cache"><ref bean="recordCache"/></property>
+		<property name="serializedWeatherCaptureTasks">
+			<list></list>
+		</property>
+	</bean>
+	
+	<!-- 从新浪网(weather.sina.com.cn)获取天气数据 -->
+	<bean id="sinaWeatherSpider" class="com.yuanluesoft.jeaf.weather.spider.sina.SinaWeatherSpider">
+		<property name="captureService"><ref bean="captureService"/></property>
+		<property name="cache"><ref bean="recordCache"/></property>
+		<property name="serializedWeatherCaptureTasks">
+			<list></list>
+		</property>
+	</bean>
+	
+	<!-- 从象辑科技(mlogcn.com)获取天气数据 -->
+	<bean id="mlogcnWeatherSpider" class="com.yuanluesoft.jeaf.weather.spider.mlogcn.MlogcnWeatherSpider">
+		<property name="captureService"><ref bean="captureService"/></property>
+		<property name="cache"><ref bean="recordCache"/></property>
+		<property name="serializedWeatherCaptureTasks">
+			<list></list>
+		</property>
+	</bean>
+	
+	<!-- 天气列表处理器 -->		
+	<bean id="weathersProcessor" class="com.yuanluesoft.jeaf.weather.processor.WeathersProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="gpsService"><ref bean="gpsService"/></property>
+		<property name="weatherService"><ref bean="weatherService"/></property>
+	</bean>
+	
+	<!-- 天气字段处理器 -->		
+	<bean id="weatherFieldProcessor" class="com.yuanluesoft.jeaf.weather.processor.WeatherFieldProcessor">
+		<property name="weatherService"><ref bean="weatherService"/></property>
+	</bean>
+</beans>

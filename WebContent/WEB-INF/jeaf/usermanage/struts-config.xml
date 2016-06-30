@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminRoot" type="com.yuanluesoft.jeaf.usermanage.forms.admin.Root"/>
+  <form-bean name="adminUnit" type="com.yuanluesoft.jeaf.usermanage.forms.admin.Unit"/>
+  <form-bean name="adminSchoolDepartment" type="com.yuanluesoft.jeaf.usermanage.forms.admin.SchoolDepartment"/>
+  <form-bean name="adminSchool" type="com.yuanluesoft.jeaf.usermanage.forms.admin.School"/>
+  <form-bean name="adminSchoolClass" type="com.yuanluesoft.jeaf.usermanage.forms.admin.SchoolClass"/>
+  <form-bean name="adminPerson" type="com.yuanluesoft.jeaf.usermanage.forms.admin.Person"/>
+  <form-bean name="adminRole" type="com.yuanluesoft.jeaf.usermanage.forms.admin.Role"/>
+  <form-bean name="orgTree" type="com.yuanluesoft.jeaf.usermanage.forms.Select"/>
+  <form-bean name="personView" type="com.yuanluesoft.jeaf.usermanage.forms.admin.PersonView"/>
+  <form-bean name="adminArea" type="com.yuanluesoft.jeaf.usermanage.forms.admin.Area"/>
+  <form-bean name="adminEmployee" type="com.yuanluesoft.jeaf.usermanage.forms.admin.Employee"/>
+  <form-bean name="adminStudent" type="com.yuanluesoft.jeaf.usermanage.forms.admin.Student"/>
+  <form-bean name="adminTeacher" type="com.yuanluesoft.jeaf.usermanage.forms.admin.Teacher"/>
+  <form-bean name="adminGenearch" type="com.yuanluesoft.jeaf.usermanage.forms.admin.Genearch"/>
+  <form-bean name="personalData" type="com.yuanluesoft.jeaf.usermanage.forms.PersonalData"/>
+  <form-bean name="portrait" type="com.yuanluesoft.jeaf.usermanage.forms.Portrait"/>
+  <form-bean name="registStudent" type="com.yuanluesoft.jeaf.usermanage.forms.RegistStudent"/>
+  <form-bean name="myClass" type="com.yuanluesoft.jeaf.usermanage.forms.MyClass"/>
+  <form-bean name="retrieveGenearchAccount" type="com.yuanluesoft.jeaf.usermanage.forms.RetrieveGenearchAccount"/>
+  <form-bean name="registTeacher" type="com.yuanluesoft.jeaf.usermanage.forms.RegistTeacher"/>
+  <form-bean name="mySchoolNavigator" type="com.yuanluesoft.jeaf.usermanage.forms.MySchoolNavigator"/>
+  <form-bean name="listToApprovalTeachers" type="com.yuanluesoft.jeaf.usermanage.forms.ListToApprovalTeachers"/>
+  <form-bean name="listSchoolTeachers" type="com.yuanluesoft.jeaf.usermanage.forms.ListSchoolTeachers"/>
+  <form-bean name="listSchoolDepartments" type="com.yuanluesoft.jeaf.usermanage.forms.ListSchoolDepartments"/>
+  <form-bean name="listSchoolClasses" type="com.yuanluesoft.jeaf.usermanage.forms.ListSchoolClasses"/>
+  <form-bean name="schoolRegistCode" type="com.yuanluesoft.jeaf.usermanage.forms.SchoolRegistCode"/>
+  <form-bean name="school" type="com.yuanluesoft.jeaf.usermanage.forms.School"/>
+  <form-bean name="schoolDepartment" type="com.yuanluesoft.jeaf.usermanage.forms.SchoolDepartment"/>
+  <form-bean name="schoolClass" type="com.yuanluesoft.jeaf.usermanage.forms.SchoolClass"/>
+  <form-bean name="student" type="com.yuanluesoft.jeaf.usermanage.forms.Student"/>
+  <form-bean name="teacher" type="com.yuanluesoft.jeaf.usermanage.forms.Teacher"/>
+  <form-bean name="questionnaire" type="com.yuanluesoft.jeaf.usermanage.forms.Questionnaire"/>
+  <form-bean name="schoolGrade" type="com.yuanluesoft.jeaf.usermanage.forms.SchoolGrade"/>
+  <form-bean name="genearch" type="com.yuanluesoft.jeaf.usermanage.forms.Genearch"/>
+  <form-bean name="myClassNavigator" type="com.yuanluesoft.jeaf.usermanage.forms.MyClassNavigator"/>
+  <form-bean name="listToApprovalStudents" type="com.yuanluesoft.jeaf.usermanage.forms.ListToApprovalStudents"/>
+  <form-bean name="listClassStudents" type="com.yuanluesoft.jeaf.usermanage.forms.ListClassStudents"/>
+  <form-bean name="adminSchoolGrade" type="com.yuanluesoft.jeaf.usermanage.forms.admin.SchoolGrade"/>
+  <form-bean name="adjustPriority" type="com.yuanluesoft.jeaf.dialog.forms.AdjustPriority"/>
+  <form-bean name="adminCategory" type="com.yuanluesoft.jeaf.usermanage.forms.admin.Category"/>
+  <form-bean name="adminRoleView" type="com.yuanluesoft.jeaf.usermanage.forms.admin.RoleView"/>
+  <form-bean name="adminUnitDepartment" type="com.yuanluesoft.jeaf.usermanage.forms.admin.UnitDepartment"/>
+  <form-bean name="select" type="com.yuanluesoft.jeaf.usermanage.forms.Select"/>
+  <form-bean name="setAgent" type="com.yuanluesoft.jeaf.usermanage.forms.SetAgent"/>
+  <form-bean name="adminUserReplicate" type="com.yuanluesoft.jeaf.usermanage.forms.admin.UserReplicate"/>
+  <form-bean name="adminTemplate" type="com.yuanluesoft.jeaf.usermanage.forms.admin.UserPageTemplate"/>
+  <form-bean name="adminSelectTemplate" type="com.yuanluesoft.jeaf.dialog.forms.ViewSelectDialog"/>
+  <form-bean name="adminSelectTemplatePage" type="com.yuanluesoft.jeaf.dialog.forms.ListDialog"/>
+  <form-bean name="adminPost" type="com.yuanluesoft.jeaf.usermanage.forms.admin.Post"/>
+  <form-bean name="adminBatchRegistEmployees" type="com.yuanluesoft.jeaf.usermanage.forms.admin.BatchRegistEmployees"/>
+  <form-bean name="adminOrgRelationConfigView" type="com.yuanluesoft.jeaf.usermanage.forms.admin.OrgRelationConfigView"/>
+  <form-bean name="insertLoginForm" type="com.yuanluesoft.jeaf.usermanage.forms.admin.InsertLoginForm"/>
+  <form-bean name="adminLoginTemplate" type="com.yuanluesoft.jeaf.usermanage.forms.admin.UserLoginTemplate"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminRoot" path="/admin/root" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.Load" validate="false">
+   <forward name="load" path="/admin/root.jsp"/>
+  </action>
+  <action input="/admin/root.jsp" name="adminRoot"
+   path="/admin/saveRoot" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.Save" validate="false"/>
+  <action name="adminUnit" path="/admin/unit" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.Load" validate="false">
+   <forward name="load" path="/admin/unit.jsp"/>
+  </action>
+  <action input="/admin/unit.jsp" name="adminUnit"
+   path="/admin/saveUnit" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.Save" validate="false"/>
+  <action input="/admin/unit.jsp" name="adminUnit"
+   path="/admin/deleteUnit" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.Delete" validate="false"/>
+  <action input="/admin/unit.jsp" name="adminUnit"
+   path="/admin/registNextUnit" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.RegistNext" validate="false"/>
+  <action name="adminUnitDepartment" path="/admin/unitDepartment"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.Load" validate="false">
+   <forward name="load" path="/admin/unitDepartment.jsp"/>
+  </action>
+  <action input="/admin/unitDepartment.jsp" name="adminUnitDepartment"
+   path="/admin/saveUnitDepartment" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.Save" validate="false"/>
+  <action input="/admin/unitDepartment.jsp" name="adminUnitDepartment"
+   path="/admin/deleteUnitDepartment" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.Delete" validate="false"/>
+  <action input="/admin/unitDepartment.jsp" name="adminUnitDepartment"
+   path="/admin/registNextUnitDepartment" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.RegistNext" validate="false"/>
+  <action name="adminSchool" path="/admin/school" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.school.Load" validate="false">
+   <forward name="load" path="/admin/school.jsp"/>
+  </action>
+  <action input="/admin/school.jsp" name="adminSchool"
+   path="/admin/saveSchool" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.school.Save" validate="false"/>
+  <action input="/admin/school.jsp" name="adminSchool"
+   path="/admin/deleteSchool" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.school.Delete" validate="false"/>
+  <action input="/admin/school.jsp" name="adminSchool"
+   path="/admin/registNextSchool" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.school.RegistNext" validate="false"/>
+  <action name="adminSchoolClass" path="/admin/schoolClass"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.schoolclass.Load" validate="false">
+   <forward name="load" path="/admin/schoolClass.jsp"/>
+  </action>
+  <action input="/admin/schoolClass.jsp" name="adminSchoolClass"
+   path="/admin/saveSchoolClass" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.schoolclass.Save" validate="false"/>
+  <action input="/admin/schoolClass.jsp" name="adminSchoolClass"
+   path="/admin/deleteSchoolClass" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.schoolclass.Delete" validate="false"/>
+  <action input="/admin/schoolClass.jsp" name="adminSchoolClass"
+   path="/admin/registNextSchoolClass" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.schoolclass.RegistNext" validate="false"/>
+  <action name="adminTeacher" path="/admin/teacher" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.person.Load" validate="false">
+   <forward name="load" path="/admin/teacher.jsp"/>
+  </action>
+  <action input="/admin/teacher.jsp" name="adminTeacher"
+   path="/admin/saveTeacher" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.person.Save" validate="false"/>
+  <action input="/admin/teacher.jsp" name="adminTeacher"
+   path="/admin/deleteTeacher" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.person.Delete" validate="false"/>
+  <action input="/admin/teacher.jsp" name="adminTeacher"
+   path="/admin/registNextTeacher" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.person.RegistNext" validate="false"/>
+  <action name="adminStudent" path="/admin/student" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.student.Load" validate="false">
+   <forward name="load" path="/admin/student.jsp"/>
+  </action>
+  <action input="/admin/student.jsp" name="adminStudent"
+   path="/admin/saveStudent" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.student.Save" validate="false"/>
+  <action input="/admin/student.jsp" name="adminStudent"
+   path="/admin/deleteStudent" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.student.Delete" validate="false"/>
+  <action input="/admin/student.jsp" name="adminStudent"
+   path="/admin/registNextStudent" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.student.RegistNext" validate="false"/>
+  <action name="adminEmployee" path="/admin/employee" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.person.Load" validate="false">
+   <forward name="load" path="/admin/employee.jsp"/>
+  </action>
+  <action input="/admin/employee.jsp" name="adminEmployee"
+   path="/admin/saveEmployee" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.person.Save" validate="false"/>
+  <action input="/admin/employee.jsp" name="adminEmployee"
+   path="/admin/deleteEmployee" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.person.Delete" validate="false"/>
+  <action input="/admin/employee.jsp" name="adminEmployee"
+   path="/admin/registNextEmployee" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.person.RegistNext" validate="false"/>
+  <action name="personView" path="/admin/personView" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.personview.PersonViewAction" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action name="adminArea" path="/admin/area" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.Load" validate="false">
+   <forward name="load" path="/admin/area.jsp"/>
+  </action>
+  <action input="/admin/area.jsp" name="adminArea"
+   path="/admin/saveArea" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.Save" validate="false"/>
+  <action input="/admin/area.jsp" name="adminArea"
+   path="/admin/deleteArea" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.Delete" validate="false"/>
+  <action input="/admin/area.jsp" name="adminArea"
+   path="/admin/registNextArea" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.RegistNext" validate="false"/>
+  <action input="/admin/schoolClass.jsp" name="adminSchoolClass"
+   path="/admin/addTeacher" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.schoolclass.AddTeacher" validate="false"/>
+  <action input="/admin/schoolClass.jsp" name="adminSchoolClass"
+   path="/admin/deleteTeachers" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.schoolclass.DeleteTeachers" validate="false"/>
+  <action input="/admin/student.jsp" name="adminStudent"
+   path="/admin/addGenearch" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.student.AddGenearch" validate="false"/>
+  <action input="/admin/student.jsp" name="adminStudent"
+   path="/admin/deleteGenearches" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.student.DeleteGenearches" validate="false"/>
+  <action name="adminGenearch" path="/admin/genearch" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.person.Load" validate="false">
+   <forward name="load" path="/admin/genearch.jsp"/>
+  </action>
+  <action input="/admin/genearch.jsp" name="adminGenearch"
+   path="/admin/saveGenearch" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.person.Save" validate="false"/>
+  <action input="/admin/genearch.jsp" name="adminGenearch"
+   path="/admin/deleteGenearch" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.person.Delete" validate="false"/>
+  <action name="personalData" path="/personalData" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.personaldata.Load" validate="false">
+   <forward name="load" path="/personalData.jsp"/>
+  </action>
+  <action input="/personalData.jsp" name="personalData"
+   path="/savePersonalData" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.personaldata.Save" validate="false">
+   <forward name="actionResultSimple" path="/actionResultSimple.jsp"/>
+  </action>
+  <action name="portrait" path="/uploadPortrait" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.portrait.UploadPortrait" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="portrait" path="/portrait" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.portrait.DownloadPortrait" validate="false"/>
+  <action path="/personalSetting" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.personalsetting.OpenPersonalSetting" validate="false">
+   <forward name="load" path="/personalSetting.jsp"/>
+  </action>
+  <action name="registStudent" path="/registStudent" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.registstudent.Load" validate="false">
+   <forward name="load" path="/registStudent.jsp"/>
+  </action>
+  <action input="/registStudent.jsp" name="registStudent"
+   path="/doRegistStudent" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.registstudent.Regist" validate="false">
+   <forward name="result" path="/questionnaire.shtml"/>
+  </action>
+  <action path="/myClass" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myclass.Load" validate="false">
+   <forward name="load" path="/myClass.jsp"/>
+  </action>
+  <action input="/listToApprovalStudents.jsp"
+   name="listToApprovalStudents" path="/approvalRegistStudents"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myclass.ApprovalRegistStudents" validate="false"/>
+  <action path="/isLoginNameInUse" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.isloginnameinuse.Check" validate="false"/>
+  <action name="retrieveGenearchAccount" path="/retrieveGenearchAccount"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.retrievegenearchaccount.Load" validate="false">
+   <forward name="load" path="/retrieveGenearchAccount.jsp"/>
+  </action>
+  <action input="/retrieveGenearchAccount.jsp"
+   name="retrieveGenearchAccount" path="/doRetrieveGenearchAccount"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.retrievegenearchaccount.Retrieve" validate="false">
+   <forward name="result" path="/displayGenearchAccount.jsp"/>
+  </action>
+  <action input="/displayGenearchAccount.jsp"
+   name="retrieveGenearchAccount" path="/modifyGenearchAccount"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.retrievegenearchaccount.ModifyAccount" validate="false">
+   <forward name="result" path="/actionResult.jsp"/>
+  </action>
+  <action name="registTeacher" path="/registTeacher" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.registteacher.Load" validate="false">
+   <forward name="load" path="/registTeacher.jsp"/>
+  </action>
+  <action input="/registTeacher.jsp" name="registTeacher"
+   path="/doRegistTeacher" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.registteacher.Regist" validate="false">
+   <forward name="result" path="/actionResult.jsp"/>
+  </action>
+  <action path="/mySchool" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.Load" validate="false">
+   <forward name="load" path="/mySchool.jsp"/>
+  </action>
+  <action input="/listToApprovalTeachers.jsp"
+   name="listToApprovalTeachers" path="/approvalRegistTeachers"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.ApprovalRegistTeachers" validate="false"/>
+  <action name="listToApprovalTeachers" path="/listToApprovalTeachers"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.ListToApprovalTeachers" validate="false">
+   <forward name="load" path="/listToApprovalTeachers.jsp"/>
+  </action>
+  <action name="listSchoolTeachers" path="/listSchoolTeachers"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.ListSchoolTeachers" validate="false">
+   <forward name="load" path="/listSchoolTeachers.jsp"/>
+  </action>
+  <action name="listSchoolTeachers" path="/displaySchoolTeacherView"
+   scope="request" validate="false"/>
+  <action name="listSchoolDepartments" path="/listSchoolDepartments"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.ListSchoolDepartments" validate="false">
+   <forward name="load" path="/listSchoolDepartments.jsp"/>
+  </action>
+  <action name="listSchoolClasses" path="/listSchoolClasses"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.ListSchoolClasses" validate="false">
+   <forward name="load" path="/listSchoolClasses.jsp"/>
+  </action>
+  <action name="listSchoolDepartments"
+   path="/displaySchoolDepartmentView" scope="request" validate="false"/>
+  <action name="listSchoolClasses" path="/displaySchoolClasseView"
+   scope="request" validate="false"/>
+  <action name="mySchoolNavigator" path="/mySchoolNavigator"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.LoadMySchoolNavigator" validate="false">
+   <forward name="load" path="/mySchoolNavigator.jsp"/>
+  </action>
+  <action name="mySchoolNavigator" path="/displaySchoolNavigator"
+   scope="request" validate="false"/>
+  <action forward="/registPerson.jsp" path="/registPerson"
+   scope="request" validate="false"/>
+  <action name="schoolRegistCode" path="/schoolRegistCode"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.registcode.Load" validate="false">
+   <forward name="load" path="/schoolRegistCode.jsp"/>
+  </action>
+  <action input="/schoolRegistCode.jsp" name="schoolRegistCode"
+   path="/saveSchoolRegistCode" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.registcode.Save" validate="false">
+   <forward name="result" path="/actionResultSimple.jsp"/>
+  </action>
+  <action name="school" path="/school" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.school.Load" validate="false">
+   <forward name="load" path="/school.jsp"/>
+  </action>
+  <action name="schoolDepartment" path="/schoolDepartment"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.schooldepartment.Load" validate="false">
+   <forward name="load" path="/schoolDepartment.jsp"/>
+  </action>
+  <action name="schoolClass" path="/schoolClass" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.schoolclass.Load" validate="false">
+   <forward name="load" path="/schoolClass.jsp"/>
+  </action>
+  <action input="/school.jsp" name="schoolClass" path="/saveSchool"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.school.Save" validate="false"/>
+  <action input="/schoolDepartment.jsp" name="schoolDepartment"
+   path="/saveSchoolDepartment" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.schooldepartment.Save" validate="false"/>
+  <action input="/schoolClass.jsp" name="schoolClass"
+   path="/saveSchoolClass" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.schoolclass.Save" validate="false"/>
+  <action input="/schoolDepartment.jsp" name="schoolDepartment"
+   path="/deleteSchoolDepartment" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.schooldepartment.Delete" validate="false"/>
+  <action input="/schoolClass.jsp" name="schoolClass"
+   path="/deleteSchoolClass" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.schoolclass.Delete" validate="false"/>
+  <action name="student" path="/student" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.student.Load" validate="false">
+   <forward name="load" path="/student.jsp"/>
+  </action>
+  <action name="teacher" path="/teacher" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.teacher.Load" validate="false">
+   <forward name="load" path="/teacher.jsp"/>
+  </action>
+  <action input="/student.jsp" name="student" path="/saveStudent"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.student.Save" validate="false"/>
+  <action input="/teacher.jsp" name="teacher" path="/saveTeacher"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.teacher.Save" validate="false"/>
+  <action input="/teacher.jsp" name="teacher" path="/deleteTeacher"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.teacher.Delete" validate="false"/>
+  <action input="/student.jsp" name="student" path="/deleteStudent"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.student.Delete" validate="false"/>
+  <action input="/student.jsp" name="student" path="/addGenearch"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.student.AddGenearch" validate="false"/>
+  <action input="/student.jsp" name="student" path="/deleteGenearches"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.student.DeleteGenearches" validate="false"/>
+  <action name="questionnaire" path="/questionnaire" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.questionnaire.Load" validate="false">
+   <forward name="load" path="/questionnaire.jsp"/>
+  </action>
+  <action input="/questionnaire.jsp" name="questionnaire"
+   path="/saveQuestionnaire" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.questionnaire.Save" validate="false">
+   <forward name="result" path="/actionResult.jsp"/>
+  </action>
+  <action input="/schoolClass.jsp" name="schoolClass"
+   path="/registNextSchoolClass" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.schoolclass.RegistNext" validate="false"/>
+  <action input="/schoolDepartment.jsp" name="schoolDepartment"
+   path="/registNextSchoolDepartment" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.schooldepartment.RegistNext" validate="false"/>
+  <action input="/schoolClass.jsp" name="schoolClass" path="/addTeacher"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.schoolclass.AddTeacher" validate="false"/>
+  <action input="/schoolClass.jsp" name="schoolClass"
+   path="/deleteTeachers" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.schoolclass.DeleteTeachers" validate="false"/>
+  <action name="schoolGrade" path="/schoolGrade" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.schoolgrade.Load" validate="false">
+   <forward name="load" path="/schoolGrade.jsp"/>
+  </action>
+  <action input="/schoolGrade.jsp" name="schoolGrade"
+   path="/registSchoolGrade" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.schoolgrade.Regist" validate="false"/>
+  <action input="/schoolGrade.jsp" name="schoolGrade"
+   path="/registNextSchoolGrade" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myschool.schoolgrade.RegistNext" validate="false"/>
+  <action name="genearch" path="/genearch" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.genearch.Load" validate="false">
+   <forward name="load" path="/genearch.jsp"/>
+  </action>
+  <action input="/genearch.jsp" name="genearch" path="/saveGenearch"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.genearch.Save" validate="false"/>
+  <action input="/genearch.jsp" name="genearch" path="/deleteGenearch"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.genearch.Delete" validate="false"/>
+  <action name="myClassNavigator" path="/myClassNavigator"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myclass.LoadMyClassNavigator" validate="false">
+   <forward name="load" path="/myClassNavigator.jsp"/>
+  </action>
+  <action name="myClassNavigator" path="/displayClassNavigator"
+   scope="request" validate="false"/>
+  <action name="listClassStudents" path="/listClassStudents"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myclass.ListClassStudents" validate="false">
+   <forward name="load" path="/listClassStudents.jsp"/>
+  </action>
+  <action name="listToApprovalStudents" path="/listToApprovalStudents"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.myclass.ListToApprovalStudents" validate="false">
+   <forward name="load" path="/listToApprovalStudents.jsp"/>
+  </action>
+  <action name="listClassStudents" path="/displayClassStudentView"
+   scope="request" validate="false"/>
+  <action name="adminSchoolGrade" path="/admin/schoolGrade"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.schoolgrade.Load" validate="false">
+   <forward name="load" path="/admin/schoolGrade.jsp"/>
+  </action>
+  <action input="/admin/schoolGrade.jsp" name="adminSchoolGrade"
+   path="/admin/registSchoolGrade" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.schoolgrade.Regist" validate="false"/>
+  <action input="/admin/schoolGrade.jsp" name="adminSchoolGrade"
+   path="/admin/registNextSchoolGrade" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.schoolgrade.RegistNext" validate="false"/>
+  <action path="/admin/upgrade" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.schoolclass.Upgrade" validate="false"/>
+  <action input="/admin/school.jsp" name="adminSchool"
+   path="/admin/resendRegistMail" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.school.ResendMail" validate="false"/>
+  <action input="/admin/school.jsp" name="adminSchool"
+   path="/admin/displayRegistInfo" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.school.DisplayRegistInfo" validate="false"/>
+  <action input="/student.jsp" name="student" path="/deleteFromClass"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.student.DeleteFromClass" validate="false"/>
+  <action input="/admin/schoolClass.jsp" name="adminSchoolClass"
+   path="/admin/resendSmsToGenearch" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.schoolclass.ResendSmsToGenearch" validate="false"/>
+  <action path="/admin/synchAllPerson" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.synchallperson.Synch" validate="false"/>
+  <action name="adjustPriority" path="/admin/adjustOrgPriority"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.adjustpriority.AdjustOrgPriorityAction" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/adjustpriority/adjustPriority.jsp"/>
+  </action>
+  <action name="adjustPriority" path="/admin/adjustPersonPriority"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.adjustpriority.AdjustPersonPriorityAction" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/adjustpriority/adjustPriority.jsp"/>
+  </action>
+  <action name="adminCategory" path="/admin/category" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.Load" validate="false">
+   <forward name="load" path="/admin/category.jsp"/>
+  </action>
+  <action input="/admin/category.jsp" name="adminCategory"
+   path="/admin/saveCategory" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.Save" validate="false"/>
+  <action input="/admin/category.jsp" name="adminCategory"
+   path="/admin/deleteCategory" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.Delete" validate="false"/>
+  <action input="/admin/category.jsp" name="adminCategory"
+   path="/admin/registNextCategory" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.RegistNext" validate="false"/>
+  <action name="adminRoleView" path="/admin/roleView" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.roleview.RoleViewAction" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action name="adminRole" path="/admin/role" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.role.Load" validate="false">
+   <forward name="load" path="/admin/role.jsp"/>
+  </action>
+  <action input="/admin/role.jsp" name="adminRole"
+   path="/admin/saveRole" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.role.Save" validate="false"/>
+  <action input="/admin/role.jsp" name="adminRole"
+   path="/admin/deleteRole" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.role.Delete" validate="false"/>
+  <action input="/admin/role.jsp" name="adminRole"
+   path="/admin/createNextRole" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.role.CreateNext" validate="false"/>
+  <action name="adminSchoolDepartment" path="/admin/schoolDepartment"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.Load" validate="false">
+   <forward name="load" path="/admin/schoolDepartment.jsp"/>
+  </action>
+  <action input="/admin/schoolDepartment.jsp"
+   name="adminSchoolDepartment" path="/admin/saveSchoolDepartment"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.Save" validate="false"/>
+  <action input="/admin/schoolDepartment.jsp"
+   name="adminSchoolDepartment" path="/admin/deleteSchoolDepartment"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.Delete" validate="false"/>
+  <action input="/admin/schoolDepartment.jsp"
+   name="adminSchoolDepartment" path="/admin/registNextSchoolDepartment"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.org.RegistNext" validate="false"/>
+  <action name="select" path="/selectOrg" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.selectorg.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="select" path="/listChildOrgs" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.selectorg.ListChildOrgs" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action name="select" path="/selectPerson" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.selectperson.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="select" path="/listPersons" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.selectperson.ListPersons" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action name="select" path="/selectRole" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.selectrole.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="select" path="/listRoles" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.selectrole.ListRoles" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action name="select" path="/selectRoleMember" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.selectrolemember.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="select" path="/listRoleMembers" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.selectrolemember.ListRoleMembers" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action name="setAgent" path="/admin/setAgent" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.setagent.Load" validate="false">
+   <forward name="load" path="/admin/setAgent.jsp"/>
+  </action>
+  <action name="personalData" path="/admin/personalData" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.personaldata.Load" validate="false">
+   <forward name="load" path="/admin/personalData.jsp"/>
+  </action>
+  <action input="/admin/saveAgent.jsp" name="setAgent"
+   path="/admin/saveAgent" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.setagent.Save" validate="false"/>
+  <action input="/admin/personalData.jsp" name="personalData"
+   path="/admin/savePersonalData" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.personaldata.Save" validate="false"/>
+  <action path="/admin/importPlaceName" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.placename.Import" validate="false"/>
+  <action name="adminUserReplicate" path="/admin/userReplicate"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.userreplicate.Replicate" validate="false">
+   <forward name="load" path="/admin/userReplicate.jsp"/>
+  </action>
+  <action path="/personalIndex" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.personalindex.Load" validate="false"/>
+  <action name="adminTemplate" path="/admin/template" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.userpagetemplate.Load" validate="false">
+   <forward name="load" path="/../../cms/templatemanage/template.jsp"/>
+  </action>
+  <action input="/../../cms/templatemanage/template.jsp"
+   name="adminTemplate" path="/admin/saveTemplate" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.userpagetemplate.Save" validate="false"/>
+  <action input="/../../cms/templatemanage/template.jsp"
+   name="adminTemplate" path="/admin/deleteTemplate" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.userpagetemplate.Delete" validate="false"/>
+  <action name="adminSelectTemplate" path="/admin/selectTemplate"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.templateconfigure.SelectTemplate" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/viewselectdialog/viewSelectDialog.jsp"/>
+  </action>
+  <action name="adminBatchRegistEmployees"
+   path="/admin/batchRegistEmployees" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.batchregistemployees.Load" validate="false">
+   <forward name="load" path="/admin/batchRegistEmployees.jsp"/>
+  </action>
+  <action input="/admin/batchRegistEmployees.jsp"
+   name="adminBatchRegistEmployees" path="/admin/doBatchRegistEmployees"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.batchregistemployees.Regist" validate="false"/>
+  <action name="adminBatchRegistEmployees"
+   path="/admin/uploadRegistEmployees" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.batchregistemployees.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="adminOrgRelationConfigView"
+   path="/admin/orgRelationConfigView" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.orgrelationconfigview.OrgRelationConfigViewAction" validate="false">
+   <forward name="load" path="/admin/orgRelationConfigView.jsp"/>
+  </action>
+  <action name="insertLoginForm" path="/templatemanage/insertLoginForm"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertLoginForm.jsp"/>
+  </action>
+  <action name="adminLoginTemplate" path="/admin/loginTemplate"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.userlogintemplate.Load" validate="false">
+   <forward name="load" path="/../../cms/templatemanage/template.jsp"/>
+  </action>
+  <action input="/../../cms/templatemanage/template.jsp"
+   name="adminLoginTemplate" path="/admin/saveLoginTemplate"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.userlogintemplate.Save" validate="false"/>
+  <action input="/../../cms/templatemanage/template.jsp"
+   name="adminLoginTemplate" path="/admin/deleteLoginTemplate"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.actions.admin.userlogintemplate.Delete" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

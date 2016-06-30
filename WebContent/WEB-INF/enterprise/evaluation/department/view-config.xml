@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="departmentEvaluations" form="evaluation" title="已完成部门考核">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.evaluation.department.pojo.DepartmentEvaluation</pojo>
+			<where>DepartmentEvaluation.creatorId={USERID}</where>
+			<orderBy>DepartmentEvaluation.evaluationYear DESC, DepartmentEvaluation.evaluationMonth DESC</orderBy>
+		</data>
+	</view>
+
+	<view name="admin/departmentEvaluation" form="admin/evaluation" title="部门考核" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.evaluation.department.pojo.DepartmentEvaluation</pojo>
+			<orderBy>DepartmentEvaluation.evaluationYear DESC, DepartmentEvaluation.evaluationMonth DESC</orderBy>
+			<quickFilter>DepartmentEvaluation.orgName like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有部门考核" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.enterprise.evaluation.department.pojo.DepartmentEvaluation</pojo>
+			</data>
+			<category value="DepartmentEvaluation.evaluationYear"> <!--value必须有-->
+				<data>DepartmentEvaluation.evaluationYear={CATEGORYVALUE}</data>
+			</category>
+			<category value="DepartmentEvaluation.evaluationMonth"> <!--value必须有-->
+				<where>DepartmentEvaluation.evaluationYear={PARENTVALUE}</where>
+				<data>DepartmentEvaluation.evaluationYear={CATEGORY1VALUE} and DepartmentEvaluation.evaluationMonth={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="考核年度" name="evaluationYear" width="100" align="center"/>
+			<column title="考核月份" name="evaluationMonth" width="100" align="center"/>
+			<column title="考核人" name="creator"/>
+			<column title="考核时间" name="created" width="110" align="center"/>
+		</columns>
+	</view>
+</views>

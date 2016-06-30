@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 论坛主题服务 -->
+	<bean id="bbsArticleService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.bbs.article.service.spring.BbsArticleServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="bbsUserService"><ref bean="bbsUserService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="exchangeClient"><ref bean="exchangeClient"/></property>
+				<property name="pageService"><ref bean="pageService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="press*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="getArticle">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="inc*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 论坛回复服务 -->
+	<bean id="bbsReplyService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.bbs.article.service.spring.BbsReplyServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="bbsUserService"><ref bean="bbsUserService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="exchangeClient"><ref bean="exchangeClient"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="press*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 发帖视图数据服务-->
+	<bean id="bbsArticleViewService" class="com.yuanluesoft.bbs.article.service.spring.BbsArticleViewServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+	</bean>
+	
+	<!-- 回帖视图数据服务-->
+	<bean id="bbsReplyViewService" class="com.yuanluesoft.bbs.article.service.spring.BbsReplyViewServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="bbsUserService"><ref bean="bbsUserService"/></property>
+	</bean>
+	
+	<!-- 论坛主题列表处理器-->
+	<bean id="bbsArticlesProcessor" class="com.yuanluesoft.bbs.article.processor.BbsArticlesProcessor">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+	</bean>
+</beans>

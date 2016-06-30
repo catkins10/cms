@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="评议任务" class="com.yuanluesoft.appraise.pojo.AppraiseTask" businessServiceName="appraiseService">
+		<field name="areaId" title="地区ID" length="20" type="number" inputMode="hidden"/>
+		<field name="area" title="地区名称" length="200" type="string" inputMode="hidden"/>
+		<field name="name" title="任务名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="appraiserType" title="评议员类型" length="1" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">基础库评议员|0\0管理服务对象|1\0全部|2</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="appraiserJobs" title="评议员身份" length="1000" required="true" type="string" inputMode="text"/>
+		<field name="recipientJobs" title="服务对象身份" length="1000" required="true" type="string" inputMode="text"/>
+		<field name="delegateAttend" title="评议代表是否参与" length="1" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">不参与|0\0参与短信投票|1\0参与网络投票|2</parameter>
+		</field>
+		<field name="smsRatio" title="短信投票所占百分比" length="5,2" type="number" inputMode="text" required="true"/>
+		<field name="internetRatio" title="网络投票所占百分比" length="5,2" type="number" inputMode="text" required="true"/>
+		<field name="appraiseMode" title="评议发起方式" length="1" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">手动|0\0自动|1</parameter>
+		</field>
+		<field name="appraiseMonths" title="评议月份" length="30" required="true" type="string" inputMode="text"/>
+		<field name="appraiseBeginDay" title="评议开始日期" length="2" required="true" type="number" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10\0 11\0 12\0 13\0 14\0 15\0 16\0 17\0 18\0 19\0 20\0 21\0 22\0 23\0 24\0 25\0 26\0 27\0 28</parameter>
+		</field>
+		<field name="appraiseDays" title="评议有效期(天)" length="2" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">5\0 10\0 15\0 20\0 25\0 30</parameter>
+		</field>
+		<field name="appraiseTime" title="评议发起时间" length="5" required="true" type="string" inputMode="time">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="inviteSms" title="邀请短信格式" length="600" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">2</parameter>
+		</field>
+		<field name="otherCarrierInviteSms" title="电信联通邀请短信格式" length="600" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">2</parameter>
+		</field>
+		<field name="delegateInviteSms" title="评议代表邀请短信格式" length="600" type="string" inputMode="textarea">
+			<parameter name="rows">2</parameter>
+		</field>
+		<field name="applauseSms" title="答谢短信格式" length="600" type="string" inputMode="textarea">
+			<parameter name="rows">2</parameter>
+		</field>
+		<field name="isSpecial" title="是否专题评议" length="1" required="true" type="number" inputMode="hidden"/>
+		<field name="specialUnitIds" title="专题评议单位ID" length="4000" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="specialUnitNames" title="专题评议单位" length="4000" required="true" type="string" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectOrg(640, 400, true, 'specialUnitIds{id},specialUnitNames{name|单位名称|100%}', '', 'unit')</parameter>
+		</field>
+		<field name="lastModifierId" title="最后修改人ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="lastModifier" title="最后修改人" length="60" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="lastModified" title="最后修改时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="enabled" title="是否启用" length="1" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">启用|1\0禁用|0</parameter>
+		</field>
+		<field name="options" title="选项列表" type="components">
+			<parameter name="class">com.yuanluesoft.appraise.pojo.AppraiseOption</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="评议选项" class="com.yuanluesoft.appraise.pojo.AppraiseOption" businessServiceName="appraiseService">
+		<field name="taskId" title="评议任务ID" length="20" type="number" inputMode="hidden"/>
+		<field name="type" title="选项类型" length="1" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">短信|0\0网络|1</parameter>
+		</field>
+		<field name="option" title="选项名称" length="30" required="true" type="string" inputMode="text"/>
+		<field name="score" title="分值" length="5,2" required="true" type="number" inputMode="text"/>
+		<field name="abstain" title="是否弃权" length="1" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+		<field name="smsOption" title="短信选项" length="10" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="评议" class="com.yuanluesoft.appraise.pojo.Appraise" businessServiceName="appraiseService">
+		<field name="name" title="名称" length="300" type="string" inputMode="text" required="true"/>
+		<field name="taskId" title="评议任务ID" length="20" type="number" inputMode="hidden"/>
+		<field name="taskName" title="评议任务名称" length="200" type="string" inputMode="readonly"/>
+		<field name="isSpecial" title="是否专题评议" length="1" type="number" inputMode="none"/>
+		<field name="appraiserType" title="评议员类型" length="1" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">基础库评议员|0\0管理服务对象|1\0全部|2</parameter>
+		</field>
+		<field name="areaId" title="地区ID" length="20" type="number" inputMode="hidden"/>
+		<field name="area" title="地区名称" length="200" type="string" inputMode="hidden"/>
+		<field name="appraiseYear" title="评议年度" length="4" type="number" inputMode="text" required="true"/>
+		<field name="appraiseMonth" title="评议月份" length="2" type="number" inputMode="text" required="true"/>
+		<field name="voteTimes" title="投票人次" length="8" type="number" inputMode="readonly"/>
+		<field name="voteTotal" title="本期投票数" length="8" type="number" inputMode="readonly"/>
+		<field name="smsVoteTotal" title="本期短信投票数" length="8" type="number" inputMode="readonly" persistence="false">
+			<parameter name="referenceFields">unitAppraises</parameter>
+		</field>
+		<field name="internetVoteTotal" title="本期网络投票数" length="8" type="number" inputMode="readonly" persistence="false">
+			<parameter name="referenceFields">unitAppraises</parameter>
+		</field>
+		<field name="scoreComprehensive" title="本期综合得分" length="10,2" type="number" inputMode="readonly" persistence="false">
+			<parameter name="referenceFields">unitAppraises</parameter>
+		</field>
+		<field name="yearVoteTotal" title="累计投票数" length="8" type="number" inputMode="readonly" persistence="false">
+			<parameter name="referenceFields">unitAppraises</parameter>
+		</field>
+		<field name="yearSmsVoteTotal" title="累计短信投票数" length="8" type="number" inputMode="readonly" persistence="false">
+			<parameter name="referenceFields">unitAppraises</parameter>
+		</field>
+		<field name="yearInternetVoteTotal" title="累计网络投票数" length="8" type="number" inputMode="readonly" persistence="false">
+			<parameter name="referenceFields">unitAppraises</parameter>
+		</field>
+		<field name="yearScoreComprehensive" title="累计综合得分" length="10,2" type="number" inputMode="readonly" persistence="false">
+			<parameter name="referenceFields">unitAppraises</parameter>
+		</field>
+		<field name="creatorId" title="发起人ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="发起人" length="60" type="string" inputMode="readonly"/>
+		<field name="created" title="发起时间" type="timestamp" inputMode="readonly"/>
+		<field name="endTime" title="截止时间" type="timestamp" inputMode="datetime" required="true"/>
+		<field name="shortMessages" title="短信列表" type="components">
+			<parameter name="lazyLoad">false</parameter>
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.appraise.pojo.AppraiseSms</parameter>
+		</field>
+		<field name="unitAppraises" title="单位评议列表" type="components">
+			<parameter name="class">com.yuanluesoft.appraise.pojo.UnitAppraise</parameter>
+		</field>
+		<field name="unitAppraisesByCategory" title="单位评议(按分类)列表" type="components" persistence="false">
+			<parameter name="referenceFields">unitAppraises</parameter>
+			<parameter name="class">com.yuanluesoft.appraise.model.UnitAppraisesByCategory</parameter>
+		</field>
+		<field name="optionVotes" title="选项统计列表" type="components" inputMode="readonly" persistence="false">
+			<parameter name="referenceFields">unitAppraises</parameter>
+			<parameter name="class">com.yuanluesoft.appraise.pojo.AppraiseOptionVote</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="评议短信" class="com.yuanluesoft.appraise.pojo.AppraiseSms" businessServiceName="appraiseService">
+		<field name="appraiseId" title="评议ID" length="20" type="number" inputMode="none"/>
+		<field name="appraiserId" title="评议员ID" length="20" type="number" inputMode="none"/>
+		<field name="appraiserOrgId" title="评议员所在组织ID" length="20" type="number" inputMode="none"/>
+		<field name="appraiser" title="评议员姓名" length="60" type="string" inputMode="readonly"/>
+		<field name="appraiserNumber" title="评议员手机号码" length="20" type="string" inputMode="readonly"/>
+		<field name="appraiserType" title="评议员类型" length="1" required="true" type="number" inputMode="readonly">
+			<parameter name="itemsText">基础库评议员|0\0管理服务对象|1</parameter>
+		</field>
+		<field name="appraiseUnitId" title="被评议单位ID" length="20" type="number" inputMode="none"/>
+		<field name="appraiseCode" title="评议验证码" length="10" type="string" inputMode="readonly"/>
+		<field name="inviteSms" title="邀请短信内容" length="200" type="string" inputMode="readonly"/>
+		<field name="inviteSmsSent" title="邀请短信发送时间" type="timestamp" inputMode="readonly"/>
+		<field name="replySms" title="回复内容" length="200" type="string" inputMode="readonly"/>
+		<field name="replyTime" title="回复时间" type="timestamp" inputMode="readonly"/>
+		<field name="applauseSms" title="答谢短信内容" length="200" type="string" inputMode="readonly"/>
+		<field name="applauseSmsSent" title="答谢短信发送时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="单位评议统计" class="com.yuanluesoft.appraise.pojo.UnitAppraise" businessServiceName="appraiseService">
+		<field name="appraiseId" title="评议ID" length="20" type="number" inputMode="none"/>
+		<field name="unitId" title="单位ID" length="20" type="number" inputMode="none"/>
+		<field name="unitName" title="单位名称" length="200" type="string" inputMode="readonly"/>
+		<field name="unitCategory" title="单位分类" length="200" type="string" inputMode="readonly"/>
+		<field name="importVoteTotal" title="引用投票数" length="8" type="number" inputMode="readonly"/>
+		<field name="importScoreTotal" title="引用投票得分" length="10,2" type="number" inputMode="readonly"/>
+		<field name="voteTotal" title="本期投票数" length="8" type="number" inputMode="readonly"/>
+		<field name="smsVoteTotal" title="本期短信投票数" length="8" type="number" inputMode="readonly"/>
+		<field name="smsScoreTotal" title="本期短信投票得分" length="10,2" type="number" inputMode="readonly"/>
+		<field name="internetVoteTotal" title="本期网络投票数" length="8" type="number" inputMode="readonly"/>
+		<field name="internetScoreTotal" title="本期网络投票得分" length="10,2" type="number" inputMode="readonly"/>
+		<field name="scoreComprehensive" title="本期综合得分" length="10,2" type="number" inputMode="readonly"/>
+		<field name="yearVoteTotal" title="累计投票数" length="8" type="number" inputMode="readonly"/>
+		<field name="yearSmsVoteTotal" title="累计短信投票数" length="8" type="number" inputMode="readonly"/>
+		<field name="yearSmsScoreTotal" title="累计短信投票得分" length="10,2" type="number" inputMode="readonly"/>
+		<field name="yearInternetVoteTotal" title="累计网络投票数" length="8" type="number" inputMode="readonly"/>
+		<field name="yearInternetScoreTotal" title="累计网络投票得分" length="10,2" type="number" inputMode="readonly"/>
+		<field name="yearScoreComprehensive" title="累计综合得分" length="10,2" type="number" inputMode="readonly"/>
+		<field name="created" title="发起时间" type="timestamp" inputMode="readonly"/>
+		<field name="optionVotes" title="选项统计列表" type="components">
+			<parameter name="lazyLoad">false</parameter>
+			<parameter name="class">com.yuanluesoft.appraise.pojo.AppraiseOptionVote</parameter>
+		</field>
+		<field name="votes" title="评议结果列表" type="components">
+			<parameter name="lazyLoad">false</parameter>
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.appraise.pojo.AppraiseVote</parameter>
+		</field>
+		<field name="appraiseProposeInputBox" title="建议输入框" persistence="false" type="html" inputMode="htmleditor">
+			<parameter name="height">160</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="评议结果" class="com.yuanluesoft.appraise.pojo.AppraiseVote" businessServiceName="appraiseService">
+		<field name="unitAppraiseId" title="单位评议ID" length="20" type="number" inputMode="none"/>
+		<field name="appraiserId" title="评议员ID" length="20" type="number" inputMode="none"/>
+		<field name="appraiserOrgId" title="评议员所在组织ID" length="20" type="number" inputMode="none"/>
+		<field name="appraiser" title="评议员姓名" length="60" type="string" inputMode="readonly"/>
+		<field name="appraiserNumber" title="评议员手机号码" length="20" type="string" inputMode="readonly"/>
+		<field name="appraiserType" title="评议员类型" length="1" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">基础库评议员|0\0管理服务对象|1</parameter>
+		</field>
+		<field name="optionId" title="选项ID" length="20" type="number" inputMode="none"/>
+		<field name="option" title="选项名称" length="30" type="string" inputMode="readonly"/>
+		<field name="score" title="分数" length="5,2" type="number" inputMode="readonly"/>
+		<field name="propose" title="意见或建议" length="4000" type="string" inputMode="readonly"/>
+		<field name="created" title="投票时间" type="timestamp" inputMode="readonly"/>
+		<field name="voteMode" title="投票方式" length="1" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">短信|0\0网络|1</parameter>
+		</field>
+		<field name="unitAppraise" title="单位评议" type="component">
+			<parameter name="class">com.yuanluesoft.appraise.pojo.UnitAppraise</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="评议选项统计" class="com.yuanluesoft.appraise.pojo.AppraiseOptionVote" businessServiceName="appraiseService">
+		<field name="unitAppraiseId" title="单位评议ID" length="20" type="number" inputMode="none"/>
+		<field name="optionId" title="选项ID" length="20" type="number" inputMode="none"/>
+		<field name="option" title="选项名称" length="30" type="string" inputMode="readonly"/>
+		<field name="optionType" title="选项类型" length="1" type="number" inputMode="none"/>
+		<field name="smsOption" title="短信选项" length="10" type="string" inputMode="readonly"/>
+		<field name="optionScore" title="选项分值" length="5,2" type="number" inputMode="readonly"/>
+		<field name="abstain" title="是否弃权" length="1" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+		<field name="voteTotal" title="投票数" length="8" type="number" inputMode="readonly"/>
+		<field name="smsVoteTotal" title="短信投票数" length="8" type="number" inputMode="readonly"/>
+		<field name="internetVoteTotal" title="网络投票数" length="8" type="number" inputMode="readonly"/>
+		<field name="score" title="累计分数" length="10,2" type="number" inputMode="readonly"/>
+		<field name="appraiseBox" title="投票框" persistence="false" type="html" inputMode="htmleditor">
+			<parameter name="height">160</parameter>
+		</field>
+		<field name="optionLabel" title="选项(含标签)" persistence="false" type="html" inputMode="htmleditor">
+			<parameter name="height">160</parameter>
+		</field>
+		<field name="unitAppraise" title="单位评议" type="component">
+			<parameter name="class">com.yuanluesoft.appraise.pojo.UnitAppraise</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="参评单位" class="com.yuanluesoft.appraise.pojo.AppraiseParticipateUnit" businessServiceName="appraiseService">
+		<field name="areaId" title="地区ID" length="20" type="number" inputMode="hidden"/>
+		<field name="area" title="地区" length="200" type="string" inputMode="hidden"/>
+		<field name="year" title="年度" length="4" required="true" type="number" inputMode="text"/>
+		<field name="category" title="分类" length="200" type="string" inputMode="dropdown">
+			<parameter name="itemsText">经济和社会管理部门\0行政执法监督部门\0公共服务行业</parameter>
+		</field>
+		<field name="unitIds" title="参评单位ID列表" length="4000" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="unitNames" title="参评单位列表" length="4000" required="true" type="string" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectOrg(640, 400, true, 'unitIds{id},unitNames{name|参评单位|100%}', '', 'unit', '', ',', '{PARAMETER:areaId}')</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="参评单位短信通知" class="com.yuanluesoft.appraise.pojo.AppraiseUnitSms" businessServiceName="appraiseService">
+		<field name="areaId" title="地区ID" length="20" type="number" inputMode="hidden"/>
+		<field name="area" title="地区" length="200" type="string" inputMode="hidden"/>
+		<field name="unitIds" title="接收单位ID列表" length="4000" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="unitNames" title="接收单位列表" length="4000" required="true" type="string" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.openListDialog('接收单位', '', 600, 400, true, 'unitIds{value},unitNames{title|参评单位|100%}', '', '', '{PARAMETER:participateUnits}', ',')</parameter>
+		</field>
+		<field name="smsContent" title="短信内容" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+		<field name="creator" title="创建人" length="60" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="sendTime" title="发送时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="扣分" class="com.yuanluesoft.appraise.pojo.AppraiseDeduct" businessServiceName="appraiseService">
+		<field name="areaId" title="地区ID" length="20" type="number" inputMode="hidden"/>
+		<field name="area" title="地区名称" length="200" type="string" inputMode="hidden"/>
+		<field name="unitId" title="单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="unitName" title="单位名称" length="200" type="string" required="true" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectOrg(640, 400, false, 'unitId{id},unitName{name}', '', 'unit', '', ',', '{PARAMETER:areaId}')</parameter>
+		</field>
+		<field name="year" title="评议年度" length="4" type="number" required="true" inputMode="text">
+			<parameter name="defaultValue">{YEAR}</parameter>
+		</field>
+		<field name="deduct" title="扣分" length="4,2" type="number" required="true" inputMode="text"/>
+		<field name="reason" title="扣分原因" length="2000" type="string" required="true" inputMode="text"/>
+		<field name="creatorId" title="登记人ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="50" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="参数配置" class="com.yuanluesoft.appraise.pojo.AppraiseParameter" businessServiceName="appraiseService">
+		<field name="recipientsUploadEnd" title="服务对象上报截止日期" length="2" required="true" type="number" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10\0 11\0 12\0 13\0 14\0 15\0 16\0 17\0 18\0 19\0 20\0 21\0 22\0 23\0 24\0 25\0 26\0 27\0 28</parameter>
+		</field>
+		<field name="recipientsUploadUrgeBegin" title="服务对象上报催办开始日期" length="2" required="true" type="number" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10\0 11\0 12\0 13\0 14\0 15\0 16\0 17\0 18\0 19\0 20\0 21\0 22\0 23\0 24\0 25\0 26\0 27\0 28</parameter>
+		</field>
+		<field name="recipientsUploadUrgeDays" title="服务对象上报催办天数" length="2" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">1\0 2\0 3\0 4\0 5</parameter>
+		</field>
+		<field name="recipientsUploadUrgeTime" title="服务对象上报催办时间" length="5" required="true" type="string" inputMode="time">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="recipientsUploadUrgeSms" title="服务对象上报催办短信格式" length="200" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+			<parameter name="defaultValue">&lt;单位名称&gt;,请上传&lt;年度&gt;年&lt;月份&gt;月的管理服务对象。</parameter>
+		</field>
+		<field name="recipientsLimit" title="服务对象上限" length="4" required="true" type="number" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="评分标准" class="com.yuanluesoft.appraise.pojo.AppraiseMarkStandard" businessServiceName="appraiseService">
+		<field name="areaIds" title="适用的地区ID" length="1000" type="string" inputMode="hidden"/>
+		<field name="areaNames" title="适用的地区名称" length="1000" type="string" required="true" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectOrg(640, 400, true, 'areaIds{id},areaNames{name|地区|100%}', '', 'area')</parameter>
+		</field>
+		<field name="categories" title="适用的单位类别" length="1000" type="string" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.openListDialog('单位类别', '', 640, 400, true, 'categories{title},categories{title|单位类别|100%}', '', '', '经济和社会管理部门,行政执法监督部门,公共服务行业', ',')</parameter>
+		</field>
+		<field name="recipientRatio" title="服务对象评议所占比例" length="5,2" type="number" required="true" inputMode="text"/>
+		<field name="expertRatio" title="专家评议所占比例" length="5,2" type="number" required="true" inputMode="text"/>
+		<field name="secondaryRatio" title="二级单位所占比例" length="5,2" type="number" inputMode="text"/>
+		<field name="subordinateRatio" title="下级单位所占比例" length="5,2" type="number" inputMode="text"/>
+		<field name="deductLimit" title="扣分上限" length="5,2" type="number" required="true" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="投票统计" class="com.yuanluesoft.appraise.model.AppraiseVoteTotal">
+		<field name="voteTimes" title="总投票人次" length="8" type="number" inputMode="readonly"/>
+		<field name="voteTotal" title="总投票数" length="8" type="number" inputMode="readonly"/>
+		<field name="smsVoteTotal" title="短信投票数" length="8" type="number" inputMode="readonly"/>
+		<field name="internetVoteTotal" title="网络投票数" length="8" type="number" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="单位评议(按分类)" class="com.yuanluesoft.appraise.model.UnitAppraisesByCategory">
+		<field name="category" title="分类名称" type="string" inputMode="readonly"/>
+		<field name="unitAppraises" title="单位评议列表" type="components">
+			<parameter name="class">com.yuanluesoft.appraise.pojo.UnitAppraise</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="文章发布统计" class="com.yuanluesoft.appraise.model.AppraiseUnitArticleTotal">
+		<field name="unitId" title="单位ID" type="number" inputMode="hidden"/>
+		<field name="unitName" title="单位名称" type="string" inputMode="readonly"/>
+		<field name="category" title="单位分类" type="string" inputMode="readonly"/>
+		<field name="createTotal" title="上报数量" type="number" inputMode="readonly"/>
+		<field name="issueTotal" title="采用数量" type="number" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="评议结果" class="com.yuanluesoft.appraise.model.AppraiseResult">
+		<field name="unitId" title="单位ID" type="number" inputMode="hidden"/>
+		<field name="unitName" title="单位名称" type="string" inputMode="readonly"/>
+		<field name="category" title="单位分类" type="string" inputMode="readonly"/>
+		<field name="recipientScore" title="服务对象评议得分" type="number" inputMode="readonly"/>
+		<field name="expertScore" title="专家评议得分" type="number" inputMode="readonly"/>
+		<field name="secondaryScore" title="二级单位得分" type="number" inputMode="readonly"/>
+		<field name="subordinateScore" title="下级单位得分" type="number" inputMode="readonly"/>
+		<field name="deduct" title="扣分" type="number" inputMode="readonly"/>
+		<field name="score" title="得分" type="number" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

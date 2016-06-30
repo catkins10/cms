@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="考试" class="com.yuanluesoft.msa.exam.pojo.MsaExam" businessServiceName="msaExamService">
+		<field name="name" title="名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="speciality" title="专业" length="50" type="string" inputMode="text"/>
+		<field name="period" title="期数" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="examPaperCode" title="试卷代码" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="examTime" title="考试时间" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="examAddress" title="考试地点" length="200" type="string" inputMode="text"/>
+		<field name="creatorId" title="创建者ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="创建者" length="30" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="publishTime" title="发布时间" type="timestamp" inputMode="readonly"/>
+		<field name="importId" title="导入日志ID" type="number" inputMode="none"/>
+		<field name="subjects" title="科目列表" type="components">
+			<parameter name="class">com.yuanluesoft.msa.exam.pojo.MsaExamSubject</parameter>
+		</field>
+		<field name="transcripts" title="成绩单列表" type="components" inputMode="readonly">
+			<parameter name="lazyLoad">false</parameter>
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.msa.exam.pojo.MsaExamTranscript</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="考试:科目" class="com.yuanluesoft.msa.exam.pojo.MsaExamSubject" businessServiceName="msaExamService">
+		<field name="examId" title="考试ID" length="20" type="number" inputMode="hidden"/>
+		<field name="subject" title="科目名称" length="50" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="成绩单" class="com.yuanluesoft.msa.exam.pojo.MsaExamTranscript" businessServiceName="msaExamService">
+		<field name="examId" title="考试ID" length="20" type="number" inputMode="hidden"/>
+		<field name="name" title="姓名" length="50" required="true" type="string" inputMode="text"/>
+		<field name="identityCard" title="身份证号码" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="permit" title="准考证号码" length="100" type="string" inputMode="text"/>
+		<field name="totalScore" title="总成绩" length="20" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="pass" title="是否通过" length="10" type="string" inputMode="text"/>
+		<field name="examLevel" title="申考等级" length="100" type="string" inputMode="text"/>
+		<field name="job" title="申考职务" length="100" type="string" inputMode="text"/>
+		<field name="scores" title="各科目成绩" type="components">
+			<parameter name="class">com.yuanluesoft.msa.exam.pojo.MsaExamScore</parameter>
+		</field>
+		<field name="exam" title="考试" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.msa.exam.pojo.MsaExam</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="成绩单：各科目成绩" class="com.yuanluesoft.msa.exam.pojo.MsaExamScore" businessServiceName="msaExamService">
+		<field name="transcriptId" title="成绩单ID" length="20" type="number" inputMode="hidden"/>
+		<field name="subject" title="科目名称" length="50" required="true" type="string" inputMode="text"/>
+		<field name="score" title="成绩" length="20" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="成绩导入日志" class="com.yuanluesoft.msa.exam.pojo.MsaExamImportLog" businessServiceName="msaExamService">
+		<field name="examName" title="考试名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="creatorId" title="创建者ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="创建者" length="30" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="data" title="数据文件" length="1" type="attachment" inputMode="attachment">
+			<parameter name="fileExtension">Excel表格|*.xls|</parameter>
+			<parameter name="extendJs">/msa/exam/admin/js/dataFile.js</parameter>
+			<parameter name="simpleMode">true</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

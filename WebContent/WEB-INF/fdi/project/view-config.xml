@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="admin/project" form="admin/project" title="客户单位" pageRows="25" openFeatures="mode=fullscreen" viewServiceName="fdiProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.fdi.project.pojo.FdiProject</pojo>
+			<orderBy>FdiProject.projectName</orderBy>
+		</data>
+		<actions>
+			<action title="添加项目"  execute="PageUtils.newrecord('fdi/project', 'admin/project', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="projectName" width="33%"/>
+			<column title="中方单位名称" name="chinaCompanyName" width="33%"/>
+			<column title="外方单位名称" name="foreignCompanyName" width="33%"/>
+			<column title="登记时间" name="created" format="yyyy-MM-dd" align="center" width="80"/>
+		</columns>
+	</view>
+</views>

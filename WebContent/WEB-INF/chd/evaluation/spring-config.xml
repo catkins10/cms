@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 评价体系目录服务 -->
+	<bean id="chdEvaluationDirectoryService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.chd.evaluation.service.spring.EvaluationDirectoryServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="pageService"><ref bean="pageService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="init*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="setManagers">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="setVisitors">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="processWorkflowConfigureNotify">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 企业页面服务 -->
+	<bean id="plantPageService" class="com.yuanluesoft.chd.evaluation.pages.PlantPageService">
+		<property name="evaluationDirectoryService"><ref bean="chdEvaluationDirectoryService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+		<property name="siteService"><ref bean="siteService"/></property>
+	</bean>
+</beans>

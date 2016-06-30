@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 留言板 -->
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/messageboard"/>
+		
+		<page name="messages" title="留言列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/messageboard&amp;pageName=messages"/>
+		
+		<page name="myMessages" title="我的留言列表(客户端)" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/messageboard&amp;pageName=myMessages"/>
+		
+		<page name="message" title="提交留言" url="/cms/messageboard/message.shtml">
+			<subPage title="提交留言" name="message" type="template"/>
+		</page>
+		
+		<page name="messageFaq" title="常见问题">
+			<subPage title="常见问题" name="messageFaq" type="template"/>
+		</page>
+		
+		<page name="messageSubmitted" title="留言提交完成">
+			<subPage title="留言提交完成" name="messageSubmitted" type="template"/>
+		</page>
+		
+		<page name="fullyMessage" title="留言查看" recordClass="com.yuanluesoft.cms.messageboard.pojo.MessageBoard" url="/cms/messageboard/message.shtml" systemLink="false">
+			<subPage title="留言查看" name="fullyMessage" type="template"/>
+		</page>
+		
+		<page name="messagePrint" title="办理单" realtimeStaticPage="false" recordPage="false" recordClass="com.yuanluesoft.cms.messageboard.pojo.MessageBoard"/>
+		
+		<page name="messageBoardSearch" title="搜索" searchPage="true" searchResults="messageBoards" url="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/messageboard&amp;pageName=messageBoardSearch"/>
+	</pages>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="messageBoards" processor="publicServicesProcessor"/> <!-- 留言 -->
+	</pageElements>
+</application>

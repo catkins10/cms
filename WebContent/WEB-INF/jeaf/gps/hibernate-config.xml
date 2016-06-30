@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--GPS定位:当前位置-->
+	<class name="com.yuanluesoft.jeaf.gps.pojo.GpsLocation" table="gps_location">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="recordId"/> <!--主记录ID,numeric(20)-->
+		<property name="placeName"/> <!--位置,varchar(200)-->
+	</class>
+	
+	<!--GPS定位:地名解析-->
+	<class name="com.yuanluesoft.jeaf.gps.pojo.GpsPlaceName" table="gps_place_name">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="longitude"/> <!--经度,精度5位,大约1.1米,numeric(7,5)-->
+		<property name="latitude"/> <!--纬度,精度5位,大约1.1米,numeric(7,5)-->
+		<property name="placeName"/> <!--地名,varchar(100)-->
+		<property name="lastModified"/> <!--最后更新时间,timestamp-->
+	</class>
+	
+	<!--IP定位-->
+	<class name="com.yuanluesoft.jeaf.gps.pojo.GpsIPLocation" table="gps_ip_location">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="beginIP"/> <!--起始IP,varchar(50)-->
+		<property name="endIP"/> <!--结束IP,varchar(50)-->
+		<property name="placeName"/> <!--地址,varchar(100)-->
+		<property name="longitude"/> <!--经度,numeric(20,17)-->
+		<property name="latitude"/> <!--纬度,numeric(20,17)-->
+		<property name="created"/> <!--创建时间,timestamp-->
+		<property name="source"/> <!--数据来源-->
+		<property name="remark"/> <!--备注,如：运营商,varchar(100)-->
+	</class>
+</hibernate-mapping>

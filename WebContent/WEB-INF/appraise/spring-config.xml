@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 评议服务 -->
+	<bean id="appraiseService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<ref local="appraiseServiceImpl"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="onShortMessageReceived">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="send*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="startupAppraise">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="supplySendAppraiseSms">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="submit*">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="schedule">PROPAGATION_NEVER,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="appraiseServiceImpl" class="com.yuanluesoft.appraise.service.spring.AppraiseServiceImpl" init-method="init" destroy-method="destory">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="smsService"><ref bean="smsService"/></property>
+		<property name="appraiserService"><ref bean="appraiserServiceImpl"/></property>
+		<property name="pageService"><ref bean="pageService"/></property>
+		<property name="orgService"><ref bean="orgService"/></property>
+		<property name="recordControlService"><ref bean="recordControlService"/></property>
+		<property name="appraiseByCodeOnly"><value>false</value></property>
+		<property name="appraiseCache"><ref bean="appraiseCache"/></property>
+	</bean>
+	
+	<!-- 评议视图服务 -->
+	<bean id="appraiseViewService" class="com.yuanluesoft.appraise.service.spring.AppraiseViewServiceImpl">
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="accessControlService"><ref bean="accessControlService"/></property>
+		<property name="orgService"><ref bean="orgService"/></property>
+	</bean>
+	
+	<!-- 文章发布统计视图服务 -->
+	<bean id="appraiseUnitArticleTotalViewService" class="com.yuanluesoft.appraise.service.spring.AppraiseUnitArticleTotalViewServiceImpl">
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="appraiseService"><ref bean="appraiseService"/></property>
+		<property name="orgService"><ref bean="orgService"/></property>
+		<property name="siteResourceService"><ref bean="siteResourceService"/></property>
+		<property name="siteService"><ref bean="siteService"/></property>
+	</bean>
+	
+	<!-- 评议汇总视图服务 -->
+	<bean id="appraiseResultViewService" class="com.yuanluesoft.appraise.service.spring.AppraiseResultViewServiceImpl">
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="appraiseService"><ref bean="appraiseService"/></property>
+		<property name="orgService"><ref bean="orgService"/></property>
+	</bean>
+	
+	<!-- 评议列表处理器 -->
+	<bean id="appraisesProcessor" class="com.yuanluesoft.appraise.processor.AppraisesProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="orgService"><ref bean="orgService"/></property>
+		<property name="siteService"><ref bean="siteService"/></property>
+		<property name="appraiseService"><ref bean="appraiseService"/></property>
+	</bean>
+</beans>

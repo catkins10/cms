@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/signUp" class="com.yuanluesoft.bidding.project.signup.forms.admin.SignUp" title="投标报名" pojo="com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUp">
+		<formFields>
+			<field name="signUpNo" title="报名号" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="查询" hide="isOld()" execute="if(document.getElementsByName('signUpNo')[0].value!='')FormUtils.doAction('signUpQuery')"/>
+			<action title="保存" hide="isRead() or isNew()" execute="FormUtils.doAction('saveSignUp')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/uploadTransactions" class="com.yuanluesoft.bidding.project.signup.forms.admin.UploadTransactions" title="上传交易记录">
+		<formFields>
+			<field name="paymentMethod" title="银行" type="string" inputMode="dropdown" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsServiceName">paymentService</parameter>
+				<parameter name="itemsName">paymentMethodNames</parameter>
+			</field>
+			<field name="attachment" title="交易记录" type="attachment" length="1" inputMode="attachment">
+				<parameter name="fileExtension">交易记录|*.xls|</parameter>
+				<parameter name="maxUploadSize">50000000</parameter>
+				<parameter name="simpleMode">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="biddingSignUp" class="com.yuanluesoft.bidding.project.signup.forms.BiddingSignUp" title="投标报名" dialogHeight="200" method="get" action="/bidding/project/signup/completeSignUp.shtml?projectId={PARAMETER:projectId}" pojo="com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUp" js="/bidding/project/signup/js/signup.js">
+		<actions>
+			<action title="完成报名" type="submit"/> <!-- 插入按钮时指定是否开新窗口 -->
+		</actions>
+	</form>
+	
+	<form name="biddingSignUpQuery" title="投标报名查询" dialogHeight="200" method="get" action="/bidding/project/signup/signUpQuery.shtml">
+		<formFields>
+			<field title="报名号" name="signUpNo"/>
+			<field title="查询目的" name="queryFor" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="查询" type="submit"/> <!-- 插入按钮时指定是否开新窗口 -->
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="biddingSignUpVerify" title="报名号验证" dialogHeight="200" method="get" action="/bidding/project/signup/signUpQuery.shtml?pageName=biddingSignUpVerify">
+		<formFields>
+			<field title="报名号" name="signUpNo"/>
+		</formFields>
+		<actions>
+			<action title="确定" type="submit"/> <!-- 插入按钮时指定是否开新窗口 -->
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+</forms>

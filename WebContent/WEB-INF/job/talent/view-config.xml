@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="职位推荐(个人)" name="recommendJobs">
+		<data>
+			<pojo>com.yuanluesoft.job.company.pojo.Job</pojo>
+			<where>Job.isPublic=1</where>
+			<orderBy>Job.refreshTime DESC</orderBy>
+		</data>
+		<links>
+			<link>/job/company/job.shtml</link>
+		</links>
+	</view>
+	
+	<view title="就业跟踪调查表(个人)" name="employments">
+		<data>
+			<pojo>com.yuanluesoft.job.talent.pojo.JobTalentEmployment</pojo>
+			<where>JobTalentEmployment.talentId={USERID}</where>
+			<orderBy>JobTalentEmployment.created DESC</orderBy>
+		</data>
+		<links>
+			<parameter name="url">javascript:PageUtils.editrecord('job/talent', 'employment', '{PARAMETER:id}', 'mode=dialog,width=660,height=400')</parameter>
+		</links>
+	</view>
+	
+	<view title="人才" name="talents">
+		<data>
+			<pojo>com.yuanluesoft.job.talent.pojo.JobTalent</pojo>
+			<where>JobTalent.status=1</where>
+			<orderBy>JobTalent.lastModified DESC</orderBy>
+		</data>
+		<links>
+			<link>/job/talent/talent.shtml</link>
+		</links>
+	</view>
+	
+	<view title="人才推送" name="pushTalent" viewServiceName="pushTalentViewService">
+		<data>
+			<pojo>com.yuanluesoft.job.talent.pojo.JobTalent</pojo>
+			<where>JobTalent.status=1 and JobTalent.receivePushMail=1</where>
+			<orderBy>JobTalent.lastModified DESC</orderBy>
+			<quickFilter>JobTalent.name like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" width="80"/>
+			<column title="注册时间" name="created"  width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view title="待审核人才" name="admin/toApprovalTalent" form="admin/talent" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_employment)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.job.talent.pojo.JobTalent</pojo>
+			<where>JobTalent.status=0</where>
+			<orderBy>JobTalent.created DESC</orderBy>
+			<quickFilter>JobTalent.name like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.job.talent.pojo.JobTalentSchooling</pojo>
+			</data>
+			<category value="JobTalentSchooling.schoolClassId" valueType="number" title="JobTalentSchooling.schoolClass"> <!--value必须有-->
+				<where>JobTalentSchooling.schoolClassId!=0</where>
+				<orderBy>JobTalentSchooling.schoolClass</orderBy>
+				<data>schoolings.schoolClassId={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<scripts>
+			<script>/job/talent/js/talient.js</script>
+		</scripts>
+		<actions>
+			<action title="人才审核" execute="approval()" hide="noPrivilege(manageUnit_approval)"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" width="80"/>
+			<column title="邮箱" name="email"/>
+			<column title="注册时间" name="created"  width="110" align="center"/>
+			<column title="毕业院校" name="schoolings.school" length="1" width="200"/>
+		</columns>
+	</view>
+	
+	<view title="已审核人才" name="admin/approvaledTalent" form="admin/talent" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_employment)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.job.talent.pojo.JobTalent</pojo>
+			<where>JobTalent.status>0</where>
+			<orderBy>JobTalent.created DESC</orderBy>
+			<quickFilter>JobTalent.name like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.job.talent.pojo.JobTalentSchooling</pojo>
+			</data>
+			<category value="JobTalentSchooling.schoolClassId" valueType="number" title="JobTalentSchooling.schoolClass"> <!--value必须有-->
+				<where>JobTalentSchooling.schoolClassId!=0</where>
+				<orderBy>JobTalentSchooling.schoolClass</orderBy>
+				<data>schoolings.schoolClassId={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" width="80"/>
+			<column title="邮箱" name="email"/>
+			<column title="注册时间" name="created"  width="110" align="center"/>
+			<column title="毕业院校" name="schoolings.school" length="1" width="200"/>
+			<column title="状态" name="status"  width="80" align="center"/>
+			<column title="审核时间" name="approvalTime"  width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view title="待审核人才" name="admin/toApprovalTalentByClass" form="admin/talent" hide="privilege(application_manager) or privilege(manageUnit_employment)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.job.talent.pojo.JobTalent</pojo>
+			<where>schoolings.schoolClassId!=0 and schoolings.schoolClassId in ({DEPARTMENTIDS}) and JobTalent.status=0</where>
+			<orderBy>JobTalent.created DESC</orderBy>
+			<quickFilter>JobTalent.name like '%{KEY}%'</quickFilter>
+		</data>
+		<scripts>
+			<script>/job/talent/js/talient.js</script>
+		</scripts>
+		<actions>
+			<action title="人才审核" execute="approval()" hide="noPrivilege(manageUnit_approval)"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" width="80"/>
+			<column title="邮箱" name="email"/>
+			<column title="注册时间" name="created"  width="110" align="center"/>
+			<column title="毕业院校" name="schoolings.school" length="1" width="200"/>
+		</columns>
+	</view>
+	
+	<view title="已审核人才" name="admin/approvaledTalentByClass" form="admin/talent" hide="privilege(application_manager) or privilege(manageUnit_employment)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.job.talent.pojo.JobTalent</pojo>
+			<where>schoolings.schoolClassId!=0 and schoolings.schoolClassId in ({DEPARTMENTIDS}) and JobTalent.status>0</where>
+			<orderBy>JobTalent.created DESC</orderBy>
+			<quickFilter>JobTalent.name like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" width="80"/>
+			<column title="邮箱" name="email"/>
+			<column title="注册时间" name="created"  width="110" align="center"/>
+			<column title="毕业院校" name="schoolings.school" length="1" width="200"/>
+			<column title="状态" name="status"  width="80" align="center"/>
+			<column title="审核时间" name="approvalTime"  width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view title="就业跟踪汇总" name="admin/employment" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_employment)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.job.talent.pojo.JobTalentEmployment</pojo>
+			<where>JobTalentEmployment.isNewest=1</where>
+			<orderBy>JobTalentEmployment.schoolClass, JobTalentEmployment.name</orderBy>
+			<quickFilter>JobTalentEmployment.schoolClass like '%{KEY}%' or JobTalentEmployment.name like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="FIRSTCATEGORY" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.job.talent.pojo.JobTalentEmployment</pojo>
+			</data>
+			<category value="JobTalentEmployment.graduationYear" valueType="number"> <!--value必须有-->
+				<orderBy>JobTalentEmployment.graduationYear DESC</orderBy>
+				<data>JobTalentEmployment.graduationYear={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<links>
+			<link>javascript:PageUtils.editrecord('job/talent', 'admin/talent', '{PARAMETER:talentId}', 'mode=fullscreen', 'tabSelected=employments')</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" width="50"/>
+			<column name="schoolClass" title="专业(班级)" width="100"/>
+			<column name="studentNumber" title="学号" width="36" display="print"/>
+			<column name="studentSource" title="生源所在地" width="80" display="print"/>
+			<column name="tel" title="联系方式" width="80" display="print"/>
+			<column name="email" title="电子邮箱" width="100" display="print"/>
+			<column name="employmentType" title="就业类型" width="60"/>
+			<column name="company" title="单位名称" width="180"/>
+			<column name="post" title="岗位" width="80" display="print"/>
+			<column name="monthlyPay" title="薪酬" width="50"/>
+			<column name="companyAddress" title="单位地址" width="180" display="print"/>
+			<column name="counterpart" title="专业是否对口" width="60"/>
+			<column name="satisfaction" title="就业满意度" width="60"/>
+			<column name="changeCompany" title="是否更换工作单位(第几次)" width="60"/>
+			<column name="leaveReason" title="离职原因" width="100" display="print"/>
+			<column name="needHelp" title="是否需要学院帮助推荐" width="36"/>
+			<column name="waitReason" title="暂不就业原因" width="100" display="print"/>
+			<column name="remark" title="备注" width="60" display="print"/>
+		</columns>
+	</view>
+	
+	<view title="就业跟踪汇总" name="admin/employmentByClass" hide="privilege(application_manager) or privilege(manageUnit_employment)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.job.talent.pojo.JobTalentEmployment</pojo>
+			<join>,JobTalentSchooling JobTalentSchooling</join>
+			<where>JobTalentSchooling.talentId=JobTalentEmployment.talentId and JobTalentSchooling.schoolClassId!=0 and JobTalentSchooling.schoolClassId in ({DEPARTMENTIDS}) and JobTalentEmployment.isNewest=1</where>
+			<orderBy>JobTalentEmployment.schoolClass, JobTalentEmployment.name</orderBy>
+			<quickFilter>JobTalentEmployment.schoolClass like '%{KEY}%' or JobTalentEmployment.name like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="FIRSTCATEGORY" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.job.talent.pojo.JobTalentEmployment</pojo>
+			</data>
+			<category value="JobTalentEmployment.graduationYear" valueType="number"> <!--value必须有-->
+				<orderBy>JobTalentEmployment.graduationYear DESC</orderBy>
+				<data>JobTalentEmployment.graduationYear={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<links>
+			<link>javascript:PageUtils.editrecord('job/talent', 'admin/talent', '{PARAMETER:talentId}', 'mode=fullscreen', 'tabSelected=employments')</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" width="50"/>
+			<column name="schoolClass" title="专业(班级)" width="100"/>
+			<column name="studentNumber" title="学号" width="36" display="print"/>
+			<column name="studentSource" title="生源所在地" width="80" display="print"/>
+			<column name="tel" title="联系方式" width="80" display="print"/>
+			<column name="email" title="电子邮箱" width="100" display="print"/>
+			<column name="employmentType" title="就业类型" width="60"/>
+			<column name="company" title="单位名称" width="180"/>
+			<column name="post" title="岗位" width="80" display="print"/>
+			<column name="monthlyPay" title="薪酬" width="50"/>
+			<column name="companyAddress" title="单位地址" width="180" display="print"/>
+			<column name="counterpart" title="专业是否对口" width="60"/>
+			<column name="satisfaction" title="就业满意度" width="60"/>
+			<column name="changeCompany" title="是否更换工作单位(第几次)" width="60"/>
+			<column name="leaveReason" title="离职原因" width="100" display="print"/>
+			<column name="needHelp" title="是否需要学院帮助推荐" width="36"/>
+			<column name="waitReason" title="暂不就业原因" width="100" display="print"/>
+			<column name="remark" title="备注" width="60" display="print"/>
+		</columns>
+	</view>
+	
+	<statisticView name="admin/employmentTotal" title="毕业生就业率统计表" pageRows="20" width="100%" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.job.talent.pojo.JobTalentEmployment</pojo>
+			<where>JobTalentEmployment.isNewest=1</where>
+		</data>
+		<categories root="全部" beginCategory="FIRSTCATEGORY" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.job.talent.pojo.JobTalentEmployment</pojo>
+			</data>
+			<category value="JobTalentEmployment.graduationYear" valueType="number"> <!--value必须有-->
+				<orderBy>JobTalentEmployment.graduationYear DESC</orderBy>
+				<data>JobTalentEmployment.graduationYear={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<statistics hideDetail="true">
+			<statistic>
+				<groupFields>
+					<groupField name="schoolClass"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="studentCount" function="count(JobTalentEmployment.id)"/> <!-- 毕业生数(人) -->
+					<statisticColumn name="signCount" function="count(JobTalentEmployment.id)" whereExtend="JobTalentEmployment.employmentType=1"/> <!-- 已签约(人) -->
+					<statisticColumn name="contractCount" function="count(JobTalentEmployment.id)" whereExtend="JobTalentEmployment.employmentType=2 or JobTalentEmployment.employmentType=3"/> <!-- 接收函/聘用合同(人) -->
+					<statisticColumn name="flexibleCount" function="count(JobTalentEmployment.id)" whereExtend="JobTalentEmployment.employmentType=4"/> <!-- 灵活就业(人) -->
+					<statisticColumn name="projectCount" function="count(JobTalentEmployment.id)" whereExtend="JobTalentEmployment.employmentType=7"/> <!-- 国家地方项目(人) -->
+					<statisticColumn name="furtherCount" function="count(JobTalentEmployment.id)" whereExtend="JobTalentEmployment.employmentType=5 or JobTalentEmployment.employmentType=6"/> <!-- 升学/出国(人) -->
+					<statisticColumn name="armyCount" function="count(JobTalentEmployment.id)" whereExtend="JobTalentEmployment.employmentType=8"/> <!-- 参军(人) -->
+					<statisticColumn name="waitingCount" function="count(JobTalentEmployment.id)" whereExtend="JobTalentEmployment.employmentType=9 or JobTalentEmployment.employmentType=10"/> <!-- 待就业(人) -->
+				</statisticColumns>
+			</statistic>
+			<statistic statisticAll="true" title="合计">
+				<statisticColumns>
+					<statisticColumn name="studentCount" function="count(JobTalentEmployment.id)"/> <!-- 毕业生数(人) -->
+					<statisticColumn name="signCount" function="count(JobTalentEmployment.id)" whereExtend="JobTalentEmployment.employmentType=1"/> <!-- 已签约(人) -->
+					<statisticColumn name="contractCount" function="count(JobTalentEmployment.id)" whereExtend="JobTalentEmployment.employmentType=2 or JobTalentEmployment.employmentType=3"/> <!-- 接收函/聘用合同(人) -->
+					<statisticColumn name="flexibleCount" function="count(JobTalentEmployment.id)" whereExtend="JobTalentEmployment.employmentType=4"/> <!-- 灵活就业(人) -->
+					<statisticColumn name="projectCount" function="count(JobTalentEmployment.id)" whereExtend="JobTalentEmployment.employmentType=7"/> <!-- 国家地方项目(人) -->
+					<statisticColumn name="furtherCount" function="count(JobTalentEmployment.id)" whereExtend="JobTalentEmployment.employmentType=5 or JobTalentEmployment.employmentType=6"/> <!-- 升学/出国(人) -->
+					<statisticColumn name="armyCount" function="count(JobTalentEmployment.id)" whereExtend="JobTalentEmployment.employmentType=8"/> <!-- 参军(人) -->
+					<statisticColumn name="waitingCount" function="count(JobTalentEmployment.id)" whereExtend="JobTalentEmployment.employmentType=9 or JobTalentEmployment.employmentType=10"/> <!-- 待就业(人) -->
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<columns>
+			<column title="专业(班级)" name="schoolClass"/>
+			<column title="毕业生数(人)" name="studentCount" type="statistic" align="center" width="50"/>
+			<column title="已签约(人)" name="signCount" type="statistic" align="center" width="50"/>
+			<column title="接收函/聘用合同(人)" name="contractCount" type="statistic" align="center" width="50"/>
+			<column title="灵活就业(人)" name="flexibleCount" type="statistic" align="center" width="50"/>
+			<column title="国家地方项目(人)" name="projectCount" type="statistic" align="center" width="50"/>
+			<column title="升学/出国(人)" name="furtherCount" type="statistic" align="center" width="50"/>
+			<column title="参军(人)" name="armyCount" type="statistic" align="center" width="50"/>
+			<column title="就业率(%)" type="formula" formula="(studentCount+0.0-waitingCount)/studentCount" formulaFields="waitingCount,studentCount" format="#.##%" align="center" width="50"/>
+			<column title="签约率(%)" type="formula" formula="(signCount+0.0)/studentCount" formulaFields="signCount,studentCount" format="#.##%" align="center" width="50"/>
+			<column title="待就业(人)" name="waitingCount" type="statistic" align="center" width="50"/>
+			<column title="待就业率(%)" type="formula" formula="(0.0+waitingCount)/studentCount" formulaFields="waitingCount,studentCount" format="#.##%" align="center" width="50"/>
+			<column title="备注" type="formula" formula="" width="50"/>
+		</columns>
+	</statisticView>
+	
+	<view title="就业报到" name="admin/report" form="admin/talentReport" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_employment)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.job.talent.pojo.JobTalentReport</pojo>
+			<orderBy>JobTalentReport.graduateDate DESC, JobTalentReport.schoolClass, JobTalentReport.name</orderBy>
+			<quickFilter>JobTalentReport.company like '%{KEY}%' or JobTalentReport.schoolClass like '%{KEY}%' or JobTalentReport.name like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.job.talent.pojo.JobTalentReport</pojo>
+			</data>
+			<category value="JobTalentReport.schoolClass" valueType="number"> <!--value必须有-->
+				<orderBy>JobTalentReport.schoolClass</orderBy>
+				<data>JobTalentReport.schoolClass='{CATEGORYVALUE}'</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="就业登记" execute="PageUtils.newrecord('job/talent','admin/schoolClassReports','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" width="60"/>
+			<column name="schoolClass" title="专业(班级)" width="100"/>
+			<column name="company" title="单位名称"/>
+			<column name="reportBegin" title="报到开始时间" width="100" align="center"/>
+			<column name="reportEnd" title="报到截止时间" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	<view title="就业报到" name="admin/reportByClass" form="admin/talentReport" hide="privilege(application_manager) or privilege(manageUnit_employment)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.job.talent.pojo.JobTalentReport</pojo>
+			<where>JobTalentReport.schoolClassId!=0 and JobTalentReport.schoolClassId in ({DEPARTMENTIDS})</where>
+			<orderBy>JobTalentReport.graduateDate DESC, JobTalentReport.schoolClass, JobTalentReport.name</orderBy>
+			<quickFilter>JobTalentReport.company like '%{KEY}%' or JobTalentReport.schoolClass like '%{KEY}%' or JobTalentReport.name like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.job.talent.pojo.JobTalentReport</pojo>
+			</data>
+			<category value="JobTalentReport.schoolClass" valueType="number"> <!--value必须有-->
+				<orderBy>JobTalentReport.schoolClass</orderBy>
+				<data>JobTalentReport.schoolClass='{CATEGORYVALUE}'</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="就业登记" execute="PageUtils.newrecord('job/talent','admin/schoolClassReports','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" width="60"/>
+			<column name="schoolClass" title="专业(班级)" width="100"/>
+			<column name="company" title="单位名称"/>
+			<column name="reportBegin" title="报到开始时间" width="100" align="center"/>
+			<column name="reportEnd" title="报到截止时间" width="100" align="center"/>
+		</columns>
+	</view>
+</views>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../../jeaf/form/error.jsp"
+  SHAPE="32,40,161,21" TARGET="page2" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../../jeaf/form/result.jsp" SHAPE="32,112,161,21"
+  TARGET="page0" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/../../../jeaf/form/error.jsp" SHAPE="304,40,50,25"
+  SUBTYPE="jsp" TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../../jeaf/form/result.jsp" SHAPE="304,112,50,25"
+  SUBTYPE="jsp" TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#signUp" NAME="action0"
+  PATH="/signUp" SHAPE="32,824,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#completeSignUp"
+  NAME="action2" PATH="/completeSignUp" SHAPE="32,1048,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#signUpQueryResult"
+  NAME="action4" PATH="/signUpQueryResult" SHAPE="32,1488,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#payment" NAME="action5"
+  PATH="/payment" SHAPE="32,1112,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#completePayment"
+  NAME="action6" PATH="/completePayment" SHAPE="32,1264,161,41" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput"
+   ID="paymentFailed" NAME="forward0" PATH="/paymentFailed.jsp"
+   TARGET="page1" TITLE="paymentFailed" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/paymentFailed.jsp" SHAPE="304,1280,50,25" SUBTYPE="jsp"
+  TITLE="paymentFailed.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listSignUpProjects"
+  NAME="action7" PATH="/listSignUpProjects" SHAPE="32,768,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#signUp"
+  NAME="action3" PATH="/admin/signUp" SHAPE="32,200,161,41"
+  TITLE="adminSignUp" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/signUp.jsp" TARGET="page6" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#signUpQuery"
+  NAME="action8" PATH="/admin/signUpQuery" SHAPE="496,232,161,25"
+  TITLE="adminSignUp" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveSignUp"
+  NAME="action10" PATH="/admin/saveSignUp" SHAPE="496,288,161,25"
+  TITLE="adminSignUp" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/admin/signUp.jsp" SHAPE="304,216,50,55" SUBTYPE="jsp"
+  TITLE="signUp.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/signUpQuery" TARGET="action8" TITLE="saveSignUp" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveSignUp" TARGET="action10" TITLE="saveSignUp" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#signUpAnonymous"
+  NAME="action9" PATH="/signUpAnonymous" SHAPE="32,888,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#signUpQuery"
+  NAME="action11" PATH="/signUpQuery" SHAPE="32,1424,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#signUpPrint"
+  NAME="action13" PATH="/signUpPrint" SHAPE="32,1360,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#uploadBid"
+  NAME="action14" PATH="/uploadBid" SHAPE="32,1648,161,41"
+  TITLE="biddingSignUp" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/uploadBid.jsp" TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/uploadBid.jsp" SHAPE="304,1664,50,40" SUBTYPE="jsp"
+  TITLE="uploadBid.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/doUploadBid" TARGET="action15" TITLE="doUploadBid" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#doUploadBid"
+  NAME="action15" PATH="/doUploadBid" SHAPE="464,1680,161,41"
+  TITLE="biddingSignUp" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/bidUploaded.jsp" TARGET="page5" TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/bidUploaded.jsp" SHAPE="736,1696,50,25" SUBTYPE="jsp"
+  TITLE="bidUploaded.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#attachmentEditor"
+  NAME="action16" PATH="/attachmentEditor" SHAPE="32,544,161,41"
+  TITLE="biddingSignUp" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../../jeaf/attachment/attachment.jsp"
+   TARGET="page11" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page11"
+  PATH="/../../../jeaf/attachment/attachment.jsp" SHAPE="304,480,50,25"
+  SUBTYPE="jsp" TITLE="attachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#signUpHistory"
+  NAME="action1" PATH="/signUpHistory" SHAPE="32,1192,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#receivePaperDocuments"
+  NAME="action12" PATH="/receivePaperDocuments" SHAPE="32,1552,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#uploadTransactions"
+  NAME="action17" PATH="/admin/uploadTransactions" SHAPE="32,352,161,41"
+  TITLE="adminUploadTransactions" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/uploadTransactions.jsp" TARGET="page3"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/admin/uploadTransactions.jsp" SHAPE="304,368,50,40"
+  SUBTYPE="jsp" TITLE="uploadTransactions.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/processTransactions" TARGET="action18"
+   TITLE="processTransactions" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#processTransactions" NAME="action18"
+  PATH="/admin/processTransactions" SHAPE="496,384,161,25"
+  TITLE="adminUploadTransactions" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#attachmentEditor"
+  NAME="action19" PATH="/admin/attachmentEditor" SHAPE="32,464,161,41"
+  TITLE="adminUploadTransactions" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../../jeaf/attachment/attachment.jsp"
+   TARGET="page11" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#enterpriseInvalidPrompt"
+  NAME="action20" PATH="/enterpriseInvalidPrompt" SHAPE="32,952,161,25" TYPE="action"/>
+</PROCESS>

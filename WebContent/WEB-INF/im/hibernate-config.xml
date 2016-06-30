@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--IM对话-->
+	<class name="com.yuanluesoft.im.pojo.IMChat" table="im_chat">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="isGroupChat"/> <!--是否讨论组-->
+		<property name="isCustomerService"/> <!--是否客服对话-->
+		<property name="isEnd"/> <!--是否结束,给客服使用-->
+		<property name="siteId"/> <!--站点ID,给客服使用-->
+		<property name="created"/> <!--创建时间-->
+		<property name="lastReadTime" formula="(select max(person.lastReadTime) from im_chat_person person where person.chatId=id)"/> <!--最后接收消息的时间-->
+		<set name="chatPersons" table="im_chat_person" lazy="true" inverse="true" cascade="delete" order-by="joinTime,id">
+			<key column="chatId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.im.pojo.IMChatPerson"/>
+		</set>
+	</class>
+	
+	<!--IM对话:参与者-->
+	<class name="com.yuanluesoft.im.pojo.IMChatPerson" table="im_chat_person">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="chatId"/> <!--对话ID,NUMERIC(20)-->
+		<property name="personId"/> <!--用户ID,NUMERIC(20)-->
+		<property name="personName"/> <!--用户名,VARCHAR(300)-->
+		<property name="joinTime"/> <!--加入对话时间,TIMESTAMP null-->
+		<property name="lastReadTime"/> <!--最后接收消息的时间,以毫秒为单位-->
+	</class>
+
+	<!--IM对话:发言-->
+	<class name="com.yuanluesoft.im.pojo.IMChatTalk" table="im_chat_talk">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="chatId"/> <!--对话ID,多人对话时格式:[多人对话ID],两人对话时格式:[用户ID(小)]/[用户ID(大)],NUMERIC(20)-->
+		<property name="content"/> <!--发言内容,VARCHAR(4000)-->
+		<property name="createdMillis"/> <!--发言时间,以毫秒为单位-->
+		<property name="creatorId"/> <!--发言人ID,NUMERIC(20)-->
+		<property name="creatorName"/> <!--发言人姓名,VARCHAR(30)-->
+	</class>
+	
+	<!--个人设置-->
+	<class name="com.yuanluesoft.im.pojo.IMPersonalSetting" table="im_personal_setting">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="status"/> <!--上线后状态,在线、忙碌、隐身、不在电脑旁,CHAR(1)-->
+		<property name="playSoundOnReceived"/> <!--消息到达是否发出声音,NUMERIC(1)-->
+		<property name="setFocusOnReceived"/> <!--消息到达是否获取焦点,NUMERIC(1)-->
+		<property name="openChatDialogOnReceived"/> <!--是否主动弹出对话窗口,NUMERIC(1)-->
+		<property name="ctrlSend"/> <!--CTRL+Enter发送消息,NUMERIC(1)-->
+		<property name="fontName"/> <!--字体,VARCHAR(30)-->
+		<property name="fontSize"/> <!--字号,VARCHAR(10)-->
+		<property name="fontColor"/> <!--颜色,VARCHAR(30)-->
+	</class>
+</hibernate-mapping>

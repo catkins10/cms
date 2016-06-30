@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--申报-->
+	<class name="com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclare" table="chd_eval_declare">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="plantId"/> <!--发电企业ID,numeric(20)-->
+		<property name="declareYear"/> <!--申报年度,numeric(4)-->
+		<property name="objectiveLevelId"/> <!--申报等级ID,numeric(20)-->
+		<property name="objectiveLevel"/> <!--申报等级,varchar(20)-->
+		<property name="creatorId"/> <!--提交人ID,numeric(20)-->
+		<property name="creator"/> <!--提交人,varchar(30)-->
+		<property name="created"/> <!--提交时间,timestamp null-->
+		<property name="approvedLevelId"/> <!--核准等级ID,numeric(20)-->
+		<property name="approvedLevel"/> <!--核准等级,varchar(20)-->
+		<property name="approveTime"/> <!--核准时间,timestamp null-->
+		<property name="approverId"/> <!--核准人ID,numeric(20)-->
+		<property name="approver"/> <!--核准人,varchar(30)-->
+		
+		<!--申报:评价细则完成情况-->
+		<set cascade="delete" inverse="true" lazy="true" name="rules" table="chd_eval_declar_rule" order-by="id">
+			<key column="declareId" />
+			<one-to-many class="com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclareRule" />
+		</set>
+		
+		<!--申报:必备条件完成情况-->
+		<set cascade="delete" inverse="true" lazy="true" name="prerequisites" table="chd_eval_declar_prerequisites" order-by="id">
+			<key column="declareId" />
+			<one-to-many class="com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclarePrerequisites" />
+		</set>
+		
+		<!--申报:主要指标完成情况-->
+		<set cascade="delete" inverse="true" lazy="true" name="indicators" table="chd_eval_declar_indicator" order-by="id">
+			<key column="declareId" />
+			<one-to-many class="com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclareIndicator" />
+		</set>
+		
+		<!--申报:机组综合数据上报-->
+		<set cascade="delete" inverse="true" lazy="true" name="generators" table="chd_eval_declar_generator">
+			<key column="declareId" />
+			<one-to-many class="com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclareGenerator" />
+		</set>
+	</class>
+	
+	<!--申报:评价细则完成情况-->
+	<class name="com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclareRule" table="chd_eval_declar_rule">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="declareId"/> <!--申报ID,numeric(20)-->
+		<property name="ruleId"/> <!--细则ID,numeric(20)-->
+		<property name="ruleNumber"/> <!--编号,varchar(20)-->
+		<property name="rule"/> <!--细则,varchar(1000)-->
+		<property name="result"/> <!--自评结果,varchar(100)-->
+		<property name="score"/> <!--自评分,numeric(5,1)-->
+		<property name="approvedResult"/> <!--考核结果,varchar(100)-->
+		<property name="approvedScore"/> <!--考核分数,numeric(5,1)-->
+		<property name="remark"/> <!--备注,varchar(200)-->
+	</class>
+	
+	<!--申报:必备条件完成情况-->
+	<class name="com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclarePrerequisites" table="chd_eval_declar_prerequisites">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="declareId"/> <!--申报ID,numeric(20)-->
+		<property name="prerequisitesId"/> <!--必备条件ID,numeric(20)-->
+		<property name="prerequisites"/> <!--必备条件,varchar(1000)-->
+		<property name="result"/> <!--完成情况说明,varchar(200)-->
+		<property name="remark"/> <!--备注,varchar(200)-->
+	</class>
+	
+	<!--申报:主要指标完成情况-->
+	<class name="com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclareIndicator" table="chd_eval_declar_indicator">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="declareId"/> <!--申报ID,numeric(20)-->
+		<property name="indicatorId"/> <!--指标ID,numeric(20)-->
+		<property name="indicator"/> <!--指标名称,varchar(200)-->
+		<property name="standard"/> <!--标准值,varchar(50)-->
+		<property name="result"/> <!--实际值,varchar(50)-->
+		<property name="remark"/> <!--备注,varchar(200)-->
+	</class>
+	
+	<!--申报:机组综合数据上报-->
+	<class name="com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclareGenerator" table="chd_eval_declar_generator">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="declareId"/> <!--申报ID,numeric(20)-->
+		<property name="body"/> <!--机组综合数据,text-->
+	</class>
+</hibernate-mapping>

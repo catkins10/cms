@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="单位配置" class="com.yuanluesoft.cms.monitor.pojo.MonitorUnitConfig" businessServiceName="monitorService">
+		<field name="unitId" title="单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="unitName" title="单位名称" length="200" type="string" inputMode="select" required="true">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectOrg(500, 350, false, 'unitId{id},unitName{name}', '', 'unit', '', '', '', false, false, true)</parameter>
+		</field>
+		<field name="ip" title="IP地址" length="100" type="string" inputMode="text" required="true"/>
+		<field name="jdbcUrl" title="JDBC URL" length="1000" type="string" inputMode="dropdown" required="true">
+			<parameter name="itemsText">Access|jdbc:odbc:Driver={MicroSoft Access Driver (*.mdb)};DBQ=[文件路径]\0Sybase|jdbc:sybase:Tds:[IP]:5000/[数据库名称]?CharSet=cp936\0SqlServer|jdbc:jtds:sqlserver://[IP]:1433;DatabaseName=[数据库名称]\0Mysql|jdbc:mysql://[服务器IP]/[数据库名称]?useUnicode=true&amp;characterEncoding=gbk\0Postgres|jdbc:postgresql://[服务器IP]:5432/[数据库名称]\0Oracle|jdbc:oracle:thin:@[服务器IP]:1521:[数据库名称]</parameter>
+		</field>
+		<field name="dbUserName" title="数据库用户名" length="200" type="string" inputMode="text"/>
+		<field name="dbPassword" title="数据库密码" length="200" type="string" inputMode="text"/>
+		<field name="captureTime" title="采集时间点" type="string" inputMode="time" required="true"/>
+		<field name="captureDays" title="采集周期(天)" length="2" type="number" inputMode="dropdown" required="true">
+			<parameter name="defaultValue">1</parameter>
+			<parameter name="minValue">1</parameter>
+			<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0</parameter>
+		</field>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="创建人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="sqls" title="SQL配置" type="components">
+			<parameter name="class">com.yuanluesoft.cms.monitor.pojo.MonitorUnitSql</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="SQL配置" class="com.yuanluesoft.cms.monitor.pojo.MonitorUnitSql" businessServiceName="monitorService">
+		<field name="unitConfigId" title="单位配置ID" length="20" type="number" inputMode="hidden"/>
+		<field name="captureContent" title="采集内容" length="100" type="string" inputMode="dropdown" required="true">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsName">captureContent</parameter>
+			<parameter name="itemsServiceName">monitorService</parameter>
+			<parameter name="valueField">monitorSql.captureContentClass</parameter>
+		</field>
+		<field name="captureContentClass" title="采集内容类名称" length="200" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="captureSql" title="SQL" length="6000" type="string" inputMode="textarea" required="true">
+			<parameter name="rows">16</parameter>
+		</field>
+		<field name="lastCaptureTime" title="最后采集时间" type="timestamp" inputMode="datetime"/>
+		<field name="unitConfig" title="单位配置" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.cms.monitor.pojo.MonitorUnitConfig</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="监察参数" class="com.yuanluesoft.cms.monitor.pojo.MonitorParameter" businessServiceName="monitorService">
+		<field name="orgId" title="适用的机构ID" length="20" type="number" inputMode="hidden"/>
+		<field name="orgName" title="适用的机构名称" length="200" type="string" inputMode="select" required="true">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectOrg(500, 350, false, 'orgId{id},orgName{name}', '', 'root,area,category,unit', '', '', '', false, false, true)</parameter>
+		</field>
+		<field name="contentParameters" title="采集对象配置" type="components" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.cms.monitor.pojo.MonitorContentParameter</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="监察参数:采集对象配置" class="com.yuanluesoft.cms.monitor.pojo.MonitorContentParameter" businessServiceName="monitorService">
+		<field name="parameterId" title="参数配置ID" length="20" type="number" inputMode="hidden"/>
+		<field name="contentClassName" title="采集对象类名称" length="200" type="string" inputMode="hidden"/>
+		<field name="timeout" title="超时参数" length="200" type="string" inputMode="text"/>
+		<field name="monitorParameter" title="监察参数配置" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.cms.monitor.pojo.MonitorParameter</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="采集日志" class="com.yuanluesoft.cms.monitor.pojo.MonitorCaptureLog">
+		<field name="unitSqlId" title="SQL配置ID" length="20" type="number" inputMode="hidden"/>
+		<field name="unitId" title="单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="unitName" title="单位名称" length="100" type="string" inputMode="readonly"/>
+		<field name="captureSql" title="SQL" length="4000" type="string" inputMode="readonly"/>
+		<field name="captureTime" title="采集时间" type="timesatmp" inputMode="readonly"/>
+		<field name="isSuccess" title="是否成功" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">成功|1\0失败|0</parameter>
+		</field>
+		<field name="captureFailedReason" title="采集失败原因" type="string" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="采集记录" class="com.yuanluesoft.cms.monitor.pojo.MonitorRecord">
+		<field name="unitId" title="单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="unitName" title="单位名称" length="200" type="string" inputMode="readonly"/>
+		<field name="recordId" title="记录ID" length="200" type="string" inputMode="readonly"/>
+		<field name="captureTime" title="采集时间" type="timestamp" inputMode="readonly"/>
+		<field name="lastCaptureTime" title="最后采集时间" type="timestamp" inputMode="readonly"/>
+		<field name="timeoutCheckDisabled" title="禁止超时检查" length="1" type="number" inputMode="none"/>
+		<field name="processDays" title="办理用时" length="5,1" type="number" inputMode="readonly"/>
+		<field name="timeoutLevel" title="超时等级" length="1" type="number" inputMode="readonly"/>
+		<field name="timeoutDays" title="超时天数" length="5,1" type="number" inputMode="readonly"/>
+		<field name="monitorStatus" title="监察状态" persistence="false" type="html" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="监察统计" class="com.yuanluesoft.cms.monitor.model.MonitorStat">
+		<field name="lastMonthInfos" title="上月信息数" type="number" inputMode="readonly"/>
+		<field name="lastMonthOntimeInfos" title="上月正常信息数" type="number" inputMode="readonly"/>
+		<field name="lastMonthTimeoutInfos" title="上月超时信息数" type="number" inputMode="readonly"/>
+		<field name="thisMonthInfos" title="本月信息数" type="number" inputMode="readonly"/>
+		<field name="thisMonthOntimeInfos" title="本月正常信息数" type="number" inputMode="readonly"/>
+		<field name="thisMonthTimeoutInfos" title="本月超时信息数" type="number" inputMode="readonly"/>
+		<field name="lastMonthPartyInfos" title="上月党务信息数" type="number" inputMode="readonly"/>
+		<field name="lastMonthOntimePartyInfos" title="上月正常党务信息数" type="number" inputMode="readonly"/>
+		<field name="lastMonthTimeoutPartyInfos" title="上月超时党务信息数" type="number" inputMode="readonly"/>
+		<field name="thisMonthPartyInfos" title="本月党务信息数" type="number" inputMode="readonly"/>
+		<field name="thisMonthOntimePartyInfos" title="本月正常党务信息数" type="number" inputMode="readonly"/>
+		<field name="thisMonthTimeoutPartyInfos" title="本月超时党务信息数" type="number" inputMode="readonly"/>
+		<field name="lastMonthSendSms" title="上月发送短信数" type="number" inputMode="readonly"/>
+		<field name="thisMonthSendSms" title="本月发送短信数" type="number" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

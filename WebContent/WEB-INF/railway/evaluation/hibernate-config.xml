@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--考核配置-->
+	<class name="com.yuanluesoft.railway.evaluation.pojo.RailwayEvaluationParameter" table="railway_evaluation_parameter">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="eventLevelADeduct"/> <!--铁路局问题A扣分,NUMERIC(5,2)-->
+		<property name="eventLevelBDeduct"/> <!--铁路局问题B扣分,NUMERIC(5,2)-->
+		<property name="eventLevelCDeduct"/> <!--铁路局问题C扣分,NUMERIC(5,2)-->
+		<property name="eventLevelDDeduct"/> <!--铁路局问题D扣分,NUMERIC(5,2)-->
+		<property name="eventDeductLimit"/> <!--铁路局问题扣分上限,NUMERIC(5,2)-->
+		<property name="mutualEvaluationRaise"/> <!--互评靠前加分,在所有人的选择中都靠前时的加分额度,NUMERIC(5,2)-->
+		<property name="mutualEvaluationDeduct"/> <!--互评靠后减分,在所有人的选择中都靠后时的扣分额度,NUMERIC(5,2)-->
+		<property name="testLackDeduct"/> <!--考试题量未完成扣分,上限,1题未答时扣除全部,NUMERIC(5,2)-->
+		<property name="testRaise"/> <!--考分靠前加分,同岗位中排名第一时的加分额度,NUMERIC(5,2)-->
+		<property name="testDeduct"/> <!--考分靠后减分,同岗位中排名倒数第一时的扣分额度,NUMERIC(5,2)-->
+	</class>
+</hibernate-mapping>

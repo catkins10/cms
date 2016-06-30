@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--ISO:文件目录-->
+	<class name="com.yuanluesoft.enterprise.iso.pojo.IsoDirectory" table="iso_directory">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryName"/> <!--目录名称-->
+		<property name="parentDirectoryId"/> <!--上级目录ID-->
+		<property name="priority"/> <!--优先级-->
+		<property name="directoryType"/> <!--目录类型-->
+		<property name="creator"/> <!--创建人-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="created"/> <!--创建时间-->
+		<property name="remark"/> <!--备注-->
+		<property name="category"/> <!--文件类别-->
+		<property name="version"/> <!--版本号-->
+		<property name="control"/> <!--受控状态-->
+		<property name="urgency"/> <!--紧急程度-->
+		<property name="security"/> <!--文件密级-->
+		<property name="storage"/> <!--保存期限-->
+		<property name="storageDepartment"/> <!--管理部门-->
+		<property name="numberingRule"/> <!--编号规则-->
+		<property name="createWorkflowId"/> <!--登记流程ID-->
+		<property name="createWorkflowName"/> <!--登记流程名称-->
+		<property name="modifyWorkflowId"/> <!--修改流程ID-->
+		<property name="modifyWorkflowName"/> <!--修改流程名称-->
+		<property name="loanWorkflowId"/> <!--借阅流程ID-->
+		<property name="loanWorkflowName"/> <!--借阅流程名称-->
+		<property name="destroyWorkflowId"/> <!--销毁流程ID-->
+		<property name="destroyWorkflowName"/> <!--销毁流程名称-->
+		<set cascade="delete" inverse="true" lazy="true" name="directoryPopedoms" table="iso_directory_popedom" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.enterprise.iso.pojo.IsoDirectoryPopedom" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="subjections" table="iso_directory_subjection" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.enterprise.iso.pojo.IsoDirectorySubjection" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="childSubjections" table="iso_directory_subjection">
+			<key column="parentDirectoryId" />
+			<one-to-many class="com.yuanluesoft.enterprise.iso.pojo.IsoDirectorySubjection" />
+		</set>
+	</class>
+	
+	<!--Iso:目录隶属关系-->
+	<class name="com.yuanluesoft.enterprise.iso.pojo.IsoDirectorySubjection" table="iso_directory_subjection">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID-->
+		<property name="parentDirectoryId"/> <!--上级目录ID-->
+	</class>
+	
+	<!--Iso:目录权限-->
+	<class name="com.yuanluesoft.enterprise.iso.pojo.IsoDirectoryPopedom" table="iso_directory_popedom">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID-->
+		<property name="userId"/> <!--用户ID-->
+		<property name="userName"/> <!--用户名-->
+		<property name="popedomName"/> <!--权限-->
+		<property name="isInherit"/> <!--是否从上级目录继承-->
+	</class>
+	
+	<!--Iso:文档-->
+	<class name="com.yuanluesoft.enterprise.iso.pojo.IsoDocument" table="iso_document">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="category"/> <!--文件类别-->
+		<property name="documentNumber"/> <!--文件编号-->
+		<property name="name"/> <!--文件名称-->
+		<property name="keywords"/> <!--关键词-->
+		<property name="version"/> <!--版本号-->
+		<property name="control"/> <!--受控状态-->
+		<property name="urgency"/> <!--紧急程度-->
+		<property name="security"/> <!--文件密级-->
+		<property name="storage"/> <!--保存期限-->
+		<property name="writer"/> <!--编制人-->
+		<property name="writeDate"/> <!--编制日期-->
+		<property name="status"/> <!--文件状态-->
+		<property name="storageDepartment"/> <!--管理部门-->
+		<property name="manager"/> <!--管理员-->
+		<property name="summary"/> <!--内容概述-->
+		<property name="isValid"/> <!--文件是否生效-->
+		<property name="isDestroy"/> <!--是否文件销毁记录-->
+		<property name="isModify"/> <!--是否文件修改记录-->
+		<property name="sourceDocumentId"/> <!--修改或销毁源文件ID-->
+		<property name="modifyDescription"/> <!--修改说明-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<property name="remark"/> <!--备注-->
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+		<set name="opinions" table="iso_document_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.enterprise.iso.pojo.IsoDocumentOpinion" />
+		</set>
+		<set name="visitors" table="iso_document_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.enterprise.iso.pojo.IsoDocumentPrivilege" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="subjections" table="iso_document_subjection" order-by="id">
+			<key column="documentId" />
+			<one-to-many class="com.yuanluesoft.enterprise.iso.pojo.IsoDocumentSubjection" />
+		</set>
+	</class>
+	
+	<!--Iso:文档所属目录-->
+	<class name="com.yuanluesoft.enterprise.iso.pojo.IsoDocumentSubjection" table="iso_document_subjection">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="documentId"/> <!--文档ID-->
+		<property name="directoryId"/> <!--目录ID-->
+	</class>
+	
+	<!--Iso:文档权限控制-->
+	<class name="com.yuanluesoft.enterprise.iso.pojo.IsoDocumentPrivilege" table="iso_document_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--Iso:文档审核意见-->
+	<class name="com.yuanluesoft.enterprise.iso.pojo.IsoDocumentOpinion" table="iso_document_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="created"/> <!--填写时间-->
+	</class>
+</hibernate-mapping>

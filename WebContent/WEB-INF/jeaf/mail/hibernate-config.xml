@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--邮件帐号-->
+	<class name="com.yuanluesoft.jeaf.mail.pojo.MailAccount" table="mail_account">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="orgId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="orgName"/> <!--单位名称,VARCHAR(100)-->
+		<property name="mailAddress"/> <!--邮箱,VARCHAR(100)-->
+		<property name="name"/> <!--名称,VARCHAR(100)-->
+		<property name="smtpHost"/> <!--SMTP主机,VARCHAR(100)-->
+		<property name="smtpPort"/> <!--SMTP端口,NUMERIC(5)-->
+		<property name="smtpUserName"/> <!--SMTP用户名,VARCHAR(100)-->
+		<property name="smtpPassword"/> <!--SMTP密码,VARCHAR(100)-->
+	</class>
+	
+	<!--邮件服务:发送记录-->
+	<class name="com.yuanluesoft.jeaf.mail.pojo.MailSend" table="mail_send">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="orgId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="orgName"/> <!--单位名称,VARCHAR(100)-->
+		<property name="mailAddress"/> <!--邮箱,VARCHAR(100)-->
+		<property name="subject"/> <!--主题,VARCHAR(2000)-->
+		<property name="receivers"/> <!--接收人,VARCHAR(2000)-->
+		<property name="body"/> <!--内容,TEXT-->
+		<property name="sent"/> <!--发送时间,TIMESTAMP-->
+		<property name="senderId"/> <!--发送人ID,NUMERIC(20)-->
+		<property name="sender"/> <!--发送人,VARCHAR(100)-->
+	</class>
+</hibernate-mapping>

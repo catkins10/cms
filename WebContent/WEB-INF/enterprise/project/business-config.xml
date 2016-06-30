@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="项目" class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProject" businessServiceName="enterpriseProjectService">
+		<field name="name" title="工程名称" length="300" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.openSelectDialog('enterprise/project', 'projectSelect', 640, 400, false, 'name{name},bridgeScale{bridgeScale},tunnelScale{tunnelScale},highwayLevel{highwayLevel},scale{scale},beginDate{beginDate},endDate{endDate},overview{overview},bridgeWidth{bridgeWidth},bridgeLength{bridgeLength},tunnelWidth{tunnelWidth},tunnelLength{tunnelLength},highwaySpeed{highwaySpeed},highwayMileage{highwayMileage},owner{owner},city{city},type{type},constructionUnit{constructionUnit},surveillanceUnit{surveillanceUnit},projectLeader{projectLeader},completionDate{completionDate},biddingNumber{biddingNumber},projectStage{projectStage},projectProgress{projectProgress}', '', '', '', ',', true);</parameter>
+		</field>
+		<field name="overview" title="工程概况" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">4</parameter>
+		</field>
+		<field name="bridgeScale" title="桥梁规模" length="10" type="string" inputMode="dropdown">
+			<parameter name="itemsText">特大\0大\0中\0小</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="bridgeWidth" title="桥宽" length="10,2" type="number" inputMode="text"/>
+		<field name="bridgeLength" title="桥长" length="10,2" type="number" inputMode="text"/>
+		<field name="tunnelScale" title="隧道规模" length="10" type="string" inputMode="dropdown">
+			<parameter name="itemsText">特大\0大\0中\0小</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="tunnelWidth" title="隧道宽" length="10,2" type="number" inputMode="text"/>
+		<field name="tunnelLength" title="隧道长" length="10,2" type="number" inputMode="text"/>
+		<field name="highwayLevel" title="公路等级" length="10" type="string" inputMode="dropdown">
+			<parameter name="itemsText">一级\0二级\0三级\0四级</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="highwaySpeed" title="公路时速" length="10,2" type="number" inputMode="text"/>
+		<field name="highwayMileage" title="公路里程" length="10,2" type="number" inputMode="text"/>
+		<field name="scale" title="项目规模" length="100" type="string" inputMode="text"/>
+		<field name="owner" title="业主单位" length="200" type="string" inputMode="dropdown">
+			<parameter name="itemsHql">select distinct EnterpriseProject.owner from EnterpriseProject EnterpriseProject where EnterpriseProject.owner is not null order by EnterpriseProject.owner</parameter>
+		</field>
+		<field name="city" title="所在地区" length="30" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">enterpriseProjectService</parameter>
+			<parameter name="itemsName">city</parameter>
+		</field>
+		<field name="type" title="项目类别" length="10" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">enterpriseProjectService</parameter>
+			<parameter name="itemsName">projectTypeEnterable</parameter>
+		</field>
+		<field name="beginDate" title="工作开始时间" type="date" inputMode="date"/>
+		<field name="endDate" title="工作结束时间" type="date" inputMode="date"/>
+		<field name="sn" title="文件编号" length="80" type="string" inputMode="text"/>
+		<field name="constructionUnit" title="施工单位" length="200" type="string" inputMode="text"/>
+		<field name="surveillanceUnit" title="监理单位" length="200" type="string" inputMode="text"/>
+		<field name="projectLeader" title="项目负责人" length="200" type="string" inputMode="text"/>
+		<field name="completionDate" title="项目建成时间" type="date" inputMode="date"/>
+		<field name="isBidding" title="是否为招标项目" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+		<field name="biddingNumber" title="招标编号" length="100" type="string" inputMode="text"/>
+		<field name="projectStage" title="项目阶段" length="20" type="string" inputMode="text"/>
+		<field name="projectProgress" title="项目进展" length="100" type="string" inputMode="text"/>
+		<field name="iso" title="是否进行ISO贯标" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">贯标|1\0不贯标|0</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly"/>
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none"/>
+		<field name="creator" title="登记人" length="30" type="string" inputMode="readonly"/>
+		<field name="isContract" title="是否合同管理" length="1" type="char" inputMode="hidden"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+		<field name="contracts" title="合同" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectContract</parameter>
+		</field>
+		<field name="collects" title="收款" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectCollect</parameter>
+		</field>
+		<field name="paies" title="付款" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectPay</parameter>
+		</field>
+		<field name="teams" title="项目组" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectTeam</parameter>
+		</field>
+		<field name="designQuality" title="设计质量" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">teams</parameter>
+		</field>
+		<field name="designStage" title="设计阶段" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">teams</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment"/>
+		<field name="isoFile" title="ISO文件" type="attachment" inputMode="attachment">
+			<parameter name="type">{PARAMETER:activityId}_{PARAMETER:isoFileType}</parameter>
+		</field>
+		<field name="isoDesignFile" title="ISO设计阶段文件" type="attachment" inputMode="attachment">
+			<parameter name="type">{PARAMETER:activityId}_{PARAMETER:isoFileType}_{PARAMETER:projectTeam.stage}</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">经营部会核,设计部会核,设计部会核,财务部会核,办公室会核,总工、总工办会核,副经理会核,总经理批示</parameter>
+			<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectOpinion</parameter>
+		</field>
+		<parameter name="fillOpinionByActivity">false</parameter> <!-- 是否按环节来保存意见,默认true -->
+	</businessObject>
+	
+	<businessObject title="合同" class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectContract" businessServiceName="enterpriseProjectService">
+		<field name="projectId" title="项目ID" type="number" inputMode="none"/>
+		<field name="contractNo" title="合同编号" length="100" type="string" inputMode="text"/>
+		<field name="contractUnit" title="合同单位" length="300" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsHql">select distinct EnterpriseProjectContract.contractUnit from EnterpriseProjectContract EnterpriseProjectContract where EnterpriseProjectContract.contractUnit is not null order by EnterpriseProjectContract.contractUnit</parameter>
+		</field>
+		<field name="contractName" title="合同名称" length="300" required="true" type="string" inputMode="text"/>
+		<field name="contractValue" title="合同金额（元）" length="13,2" type="number" inputMode="text"/>
+		<field name="signDate" title="签订时间" type="date" inputMode="date"/>
+		<field name="archiveDate" title="存档时间" type="date" inputMode="date"/>
+		<field name="sealDate" title="盖章时间" type="date" inputMode="date"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="body" title="HTML正文" type="html" inputMode="htmleditor"/>
+		<field name="remark" title="备注" length="1000" type="string" inputMode="text"/>
+		<field name="contract" title="合同正文" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">5000000</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="attachmentEditor">/enterprise/project/contractAttachmentEditor.shtml</parameter>
+		</field>
+		<field name="html" title="HTML文件及附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">500000000</parameter>
+			<parameter name="fileExtension">所有文件|*.*|</parameter>
+		</field>
+		<field name="project" title="项目" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProject</parameter>
+		</field>
+		<field name="collects" title="收款记录" type="components" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectCollect</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="收款" class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectCollect" businessServiceName="enterpriseProjectService">
+		<field name="projectId" title="项目ID" type="number" inputMode="none"/>
+		<field name="contractId" title="合同ID" type="number" inputMode="hidden"/>
+		<field name="clauseName" title="款项名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="accountReceivable" title="按合同进度应到款数" length="13,2" type="number" inputMode="text"/>
+		<field name="invoiceAmount" title="开票金额（元）" length="13,2" type="number" inputMode="text"/>
+		<field name="uninvoiceAmount" title="未开票金额（元）" persistence="false" type="number" inputMode="readonly">
+			<parameter name="referenceFields">contract,invoiceAmount</parameter>
+		</field>
+		<field name="billingMonth" title="开票月份" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">billingDate</parameter>
+		</field>
+		<field name="billingYear" title="开票年度" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">billingDate</parameter>
+		</field>
+		<field name="billingDate" title="开票时间" required="true" type="date" inputMode="date"/>
+		<field name="receiveAmount" title="到款金额（元）" length="13,2" type="number" inputMode="text"/>
+		<field name="receiveDate" title="到款时间" type="date" inputMode="date"/>
+		<field name="remark" title="备注" length="500" type="string" inputMode="text"/>
+		<field name="project" title="项目" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProject</parameter>
+		</field>
+		<field name="contract" title="合同" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectContract</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="付款" class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectPay" businessServiceName="enterpriseProjectService">
+		<field name="projectId" title="项目ID" type="number" inputMode="none"/>
+		<field name="clauseName" title="款项名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="accountReceivable" title="按合同进度应付款数" length="13,2" type="number" inputMode="text"/>
+		<field name="payDate" title="付款时间" type="date" inputMode="date"/>
+		<field name="invoiceAmount" title="票额" length="13,2" type="number" inputMode="text"/>
+		<field name="billingReceiveDate" title="收票时间" type="date" inputMode="date"/>
+		<field name="receiver" title="接收人" length="200" type="string" inputMode="text"/>
+		<field name="isPaid" title="是否已付款" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">已付款|1\0未付款|0</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="项目组" class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectTeam" businessServiceName="enterpriseProjectService">
+		<field name="projectId" title="项目ID" type="number" inputMode="none"/>
+		<field name="stage" title="项目阶段" length="20" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">enterpriseProjectService</parameter>
+			<parameter name="itemsName">stageImcomplete</parameter>
+		</field>
+		<field name="workContent" title="工作内容" length="1000" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="expectingDate" title="计划完成时间" type="date" inputMode="date"/>
+		<field name="completionDate" title="实际完成时间" type="date" inputMode="date"/>
+		<field name="completionDescription" title="实际完成情况" length="1000" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="designQuality" title="设计质量" length="100" type="string" inputMode="dropdown">
+			<parameter name="itemsText">优秀\0良好\0合格\0不合格\0原则性错误\0技术性错误\0一般性错误</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="projectTeamManagerIds" title="项目经理ID" type="string" inputMode="hidden"/>
+		<field name="projectTeamManagerNames" title="项目经理" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(600, 400, true, 'projectTeam.projectTeamManagerIds{id},projectTeam.projectTeamManagerNames{name|项目负责人|100%}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="projectTeamMemberIds" title="项目组成员ID" type="string" inputMode="hidden"/>
+		<field name="projectTeamMemberNames" title="项目组成员" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(600, 400, true, 'projectTeam.projectTeamMemberIds{id},projectTeam.projectTeamMemberNames{name|项目组成员|100%}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="creatorId" title="创建人ID" type="number" inputMode="none"/>
+		<field name="creator" title="创建人" length="50" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="备注" length="300" type="string" inputMode="text"/>
+		<field name="project" title="项目" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProject</parameter>
+		</field>
+		<field name="members" title="项目组成员" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectTeamMember</parameter>
+		</field>
+		<field name="plans" title="项目组工作计划" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectTeamPlan</parameter>
+		</field>
+		<field name="qualities" title="设计完成情况" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectQuality</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">500000000</parameter>
+			<parameter name="attachmentEditor">/enterprise/project/teamAttachmentEditor.shtml?projectTeam.id={PARAMETER:projectTeam.id}</parameter>
+		</field>
+		<field name="design" title="设计文件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">500000000</parameter>
+			<parameter name="attachmentEditor">/enterprise/project/teamAttachmentEditor.shtml?projectTeam.id={PARAMETER:projectTeam.id}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="项目组成员" class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectTeamMember" businessServiceName="enterpriseProjectService">
+		<field name="teamId" title="项目组ID" type="number" inputMode="hidden"/>
+		<field name="memberId" title="组员ID" type="number" inputMode="hidden"/>
+		<field name="memberName" title="组员姓名" length="30" type="string" inputMode="select"/>
+		<field name="isManager" title="是否项目组负责人" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="项目组工作计划" class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectTeamPlan" businessServiceName="enterpriseProjectService">
+		<field name="teamId" title="项目组ID" type="number" inputMode="hidden"/>
+		<field name="memberIds" title="参与的项目组成员ID列表" length="200" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="memberNames" title="参与的项目组成员列表" length="200" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.openListDialog('项目组成员', 'teamMembers', 550, 360, true, 'plan.memberIds{value},plan.memberNames{title|项目组成员|100%}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="workContent" title="工作内容" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="beginDate" title="计划开始时间" required="true" type="date" inputMode="date"/>
+		<field name="endDate" title="计划结束时间" required="true" type="date" inputMode="date"/>
+		<field name="completionDate" title="实际完成时间" type="date" inputMode="date"/>
+		<field name="completionDescription" title="实际完成情况" length="1000" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="设计完成情况" class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectQuality" businessServiceName="enterpriseProjectService">
+		<field name="teamId" title="项目组ID" type="number" inputMode="hidden"/>
+		<field name="completionDate" title="设计完成时间" type="date" inputMode="date"/>
+		<field name="completionDescription" title="设计完成情况" length="1000" type="string" inputMode="text"/>
+		<field name="designQuality" title="设计质量" length="100" type="string" inputMode="dropdown"/>
+		<field name="approverId" title="审核人ID" type="number" inputMode="none"/>
+		<field name="approver" title="审核人" length="30" type="string" inputMode="readonly"/>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="项目类型配置" class="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectType">
+		<field name="projectType" title="项目类型" length="20" required="true" type="string" inputMode="text"/>
+		<field name="workflowId" title="流程ID" length="20" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="workflowName" title="流程名称" length="100" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('workflowConfig', '', false, null, '_self')</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="contractNumberRule" title="合同编号规则" length="100" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="合同模板" class="com.yuanluesoft.enterprise.project.pojo.EnterpriseContractTemplate">
+		<field name="name" title="模板名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="appliedProjectTypes" title="适用的项目类型" length="100" type="string" inputMode="text"/>
+		<field name="template" title="模板" length="1" type="attachment" inputMode="attachment"/>
+		<field name="displayAppliedProjectTypes" title="适用的项目类型" type="string" inputMode="readonly">
+			<parameter name="referenceFields">appliedProjectTypes</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

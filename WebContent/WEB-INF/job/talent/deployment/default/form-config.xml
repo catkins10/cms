@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 所在班级父目录ID设为20339916761990000 -->
+<forms>
+	<form title="人才搜索" name="talentSearch" method="get" action="/cms/sitemanage/applicationSearch.shtml?applicationName=job/talent&amp;pageName=talentSearch&amp;anonymous=false">
+		<formFields>
+			<field name="sex" title="性别" length="1" type="char" inputMode="radio">
+				<parameter name="itemsText">不限|A\0男|M\0女|F</parameter>
+				<parameter name="defaultValue">A</parameter>
+				<parameter name="searchCondition">'{PARAMETER:sex}'='A' or JobTalent.sex='{PARAMETER:sex}'</parameter>
+			</field>
+			<field name="ageMin" title="年龄下限" type="number" inputMode="text">
+				<parameter name="searchCondition">{YEAR}-year(JobTalent.birthday)&gt;={PARAMETER:ageMin}</parameter>
+			</field>
+			<field name="ageMax" title="年龄上限" type="number" inputMode="text">
+				<parameter name="searchCondition">{YEAR}-year(JobTalent.birthday)&lt;={PARAMETER:ageMax}</parameter>
+			</field>
+			<field name="maritalStatus" title="婚姻状况" length="1" type="number" inputMode="radio">
+				<parameter name="itemsText">不限|-1\0未婚|0\0已婚|1</parameter>
+				<parameter name="defaultValue">-1</parameter>
+				<parameter name="searchCondition">{PARAMETER:maritalStatus}=-1 or JobTalent.maritalStatus={PARAMETER:maritalStatus}</parameter>
+			</field>
+			<field name="statureMin" title="身高下限" length="3" type="number" inputMode="text"/>
+			<field name="statureMax" title="身高上限" length="3" type="number" inputMode="text"/>
+			<field name="politicalStatus" title="政治面貌" length="20" type="string" inputMode="text"/>
+			<field name="workYearMin" title="工作年限" length="2" type="number" inputMode="dropdown">
+				<parameter name="itemsText">不限|-2\0在读学生|-1\0应届毕业生|0\0 1年|1\0 2年|2\0 3年|3\0 4年|4\0 5年|5\0 6年|6\0 7年|7\0 8年|8\0 9年|9\0 10年以上|10</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">-2</parameter>
+			</field>
+			<field name="residence" title="户口所在地" length="30" type="string" inputMode="select">
+				<parameter name="execute">DialogUtils.selectOrg(600, 360, false, 'residence{name}', '', 'area')</parameter>
+			</field>
+			<field name="area" title="居住地名称" length="30" type="string" inputMode="select">
+				<parameter name="execute">DialogUtils.selectOrg(600, 360, false, 'areaId{id},area{name}', '', 'area')</parameter>
+			</field>
+			<field name="englishLevel" title="英语等级" length="10" type="string" inputMode="dropdown">
+				<parameter name="itemsText">英语四级\0英语六级\0专业四级\0专业八级</parameter>
+			</field>
+			<field name="japaneseLevel" title="日语等级" length="10" type="string" inputMode="dropdown">
+				<parameter name="itemsText">一级\0二级\0三级\0四级</parameter>
+			</field>
+			<field name="drivingLicense" title="驾照" length="3" type="string" inputMode="dropdown">
+				<parameter name="itemsText">A1\0 A2\0 A3\0 C1\0 C2\0 C3\0 C4\0 C5\0 D\0 E\0 F\0 M\0 N\0 P</parameter>
+			</field>
+			<field name="lastModifiedBegin" title="更新时间" type="date" inputMode="date"/>
+			
+			<field name="intentions.companyScale" title="求职意向_企业规模" length="1" type="number" inputMode="dropdown">
+				<parameter name="itemsText">1~49人|1\0 50~99人|2\0 100~499人|3\0 500~999人|4\0 1000人以上|5\0 不限|0</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">0</parameter>
+				<parameter name="searchCondition">{PARAMETER:intentions.companyScale}=0 or intentions.companyScale=0 or intentions.companyScale={PARAMETER:intentions.companyScale}</parameter>		
+			</field>
+			<field name="intentions.minMonthlyPayMin" title="求职意向_期望最低月薪" length="8" type="number" inputMode="text"/>
+			<field name="intentions.maxMonthlyPayMax" title="求职意向_期望最高月薪" length="8" type="number" inputMode="text"/>
+			<field name="intentions.areas.area" title="求职意向地点" type="string" inputMode="select">
+				<parameter name="execute">DialogUtils.selectOrg(600, 360, false, 'intentions.areas.area{name}', '', 'area')</parameter>
+			</field>
+			<field name="intentions.types.type" title="求职意向_工作性质" type="number" inputMode="radio">
+				<parameter name="itemsText">不限|-1\0全职|0\0兼职|1\0实习|2\0暑期工|3</parameter>
+				<parameter name="defaultValue">-1</parameter>
+				<parameter name="searchCondition">{PARAMETER:intentions.types.type}=-1 or intentions_types.type={PARAMETER:intentions.types.type}</parameter>
+			</field>
+			<field name="intentions.industries.industry" title="求职意向_行业" type="string" inputMode="select">
+				<parameter name="js">/job/company/js/job.js</parameter>
+				<parameter name="execute">selectIndustry(640, 360, false, 'intentions.industries.industry{name}', 'industry')</parameter>
+			</field>
+			<field name="intentions.posts.post" title="求职意向_职能类别" length="100" type="string" inputMode="select">
+				<parameter name="js">/job/company/js/job.js</parameter>
+				<parameter name="execute">selectPost(600, 360, false, 'intentions.posts.post{name}')</parameter>
+			</field>
+			<field name="intentions.companyTypes.companyType" title="求职意向_公司性质" length="30" type="string" inputMode="dropdown">
+				<parameter name="itemsText">外资（欧美）\0外资（非欧美）\0合资\0国企\0民营公司\0国内上市公司\0外企代表处\0政府机关\0事业单位\0非营利机构\0其它性质</parameter>
+			</field>
+			
+			<field name="schoolings.endDateBegin" title="教育经历_毕业时间(开始)" type="date" inputMode="date"/>
+			<field name="schoolings.endDateEnd" title="教育经历_毕业时间(结束)" type="date" inputMode="date"/>
+			<field name="schoolings.school" title="教育经历_学校" length="100" type="string" inputMode="text"/>
+			<field name="schoolings.specialty" title="教育经历_专业" length="50" type="string" inputMode="select">
+				<parameter name="js">/job/company/js/job.js</parameter>
+				<parameter name="execute">selectSpecialty(600, 360, false, 'schoolings.specialty{name}', 'specialty')</parameter>
+			</field>
+			<field name="schoolings.qualificationMin" title="教育经历_学历" length="2" type="number" inputMode="dropdown">
+				<parameter name="itemsText">不限|-1\0小学\0初中|1\0高中|2\0职业高中|3\0职业中专|4\0中专|5\0大专|6\0本科|7\0硕士研究生|8\0博士研究生|9</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">-1</parameter>
+			</field>
+			<field name="schoolings.degree" title="教育经历_学位" length="20" type="string" inputMode="dropdown">
+				<parameter name="itemsText">无\0学士\0硕士\0博士</parameter>
+			</field>
+			<field name="schoolings.abroad" title="教育经历_海外学习经历" length="1" type="number" inputMode="radio">
+				<parameter name="itemsText">不限|-1\0有|1</parameter>
+				<parameter name="defaultValue">-1</parameter>
+				<parameter name="searchCondition">{PARAMETER:schoolings.abroad}=-1 or schoolings.abroad=1</parameter>
+			</field>
+			
+			<field name="trainings.organization" title="培训经历_培训机构" length="100" type="string" inputMode="text"/>
+			<field name="trainings.course" title="培训经历_培训课程" length="200" type="string" inputMode="text"/>
+			
+			<field name="careers.company" title="工作经历_公司" length="100" type="string" inputMode="text"/>
+			<field name="careers.industry" title="工作经历_行业" length="100" type="string" inputMode="select">
+				<parameter name="js">/job/company/js/job.js</parameter>
+				<parameter name="execute">selectIndustry(640, 360, false, 'careers..industry{name}', 'industry')</parameter>
+			</field>
+			<field name="careers.scaleMin" title="工作经历_公司规模" length="1" type="number" inputMode="dropdown">
+				<parameter name="itemsText">1~49人|1\0 50~99人|2\0 100~499人|3\0 500~999人|4\0 1000人以上|5\0不限|0</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">0</parameter>
+			</field>
+			<field name="careers.type" title="工作经历_公司性质" length="30" type="string" inputMode="dropdown">
+				<parameter name="itemsText">外资（欧美）\0外资（非欧美）\0合资\0国企\0民营公司\0国内上市公司\0外企代表处\0政府机关\0事业单位\0非营利机构\0其它性质</parameter>
+			</field>
+
+			<field name="certificates.certificateName" title="证书名称" length="100" type="string" inputMode="text"/>
+			
+			<field name="abilities.name" title="其它技能" length="100" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+	</form>
+
+	<form title="人才编辑" name="talent" method="post" action="/job/talent/saveTalent.shtml" class="com.yuanluesoft.job.talent.forms.Talent" pojo="com.yuanluesoft.job.talent.pojo.JobTalent">
+		<formFields>
+			<field name="password" title="登录密码" length="200" required="true" type="string" inputMode="password"/>
+			<field name="intention" title="求职意向" type="component">
+				<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalentIntention</parameter>
+			</field>
+			<field name="schooling" title="教育经历" type="component">
+				<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalentSchooling</parameter>
+			</field>
+			<field name="schooling.schoolClass" title="所在班级" length="60" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'schooling.schoolClassId{id},schooling.schoolClass{name}', '', '', '', '', '20339916761990000', false, true)</parameter>
+			</field>
+			<field name="career" title="工作经历" type="component">
+				<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalentCareer</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="注册" type="submit"/>
+			<action title="下一步" type="submit"/>
+			<action title="完成注册" type="submit"/>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+	
+	<form title="工作经历" name="career" class="com.yuanluesoft.job.talent.forms.Career" pojo="com.yuanluesoft.job.talent.pojo.JobTalentCareer">
+		<formFields>
+			<field name="industry" title="行业" length="100" type="string" inputMode="select">
+				<parameter name="js">/job/company/js/job.js</parameter>
+				<parameter name="execute">selectIndustry(640, 360, false, 'industry{name}', 'industry')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('deleteCareer')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="就业跟踪调查表" name="employment" class="com.yuanluesoft.job.talent.forms.Employment" pojo="com.yuanluesoft.job.talent.pojo.JobTalentEmployment">
+		<actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('deleteEmployment')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="证书" name="certificate" class="com.yuanluesoft.job.talent.forms.Certificate" pojo="com.yuanluesoft.job.talent.pojo.JobTalentCertificate">
+		<actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('deleteCertificate')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="求职意向" name="intention" class="com.yuanluesoft.job.talent.forms.Intention" pojo="com.yuanluesoft.job.talent.pojo.JobTalentIntention">
+		<formFields>
+			<field name="areaNames" title="工作地点" type="string" persistence="false" required="true" inputMode="select">
+	   			<parameter name="execute">DialogUtils.selectOrg(600, 360, true, 'areaIds{id},areaNames{name|工作地点|100%}', '', 'area')</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="referenceFields">areas</parameter>
+			</field>
+			<field name="industryNames" title="行业" length="100" required="true" type="string" persistence="false" inputMode="select">
+				<parameter name="js">/job/company/js/job.js</parameter>
+				<parameter name="execute">selectIndustry(640, 400, true, 'industryIds{id},industryNames{name|行业|100%}', 'industry')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="postNames" title="职能类别" length="100" required="true" type="string" persistence="false" inputMode="select">
+				<parameter name="js">/job/company/js/job.js</parameter>
+				<parameter name="execute">selectPost(600, 400, true, 'postIds{id},postNames{name|职能类别|100%}')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('deleteIntention')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="项目经验" name="project" class="com.yuanluesoft.job.talent.forms.Project" pojo="com.yuanluesoft.job.talent.pojo.JobTalentProject">
+		<actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('deleteProject')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="教育经历" name="schooling" class="com.yuanluesoft.job.talent.forms.Schooling" pojo="com.yuanluesoft.job.talent.pojo.JobTalentSchooling">
+		<formFields>
+			<field name="specialty" title="专业" length="50" type="string" inputMode="select">
+				<parameter name="js">/job/company/js/job.js</parameter>
+				<parameter name="execute">selectSpecialty(600, 360, false, 'specialty{name}', 'specialty')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="schoolClass" title="所在班级" length="60" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'schoolClassId{id},schoolClass{name}', '', '', '', '', '20339916761990000', false, true)</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('deleteSchooling')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="其它技能" name="schooling" class="com.yuanluesoft.job.talent.forms.Speech" pojo="com.yuanluesoft.job.talent.pojo.JobTalentSpeech">
+		<actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('deleteSpeech')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="语音能力" name="speech" class="com.yuanluesoft.job.talent.forms.Speech" pojo="com.yuanluesoft.job.talent.pojo.JobTalentSpeech">
+		<actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('deleteSpeech')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="培训经历" name="training" class="com.yuanluesoft.job.talent.forms.Training" pojo="com.yuanluesoft.job.talent.pojo.JobTalentTraining">
+		<actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('deleteTraining')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="其它技能" name="ability" class="com.yuanluesoft.job.talent.forms.Ability" pojo="com.yuanluesoft.job.talent.pojo.JobTalentAbility">
+		<actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('deleteAbility')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="人才" name="admin/talent" class="com.yuanluesoft.job.talent.forms.admin.Talent" pojo="com.yuanluesoft.job.talent.pojo.JobTalent">
+	   <formFields>
+	   		<field name="password" title="登录密码" length="200" required="true" type="string" inputMode="text"/>
+			<field name="approvalPass" title="是否审核通过" type="boolean" inputMode="hidden"/>
+	   </formFields>
+	   <actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确实删除？'))FormUtils.doAction('deleteTalent')"/>
+			<action title="审核" hide="noPrivilege(manageUnit_approval)" execute="approval()"/>
+		</actions>
+	</form>
+	
+	<form title="就业登记" name="admin/schoolClassReports" class="com.yuanluesoft.job.talent.forms.admin.SchoolClassReports">
+	   <formFields>
+	   		<field name="schoolClassId" title="班级ID" length="20" type="number" inputMode="hidden"/>
+			<field name="schoolClass" title="班级" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'schoolClassId{id},schoolClass{name}', '', 'unit,unitDepartment', '', '', '20339916761990000', false, false, true);</parameter>
+			</field>
+			<field name="graduateDate" title="毕业时间" type="date" inputMode="date"/>
+			<field name="schoolingLength" title="学制" length="20" type="string" inputMode="text"/>
+			<field name="qualification" title="学历层次" length="20" type="string" inputMode="text"/>
+			<field name="specialty" title="专业" length="100" type="string" inputMode="text"/>
+			<field name="trainingMode" title="培养方式" length="50" type="string" inputMode="text"/>
+			<field name="reportBegin" title="报到开始时间" type="date" inputMode="date"/>
+			<field name="reportEnd" title="报到截止时间" type="date" inputMode="date"/>
+			<field name="noticeNumber" title="就业通知书起始编号" length="20" type="number" inputMode="text"/>
+			<field name="reportNumber" title="就业报到证起始编号" length="20" type="number" inputMode="text"/>		
+	   </formFields>
+	   <actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="下一步" execute="FormUtils.doAction('schoolClassReports')"/>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="打印报到证" execute="printReports(false)"/>
+			<action title="打印通知书" execute="printReports(true)"/>
+		</actions>
+	</form>
+	
+	<form title="就业报到" name="admin/talentReport" class="com.yuanluesoft.job.talent.forms.admin.TalentReport" pojo="com.yuanluesoft.job.talent.pojo.JobTalentReport">
+	   <actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="打印报到证" hide="isRead()" execute="PageUtils.openurl('{CONTEXTPATH}/job/talent/admin/printReports.shtml?talentIds={PARAMETER:talentId}');"/>
+			<action title="打印通知书" hide="isRead()" execute="PageUtils.openurl('{CONTEXTPATH}/job/talent/admin/printReports.shtml?talentIds={PARAMETER:talentId}&amp;printNotify=true');"/>
+		</actions>
+	</form>
+	
+	<form title="人才审核设置" name="admin/talentApproval" class="com.yuanluesoft.job.talent.forms.admin.TalentApproval" pojo="com.yuanluesoft.job.talent.pojo.JobTalentApproval">
+		<actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

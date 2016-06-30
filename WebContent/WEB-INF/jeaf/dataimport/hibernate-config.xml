@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--数据导入:导入的记录-->
+	<class name="com.yuanluesoft.jeaf.dataimport.pojo.ImportedRecord" table="dataimport_record">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="importDataName"/> <!--被导入数据名称,如：投诉、政府信息,varchar(50)-->
+		<property name="siteId"/> <!--站点ID,numeric(20)-->
+		<property name="remoteRecordId"/> <!--导入的记录ID,varchar(100)-->
+		<property name="localRecordId"/> <!--本系统的记录ID,numeric(20)-->
+	</class>
+</hibernate-mapping>

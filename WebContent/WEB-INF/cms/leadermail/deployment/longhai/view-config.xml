@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 显示超时标志 -->
+<views>
+	<view title="领导信箱来信" name="leaderMails">
+		<data>
+			<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMail</pojo>
+			<where>LeaderMail.publicPass='1' and LeaderMail.isDeleted=0</where>
+			<orderBy>LeaderMail.created DESC</orderBy>
+			<quickFilter>LeaderMail.subject like '%{KEY}%' or LeaderMail.creator like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="信件">/cms/leadermail/leaderMail.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/leadermail</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/leadermail/templatemanage/insertLeaderMails.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view title="我的信件(客户端)" name="clientLeaderMails">
+		<data>
+			<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMail</pojo>
+			<where>LeaderMail.clientDeviceId='{PARAMETER:client.deviceId|-1}' and LeaderMail.isDeleted=0</where>
+			<orderBy>LeaderMail.created DESC</orderBy>
+			<quickFilter>LeaderMail.subject like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="信件">/cms/leadermail/leaderMail.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/leadermail</link>
+		</links>
+		<extendParameters>
+			<parameter name="encryptRequired">true</parameter> <!-- 必须加密 -->
+		</extendParameters>
+	</view>
+	
+	<view title="信件统计" name="leaderMailStatistic">
+		<data>
+			<pojo>com.yuanluesoft.cms.publicservice.model.PublicServiceStatistic</pojo>
+		</data>
+		<extendParameters>
+			<parameter name="pojoClassName">com.yuanluesoft.cms.leadermail.pojo.LeaderMail</parameter>
+		</extendParameters>
+	</view>
+
+	<view name="admin/todoLeaderMail" form="admin/leaderMail" title="待办信件" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMail</pojo>
+			<where>LeaderMail.isDeleted=0</where>
+			<orderBy>LeaderMail.created DESC</orderBy>
+			<quickFilter>LeaderMail.subject like '%{KEY}%' or LeaderMail.creator like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMailType</pojo>
+				<orderBy>LeaderMailType.type</orderBy>
+			</data>
+			<category value="LeaderMailType.type"> <!--value必须有-->
+				<data>LeaderMail.type={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<group title="批量处理">
+				<action title="批量办理信件" groupTitle="办理信件" execute="batchSend('../../cms/leadermail/admin/runLeaderMail')"/>
+				<action hide="noPrivilege(application_manager)" title="删除信件" groupTitle="删除信件" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/cms/publicservice/admin/batchDelete.shtml')"/>
+			</group>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="时限" name="timeLeftFlag" width="32" align="center"/>
+			<column title="主题" name="subject"/>
+			<column title="信件类型" name="type" align="center" width="80" displayExcept="portlet"/>
+			<column title="写信人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="写信时间" name="created" align="center" width="108"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+			<column title="剩余时间" name="timeLeftTitle" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/todoLeaderMailBySite" form="admin/leaderMail" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/leadermail&amp;viewName=admin/todoLeaderMailBySite&amp;showChildSiteData=true" title="待办信件" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMail</pojo>
+			<where>LeaderMail.isDeleted=0</where>
+			<orderBy>LeaderMail.created DESC</orderBy>
+			<quickFilter>LeaderMail.subject like '%{KEY}%' or LeaderMail.creator like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<group title="批量处理">
+				<action title="批量办理信件" groupTitle="办理信件" execute="batchSend('../../cms/leadermail/admin/runLeaderMail')"/>
+				<action hide="noPrivilege(application_manager)" title="删除信件" groupTitle="删除信件" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/cms/publicservice/admin/batchDelete.shtml')"/>
+			</group>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="时限" name="timeLeftFlag" width="32" align="center"/>
+			<column title="主题" name="subject"/>
+			<column title="信件类型" name="type" align="center" width="80" displayExcept="portlet"/>
+			<column title="写信人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="写信时间" name="created" align="center" width="108"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+			<column title="剩余时间" name="timeLeftTitle" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessLeaderMail" form="admin/leaderMail" title="在办信件" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMail</pojo>
+			<where>LeaderMail.isDeleted=0</where>
+			<orderBy>LeaderMail.created DESC</orderBy>
+			<quickFilter>LeaderMail.subject like '%{KEY}%' or LeaderMail.creator like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMailType</pojo>
+				<orderBy>LeaderMailType.type</orderBy>
+			</data>
+			<category value="LeaderMailType.type"> <!--value必须有-->
+				<data>LeaderMail.type={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="时限" name="timeLeftFlag" width="32" align="center"/>
+			<column title="主题" name="subject"/>
+			<column title="信件类型" name="type" align="center" width="80" displayExcept="portlet"/>
+			<column title="写信人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="写信时间" name="created" align="center" width="108"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+			<column title="剩余时间" name="timeLeftTitle" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedLeaderMail" form="admin/leaderMail" title="办结信件" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMail</pojo>
+			<filter>COMPLETED</filter>
+			<where>LeaderMail.isDeleted=0</where>
+			<orderBy>LeaderMail.created DESC</orderBy>
+			<quickFilter>LeaderMail.subject like '%{KEY}%' or LeaderMail.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMailType</pojo>
+				<orderBy>LeaderMailType.type</orderBy>
+			</data>
+			<category value="LeaderMailType.type"> <!--value必须有-->
+				<data>LeaderMail.type={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="信件类型" name="type" align="center" width="80"/>
+			<column title="写信人" name="creator" align="center" width="80"/>
+			<column title="写信时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allLeaderMail" form="admin/leaderMail" title="所有信件" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMail</pojo>
+			<filter>READABLE</filter>
+			<where>LeaderMail.isDeleted=0</where>
+			<orderBy>LeaderMail.created DESC</orderBy>
+			<quickFilter>LeaderMail.subject like '%{KEY}%' or LeaderMail.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMailType</pojo>
+				<orderBy>LeaderMailType.type</orderBy>
+			</data>
+			<category value="LeaderMailType.type"> <!--value必须有-->
+				<data>LeaderMail.type={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<group title="批量处理">
+				<action title="信件授权" hide="noPrivilege(application_manager)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/publicservice/admin/readersModifyOption.shtml?applicationName={PARAMETER:applicationName}', 430, 200)"/>
+				<action hide="noPrivilege(application_manager)" title="删除信件" groupTitle="删除信件" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/cms/publicservice/admin/batchDelete.shtml')"/>
+			</group>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="信件类型" name="type" align="center" width="80"/>
+			<column title="写信人" name="creator" align="center" width="80"/>
+			<column title="写信时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<!--  hide="noPrivilege(application_manager) and isNotSiteManager()" -->	
+	<view name="admin/allLeaderMailBySite" form="admin/leaderMail" title="所有信件" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/leadermail&amp;viewName=admin/allLeaderMailBySite&amp;showChildSiteData=true" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMail</pojo>
+			<filter>READABLE</filter>
+			<where>LeaderMail.isDeleted=0</where>
+			<orderBy>LeaderMail.created DESC</orderBy>
+			<quickFilter>LeaderMail.subject like '%{KEY}%' or LeaderMail.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<group title="批量处理">
+				<action title="信件授权" hide="noPrivilege(application_manager)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/publicservice/admin/readersModifyOption.shtml?applicationName={PARAMETER:applicationName}', 430, 200)"/>
+				<action hide="noPrivilege(application_manager)" title="删除信件" groupTitle="删除信件" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/cms/publicservice/admin/batchDelete.shtml')"/>
+			</group>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="信件类型" name="type" align="center" width="80"/>
+			<column title="写信人" name="creator" align="center" width="80"/>
+			<column title="写信时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/warnLeaderMail" form="admin/leaderMail" title="即将到期信件" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMail</pojo>
+			<filter>READABLE</filter>
+			<where>LeaderMail.isDeleted=0
+				   and workItems.deadline>0
+				   and day(TIMESTAMP({NOW}) - workItems.created) between workItems.deadline-1 and workItems.deadline
+				   and not workItems.activityName like '信访局%'</where> <!-- 预警时间24小时 -->
+			<orderBy>LeaderMail.created DESC</orderBy>
+			<quickFilter>LeaderMail.subject like '%{KEY}%' or LeaderMail.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="时限" name="timeLeftFlag" width="32" align="center"/>
+			<column title="主题" name="subject"/>
+			<column title="信件类型" name="type" align="center" width="80" displayExcept="portlet"/>
+			<column title="写信人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="写信时间" name="created" align="center" width="108"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+			<column title="剩余时间" name="timeLeftTitle" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/timeoutTodoLeaderMail" form="admin/leaderMail" title="逾期未办理信件" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMail</pojo>
+			<filter>READABLE</filter>
+			<where>LeaderMail.isDeleted=0
+				   and not workItems.activityName like '信访局%'
+				   and workItems.deadline>0
+				   and day(TIMESTAMP({NOW}) - workItems.created)&gt;=workItems.deadline</where>
+			<orderBy>LeaderMail.created DESC</orderBy>
+			<quickFilter>LeaderMail.subject like '%{KEY}%' or LeaderMail.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="时限" name="timeLeftFlag" width="32" align="center"/>
+			<column title="主题" name="subject"/>
+			<column title="信件类型" name="type" align="center" width="80" displayExcept="portlet"/>
+			<column title="写信人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="写信时间" name="created" align="center" width="108"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+			<column title="剩余时间" name="timeLeftTitle" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/timeoutLeaderMail" form="admin/leaderMail" title="逾期办理信件" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMail</pojo>
+			<filter>READABLE</filter>
+			<join>, WorkItemTimeout WorkItemTimeout</join>
+			<where>LeaderMail.isDeleted=0
+				   and WorkItemTimeout.recordId=LeaderMail.id
+				   and not WorkItemTimeout.activityName like '信访局%'</where>
+			<orderBy>LeaderMail.created DESC</orderBy>
+			<quickFilter>LeaderMail.subject like '%{KEY}%' or LeaderMail.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="信件类型" name="type" align="center" width="80" displayExcept="portlet"/>
+			<column title="写信人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="写信时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/deleted" form="admin/leaderMail" hide="noPrivilege(application_manager) and isNotSiteManager()" title="已删除信件" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMail</pojo>
+			<filter>READABLE</filter>
+			<where>LeaderMail.isDeleted=1</where>
+			<orderBy>LeaderMail.created DESC</orderBy>
+			<quickFilter>LeaderMail.subject like '%{KEY}%' or LeaderMail.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="信件类型" name="type" align="center" width="80"/>
+			<column title="写信人" name="creator" align="center" width="80"/>
+			<column title="写信时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="selectLeaderMail" form="admin/leaderMail" title="信件选择" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMail</pojo>
+			<filter>READABLE</filter>
+			<where>LeaderMail.isDeleted=0</where>
+			<orderBy>LeaderMail.created DESC</orderBy>
+			<quickFilter>LeaderMail.subject like '%{KEY}%' or LeaderMail.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMailType</pojo>
+				<orderBy>LeaderMailType.type</orderBy>
+			</data>
+			<category value="LeaderMailType.type"> <!--value必须有-->
+				<data>LeaderMail.type={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="主题" name="subject"/>
+			<column title="写信时间" name="created" align="center" width="70"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="admin/leaderMailType" form="admin/leaderMailType" title="信件类型" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/leadermail&amp;viewName=admin/leaderMailType" hide="noPrivilege(application_manager) and isNotSiteManager()" pageRows="20" openFeatures="mode=dialog,width=430,height=220">
+		<data>
+			<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMailType</pojo>
+			<orderBy>LeaderMailType.type</orderBy>
+			<quickFilter>LeaderMailType.type like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新增类型" execute="PageUtils.openurl('{WEBAPPLICATIONURL}/cms/leadermail/admin/leaderMailType.shtml?siteId={PARAMETER:siteId}', 'mode=dialog,width=430,height=220', 'leaderMailType')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="类型" name="type"/>
+			<column title="办理时限" name="workingDay" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/leaderMailDepartment" form="admin/leaderMailDepartment" title="受理部门" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/leadermail&amp;viewName=admin/leaderMailDepartment" hide="noPrivilege(application_manager) and isNotSiteManager()" pageRows="20" openFeatures="mode=dialog,width=430,height=120">
+		<data>
+			<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMailDepartment</pojo>
+		</data>
+		<actions>
+			<action title="部门配置" execute="PageUtils.openurl('{WEBAPPLICATIONURL}/cms/leadermail/admin/leaderMailDepartment.shtml?siteId={PARAMETER:siteId}', 'mode=dialog,width=430,height=120', 'leaderMailDepartment')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="部门" name="departments"/>
+		</columns>
+	</view>
+	
+	<statisticView name="admin/timeoutStatistics" hide="noPrivilege(application_manager) and isNotMyUnitManager()" title="超时统计" pageRows="200" viewServiceName="workItemTimeoutStatisticsViewService">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.workflow.pojo.WorkItemTimeout</pojo>
+			<where>WorkItemTimeout.recordListClassName='com.yuanluesoft.cms.leadermail.pojo.LeaderMail' and WorkItemTimeout.timeout=1 and WorkItemTimeout.unitId={UNITID}</where>
+			<orderBy>WorkItemTimeout.participantName, WorkItemTimeout.participantId</orderBy>
+			<quickFilter>WorkItemTimeout.participantName like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.jeaf.workflow.pojo.WorkItemTimeout</pojo>
+			</data>
+			<category value="year(WorkItemTimeout.completed)"> <!--value必须有-->
+				<where>WorkItemTimeout.recordListClassName='com.yuanluesoft.cms.leadermail.pojo.LeaderMail' and WorkItemTimeout.timeout=1 and WorkItemTimeout.unitId={UNITID}</where>
+				<data>year(WorkItemTimeout.completed)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(WorkItemTimeout.completed)"> <!--value必须有-->
+				<where>WorkItemTimeout.recordListClassName='com.yuanluesoft.cms.leadermail.pojo.LeaderMail' and WorkItemTimeout.timeout=1 and WorkItemTimeout.unitId={UNITID} and year(WorkItemTimeout.completed)={CATEGORY1VALUE}</where> <!--  and PublicInfo.orgId>0 -->
+				<data>year(WorkItemTimeout.completed)={CATEGORY1VALUE} and month(WorkItemTimeout.completed)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<statistics>
+			<statistic title="{PARAMETER:rowIndex}、{PARAMETER:participantName}（{PARAMETER:timeoutCount}次）">
+				<groupFields>
+					<groupField name="participantName"/>
+					<groupField name="participantId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="timeoutCount" function="count(distinct WorkItemTimeout.id)"/>
+				</statisticColumns>
+			</statistic>
+			<statistic statisticAll="true" title="合计（{PARAMETER:timeoutCount}次）">
+				<statisticColumns>
+					<statisticColumn name="timeoutCount" function="count(distinct WorkItemTimeout.id)"/>
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<links>
+			<link title="信件">javascript:PageUtils.editrecord('cms/leadermail', 'admin/leaderMail', '{PARAMETER:recordId}')</link>
+		</links>
+		<columns>
+			<column title="主题" name="record.subject" prefix="　 "/>
+			<column title="环节" name="activityName" width="100"/>
+			<column title="送达时间" name="created" width="110" align="center"/>
+			<column title="办理时间" name="completed" width="110" align="center"/>
+			<column title="时限" name="deadline" width="40" align="center"/>
+			<column title="用时" name="workDays" width="40" align="center"/>
+		</columns>
+	</statisticView>
+	
+	<view name="selectLeaderMailType" title="信件类型选择" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.cms.leadermail.pojo.LeaderMailType</pojo>
+			<where>LeaderMailType.siteId={PARAMETER:siteId}</where>
+			<orderBy>LeaderMailType.type</orderBy>
+			<quickFilter>LeaderMailType.type like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="类型" name="type"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+</views>

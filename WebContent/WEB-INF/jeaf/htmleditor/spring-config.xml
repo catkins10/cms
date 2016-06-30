@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- HTML编辑器命令集合 -->
+	<bean id="htmlEditorCommandSets" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<!-- 标准命令集合 -->
+				<bean class="com.yuanluesoft.jeaf.htmleditor.model.HtmlEditorCommandSet">
+					<property name="name"><value>standard</value></property>
+					<property name="plugins"><value>/cms/inquiry/editorplugins/plugin.js</value></property>
+					<property name="commands">
+						<value>
+							cut,copy,paste,-,undo,redo,-,find,-,selectAll,removeFormat,-,insertOrderedList,insertUnorderedList,-,outdent,indent,source|
+							fontName,fontSize,bold,italic,-,underline,strikeThrough,subscript,superscript,-,textColor,bgColor,-,justifyLeft,justifyCenter,justifyRight,justifyFull|
+							image,flash,video,inquiry,link,unlink,smiley,specialChar,-,table,paragraph,rule,pageBreak,-,print,fitWindow
+						</value>
+					</property>
+				</bean>
+				<!-- 对外命令集合 -->
+				<bean class="com.yuanluesoft.jeaf.htmleditor.model.HtmlEditorCommandSet">
+					<property name="name"><value>outer</value></property>
+					<property name="commands">
+						<value>
+							cut,copy,paste,-,undo,redo,-,selectAll,removeFormat|
+							fontName,fontSize,bold,italic,-,underline,strikeThrough,-,textColor,bgColor,-,justifyLeft,justifyCenter,justifyRight,justifyFull|
+							image,link,unlink,smiley,-,fitWindow
+						</value>
+					</property>
+				</bean>
+				<!-- 精简命令集合 -->
+				<bean class="com.yuanluesoft.jeaf.htmleditor.model.HtmlEditorCommandSet">
+					<property name="name"><value>simplify</value></property>
+					<property name="commands">
+						<value>
+							cut,copy,paste,-,undo,redo,-,smiley,-,bold,italic,-,textColor,bgColor,-,justifyLeft,justifyCenter,justifyRight,justifyFull
+						</value>
+					</property>
+				</bean>
+			</list>
+		</constructor-arg>
+	</bean>
+</beans>

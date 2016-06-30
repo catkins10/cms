@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/onlineservice"/>
+		
+		<page name="directory" title="网上办事目录" recordPage="false" recordClass="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectory" url="/cms/onlineservice/directory.shtml">
+			<templateView name="admin/template" application="cms/onlineservice"/>
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugin.js" private="true">
+				<templateActions>onlineServiceSelectDirectory</templateActions> <!-- 模板操作 -->
+				<pageElementActions>onlineServiceLocation</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<link title="网上办事目录首页" url="/cms/onlineservice/directory.shtml?id={PARAMETER:id}"/>
+			<link title="常见问题列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/onlineservice/faq&amp;pageName=faqs&amp;directoryId={PARAMETER:id}"/>
+		</page>
+		
+		<page name="branchDirectory" title="网上办事子目录(非末级)" recordPage="false" recordClass="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectory" url="/cms/onlineservice/directory.shtml"> systemLink="false"
+			<templateView name="admin/template" application="cms/onlineservice"/>
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugin.js" private="true">
+				<templateActions>onlineServiceSelectDirectory</templateActions> <!-- 模板操作 -->
+				<pageElementActions>onlineServiceLocation</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<link title="常见问题列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/onlineservice/faq&amp;pageName=faqs&amp;directoryId={PARAMETER:id}"/>
+		</page>
+		
+		<page name="leafDirectory" title="网上办事子目录(末级)" recordPage="false" recordClass="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectory" url="/cms/onlineservice/directory.shtml" systemLink="false">
+			<templateView name="admin/template" application="cms/onlineservice"/>
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugin.js" private="true">
+				<templateActions>onlineServiceSelectDirectory</templateActions> <!-- 模板操作 -->
+				<pageElementActions>onlineServiceLocation</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<link title="常见问题列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/onlineservice/faq&amp;pageName=faqs&amp;directoryId={PARAMETER:id}"/>
+		</page>
+		
+		<page name="search" title="办理事项搜索" searchPage="true" searchResults="onlineServiceItems" url="/cms/onlineservice/search.shtml"/>
+		
+		<page name="guide" title="办事指南" realtimeStaticPage="true" recordClass="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem" systemLink="false">
+			<templateView name="admin/template" application="cms/onlineservice"/>
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugin.js" private="true">
+				<templateActions>onlineServiceSelectDirectory,onlineServiceSelectItemType</templateActions> <!-- 模板操作 -->
+				<pageElementActions>onlineServiceLocation</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<link title="办事指南" url="/cms/onlineservice/guide.shtml?itemId={PARAMETER:itemId}"/>
+			<link title="表格下载" url="/cms/onlineservice/download.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="常见问题解答" url="/cms/onlineservice/faq.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="办理机构" url="/cms/onlineservice/unit.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="在线咨询" url="{PARAMETER:internetConsultUrl}"/>
+			<link title="在线投诉" url="{PARAMETER:internetComplaintUrl}"/>
+			<link title="在线受理" url="{PARAMETER:internetAcceptUrl}"/>
+			<link title="状态查询" url="{PARAMETER:internetQueryUrl}"/>
+			<link title="结果查询" url="{PARAMETER:internetResultUrl}"/>
+			<link title="办理情况公示" url="/cms/onlineservice/listInteractives.shtml?applicationName=cms/onlineservice/accept&amp;type=onlineServiceAccepts&amp;itemId={PARAMETER:itemId}"/>
+		</page>
+		
+		<page name="download" title="表格下载" realtimeStaticPage="true" recordClass="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem" systemLink="false">
+			<templateView name="admin/template" application="cms/onlineservice"/>
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugin.js" private="true">
+				<templateActions>onlineServiceSelectDirectory</templateActions> <!-- 模板操作 -->
+				<pageElementActions>onlineServiceLocation</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<link title="办事指南" url="/cms/onlineservice/guide.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="表格下载" url="/cms/onlineservice/download.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="常见问题解答" url="/cms/onlineservice/faq.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="办理机构" url="/cms/onlineservice/unit.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="在线咨询" url="{PARAMETER:internetConsultUrl}"/>
+			<link title="在线投诉" url="{PARAMETER:internetComplaintUrl}"/>
+			<link title="在线受理" url="{PARAMETER:internetAcceptUrl}"/>
+			<link title="状态查询" url="{PARAMETER:internetQueryUrl}"/>
+			<link title="结果查询" url="{PARAMETER:internetResultUrl}"/>
+		</page>
+		
+		<page name="faq" title="常见问题解答" realtimeStaticPage="true" recordClass="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem" systemLink="false">
+			<templateView name="admin/template" application="cms/onlineservice"/>
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugin.js" private="true">
+				<templateActions>onlineServiceSelectDirectory</templateActions> <!-- 模板操作 -->
+				<pageElementActions>onlineServiceLocation</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<link title="办事指南" url="/cms/onlineservice/guide.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="表格下载" url="/cms/onlineservice/download.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="常见问题解答" url="/cms/onlineservice/faq.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="办理机构" url="/cms/onlineservice/unit.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="在线咨询" url="{PARAMETER:internetConsultUrl}"/>
+			<link title="在线投诉" url="{PARAMETER:internetComplaintUrl}"/>
+			<link title="在线受理" url="{PARAMETER:internetAcceptUrl}"/>
+			<link title="状态查询" url="{PARAMETER:internetQueryUrl}"/>
+			<link title="结果查询" url="{PARAMETER:internetResultUrl}"/>
+			<link title="办理情况公示" url="/cms/onlineservice/listInteractives.shtml?applicationName=cms/onlineservice/accept&amp;type=onlineServiceAccepts&amp;itemId={PARAMETER:itemId}"/>
+		</page>
+		
+		<page name="faqs" title="常见问题解答列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/onlineservice&amp;pageName=faqs"/>
+		
+		<page name="unit" title="办理机构" realtimeStaticPage="true" recordClass="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem" systemLink="false">
+			<templateView name="admin/template" application="cms/onlineservice"/>
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugin.js" private="true">
+				<templateActions>onlineServiceSelectDirectory</templateActions> <!-- 模板操作 -->
+				<pageElementActions>onlineServiceLocation</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<link title="办事指南" url="/cms/onlineservice/guide.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="表格下载" url="/cms/onlineservice/download.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="常见问题解答" url="/cms/onlineservice/faq.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="办理机构" url="/cms/onlineservice/unit.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="在线咨询" url="{PARAMETER:internetConsultUrl}"/>
+			<link title="在线投诉" url="{PARAMETER:internetComplaintUrl}"/>
+			<link title="在线受理" url="{PARAMETER:internetAcceptUrl}"/>
+			<link title="状态查询" url="{PARAMETER:internetQueryUrl}"/>
+			<link title="结果查询" url="{PARAMETER:internetResultUrl}"/>
+			<link title="办理情况公示" url="/cms/onlineservice/listInteractives.shtml?applicationName=cms/onlineservice/accept&amp;type=onlineServiceAccepts&amp;itemId={PARAMETER:itemId}"/>
+		</page>
+
+		<page name="downloads" title="表格下载首页" url="/cms/onlineservice/downloads.shtml"/>
+		
+		<page name="downloadsByDirectory" title="表格下载目录" recordPage="false" recordClass="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectory" url="/cms/onlineservice/downloads.shtml" systemLink="false">
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugin.js" private="true">
+				<pageElementActions>onlineServiceLocation</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+		</page>
+		
+		<page name="downloadSearch" title="表格下载搜索" searchPage="true" searchResults="onlineServiceDownloads" url="/cms/onlineservice/downloadSearch.shtml"/>
+		
+		<page name="exampleSearch" title="样表下载搜索" searchPage="true" searchResults="onlineServiceExampleDownloads" url="/cms/onlineservice/downloadSearch.shtml?exampleSearch=true"/>
+		
+		<page name="authorityDirectory" title="行政职权目录" url="/cms/onlineservice/authorityDirectory.shtml">
+			<templateView name="admin/template" application="cms/onlineservice"/>
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugin.js" private="true">
+				<templateActions>onlineServiceSelectItemType</templateActions> <!-- 模板操作 -->
+			</templatePlugin>
+		</page>
+		
+		<page name="authoritySearch" title="行政职权搜索" searchPage="true" searchResults="authorityItems" url="/cms/onlineservice/authoritySearch.shtml">
+			<templateView name="admin/template" application="cms/onlineservice"/>
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugin.js" private="true">
+				<templateActions>onlineServiceSelectItemType</templateActions> <!-- 模板操作 -->
+			</templatePlugin>
+		</page>
+		
+		<page name="personalIndex" title="网上办事个人主页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/onlineservice&amp;pageName=personalIndex&amp;anonymous=false"/>
+	</pages>
+	
+	<!-- 链接 -->
+	<links>
+		<link title="网上办事目录链接" dialogURL="/cms/onlineservice/templatemanage/insertDirectoryLink.shtml"/>
+		<link title="职权目录链接" dialogURL="/cms/onlineservice/templatemanage/insertAuthorityDirectoryLink.shtml"/>
+	</links>
+	
+	<!-- 页面元素,name必须在所有的应用中唯一 -->
+	<pageElements>
+		<pageElement name="onlineServiceItems" processor="onlineServiceItemsProcessor"/> <!-- 网上办事办理事项列表 -->
+		<pageElement name="allOnlineServiceItems" processor="onlineServiceItemsProcessor"/> <!-- 网上办事全部事项列表 -->
+		<pageElement name="onlineServiceMaterials" processor="onlineServiceItemsProcessor"/> <!-- 申报材料列表 -->
+		<pageElement name="onlineServiceDownloads" processor="onlineServiceItemsProcessor"/> <!-- 下载列表 -->
+		<pageElement name="onlineServiceExampleDownloads" processor="onlineServiceItemsProcessor"/> <!-- 样表列表 -->
+		<pageElement name="onlineServiceDirectoryLink" processor="onlineServiceDirectoryLinkProcessor"/> <!-- 网上办事目录链接 -->
+		<pageElement name="onlineServiceAuthorityDirectoryLink" processor="onlineServiceDirectoryLinkProcessor"/> <!-- 职权目录链接 -->
+		<pageElement name="onlineServiceLocation" processor="onlineServiceLocationProcessor"/> <!-- 网上办事位置处理器 -->
+		<pageElement name="onlineServiceDirectories" processor="onlineServiceDirectoriesProcessor"/> <!-- 网上办事目录 -->
+		<pageElement name="onlineServiceDownloadDirectories" processor="onlineServiceDirectoriesProcessor"/> <!-- 表格下载目录 -->
+		<pageElement name="authorityTypes" processor="onlineServiceDirectoriesProcessor"/> <!-- 行政职权类别 -->
+		<pageElement name="publicServiceTypes" processor="onlineServiceDirectoriesProcessor"/> <!-- 公共服务类别 -->
+		<pageElement name="authorityDirectories" processor="onlineServiceDirectoriesProcessor"/> <!-- 行政职权部门列表 -->
+		<pageElement name="authorityItems" processor="onlineServiceItemsProcessor"/> <!-- 行政职权目录 -->
+	</pageElements>
+</application>

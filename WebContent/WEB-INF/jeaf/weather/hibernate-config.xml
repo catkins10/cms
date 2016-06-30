@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--天气：天气实况-->
+	<class name="com.yuanluesoft.jeaf.weather.pojo.WeatherLive" table="weather_live">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="area"/> <!--地区,VARCHAR(50)-->
+		<property name="updateTime"/> <!--更新时间,TIMESTAMP-->
+		<property name="source"/> <!--来源,如：中央气象台,VARCHAR(50)-->
+		<property name="describe"/> <!--天气概况,如：晴，中雨,VARCHAR(20)-->
+		<property name="temperature"/> <!--气温,NUMERIC(5,2)-->
+		<property name="feelst"/> <!--体感温度,VARCHAR(30)-->
+		<property name="feelstTip"/> <!--体感温度描述,VARCHAR(60)-->
+		<property name="airpressure"/> <!--气压,VARCHAR(50)-->
+		<property name="airpressureTip"/> <!--气压描述,VARCHAR(60)-->
+		<property name="rain"/> <!--降水,VARCHAR(60)-->
+		<property name="windDirection"/> <!--风向,VARCHAR(60)-->
+		<property name="windPower"/> <!--风力,VARCHAR(30)-->
+		<property name="windSpeed"/> <!--风速,VARCHAR(30)-->
+		<property name="humidity"/> <!--湿度,VARCHAR(30)-->
+		<property name="humidityTip"/> <!--湿度描述,VARCHAR(60)-->
+		<property name="comfort"/> <!--舒适度,VARCHAR(60)-->
+		<property name="comfortTip"/> <!--舒适度描述,VARCHAR(60)-->
+		<property name="airQuality"/> <!--空气质量,VARCHAR(30)-->
+	</class>
+  
+  	<!--天气：预报-->
+	<class name="com.yuanluesoft.jeaf.weather.pojo.WeatherForecast" table="weather_forecast">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="area"/> <!--地区,VARCHAR(50)-->
+		<property name="updateTime"/> <!--更新时间,TIMESTAMP-->
+		<property name="source"/> <!--来源,如：中央气象台,VARCHAR(50)-->
+		<property name="forecastDate"/> <!--预报日期,DATE-->
+		<property name="dayDescribe"/> <!--白天天气概况,VARCHAR(20)-->
+		<property name="nightDescribe"/> <!--夜晚天气概况,如：晴，中雨,VARCHAR(20)-->
+		<property name="dayTemperature"/> <!--白天气温,NUMERIC(5,2)-->
+		<property name="nightTemperature"/> <!--夜晚气温,NUMERIC(5,2)-->
+		<property name="dayWindDirection"/> <!--白天风向,VARCHAR(60)-->
+		<property name="nightWindDirection"/> <!--夜晚风向,VARCHAR(60)-->
+		<property name="dayWindPower"/> <!--白天风力,VARCHAR(30)-->
+		<property name="nightWindPower"/> <!--夜晚风力,VARCHAR(30)-->
+		<property name="dayWindSpeed"/> <!--白天风速,VARCHAR(30)-->
+		<property name="nightWindSpeed"/> <!--夜晚风速,VARCHAR(30)-->
+		<property name="dayAirQuality"/> <!--白天空气质量,VARCHAR(30)-->
+		<property name="nightAirQuality"/> <!--夜晚空气质量,VARCHAR(30)-->
+		<set name="hourForecasts" table="weather_hour_forecast" lazy="true" inverse="true" cascade="delete" order-by="forecastTime">
+			<key column="forecastId" />
+			<one-to-many class="com.yuanluesoft.jeaf.weather.pojo.WeatherHourForecast" />
+		</set>
+	</class>
+	
+	<!--天气：整点预报-->
+	<class name="com.yuanluesoft.jeaf.weather.pojo.WeatherHourForecast" table="weather_hour_forecast">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="forecastId"/> <!--预报ID,NUMERIC(20)-->
+		<property name="forecastTime"/> <!--时间,TIMESTAMP-->
+		<property name="describe"/> <!--天气概况,VARCHAR(20)-->
+		<property name="temperature"/> <!--气温,NUMERIC(5,2)-->
+		<property name="feelst"/> <!--体感温度,VARCHAR(30)-->
+		<property name="feelstTip"/> <!--体感温度描述,VARCHAR(60)-->
+		<property name="rain"/> <!--降水,VARCHAR(60)-->
+		<property name="windDirection"/> <!--风向,VARCHAR(60)-->
+		<property name="windPower"/> <!--风力,VARCHAR(30)-->
+		<property name="windSpeed"/> <!--风速,VARCHAR(30)-->
+		<property name="airpressure"/> <!--气压,VARCHAR(30)-->
+		<property name="airpressureTip"/> <!--气压描述,VARCHAR(60)-->
+		<property name="humidity"/> <!--湿度,VARCHAR(30)-->
+		<property name="humidityTip"/> <!--湿度描述,VARCHAR(60)-->
+		<property name="cloud"/> <!--云量,VARCHAR(30)-->
+		<property name="visibility"/> <!--能见度,VARCHAR(30)-->
+		<property name="airQuality"/> <!--空气质量,VARCHAR(30)-->
+	</class>
+</hibernate-mapping>

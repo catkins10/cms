@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 效能监督 -->
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/supervision"/>
+		
+		<page name="supervision" title="提交监督" recordClass="com.yuanluesoft.cms.supervision.pojo.Supervision" url="/cms/supervision/supervision.shtml">
+			<subPage title="提交监督" name="supervision" type="template"/>
+		</page>
+		
+		<page name="supervisionSubmitted" title="监督提交完成">
+			<subPage title="监督提交完成" name="supervisionSubmitted" type="template"/>
+		</page>
+		
+		<page name="supervisionFailed" title="监督查询失败">
+			<subPage title="监督查询失败" name="supervisionFailed" type="template"/>
+		</page>
+		
+		<page name="poorSupervision" title="监督查看(公开主题)" recordClass="com.yuanluesoft.cms.supervision.pojo.Supervision">
+			<subPage title="监督查看(公开主题)" name="poorSupervision" type="template"/>
+		</page>
+		
+		<page name="originalSupervision" title="监督查看(公开正文)" recordClass="com.yuanluesoft.cms.supervision.pojo.Supervision">
+			<subPage title="监督查看(公开正文)" name="originalSupervision" type="template"/>
+		</page>
+		
+		<page name="processingSupervision" title="监督查看(公开办理情况)" recordClass="com.yuanluesoft.cms.supervision.pojo.Supervision">
+			<subPage title="监督查看(公开办理情况)" name="processingSupervision" type="template"/>
+		</page>
+		
+		<page name="fullySupervision" title="监督查看(完全公开)" recordClass="com.yuanluesoft.cms.supervision.pojo.Supervision">
+			<subPage title="监督查看(完全公开)" name="fullySupervision" type="template"/>
+		</page>
+		
+		<page name="supervisionPrint" title="办理单" realtimeStaticPage="false" recordPage="false" recordClass="com.yuanluesoft.cms.supervision.pojo.Supervision"/>
+		
+		<page name="supervisioneSearch" title="搜索" searchPage="true" searchResults="supervisions" url="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/supervision&amp;pageName=supervisionSearch"/>
+	</pages>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="supervisions" processor="publicServicesProcessor"/> <!-- 效能监督 -->
+	</pageElements>
+</application>

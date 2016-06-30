@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="用户" class="com.yuanluesoft.lss.insurance.pojo.InsuranceUser">
+		<field name="identityCardNumber" title="身份证号码" length="50" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="password" title="密码" length="50" required="true" type="string" inputMode="password">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="个人账户" class="com.yuanluesoft.lss.insurance.pojo.InsuranceAccount">
+		<field name="identityCardNumber" title="身份证号码" length="50" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="name" title="姓名" length="50" type="string" inputMode="readonly"/>
+		<field name="year" title="年度" length="4" type="number" inputMode="readonly"/>
+		<field name="accountCapital" title="本年度个人账户本金" length="13,2" type="number" inputMode="readonly"/>
+		<field name="payCapital" title="其中个人缴纳本金" length="13,2" type="number" inputMode="readonly"/>
+		<field name="monthNumber" title="本年底累计缴费月数" length="4" type="number" inputMode="readonly"/>
+		<field name="yearTotal" title="年底账户本息累计" length="13,2" type="number" inputMode="readonly"/>
+		<field name="yearPayTotal" title="其中个人缴纳本息" length="13,2" type="number" inputMode="readonly"/>
+		<field name="cardinalNumber" title="年缴费基数（含补缴）" length="13,2" type="number" inputMode="readonly"/>
+	</businessObject>
+	<businessObject title="记账利率、缴纳比例" class="com.yuanluesoft.lss.insurance.pojo.InsuranceParameter">
+		<field name="year" title="年度" length="4" type="number" inputMode="readonly"/>
+		<field name="rate" title="年记账利率" length="5,2" type="number" inputMode="readonly"/>
+		<field name="accountRatio" title="个人账户比例" length="5,2" type="number" inputMode="readonly"/>
+		<field name="payRatio" title="个人缴纳比例" length="5,2" type="number" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

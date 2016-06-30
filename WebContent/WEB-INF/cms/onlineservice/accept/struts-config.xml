@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminAccept" type="com.yuanluesoft.cms.onlineservice.interactive.accept.forms.admin.Accept"/>
+  <form-bean name="accept" type="com.yuanluesoft.cms.onlineservice.interactive.accept.forms.Accept"/>
+  <form-bean name="login" type="com.yuanluesoft.jeaf.sso.forms.LoginForm"/>
+  <form-bean name="adminImportCases" type="com.yuanluesoft.cms.onlineservice.interactive.accept.forms.admin.ImportCases"/>
+  <form-bean name="serialNumberConfig" type="com.yuanluesoft.cms.onlineservice.interactive.accept.forms.admin.AcceptSerialNumberConfig"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminAccept" path="/admin/accept" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.accept.admin.Load" validate="false">
+   <forward name="load" path="/admin/accept.jsp"/>
+  </action>
+  <action name="accept" path="/accept" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.accept.Load" validate="false">
+   <forward name="load" path="/accept.jsp"/>
+  </action>
+  <action input="/accept.jsp" name="accept" path="/saveAccept"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.accept.Save" validate="false">
+   <forward name="result" path="/acceptResult.jsp"/>
+  </action>
+  <action input="/admin/accept.jsp" name="adminAccept"
+   path="/admin/saveAccept" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.accept.admin.Save" validate="false"/>
+  <action input="/admin/accept.jsp" name="adminAccept"
+   path="/admin/deleteAccept" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.accept.admin.Delete" validate="false"/>
+  <action input="/admin/accept.jsp" name="adminAccept"
+   path="/admin/runAccept" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.accept.admin.Run" validate="false"/>
+  <action input="/admin/accept.jsp" name="adminAccept"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.accept.admin.WriteOpinion" validate="false"/>
+  <action input="/accept.jsp" name="accept" path="/runAccept"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.accept.Run" validate="false">
+   <forward name="result" path="/acceptResult.jsp"/>
+  </action>
+  <action input="/request.jsp" name="accept" path="/attachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.accept.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action input="/request.jsp" name="adminAccept"
+   path="/admin/attachmentEditor" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.accept.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action input="/admin/accept.jsp" name="adminAccept"
+   path="/admin/missing" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.accept.admin.Missing" validate="false"/>
+  <action input="/admin/accept.jsp" name="adminAccept"
+   path="/admin/answer" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.accept.admin.Answer" validate="false"/>
+  <action input="/admin/accept.jsp" name="adminAccept"
+   path="/admin/switchPage" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.accept.admin.SwitchPage" validate="false"/>
+  <action name="login" path="/login" scope="request"
+   type="com.yuanluesoft.jeaf.sso.actions.login.Load" validate="false">
+   <forward name="load" path="/login.jsp"/>
+  </action>
+  <action name="accept" path="/acceptQuery" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.accept.Query" validate="false">
+   <forward name="load" path="/acceptQuery.jsp"/>
+  </action>
+  <action name="adminImportCases" path="/admin/importCases"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.importcases.admin.Load" validate="false">
+   <forward name="load" path="/admin/importCases.jsp"/>
+  </action>
+  <action input="/admin/importCases.jsp" name="adminImportCases"
+   path="/admin/doImportCases" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.importcases.admin.DoImport" validate="false"/>
+  <action name="adminImportCases"
+   path="/admin/importCasesAttachmentEditor" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.importcases.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action path="/listAccepts" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.listaccepts.Load" validate="false"/>
+   <!-- 流水号配置 -->
+  <action name="serialNumberConfig" path="/admin/serialNumberConfig" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.accept.admin.serialnumberconfig.Load" validate="false">
+   <forward name="load" path="/admin/serialNumberConfig.jsp"/>
+  </action>
+  <action input="/admin/serialNumberConfig.jsp" name="serialNumberConfig"  path="/admin/serialNumberConfigSave" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.interactive.accept.actions.accept.admin.serialnumberconfig.Save" validate="false"/>
+   
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminImportData" type="com.yuanluesoft.msa.seafarer.forms.admin.ImportData"/>
+  <form-bean name="adminPassportOrg" type="com.yuanluesoft.msa.seafarer.forms.admin.PassportOrg"/>
+  <form-bean name="adminServiceOrg" type="com.yuanluesoft.msa.seafarer.forms.admin.ServiceOrg"/>
+  <form-bean name="adminTrainShip" type="com.yuanluesoft.msa.seafarer.forms.admin.TrainShip"/>
+  <form-bean name="adminTrainOrg" type="com.yuanluesoft.msa.seafarer.forms.admin.TrainOrg"/>
+  <form-bean name="adminCertificationExam" type="com.yuanluesoft.msa.seafarer.forms.admin.CertificationExam"/>
+  <form-bean name="adminCertificationExaminee" type="com.yuanluesoft.msa.seafarer.forms.admin.CertificationExaminee"/>
+  <form-bean name="insertServiceOrgs" type="com.yuanluesoft.msa.seafarer.forms.admin.InsertServiceOrgs"/>
+  <form-bean name="insertServiceOrgCategoryLink" type="com.yuanluesoft.msa.seafarer.forms.admin.InsertServiceOrgCategoryLink"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminImportData" path="/admin/importData"
+   scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.importdata.admin.Load" validate="false">
+   <forward name="load" path="/admin/importData.jsp"/>
+  </action>
+  <action input="/admin/importData.jsp" name="adminImportData"
+   path="/admin/doImportData" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.importdata.admin.DoImport" validate="false"/>
+  <action name="adminPassportOrg" path="/admin/passportOrg"
+   scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.passportorg.admin.Load" validate="false">
+   <forward name="load" path="/admin/passportOrg.jsp"/>
+  </action>
+  <action input="/admin/passportOrg.jsp" name="adminPassportOrg"
+   path="/admin/savePassportOrg" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.passportorg.admin.Save" validate="false"/>
+  <action input="/admin/passportOrg.jsp" name="adminPassportOrg"
+   path="/admin/deletePassportOrg" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.passportorg.admin.Delete" validate="false"/>
+  <action path="/passportOrg" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.passportorg.Load" validate="false"/>
+  <action input="/admin/importData.jsp" name="adminImportData"
+   path="/admin/deleteImportData" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.importdata.admin.Delete" validate="false"/>
+  <action name="adminImportData" path="/admin/attachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.importdata.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="adminServiceOrg" path="/admin/serviceOrg"
+   scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.serviceorg.admin.Load" validate="false">
+   <forward name="load" path="/admin/serviceOrg.jsp"/>
+  </action>
+  <action input="/admin/serviceOrg.jsp" name="adminServiceOrg"
+   path="/admin/saveServiceOrg" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.serviceorg.admin.Save" validate="false"/>
+  <action input="/admin/serviceOrg.jsp" name="adminServiceOrg"
+   path="/admin/deleteServiceOrg" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.serviceorg.admin.Delete" validate="false"/>
+  <action path="/serviceOrg" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.serviceorg.Load" validate="false"/>
+  <action name="adminTrainShip" path="/admin/trainShip" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.trainship.admin.Load" validate="false">
+   <forward name="load" path="/admin/trainShip.jsp"/>
+  </action>
+  <action input="/admin/trainShip.jsp" name="adminTrainShip"
+   path="/admin/saveTrainShip" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.trainship.admin.Save" validate="false"/>
+  <action input="/admin/trainShip.jsp" name="adminTrainShip"
+   path="/admin/deleteTrainShip" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.trainship.admin.Delete" validate="false"/>
+  <action path="/trainShip" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.trainship.Load" validate="false"/>
+  <action name="adminTrainOrg" path="/admin/trainOrg" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.trainorg.admin.Load" validate="false">
+   <forward name="load" path="/admin/trainOrg.jsp"/>
+  </action>
+  <action input="/admin/trainOrg.jsp" name="adminTrainOrg"
+   path="/admin/saveTrainOrg" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.trainorg.admin.Save" validate="false"/>
+  <action input="/admin/trainOrg.jsp" name="adminTrainOrg"
+   path="/admin/deleteTrainOrg" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.trainorg.admin.Delete" validate="false"/>
+  <action path="/trainOrg" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.trainorg.Load" validate="false"/>
+  <action name="insertServiceOrgs"
+   path="/templatemanage/insertServiceOrgs" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertServiceOrgs.jsp"/>
+  </action>
+  <action name="insertServiceOrgCategoryLink"
+   path="/templatemanage/insertServiceOrgCategoryLink" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertServiceOrgCategoryLink.jsp"/>
+  </action>
+  <action name="adminCertificationExam" path="/admin/certificationExam"
+   scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.certificationexam.admin.Load" validate="false">
+   <forward name="load" path="/admin/certificationExam.jsp"/>
+  </action>
+  <action input="/admin/certificationExam.jsp"
+   name="adminCertificationExam" path="/admin/saveCertificationExam"
+   scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.certificationexam.admin.Save" validate="false"/>
+  <action input="/admin/certificationExam.jsp"
+   name="adminCertificationExam" path="/admin/deleteCertificationExam"
+   scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.certificationexam.admin.Delete" validate="false"/>
+  <action input="/admin/certificationExam.jsp"
+   name="adminCertificationExam" path="/admin/refreshCertificationExam"
+   scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.certificationexam.admin.Refresh" validate="false"/>
+  <action name="adminCertificationExaminee"
+   path="/admin/certificationExaminee" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.certificationexam.admin.examinee.Load" validate="false">
+   <forward name="load" path="/admin/certificationExaminee.jsp"/>
+  </action>
+  <action input="/admin/certificationExaminee.jsp"
+   name="adminCertificationExaminee"
+   path="/admin/saveCertificationExaminee" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.certificationexam.admin.examinee.Save" validate="false"/>
+  <action input="/admin/certificationExaminee.jsp"
+   name="adminCertificationExaminee"
+   path="/admin/deleteCertificationExaminee" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.certificationexam.admin.examinee.Delete" validate="false"/>
+  <action path="/certificationExam" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.certificationexam.Load" validate="false"/>
+  <action path="/certificationExaminee" scope="request"
+   type="com.yuanluesoft.msa.seafarer.actions.certificationexaminee.Load" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="productDetail" title="金融产品详情" recordClass="com.yuanluesoft.credit.bank.financialproducts.pojo.Product">
+			<link title="申请" url="/credit/bank/apply.shtml?bankName={PARAMETER:creator}&amp;bankId={PARAMETER:creatorId}"/>
+		</page>
+		
+		<page name="bankDetail" title="金融机构详情" recordClass="com.yuanluesoft.credit.bank.bank.pojo.Bank"/>
+		
+		<page name="bankLoanDetail" title="贷款信息详情" recordClass="com.yuanluesoft.credit.bank.loan.pojo.BankLoan"/>
+		
+		
+		
+		<page name="apply" title="申请贷款" />
+		
+		<page name="applySubmitted" title="贷款申请结果提示" url="/cms/sitemanage/applicationIndex.shtml?applicationName=credit/bank&amp;pageName=applySubmitted"/>
+		
+		<page name="productQueryResult" title="金融产品查询结果" searchPage="true" searchResults="productQueryResults" 
+		url="/cms/sitemanage/applicationSearch.shtml?applicationName=credit/bank&amp;pageName=productQueryResult"/>
+		
+		
+		<page name="moreBank" title="更多金融机构页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=credit/bank&amp;pageName=moreBank"/>
+		<page name="moreProduct" title="更多金融产品页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=credit/bank&amp;pageName=moreProduct"/>
+		<page name="moreLoan" title="更多贷款信息页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=credit/bank&amp;pageName=moreLoan"/>
+		
+		<page name="creditStat" staticPageSupport="false" title="发布统计页" url="/credit/bank/creditStat.shtml"/>
+		<page name="creditStatDetail" staticPageSupport="false" title="统计详情" url="/cms/sitemanage/applicationIndex.shtml?applicationName=credit/bank&amp;pageName=creditStatDetail"/>
+	</pages>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="departments" staticPageSupport="false" processor="statDepProcessor"/>  
+		<pageElement name="statColumnResults" staticPageSupport="false" processor="statColumnResultProcessor"/>
+		<pageElement name="statAppResults" staticPageSupport="false" processor="statAppResultProcessor"/>
+	</pageElements>
+</application>

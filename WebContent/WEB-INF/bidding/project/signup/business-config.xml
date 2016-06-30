@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="投标报名" class="com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUp" businessServiceName="biddingService">
+		<field name="projectId" title="工程ID" type="number" inputMode="hidden"/>
+		<field name="projectName" title="工程名称" length="255" type="string" inputMode="readonly"/>
+		<field name="signUpNo" title="报名号" length="100" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="enterpriseId" title="企业ID" type="number" inputMode="none"/>
+		<field name="enterpriseName" title="企业名称" length="200" type="string" inputMode="text"/>
+		<field name="enterpriseBank" title="开户行" length="200" type="string" inputMode="text"/>
+		<field name="enterpriseAccount" title="帐号" length="200" type="string" inputMode="text"/>
+		<field name="signUpPersonId" title="报名用户ID" type="number" inputMode="none"/>
+		<field name="signUpPersonName" title="报名用户名称" length="30" type="string" inputMode="text"/>
+		<field name="signUpTime" title="报名时间" type="timestamp" inputMode="readonly"/>
+		<field name="isInternetPayment" title="是否网络支付" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">网络支付|1\0转账|0</parameter>
+		</field>
+		<field name="paymentMoney" title="报名费" length="6,2" type="number" inputMode="readonly"/>
+		<field name="paymentTime" title="支付时间" type="timestamp" inputMode="datetime"/>
+		<field name="paymentId" title="支付单ID" type="number" inputMode="none"/>
+		<field name="paymentBank" title="银行" length="50" type="string" inputMode="dropdown">
+			<parameter name="itemsText">中国银行\0工商银行\0建设银行\0农业银行\0招商银行\0兴业银行\0光大银行\0交通银行\0民生银行</parameter>
+		</field>
+		<field name="billBack" title="银行回单ID" length="100" type="string" inputMode="text"/>
+		<field name="recorderId" title="记录人ID" type="number" inputMode="none"/>
+		<field name="recorder" title="记录人姓名" length="30" type="string" inputMode="readonly"/>
+		<field name="recordTime" title="记录时间" type="timestamp" inputMode="readonly"/>
+		<field name="isDrawInternetPayment" title="图纸是否网络支付" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">网络支付|1\0转账|0</parameter>
+		</field>
+		<field name="drawPaymentMoney" title="图纸价格" length="12,2" type="number" inputMode="readonly"/>
+		<field name="drawPaymentTime" title="图纸支付时间" type="timestamp" inputMode="datetime"/>
+		<field name="drawPaymentId" title="图纸支付单ID" type="number" inputMode="none"/>
+		<field name="drawPaymentBank" title="图纸银行" length="50" type="string" inputMode="dropdown">
+			<parameter name="itemsText">中国银行\0工商银行\0建设银行\0农业银行\0招商银行\0兴业银行\0光大银行\0交通银行\0民生银行</parameter>
+		</field>
+		<field name="drawBillBack" title="图纸银行回单ID" length="100" type="string" inputMode="text"/>
+		<field name="drawRecorderId" title="图纸支付记录人ID" type="number" inputMode="none"/>
+		<field name="drawRecorder" title="图纸支付记录人姓名" length="30" type="string" inputMode="readonly"/>
+		<field name="drawRecordTime" title="图纸支付记录时间" type="timestamp" inputMode="readonly"/>
+		<field name="isPledgeInternetPayment" title="保证金是否网络支付" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">网络支付|1\0转账|0</parameter>
+		</field>
+		<field name="pledgePaymentMoney" title="保证金金额" length="12,2" type="number" inputMode="readonly"/>
+		<field name="pledgePaidMoney" title="保证金实收金额" length="12,2" type="number" inputMode="text"/>
+		<field name="pledgePaymentTime" title="保证金支付时间" type="timestamp" inputMode="datetime"/>
+		<field name="pledgePaymentId" title="保证金支付单ID" type="number" inputMode="none"/>
+		<field name="pledgePaymentBank" title="保证金银行" length="50" type="string" inputMode="dropdown">
+			<parameter name="itemsText">中国银行\0工商银行\0建设银行\0农业银行\0招商银行\0兴业银行\0光大银行\0交通银行\0民生银行</parameter>
+		</field>
+		<field name="pledgeBillBack" title="保证金银行回单ID" length="100" type="string" inputMode="text"/>
+		<field name="pledgeBillBackRemark" title="保证金银行回单说明" length="1000" type="string" inputMode="text"/>
+		<field name="pledgeConfirm" title="保证金确认" length="1" type="char" inputMode="none"/>
+		<field name="pledgeRecorderId" title="保证金支付记录人ID" type="number" inputMode="none"/>
+		<field name="pledgeRecorder" title="保证金支付记录人姓名" length="30" type="string" inputMode="readonly"/>
+		<field name="pledgeRecordTime" title="保证金支付记录时间" type="timestamp" inputMode="readonly"/>
+		<field name="pledgeReturnEnabled" title="是否允许返还保证金" length="1" type="char" inputMode="readonly"/>
+		<field name="pledgeReturnExportTime" title="保证金返还导出时间" type="timestamp" inputMode="readonly"/>
+		<field name="pledgeReturnTransferTime" title="保证金返还转账时间" type="timestamp" inputMode="readonly"/>
+		<field name="pledgeReturnTransferError" title="保证金返还转账失败原因" length="500" type="string" inputMode="readonly"/>
+		<field name="pledgeReturnTime" title="保证金返还时间" type="timestamp" inputMode="readonly"/>
+		<field name="pledgeReturnTransactorId" title="保证金返还人ID" type="number" inputMode="none"/>
+		<field name="pledgeReturnTransactor" title="保证金返还人" length="30" type="string" inputMode="readonly"/>
+		<field name="pledgeReturnRate" title="保证金利率" type="number" length="7,4" inputMode="readonly"/>
+		<field name="pledgeReturnTax" title="保证金利息所得税率" type="number" length="7,4" inputMode="readonly"/>
+		<field name="pledgeReturnDays" title="保证金计息天数" type="number" length="7,4" inputMode="text"/>
+		<field name="pledgeReturnMoney" title="保证金返还金额" type="number" length="12,2" inputMode="text"/>
+		<field name="uploadTime" title="投标书上传时间" type="timestamp" inputMode="readonly"/>
+		<field name="receivePaperDocumentsTime" title="纸质标书领取时间" type="timestamp" inputMode="readonly"/>
+		<field name="agentSettleTime" title="代理费用结算时间" type="timestamp" inputMode="readonly"/>
+		<field name="agentSettleFee" title="代理结算手续费" type="number" length="12,2" inputMode="readonly"/>
+		<field name="agentSettleTransactorId" title="代理费用结算人ID" type="number" inputMode="none"/>
+		<field name="agentSettleTransactor" title="代理费用结算人" length="30" type="string" inputMode="readonly"/>
+		<field name="ranking" title="评标排名" length="3" type="number" inputMode="readonly"/>
+		<field name="biddingAgent" title="招标代理" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.bidding.project.pojo.BiddingProjectAgent</parameter>
+		</field>
+		<field name="project" title="工程项目" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.bidding.project.pojo.BiddingProject</parameter>
+		</field>
+		<field name="jobholders" title="参与人员" type="components">
+			<parameter name="class">com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUpJobholder</parameter>
+			<parameter name="lazyLoad">false</parameter>
+		</field>
+		<field name="bid" title="投标文件" length="1" type="attachment" inputMode="attachment">
+			<parameter name="fileExtension">投标文件(*.fzt)|*.fzt|</parameter>
+			<parameter name="maxUploadSize">500000000</parameter>
+			<parameter name="extendJs">/bidding/project/js/fztValidator.js</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="参与人员" class="com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUpJobholder">
+		<field name="signUpId" title="报名ID" length="20" type="number" inputMode="hidden"/>
+		<field name="jobholderCategory" title="人员类别" length="30" type="string" inputMode="text"/>
+		<field name="jobholderId" title="人员ID" length="20" type="number" inputMode="hidden"/>
+		<field name="jobholderName" title="人员姓名" length="30" type="string" inputMode="text"/>
+		<field name="qualification" title="资质等级" length="80" type="string" inputMode="text"/>
+		<field name="certificateNumber" title="资质证书编号" length="80" type="string" inputMode="text"/>
+		<field name="locked" title="是否锁定" length="1" type="number" inputMode="text"/>
+		<field name="unlockTime" title="解锁时间" type="timestamp" inputMode="text"/>
+	</businessObject>
+</businessObjects>

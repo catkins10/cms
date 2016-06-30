@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--评议员-->
+	<class name="com.yuanluesoft.appraise.appraiser.pojo.Appraiser" table="appraise_appraiser">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="importId"/> <!--导入日志ID,NUMERIC(20)-->
+		<property name="type"/> <!--类型,0/基础,1/管理服务对象,2/评议代表,NUMERIC(1)-->
+		<property name="orgId"/> <!--隶属机构ID,NUMERIC(20)-->
+		<property name="orgName"/> <!--隶属机关名称,VARCHAR(200)-->
+		<property name="name"/> <!--姓名,VARCHAR(60)-->
+		<property name="unit"/> <!--单位或居住地,VARCHAR(200)-->
+		<property name="address"/> <!--通讯地址,VARCHAR(200)-->
+		<property name="area"/> <!--区域,VARCHAR(20)-->
+		<property name="street"/> <!--乡镇或街道,VARCHAR(50)-->
+		<property name="areaType"/> <!--居住地类别,1、城区市区（不含县市级）；2、县城城区；3、乡镇政府所在地（不含县城所在地）；4、农村,VARCHAR(50)-->
+		<property name="mobileNumber"/> <!--手机号码,VARCHAR(20)-->
+		<property name="job"/> <!--身份,公务员,人大代表,政协委员,企业主,城市居民,农民,VARCHAR(20)-->
+		<property name="npcLevel"/> <!--哪级人大代表政协委员,VARCHAR(20)-->
+		<property name="level"/> <!--级别,地厅级,县处级,乡科级,其它,VARCHAR(20)-->
+		<property name="education"/> <!--文化程度,暂不适用,VARCHAR(50)-->
+		<property name="serviceUnit"/> <!--提供服务或管理单位,只对管理服务对象有效,VARCHAR(200)-->
+		<property name="serviceContent"/> <!--服务或管理项目、内容,只对管理服务对象有效,VARCHAR(200)-->
+		<property name="creatorId"/> <!--登记人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--登记人,VARCHAR(60)-->
+		<property name="created"/> <!--登记时间,TIMESTAMP-->
+		<property name="expire"/> <!--有效期,TIMESTAMP null-->
+		<property name="status"/> <!--状态,0/待审核,1/已启用,2/已过期,NUMERIC(1)-->
+		<property name="remark"/> <!--备注,VARCHAR(200)-->
+	</class>
+	
+	<!--管理服务对象导入-->
+	<class name="com.yuanluesoft.appraise.appraiser.pojo.AppraiserImport" table="appraiser_import">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="areaId"/> <!--地区ID,NUMERIC(20)-->
+		<property name="areaName"/> <!--地区名称,VARCHAR(200)-->
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(200)-->
+		<property name="creatorId"/> <!--创建人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--创建人,VARCHAR(60)-->
+		<property name="created"/> <!--导入时间,TIMESTAMP-->
+		<property name="timeout"/> <!--是否超时,NUMERIC(1)-->
+		<property name="approverCount"/> <!--导入人数,NUMERIC(4)-->
+		<property name="approverId"/> <!--审核人ID,NUMERIC(20)-->
+		<property name="approver"/> <!--审核人,VARCHAR(60)-->
+		<property name="approvalTime"/> <!--审核时间,TIMESTAMP null-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID,VARCHAR(32)-->
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+		<set name="opinions" table="appraiser_import_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.appraise.appraiser.pojo.AppraiserImportOpinion" />
+		</set>
+		<set name="visitors" table="appraiser_import_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.appraise.appraiser.pojo.AppraiserImportPrivilege" />
+		</set>
+	</class>
+	
+	<!--管理服务对象导入:权限控制-->
+	<class name="com.yuanluesoft.appraise.appraiser.pojo.AppraiserImportPrivilege" table="appraiser_import_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,NUMERIC(20,0)-->
+		<property name="accessLevel"/> <!--访问级别,CHAR(1)-->
+		<property name="recordId"/> <!--主记录ID,NUMERIC(20,0)-->
+	</class>
+	
+	<!--管理服务对象导入:审核意见-->
+	<class name="com.yuanluesoft.appraise.appraiser.pojo.AppraiserImportOpinion" table="appraiser_import_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID,NUMERIC(20,0)-->
+		<property name="workItemId"/> <!--工作项ID,VARCHAR(32)-->
+		<property name="activityName"/> <!--环节名称,VARCHAR(50)-->
+		<property name="activityId"/> <!--环节ID,VARCHAR(32)-->
+		<property name="personId"/> <!--填写人ID,NUMERIC(20,0)-->
+		<property name="personName"/> <!--填写人姓名,VARCHAR(32)-->
+		<property name="agentId"/> <!--代理人ID,NUMERIC(20,0)-->
+		<property name="agentName"/> <!--代理人姓名,VARCHAR(32)-->
+		<property name="opinion"/> <!--意见内容,VARCHAR(2000)-->
+		<property name="opinionType"/> <!--意见类型,VARCHAR(20)-->
+		<property name="created"/> <!--填写时间,timestamp null-->
+	</class>
+	
+	<!--管理服务对象导入任务-->
+	<class name="com.yuanluesoft.appraise.appraiser.pojo.AppraiserImportTask" table="appraiser_import_task">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(200)-->
+		<property name="taskYear"/> <!--年度,NUMERIC(4)-->
+		<property name="taskMonth"/> <!--月份,NUMERIC(2)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP null-->
+		<set name="visitors" table="appraiser_imp_task_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.appraise.appraiser.pojo.AppraiserImportTaskPrivilege" />
+		</set>
+	</class>
+	
+	<!--管理服务对象导入任务:权限控制-->
+	<class name="com.yuanluesoft.appraise.appraiser.pojo.AppraiserImportTaskPrivilege" table="appraiser_imp_task_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,NUMERIC(20,0)-->
+		<property name="accessLevel"/> <!--访问级别,CHAR(1)-->
+		<property name="recordId"/> <!--主记录ID,NUMERIC(20,0)-->
+	</class>
+</hibernate-mapping>

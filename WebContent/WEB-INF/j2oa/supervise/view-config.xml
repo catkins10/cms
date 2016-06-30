@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="todoSupervise" form="supervise" title="待办督办" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.supervise.pojo.Supervise</pojo>
+			<quickFilter>Supervise.content like '%{KEY}%' or Supervise.result like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+			<orderBy>Supervise.created DESC</orderBy>
+		</data>
+		<actions>
+			<action title="新建督办单" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="工作内容" name="content"/>
+			<column title="责任部门" name="departmentNames" align="center" width="100"/>
+			<column title="完成时限" name="timeLimit" align="center" width="100"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="105"/>
+			<column title="发送人" name="workflowSender" align="center" width="80"/>
+		</columns>
+	</view>
+	
+	<view name="inProcessSupervise" form="supervise" title="在办督办" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.supervise.pojo.Supervise</pojo>
+			<filter>INPROCESS</filter>
+			<orderBy>Supervise.created DESC</orderBy>
+			<quickFilter>Supervise.content like '%{KEY}%' or Supervise.result like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建督办单" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="工作内容" name="content"/>
+			<column title="落实情况" name="result"/>
+			<column title="责任部门" name="departmentNames" align="center" width="100"/>
+			<column title="完成时限" name="timeLimit" align="center" width="100"/>
+			<column title="销号情况" name="statusTitle" align="center" width="60"/>
+		</columns>
+	</view>
+	
+	<view name="completedSupervise" form="supervise" title="办结督办" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.supervise.pojo.Supervise</pojo>
+			<filter>COMPLETED</filter>
+			<orderBy>Supervise.created DESC</orderBy>
+			<quickFilter>Supervise.content like '%{KEY}%' or Supervise.result like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建督办单" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="工作内容" name="content"/>
+			<column title="落实情况" name="result"/>
+			<column title="责任部门" name="departmentNames" align="center" width="100"/>
+			<column title="完成时限" name="timeLimit" align="center" width="100"/>
+			<column title="销号情况" name="statusTitle" align="center" width="60"/>
+		</columns>
+	</view>
+	
+	<view name="allSupervise" form="supervise" title="所有督办" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.supervise.pojo.Supervise</pojo>
+			<filter>READABLE</filter>
+			<orderBy>Supervise.created DESC</orderBy>
+			<quickFilter>Supervise.content like '%{KEY}%' or Supervise.result like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建督办单" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="工作内容" name="content"/>
+			<column title="落实情况" name="result"/>
+			<column title="责任部门" name="departmentNames" align="center" width="100"/>
+			<column title="完成时限" name="timeLimit" align="center" width="100"/>
+			<column title="销号情况" name="statusTitle" align="center" width="60"/>
+		</columns>
+	</view>
+	
+	<view name="processingSupervise" form="supervise" title="督办(正在落实)">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.supervise.pojo.Supervise</pojo>
+			<where>Supervise.status=1</where>
+			<orderBy>Supervise.created DESC</orderBy>
+			<quickFilter>Supervise.content like '%{KEY}%' or Supervise.result like '%{KEY}%'</quickFilter>
+		</data>
+	</view>
+</views>

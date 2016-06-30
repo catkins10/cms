@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--车辆-->
+	<class name="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicle" table="logistics_vehicle">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="userId"/> <!--联盟用户ID-->
+		<property name="plateNumber"/> <!--车牌号码-->
+		<property name="owner"/> <!--车主姓名-->
+		<property name="ownerTel"/> <!--车主电话-->
+		<property name="ownerBirthplace"/> <!--籍贯-->
+		<property name="ownerAddress"/> <!--家庭住址-->
+		<property name="ownerIdNumber"/> <!--身份证号-->
+		<property name="licenceNumber"/> <!--行车证号-->
+		<property name="linkman"/> <!--随车联系人-->
+		<property name="linkmanTel"/> <!--随车联系人电话-->
+		<property name="brand"/> <!--汽车品牌-->
+		<property name="type"/> <!--车型-->
+		<property name="buyDate"/> <!--购买时间-->
+		<property name="vehicleBody"/> <!--车体状况-->
+		<property name="vehicleLoad"/> <!--载重-->
+		<property name="areaId"/> <!--车辆归属地ID-->
+		<property name="area"/> <!--车辆归属地-->
+		<property name="vehicleLong"/> <!--车长-->
+		<property name="vehicleWidth"/> <!--车宽-->
+		<property name="transportLines"/> <!--主要运输路线-->
+		<property name="creatorId"/> <!--登记人ID-->
+		<property name="creator"/> <!--登记人-->
+		<property name="created"/> <!--登记时间-->
+		<property name="lastModified"/> <!--最后修改时间-->
+		<property name="creatorIP"/> <!--登记人IP-->
+		<property name="isEmpty"/> <!--空车/重车-->
+		<property name="remark"/> <!--备注-->
+		<!--车辆位置(定时更新)-->
+		<set name="gpsLocation" table="gps_location" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="recordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.jeaf.gps.pojo.GpsLocation" />
+		</set>
+	</class>
+	
+	<!--车源-->
+	<class name="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicleSupply" table="logistics_vehicle_supply">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="userId"/> <!--联盟用户ID-->
+		<property name="vechileCount"/> <!--汽车辆数-->
+		<property name="beginTime"/> <!--开始时间-->
+		<property name="endTime"/> <!--截止时间-->
+		<property name="freightAmount"/> <!--运费金额-->
+		<property name="freightUnit"/> <!--运费单位-->
+		<property name="linkman"/> <!--联系人-->
+		<property name="linkmanTel"/> <!--联系电话-->
+		<property name="creatorId"/> <!--登记人ID-->
+		<property name="creator"/> <!--登记人-->
+		<property name="created"/> <!--登记时间-->
+		<property name="lastModified"/> <!--最后修改时间-->
+		<property name="creatorIP"/> <!--登记人IP-->
+		<property name="issue"/> <!--是否发布 -->
+		<property name="remark"/> <!--备注-->
+		<!-- 载货车辆列表 -->
+		<set name="freeVehicles" table="logistics_vehicle_free" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="supplyId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicleFree" />
+		</set>
+		<!-- 出发地点列表 -->
+		<set name="departures" table="logistics_vehicle_departure" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="supplyId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicleDeparture" />
+		</set>
+		<!-- 目的地点列表 -->
+		<set name="destinations" table="logistics_vehicle_destination" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="supplyId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicleDestination" />
+		</set>
+	</class>
+	
+	<!--车源:载货车辆-->
+	<class name="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicleFree" table="logistics_vehicle_free">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="supplyId"/> <!--车源ID-->
+		<property name="plateNumber"/> <!--车辆牌号-->
+	</class>
+	
+	<!--车源:出发地点-->
+	<class name="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicleDeparture" table="logistics_vehicle_departure">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="supplyId"/> <!--车源ID-->
+		<property name="departureId"/> <!--出发地点ID-->
+		<property name="departure"/> <!--出发地点-->
+	</class>
+	
+	<!--车源:目的地点-->
+	<class name="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicleDestination" table="logistics_vehicle_destination">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="supplyId"/> <!--车源ID-->
+		<property name="destinationId"/> <!--目的地ID-->
+		<property name="destination"/> <!--目的地-->
+	</class>
+</hibernate-mapping>

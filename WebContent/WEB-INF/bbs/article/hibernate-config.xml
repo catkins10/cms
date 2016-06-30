@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--论坛:帖子-->
+	<class name="com.yuanluesoft.bbs.article.pojo.BbsArticle" table="bbs_article">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="subject"/> <!--主题-->
+		<property name="creatorId"/> <!--发帖人ID-->
+		<property name="creatorNickname"/> <!--发帖人昵称-->
+		<property name="created"/> <!--发帖时间-->
+		<property name="priority"/> <!--优先级-->
+		<property name="quint"/> <!--是否精华贴-->
+		<property name="top"/> <!--是否置顶-->
+		<property name="systemMessage"/> <!--是否系统公告-->
+		<property name="accessTimes"/> <!--访问次数-->
+		<property name="isDeleted"/> <!--是否被管理员删除-->
+		<property name="deleteReason"/> <!--删除原因-->
+		<set cascade="delete" inverse="true" lazy="true" name="subjections" table="bbs_article_subjection">
+			<key column="articleId" />
+			<one-to-many class="com.yuanluesoft.bbs.article.pojo.BbsArticleSubjection" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="lazyBody" table="bbs_article_body">
+			<key column="id"/>
+			<one-to-many class="com.yuanluesoft.bbs.article.pojo.BbsArticleBody"/>
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="replies" table="bbs_reply">
+			<key column="articleId"/>
+			<one-to-many class="com.yuanluesoft.bbs.article.pojo.BbsReply"/>
+		</set>
+	</class>
+	
+	<!--论坛:帖子正文-->
+	<class name="com.yuanluesoft.bbs.article.pojo.BbsArticleBody" table="bbs_article_body">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文-->
+	</class>
+	
+	<!--论坛:帖子所属版块-->
+	<class name="com.yuanluesoft.bbs.article.pojo.BbsArticleSubjection" table="bbs_article_subjection">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="articleId"/> <!--帖子ID-->
+		<property name="forumId"/> <!--版块ID-->
+	</class>
+	
+	<!--论坛:回复-->
+	<class name="com.yuanluesoft.bbs.article.pojo.BbsReply" table="bbs_reply">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="articleId"/> <!--帖子ID-->
+		<property name="replyId"/> <!--被回复的回复ID-->
+		<property name="subject"/> <!--主题-->
+		<property name="creatorId"/> <!--回复人ID-->
+		<property name="creatorNickname"/> <!--回复人昵称-->
+		<property name="created"/> <!--回复时间-->
+		<property name="isDeleted"/> <!--是否被管理员删除-->
+		<property name="deleteReason"/> <!--删除原因-->
+		<set cascade="delete" inverse="true" lazy="true" name="lazyBody" table="bbs_reply_body">
+			<key column="id"/>
+			<one-to-many class="com.yuanluesoft.bbs.article.pojo.BbsReplyBody"/>
+		</set>
+	</class>
+	
+	<!--论坛:回复正文-->
+	<class name="com.yuanluesoft.bbs.article.pojo.BbsReplyBody" table="bbs_reply_body">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文-->
+	</class>
+</hibernate-mapping>

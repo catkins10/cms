@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="在线受理" class="com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAccept" businessServiceName="onlineServiceAcceptService">
+		<field name="memberId" title="申报人ID" length="20" type="number" inputMode="hidden">
+		</field>
+		<field name="member" title="申报人" length="200" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.openSelectDialog('jeaf/usermanage/member', 'admin/member', 720, 430, false, 'memberId{id},member{company}', '', '', '', ',', false )</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="js">/cms/onlineservice/js/onlineservice.js</parameter>
+		</field>
+		<field name="agentorId" title="代理人ID" length="20" type="number" inputMode="hidden">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="agentor" title="代理人" length="200" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		
+		<field name="creatorType" title="申报人类型" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">个人|0\0企业|1</parameter>
+		</field>
+		
+		<field name="itemId" title="办理事项ID" length="20" type="number" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="itemName" title="办理事项名称" length="200" required="true" type="string" inputMode="select">
+			<parameter name="execute">selectOnlineServiceItem(550, 360, false, 'itemId{id},itemName{name}', '', '', '', '', '{PARAMETER:directoryId}', false, true, false, false, true)</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="js">/cms/onlineservice/js/onlineservice.js</parameter>
+		</field>
+		
+		<field name="caseNumber" title="受理件数" length="6" type="number" inputMode="text"/>
+		<field name="caseAccept" title="是否受理" length="1" type="char" inputMode="none"/>
+		<field name="caseDeclinedReason" title="不受理原因" length="4000" type="string" inputMode="text"/>
+		<field name="subNo" title="子编号" length="20" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="caseAcceptTime" title="受理时间" type="timestamp" inputMode="readonly"/>
+		<field name="caseLimitTime" title="受理截止时间" type="timestamp" inputMode="readonly"/>
+		<field name="caseCompleteTime" title="办结时间" type="timestamp" inputMode="readonly"/>
+		<field name="pickupTime" title="取件时间" type="timestamp" inputMode="readonly"/>
+		<field name="price" title="价格" length="14,2" type="number" inputMode="text"/>
+		<field name="businessLicence" title="营业执照号码" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="legalRepresentative" title="法定代表人" length="32" type="string" inputMode="text"/>
+		<field name="linkman" title="联系人" length="100" type="string" inputMode="text"/>
+		<field name="creator" title="申报人" length="200" type="string" inputMode="readonly"/>
+		<field name="acceptStatus" title="办理状态" length="32" type="string" inputMode="readonly"/>
+		<field name="remark" title="备注" length="250" type="string" inputMode="text"/>
+		<field name="missings" title="缺件通知" type="components">
+			<parameter name="class">com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAcceptMissing</parameter>
+		</field>
+		<field name="material" title="申报材料" type="attachment" inputMode="attachment">
+			<parameter name="type">{PARAMETER:material.id}</parameter>
+			<parameter name="simpleMode">true</parameter>
+		</field>
+		<field name="materialMissing" title="办理过程中产生的相关材料" type="attachment" inputMode="attachment">
+			<parameter name="type">{PARAMETER:id}{PARAMETER:material.id}</parameter>
+			<parameter name="simpleMode">true</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">预审|required,督查,审批,批示</parameter>
+			<parameter name="class">com.yuanluesoft.cms.publicservice.pojo.PublicServiceOpinion</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="在线受理" class="com.yuanluesoft.cms.onlineservice.interactive.accept.model.AcceptStatistic">
+		<field name="acceptTotal" title="累计受理" type="number" inputMode="readonly"/>
+		<field name="completeTotal" title="累计办结" type="number" inputMode="readonly"/>
+		<field name="monthAcceptTotal" title="本月累计受理" type="number" inputMode="readonly"/>
+		<field name="monthCompleteTotal" title="本月累计办结" type="number" inputMode="readonly"/>
+		<field name="yesterdayAcceptTotal" title="昨日累计受理" type="number" inputMode="readonly"/>
+		<field name="yesterdayCompleteTotal" title="昨日累计办结" type="number" inputMode="readonly"/>
+		<field name="todayAcceptTotal" title="今日累计受理" type="number" inputMode="readonly"/>
+		<field name="todayCompleteTotal" title="今日累计办结" type="number" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="福建省级网上行政服务大厅审批数据" class="com.yuanluesoft.cms.onlineservice.interactive.accept.fjwssp.model.Case">
+		<field name="receiverDept" title="受理部门" type="string" inputMode="readonly"/>
+		<field name="projectName" title="受理事项" type="string" inputMode="readonly"/>
+		<field name="projectID" title="受理申报号" type="string" inputMode="readonly"/>
+		<field name="serviceName" title="审批事项名称"  type="string" inputMode="readonly"/>
+		<field name="serviceCode" title="审批事项编码" type="string" inputMode="readonly"/>
+		<field name="applyName" title="申报人" type="string" inputMode="readonly"/>
+		<field name="createTime" title="申报日期" type="timestamp" inputMode="readonly"/>
+		<field name="promiseEndDay" title="承诺办结日期" type="date" inputMode="readonly"/>
+		<field name="handleState" title="办件状态" type="string" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="流水号配置" class="com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.AcceptSerialNumberConfig" >
+		<field name="content" title="规则格式" length="50" required="true" type="string" inputMode="text"/>
+	</businessObject>
+</businessObjects>

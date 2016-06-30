@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+ <form-bean name="applicationView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/>
+  <form-bean name="adminCommonCredit" type="com.yuanluesoft.credit.enterprisecredit.commoncredit.forms.CommonCredit"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminCommonCredit" path="/admin/commonCredit" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.commoncredit.actions.Load" validate="false">
+   <forward name="load" path="/commonCredit.jsp"/>
+  </action>
+  <action input="/commonCredit.jsp" name="adminCommonCredit" path="/admin/saveCommonCredit" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.commoncredit.actions.Save" validate="false"/>
+  <action input="/commonCredit.jsp" name="adminCommonCredit" path="/admin/deleteCommonCredit"
+   scope="request" type="com.yuanluesoft.credit.enterprisecredit.commoncredit.actions.Delete" validate="false"/>
+  <!-- 批量删除操作 -->
+   <action input="/../../../jeaf/application/applicationView.jsp" name="applicationView" 
+   path="/batchOperate" scope="request" 
+   type="com.yuanluesoft.credit.enterprisecredit.batchoperate.BatchOperate" validate="false" />
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<application>
+	<viewLink local="admin/todoAccept" title="待办申报"/>
+	<viewLink local="admin/inProcessAccept" title="在办申报"/>
+	<viewLink local="admin/completedAccept" title="办结申报"/>
+	<viewLink local="admin/allAccept" title="所有申报"/>
+	<viewLink local="admin/myAccept" title="代报事项"/>
+	<link title="办结短信格式" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/onlineservice/accept&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/smsFormat
+	</link>
+	<link name="serialNumberConfig" title="受理编号配置" hide="noPrivilege(application_manager)">
+		javascript:PageUtils.openurl('{WEBAPPLICATIONURL}/cms/onlineservice/accept/admin/serialNumberConfig.shtml', 'mode=dialog,width=500,height=480')
+	</link>
+</application>

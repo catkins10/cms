@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/commonCredit" form="admin/commonCredit" hide="noPrivilege(application_manager)" title="通用信用信息" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.commoncredit.pojo.CommonCredit</pojo>
+			<orderBy>CommonCredit.created</orderBy>
+			<quickFilter>CommonCredit.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="新增" execute="PageUtils.newrecord('credit/enterprisecredit/commoncredit','admin/commonCredit','mode=fullscreen')"/>
+			<action title="批量删除"  execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/commoncredit/batchOperate.shtml?pojoName=CommonCredit')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="个人/企业名称"/>
+			<column name="type" title="类型"  align="center"/>
+			<column name="creator" title="创建人" align="center"/>
+			<column name="created" title="创建时间" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/mycommonCredit" form="admin/commonCredit" title="通用信用信息"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.commoncredit.pojo.CommonCredit</pojo>
+			<where>CommonCredit.creatorId={USERID}</where>
+			<orderBy>CommonCredit.created</orderBy>
+			<quickFilter>CommonCredit.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="批量删除" hide="noPrivilege(manageUnit_commoncredit)" execute="if(confirm('是否确定发布？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/agricultural/batchOperate.shtml?pojoName=Agricultural')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_commoncredit)" execute="PageUtils.newrecord('credit/enterprisecredit/commoncredit','admin/commonCredit','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="个人/企业名称"/>
+			<column name="type" title="类型"  align="center"/>
+			<column name="creator" title="创建人" align="center"/>
+			<column name="created" title="创建时间" align="center"/>
+		</columns>
+	</view>
+	
+	
+</views>

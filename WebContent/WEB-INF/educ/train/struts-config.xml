@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="trainInfo" type="com.yuanluesoft.educ.train.forms.admin.TrainInfoForm"/>
+  <form-bean name="trainConfig" type="com.yuanluesoft.educ.train.forms.admin.TrainConfigForm"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminTrainInfo" path="/admin/trainInfo" scope="request"
+   type="com.yuanluesoft.educ.train.actions.admin.Load" validate="false">
+   <forward name="load" path="admin/trainInfo.jsp"/>
+  </action>
+  <action input="/admin/trainInfo.jsp" name="adminTrainInfo" path="/admin/saveTrainInfo" scope="request"
+   type="com.yuanluesoft.educ.train.actions.admin.Save" validate="false"/>
+  <action input="/admin/trainInfo.jsp" name="adminTrainInfo" path="/admin/deleteTrainInfo" scope="request"
+   type="com.yuanluesoft.educ.train.actions.admin.Delete" validate="false"/>
+   
+   <action name="adminTrainConfig" path="/admin/trainConfig" scope="request"
+   type="com.yuanluesoft.educ.train.actions.admin.config.Load" validate="false">
+   <forward name="load" path="admin/trainConfig.jsp"/>
+  </action>
+  <action input="/admin/trainConfig.jsp" name="adminTrainConfig" path="/admin/saveTrainConfig" scope="request"
+   type="com.yuanluesoft.educ.train.actions.admin.config.Save" validate="false"/>
+   
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="200M"/>
+</struts-config>

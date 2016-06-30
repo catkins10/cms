@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--自评-->
+	<class name="com.yuanluesoft.chd.evaluation.selfeval.pojo.ChdEvaluationSelf" table="chd_eval_self">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="evalYear"/> <!--年度,numeric(4)-->
+		<property name="evalMonth"/> <!--月份,numeric(2)-->
+		<property name="evalResult"/> <!--自查情况说明,varchar(4000)-->
+		<property name="created"/> <!--提交时间,timestamp null-->
+		<property name="department"/> <!--部门名称,varchar(50)-->
+		<property name="creatorId"/> <!--责任人ID,numeric(20)-->
+		<property name="creator"/> <!--责任人姓名,varchar(30)-->
+		<property name="remark"/> <!--备注,varchar(200)-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID,varchar(32)-->
+		<set cascade="delete" inverse="true" lazy="true" name="subjections" table="chd_eval_self_subjection" order-by="id">
+			<key column="evalId" />
+			<one-to-many class="com.yuanluesoft.chd.evaluation.selfeval.pojo.ChdEvaluationSelfSubjection" />
+		</set>
+		<set name="opinions" table="chd_eval_self_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.chd.evaluation.selfeval.pojo.ChdEvaluationSelfOpinion"/>
+		</set>
+		<set name="visitors" table="chd_eval_self_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.chd.evaluation.selfeval.pojo.ChdEvaluationSelfPrivilege"/>
+		</set>
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+	</class>
+	
+	<!--自评:权限控制信息-->
+	<class name="com.yuanluesoft.chd.evaluation.selfeval.pojo.ChdEvaluationSelfPrivilege" table="chd_eval_self_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,numeric(20)-->
+		<property name="accessLevel"/> <!--访问级别,char(1)-->
+		<property name="recordId"/> <!--主记录ID,numeric(20)-->
+	</class>
+	
+	<!--自评:所属目录-->
+	<class name="com.yuanluesoft.chd.evaluation.selfeval.pojo.ChdEvaluationSelfSubjection" table="chd_eval_self_subjection">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="evalId"/> <!--自评ID,numeric(20)-->
+		<property name="directoryId"/> <!--目录ID,numeric(20)-->
+	</class>
+	
+	<!--自评:办理意见-->
+	<class name="com.yuanluesoft.chd.evaluation.selfeval.pojo.ChdEvaluationSelfOpinion" table="chd_eval_self_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID,numeric(20)-->
+		<property name="activityName"/> <!--环节名称,varchar(50)-->
+		<property name="workItemId"/> <!--工作项ID,varchar(32)-->
+		<property name="activityId"/> <!--环节ID,varchar(32)-->
+		<property name="personId"/> <!--填写人ID,numeric(20)-->
+		<property name="personName"/> <!--填写人姓名,varchar(32)-->
+		<property name="agentId"/> <!--代理人ID,numeric(20)-->
+		<property name="agentName"/> <!--代理人姓名,varchar(32)-->
+		<property name="opinion"/> <!--意见内容,varchar(1000)-->
+		<property name="opinionType"/> <!--意见类型,varchar(20)-->
+		<property name="created"/> <!--填写时间,timestamp null-->
+	</class>
+</hibernate-mapping>

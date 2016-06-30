@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--监察:信息公开-->
+	<class name="com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfo" table="monitor_public_info" polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(200)-->
+		<property name="recordId"/> <!--记录ID,VARCHAR(200)-->
+		<property name="captureTime"/> <!--采集时间,TIMESTAMP null-->
+		<property name="lastCaptureTime"/> <!--最后采集时间,TIMESTAMP null-->
+		<property name="timeoutCheckDisabled"/> <!--禁止超时检查,NUMERIC(1)-->
+		<property name="processDays"/> <!--办理用时,NUMERIC(5,1)-->
+		<property name="timeoutLevel"/> <!--超时等级,NUMERIC(1)-->
+		<property name="timeoutDays"/> <!--超时天数,NUMERIC(5,1)-->
+		<property name="subject"/> <!--标题,VARCHAR(200)-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文,TEXT-->
+		<property name="infoIndex"/> <!--索引号,VARCHAR(60)-->
+		<property name="infoFrom"/> <!--发布机构,VARCHAR(60)-->
+		<property name="mark"/> <!--文号,VARCHAR(60)-->
+		<property name="generateDate"/> <!--生成日期,date null-->
+		<property name="creator"/> <!--创建人,VARCHAR(30)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="issueTime"/> <!--发布时间,timestamp null-->
+		<property name="summarize"/> <!--内容概述,VARCHAR(500)-->
+		<property name="category"/> <!--主题分类,VARCHAR(100)-->
+		<property name="keywords"/> <!--主题词,VARCHAR(100)-->
+		<property name="directoryName"/> <!--目录名称,VARCHAR(200)-->
+	</class>
+	
+	<!--监察:党务公开-->
+	<class name="com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPartyInfo" table="monitor_party_info" polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(200)-->
+		<property name="recordId"/> <!--记录ID,VARCHAR(200)-->
+		<property name="captureTime"/> <!--采集时间,TIMESTAMP null-->
+		<property name="lastCaptureTime"/> <!--最后采集时间,TIMESTAMP null-->
+		<property name="timeoutCheckDisabled"/> <!--禁止超时检查,NUMERIC(1)-->
+		<property name="processDays"/> <!--办理用时,NUMERIC(5,1)-->
+		<property name="timeoutLevel"/> <!--超时等级,NUMERIC(1)-->
+		<property name="timeoutDays"/> <!--超时天数,NUMERIC(5,1)-->
+		<property name="subject"/> <!--标题,VARCHAR(200)-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文,TEXT-->
+		<property name="infoIndex"/> <!--索引号,VARCHAR(60)-->
+		<property name="infoFrom"/> <!--发布机构,VARCHAR(60)-->
+		<property name="mark"/> <!--文号,VARCHAR(60)-->
+		<property name="generateDate"/> <!--生成日期,date null-->
+		<property name="creator"/> <!--创建人,VARCHAR(30)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="issueTime"/> <!--发布时间,timestamp null-->
+		<property name="summarize"/> <!--内容概述,VARCHAR(500)-->
+		<property name="category"/> <!--主题分类,VARCHAR(100)-->
+		<property name="keywords"/> <!--主题词,VARCHAR(100)-->
+		<property name="directoryName"/> <!--目录名称,VARCHAR(200)-->
+	</class>
+	
+	<!--监察:信息公开意见箱-->
+	<class name="com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoOpinion" table="monitor_info_opinion" polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(200)-->
+		<property name="recordId"/> <!--记录ID,VARCHAR(200)-->
+		<property name="captureTime"/> <!--采集时间,TIMESTAMP null-->
+		<property name="lastCaptureTime"/> <!--最后采集时间,TIMESTAMP null-->
+		<property name="timeoutCheckDisabled"/> <!--禁止超时检查,NUMERIC(1)-->
+		<property name="processDays"/> <!--办理用时,NUMERIC(5,1)-->
+		<property name="timeoutLevel"/> <!--超时等级,NUMERIC(1)-->
+		<property name="timeoutDays"/> <!--超时天数,NUMERIC(5,1)-->
+		<property name="subject"/> <!--主题,VARCHAR(2000)-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文,TEXT-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="creator"/> <!--创建人姓名,VARCHAR(20)-->
+		<property name="creatorTel"/> <!--联系电话,VARCHAR(100)-->
+		<property name="creatorMail"/> <!--邮箱,VARCHAR(100)-->
+		<property name="creatorIP"/> <!--创建人IP,VARCHAR(30)-->
+		<property name="creatorMobile"/> <!--创建人手机,VARCHAR(100)-->
+		<property name="opinion" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--办理意见,TEXT-->
+		<property name="transactTime"/> <!--办理时间,timestamp null-->
+		<property name="transactor"/> <!--经办人,VARCHAR(60)-->
+	</class>
+	
+	<!--监察:申请公开-->
+	<class name="com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoRequest" table="monitor_info_request" polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(200)-->
+		<property name="recordId"/> <!--记录ID,VARCHAR(200)-->
+		<property name="captureTime"/> <!--采集时间,TIMESTAMP null-->
+		<property name="lastCaptureTime"/> <!--最后采集时间,TIMESTAMP null-->
+		<property name="timeoutCheckDisabled"/> <!--禁止超时检查,NUMERIC(1)-->
+		<property name="processDays"/> <!--办理用时,NUMERIC(5,1)-->
+		<property name="timeoutLevel"/> <!--超时等级,NUMERIC(1)-->
+		<property name="timeoutDays"/> <!--超时天数,NUMERIC(5,1)-->
+		<property name="proposerType"/> <!--申请人类型,公民,法人/其他组织,VARCHAR(10)-->
+		<property name="applyMode"/> <!--申请方式,网络、电话、传真,VARCHAR(50)-->
+		<property name="creator"/> <!--申请人,VARCHAR(20)-->
+		<property name="creatorMobile"/> <!--申请人手机,VARCHAR(100)-->
+		<property name="creatorMail"/> <!--申请人邮箱,VARCHAR(100)-->
+		<property name="creatorTel"/> <!--联系电话,VARCHAR(100)-->
+		<property name="code"/> <!--机构代码,VARCHAR(100)-->
+		<property name="legalRepresentative"/> <!--法人代表,VARCHAR(30)-->
+		<property name="creatorIP"/> <!--申请人IP,VARCHAR(30)-->
+		<property name="content"/> <!--内容描述,VARCHAR(4000)-->
+		<property name="purpose"/> <!--用途,VARCHAR(250)-->
+		<property name="created"/> <!--申请时间,timestamp null-->
+		<property name="medium"/> <!--提供方式,纸面/电子邮件/光盘/磁盘,VARCHAR(100)-->
+		<property name="receiveMode"/> <!--获取信息的方式,邮寄/快递/电子邮件/传真/自行领取/当场阅读、抄录,VARCHAR(100)-->
+		<property name="approvalResult"/> <!--审批结果,同意公开/同意部分公开/不公开,VARCHAR(50)-->
+		<property name="notPublicType"/> <!--不公开类别,信息不存在/非本部门掌握/申请内容不明确/免予公开/其他原因未能提供信息,VARCHAR(50)-->
+		<property name="notPublicReason"/> <!--其他未能提供信息的原因,VARCHAR(500)-->
+		<property name="doneMedium"/> <!--实际提供方式,VARCHAR(100)-->
+		<property name="doneReceiveMode"/> <!--实际信息获取方式,VARCHAR(100)-->
+		<property name="approvalTime"/> <!--审批时间,timestamp null-->
+	</class>
+	
+	<!--监察:信息公开年度报告-->
+	<class name="com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoReport" table="monitor_info_report" polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(200)-->
+		<property name="recordId"/> <!--记录ID,VARCHAR(200)-->
+		<property name="captureTime"/> <!--采集时间,TIMESTAMP null-->
+		<property name="lastCaptureTime"/> <!--最后采集时间,TIMESTAMP null-->
+		<property name="timeoutCheckDisabled"/> <!--禁止超时检查,NUMERIC(1)-->
+		<property name="processDays"/> <!--办理用时,NUMERIC(5,1)-->
+		<property name="timeoutLevel"/> <!--超时等级,NUMERIC(1)-->
+		<property name="timeoutDays"/> <!--超时天数,NUMERIC(5,1)-->
+		<property name="subject"/> <!--标题,VARCHAR(200)-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文,TEXT-->
+		<property name="creator"/> <!--创建人,VARCHAR(30)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="issueTime"/> <!--发布时间,timestamp null-->
+	</class>
+	
+	<!--监察:信息公开制度-->
+	<class name="com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoRule" table="monitor_info_rule" polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(200)-->
+		<property name="recordId"/> <!--记录ID,VARCHAR(200)-->
+		<property name="captureTime"/> <!--采集时间,TIMESTAMP null-->
+		<property name="lastCaptureTime"/> <!--最后采集时间,TIMESTAMP null-->
+		<property name="timeoutCheckDisabled"/> <!--禁止超时检查,NUMERIC(1)-->
+		<property name="processDays"/> <!--办理用时,NUMERIC(5,1)-->
+		<property name="timeoutLevel"/> <!--超时等级,NUMERIC(1)-->
+		<property name="timeoutDays"/> <!--超时天数,NUMERIC(5,1)-->
+		<property name="subject"/> <!--标题,VARCHAR(200)-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文,TEXT-->
+		<property name="creator"/> <!--创建人,VARCHAR(30)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="issueTime"/> <!--发布时间,timestamp null-->
+	</class>
+</hibernate-mapping>

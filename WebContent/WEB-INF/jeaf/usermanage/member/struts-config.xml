@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="member" type="com.yuanluesoft.jeaf.usermanage.member.forms.Member"/>
+  <form-bean name="adminMember" type="com.yuanluesoft.jeaf.usermanage.member.forms.admin.Member"/>
+  <form-bean name="adminSetting" type="com.yuanluesoft.jeaf.usermanage.member.forms.admin.MemberRegistSetting"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminSetting" path="/admin/setting" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.member.actions.admin.setting.Load" validate="false">
+   <forward name="load" path="/admin/setting.jsp"/>
+  </action>
+  <action name="member" path="/regist" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.member.actions.regist.Load" validate="false">
+   <forward name="load" path="/regist.jsp"/>
+  </action>
+  <action name="adminMember" path="/admin/member" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.member.actions.admin.member.Load" validate="false">
+   <forward name="load" path="/admin/member.jsp"/>
+  </action>
+  <action input="/regist.jsp" name="member" path="/submit"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.member.actions.regist.Submit" validate="false">
+   <forward name="result" path="/result.jsp"/>
+  </action>
+  <action input="/admin/member.jsp" name="adminMember"
+   path="/admin/saveMember" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.member.actions.admin.member.Save" validate="false"/>
+  <action input="/admin/member.jsp" name="adminMember"
+   path="/admin/deleteMember" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.member.actions.admin.member.Delete" validate="false"/>
+  <action input="/admin/setting.jsp" name="adminSetting"
+   path="/admin/saveSetting" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.member.actions.admin.setting.Save" validate="false"/>
+  <action path="/index" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.member.actions.index.Load" validate="false"/>
+  <action name="member" path="/profile" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.member.actions.profile.Load" validate="false">
+   <forward name="load" path="/profile.jsp"/>
+  </action>
+  <action input="/profile.jsp" name="member" path="/updateProfile"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.member.actions.profile.Submit" validate="false">
+   <forward name="result" path="/result.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

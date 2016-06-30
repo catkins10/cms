@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>	
+	<!-- 个人订单服务 -->
+	<bean id="personalOrderService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<ref bean="personalOrderServiceImpl"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="cancel*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="create*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- bean id="personalOrderServiceImpl" class="com.yuanluesoft.charge.order.service.spring.PersonalOrderServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="deductionService"><ref bean="deductionServiceImpl"/></property>
+		<property name="serviceManage"><ref bean="serviceManage"/></property>
+	</bean-->
+	<bean id="personalOrderServiceImpl" class="com.yuanluesoft.charge.thirdparty.unicom.service.spring.PersonalOrderServiceUnicomImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="deductionService"><ref bean="deductionServiceImpl"/></property>
+		<property name="serviceManage"><ref bean="serviceManage"/></property>
+		<property name="unicomSynchClient"><ref bean="unicomSynchClient"/></property>
+	</bean>
+</beans>

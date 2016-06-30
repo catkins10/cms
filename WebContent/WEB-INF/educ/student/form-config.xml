@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<forms>
+	<form name="admin/student" class="com.yuanluesoft.educ.student.forms.admin.StudentForm" title="添加学生" pojo="com.yuanluesoft.educ.student.pojo.Stude">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="isNew() or workflow()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('delete')"/>
+			<action title="完成注册" hide="workflow()" execute="if(confirm('是否确定完成注册？'))FormUtils.doAction('admin/completeRegist')"/>
+			<action title="完成变更" hide="workflow()" execute="if(confirm('是否确定完成变更？'))FormUtils.doAction('admin/completeAlter')"/>
+			<action title="学生变更" execute="location.href='alterStudent.shtml?alterStudentId={PARAMETER:id}'"/>
+		</actions>
+	</form>
+	
+	<form name="student" title="提交注册信息" method="post" action="/educ/student/saveStudent.shtml?act=create" class="com.yuanluesoft.educ.student.forms.StudentForm" pojo="com.yuanluesoft.educ.student.pojo.Stude">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+	<form name="student/changeInfo" title="提交修改资料信息" method="post" action="/educ/student/saveStudent.shtml?act=edit" class="com.yuanluesoft.educ.student.forms.StudentForm" pojo="com.yuanluesoft.educ.student.pojo.Stude">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+	
+	<!-- Excel导入表单 -->
+	<form name="admin/studentImportData" class="com.yuanluesoft.educ.student.forms.admin.ImportDateExcel" title="学生批量导入">
+	   <formFields>
+	   		<field name="data" title="数据文件" type="attachment" inputMode="attachment" length="1"><!-- 附件操作，length是个数 -->
+				<parameter name="fileExtension">Excel表格|*.xls;*.xlsx|</parameter><!-- 指定过滤文件 -->
+				<parameter name="simpleMode">true</parameter><!-- 简单模式 -->
+			</field>
+	   </formFields>
+	   <actions>
+			<action title="导入" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

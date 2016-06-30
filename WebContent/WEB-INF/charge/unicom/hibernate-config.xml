@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--联通:号码段-->
+	<class name="com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomTelNumber" table="charge_unicom_tel_number">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="area"/> <!--地区名称-->
+		<property name="areaId"/> <!--地区ID-->
+		<property name="areaCode"/> <!--区号-->
+		<property name="beginNumber"/> <!--起始号码-->
+		<property name="endNumber"/> <!--结束号码-->
+		<property name="lastUseNumber"/> <!--最后使用的号码-->
+		<property name="allUsed"/> <!--是否全部被使用-->
+	</class>
+	
+	<!--联通:用户附加信息-->
+	<class name="com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomPersonExtend" table="charge_unicom_person_extend">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unicomPersonId"/> <!--联通用户ID-->
+		<property name="created"/> <!--创建时间-->
+		<one-to-one name="person" class="com.yuanluesoft.jeaf.usermanage.pojo.Person"/>
+	</class>
+	
+	<!--联通:套餐映射-->
+	<class name="com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomServiceMapping" table="charge_unicom_service_mapping">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="servicePriceId"/> <!--服务报价ID-->
+		<property name="servicePriceName"/> <!--服务报价名称-->
+		<property name="unicomServiceId"/> <!--联通套餐编码-->
+	</class>
+	
+	<!--联通:扣费记录-->
+	<class name="com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomDeduct" table="charge_unicom_deduct">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="personId"/> <!--用户ID-->
+		<property name="unicomPersonId"/> <!--联通用户ID-->
+		<property name="money"/> <!--扣费金额-->
+		<property name="created"/> <!--扣费时间-->
+	</class>
+	
+	<!--联通:账号卡订单-->
+	<class name="com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomCardOrder" table="charge_unicom_card_order">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="area"/> <!--地区名称-->
+		<property name="areaId"/> <!--地区ID-->
+		<property name="areaCode"/> <!--区号-->
+		<property name="beginNumber"/> <!--起始号码-->
+		<property name="endNumber"/> <!--结束号码-->
+		<property name="created"/> <!--创建时间-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="creator"/> <!--创建人-->
+	</class>
+	
+	<!--联通:账号卡-->
+	<class name="com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomCard" table="charge_unicom_card">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="orderId"/> <!--帐号卡订单ID-->
+		<property name="cardNumber"/> <!--卡号-->
+		<property name="cardPassword"/> <!--密码-->
+		<property name="effectiveTime"/> <!--生效时间-->
+	</class>
+	
+	<!--联通:账号卡计费组代码绑定-->
+	<class name="com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomCardGroup" table="charge_unicom_card_group">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="areaCode"/> <!--区号-->
+		<property name="beginNumber"/> <!--起始号码-->
+		<property name="endNumber"/> <!--结束号码-->
+		<property name="groupCode"/> <!--计费组代码-->
+		<property name="created"/> <!--创建时间-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="creator"/> <!--创建人-->
+	</class>
+</hibernate-mapping>

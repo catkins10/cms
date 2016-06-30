@@ -1,0 +1,43 @@
+<form class="form" id="approvalQuery" title="办理情况查询" action="applicationName=logistics/complaint" style="border-right: #ffc0c0 1px dotted; border-top: #ffc0c0 1px dotted; margin: 0px; border-left: #ffc0c0 1px dotted; border-bottom: #ffc0c0 1px dotted">
+	<table class="editabledTable">
+		<tr>
+		    <td>获取办理情况请输入查询密码：</td>
+		    <td><input class="field" id="field" title="查询密码" style="width: 80px" name="approvalQueryPassword" type="text" /></td>
+		    <td align="center" colspan="3">&nbsp;<input class="submitButton" id="button" title="查询" tabindex="0" type="button" value="查询" /> </td>
+		</tr>
+	</table>
+</form>
+<table class="readonlyTable">
+	<colgroup>
+		<col align="right"/>
+		<col width="50%"/>
+		<col align="right"/>
+		<col width="50%"/>
+	</colgroup>
+	<tr>
+        <td class="label">货源(车源)</td>
+        <td colspan="3" class="content"><a id="field" urn="name=supplyDescription">&lt;货源/车源描述&gt;</a></td>
+    </tr>
+    <tr>
+        <td  nowrap="nowrap" class="label">投诉的公司(个人)</td>
+        <td colspan="3" class="content"><a id="field" urn="name=userName">&lt;被投诉公司/个人&gt;</a></td>
+    </tr>
+	<tr>
+		<td class="label">主题</td>
+		<td class="content" colspan="3"><a id="field" urn="name=subject">&lt;主题&gt;</a></td>
+	</tr>
+	<tr>
+		<td class="label">编号</td>
+		<td class="content"><a id="field" urn="name=sn">&lt;编号&gt;</a></td>
+		<td class="label" nowrap="nowrap">投诉时间</td>
+		<td class="content"><a id="field" urn="name=created&amp;fieldFormat=yyyy-MM-dd HH:mm">&lt;投诉时间&gt;</a></td>
+	</tr>
+	<tr>
+		<td class="label" valign="top">详细说明</td>
+		<td class="content" colspan="3"><a id="field" urn="name=content">&lt;正文&gt;</a></td>
+	</tr>
+	<tr>
+		<td class="label" nowrap="nowrap">投诉人姓名</td>
+		<td class="content" colspan="3"><a id="field" urn="name=creator">&lt;投诉人&gt;</a></td>
+	</tr>
+</table>

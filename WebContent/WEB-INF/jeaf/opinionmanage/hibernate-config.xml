@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--用户常用意见-->
+	<class name="com.yuanluesoft.jeaf.opinionmanage.pojo.OftenUseOpinion" table="opinion_often_use">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="personId"/> <!--填写人ID,bigint unsigned-->
+		<property name="applicationName"/> <!--应用名称,varchar(60)-->
+		<property name="opinion"/> <!--意见内容,varchar(2000)-->
+	</class>
+	
+	<!--意见类型配置-->
+	<class name="com.yuanluesoft.jeaf.opinionmanage.pojo.OpinionType" table="opinion_type">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="businessClassName"/> <!--业务对象类名称,varchar(100)-->
+		<property name="opinionType"/> <!--意见类型,varchar(60)-->
+		<property name="required"/> <!--是否必须填写,char(1)-->
+		<property name="inputPrompt"/> <!--没有填写时提示信息,默认:尚未填写意见,varchar(100)-->
+		<property name="priority"/> <!--优先级,numeric(7,4)-->
+	</class>
+</hibernate-mapping>

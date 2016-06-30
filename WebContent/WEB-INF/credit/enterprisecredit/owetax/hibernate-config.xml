@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--龙海市国家税务局年辖区企业欠税情况-->
+	<class name="com.yuanluesoft.credit.enterprisecredit.owetax.pojo.OweTax" table="credit_owetax">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="number"/> <!-- 纳税人识别号 -->
+		<property name="name"/><!-- 纳税人名称 -->
+		<property name="project"/> <!-- 征收项目 -->
+		<property name="totalTaxes"/> <!-- 累计欠税(元) -->
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+	</class>
+	
+	
+	
+	
+</hibernate-mapping>

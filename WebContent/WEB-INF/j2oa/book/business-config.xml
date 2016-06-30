@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="图书" class="com.yuanluesoft.j2oa.book.pojo.Book" businessServiceName="bookService">
+		<field name="serialNumber" title="书籍编号" length="50" type="string" inputMode="text"/>
+		<field name="title" title="书籍名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="category" title="书籍类别" length="50" type="string" inputMode="text"/>
+		<field name="author" title="作者姓名" length="100" type="string" inputMode="text"/>
+		<field name="publishingHouse" title="出版社名称" length="100" type="string" inputMode="text"/>
+		<field name="publicationDate" title="出版日期" type="date" inputMode="date"/>
+		<field name="pages" title="书籍页数" length="5" type="number" inputMode="text"/>
+		<field name="keyword" title="关键词" length="100" type="string" inputMode="text"/>
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none"/>
+		<field name="creator" title="登记人" length="30" type="string" inputMode="readonly"/>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly"/>
+		<field name="isBorrowing" title="是否被借阅" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">已借出|1\0未借出|0</parameter>
+		</field>
+		<field name="isBorrowingTitle" title="是否被借阅" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">isBorrowing</parameter>
+		</field>
+		<field name="remark" title="备注" length="500" type="string" inputMode="text"/>
+		<field name="borrows" title="借阅记录" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.book.pojo.BookBorrow</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="借阅信息" class="com.yuanluesoft.j2oa.book.pojo.BookBorrow">
+		<field name="bookId" title="书籍ID" type="number" inputMode="hidden"/>
+		<field name="personId" title="借阅人ID" type="number" inputMode="hidden"/>
+		<field name="personName" title="借阅人" length="30" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(500, 330, false, 'borrow.personId{id},borrow.personName{name}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="borrowTime" title="借阅时间" type="timestamp" inputMode="readonly"/>
+		<field name="returnTime" title="归还时间" type="timestamp" inputMode="datetime"/>
+		<field name="isReturned" title="是否归还" length="1" type="char" inputMode="none"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+	</businessObject>
+</businessObjects>

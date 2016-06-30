@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminEvaluationParameter" type="com.yuanluesoft.railway.evaluation.forms.admin.EvaluationParameter"/>
+  <form-bean name="adminEvaluationView" type="com.yuanluesoft.railway.evaluation.forms.admin.EvaluationView"/>
+  <form-bean name="evaluation" type="com.yuanluesoft.railway.evaluation.forms.Evaluation"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminEvaluationParameter"
+   path="/admin/evaluationParameter" scope="request"
+   type="com.yuanluesoft.railway.evaluation.actions.evaluationparameter.admin.Load" validate="false">
+   <forward name="load" path="/admin/evaluationParameter.jsp"/>
+  </action>
+  <action input="/admin/evaluationParameter.jsp"
+   name="adminEvaluationParameter" path="/admin/saveEvaluationParameter"
+   scope="request"
+   type="com.yuanluesoft.railway.evaluation.actions.evaluationparameter.admin.Save" validate="false"/>
+  <action name="adminEvaluationView" path="/admin/evaluationView"
+   scope="request"
+   type="com.yuanluesoft.railway.evaluation.actions.evaluationview.admin.EvaluationViewAction" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action name="evaluation" path="/evaluation" scope="request"
+   type="com.yuanluesoft.railway.evaluation.actions.evaluation.Load" validate="false">
+   <forward name="load" path="/evaluation.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

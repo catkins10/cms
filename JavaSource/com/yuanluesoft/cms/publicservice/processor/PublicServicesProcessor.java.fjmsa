@@ -1,0 +1,47 @@
+package com.yuanluesoft.cms.publicservice.processor;
+
+import java.sql.Timestamp;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.yuanluesoft.cms.pagebuilder.model.page.SitePage;
+import com.yuanluesoft.cms.pagebuilder.model.recordlist.RecordList;
+import com.yuanluesoft.cms.pagebuilder.processor.spring.RecordListProcessor;
+import com.yuanluesoft.cms.pagebuilder.util.PageUtils;
+import com.yuanluesoft.cms.publicservice.pojo.PublicService;
+import com.yuanluesoft.cms.sitemanage.pojo.WebDirectory;
+import com.yuanluesoft.cms.sitemanage.pojo.WebSite;
+import com.yuanluesoft.jeaf.exception.ServiceException;
+import com.yuanluesoft.jeaf.view.model.View;
+
+/**
+ * 公众服务列表处理器
+ * @author linchuan
+ *
+ */
+public class PublicServicesProcessor extends RecordListProcessor {
+
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.pagebuilder.processor.spring.RecordListProcessor#readRecords(com.yuanluesoft.jeaf.view.model.View, com.yuanluesoft.cms.pagebuilder.model.recordlist.RecordList, int, int, com.yuanluesoft.cms.sitemanage.pojo.WebDirectory, com.yuanluesoft.cms.sitemanage.pojo.WebSite, com.yuanluesoft.cms.pagebuilder.model.page.SitePage, javax.servlet.http.HttpServletRequest)
+	 */
+	protected List readRecords(View view, RecordList recordListModel, int pageIndex, int pageRows, WebDirectory webDirectory, WebSite parentSite, SitePage sitePage, HttpServletRequest request) throws ServiceException {
+		List records = super.readRecords(view, recordListModel, pageIndex, pageRows, webDirectory, parentSite, sitePage, request);
+			//设置页面有效时间
+		Timestamp minTime = null;
+		for(Iterator iterator = records==null ? null : records.iterator(); iterator!=null && iterator.hasNext();) {
+			Object record = iterator.next();
+			if(!(record instanceof PublicService)) {
+				continue;
+			}
+			PublicService publicService = (PublicService)record;
+			if(publicService.getPublicEnd()!=null && (minTime==null || minTime.after(publicService.getPublicEnd()))) {
+				minTime = publicService.getPublicEnd();
+			}
+		}
+		//设置页面有效时间
+		PageUtils.setPageExpiresTime(minTime, request);
+		return records;
+	}
+}

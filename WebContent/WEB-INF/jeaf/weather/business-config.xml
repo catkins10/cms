@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="天气实况" class="com.yuanluesoft.jeaf.weather.pojo.WeatherLive">
+		<field name="area" title="地区" length="50" type="string" inputMode="readonly"/>
+		<field name="updateTime" title="更新时间" type="timestamp" inputMode="readonly"/>
+		<field name="source" title="来源" length="50" type="string" inputMode="readonly"/>
+		<field name="describe" title="天气概况" length="20" type="string" inputMode="readonly"/>
+		<field name="temperature" title="气温" length="5,2" type="number" inputMode="readonly"/>
+		<field name="feelst" title="体感温度" length="30" type="string" inputMode="readonly">
+			<parameter name="title">体感温度:{PARAMETER:feelst}</parameter>
+		</field>
+		<field name="feelstTip" title="体感温度描述" length="60" type="string" inputMode="readonly"/>
+		<field name="airpressure" title="气压" length="50" type="string" inputMode="readonly">
+			<parameter name="title">气压:{PARAMETER:airpressure}</parameter>
+		</field>
+		<field name="airpressureTip" title="气压描述" length="60" type="string" inputMode="readonly"/>
+		<field name="rain" title="降水" length="60" type="string" inputMode="readonly">
+			<parameter name="title">降水:{PARAMETER:rain}</parameter>
+		</field>
+		<field name="windDirection" title="风向" length="60" type="string" inputMode="readonly">
+			<parameter name="title">风力:{PARAMETER:windPower},风向:{PARAMETER:windDirection}</parameter>
+		</field>
+		<field name="windPower" title="风力" length="30" type="string" inputMode="readonly">
+			<parameter name="title">风力:{PARAMETER:windPower},风向:{PARAMETER:windDirection}</parameter>
+		</field>
+		<field name="windSpeed" title="风速" length="30" type="string" inputMode="readonly">
+			<parameter name="title">风速:{PARAMETER:windSpeed}</parameter>
+		</field>
+		<field name="humidity" title="湿度" length="30" type="string" inputMode="readonly">
+			<parameter name="title">湿度:{PARAMETER:humidity}</parameter>
+		</field>
+		<field name="humidityTip" title="湿度描述" length="60" type="string" inputMode="readonly"/>
+		<field name="comfort" title="舒适度" length="60" type="string" inputMode="readonly"/>
+		<field name="comfortTip" title="舒适度描述" length="60" type="string" inputMode="readonly"/>
+		<field name="airQuality" title="空气质量" length="30" type="string" inputMode="none"/>
+		<field name="airQualityModel" title="空气质量" type="component" inputMode="readonly" persistence="false">
+			<parameter name="class">com.yuanluesoft.jeaf.weather.model.AirQuality</parameter>
+		</field>
+		<field name="weatherIconUrl" title="天气图标" type="imageName" inputMode="readonly" persistence="false">
+			<parameter name="alt">{PARAMETER:describe}</parameter>
+			<parameter name="describeField">describe</parameter>
+			<parameter name="timeField">updateTime</parameter>
+		</field>
+	</businessObject>
+  
+	<businessObject title="天气预报" class="com.yuanluesoft.jeaf.weather.pojo.WeatherForecast">
+		<field name="area" title="地区" length="50" type="string" inputMode="readonly"/>
+		<field name="updateTime" title="更新时间" type="timestamp" inputMode="readonly"/>
+		<field name="source" title="来源" length="50" type="string" inputMode="readonly"/>
+		<field name="forecastDate" title="预报日期" type="date" inputMode="readonly"/>
+		<field name="dayDescribe" title="白天天气概况" length="20" type="string" inputMode="readonly"/>
+		<field name="nightDescribe" title="夜晚天气概况" length="20" type="string" inputMode="readonly"/>
+		<field name="dayTemperature" title="白天气温" length="5,2" type="number" inputMode="readonly"/>
+		<field name="nightTemperature" title="夜晚气温" length="5,2" type="number" inputMode="readonly"/>
+		<field name="dayWindDirection" title="白天风向" length="60" type="string" inputMode="readonly">
+			<parameter name="title">风力:{PARAMETER:dayWindPower},风向:{PARAMETER:dayWindDirection}</parameter>
+		</field>
+		<field name="nightWindDirection" title="夜晚风向" length="60" type="string" inputMode="readonly">
+			<parameter name="title">风力:{PARAMETER:nightWindPower},风向:{PARAMETER:nightWindDirection}</parameter>
+		</field>
+		<field name="dayWindPower" title="白天风力" length="30" type="string" inputMode="readonly">
+			<parameter name="title">风力:{PARAMETER:dayWindPower},风向:{PARAMETER:dayWindDirection}</parameter>
+		</field>
+		<field name="nightWindPower" title="夜晚风力" length="30" type="string" inputMode="readonly">
+			<parameter name="title">风力:{PARAMETER:nightWindPower},风向:{PARAMETER:nightWindDirection}</parameter>
+		</field>
+		<field name="dayWindSpeed" title="白天风速" length="30" type="string" inputMode="readonly"/>
+		<field name="nightWindSpeed" title="夜晚风速" length="30" type="string" inputMode="readonly"/>
+		<field name="dayAirQuality" title="白天空气质量" length="30" type="string" inputMode="none"/>
+		<field name="dayAirQualityModel" title="白天空气质量" type="component" inputMode="readonly" persistence="false">
+			<parameter name="class">com.yuanluesoft.jeaf.weather.model.AirQuality</parameter>
+		</field>
+		<field name="nightAirQuality" title="夜晚空气质量" length="30" type="string" inputMode="readonly"/>
+		<field name="nightAirQualityModel" title="夜晚空气质量" type="component" inputMode="readonly" persistence="false">
+			<parameter name="class">com.yuanluesoft.jeaf.weather.model.AirQuality</parameter>
+		</field>
+		<field name="hourForecasts" title="整点预报列表" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.weather.pojo.WeatherHourForecast</parameter>
+		</field>
+		<field name="describe" title="全天天气概况" length="20" type="string" inputMode="readonly" persistence="false"/>
+		<field name="windDirection" title="全天风向" length="60" type="string" inputMode="readonly" persistence="false">
+			<parameter name="title">风力:{PARAMETER:windPower},风向:{PARAMETER:windDirection}</parameter>
+		</field>
+		<field name="windPower" title="全天风力" length="30" type="string" inputMode="readonly" persistence="false">
+			<parameter name="title">风力:{PARAMETER:windPower},风向:{PARAMETER:windDirection}</parameter>
+		</field>
+		<field name="airQualityModel" title="全天空气质量" type="component" inputMode="readonly" persistence="false">
+			<parameter name="class">com.yuanluesoft.jeaf.weather.model.AirQuality</parameter>
+		</field>
+		<field name="dayWeatherIconUrl" title="白天天气图标" type="imageName" inputMode="readonly" persistence="false">
+			<parameter name="alt">{PARAMETER:dayDescribe}</parameter>
+			<parameter name="describeField">dayDescribe</parameter>
+			<parameter name="day">true</parameter>
+		</field>
+		<field name="nightWeatherIconUrl" title="夜晚天气图标" type="imageName" inputMode="readonly" persistence="false">
+			<parameter name="alt">{PARAMETER:nightDescribe}</parameter>
+			<parameter name="describeField">nightDescribe</parameter>
+			<parameter name="night">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="整点预报" class="com.yuanluesoft.jeaf.weather.pojo.WeatherHourForecast">
+		<field name="forecastId" title="预报ID" length="20" type="number" inputMode="hidden"/>
+		<field name="forecastTime" title="时间" type="timestamp" inputMode="readonly"/>
+		<field name="describe" title="天气概况" length="20" type="string" inputMode="readonly"/>
+		<field name="temperature" title="气温" length="5,2" type="number" inputMode="readonly"/>
+		<field name="feelst" title="体感温度" length="30" type="string" inputMode="readonly"/>
+		<field name="feelstTip" title="体感温度描述" length="60" type="string" inputMode="readonly"/>
+		<field name="rain" title="降水" length="60" type="string" inputMode="readonly"/>
+		<field name="windDirection" title="风向" length="60" type="string" inputMode="readonly"/>
+		<field name="windPower" title="风力" length="30" type="string" inputMode="readonly"/>
+		<field name="windSpeed" title="风速" length="30" type="string" inputMode="readonly"/>
+		<field name="airpressure" title="气压" length="30" type="string" inputMode="readonly"/>
+		<field name="airpressureTip" title="气压描述" length="60" type="string" inputMode="readonly"/>
+		<field name="humidity" title="湿度" length="30" type="string" inputMode="readonly"/>
+		<field name="humidityTip" title="湿度描述" length="60" type="string" inputMode="readonly"/>
+		<field name="cloud" title="云量" length="30" type="string" inputMode="readonly"/>
+		<field name="visibility" title="能见度" length="30" type="string" inputMode="readonly"/>
+		<field name="airQuality" title="空气质量" length="30" type="string" inputMode="none"/>
+		<field name="airQualityModel" title="空气质量" type="component" inputMode="readonly" persistence="false">
+			<parameter name="class">com.yuanluesoft.jeaf.weather.model.AirQuality</parameter>
+		</field>
+		<field name="weatherIconUrl" title="天气图标" type="imageName" inputMode="readonly" persistence="false">
+			<parameter name="alt">{PARAMETER:describe}</parameter>
+			<parameter name="describeField">describe</parameter>
+			<parameter name="timeField">forecastTime</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="天气" class="com.yuanluesoft.jeaf.weather.model.Weather">
+		<field name="area" title="地区" type="string"/>
+		<field name="weatherLive" title="天气实况" type="component">
+			<parameter name="class">com.yuanluesoft.jeaf.weather.pojo.WeatherLive</parameter>
+		</field>
+		<field name="forecasts" title="天气预报列表" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.weather.pojo.WeatherForecast</parameter>
+		</field>
+		<field name="forecastUpdateTime" title="天气预报更新时间" type="timestamp"/>
+	</businessObject>
+	
+	<businessObject title="天气抓取" class="com.yuanluesoft.jeaf.weather.model.WeatherCapture">
+		<field name="updateTime" title="更新时间" type="timestamp"/>
+		<field name="describe" title="实时天气情况" type="string"/>
+		<field name="temperature" title="实时气温" type="number"/>
+		<field name="feelst" title="实时体感温度" type="string"/>
+		<field name="feelstTip" title="实时体感温度描述" type="string"/>
+		<field name="airpressure" title="实时气压" type="string"/>
+		<field name="airpressureTip" title="实时气压描述" type="string"/>
+		<field name="rain" title="实时降水" type="string"/>
+		<field name="windDirection" title="实时风向" type="string"/>
+		<field name="windPower" title="实时风力" type="string"/>
+		<field name="windSpeed" title="实时风速" type="string"/>
+		<field name="humidity" title="实时湿度" type="string"/>
+		<field name="humidityTip" title="实时湿度描述" type="string"/>
+		<field name="comfort" title="实时舒适度" type="string"/>
+		<field name="comfortTip" title="实时舒适度描述" type="string"/>
+		<field name="airQuality" title="实时空气质量" type="string"/>
+		<field name="forecastUpdateTime" title="天气预报更新时间" type="timestamp"/>
+		<field name="forecasts" title="天气预报列表" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.weather.model.WeatherForecast</parameter>
+			<parameter name="capture">true</parameter>
+		</field>
+		<field name="refinedForecasts" title="精细预报列表" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.weather.model.WeatherRefinedForecast</parameter>
+			<parameter name="capture">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="天气预报抓取" class="com.yuanluesoft.jeaf.weather.model.WeatherForecast">
+		<field name="forecastDate" title="预报时间" type="date"/>
+		<field name="forecastDay" title="日期(1~31)" type="number"/>
+		
+		<field name="describe" title="天气情况(全天)" type="string"/>
+		<field name="lowTemperature" title="最低温度(全天)" type="number"/>
+		<field name="highTemperature" title="最高温度(全天)" type="number"/>
+		<field name="windDirection" title="风向(全天)" type="string"/>
+		<field name="windPower" title="风力(全天)" type="string"/>
+		<field name="windSpeed" title="风速(全天)" type="string"/>
+		<field name="airQuality" title="空气质量(全天)" type="string"/>
+		
+		<field name="dayDescribe" title="天气情况(白天)" type="string"/>
+		<field name="dayTemperature" title="温度(白天)" type="number"/>
+		<field name="dayWindDirection" title="风向(白天)" type="string"/>
+		<field name="dayWindPower" title="风力(白天)" type="string"/>
+		<field name="dayWindSpeed" title="风速(白天)" type="string"/>
+		<field name="dayAirQuality" title="空气质量(白天)" type="string"/>
+		
+		<field name="nightDescribe" title="天气情况(夜晚)" type="string"/>
+		<field name="nightTemperature" title="温度(夜晚)" type="number"/>
+		<field name="nightWindDirection" title="风向(夜晚)" type="string"/>
+		<field name="nightWindPower" title="风力(夜晚)" type="string"/>
+		<field name="nightWindSpeed" title="风速(夜晚)" type="string"/>
+		<field name="nightAirQuality" title="空气质量(夜晚)" type="string"/>
+	</businessObject>
+	
+	<businessObject title="精细预报抓取" class="com.yuanluesoft.jeaf.weather.model.WeatherRefinedForecast">
+		<field name="hourForecasts" title="整点预报列表" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.weather.model.WeatherHourForecast</parameter>
+			<parameter name="capture">true</parameter>
+		</field>
+		<field name="hourForecastTimes" title="整点预报时间列表" type="timestamp[]"/>
+		<field name="hourForecastDates" title="整点预报日期列表" type="date[]"/>
+		<field name="hourForecastDateTimes" title="整点预报日期和时间列表" type="timestamp[]"/>
+		<field name="hourForecastDescribes" title="整点预报天气概况列表" type="string[]"/>
+		<field name="hourForecastTemperatures" title="整点预报气温列表" type="number[]"/>
+		<field name="hourForecastFeelsts" title="整点预报体感温度列表" type="string[]"/>
+		<field name="hourForecastFeelstTips" title="整点预报体感温度描述列表" type="string[]"/>
+		<field name="hourForecastRains" title="整点预报降水列表" type="string[]"/>
+		<field name="hourForecastWindDirections" title="整点预报风向列表" type="string[]"/>
+		<field name="hourForecastWindPowers" title="整点预报风力列表" type="string[]"/>
+		<field name="hourForecastWindSpeeds" title="整点预报风速列表" type="string[]"/>
+		<field name="hourForecastAirpressures" title="整点预报气压列表" type="string[]"/>
+		<field name="hourForecastAirpressureTips" title="整点预报气压描述列表" type="string[]"/>
+		<field name="hourForecastHumidities" title="整点预报湿度列表" type="string[]"/>
+		<field name="hourForecastHumidityTips" title="整点预报湿度描述列表" type="string[]"/>
+		<field name="hourForecastClouds" title="整点预报云量列表" type="string[]"/>
+		<field name="hourForecastVisibilities" title="整点预报能见度列表" type="string[]"/>
+		<field name="hourForecastAirQualities" title="整点预报空气质量列表" type="string[]"/>
+	</businessObject>
+	
+	<businessObject title="整点预报抓取" class="com.yuanluesoft.jeaf.weather.model.WeatherHourForecast">
+		<field name="forecastTime" title="时间" type="timestamp"/>
+		<field name="forecastDate" title="日期" type="timestamp"/>
+		<field name="forecastDateTime" title="日期和时间" type="timestamp"/>
+		<field name="describe" title="天气概况" type="string"/>
+		<field name="temperature" title="气温" type="number"/>
+		<field name="feelst" title="体感温度" type="string"/>
+		<field name="feelstTip" title="体感温度描述" type="string"/>
+		<field name="rain" title="降水" type="string"/>
+		<field name="windDirection" title="风向" type="string"/>
+		<field name="windPower" title="风力" type="string"/>
+		<field name="windSpeed" title="风速" type="string"/>
+		<field name="airpressure" title="气压" type="string"/>
+		<field name="airpressureTip" title="气压描述" type="string"/>
+		<field name="humidity" title="湿度" type="string"/>
+		<field name="humidityTip" title="湿度描述" type="string"/>
+		<field name="cloud" title="云量" type="string"/>
+		<field name="visibility" title="能见度" type="string"/>
+		<field name="airQuality" title="空气质量" type="string"/>
+	</businessObject>
+	
+	<businessObject title="空气质量" class="com.yuanluesoft.jeaf.weather.model.AirQuality">
+		<field name="qualityValue" title="空气质量数值" type="number">
+			<parameter name="color">{PARAMETER:color}</parameter>
+			<parameter name="title">空气质量:{PARAMETER:qualityValue},等级:{PARAMETER:level},{PARAMETER:describe},{PARAMETER:outdoor}</parameter>
+		</field>
+		<field name="level" title="空气质量等级" type="string">
+			<parameter name="color">{PARAMETER:color}</parameter>
+			<parameter name="title">空气质量:{PARAMETER:qualityValue},等级:{PARAMETER:level},{PARAMETER:describe},{PARAMETER:outdoor}</parameter>
+		</field>
+		<field name="describe" title="空气质量说明" type="string"/>
+		<field name="outdoor" title="户外活动说明" type="string"/>
+		<field name="colorText" title="颜色" type="string" inputMode="none"/>
+		<field name="color" title="颜色值" type="string" inputMode="none"/>
+	</businessObject>
+</businessObjects>

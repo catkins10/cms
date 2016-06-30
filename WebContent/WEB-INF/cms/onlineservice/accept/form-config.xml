@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="approvalQuery" title="办理情况查询" method="post" action="/cms/onlineservice/accept/acceptQuery.shtml?id={PARAMETER:id}">
+		<formFields>
+			<field title="编号" name="approvalQuerySN"/>
+			<field title="密码" name="approvalQueryPassword" inputMode="password"/>
+		</formFields>
+		<actions>
+			<action title="查询" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	
+	<form name="acceptQuery" title="项目查询" method="get" action="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/onlineservice/accept&amp;pageName=acceptQuery">
+		<formFields>
+			<field title="流水号" name="sn">
+				<parameter name="searchCondition">OnlineServiceAccept.sn = '{PARAMETER:sn}'</parameter> <!-- 搜索条件定义 -->
+			</field>
+			<field title="状态" name="acceptStatus" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">onlineServiceAcceptService</parameter>
+				<parameter name="searchCondition">OnlineServiceAccept.acceptStatus = '{PARAMETER:acceptStatus}'</parameter>
+			</field>
+			<field title="申报人名称" name="creator"/>
+			<field title="项目名称" name="itemName" inputMode="select" type="string">
+				<parameter name="execute">selectOnlineServiceItem(550, 360, false, 'itemName{name}', '', '', '', '', '{PARAMETER:directoryId}', false, true, false, false, true)</parameter>
+				<parameter name="js">/cms/onlineservice/js/onlineservice.js</parameter>
+				<parameter name="searchCondition">OnlineServiceAccept.itemName like '%{PARAMETER:itemName}%'</parameter>
+			</field>
+			<field title="开始时间" name="createdBegin" type="date"/>
+			<field title="结束时间" name="createdEnd" type="date"/>
+		</formFields>
+		<actions>
+			<action title="查询" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.onlineservice.interactive.accept.forms.Accept" title="在线受理" pojo="com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAccept">
+		<formFields>
+			<field title="步骤" name="step" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="下一步" hide="isOld()" execute="submitAccept(true)"/>
+			<action title="提交" hide="isOld()" execute="submitAccept(false)"/>
+			<action title="提交" hide="isNew() or isRead()" execute="submitAccept(false)"/>
+		</actions>
+	</form>
+	
+	<form name="admin/accept" class="com.yuanluesoft.cms.onlineservice.interactive.accept.forms.admin.Accept" title="在线受理" pojo="com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAccept">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="提交" hide="workflow()" execute="FormUtils.doAction('runAccept')"/>
+			<action title="受理申报" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=answer')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteAccept', 'physical=true')"/>
+			<!--action title="打印办理单" execute="FormUtils.doAction('printAccept')"/-->
+		</actions>
+	</form>
+	
+	<form name="admin/importCases" class="com.yuanluesoft.cms.onlineservice.interactive.accept.forms.admin.ImportCases" title="上传申报记录">
+		<formFields>
+			<field title="申报记录文件" name="files" type="attachment" inputMode="attachment" length="1">
+				<parameter name="attachmentEditor">importCasesAttachmentEditor.shtml</parameter>
+				<!-- parameter name="fileExtension">申报记录文件|*.txt;*.fmt|</parameter -->
+				<parameter name="fileExtension">申报记录文件|*.zip|</parameter>
+				<parameter name="simpleMode">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/serialNumberConfig" class="com.yuanluesoft.cms.onlineservice.interactive.accept.forms.admin.AcceptSerialNumberConfig" title="流水号配置" pojo="com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.AcceptSerialNumberConfig">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+</forms>

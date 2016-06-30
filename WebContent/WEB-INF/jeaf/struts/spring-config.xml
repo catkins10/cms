@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- STRUTS配置服务 -->
+	<bean id="strutsDefineService" class="com.yuanluesoft.jeaf.struts.service.spring.StrutsDefineServiceImpl">
+		<property name="strutsParser"><ref bean="strutsParser"/></property>
+	</bean>
+
+	<!-- STRUTS解析器 -->
+	<bean id="strutsParser" class="com.yuanluesoft.jeaf.struts.parser.dom4j.StrutsParserImpl"/>
+</beans>

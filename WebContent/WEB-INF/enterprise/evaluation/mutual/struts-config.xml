@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminEvaluationParameter" type="com.yuanluesoft.enterprise.evaluation.mutual.forms.admin.EvaluationParameter"/>
+  <form-bean name="evaluation" type="com.yuanluesoft.enterprise.evaluation.mutual.forms.Evaluation"/>
+  <form-bean name="adminEvaluation" type="com.yuanluesoft.enterprise.evaluation.mutual.forms.admin.Evaluation"/>
+  <form-bean name="insertEvaluationLink" type="com.yuanluesoft.enterprise.evaluation.mutual.forms.admin.InsertEvaluationLink"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminEvaluationParameter"
+   path="/admin/evaluationParameter" scope="request"
+   type="com.yuanluesoft.enterprise.evaluation.mutual.actions.evaluationparameter.admin.Load" validate="false">
+   <forward name="load" path="/admin/evaluationParameter.jsp"/>
+  </action>
+  <action input="/admin/evaluationParameter.jsp"
+   name="adminEvaluationParameter" path="/admin/saveEvaluationParameter"
+   scope="request"
+   type="com.yuanluesoft.enterprise.evaluation.mutual.actions.evaluationparameter.admin.Save" validate="false"/>
+  <action name="evaluation" path="/evaluation" scope="request"
+   type="com.yuanluesoft.enterprise.evaluation.mutual.actions.evaluation.Load" validate="false">
+   <forward name="load" path="/evaluation.jsp"/>
+  </action>
+  <action input="/evaluation.jsp" name="evaluation"
+   path="/saveEvaluation" scope="request"
+   type="com.yuanluesoft.enterprise.evaluation.mutual.actions.evaluation.Save" validate="false">
+   <forward name="result" path="/evaluationSubmitted.jsp"/>
+  </action>
+  <action name="adminEvaluation" path="/admin/evaluation"
+   scope="request"
+   type="com.yuanluesoft.enterprise.evaluation.mutual.actions.evaluation.admin.Load" validate="false">
+   <forward name="load" path="/admin/evaluation.jsp"/>
+  </action>
+  <action input="/admin/evaluation.jsp" name="adminEvaluation"
+   path="/admin/saveEvaluation" scope="request"
+   type="com.yuanluesoft.enterprise.evaluation.mutual.actions.evaluation.admin.Save" validate="false"/>
+  <action name="insertEvaluationLink"
+   path="/templatemanage/insertEvaluationLink" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertEvaluationLink.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

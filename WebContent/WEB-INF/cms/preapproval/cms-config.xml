@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 网上预审 -->
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/preapproval"/>
+		<page name="preapproval" title="提交预审件" url="/cms/preapproval/preapproval.shtml">
+			<subPage name="base" title="提交预审件"/>
+			<field title="主题" name="subject"/>
+			<field title="正文" name="body"/>
+			<field title="编号" name="sn"/>
+			<field title="创建人姓名" name="creator"/>
+			<field title="创建人邮箱" name="creatorMail"/>
+			<field title="证件号码" name="creatorIdentityCard"/>
+			<field title="创建时间" name="created" type="timestamp"/>
+		</page>
+		<page name="preapprovalSearch" title="搜索" searchPage="true" searchResults="preapprovals" url="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/preapproval&amp;pageName=preapprovalSearch"/>
+	</pages>
+	
+	<recordLists>
+		<recordList title="预审件列表" name="preapprovals" recordPage="preapproval" hostPage="index"/>
+	</recordLists>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="preapprovals" processor="publicServicesProcessor"/> <!-- 预审件列表处理器 -->
+	</pageElements>
+</application>

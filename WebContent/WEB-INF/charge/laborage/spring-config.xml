@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 报酬支出服务 -->
+	<bean id="laborageService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.charge.laborage.service.spring.LaborageServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="serviceSoapPassport"><ref bean="chargeSoapPassport"/></property>
+				<property name="distributionService"><ref bean="distributionService"/></property>
+				<!-- property name="personalAccountService"><ref bean="personalAccountService"/></property-->
+				<property name="taxRate"><value>0.1</value></property> <!-- 个税税率 -->
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="pay*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="generateMonthlyLaborage">PROPAGATION_NEVER,-Exception</prop> <!-- 不需要事务支持 -->
+			</props>
+		</property>
+	</bean>
+</beans>

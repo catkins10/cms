@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminSendMessageByTel" type="com.yuanluesoft.jeaf.sms.forms.admin.SendMessageByTel"/>
+  <form-bean name="adminSmsBusiness" type="com.yuanluesoft.jeaf.sms.forms.admin.SmsBusiness"/>
+  <form-bean name="adminSmsUnitConfig" type="com.yuanluesoft.jeaf.sms.forms.admin.SmsUnitConfig"/>
+  <form-bean name="adminSmsUnitBusiness" type="com.yuanluesoft.jeaf.sms.forms.admin.SmsUnitBusiness"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminSendMessageByTel" path="/admin/sendMessageByTel"
+   scope="request"
+   type="com.yuanluesoft.jeaf.sms.actions.admin.sendmessagebytel.Load" validate="false">
+   <forward name="load" path="/admin/sendMessageByTel.jsp"/>
+  </action>
+  <action input="/admin/sendMessageByTel.jsp"
+   name="adminSendMessageByTel" path="/admin/doSendMessageByTel"
+   scope="request"
+   type="com.yuanluesoft.jeaf.sms.actions.admin.sendmessagebytel.Send" validate="false"/>
+  <action name="adminSmsBusiness" path="/admin/smsBusiness"
+   scope="request"
+   type="com.yuanluesoft.jeaf.sms.actions.admin.smsbusiness.Load" validate="false">
+   <forward name="load" path="/admin/smsBusiness.jsp"/>
+  </action>
+  <action input="/admin/smsBusiness.jsp" name="adminSmsBusiness"
+   path="/admin/saveSmsBusiness" scope="request"
+   type="com.yuanluesoft.jeaf.sms.actions.admin.smsbusiness.Save" validate="false"/>
+  <action input="/admin/smsBusiness.jsp" name="adminSmsBusiness"
+   path="/admin/deleteSmsBusiness" scope="request"
+   type="com.yuanluesoft.jeaf.sms.actions.admin.smsbusiness.Delete" validate="false"/>
+  <action name="adminSmsUnitConfig" path="/admin/smsUnitConfig"
+   scope="request"
+   type="com.yuanluesoft.jeaf.sms.actions.admin.smsunitconfig.Load" validate="false">
+   <forward name="load" path="/admin/smsUnitConfig.jsp"/>
+  </action>
+  <action input="/admin/smsUnitConfig.jsp" name="adminSmsUnitConfig"
+   path="/admin/saveSmsUnitConfig" scope="request"
+   type="com.yuanluesoft.jeaf.sms.actions.admin.smsunitconfig.Save" validate="false"/>
+  <action input="/admin/smsUnitConfig.jsp" name="adminSmsUnitConfig"
+   path="/admin/deleteSmsUnitConfig" scope="request"
+   type="com.yuanluesoft.jeaf.sms.actions.admin.smsunitconfig.Delete" validate="false"/>
+  <action name="adminSmsUnitBusiness" path="/admin/smsUnitBusiness"
+   scope="request"
+   type="com.yuanluesoft.jeaf.sms.actions.admin.smsunitconfig.smsunitbusiness.Load" validate="false">
+   <forward name="load" path="/admin/smsUnitBusiness.jsp"/>
+  </action>
+  <action input="/admin/smsUnitBusiness.jsp" name="adminSmsUnitBusiness"
+   path="/admin/saveSmsUnitBusiness" scope="request"
+   type="com.yuanluesoft.jeaf.sms.actions.admin.smsunitconfig.smsunitbusiness.Save" validate="false"/>
+  <action input="/admin/smsUnitBusiness.jsp" name="adminSmsUnitBusiness"
+   path="/admin/deleteSmsUnitBusiness" scope="request"
+   type="com.yuanluesoft.jeaf.sms.actions.admin.smsunitconfig.smsunitbusiness.Delete" validate="false"/>
+  <action input="/admin/smsUnitConfig.jsp" name="adminSmsUnitConfig"
+   path="/admin/refreshSmsUnitConfig" scope="request"
+   type="com.yuanluesoft.jeaf.sms.actions.admin.smsunitconfig.Refresh" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

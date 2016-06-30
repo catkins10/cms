@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 综合评价服务 -->
+	<bean id="railwayEvaluationService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.railway.evaluation.service.spring.RailwayEvaluationServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="orgService"><ref bean="orgService"/></property>
+				<property name="roleService"><ref bean="roleService"/></property>
+				<property name="personService"><ref bean="personService"/></property>
+				<property name="departmentEvaluationService"><ref bean="departmentEvaluationService"/></property>
+				<property name="examService"><ref bean="examService"/></property>
+				<property name="mutualEvaluationService"><ref bean="mutualEvaluationService"/></property>
+				<property name="railwayEventService"><ref bean="railwayEventService"/></property>
+				<property name="workloadService"><ref bean="workloadService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 综合评价视图服务 -->
+	<bean id="railwayEvaluationViewService" class="com.yuanluesoft.railway.evaluation.service.spring.RailwayEvaluationViewServiceImpl">
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="railwayEvaluationService"><ref bean="railwayEvaluationService"/></property>
+	</bean>
+</beans>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- SSO会话服务 -->
+	<bean id="ssoSessionService" class="com.yuanluesoft.jeaf.sso.service.domino.SsoSessionServiceImpl">
+		<property name="sessionCache"><ref bean="ssoSessionCache"/></property>
+		<property name="ticketCache"><ref bean="ticketCache"/></property>
+		<!-- serviceSoapPassport -->
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="memberServiceList"><ref bean="memberServiceList"/></property>
+		<property name="statService"><ref bean="statService"/></property>
+		<property name="loginPolicyServices">
+			<list>
+				<ref bean="loginPolicyService"/>
+			</list>
+		</property>
+		<property name="domionSessionServiceUrl"><value>http://198.20.1.10/sso.nsf/dominosessionservice?openagent</value></property>
+		<property name="dominoEncoding"><value>gbk</value></property>
+	</bean>
+	
+	<!-- 用户登录策略服务 -->
+	<bean id="loginPolicyService" class="com.yuanluesoft.jeaf.sso.service.spring.LoginPolicyServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="sessionService"><ref bean="sessionService"/></property>
+	</bean>
+	
+	<!-- 登录页面服务 -->
+	<bean id="loginPageService" class="com.yuanluesoft.jeaf.sso.pages.LoginPageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="userPageTemplateService"/></property>
+	</bean>
+	
+	<!-- 用户登录表单处理器 -->
+	<bean id="loginFormProcessor" class="com.yuanluesoft.jeaf.sso.processor.LoginFormProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="formFieldService"><ref bean="formFieldService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="formSecurityService"><ref bean="formSecurityService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="fingerprintService"><ref bean="fingerprintService"/></property>
+	</bean>
+</beans>

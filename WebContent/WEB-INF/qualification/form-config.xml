@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="qualification" class="com.yuanluesoft.qualification.forms.Qualification" title="证书" pojo="com.yuanluesoft.qualification.pojo.Qualification">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="打印" hide="isNew()" execute="window.print()"/>
+			<action title="审核证书" hide="workflow()" execute="FormUtils.doAction('run', 'workflowAction=approval')"></action>
+			<action title="作废" hide="isNew() or workflow()" execute="if(confirm('是否确定要作废？'))FormUtils.doAction('delete')"/>
+		</actions>
+	</form>
+	
+</forms>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="paymentService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.charge.payment.service.spring.PaymentServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="personalFinanceService"><ref bean="personalFinanceService"/></property>
+				<property name="prepayCache"><ref bean="prepayCache"/></property>
+				<property name="serviceSoapPassport"><ref bean="chargeSoapPassport"/></property>
+				<property name="cryptService"><ref bean="cryptService"/></property>
+				<property name="personService"><ref bean="personService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="confirmPrepayBill">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="validatePayPassword">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="changePayPassword">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

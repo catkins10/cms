@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="/admin/regist" class="com.yuanluesoft.credit.regist.forms.admin.CreditUser" title="用户注册" pojo="com.yuanluesoft.credit.regist.pojo.admin.CreditUser">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="isNew() or isRead()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteRegist')"/>
+		</actions>
+	</form>
+	
+	<form name="regist" class="com.yuanluesoft.credit.regist.forms.CreditUser" title="用户注册" pojo="com.yuanluesoft.credit.regist.pojo.admin.CreditUser" method="post" action="/credit/regist/saveRegist.shtml">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" type="submit"/>
+		</actions>
+	</form>
+	
+	<!-- 是否前台表单是通过action属性判断的。貌似不能和action中pageName对应的页面插入表单。即不能自己提交给自己 -->
+	<form name="searchRegist"
+		action="/cms/sitemanage/applicationSearch.shtml?applicationName=credit/regist&amp;pageName=registQueryResult"
+		title="用户注册状态查询表单" method="get"					      
+		class="com.yuanluesoft.credit.regist.forms.CreditUser" ><!-- 这里若是写入pojo参数，则配置页面时会把所有的字段都列举出来.只是搜索的话只需写出需要的搜索字段即可 -->
+		<formFields>
+			<!-- 搜索关键字 -->
+			<field title="登录用户名"  name="loginName" />
+			<field title="密码"  name="password" />
+		</formFields>
+		<actions>
+			<action title="查询" type="submit" /><!-- 这里的按钮动作在配置页面的表单中选择选择“插入按钮”时将会列出来 -->
+		</actions>
+	</form>
+	
+	
+</forms>

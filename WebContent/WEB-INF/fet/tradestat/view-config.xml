@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="admin/uploadData" form="admin/uploadData" title="数据上传" hide="noPrivilege(manageUnit_upload) and noPrivilege(application_manager)" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.fet.tradestat.pojo.UploadTradeData</pojo>
+			<orderBy>UploadTradeData.uploadTime DESC</orderBy>
+		</data>
+		<actions>
+			<action title="上传数据" hide="noPrivilege(manageUnit_upload)"  execute="PageUtils.newrecord('fet/tradestat', 'admin/uploadData', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="年度" name="dataYear" width="80" align="center"/>
+			<column title="月份" name="dataMonth" align="center" width="80"/>
+			<column title="进口/出口" name="isExport"  width="100" align="center"/>
+			<column title="经办人" name="transactor" align="center" width="80"/>
+			<column title="上传时间" name="uploadTime" align="center"/>
+		</columns>
+	</view>
+	<view name="admin/tradeImportByCounty" title="进口数据(按区县)" hide="noPrivilege(manageUnit_upload) and noPrivilege(manageUnit_query) and noPrivilege(application_manager)" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.fet.tradestat.pojo.TradeImport</pojo>
+			<orderBy>TradeImport.dataYear DESC, TradeImport.dataMonth DESC, TradeImport.companyCode</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.fet.tradestat.pojo.TradeImport</pojo>
+			</data>
+			<category value="TradeImport.dataYear"> <!--value必须有-->
+				<data>TradeImport.dataYear={CATEGORYVALUE}</data>
+			</category>
+			<category value="TradeImport.dataMonth"> <!--value必须有-->
+				<where>TradeImport.dataYear={CATEGORY1VALUE}</where>
+				<data>TradeImport.dataYear={CATEGORY1VALUE} and TradeImport.dataMonth={CATEGORYVALUE}</data>
+			</category>
+			<category value="TradeImport.countyCode" titleHql="select FetCounty.name from FetCounty FetCounty where FetCounty.code={CATEGORYVALUE}"> <!--value必须有-->
+				<where>TradeImport.dataYear={CATEGORY1VALUE} and TradeImport.dataMonth={CATEGORY2VALUE}</where>
+				<data>TradeImport.dataYear={CATEGORY1VALUE} and TradeImport.dataMonth={CATEGORY2VALUE} and TradeImport.countyCode={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="企业编号" name="companyCode" width="80" align="center"/>
+			<column title="企业名称" name="companyName"/>
+			<column title="本月数" name="monthlyTotal" format="#" width="60" align="center"/>
+			<column title="累计数" name="yearTotal" format="#" width="60" align="center"/>
+			<column title="同期数" name="lastYearMonthlyTotal" format="#" width="60" align="center"/>
+			<column title="同期累计数" name="lastYearTotal" format="#" width="60" align="center"/>
+			<column title="累计比增" name="growthRate" width="60" align="center"/>
+			<column title="年度" name="dataYear" width="50" align="center"/>
+			<column title="月份" name="dataMonth" align="center" width="50"/>
+		</columns>
+	</view>
+	<view name="admin/tradeImportByDevelopmentArea" title="进口数据(按开发区)" hide="noPrivilege(manageUnit_upload) and noPrivilege(manageUnit_query) and noPrivilege(application_manager)" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.fet.tradestat.pojo.TradeImport</pojo>
+			<orderBy>TradeImport.dataYear DESC, TradeImport.dataMonth DESC, TradeImport.companyCode</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.fet.tradestat.pojo.TradeImport</pojo>
+			</data>
+			<category value="TradeImport.dataYear"> <!--value必须有-->
+				<data>TradeImport.dataYear={CATEGORYVALUE}</data>
+			</category>
+			<category value="TradeImport.dataMonth"> <!--value必须有-->
+				<where>TradeImport.dataYear={CATEGORY1VALUE}</where>
+				<data>TradeImport.dataYear={CATEGORY1VALUE} and TradeImport.dataMonth={CATEGORYVALUE}</data>
+			</category>
+			<category value="TradeImport.developmentAreaCode" titleHql="select FetDevelopmentArea.name from FetDevelopmentArea FetDevelopmentArea where FetDevelopmentArea.code={CATEGORYVALUE}"> <!--value必须有-->
+				<where>TradeImport.dataYear={CATEGORY1VALUE} and TradeImport.dataMonth={CATEGORY2VALUE}</where>
+				<data>TradeImport.dataYear={CATEGORY1VALUE} and TradeImport.dataMonth={CATEGORY2VALUE} and TradeImport.developmentAreaCode={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="企业编号" name="companyCode" width="80" align="center"/>
+			<column title="企业名称" name="companyName"/>
+			<column title="本月数" name="monthlyTotal" format="#" width="60" align="center"/>
+			<column title="累计数" name="yearTotal" format="#" width="60" align="center"/>
+			<column title="同期数" name="lastYearMonthlyTotal" format="#" width="60" align="center"/>
+			<column title="同期累计数" name="lastYearTotal" format="#" width="60" align="center"/>
+			<column title="累计比增" name="growthRate" width="60" align="center"/>
+			<column title="年度" name="dataYear" width="50" align="center"/>
+			<column title="月份" name="dataMonth" align="center" width="50"/>
+		</columns>
+	</view>
+	<view name="admin/tradeExportByCounty" title="出口数据(按区县)" hide="noPrivilege(manageUnit_upload) and noPrivilege(manageUnit_query) and noPrivilege(application_manager)" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.fet.tradestat.pojo.TradeExport</pojo>
+			<orderBy>TradeExport.dataYear DESC, TradeExport.dataMonth DESC, TradeExport.companyCode</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.fet.tradestat.pojo.TradeExport</pojo>
+			</data>
+			<category value="TradeExport.dataYear"> <!--value必须有-->
+				<data>TradeExport.dataYear={CATEGORYVALUE}</data>
+			</category>
+			<category value="TradeExport.dataMonth"> <!--value必须有-->
+				<where>TradeExport.dataYear={CATEGORY1VALUE}</where>
+				<data>TradeExport.dataYear={CATEGORY1VALUE} and TradeExport.dataMonth={CATEGORYVALUE}</data>
+			</category>
+			<category value="TradeExport.countyCode" titleHql="select FetCounty.name from FetCounty FetCounty where FetCounty.code={CATEGORYVALUE}"> <!--value必须有-->
+				<where>TradeExport.dataYear={CATEGORY1VALUE} and TradeExport.dataMonth={CATEGORY2VALUE}</where>
+				<data>TradeExport.dataYear={CATEGORY1VALUE} and TradeExport.dataMonth={CATEGORY2VALUE} and TradeExport.countyCode={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="企业编号" name="companyCode" width="80" align="center"/>
+			<column title="企业名称" name="companyName"/>
+			<column title="本月数" name="monthlyTotal" format="#" width="60" align="center"/>
+			<column title="累计数" name="yearTotal" format="#" width="60" align="center"/>
+			<column title="同期数" name="lastYearMonthlyTotal" format="#" width="60" align="center"/>
+			<column title="同期累计数" name="lastYearTotal" format="#" width="60" align="center"/>
+			<column title="累计比增" name="growthRate" width="60" align="center"/>
+			<column title="年度" name="dataYear" width="50" align="center"/>
+			<column title="月份" name="dataMonth" align="center" width="50"/>
+		</columns>
+	</view>
+	<view name="admin/tradeExportByDevelopmentArea" title="出口数据(按开发区)" hide="noPrivilege(manageUnit_upload) and noPrivilege(manageUnit_query) and noPrivilege(application_manager)" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.fet.tradestat.pojo.TradeExport</pojo>
+			<orderBy>TradeExport.dataYear DESC, TradeExport.dataMonth DESC, TradeExport.companyCode</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.fet.tradestat.pojo.TradeExport</pojo>
+			</data>
+			<category value="TradeExport.dataYear"> <!--value必须有-->
+				<data>TradeExport.dataYear={CATEGORYVALUE}</data>
+			</category>
+			<category value="TradeExport.dataMonth"> <!--value必须有-->
+				<where>TradeExport.dataYear={CATEGORY1VALUE}</where>
+				<data>TradeExport.dataYear={CATEGORY1VALUE} and TradeExport.dataMonth={CATEGORYVALUE}</data>
+			</category>
+			<category value="TradeExport.developmentAreaCode" titleHql="select FetDevelopmentArea.name from FetDevelopmentArea FetDevelopmentArea where FetDevelopmentArea.code={CATEGORYVALUE}"> <!--value必须有-->
+				<where>TradeExport.dataYear={CATEGORY1VALUE} and TradeExport.dataMonth={CATEGORY2VALUE}</where>
+				<data>TradeExport.dataYear={CATEGORY1VALUE} and TradeExport.dataMonth={CATEGORY2VALUE} and TradeExport.developmentAreaCode={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="企业编号" name="companyCode" width="80" align="center"/>
+			<column title="企业名称" name="companyName"/>
+			<column title="本月数" name="monthlyTotal" format="#" width="60" align="center"/>
+			<column title="累计数" name="yearTotal" format="#" width="60" align="center"/>
+			<column title="同期数" name="lastYearMonthlyTotal" format="#" width="60" align="center"/>
+			<column title="同期累计数" name="lastYearTotal" format="#" width="60" align="center"/>
+			<column title="累计比增" name="growthRate" width="60" align="center"/>
+			<column title="年度" name="dataYear" width="50" align="center"/>
+			<column title="月份" name="dataMonth" align="center" width="50"/>
+		</columns>
+	</view>
+	<view name="admin/tradeImport" title="进口数据" hide="privilege(manageUnit_upload) or privilege(manageUnit_query) or privilege(application_manager)" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.fet.tradestat.pojo.TradeImport</pojo>
+			<orderBy>TradeImport.dataYear DESC, TradeImport.dataMonth DESC, TradeImport.companyCode</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.fet.tradestat.pojo.TradeImport</pojo>
+			</data>
+			<category value="TradeImport.dataYear"> <!--value必须有-->
+				<data>TradeImport.dataYear={CATEGORYVALUE}</data>
+			</category>
+			<category value="TradeImport.dataMonth"> <!--value必须有-->
+				<where>TradeImport.dataYear={CATEGORY1VALUE}</where>
+				<data>TradeImport.dataYear={CATEGORY1VALUE} and TradeImport.dataMonth={CATEGORYVALUE}</data>
+			</category>
+			<category value="TradeImport.developmentAreaCode" titleHql="select FetDevelopmentArea.name from FetDevelopmentArea FetDevelopmentArea where FetDevelopmentArea.code={CATEGORYVALUE}"> <!--value必须有-->
+				<where>TradeImport.dataYear={CATEGORY1VALUE} and TradeImport.dataMonth={CATEGORY2VALUE}</where>
+				<data>TradeImport.dataYear={CATEGORY1VALUE} and TradeImport.dataMonth={CATEGORY2VALUE} and TradeImport.developmentAreaCode={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="数据导出" execute="FormUtils.doAction('downloadImportData')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="企业编号" name="companyCode" width="80" align="center"/>
+			<column title="企业名称" name="companyName"/>
+			<column title="本月数" name="monthlyTotal" width="60" align="center"/>
+			<column title="累计数" name="yearTotal" width="60" align="center"/>
+			<column title="同期数" name="lastYearMonthlyTotal" width="60" align="center"/>
+			<column title="同期累计数" name="lastYearTotal" width="60" align="center"/>
+			<column title="累计比增" name="growthRate" width="60" align="center"/>
+			<column title="年度" name="dataYear" width="50" align="center"/>
+			<column title="月份" name="dataMonth" align="center" width="50"/>
+		</columns>
+	</view>
+	<view name="admin/tradeExport" title="出口数据" hide="privilege(manageUnit_upload) or privilege(manageUnit_query) or privilege(application_manager)" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.fet.tradestat.pojo.TradeExport</pojo>
+			<orderBy>TradeExport.dataYear DESC, TradeExport.dataMonth DESC, TradeExport.companyCode</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.fet.tradestat.pojo.TradeExport</pojo>
+			</data>
+			<category value="TradeExport.dataYear"> <!--value必须有-->
+				<data>TradeExport.dataYear={CATEGORYVALUE}</data>
+			</category>
+			<category value="TradeExport.dataMonth"> <!--value必须有-->
+				<where>TradeExport.dataYear={CATEGORY1VALUE}</where>
+				<data>TradeExport.dataYear={CATEGORY1VALUE} and TradeExport.dataMonth={CATEGORYVALUE}</data>
+			</category>
+			<category value="TradeExport.developmentAreaCode" titleHql="select FetDevelopmentArea.name from FetDevelopmentArea FetDevelopmentArea where FetDevelopmentArea.code={CATEGORYVALUE}"> <!--value必须有-->
+				<where>TradeExport.dataYear={CATEGORY1VALUE} and TradeExport.dataMonth={CATEGORY2VALUE}</where>
+				<data>TradeExport.dataYear={CATEGORY1VALUE} and TradeExport.dataMonth={CATEGORY2VALUE} and TradeExport.developmentAreaCode={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="数据导出" execute="FormUtils.doAction('downloadExportData')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="企业编号" name="companyCode" width="80" align="center"/>
+			<column title="企业名称" name="companyName"/>
+			<column title="本月数" name="monthlyTotal" format="#" width="60" align="center"/>
+			<column title="累计数" name="yearTotal" format="#" width="60" align="center"/>
+			<column title="同期数" name="lastYearMonthlyTotal" format="#" width="60" align="center"/>
+			<column title="同期累计数" name="lastYearTotal" format="#" width="60" align="center"/>
+			<column title="累计比增" name="growthRate" width="60" align="center"/>
+			<column title="年度" name="dataYear" width="50" align="center"/>
+			<column title="月份" name="dataMonth" align="center" width="50"/>
+		</columns>
+	</view>
+	
+	<view name="admin/company" form="admin/company" hide="noPrivilege(application_manager)" title="企业信息" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.fet.tradestat.pojo.FetCompany</pojo>
+			<orderBy>FetCompany.approvalPass,FetCompany.code</orderBy>
+		</data>
+		<actions>
+			<action title="新增企业" hide="noPrivilege(application_manager)"  execute="PageUtils.newrecord('fet/tradestat', 'admin/company', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="代码" name="code" width="80" align="center"/>
+			<column title="名称" name="name"/>
+			<column title="经济类型" name="type"  width="80" align="center"/>
+			<column title="所属县、市" name="county" align="center" width="80"/>
+			<column title="联系电话" name="tel" align="center"/>
+		</columns>
+	</view>
+	<view name="admin/toApprovalCompany" form="admin/company" hide="noPrivilege(application_manager)" title="待审核企业" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.fet.tradestat.pojo.FetCompany</pojo>
+			<where>FetCompany.approvalPass!='1'</where>
+			<orderBy>FetCompany.code</orderBy>
+		</data>
+		<actions>
+			<action title="新增企业" hide="noPrivilege(application_manager)"  execute="PageUtils.newrecord('fet/tradestat', 'admin/company', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="代码" name="code" width="80" align="center"/>
+			<column title="名称" name="name"/>
+			<column title="经济类型" name="type"  width="80" align="center"/>
+			<column title="所属县、市" name="county" align="center" width="80"/>
+			<column title="联系电话" name="tel" align="center"/>
+		</columns>
+	</view>
+	<view name="admin/county" form="admin/county" hide="noPrivilege(application_manager)" title="区县信息" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.fet.tradestat.pojo.FetCounty</pojo>
+			<orderBy>FetCounty.code</orderBy>
+		</data>
+		<actions>
+			<action title="新增区县" hide="noPrivilege(application_manager)"  execute="PageUtils.newrecord('fet/tradestat', 'admin/county', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="代码" name="code" width="80" align="center"/>
+			<column title="名称" name="name"/>
+		</columns>
+	</view>
+	<view name="admin/developmentArea" form="admin/developmentArea" hide="noPrivilege(application_manager)" title="开发区信息" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.fet.tradestat.pojo.FetDevelopmentArea</pojo>
+			<orderBy>FetDevelopmentArea.code</orderBy>
+		</data>
+		<actions>
+			<action title="新增开发区" hide="noPrivilege(application_manager)"  execute="PageUtils.newrecord('fet/tradestat', 'admin/developmentArea', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="代码" name="code" width="80" align="center"/>
+			<column title="名称" name="name"/>
+		</columns>
+	</view>
+	<view name="tradeImport" title="进口数据" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.fet.tradestat.pojo.TradeImport</pojo>
+			<orderBy>TradeImport.dataYear DESC, TradeImport.dataMonth DESC, TradeImport.companyCode</orderBy>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="企业编号" name="companyCode" width="80" align="center"/>
+			<column title="企业名称" name="companyName"/>
+			<column title="本月数" name="monthlyTotal" format="#" width="60" align="center"/>
+			<column title="累计数" name="yearTotal" format="#" width="60" align="center"/>
+			<column title="同期数" name="lastYearMonthlyTotal" format="#" width="60" align="center"/>
+			<column title="同期累计数" name="lastYearTotal" format="#" width="80" align="center"/>
+			<column title="累计比增" name="growthRate" width="66" align="center"/>
+			<column title="年度" name="dataYear" width="50" align="center"/>
+			<column title="月份" name="dataMonth" align="center" width="50"/>
+		</columns>
+	</view>
+	<view name="tradeExport" title="出口数据" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.fet.tradestat.pojo.TradeExport</pojo>
+			<orderBy>TradeExport.dataYear DESC, TradeExport.dataMonth DESC, TradeExport.companyCode</orderBy>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="企业编号" name="companyCode" width="80" align="center"/>
+			<column title="企业名称" name="companyName"/>
+			<column title="本月数" name="monthlyTotal" format="#" width="60" align="center"/>
+			<column title="累计数" name="yearTotal" format="#" width="60" align="center"/>
+			<column title="同期数" name="lastYearMonthlyTotal" format="#" width="60" align="center"/>
+			<column title="同期累计数" name="lastYearTotal" format="#" width="80" align="center"/>
+			<column title="累计比增" name="growthRate" width="66" align="center"/>
+			<column title="年度" name="dataYear" width="50" align="center"/>
+			<column title="月份" name="dataMonth" align="center" width="50"/>
+		</columns>
+	</view>
+	<view name="company" form="company" title="企业信息" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.fet.tradestat.pojo.FetCompany</pojo>
+			<orderBy>FetCompany.code</orderBy>
+		</data>
+		<links>
+			<link target="_blank">company.shtml?act=edit&amp;id={PARAMETER:id}</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="代码" name="code" width="80" align="center"/>
+			<column title="名称" name="name"/>
+			<column title="经济类型" name="type"  width="80" align="center"/>
+			<column title="所属县、市" name="county" align="center" width="80"/>
+			<column title="联系电话" name="tel" align="center"/>
+		</columns>
+	</view>
+</views>

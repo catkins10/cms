@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--银行-->
+	<class name="com.yuanluesoft.credit.bank.bank.pojo.Bank" table="credit_bank">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="loginName"/> 
+		<property name="password"/> 
+		<property name="name"/> 
+		<property name="introduction"/> 
+		<property name="addr"/> 
+		<property name="postcode"/> 
+		<property name="linkMan"/> 
+		<property name="email"/> 
+		<property name="faxes"/> 
+		<property name="tel"/> 
+		<property name="person"/> 
+		<property name="operator"/> 
+		<property name="orgUrl"/> 
+		<property name="orgEmail"/> 
+		<property name="orgFaxes"/> 
+		<property name="orgTel"/> 
+		<property name="complainUrl"/> 
+		<property name="complainEmail"/> 
+		<property name="complainFaxes"/> 
+		<property name="complainTel"/> 
+		<property name="logoImage"/> 
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+		<!--金融产品-->
+		<set name="products" table="credit_bank_product" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="creatorId"/>
+			<one-to-many class="com.yuanluesoft.credit.bank.financialproducts.pojo.Product"/>
+		</set>
+	</class>
+	
+	<!--金融产品-->
+	<class name="com.yuanluesoft.credit.bank.financialproducts.pojo.Product" table="credit_bank_product">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> 
+		<property name="typeId"/> 
+		<property name="type"/> 
+		<property name="introduction"/> 
+		<property name="forWho"/> 
+		<property name="condition"/> 
+		<property name="material"/> 
+		<property name="maxMoney"/> 
+		<property name="how"/> 
+		<property name="linkMan"/> 
+		<property name="email"/> 
+		<property name="faxes"/> 
+		<property name="tel"/> 
+		<property name="issueTime"/> 
+		<property name="logoImage"/> 
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+	</class>
+	
+	<!--贷款信息-->
+	<class name="com.yuanluesoft.credit.bank.loan.pojo.BankLoan" table="credit_bank_loan">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="enterpriseName"/> 
+		<property name="productId"/> 
+		<property name="productName"/> 
+		<property name="mony"/> 
+		<property name="time"/> 
+		<property name="issueTime"/>
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+		
+	</class>
+	
+	<!--借款申请信息-->
+	<class name="com.yuanluesoft.credit.bank.apply.pojo.Apply" table="credit_bank_apply">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="creatorId"/> <!--  --> 
+		<property name="creator"/> <!--  --> 
+		<property name="created"/> <!--  --> 
+		<property name="bankId"/> <!-- 拟申请银行ID -->
+		<property name="bankName"/><!-- 拟申请银行名称 --> 
+		<property name="applyPerson"/> <!--申请人  --> 
+		<property name="nature"/> <!-- 企业性质 --> 
+		<property name="industry"/> <!-- 行业类别 --> 
+		<property name="level"/><!-- 信用等级 --> 
+		<property name="companyAddr"/><!-- 公司地址-->
+		<property name="code"/><!-- 三证合一信用代码 -->
+		<property name="licenseNo"/><!-- 营业执照号 -->
+		<property name="orgCode"/><!-- 组织机构代码 -->
+		<property name="legalPerson"/><!-- 法定代表人 -->
+		<property name="phone"/><!-- 联系电话 -->
+		<property name="idCard"/><!-- 身份证号码 -->
+		<property name="totalMoney"/><!-- 总资产（万元） -->
+		<property name="cleanMoney"/><!-- 净资产(万元) -->
+		<property name="totalOwe"/><!-- 总负债(万元) -->
+		<property name="nowOwe"/><!-- 目前结欠贷款(万元) -->
+		<property name="saleMoney"/><!-- 销售收入（万元） -->
+		<property name="scale"/><!--经营规模（万元） -->
+		<property name="applyMoney"/><!-- 申请金额 -->
+		<property name="borrowNature"/><!-- 借款性质 -->
+		<property name="borrowType"/><!-- 贷款方式 -->
+		<property name="applyPurpose"/><!-- 借款用途 -->
+		<property name="applyStart"/><!-- 借款期限自 -->
+		<property name="applyEnd"/><!-- 借款期限至 -->
+		<property name="payment"/><!-- 还款来源 -->
+		<property name="payMethod"/><!-- 还款方式 -->
+		<property name="guarantorf"/><!-- 保证人名称1 -->
+		<property name="guarantorLevelf"/><!-- 保证人信用等级1 -->
+		<property name="guarantors"/><!-- 保证人名称2 -->
+		<property name="guarantorLevels"/><!-- 保证人信用等级2 -->
+		<property name="guarantort"/><!-- 保证人名称3 -->
+		<property name="guarantorLevelt"/><!-- 保证人信用等级3 -->
+		<property name="guarantorfo"/><!-- 保证人名称4 -->
+		<property name="guarantorLevelfo"/><!-- 保证人信用等级4 -->
+		<property name="mortgager"/><!-- 抵押人（出质人）名称 -->
+		<property name="collateral"/><!-- 抵押物（质物）名称 -->
+		<property name="collateralAddr"/><!-- 抵押物（质物）具体地理位置 -->
+		<property name="collateralDetail"/><!-- 抵押物（质物）具体情况 -->
+		<property name="applyReason"/><!-- 申    请    理    由 -->
+		<property name="status"/><!-- 状态 -->
+		<property name="opinions"/><!-- 办理意见 -->
+		
+	</class>
+	
+	
+</hibernate-mapping>

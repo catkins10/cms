@@ -1,0 +1,1429 @@
+package com.yuanluesoft.cms.templatemanage.service.spring;
+
+import com.yuanluesoft.cms.pagebuilder.PageDefineService;
+import com.yuanluesoft.cms.pagebuilder.StaticPageBuilder;
+import com.yuanluesoft.cms.pagebuilder.model.page.SiteApplication;
+import com.yuanluesoft.cms.pagebuilder.model.page.SitePage;
+import com.yuanluesoft.cms.pagebuilder.model.page.SiteSubPage;
+import com.yuanluesoft.cms.pagebuilder.model.page.SiteTemplateView;
+import com.yuanluesoft.cms.sitemanage.pojo.SiteTemplateTheme;
+import com.yuanluesoft.cms.sitemanage.service.SiteTemplateThemeService;
+import com.yuanluesoft.cms.templatemanage.model.SynchSetDafaultTemplate;
+import com.yuanluesoft.cms.templatemanage.pojo.CssFile;
+import com.yuanluesoft.cms.templatemanage.pojo.Template;
+import com.yuanluesoft.cms.templatemanage.pojo.TemplateTheme;
+import com.yuanluesoft.cms.templatemanage.service.TemplateService;
+import com.yuanluesoft.exchange.client.ExchangeClient;
+import com.yuanluesoft.jeaf.attachmentmanage.model.Attachment;
+import com.yuanluesoft.jeaf.attachmentmanage.service.AttachmentService;
+import com.yuanluesoft.jeaf.business.model.BusinessObject;
+import com.yuanluesoft.jeaf.business.service.BusinessDefineService;
+import com.yuanluesoft.jeaf.business.service.BusinessService;
+import com.yuanluesoft.jeaf.business.service.spring.BusinessServiceImpl;
+import com.yuanluesoft.jeaf.cache.Cache;
+import com.yuanluesoft.jeaf.cache.exception.CacheException;
+import com.yuanluesoft.jeaf.database.DatabaseService;
+import com.yuanluesoft.jeaf.database.Record;
+import com.yuanluesoft.jeaf.exception.ServiceException;
+import com.yuanluesoft.jeaf.filetransfer.services.FileDownloadService;
+import com.yuanluesoft.jeaf.htmlparser.HTMLParser;
+import com.yuanluesoft.jeaf.logger.Logger;
+import com.yuanluesoft.jeaf.sessionmanage.model.SessionInfo;
+import com.yuanluesoft.jeaf.util.DateTimeUtils;
+import com.yuanluesoft.jeaf.util.Environment;
+import com.yuanluesoft.jeaf.util.FileUtils;
+import com.yuanluesoft.jeaf.util.ListUtils;
+import com.yuanluesoft.jeaf.util.StringUtils;
+import com.yuanluesoft.jeaf.util.UUIDLongGenerator;
+import com.yuanluesoft.jeaf.util.ZipUtils;
+import com.yuanluesoft.jeaf.view.model.View;
+import com.yuanluesoft.jeaf.view.service.ViewDefineService;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.html.HTMLDivElement;
+import org.w3c.dom.html.HTMLDocument;
+import org.w3c.dom.html.HTMLElement;
+import org.w3c.dom.html.HTMLHeadElement;
+import org.w3c.dom.html.HTMLInputElement;
+import org.w3c.dom.html.HTMLLinkElement;
+import org.w3c.dom.html.HTMLScriptElement;
+import org.w3c.dom.html.HTMLTitleElement;
+
+public class TemplateServiceImpl extends BusinessServiceImpl
+  implements TemplateService
+{
+  private Cache cache;
+  protected final String TEMPPLATE_FILE_NAME = "template.html";
+  private String templatePath = Environment.getWebAppPath() + "cms/templates/";
+  private String templateUrl = "/cms/templates/";
+  private FileDownloadService fileDownloadService;
+  private HTMLParser htmlParser;
+  private StaticPageBuilder staticPageBuilder;
+  private ExchangeClient exchangeClient;
+  private AttachmentService templateAttachmentService;
+  private SiteTemplateThemeService siteTemplateThemeService;
+  private PageDefineService pageDefineService;
+
+  public Record save(Record record)
+    throws ServiceException
+  {
+    if (!(record instanceof Template)) {
+      return super.save(record);
+    }
+    Template template = (Template)record;
+    List congenerTemplates = listCongenerTemplates(template, "" + template.getThemeId());
+    if ((congenerTemplates == null) || (congenerTemplates.isEmpty())) {
+      template.setIsSelected('1');
+    }
+    try
+    {
+      getCache().clear();
+    }
+    catch (CacheException localCacheException)
+    {
+    }
+    super.save(record);
+
+    if (template.getIsSelected() == '1') {
+      rebuildStaticPageForFirstTemplate(template);
+    }
+
+    if (this.exchangeClient != null) {
+      this.exchangeClient.synchUpdate(record, null, 2000);
+    }
+    return template;
+  }
+
+  private void rebuildStaticPageForFirstTemplate(Template template)
+    throws ServiceException
+  {
+    if (this.siteTemplateThemeService == null) {
+      return;
+    }
+    SiteTemplateTheme theme = this.siteTemplateThemeService.getSiteTemplateTheme(template.getThemeId());
+    if ((theme == null) || (theme.getType() != 0)) {
+      return;
+    }
+    if (theme.getIsDefault() == 1) {
+      rebuildStaticPage(template, null);
+      return;
+    }
+    if (theme.getTemporaryOpening() == 1)
+    {
+      SitePage sitePage = this.pageDefineService.getSitePage(template.getApplicationName(), template.getPageName());
+      if ((sitePage == null) || (sitePage.isRealtimeStaticPage())) {
+        rebuildStaticPage(template, null);
+        return;
+      }
+    }
+
+    String hql = "select SiteTemplateTheme.id from SiteTemplateTheme SiteTemplateTheme where SiteTemplateTheme.type=0 and SiteTemplateTheme.siteId=" + 
+      theme.getSiteId() + 
+      " and SiteTemplateTheme.priority>" + theme.getPriority();
+    List themeIds = getDatabaseService().findRecordsByHql(hql);
+    List congenerTemplates = listCongenerTemplates(template, ListUtils.join(themeIds, ","));
+    if (congenerTemplates == null)
+      rebuildStaticPage(template, null);
+  }
+
+  public Record update(Record record)
+    throws ServiceException
+  {
+    if (!(record instanceof Template)) {
+      return super.update(record);
+    }
+    Template template = (Template)record;
+    try
+    {
+      getCache().clear();
+    }
+    catch (CacheException localCacheException)
+    {
+    }
+
+    super.update(record);
+    if (template.getIsSelected() == '1')
+    {
+      rebuildStaticPage(template, template);
+    }
+
+    if (this.exchangeClient != null) {
+      this.exchangeClient.synchUpdate(record, null, 2000);
+    }
+    return template;
+  }
+
+  public void delete(Record record)
+    throws ServiceException
+  {
+    super.delete(record);
+    if (!(record instanceof Template)) {
+      return;
+    }
+    Template template = (Template)record;
+
+    //FileUtils.deleteDirectory(getTemplateDirectory(template.getId(), false));
+    try
+    {
+      getCache().clear();
+    }
+    catch (CacheException localCacheException)
+    {
+    }
+    if (template.getIsSelected() == '1')
+    {
+      List congenerTemplates = listCongenerTemplates(template,"" + template.getThemeId());
+      if ((congenerTemplates != null) && (!congenerTemplates.isEmpty())) {
+        Template congenerTemplate = (Template)congenerTemplates.get(0);
+        congenerTemplate.setIsSelected('1');
+        getDatabaseService().updateRecord(congenerTemplate);
+      }
+
+      rebuildStaticPage(template, template);
+    }
+
+    if (this.exchangeClient != null)
+      this.exchangeClient.synchDelete(record, null, 2000);
+  }
+
+  public void setDefaultTemplate(long templateId)
+    throws ServiceException
+  {
+    Template currentTemplate = (Template)getDatabaseService().findRecordById(Template.class.getName(), templateId);
+    List currentDefaultTemplates = new ArrayList();
+    List congenerTemplates = listCongenerTemplates(currentTemplate, "" + currentTemplate.getThemeId());
+    if ((congenerTemplates != null) && (!congenerTemplates.isEmpty())) {
+      for (Iterator iterator = congenerTemplates.iterator(); iterator.hasNext(); ) {
+        Template template = (Template)iterator.next();
+        if (template.getId() == templateId) {
+          continue;
+        }
+        if (template.getIsSelected() == '1') {
+          currentDefaultTemplates.add(template);
+          template.setIsSelected('0');
+          getDatabaseService().updateRecord(template);
+        }
+      }
+    }
+    currentTemplate.setIsSelected('1');
+    getDatabaseService().updateRecord(currentTemplate);
+    try
+    {
+      getCache().clear();
+    }
+    catch (CacheException localCacheException)
+    {
+    }
+
+    if (currentDefaultTemplates.isEmpty()) {
+      rebuildStaticPage(currentTemplate, null);
+    }
+    else {
+      for (Iterator iterator = currentDefaultTemplates.iterator(); iterator.hasNext(); ) {
+        Template currentDefaultTemplate = (Template)iterator.next();
+        rebuildStaticPage(currentTemplate, currentDefaultTemplate);
+      }
+
+    }
+
+    if (this.exchangeClient != null)
+      this.exchangeClient.synchUpdate(new SynchSetDafaultTemplate(templateId), null, 2000);
+  }
+
+  public void synchUpdate(Object object, String senderName)
+    throws ServiceException
+  {
+    if ((object instanceof SynchSetDafaultTemplate)) {
+      SynchSetDafaultTemplate synchSetDafaultTemplate = (SynchSetDafaultTemplate)object;
+      setDefaultTemplate(synchSetDafaultTemplate.getTemplateId());
+      return;
+    }
+    super.synchUpdate(object, senderName);
+  }
+
+  public void uploadTemplate(long templateId)
+    throws ServiceException
+  {
+    List templateFiles = this.templateAttachmentService.list("cms/templatemanage", "templateUpload", templateId, 1, null);
+    if ((templateFiles == null) || (templateFiles.isEmpty())) {
+      return;
+    }
+    String temporaryDirectory = FileUtils.createDirectory(Environment.getWebinfPath() + "temp/" + UUIDLongGenerator.generateId());
+    try
+    {
+      ZipUtils.unZip(((Attachment)templateFiles.get(0)).getFilePath(), temporaryDirectory);
+
+      File directory = new File(temporaryDirectory);
+      File[] files = directory.listFiles(new FilenameFilter() {
+        public boolean accept(File dir, String name) {
+          name = name.toLowerCase();
+          return (name.endsWith(".html")) || (name.endsWith(".htm"));
+        }
+      });
+      String templateFileName = null;
+      if ((files != null) && (files.length > 0)) {
+        for (int i = 0; i < files.length; i++) {
+          String name = files[i].getName().toLowerCase();
+          if ((name.indexOf("tmplate") != -1) || (name.indexOf("模板") != -1)) {
+            templateFileName = files[i].getPath();
+            break;
+          }
+        }
+        if (templateFileName == null) {
+          templateFileName = files[0].getPath();
+        }
+      }
+      if (templateFileName != null) {
+        String templateDirectory = getTemplateDirectory(templateId, true);
+
+        FileUtils.deleteFilesInDirectory(templateDirectory);
+
+        saveHtmlPageAs(templateFileName, templateDirectory + "template.html", temporaryDirectory, templateDirectory, this.templateUrl + templateId + "/");
+      }
+    }
+    catch (Exception e) {
+      Logger.exception(e);
+      throw new ServiceException();
+    }
+    finally
+    {
+      FileUtils.deleteDirectory(temporaryDirectory);
+    }
+  }
+
+  public void saveTemplateHTML(long templateId, String html, HttpServletRequest request)
+    throws ServiceException
+  {
+    OutputStreamWriter fileWriter = null;
+    FileOutputStream out = null;
+    try
+    {
+      html = StringUtils.removeServerPath(html, request);
+      HTMLDocument templateDocument = this.htmlParser.parseHTMLString(html);
+
+      this.htmlParser.appendDisableErrorAlertScript(templateDocument);
+      String templateFilePath = getTemplateDirectory(templateId, true) + "template.html";
+      if (FileUtils.isExists(templateFilePath))
+      {
+        FileUtils.copyFile(templateFilePath, FileUtils.createDirectory(new StringBuffer(String.valueOf(getTemplateDirectory(templateId, false))).append("backup/").toString()) + "template.html", true, false);
+      }
+      out = new FileOutputStream(templateFilePath);
+      out.write(new byte[] { -17, -69, -65 });
+      fileWriter = new OutputStreamWriter(out, "utf-8");
+      this.htmlParser.writeHTMLDocument(templateDocument, fileWriter, "utf-8");
+    }
+    catch (Exception e) {
+      Logger.exception(e);
+      throw new ServiceException(e.getMessage());
+    }
+    finally {
+      try {
+        fileWriter.close();
+      }
+      catch (Exception localException1)
+      {
+      }
+      try {
+        out.close();
+      }
+      catch (Exception localException2)
+      {
+      }
+    }
+  }
+
+  public void restoreTemplateHTML(long templateId)
+    throws ServiceException
+  {
+    String backupTemplateFilePath = getTemplateDirectory(templateId, false) + "backup/" + "template.html";
+    if (!FileUtils.isExists(backupTemplateFilePath)) {
+      return;
+    }
+
+    FileUtils.copyFile(getTemplateDirectory(templateId, false) + "template.html", backupTemplateFilePath + ".1", true, false);
+
+    FileUtils.renameFile(backupTemplateFilePath, getTemplateDirectory(templateId, false) + "template.html", true, false);
+    FileUtils.renameFile(backupTemplateFilePath + ".1", backupTemplateFilePath, true, false);
+  }
+
+  public void copyTemplate(long toTemplateId, long fromTemplateId)
+    throws ServiceException
+  {
+    String fromTemplateDirectory = getTemplateDirectory(fromTemplateId, false);
+    if (!FileUtils.isExists(fromTemplateDirectory + "template.html")) {
+      return;
+    }
+
+    String toTemplateDirectory = getTemplateDirectory(toTemplateId, true);
+
+    FileUtils.deleteFilesInDirectory(toTemplateDirectory);
+
+    File[] files = new File(fromTemplateDirectory).listFiles();
+    for (int i = 0; i < files.length; i++) {
+      if (files[i].getName().equals("backup")) {
+        continue;
+      }
+      if (files[i].getName().equals("css")) {
+        String cssPath = FileUtils.createDirectory(toTemplateDirectory + files[i].getName());
+        File[] cssFiles = files[i].listFiles();
+        for (int j = 0; j < cssFiles.length; j++)
+        {
+          String css = FileUtils.readStringFromFile(cssFiles[j].getAbsolutePath(), "UTF-8").replaceAll("/" + fromTemplateId + "/", "/" + toTemplateId + "/");
+
+          FileUtils.saveStringToFile(cssPath + cssFiles[j].getName(), css, "utf-8", true);
+        }
+      }
+      else if (files[i].isDirectory()) {
+        FileUtils.copyDirectory(files[i].getAbsolutePath(), FileUtils.createDirectory(toTemplateDirectory + files[i].getName()), true);
+      }
+    }
+
+    String templateHtml = FileUtils.readStringFromFile(fromTemplateDirectory + "template.html", "UTF-8").replaceAll("/" + fromTemplateId + "/", "/" + toTemplateId + "/");
+
+    FileUtils.saveStringToFile(toTemplateDirectory + "template.html", templateHtml, "utf-8", true);
+  }
+
+  public void loadNormalTemplate(String applicationName, String pageName, long templateId)
+    throws ServiceException
+  {
+    Template template = getTemplate(templateId);
+
+    TemplateTheme theme = (TemplateTheme)getDatabaseService().findRecordById(TemplateTheme.class.getName(), template.getThemeId());
+    Template parentTemplate = getParentTemplate(template, theme);
+    if ((parentTemplate != null) && (parentTemplate.getId() != template.getId())) {
+      copyTemplate(templateId, parentTemplate.getId());
+      return;
+    }
+
+    String normalTemplatePath = Environment.getWebAppPath() + applicationName + "/template/" + pageName;
+    String templateFileName = normalTemplatePath + "/template.html";
+    if (!FileUtils.isExists(templateFileName)) {
+      return;
+    }
+    String templateDirectory = getTemplateDirectory(templateId, true);
+
+    FileUtils.deleteFilesInDirectory(templateDirectory);
+
+    File[] files = new File(normalTemplatePath).listFiles();
+    for (int i = 0; i < files.length; i++) {
+      if (files[i].isDirectory()) {
+        FileUtils.copyDirectory(files[i].getAbsolutePath(), FileUtils.createDirectory(templateDirectory + files[i].getName()), true);
+      }
+    }
+
+    String templateHtml = FileUtils.readStringFromFile(templateFileName, "UTF-8")
+      .replaceAll("\\x7bCONTEXTPATH\\x7d/" + applicationName + "/template/" + pageName.toLowerCase(), this.templateUrl + templateId)
+      .replaceAll("\\x7bCONTEXTPATH\\x7d", Environment.getContextPath());
+
+    HTMLDocument htmlDocument = this.htmlParser.parseHTMLString(templateHtml);
+
+    NodeList links = htmlDocument.getElementsByTagName("link");
+    for (int i = links == null ? -1 : links.getLength() - 1; i >= 0; i--) {
+      HTMLLinkElement linkElement = (HTMLLinkElement)links.item(i);
+      if ((!"text/css".equalsIgnoreCase(linkElement.getType())) || 
+        (linkElement.getHref() == null) || 
+        (linkElement.getHref().indexOf("" + templateId) != -1))
+      {
+        continue;
+      }
+      String cssText = loadCssText(linkElement.getHref());
+      String cssFileName = linkElement.getHref().substring(linkElement.getHref().lastIndexOf("/") + 1);
+
+      FileUtils.saveStringToFile(FileUtils.createDirectory(new StringBuffer(String.valueOf(templateDirectory)).append("css").toString()) + cssFileName, cssText, "utf-8", true);
+
+      linkElement.setHref(this.templateUrl + templateId + "/css/" + cssFileName);
+    }
+    OutputStreamWriter fileWriter = null;
+    FileOutputStream out = null;
+    try {
+      out = new FileOutputStream(templateDirectory + "template.html");
+      out.write(new byte[] { -17, -69, -65 });
+      fileWriter = new OutputStreamWriter(out, "utf-8");
+      this.htmlParser.writeHTMLDocument(htmlDocument, fileWriter, "utf-8");
+    }
+    catch (Exception e) {
+      Logger.exception(e);
+      throw new ServiceException(e.getMessage());
+    }
+    finally {
+      try {
+        fileWriter.close();
+      }
+      catch (Exception localException1)
+      {
+      }
+      try {
+        out.close();
+      }
+      catch (Exception localException2)
+      {
+      }
+    }
+  }
+
+  public CssFile loadCssFile(String cssUrl)
+    throws ServiceException
+  {
+    if (cssUrl.indexOf(this.templateUrl) == -1) {
+      return null;
+    }
+    return (CssFile)getDatabaseService().findRecordByHql("from CssFile CssFile where CssFile.cssUrl='" + cssUrl + "'");
+  }
+
+  public String loadCssText(String cssUrl)
+    throws ServiceException
+  {
+    if ((cssUrl == null) || (cssUrl.isEmpty())) {
+      return null;
+    }
+    int index = cssUrl.indexOf(this.templateUrl);
+    if (index != -1)
+    {
+      return FileUtils.readStringFromFile(this.templatePath + cssUrl.substring(index + this.templateUrl.length()), "UTF-8");
+    }
+
+    String cssText = FileUtils.readStringFromFile(Environment.getWebAppPath() + cssUrl.substring(Environment.getContextPath().length()), "UTF-8");
+
+    String cssPath = cssUrl.substring(0, cssUrl.lastIndexOf('/') + 1);
+    cssText = cssText.replaceAll("url\\x28", "url(" + cssPath);
+    return cssText;
+  }
+
+  public void saveCssFile(long id, String cssName, String cssUrl, String fromCssFile, long siteId, String cssText)
+    throws ServiceException
+  {
+    CssFile cssFile = new CssFile();
+    cssFile.setId(id);
+    cssFile.setCssName(cssName);
+    cssFile.setCssUrl(cssUrl);
+    cssFile.setFromCssFile(fromCssFile);
+    cssFile.setSiteId(siteId);
+
+    String cssFileName = cssFile.getFromCssFile().substring(cssFile.getFromCssFile().lastIndexOf('/') + 1);
+    if (cssFile.getFromCssFile().equals(cssFile.getCssUrl())) {
+      cssFile.setCssUrl(this.templateUrl + cssFile.getId() + "/" + cssFileName);
+      getDatabaseService().saveRecord(cssFile);
+    }
+    else {
+      getDatabaseService().updateRecord(cssFile);
+    }
+
+    FileUtils.saveStringToFile(FileUtils.createDirectory(new StringBuffer(String.valueOf(this.templatePath)).append(cssFile.getId()).append("/").toString()) + cssFileName, cssText, "utf-8", true);
+    if (this.exchangeClient != null)
+    {
+      this.exchangeClient.synchUpdate(cssFile, null, 2000);
+    }
+  }
+
+  public void deleteCssFile(long cssFileId)
+    throws ServiceException
+  {
+    CssFile cssFile = (CssFile)getDatabaseService().findRecordById(CssFile.class.getName(), cssFileId);
+    if (cssFile == null) {
+      return;
+    }
+    getDatabaseService().deleteRecord(cssFile);
+
+    FileUtils.deleteDirectory(this.templatePath + cssFile.getId());
+    if (this.exchangeClient != null)
+    {
+      this.exchangeClient.synchDelete(cssFile, null, 2000);
+    }
+  }
+
+  public List listInheritCssFiles(String fromCssFile, long siteId)
+    throws ServiceException
+  {
+    fromCssFile = Environment.getContextPath() + fromCssFile;
+
+    List cssFiles = getDatabaseService().findRecordsByHql("from CssFile CssFile where CssFile.fromCssFile='" + fromCssFile + "' order by CssFile.cssName");
+    if (cssFiles == null) {
+      cssFiles = new ArrayList();
+    }
+
+    CssFile cssFile = new CssFile();
+    cssFile.setCssName("默认CSS");
+    cssFile.setCssUrl(fromCssFile);
+    cssFiles.add(0, cssFile);
+    return cssFiles;
+  }
+
+  public Template getTemplate(long templateId)
+    throws ServiceException
+  {
+    return (Template)getDatabaseService().findRecordById(Template.class.getName(), templateId);
+  }
+
+  public HTMLDocument getTemplateHTMLDocument(String applicationName, String pageName, long siteId, long themeId, int themeType, int pageWidth, boolean flashSupport, boolean temporaryOpeningFirst, HttpServletRequest request)
+    throws ServiceException
+  {
+    HTMLDocument templateDocument = null;
+    String cacheKey = applicationName + "/" + pageName + "/" + siteId + "/" + themeId + "/" + themeType + "/" + pageWidth + "/" + (flashSupport ? 1 : 0) + "/" + (temporaryOpeningFirst ? 1 : 0);
+    try {
+      templateDocument = (HTMLDocument)getCache().get(cacheKey);
+    }
+    catch (CacheException e) {
+      Logger.exception(e);
+    }
+    if (templateDocument != null) {
+      return (HTMLDocument)templateDocument.cloneNode(true);
+    }
+
+    Template template = retrieveTemplate(Template.class.getName(), null, null, null, false, true, applicationName, pageName, siteId, themeId, themeType, false, pageWidth, flashSupport, temporaryOpeningFirst);
+    if (template == null) {
+      templateDocument = getNormalTemplateHTMLDocument(applicationName, pageName);
+    }
+    else {
+      templateDocument = getTemplateHTMLDocument(template.getId(), siteId, false, request);
+    }
+    if (templateDocument == null)
+      return null;
+    try
+    {
+      getCache().put(cacheKey, templateDocument);
+    }
+    catch (CacheException e) {
+      Logger.exception(e);
+    }
+    return (HTMLDocument)templateDocument.cloneNode(true);
+  }
+
+  protected Template retrieveTemplate(String templateClassName, String extraHqlJoin, String extraHqlWhere, String extraHqlOrderBy, boolean currentSiteOnly, boolean selectedOnly, String applicationName, String pageName, long siteId, long themeId, int themeType, boolean themeTypeOnly, int pageWidth, boolean flashSupport, boolean temporaryOpeningFirst)
+    throws ServiceException
+  {
+    String className = templateClassName.substring(templateClassName.lastIndexOf('.') + 1);
+    if (themeId > 0L)
+    {
+      String hqlFrom = className + " " + className;
+      if (extraHqlJoin != null) {
+        hqlFrom = hqlFrom + extraHqlJoin;
+      }
+      if (!currentSiteOnly) {
+        hqlFrom = hqlFrom + ", WebDirectorySubjection WebDirectorySubjection";
+      }
+
+      String hqlWhere = className + ".themeId=" + themeId + (
+        applicationName == null ? "" : new StringBuffer(" and ").append(className).append(".applicationName='").append(applicationName).append("'").toString()) + 
+        " and " + className + ".pageName='" + pageName + "'" + (
+        selectedOnly ? " and " + className + ".isSelected='1'" : "");
+      if (extraHqlWhere != null) {
+        hqlWhere = hqlWhere + " and (" + extraHqlWhere + ")";
+      }
+      if (currentSiteOnly) {
+        hqlWhere = hqlWhere + " and " + className + ".siteId=" + siteId;
+      }
+      else {
+        hqlWhere = hqlWhere + " and " + className + ".siteId=WebDirectorySubjection.parentDirectoryId" + 
+          " and WebDirectorySubjection.directoryId=" + siteId;
+      }
+
+      String hqlOrderBy = extraHqlOrderBy;
+      if (!currentSiteOnly) {
+        hqlOrderBy = (hqlOrderBy == null ? "" : new StringBuffer(String.valueOf(hqlOrderBy)).append(", ").toString()) + "WebDirectorySubjection.id";
+      }
+      if (!selectedOnly) {
+        hqlOrderBy = (hqlOrderBy == null ? "" : new StringBuffer(String.valueOf(hqlOrderBy)).append(", ").toString()) + className + ".isSelected DESC";
+      }
+
+      String hql = "select " + className + " from " + hqlFrom + " where " + hqlWhere + (hqlOrderBy == null ? "" : new StringBuffer(" order by ").append(hqlOrderBy).toString());
+      Template template = (Template)getDatabaseService().findRecordByHql(hql);
+      if (template != null) {
+        return template;
+      }
+    }
+
+    Number themeSiteId = this.siteTemplateThemeService.getThemeSiteId(siteId);
+    if (themeSiteId == null) {
+      return null;
+    }
+
+    String hqlFrom = className + " " + className + ", SiteTemplateTheme SiteTemplateTheme";
+    if (extraHqlJoin != null) {
+      hqlFrom = hqlFrom + extraHqlJoin;
+    }
+    if (!currentSiteOnly) {
+      hqlFrom = hqlFrom + ", WebDirectorySubjection WebDirectorySubjection";
+    }
+
+    String hqlWhere = className + ".themeId=SiteTemplateTheme.id" + 
+      " and SiteTemplateTheme.siteId=" + themeSiteId + 
+      " and SiteTemplateTheme.type" + (themeTypeOnly ? "=" : "<=") + themeType + (
+      applicationName == null ? "" : new StringBuffer(" and ").append(className).append(".applicationName='").append(applicationName).append("'").toString()) + 
+      " and " + className + ".pageName='" + pageName + "'" + (
+      selectedOnly ? " and " + className + ".isSelected='1'" : "");
+    if (extraHqlWhere != null) {
+      hqlWhere = hqlWhere + " and (" + extraHqlWhere + ")";
+    }
+    if (currentSiteOnly) {
+      hqlWhere = hqlWhere + " and " + className + ".siteId=" + siteId;
+    }
+    else {
+      hqlWhere = hqlWhere + " and " + className + ".siteId=WebDirectorySubjection.parentDirectoryId" + 
+        " and WebDirectorySubjection.directoryId=" + siteId;
+    }
+
+    String hqlOrderBy = "SiteTemplateTheme.type DESC";
+    if (extraHqlOrderBy != null) {
+      hqlOrderBy = hqlOrderBy + "," + extraHqlOrderBy;
+    }
+    if (!currentSiteOnly) {
+      hqlOrderBy = hqlOrderBy + ",WebDirectorySubjection.id";
+    }
+    hqlOrderBy = hqlOrderBy + (temporaryOpeningFirst ? ",SiteTemplateTheme.temporaryOpening DESC" : "") + 
+      ",SiteTemplateTheme.pageWidth" + 
+      ",SiteTemplateTheme.flashSupport" + (flashSupport ? " DESC" : "") + 
+      ",SiteTemplateTheme.priority DESC" + (
+      selectedOnly ? "" : new StringBuffer(",").append(className).append(".isSelected DESC").toString());
+
+    String hql = "select " + className + ", SiteTemplateTheme.pageWidth, SiteTemplateTheme.type from " + hqlFrom + " where " + hqlWhere + " order by " + hqlOrderBy;
+    List templates = getDatabaseService().findRecordsByHql(hql);
+    if ((templates == null) || (templates.isEmpty())) {
+      return null;
+    }
+
+    if (pageWidth < 0) {
+      pageWidth = 0;
+    }
+    Template computerTemplate = null;
+    Template template = null;
+    int templateWidth = -1;
+    for (Iterator iterator = templates.iterator(); iterator.hasNext(); ) {
+      Object[] values = (Object[])iterator.next();
+      int width = ((Number)values[1]).intValue();
+      if ((themeType == 2) || (width == pageWidth)) {
+        return (Template)values[0];
+      }
+      if ((computerTemplate == null) && (((Number)values[2]).intValue() == 0)) {
+        computerTemplate = (Template)values[0];
+      }
+      if (pageWidth == 0) {
+        continue;
+      }
+      if ((width > pageWidth) && ((templateWidth == -1) || (width < templateWidth))) {
+        template = (Template)values[0];
+        templateWidth = width;
+      }
+      else if ((width < pageWidth) && (width >= pageWidth * 0.7D) && ((templateWidth > pageWidth) || (width > templateWidth))) {
+        template = (Template)values[0];
+        templateWidth = width;
+      }
+    }
+    if (template != null) {
+      return template;
+    }
+    if (computerTemplate != null) {
+      return computerTemplate;
+    }
+    Object[] values = (Object[])templates.iterator().next();
+    return (Template)values[0];
+  }
+
+  protected Template getParentTemplate(Template template, TemplateTheme theme)
+    throws ServiceException
+  {
+    if ((template == null) || (template.getSiteId() == 0L)) {
+      return null;
+    }
+
+    String hql = "select WebDirectory.parentDirectoryId from WebDirectory WebDirectory where WebDirectory.id=" + template.getSiteId();
+    long parentDirectoryId = ((Number)getDatabaseService().findRecordByHql(hql)).longValue();
+    return retrieveTemplate(template.getClass().getName(), null, null, null, false, true, template.getApplicationName(), template.getPageName(), parentDirectoryId, template.getThemeId(), theme.getType(), false, theme.getPageWidth(), theme.getFlashSupport() == 1, false);
+  }
+
+  public HTMLDocument getNormalTemplateHTMLDocument(String applicationName, String pageName)
+    throws ServiceException
+  {
+    String templateFileName = Environment.getWebAppPath() + applicationName + "/template/" + pageName.toLowerCase() + "/template.html";
+    if (!FileUtils.isExists(templateFileName)) {
+      return null;
+    }
+    String templateHtml = FileUtils.readStringFromFile(templateFileName, "UTF-8").replaceAll("\\x7bCONTEXTPATH\\x7d", Environment.getContextPath());
+    return getHtmlParser().parseHTMLString(templateHtml);
+  }
+
+  public HTMLDocument getTemplateHTMLDocumentByTemplateName(String applicationName, String pageName, String templateName, long siteId, long themeId, int themeType, int pageWidth, boolean flashSupport, boolean temporaryOpeningFirst, HttpServletRequest request)
+    throws ServiceException
+  {
+    String extraHqlWhere = "Template.templateName='" + templateName + "'";
+    Template template = retrieveTemplate(Template.class.getName(), null, extraHqlWhere, null, false, false, applicationName, pageName, siteId, themeId, themeType, false, pageWidth, flashSupport, temporaryOpeningFirst);
+    if (template == null) {
+      return null;
+    }
+    return (HTMLDocument)getTemplateHTMLDocument(template.getId(), siteId, false, request).cloneNode(true);
+  }
+
+  public List listSubTemplates(long siteId, long themeId)
+    throws ServiceException
+  {
+    String hql = "from Template Template where Template.siteId=" + 
+      siteId + 
+      " and Template.themeId=" + themeId + 
+      " and Template.applicationName='cms/sitemanage'" + 
+      " and Template.pageName='subTemplate'" + 
+      " order by Template.templateName";
+    return getDatabaseService().findRecordsByHql(hql);
+  }
+
+  public void clearCachedTemplate()
+    throws ServiceException
+  {
+    try
+    {
+      getCache().clear();
+    }
+    catch (CacheException localCacheException)
+    {
+    }
+  }
+
+  protected List listCongenerTemplates(Template template, String themeIds)
+    throws ServiceException
+  {
+    String hql = "from Template Template where Template.themeId in (" + 
+      themeIds + ")" + 
+      " and Template.applicationName='" + template.getApplicationName() + "'" + 
+      " and Template.pageName='" + template.getPageName() + "'" + 
+      " and Template.siteId=" + template.getSiteId() + 
+      " and Template.id!=" + template.getId();
+    return getDatabaseService().findRecordsByHql(hql);
+  }
+
+  public HTMLDocument getTemplateHTMLDocument(long templateId, long siteId, boolean editMode, HttpServletRequest request)
+    throws ServiceException
+  {
+    List usedTemplateIds = new ArrayList();
+    HTMLDocument templateDocument = getTemplateHTMLDocument(templateId, siteId, editMode, new ArrayList(), usedTemplateIds, request);
+    if (templateDocument == null) {
+      return templateDocument;
+    }
+    this.htmlParser.removeMeta(templateDocument, "cms.templateIds");
+    this.htmlParser.appendMeta(templateDocument, "cms.templateIds", ListUtils.join(usedTemplateIds, ","));
+    return templateDocument;
+  }
+
+  private HTMLDocument getTemplateHTMLDocument(long templateId, long siteId, boolean editMode, List circularCheck, List usedTemplateIds, HttpServletRequest request)
+    throws ServiceException
+  {
+    HTMLDocument templateDocument = null;
+    try {
+      templateDocument = getHtmlParser().parseHTMLFile(getTemplateDirectory(templateId, false) + "template.html");
+    }
+    catch (Exception e) {
+      Logger.exception(e);
+    }
+    if (templateDocument == null) {
+      return null;
+    }
+    usedTemplateIds.add("" + templateId);
+    HTMLHeadElement head = this.htmlParser.getHTMLHeader(templateDocument, true);
+
+    NodeList nodes = head.getChildNodes();
+    if ((nodes != null) && (nodes.getLength() > 0)) {
+      for (int i = nodes.getLength() - 1; i >= 0; i--) {
+        Node node = nodes.item(i);
+        String id = (node instanceof HTMLElement) ? ((HTMLElement)node).getId() : null;
+        if ((id != null) && (id.startsWith("subTemplateHeadElement_"))) {
+          head.removeChild(node);
+        }
+      }
+    }
+
+    NodeList divs = templateDocument.getElementsByTagName("div");
+    if ((divs == null) || (divs.getLength() == 0)) {
+      return templateDocument;
+    }
+    circularCheck.add(new Long(templateId));
+    for (int i = divs.getLength() - 1; i >= 0; i--) {
+      HTMLDivElement subTemplateElement = (HTMLDivElement)divs.item(i);
+      if (!"subTemplate".equals(subTemplateElement.getId()))
+      {
+        continue;
+      }
+      String title = subTemplateElement.getTitle();
+      String subTemplateName = StringUtils.getPropertyValue(title, "子模板");
+      long subTemplateId = StringUtils.getPropertyLongValue(title, "ID", -1L);
+      boolean isInheritDisabled = "true".equals(StringUtils.getPropertyValue(title, "禁止继承"));
+      if ((!editMode) && (siteId >= 0L) && (!isInheritDisabled))
+      {
+        String hql = "select Template.id from Template Template, WebDirectorySubjection WebDirectorySubjection where Template.siteId=WebDirectorySubjection.parentDirectoryId and WebDirectorySubjection.directoryId=" + 
+          siteId + 
+          " and Template.themeId=(select Template.themeId from Template Template where Template.id=" + templateId + ")" + 
+          " and Template.templateName='" + subTemplateName + "'" + 
+          " and Template.applicationName='cms/sitemanage'" + 
+          " and Template.pageName='subTemplate'" + 
+          " order by WebDirectorySubjection.id";
+        Number id = (Number)getDatabaseService().findRecordByHql(hql);
+        if (id != null) {
+          subTemplateId = id.longValue();
+        }
+      }
+
+      HTMLDocument subTemplateDocument = null;
+      if (circularCheck.indexOf(new Long(subTemplateId)) == -1) {
+        int size = circularCheck.size();
+        subTemplateDocument = getTemplateHTMLDocument(subTemplateId, siteId, editMode, circularCheck, usedTemplateIds, request);
+        circularCheck = circularCheck.subList(0, size);
+      }
+      if (subTemplateDocument == null)
+      {
+        subTemplateElement.getParentNode().removeChild(subTemplateElement);
+      }
+      else
+      {
+        HTMLHeadElement subTemplateHead = this.htmlParser.getHTMLHeader(subTemplateDocument, false);
+        NodeList subTemplateHeadChildNodes = subTemplateHead == null ? null : subTemplateHead.getChildNodes();
+        if ((subTemplateHeadChildNodes != null) && (subTemplateHeadChildNodes.getLength() > 0))
+        {
+          Node insertBefore = null;
+          nodes = head.getChildNodes();
+          if ((nodes != null) && (nodes.getLength() > 0)) {
+            for (int j = 0; j < nodes.getLength(); j++) {
+              if ((nodes.item(j) instanceof HTMLElement)) {
+                HTMLElement element = (HTMLElement)nodes.item(j);
+                if ((element instanceof HTMLTitleElement)) {
+                  insertBefore = j < nodes.getLength() - 1 ? nodes.item(j + 1) : null; break;
+                }
+
+                insertBefore = element;
+
+                break;
+              }
+            }
+          }
+
+          for (int j = 0; j < subTemplateHeadChildNodes.getLength(); j++) {
+            if (!(subTemplateHeadChildNodes.item(j) instanceof HTMLElement)) {
+              continue;
+            }
+            HTMLElement htmlElement = (HTMLElement)subTemplateHeadChildNodes.item(j);
+            String tagName = htmlElement.getTagName().toLowerCase();
+            if (",script,link,style,".indexOf("," + tagName + ",") == -1)
+            {
+              continue;
+            }
+            NodeList currentNodes = head.getElementsByTagName(tagName);
+            if ((currentNodes != null) && (currentNodes.getLength() > 0)) {
+              String attributeName = null;
+              String attributeValue = null;
+              String textContent = null;
+              if ("script".equals(tagName)) {
+                attributeName = "src";
+              }
+              else if ("link".equals(tagName)) {
+                attributeName = "href";
+              }
+              if (attributeName != null) {
+                attributeValue = htmlElement.getAttribute(attributeName);
+                if ("".equals(attributeValue)) {
+                  attributeValue = null;
+                }
+              }
+              if (attributeValue == null) {
+                textContent = this.htmlParser.getTextContent(htmlElement);
+                if ((textContent == null) || (textContent.equals(""))) {
+                  continue;
+                }
+              }
+              boolean same = false;
+              for (int k = 0; k < currentNodes.getLength(); k++) {
+                HTMLElement currentElement = (HTMLElement)currentNodes.item(k);
+                if (attributeValue != null) {
+                  if (attributeValue.equals(currentElement.getAttribute(attributeName))) {
+                    same = true;
+                    break;
+                  }
+
+                }
+                else if (textContent.equals(this.htmlParser.getTextContent(currentElement))) {
+                  same = true;
+                  break;
+                }
+              }
+
+              if (same)
+              {
+                continue;
+              }
+            }
+            htmlElement = (HTMLElement)templateDocument.importNode(htmlElement, true);
+            if (editMode) {
+              htmlElement.setId("subTemplateHeadElement_" + templateId);
+            }
+            if (insertBefore == null) {
+              head.appendChild(htmlElement);
+            }
+            else {
+              head.insertBefore(htmlElement, insertBefore);
+            }
+          }
+        }
+        NodeList subNodes = subTemplateDocument.getBody().getChildNodes();
+        if (!editMode) {
+          if ((subNodes != null) && (subNodes.getLength() > 0)) {
+            for (int j = 0; j < subNodes.getLength(); j++) {
+              subTemplateElement.getParentNode().insertBefore(subTemplateElement.getOwnerDocument().importNode(subNodes.item(j), true), subTemplateElement);
+            }
+          }
+
+          subTemplateElement.getParentNode().removeChild(subTemplateElement);
+        }
+        else {
+          this.htmlParser.setTextContent(subTemplateElement, null);
+          if ((subNodes != null) && (subNodes.getLength() > 0)) {
+            for (int j = 0; j < subNodes.getLength(); j++)
+              subTemplateElement.appendChild(subTemplateElement.getOwnerDocument().importNode(subNodes.item(j), true));
+          }
+        }
+      }
+    }
+    return templateDocument;
+  }
+
+  protected String getTemplateDirectory(long templateId, boolean mkdir)
+  {
+    if (mkdir) {
+      FileUtils.createDirectory(this.templatePath + templateId + "/");
+    }
+    return this.templatePath + templateId + "/";
+  }
+
+  public synchronized void exportTemplate(HttpServletRequest request, HttpServletResponse response, long templateId)
+    throws ServiceException
+  {
+    Template template = (Template)getDatabaseService().findRecordById(Template.class.getName(), templateId);
+    if (template == null) {
+      return;
+    }
+    String templateDirectory = getTemplateDirectory(templateId, false);
+    String exportDirectory = null;
+    String zipFileName = null;
+    try
+    {
+      exportDirectory = FileUtils.createDirectory(templateDirectory + "export");
+
+      File[] files = new File(templateDirectory).listFiles();
+      for (int i = 0; i < files.length; i++) {
+        if ((files[i].getName().equals("backup")) || (files[i].getName().equals("export"))) {
+          continue;
+        }
+        if (files[i].getName().equals("css")) {
+          String cssPath = FileUtils.createDirectory(exportDirectory + files[i].getName());
+          File[] cssFiles = files[i].listFiles();
+          for (int j = 0; j < cssFiles.length; j++)
+          {
+            String css = FileUtils.readStringFromFile(cssFiles[j].getAbsolutePath(), "UTF-8").replaceAll(this.templateUrl + templateId + "/", "../");
+
+            FileUtils.saveStringToFile(cssPath + cssFiles[j].getName(), css, "utf-8", true);
+          }
+        }
+        else if (files[i].isDirectory()) {
+          FileUtils.copyDirectory(files[i].getAbsolutePath(), FileUtils.createDirectory(exportDirectory + files[i].getName()), true);
+        }
+      }
+
+      String templateHtml = FileUtils.readStringFromFile(templateDirectory + "template.html", "UTF-8").replaceAll(this.templateUrl + templateId + "/", "");
+      templateHtml = templateHtml.replaceAll(".css\\?seq=[\\d]*\"", ".css\"");
+
+      FileUtils.saveStringToFile(exportDirectory + "template.html", templateHtml, "utf-8", true);
+
+      zipFileName = templateDirectory + template.getTemplateName() + "_" + DateTimeUtils.formatDate(DateTimeUtils.date(), null) + ".zip";
+      ZipUtils.zip(zipFileName, exportDirectory);
+
+      this.fileDownloadService.httpDownload(request, response, zipFileName, null, true, null);
+    }
+    catch (Exception e) {
+      Logger.exception(e);
+    }
+    finally {
+      if (exportDirectory != null) {
+        FileUtils.deleteFile(zipFileName);
+      }
+      if (exportDirectory != null)
+        FileUtils.deleteDirectory(exportDirectory);
+    }
+  }
+
+  public void batchCopyTemplate(long sourceTemplateId, String targetPageNames, SessionInfo sessionInfo)
+    throws ServiceException
+  {
+    if ((targetPageNames == null) || (targetPageNames.isEmpty())) {
+      return;
+    }
+    BusinessDefineService businessDefineService = (BusinessDefineService)Environment.getService("businessDefineService");
+    ViewDefineService viewDefineService = (ViewDefineService)Environment.getService("viewDefineService");
+    PageDefineService pageDefineService = (PageDefineService)Environment.getService("pageDefineService");
+    Template sourceTemplate = getTemplate(sourceTemplateId);
+
+    String[] pageNames = targetPageNames.split(",");
+    boolean subPageEmbeded = true;
+    for (int i = 0; i < pageNames.length; i++)
+      try {
+        String[] values = pageNames[i].split("__");
+        SitePage sitePage = pageDefineService.getSitePage(values[0], values[1]);
+        SiteApplication siteApplication = pageDefineService.getSiteApplication(sitePage.getApplicationName());
+        Template template;
+        if ((sitePage.getTemplateView() == null) && (siteApplication.getTemplateView() == null)) {
+          template = new Template();
+        }
+        else {
+          SiteTemplateView siteTemplateView = sitePage.getTemplateView() == null ? siteApplication.getTemplateView() : sitePage.getTemplateView();
+          View view = viewDefineService.getView(siteTemplateView.getViewApplication() == null ? siteApplication.getName() : siteTemplateView.getViewApplication(), siteTemplateView.getViewName(), sessionInfo);
+          template = (Template)Class.forName(view.getPojoClassName()).newInstance();
+        }
+
+        template.setId(UUIDLongGenerator.generateId());
+        template.setTemplateName(sitePage.getTitle());
+        template.setApplicationName(sitePage.getApplicationName());
+        template.setPageName(sitePage.getName());
+        template.setSiteId(sourceTemplate.getSiteId());
+        template.setIsSelected('0');
+        template.setLastModified(DateTimeUtils.now());
+        template.setLastModifierId(sessionInfo.getUserId());
+        template.setLastModifier(sessionInfo.getUserName());
+        template.setThemeId(sourceTemplate.getThemeId());
+
+        copyTemplate(template.getId(), sourceTemplateId);
+        SiteSubPage subPage;
+        if ((subPageEmbeded) && ((subPage = (SiteSubPage)ListUtils.findObjectByProperty(sitePage.getSubPages(), "type", "template")) != null))
+        {
+          String templateFilePath = getTemplateDirectory(template.getId(), false) + "template.html";
+          String templateHtml = FileUtils.readStringFromFile(templateFilePath, "utf-8");
+          int beginIndex = templateHtml.lastIndexOf("<!-- subPage begin -->");
+          if (beginIndex == -1) {
+            subPageEmbeded = false;
+          }
+          else {
+            beginIndex += "<!-- subPage begin -->".length();
+            int endIndex = templateHtml.indexOf("<!-- subPage end -->", beginIndex);
+            if (endIndex == -1) {
+              subPageEmbeded = false;
+            }
+            else
+            {
+              String subPagePath = Environment.getWebAppPath() + sitePage.getApplicationName() + "/template/subpage/" + subPage.getName().toLowerCase() + "/template.html";
+              String subPageHtml = FileUtils.readStringFromFile(subPagePath, "utf-8").replaceAll("\\{CONTEXTPATH\\}", Environment.getContextPath());
+              FileUtils.saveStringToFile(templateFilePath, templateHtml.substring(0, beginIndex) + subPageHtml + templateHtml.substring(endIndex), "utf-8", true);
+            }
+          }
+        }
+
+        BusinessObject businessObject = businessDefineService.getBusinessObject(template.getClass());
+        BusinessService businessService = (BusinessService)Environment.getService((businessObject.getBusinessServiceName() == null) || (businessObject.getBusinessServiceName().isEmpty()) ? "businessService" : businessObject.getBusinessServiceName());
+        businessService.save(template);
+      }
+      catch (Exception e) {
+        Logger.exception(e);
+      }
+  }
+
+  private void saveHtmlPageAs(String pageFileName, String newPageFileName, String resourceDirectory, String templateDirectory, String templateBaseURL)
+    throws ServiceException
+  {
+    HTMLDocument htmlDocument = this.htmlParser.parseHTMLFile(pageFileName);
+
+    updateHTMLElement(htmlDocument, resourceDirectory, templateDirectory, templateBaseURL, new HashMap());
+
+    this.htmlParser.saveHTMLDocumentToFile(htmlDocument, newPageFileName, "UTF-8");
+  }
+
+  private void updateHTMLElement(Node element, String resourceDirectory, String templateDirectory, String templateBaseURL, Map fileMap)
+    throws ServiceException
+  {
+    String tagName = element.getNodeName().toUpperCase();
+    if ("IMG".equals(tagName)) {
+      moveResource(element, "src", resourceDirectory, "images", templateDirectory, templateBaseURL, fileMap);
+    }
+    else if ("LINK".equals(tagName)) {
+      Node attribute = element.getAttributes().getNamedItem("type");
+      if ((attribute != null) && ("text/css".equals(attribute.getNodeValue()))) {
+        MoveResource moveResourceModel = moveResource(element, "href", resourceDirectory, "css", templateDirectory, templateBaseURL, fileMap);
+        if (moveResourceModel != null) {
+          String cssText = FileUtils.readStringFromFile(moveResourceModel.getNewResourceFileName(), "UTF-8");
+          String newCssText = updateCssText(cssText, moveResourceModel.getOldResourceFileName().substring(0, moveResourceModel.getOldResourceFileName().lastIndexOf('/') + 1), templateDirectory, templateBaseURL);
+          FileUtils.saveStringToFile(moveResourceModel.getNewResourceFileName(), newCssText == null ? cssText : newCssText, "UTF-8", true);
+        }
+        ((HTMLLinkElement)element).setCharset("UTF-8");
+      }
+    }
+    else if ("SCRIPT".equals(tagName)) {
+      HTMLScriptElement scriptElement = (HTMLScriptElement)element;
+      if (scriptElement.getSrc() != null) {
+        MoveResource moveResourceModel = moveResource(element, "src", resourceDirectory, "js", templateDirectory, templateBaseURL, fileMap);
+        if (moveResourceModel != null) {
+          String js = FileUtils.readStringFromFile(moveResourceModel.getNewResourceFileName(), "UTF-8");
+          FileUtils.saveStringToFile(moveResourceModel.getNewResourceFileName(), js, "UTF-8", true);
+        }
+        scriptElement.setCharset("UTF-8");
+      }
+    }
+    else if ("INPUT".equals(tagName)) {
+      HTMLInputElement inputElement = (HTMLInputElement)element;
+      if ((inputElement.getSrc() != null) && (inputElement.getType() != null) && (inputElement.getType().toLowerCase().equals("image"))) {
+        moveResource(element, "src", resourceDirectory, "images", templateDirectory, templateBaseURL, fileMap);
+      }
+    }
+    else if (("IFRAME".equals(tagName)) || ("FRAME".equals(tagName))) {
+      MoveResource moveResourceModel = moveResource(element, "src", resourceDirectory, "pages", templateDirectory, templateBaseURL, fileMap);
+      if (moveResourceModel != null) {
+        saveHtmlPageAs(moveResourceModel.getNewResourceFileName(), moveResourceModel.getNewResourceFileName(), moveResourceModel.getOldResourceFileName().substring(0, moveResourceModel.getOldResourceFileName().lastIndexOf('/') + 1), templateDirectory, templateBaseURL);
+      }
+    }
+    else if ("STYLE".equals(tagName))
+    {
+      Node cssTextNode = element.getFirstChild();
+      if (cssTextNode != null) {
+        String cssText = cssTextNode.getNodeValue();
+        if ((cssText = updateCssText(cssText, resourceDirectory, templateDirectory, templateBaseURL)) != null)
+          cssTextNode.setNodeValue(cssText);
+      }
+    }
+    else {
+      "A".equals(tagName);
+    }
+
+    Node attribute = element.getAttributes() == null ? null : element.getAttributes().getNamedItem("style");
+    if (attribute != null) {
+      String cssText = attribute.getNodeValue();
+      if ((cssText = updateCssText(cssText, resourceDirectory, templateDirectory, templateBaseURL)) != null) {
+        attribute.setNodeValue(cssText);
+      }
+    }
+
+    if ((element.getAttributes() != null) && (element.getAttributes().getNamedItem("background") != null)) {
+      moveResource(element, "background", resourceDirectory, "images", templateDirectory, templateBaseURL, fileMap);
+    }
+
+    Node childElement = element.getFirstChild();
+    while (childElement != null) {
+      updateHTMLElement(childElement, resourceDirectory, templateDirectory, templateBaseURL, fileMap);
+      childElement = childElement.getNextSibling();
+    }
+  }
+
+  private MoveResource moveResource(Node element, String attributeName, String resourceDirectory, String folderName, String templateDirectory, String templateBaseURL, Map fileMap)
+  {
+    Node attribute = element.getAttributes().getNamedItem(attributeName);
+    if (attribute == null) {
+      return null;
+    }
+    String fileName = attribute.getNodeValue();
+    if (fileName == null) {
+      return null;
+    }
+    fileName = fileName.replaceAll("\\x5C", "/");
+    String filePath = resourceDirectory + fileName;
+    MoveResource moveResourceModel = new MoveResource();
+    moveResourceModel.setOldResourceFileName(filePath);
+    File oldFile = new File(filePath);
+    if (oldFile.isDirectory()) {
+      return null;
+    }
+    if (!oldFile.exists())
+    {
+      filePath = (String)fileMap.get(new File(filePath).getPath());
+      if (filePath != null) {
+        attribute.setNodeValue(filePath);
+      }
+      return null;
+    }
+
+    filePath = FileUtils.moveFile(filePath, FileUtils.createDirectory(templateDirectory + folderName), false, true);
+    filePath = filePath.replaceAll("\\x5C", "/");
+    moveResourceModel.setNewResourceFileName(filePath);
+    filePath = templateBaseURL + folderName + "/" + filePath.substring(filePath.lastIndexOf('/') + 1);
+    fileMap.put(oldFile.getPath(), filePath);
+    attribute.setNodeValue(filePath);
+    return moveResourceModel;
+  }
+
+  private String updateCssText(String cssText, String cssFileDirectory, String templateDirectory, String templateBaseURL)
+  {
+    String newCssText = "";
+    int beginIndex = cssText.indexOf("url(");
+
+    int prevEndIndex = 0;
+    int endIndex;
+    for (beginIndex = cssText.indexOf("url("); beginIndex > 0; beginIndex = cssText.indexOf("url(", endIndex)) {
+      String quotation = "" + cssText.charAt(beginIndex + 4);
+      if ((!quotation.equals("'")) && (!quotation.equals("\""))) {
+        quotation = "";
+      }
+      beginIndex += 4 + quotation.length();
+      endIndex = cssText.indexOf(quotation + ")", beginIndex);
+      if (endIndex - beginIndex > 200) {
+        return null;
+      }
+      String fileName = cssText.substring(beginIndex, endIndex).replaceAll("\\x2520", " ").replaceAll("\\x5C", "/");
+      endIndex += 1 + quotation.length();
+
+      String filePath = cssFileDirectory + fileName;
+      filePath = FileUtils.moveFile(filePath, FileUtils.createDirectory(templateDirectory + "images"), false, true);
+      if (filePath == null) {
+        if (fileName.indexOf(':') != -1) {
+          continue;
+        }
+        fileName = fileName.substring(fileName.lastIndexOf('/') + 1).replaceAll(" ", "%20");
+      }
+      else {
+        fileName = filePath.substring(filePath.lastIndexOf(File.separatorChar) + 1).replaceAll(" ", "%20");
+      }
+      newCssText = newCssText + cssText.substring(prevEndIndex, beginIndex);
+      newCssText = newCssText + templateBaseURL + "images/" + fileName;
+      newCssText = newCssText + quotation + ")";
+      prevEndIndex = endIndex;
+    }
+    return newCssText + cssText.substring(prevEndIndex);
+  }
+
+  public void rebuildStaticPage(Template currentTemplate, Template referenceTemplate)
+    throws ServiceException
+  {
+    if (!this.siteTemplateThemeService.isTypeOf(currentTemplate.getThemeId(), 0)) {
+      return;
+    }
+    this.staticPageBuilder.rebuildPageForTemplate(currentTemplate.getApplicationName(), currentTemplate.getPageName(), referenceTemplate == null ? 0L : referenceTemplate.getId(), currentTemplate.getSiteId(), true);
+  }
+
+  public String getTemplatePath()
+  {
+    return this.templatePath;
+  }
+
+  public String getTemplateUrl()
+  {
+    return this.templateUrl;
+  }
+
+  public void setTemplateUrl(String templateUrl)
+  {
+    this.templateUrl = templateUrl;
+  }
+
+  public void setTemplatePath(String templatePath)
+  {
+    this.templatePath = FileUtils.createDirectory(templatePath);
+  }
+
+  public HTMLParser getHtmlParser()
+  {
+    return this.htmlParser;
+  }
+
+  public void setHtmlParser(HTMLParser htmlParser)
+  {
+    this.htmlParser = htmlParser;
+  }
+
+  public Cache getCache()
+  {
+    return this.cache;
+  }
+
+  public void setCache(Cache cache)
+  {
+    this.cache = cache;
+  }
+
+  public FileDownloadService getFileDownloadService()
+  {
+    return this.fileDownloadService;
+  }
+
+  public void setFileDownloadService(FileDownloadService fileDownloadService)
+  {
+    this.fileDownloadService = fileDownloadService;
+  }
+
+  public ExchangeClient getExchangeClient()
+  {
+    return this.exchangeClient;
+  }
+
+  public void setExchangeClient(ExchangeClient exchangeClient)
+  {
+    this.exchangeClient = exchangeClient;
+  }
+
+  public AttachmentService getTemplateAttachmentService()
+  {
+    return this.templateAttachmentService;
+  }
+
+  public void setTemplateAttachmentService(AttachmentService templateAttachmentService)
+  {
+    this.templateAttachmentService = templateAttachmentService;
+  }
+
+  public StaticPageBuilder getStaticPageBuilder()
+  {
+    return this.staticPageBuilder;
+  }
+
+  public void setStaticPageBuilder(StaticPageBuilder staticPageBuilder)
+  {
+    this.staticPageBuilder = staticPageBuilder;
+  }
+
+  public SiteTemplateThemeService getSiteTemplateThemeService()
+  {
+    return this.siteTemplateThemeService;
+  }
+
+  public void setSiteTemplateThemeService(SiteTemplateThemeService siteTemplateThemeService)
+  {
+    this.siteTemplateThemeService = siteTemplateThemeService;
+  }
+
+  public PageDefineService getPageDefineService()
+  {
+    return this.pageDefineService;
+  }
+
+  public void setPageDefineService(PageDefineService pageDefineService)
+  {
+    this.pageDefineService = pageDefineService;
+  }
+
+  protected class MoveResource
+  {
+    private String oldResourceFileName;
+    private String newResourceFileName;
+
+    protected MoveResource()
+    {
+    }
+
+    public String getNewResourceFileName()
+    {
+      return this.newResourceFileName;
+    }
+
+    public void setNewResourceFileName(String newResourceFileName)
+    {
+      this.newResourceFileName = newResourceFileName;
+    }
+
+    public String getOldResourceFileName()
+    {
+      return this.oldResourceFileName;
+    }
+
+    public void setOldResourceFileName(String oldResourceFileName)
+    {
+      this.oldResourceFileName = oldResourceFileName;
+    }
+  }
+}

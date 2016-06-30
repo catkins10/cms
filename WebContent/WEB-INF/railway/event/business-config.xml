@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="问题记录" class="com.yuanluesoft.railway.event.pojo.RailwayEvent">
+		<field name="importId" title="导入日志ID" length="20" type="number" inputMode="none"/>
+		<field name="sn" title="信息单号" length="20" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="code" title="问题代码" length="20" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="personId" title="责任人ID" length="20" type="number" inputMode="none"/>
+		<field name="personName" title="责任人" length="60" type="string" inputMode="text"/>
+		<field name="checker" title="检查人" length="60" type="string" inputMode="text"/>
+		<field name="checkTime" title="检查时间" type="timestamp" inputMode="readonly"/>
+		<field name="checkAddress" title="检查地点" length="100" type="string" inputMode="text"/>
+		<field name="eventLevel" title="问题层级" length="10" type="string" inputMode="text"/>
+		<field name="eventCategory" title="问题类别" length="30" type="string" inputMode="text"/>
+		<field name="description" title="检查内容" length="4000" type="string" inputMode="text"/>
+		<field name="deduct" title="扣款" length="7,2" type="number" inputMode="text"/>
+	</businessObject>
+	<businessObject title="问题导入日志" class="com.yuanluesoft.railway.event.pojo.RailwayEventImport">
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="创建人" length="60" type="string" inputMode="readonly"/>
+		<field name="data" title="数据文件" length="1" type="attachment" inputMode="attachment">
+			<parameter name="fileExtension">Excel表格|*.xls|</parameter>
+			<parameter name="simpleMode">true</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

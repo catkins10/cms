@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<statisticView name="unpaid" title="未到款" pageRows="50" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectCollect</pojo>
+			<orderBy>EnterpriseProjectCollect.contractId</orderBy>
+			<where>EnterpriseProjectCollect.contractId in (select Collect.contractId from EnterpriseProjectCollect Collect where Collect.contractId=EnterpriseProjectCollect.contractId and Collect.receiveAmount&lt;Collect.invoiceAmount)</where>
+			<quickFilter>EnterpriseProjectCollect.project.name like '%{KEY}%'</quickFilter>
+		</data>
+		<statistics hideDetail="true">
+			<statistic> <!-- 合同合计 -->
+				<groupFields>
+					<groupField name="contractId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="invoiceAmount" function="sum(EnterpriseProjectCollect.invoiceAmount)"/>
+					<statisticColumn name="receiveAmount" function="sum(EnterpriseProjectCollect.receiveAmount)"/>
+					<statisticColumn name="accountReceivable" function="sum(EnterpriseProjectCollect.accountReceivable)"/>
+				</statisticColumns>
+			</statistic>
+			<statistic statisticAll="true" title="合计">
+				<statisticColumns>
+					<statisticColumn name="contract.contractValue" function="sum(EnterpriseProjectCollect.contract.contractValue)" whereExtend="EnterpriseProjectCollect.id=(select min(Collect.id) from EnterpriseProjectCollect Collect where Collect.contractId=EnterpriseProjectCollect.contractId)"/>
+					<statisticColumn name="invoiceAmount" function="sum(EnterpriseProjectCollect.invoiceAmount)"/>
+					<statisticColumn name="receiveAmount" function="sum(EnterpriseProjectCollect.receiveAmount)"/>
+					<statisticColumn name="accountReceivable" function="sum(EnterpriseProjectCollect.accountReceivable)"/>
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<actions>
+			<action title="导出EXCEL" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="合同号" name="contract.contractNo" width="100" align="center"/>
+			<column title="项目" name="project.name" />
+			<column title="业主" name="project.owner" />
+			<column title="合同金额" name="contract.contractValue" type="statistic"  width="66" align="center" format="#,####.##"/>
+			<column title="已开票" name="invoiceAmount" type="statistic"  width="66" align="center" format="#,####.##"/>
+			<column title="未开票" name="uninvoiceAmount"  width="66" align="center" format="#,####.##"/>
+			<column title="已付款" name="receiveAmount" type="statistic"  width="66" align="center" format="#,####.##"/>
+			<column title="按合同进度应到款" name="accountReceivable" type="statistic"  width="110" align="center" format="#,####.##"/>
+			<column title="备注" name="remark" emptyWhenStatistic="true"/>
+		</columns>
+	</statisticView>
+	
+	<statisticView name="monthCollect" title="每月财务明细" pageRows="50" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectCollect</pojo>
+			<quickFilter>EnterpriseProjectCollect.project.name like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="FIRSTCATEGOEY" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectCollect</pojo>
+			</data>
+			<category value="year(EnterpriseProjectCollect.billingDate)"> <!--value必须有-->
+				<data>year(EnterpriseProjectCollect.billingDate)={CATEGORYVALUE}</data>
+				<orderBy>year(EnterpriseProjectCollect.billingDate) DESC</orderBy>
+			</category>
+		</categories>
+		<statistics hideDetail="true">
+			<statistic title="　{PARAMETER:billingMonthIntValue}月">
+				<groupFields>
+					<groupField name="billingMonthIntValue" field="month(EnterpriseProjectCollect.billingDate)"/>
+					<groupField name="billingYearIntValue" field="year(EnterpriseProjectCollect.billingDate)"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="invoiceAmount" function="sum(EnterpriseProjectCollect.invoiceAmount)"/>
+					<statisticColumn name="receiveAmount" function="sum(EnterpriseProjectCollect.receiveAmount)"/>
+				</statisticColumns>
+			</statistic>
+			<statistic title="{PARAMETER:billingYearIntValue}年">
+				<groupFields>
+					<groupField name="billingYearIntValue" field="year(EnterpriseProjectCollect.billingDate)"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="invoiceAmount" function="sum(EnterpriseProjectCollect.invoiceAmount)"/>
+					<statisticColumn name="receiveAmount" function="sum(EnterpriseProjectCollect.receiveAmount)"/>
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<actions>
+			<action title="导出EXCEL" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="开票时间" name="billingMonth" width="100" displayExcept="condition"/>
+			<column title="开票" name="invoiceAmount" type="statistic" width="150" align="center" format="#,####.##" displayExcept="condition"/>
+			<column title="到帐" name="receiveAmount" type="statistic" width="150" align="center" format="#,####.##" displayExcept="condition"/>
+			<column title="备注" name="remark" emptyWhenStatistic="true"/>
+		</columns>
+	</statisticView>
+	
+	<statisticView name="contract" title="合同管理" pageRows="50" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectContract</pojo>
+			<orderBy>EnterpriseProjectContract.id</orderBy>
+			<quickFilter>EnterpriseProjectContract.project.name like '%{KEY}%'</quickFilter>
+		</data>
+		<statistics hideDetail="true">
+			<statistic>
+				<groupFields>
+					<groupField name="id"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="invoiceAmount" function="sum(collects.invoiceAmount)"/>
+					<statisticColumn name="receiveAmount" function="sum(collects.receiveAmount)"/>
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<actions>
+			<action title="导出EXCEL" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="合同编号" name="contractNo"  width="80" align="center"/>
+			<column title="工程名称" name="project.name" />
+			<column title="业主" name="project.owner" />
+			<column title="盖章" name="sealDate" width="70"/>
+			<column title="签订时间" name="signDate" width="70"/>
+			<!-- column title="起草人" name="creator" width="50"/ -->
+			<column title="存档时间" name="archiveDate" width="70"/>
+			<column title="合同金额" name="contractValue" type="statistic" width="66" align="center" format="#,####.##"/>
+			<column title="已开票" name="invoiceAmount" type="statistic" width="66" align="center" format="#,####.##"/>
+			<column title="已收款" name="receiveAmount" type="statistic" width="66" align="center" format="#,####.##"/>
+		</columns>
+	</statisticView>
+	
+	<statisticView name="contractSimple" title="合同管理(简化)" pageRows="50" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectContract</pojo>
+			<orderBy>EnterpriseProjectContract.id</orderBy>
+			<quickFilter>EnterpriseProjectContract.project.name like '%{KEY}%'</quickFilter>
+		</data>
+		<statistics hideDetail="true">
+			<statistic>
+				<groupFields>
+					<groupField name="id"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="invoiceAmount" function="sum(collects.invoiceAmount)"/>
+					<statisticColumn name="receiveAmount" function="sum(collects.receiveAmount)"/>
+				</statisticColumns>
+			</statistic>
+			<statistic statisticAll="true" title="合计">
+				<statisticColumns>
+					<statisticColumn name="invoiceAmount" function="sum(collects.invoiceAmount)"/>
+					<statisticColumn name="receiveAmount" function="sum(collects.receiveAmount)"/>
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<actions>
+			<action title="导出EXCEL" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="合同编号" name="contractNo"  width="80" align="center"/>
+			<column title="合同单位" name="contractUnit"/>
+			<column title="工程名称" name="project.name" />
+			<column title="已收款" name="receiveAmount" type="statistic" width="120" align="center" format="#,####.##"/>
+			<column title="已开票" name="invoiceAmount" type="statistic" width="120" align="center" format="#,####.##"/>
+		</columns>
+	</statisticView>
+</views>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.enterprise.iso.forms.Directory" title="目录" pojo="com.yuanluesoft.enterprise.iso.pojo.IsoDirectory">
+		<formFields>
+			<field title="上级站点" name="parentDirectoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/enterprise/iso/js/directory.js</parameter>
+				<parameter name="execute">selectDirectory(600, 400, false, 'parentDirectoryId{id},parentDirectoryName{name}', '', '', '', 0)</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="新建下一个目录" hide="isOld()" execute="FormUtils.doAction('createNextDirectory')"/>
+			<action title="删除" hide="deleteDisable()" execute="javascript:if(confirm('删除后不可恢复，所有的下级目录及其内容都将被删除，是否确定要删除？'))FormUtils.doAction('deleteDirectory')"/>
+		</actions>
+	</form>
+	
+	<form name="document" class="com.yuanluesoft.enterprise.iso.forms.Document" title="文件" pojo="com.yuanluesoft.enterprise.iso.pojo.IsoDocument">
+		<formFields>
+			<field name="directoryId" title="所在目录ID" type="number" inputMode="hidden"/>
+			<field name="directoryName" title="所在目录" type="string" inputMode="select" required="true">
+				<parameter name="js">/enterprise/iso/js/directory.js</parameter>
+				<parameter name="execute">selectDirectory(600, 400, false, 'directoryId{id},directoryName{name}', '', '', '', 0)</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="isNew() or workflow()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteDocument')"/>
+			<action title="完成登记" hide="workflow()" execute="if(confirm('是否确定完成登记？'))FormUtils.doAction('completeCreate')"/>
+			<action title="完成修改" hide="workflow()" execute="if(confirm('是否确定完成修改？'))FormUtils.doAction('completeModify')"/>
+			<action title="完成销毁" hide="workflow()" execute="if(confirm('是否确定完成销毁？'))FormUtils.doAction('completeDestroy')"/>
+			<action title="修改文件" execute="location.href='modifyDocument.shtml?sourceDocumentId={PARAMETER:id}'"/>
+			<action title="销毁文件" execute="location.href='destroyDocument.shtml?sourceDocumentId={PARAMETER:id}'"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.enterprise.iso.forms.DocumentView" title="ISO文档视图">
+		<formFields>
+			<field name="directoryId" title="ISO目录ID" type="number" inputMode="hidden"/>
+		</formFields>
+	</form>
+</forms>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+  <appender name="file.log" class="org.apache.log4j.RollingFileAppender">
+    <param name="File" value="f:/cms/stdout.log" />
+    <param name="MaxFileSize" value="30MB" />
+    <param name="MaxBackupIndex" value="10"/>
+    <param name="Append" value="true" />
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d [%t] %p - %m%n" />
+    </layout>
+  </appender>
+  
+  <appender name="console.log" class="org.apache.log4j.ConsoleAppender">
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d [%t] %p - %m%n" />
+    </layout>
+    <filter class="org.apache.log4j.varia.LevelRangeFilter">  
+		<param name="LevelMin" value="TRACE" />  
+		<param name="LevelMax" value="FATAL" /> 
+		<param name="AcceptOnMatch" value="true" />  
+	</filter>
+  </appender>
+  
+  <category name="com.yuanluesoft" additivity="false"> 
+	<priority value="ALL"/>
+    <appender-ref ref="console.log" />
+    <appender-ref ref="file.log" />
+  </category>
+  
+  <category name="net.sf.hibernate" additivity="false"> 
+	<priority value="WARN"/> 
+    <appender-ref ref="file.log" />
+  </category>
+  
+  <!-- category name="org.springframework.jdbc" additivity="false"> 
+	<priority value="DEBUG"/> 
+    <appender-ref ref="console.log" />
+  </category -->
+  
+  <!-- category name="org.springframework.transaction" additivity="false"> 
+	<priority value="DEBUG"/> 
+    <appender-ref ref="console.log" />
+  </category -->
+  
+  <root>
+    <level value="WARN" />
+    <appender-ref ref="console.log" />
+    <appender-ref ref="file.log" />
+  </root>
+</log4j:configuration>

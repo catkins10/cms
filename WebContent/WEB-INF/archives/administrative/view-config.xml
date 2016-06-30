@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views>
+	<view name="administrativeArchives" form="administrativeArchives" title="文书档案" pageRows="20" hide="noPrivilege(application_visitor)" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.archives.administrative.pojo.AdministrativeArchives</pojo>
+			<quickFilter>AdministrativeArchives.subject like '%{KEY}%' 
+				or AdministrativeArchives.secureLevel like '%{KEY}%'
+				or AdministrativeArchives.docWord like '%{KEY}%'
+				or AdministrativeArchives.rotentionPeriod like '%{KEY}%'
+			</quickFilter>
+			<filter>READABLE</filter>
+			<orderBy>AdministrativeArchives.filingDate DESC</orderBy>
+		</data>
+		<actions>
+			<action title="数据著录" hide="noPrivilege(manageUnit_administrativeArchivesManage)" execute="PageUtils.newrecord('archives/administrative', 'administrativeArchives', 'width=760,height=520')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="文件题名" name="subject"/>
+			<column title="文件字号" name="docWord" width="130" align="center"/>
+			<column title="档号" name="archivesCode" width="120" align="center"/>
+			<column title="归档日期" name="filingDate" width="80" align="center"/>
+		</columns>
+	</view>
+</views>

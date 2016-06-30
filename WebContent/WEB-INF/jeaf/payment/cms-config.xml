@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 支付 -->
+<application>
+	<pages>
+		<page name="selectPaymentMethod" title="选择银行">
+			<recordList title="银行列表" name="paymentMethods">
+				<field title="名称" name="name"/>
+				<field title="图标" name="iconUrl" type="image"/>
+			</recordList>
+		</page>
+		
+		<page name="selectAccountType" title="选择帐户类型">
+			<recordList title="帐户类型列表" name="accountTypes">
+				<field title="帐户类型" name="name"/>
+			</recordList>
+		</page>
+		
+		<page name="paidPrompt" title="已支付过提示">
+			<link title="继续" url="/jeaf/payment/completePayment.shtml?paymentId={PARAMETER:id}"/>
+		</page>
+	</pages>
+	
+		<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="paymentMethods" processor="paymentRecordListProcessor"/> <!-- 待办项目列表处理器 -->
+		<pageElement name="accountTypes" processor="paymentRecordListProcessor"/> <!-- 帐户类型列表处理器 -->
+	</pageElements>
+</application>

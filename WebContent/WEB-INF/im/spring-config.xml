@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- IM服务 -->
+	<bean id="imService" class="com.yuanluesoft.im.service.spring.IMServiceImpl" init-method="startup">
+		<property name="udpPorts"><value>8886-8888,9001,9002</value></property>
+		<property name="messageLimit"><value>100000</value></property> <!-- 系统保存的聊天记录上限 -->
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+
+		<property name="ticketCache"><ref bean="ticketCache"/></property>
+		<property name="sessionCache"><ref bean="imSessionCache"/></property>
+		<property name="chatCache"><ref bean="imChatCache"/></property>
+		<property name="systemMessageCache"><ref bean="imSystemMessageCache"/></property>
+		<property name="serverInfoCache"><ref bean="imServerInfoCache"/></property>
+		<property name="udpConnectionCache"><ref bean="imConnectionCache"/></property>
+
+		<property name="memberServiceList"><ref bean="memberServiceList"/></property>
+		<property name="messageService"><ref bean="messageService"/></property>
+		<property name="csService"><ref bean="csService"/></property>
+		<property name="distributionService"><ref bean="distributionService"/></property>
+		<property name="pageService"><ref bean="pageService"/></property>
+	</bean>
+	
+	<!-- IM用户列表处理器 -->
+	<bean id="imPersonsProcessor" class="com.yuanluesoft.im.processor.IMPersonsProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="imService"><ref bean="imService"/></property>
+	</bean>
+	
+	<!-- 客服人员列表处理器 -->
+	<bean id="customerServiceSpecialistsProcessor" class="com.yuanluesoft.im.processor.CustomerServiceSpecialistsProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="imService"><ref bean="imService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+	</bean>
+	
+	<!-- IM主页面服务 -->
+	<bean id="imPageService" class="com.yuanluesoft.im.pages.IMPageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="imService"><ref bean="imService"/></property>
+	</bean>
+	
+	<!-- IM对话页面服务 -->
+	<bean id="imChatPageService" class="com.yuanluesoft.im.pages.IMChatPageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="imService"><ref bean="imService"/></property>
+		<property name="memberServiceList"><ref bean="memberServiceList"/></property>
+		<property name="orgService"><ref bean="orgService"/></property>
+	</bean>
+</beans>

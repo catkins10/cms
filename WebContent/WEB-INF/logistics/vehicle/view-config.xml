@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="车源" name="vehicleSupplies">
+		<data>
+			<pojo>com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicleSupply</pojo>
+			<where>LogisticsVehicleSupply.issue=1 and (LogisticsVehicleSupply.endTime is null or LogisticsVehicleSupply.endTime>=DATE({TODAY}))</where>
+			<orderBy>LogisticsVehicleSupply.created DESC</orderBy>
+			<quickFilter>LogisticsVehicleSupply.linkman like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link>/logistics/vehicle/vehicleSupply.shtml</link>
+		</links>
+	</view>
+	
+	<view title="车辆(全部)" name="vehicles">
+		<data>
+			<pojo>com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicle</pojo>
+			<orderBy>LogisticsVehicle.plateNumber</orderBy>
+			<quickFilter>LogisticsVehicle.plateNumber like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link>/logistics/vehicle/vehicle.shtml</link>
+		</links>
+	</view>
+	
+	<view title="车辆(支持定位)" name="locatableVehicles">
+		<data>
+			<pojo>com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicle</pojo>
+			<where>not LogisticsVehicle.linkmanTel is null</where>
+			<orderBy>LogisticsVehicle.plateNumber</orderBy>
+			<quickFilter>LogisticsVehicle.plateNumber like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link>/logistics/vehicle/vehicle.shtml</link>
+		</links>
+	</view>
+	
+	<view title="我的车源" name="myVehicleSupplies">
+		<data>
+			<pojo>com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicleSupply</pojo>
+			<where>LogisticsVehicleSupply.userId={USERID}</where>
+			<orderBy>LogisticsVehicleSupply.created DESC</orderBy>
+			<quickFilter>LogisticsVehicleSupply.linkman like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link>/logistics/vehicle/vehicleSupply.shtml</link>
+		</links>
+	</view>
+	
+	<view title="我的车辆" name="myVehicles">
+		<data>
+			<pojo>com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicle</pojo>
+			<where>LogisticsVehicle.userId={USERID}</where>
+			<orderBy>LogisticsVehicle.plateNumber</orderBy>
+			<quickFilter>LogisticsVehicle.plateNumber like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link>/logistics/vehicle/vehicle.shtml</link>
+		</links>
+	</view>
+
+	<view name="admin/vehicle" form="admin/vehicle" title="车辆" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicle</pojo>
+			<orderBy>LogisticsVehicle.plateNumber</orderBy>
+			<quickFilter>LogisticsVehicle.plateNumber like '%{KEY}%' or LogisticsVehicle.linkmanTel like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action hide="noPrivilege(manageUnit_regist) and noPrivilege(manageUnit_superintend)" title="登记车辆" execute="DialogUtils.openSelectDialog('logistics/usermanage', 'admin/userCheck', 550, 350, false, '', 'PageUtils.newrecord(\'logistics/vehicle\', \'admin/vehicle\', \'mode=fullscreen\', \'userId={id}\')')"/>
+			<action hide="noPrivilege(manageUnit_regist) and noPrivilege(manageUnit_superintend)" title="登记车源" execute="DialogUtils.openSelectDialog('logistics/usermanage', 'admin/userCheck', 550, 350, false, '', 'PageUtils.newrecord(\'logistics/vehicle\', \'admin/vehicleSupply\', \'mode=fullscreen\', \'userId={id}\')')"/>
+			<action hide="noPrivilege(application_manager) and noPrivilege(manageUnit_superintend)" title="更新车辆位置" execute="DialogUtils.openDialog('{CONTEXTPATH}/logistics/vehicle/admin/updateVehicleLocation.shtml', 400, 150)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="车牌号码" name="plateNumber" width="100"/>
+			<column title="联系人" name="linkman" align="center" width="68"/>
+			<column title="联系电话" name="linkmanTel" align="center" width="100"/>
+			<column title="车体状况" name="vehicleBody" align="center" width="68"/>
+			<column title="载重" name="vehicleLoad" align="center" width="50"/>
+			<column title="车长" name="vehicleLong" align="center" width="50"/>
+			<column title="车宽" name="vehicleWidth" align="center" width="50"/>
+			<column title="空车/重车" name="isEmpty" align="center" width="68"/>
+			<column title="当前位置" name="placeName"/>
+		</columns>
+	</view>
+	
+	<view name="admin/vehicleSupply" form="admin/vehicleSupply" title="已发布车源" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicleSupply</pojo>
+			<where>LogisticsVehicleSupply.issue=1</where>
+			<orderBy>LogisticsVehicleSupply.created DESC</orderBy>
+			<quickFilter>LogisticsVehicleSupply.linkman like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action hide="noPrivilege(manageUnit_regist) and noPrivilege(manageUnit_superintend)" title="登记车辆" execute="DialogUtils.openSelectDialog('logistics/usermanage', 'admin/userCheck', 550, 350, false, '', 'PageUtils.newrecord(\'logistics/vehicle\', \'admin/vehicle\', \'mode=fullscreen\', \'userId={id}\')', '', '', '', true)"/>
+			<action hide="noPrivilege(manageUnit_regist) and noPrivilege(manageUnit_superintend)" title="登记车源" execute="DialogUtils.openSelectDialog('logistics/usermanage', 'admin/userCheck', 550, 350, false, '', 'PageUtils.newrecord(\'logistics/vehicle\', \'admin/vehicleSupply\', \'mode=fullscreen\', \'userId={id}\')', '', '', '', true)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="车牌号码" name="freeVehicles.plateNumber" width="40%"/>
+			<column title="出发地点" name="departures.departure" width="30%"/>
+			<column title="目的地点" name="destinations.destination" width="30%"/>
+			<column title="开始时间" name="beginTime" align="center" width="70"/>
+			<column title="截止时间" name="endTime" align="center" width="70"/>
+			<column title="联系人" name="linkman" align="center" width="68"/>
+			<column title="联系电话" name="linkmanTel" align="center" width="100"/>
+		</columns>
+	</view>
+	
+	<view name="admin/todoVehicleSupply" form="admin/vehicleSupply" title="待发布车源" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicleSupply</pojo>
+			<where>LogisticsVehicleSupply.issue=0</where>
+			<orderBy>LogisticsVehicleSupply.created DESC</orderBy>
+			<quickFilter>LogisticsVehicleSupply.linkman like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action hide="noPrivilege(manageUnit_regist) and noPrivilege(manageUnit_superintend)" title="登记车辆" execute="DialogUtils.openSelectDialog('logistics/usermanage', 'admin/userCheck', 550, 350, false, '', 'PageUtils.newrecord(\'logistics/vehicle\', \'admin/vehicle\', \'mode=fullscreen\', \'userId={id}\')', '', '', '', true)"/>
+			<action hide="noPrivilege(manageUnit_regist) and noPrivilege(manageUnit_superintend)" title="登记车源" execute="DialogUtils.openSelectDialog('logistics/usermanage', 'admin/userCheck', 550, 350, false, '', 'PageUtils.newrecord(\'logistics/vehicle\', \'admin/vehicleSupply\', \'mode=fullscreen\', \'userId={id}\')', '', '', '', true)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="车牌号码" name="freeVehicles.plateNumber" width="40%"/>
+			<column title="出发地点" name="departures.departure" width="30%"/>
+			<column title="目的地点" name="destinations.destination" width="30%"/>
+			<column title="开始时间" name="beginTime" align="center" width="70"/>
+			<column title="截止时间" name="endTime" align="center" width="70"/>
+			<column title="联系人" name="linkman" align="center" width="68"/>
+			<column title="联系电话" name="linkmanTel" align="center" width="100"/>
+		</columns>
+	</view>
+	
+	<view name="selectVehicle" title="车辆选择" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicle</pojo>
+			<where>LogisticsVehicle.userId={USERID}</where>
+			<orderBy>LogisticsVehicle.plateNumber</orderBy>
+			<quickFilter>LogisticsVehicle.plateNumber like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="车牌号码" name="plateNumber"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view hide="noPrivilege(manageUnit_regist) and noPrivilege(manageUnit_superintend)" name="admin/selectVehicle" title="车辆选择" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicle</pojo>
+			<where>LogisticsVehicle.userId={PARAMETER:logisticsUserId}</where>
+			<orderBy>LogisticsVehicle.plateNumber</orderBy>
+			<quickFilter>LogisticsVehicle.plateNumber like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="车牌号码" name="plateNumber"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+</views>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.j2oa.supervise.forms.Supervise" title="督办" pojo="com.yuanluesoft.j2oa.supervise.pojo.Supervise">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="作废" hide="deleteDisable()" execute="if(confirm('是否确定要作废？'))FormUtils.doAction('deleteSupervise')"/>
+			<action title="交办" hide="workflow()" execute="DialogUtils.selectPerson(550, 350, true, 'transactorIds{id},transactorNames{name|经办|100%}', 'if(document.getElementsByName(&quot;transactorIds&quot;)[0].value!=&quot;&quot;)FormUtils.doAction(&quot;assignSupervise&quot;);', '', '', ',', '{DEPARTMENTID}')"/>
+			<action title="完成落实" hide="workflow()" execute="if(document.getElementsByName('result')[0].value==''){alert('落实情况未填写，操作不能完成。');}else{if(confirm('是否确定完成落实？'))FormUtils.doAction('implementSupervise');}"/>
+			<action title="销号" hide="workflow()" execute="if(confirm('是否确定要销号？'))FormUtils.doAction('cancelSupervise')"/>
+			<action title="调整时限" execute="DialogUtils.openDialog('{CONTEXTPATH}/j2oa/supervise/superviseTimeLimit.shtml?id={PARAMETER:id}', 360, 160)"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.supervise.forms.SuperviseTimeLimit" title="完成时限" pojo="com.yuanluesoft.j2oa.supervise.pojo.Supervise">
+		<formFields>
+			<field name="superviseTimeLimit" title="完成时限" type="component">
+				<parameter name="class">com.yuanluesoft.j2oa.supervise.pojo.SuperviseTimeLimit</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+</forms>

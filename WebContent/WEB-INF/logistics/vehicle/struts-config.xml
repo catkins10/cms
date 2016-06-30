@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="vehicle" type="com.yuanluesoft.logistics.vehicle.forms.Vehicle"/>
+  <form-bean name="vehicleSupply" type="com.yuanluesoft.logistics.vehicle.forms.VehicleSupply"/>
+  <form-bean name="adminVehicle" type="com.yuanluesoft.logistics.vehicle.forms.admin.Vehicle"/>
+  <form-bean name="adminVehicleSupply" type="com.yuanluesoft.logistics.vehicle.forms.admin.VehicleSupply"/>
+  <form-bean name="adminUpdateVehicleLocation" type="com.yuanluesoft.logistics.vehicle.forms.admin.UpdateVehicleLocation"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="vehicle" path="/vehicle" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehicle.Load" validate="false">
+   <forward name="load" path="/vehicle.jsp"/>
+  </action>
+  <action input="/vehicle.jsp" name="vehicle" path="/saveVehicle"
+   scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehicle.Save" validate="false">
+   <forward name="result" path="/vehicleSubmitted.jsp"/>
+  </action>
+  <action input="/vehicle.jsp" name="vehicle" path="/deleteVehicle"
+   scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehicle.Delete" validate="false">
+   <forward name="result" path="/vehicleDeleted.jsp"/>
+  </action>
+  <action name="vehicleSupply" path="/vehicleSupply" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehiclesupply.Load" validate="false">
+   <forward name="load" path="/vehicleSupply.jsp"/>
+  </action>
+  <action input="/vehicleSupply.jsp" name="vehicleSupply"
+   path="/saveVehicleSupply" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehiclesupply.Save" validate="false">
+   <forward name="result" path="/vehicleSupplySubmitted.jsp"/>
+  </action>
+  <action input="/vehicleSupply.jsp" name="vehicleSupply"
+   path="/deleteVehicleSupply" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehiclesupply.Delete" validate="false">
+   <forward name="result" path="/vehicleSupplyDeleted.jsp"/>
+  </action>
+  <action path="/index" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.index.Load" validate="false"/>
+  <action path="/vehicleSupplies" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehiclesupplies.Load" validate="false"/>
+  <action path="/myVehicles" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.myvehicles.Load" validate="false"/>
+  <action path="/myVehicleSupplies" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.myvehiclesupplies.Load" validate="false"/>
+  <action path="/vehicles" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehicles.Load" validate="false"/>
+  <action path="/vehicleLocation" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehiclelocation.Load" validate="false"/>
+  <action name="adminVehicle" path="/admin/vehicle" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehicle.admin.Load" validate="false">
+   <forward name="load" path="/admin/vehicle.jsp"/>
+  </action>
+  <action input="/admin/vehicle.jsp" name="adminVehicle"
+   path="/admin/saveVehicle" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehicle.admin.Save" validate="false"/>
+  <action input="/admin/vehicle.jsp" name="adminVehicle"
+   path="/admin/deleteVehicle" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehicle.admin.Delete" validate="false"/>
+  <action name="adminVehicleSupply" path="/admin/vehicleSupply"
+   scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehiclesupply.admin.Load" validate="false">
+   <forward name="load" path="/admin/vehicleSupply.jsp"/>
+  </action>
+  <action input="/admin/vehicleSupply.jsp" name="adminVehicleSupply"
+   path="/admin/saveVehicleSupply" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehiclesupply.admin.Save" validate="false"/>
+  <action input="/admin/vehicleSupply.jsp" name="adminVehicleSupply"
+   path="/admin/deleteVehicleSupply" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehiclesupply.admin.Delete" validate="false"/>
+  <action name="adminUpdateVehicleLocation"
+   path="/admin/updateVehicleLocation" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.updatevehiclelocation.Update" validate="false">
+   <forward name="load" path="/admin/updateVehicleLocation.jsp"/>
+  </action>
+  <action path="/vehicleLocationSearch" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehiclelocationsearch.Load" validate="false"/>
+  <action path="/vehicleSearch" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehiclesearch.Load" validate="false"/>
+  <action path="/vehicleSupplySearch" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehiclesupplysearch.Load" validate="false"/>
+  <action input="/admin/vehicleSupply.jsp" name="adminVehicleSupply"
+   path="/admin/issueVehicleSupply" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehiclesupply.admin.Issue" validate="false"/>
+  <action input="/admin/vehicleSupply.jsp" name="adminVehicleSupply"
+   path="/admin/unissueVehicleSupply" scope="request"
+   type="com.yuanluesoft.logistics.vehicle.actions.vehiclesupply.admin.Unissue" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

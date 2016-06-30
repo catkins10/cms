@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="agriculturalImportData" type="com.yuanluesoft.credit.enterprisecredit.agricultural.forms.ImportDateExcel"/>
+  <form-bean name="adminAgricultural" type="com.yuanluesoft.credit.enterprisecredit.agricultural.forms.Agricultural"/>
+  <form-bean name="applicationView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminAgricultural" path="/admin/agricultural" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.agricultural.actions.Load" validate="false">
+   <forward name="load" path="/agricultural.jsp"/>
+  </action>
+  <action input="/agricultural.jsp" name="adminAgricultural" path="/admin/saveAgricultural" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.agricultural.actions.Save" validate="false"/>
+  <action input="/agricultural.jsp" name="adminAgricultural" path="/admin/deleteAgricultural"
+   scope="request" type="com.yuanluesoft.credit.enterprisecredit.agricultural.actions.Delete" validate="false"/>
+  
+  <!-- 附件选择处理。页面的data标签加载时跳转该path调用相应action处理附件页面 -->
+  <action name="agriculturalImportData" path="/admin/attachmentEditor" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.localtax.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <!-- excel数据导入页面加载 -->
+   <action name="agriculturalImportData" path="/admin/agriculturalImportData" scope="request" validate="false"
+   type="com.yuanluesoft.credit.enterprisecredit.agricultural.actions.excelimport.Load">
+   <forward name="load" path="/importData.jsp"/>
+   </action>
+   
+   <action name="agriculturalImportData" path="/admin/doImportData" scope="request" validate="false" input="/importData.jsp"
+   type="com.yuanluesoft.credit.enterprisecredit.agricultural.actions.excelimport.DoImportData"/>
+   
+   <!-- 批量删除操作 -->
+   <action input="/../../../jeaf/application/applicationView.jsp" name="applicationView" 
+   path="/batchOperate" scope="request" 
+   type="com.yuanluesoft.credit.enterprisecredit.batchoperate.BatchOperate" validate="false" />
+ </action-mappings>
+ <controller/>
+</struts-config>

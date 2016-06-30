@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="personTree" type="com.yuanluesoft.im.forms.PersonTree"/>
+  <form-bean name="webcsAddon" type="com.yuanluesoft.im.webim.forms.WebcsAddon"/>
+  <form-bean name="insertWebimAction" type="com.yuanluesoft.im.webim.forms.InsertWebimAction"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action path="/webim" scope="request"
+   type="com.yuanluesoft.im.webim.actions.webim.Load" validate="false"/>
+  <action path="/onlinePersons" scope="request"
+   type="com.yuanluesoft.im.webim.actions.onlinepersons.Load" validate="false"/>
+  <action name="personTree" path="/personTree" scope="request"
+   type="com.yuanluesoft.im.actions.persontree.Load" validate="false">
+   <forward name="load" path="/personTree.jsp"/>
+  </action>
+  <action path="/personalSetting" scope="request"
+   type="com.yuanluesoft.im.webim.actions.personalsetting.Load" validate="false"/>
+  <action path="/systemMessage" scope="request"
+   type="com.yuanluesoft.im.webim.actions.systemmessage.Load" validate="false"/>
+  <action path="/ajax/retrieveMessage" scope="request"
+   type="com.yuanluesoft.im.webim.actions.ajax.RetrieveMessage" validate="false"/>
+  <action path="/chat" scope="request"
+   type="com.yuanluesoft.im.webim.actions.chat.Load" validate="false"/>
+  <action path="/ajax/createChat" scope="request"
+   type="com.yuanluesoft.im.webim.actions.ajax.CreateChat" validate="false"/>
+  <action path="/ajax/loadChat" scope="request"
+   type="com.yuanluesoft.im.webim.actions.ajax.LoadChat" validate="false"/>
+  <action path="/ajax/login" scope="request"
+   type="com.yuanluesoft.im.webim.actions.ajax.Login" validate="false"/>
+  <action path="/ajax/unloadWebim" scope="request"
+   type="com.yuanluesoft.im.webim.actions.ajax.UnloadWebim" validate="false"/>
+  <action path="/ajax/chatTalk" scope="request"
+   type="com.yuanluesoft.im.webim.actions.ajax.ChatTalk" validate="false"/>
+  <action name="personTree" path="/selectPerson" scope="request"
+   type="com.yuanluesoft.im.actions.persontree.SelectPerson" validate="false">
+   <forward name="load" path="/selectPerson.jsp"/>
+  </action>
+  <action path="/ajax/createGroupChat" scope="request"
+   type="com.yuanluesoft.im.webim.actions.ajax.CreateGroupChat" validate="false"/>
+  <action path="/ajax/savePersonalSetting" scope="request"
+   type="com.yuanluesoft.im.webim.actions.ajax.SavePersonalSetting" validate="false"/>
+  <action path="/ajax/retrieveTalks" scope="request"
+   type="com.yuanluesoft.im.webim.actions.ajax.RetrieveTalks" validate="false"/>
+  <action path="/webimLogin" scope="request"
+   type="com.yuanluesoft.im.webim.actions.webim.Login" validate="false"/>
+  <action path="/ajax/feedbackSystemMessage" scope="request"
+   type="com.yuanluesoft.im.webim.actions.ajax.FeedbackSystemMessage" validate="false"/>
+  <action path="/ajax/createCustomerServiceChat" scope="request"
+   type="com.yuanluesoft.im.webim.actions.ajax.CreateCustomerServiceChat" validate="false"/>
+  <action path="/ajax/closeCustomerServiceChat" scope="request"
+   type="com.yuanluesoft.im.webim.actions.ajax.CloseCustomerServiceChat" validate="false"/>
+  <action name="webcsAddon" path="/templatemanage/webcsAddon"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/webcsAddon.jsp"/>
+  </action>
+  <action name="insertWebimAction"
+   path="/templatemanage/insertWebimAction" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertWebimAction.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

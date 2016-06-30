@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="todoDispatch" form="dispatch" title="待办发文" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.dispatch.pojo.Dispatch</pojo>
+			<quickFilter>Dispatch.subject like '%{KEY}%' or bodies.htmlBody like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="起草发文" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="拟稿人" name="draftPerson" align="center" width="66"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="105" display="normal,print,portlet"/>
+			<column title="发送人" name="workflowSender" align="center" width="66" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="inProcessDispatch" form="dispatch" title="在办发文" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.dispatch.pojo.Dispatch</pojo>
+			<orderBy>Dispatch.draftDate DESC</orderBy>
+			<quickFilter>Dispatch.subject like '%{KEY}%' or bodies.htmlBody like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="起草发文" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="拟稿人" name="draftPerson" align="center" width="66"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="105" display="normal,print,portlet"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="allDispatch" form="dispatch" title="所有发文" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.dispatch.pojo.Dispatch</pojo>
+			<filter>READABLE</filter>
+			<orderBy>Dispatch.draftDate DESC,Dispatch.draftPerson ASC</orderBy>
+			<quickFilter>Dispatch.subject like '%{KEY}%' or bodies.htmlBody like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="起草发文" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="拟稿人" name="draftPerson" align="center" width="100"/>
+			<column title="拟稿时间" name="draftDate" align="center" width="100"/>
+			<column title="成文日期" name="signDate" width="70"/>
+		</columns>
+	</view>
+	
+	<view name="allDispatchByMonth" form="dispatch" title="所有发文/按年月" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.dispatch.pojo.Dispatch</pojo>
+			<filter>READABLE</filter>
+			<orderBy>Dispatch.draftDate DESC,Dispatch.draftPerson ASC</orderBy>
+			<quickFilter>Dispatch.subject like '%{KEY}%' or bodies.htmlBody like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有发文" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.dispatch.pojo.Dispatch</pojo>
+				<filter>READABLE</filter>
+			</data>
+			<category value="year(Dispatch.draftDate)"> <!--value必须有-->
+				<data>year(Dispatch.draftDate)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(Dispatch.draftDate)"> <!--value必须有-->
+				<where>year(Dispatch.draftDate)={PARENTVALUE}</where>
+				<data>year(Dispatch.draftDate)={CATEGORY1VALUE} and month(Dispatch.draftDate)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="起草发文" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="拟稿时间" name="draftDate" align="center" width="100"/>
+			<column title="文件字号" name="docWord" width="120"/>
+			<column title="秘密等级" name="secureLevel" align="center" width="60"/>
+			<column title="主送" name="mainSend"  width="120"/>
+			<column title="成文日期" name="signDate" width="80" align="center" format="yyyy-MM-dd"/>
+		</columns>
+	</view>
+	
+	<view name="allDispatchByType" form="dispatch" title="所有发文/按文件种类" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.dispatch.pojo.Dispatch</pojo>
+			<filter>READABLE</filter>
+			<orderBy>Dispatch.draftDate DESC,Dispatch.draftPerson ASC</orderBy>
+			<quickFilter>Dispatch.subject like '%{KEY}%' or bodies.htmlBody like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有发文" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.dispatch.pojo.Dispatch</pojo>
+			</data>
+			<category value="docType"> <!--value必须有-->
+				<orderBy>Dispatch.docType</orderBy>
+				<data>Dispatch.docType={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="起草发文" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="拟稿时间" name="draftDate" align="center" width="100"/>
+			<column title="文件字号" name="docWord" width="120"/>
+			<column title="秘密等级" name="secureLevel" align="center" width="60"/>
+			<column title="主送" name="mainSend" width="120"/>
+			<column title="抄送" name="copySend" width="120"/>
+			<column title="打印份数" name="printNumber" align="center" width="50"/>
+			<column title="成文日期" name="signDate" width="80" align="center" format="yyyy-MM-dd"/>
+		</columns>
+	</view>
+	
+	<view name="allDispatchByDepartment" form="dispatch" title="所有发文/按主办部门" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.dispatch.pojo.Dispatch</pojo>
+			<filter>READABLE</filter>
+			<orderBy>Dispatch.draftDate DESC,Dispatch.draftPerson ASC</orderBy>
+			<quickFilter>Dispatch.subject like '%{KEY}%' or bodies.htmlBody like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有发文" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.dispatch.pojo.Dispatch</pojo>
+				<filter>READABLE</filter>
+			</data>
+			<category value="draftDepartment"> <!--value必须有-->
+				<orderBy>Dispatch.draftDepartment</orderBy>
+				<data>Dispatch.draftDepartment={CATEGORYVALUE}</data>
+			</category>
+			<category value="year(Dispatch.draftDate)"> <!--value必须有-->
+				<where>Dispatch.draftDepartment={PARENTVALUE}</where>
+				<orderBy>year(Dispatch.draftDate)</orderBy>
+				<data>Dispatch.draftDepartment={CATEGORY1VALUE} and year(Dispatch.draftDate)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="起草发文" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="拟稿时间" name="draftDate" align="center" width="100"/>
+			<column title="文件字号" name="docWord" width="120"/>
+			<column title="秘密等级" name="secureLevel" align="center" width="60"/>
+			<column title="主送" name="mainSend" width="120"/>
+			<column title="抄送" name="copySend" width="120"/>
+			<column title="成文日期" name="signDate" width="80" align="center" format="yyyy-MM-dd"/>
+		</columns>
+	</view>
+	
+	<view name="templateConfig" form="templateConfig" title="模板配置" hide="noPrivilege(application_manager)" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.dispatch.pojo.DispatchTemplateConfig</pojo>
+			<quickFilter>DispatchTemplateConfig.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新增模板" execute="PageUtils.newrecord('j2oa/dispatch', 'templateConfig', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="适用的文种" name="docTypes"/>
+			<column title="适用的文件字" name="docWords"/>
+		</columns>
+	</view>
+	
+	<view name="docWordConfig" form="docWordConfig" title="文件字配置" hide="noPrivilege(application_manager)" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.dispatch.pojo.DispatchDocWordConfig</pojo>
+			<quickFilter>DispatchDocWordConfig.docWord like '%{KEY}%'</quickFilter>
+			<orderBy>DispatchDocWordConfig.docWord</orderBy>
+		</data>
+		<actions>
+			<action title="新增文件字" execute="PageUtils.newrecord('j2oa/dispatch', 'docWordConfig', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="文件字名称" name="docWord"/>
+		</columns>
+	</view>
+</views>

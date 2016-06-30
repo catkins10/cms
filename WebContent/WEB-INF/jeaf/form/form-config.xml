@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.jeaf.form.ActionForm" title="表单">
+		<formFields>
+			<field name="id" title="ID" type="number" inputMode="hidden"/>
+			<field name="act" title="操作" type="string" inputMode="hidden"/>
+			<field name="displayMode" title="显示方式" type="string" inputMode="hidden"/>
+			<field name="internalForm" title="是否内部表单" type="boolean" inputMode="hidden"/>
+			<field name="reloadPageURL" title="重新加载页面的URL" type="string" inputMode="hidden"/>
+			<field name="tabSelected" title="当前选中的TAB" type="string" inputMode="hidden"/>
+			<field name="queryString" title="请求参数" type="string" inputMode="hidden"/>
+			<field name="requestCode" title="请求编码" type="number" inputMode="hidden"/>
+			<field name="directOpenComponent" title="组成部分是否不经过主记录直接打开" type="string" inputMode="hidden"/>
+			<field name="formTitle" title="窗口标题" type="string" inputMode="readonly"/>
+			<field name="actionResult" title="操作执行结果" type="string" inputMode="readonly"/>
+			<field name="innerDialogTitle" title="内置对话框标题" type="string" inputMode="readonly"/>
+			<field name="formActions" title="操作" type="components">
+				<parameter name="class">com.yuanluesoft.jeaf.form.model.FormAction</parameter>
+				<parameter name="url">javascript:{PARAMETER:execute}</parameter>
+			</field>
+			<field name="attachmentSelector" title="附件选择" type="component" inputMode="readonly">
+				<parameter name="class">com.yuanluesoft.jeaf.form.model.AttachmentSelector</parameter>
+			</field>
+		</formFields>
+	</form>
+</forms>

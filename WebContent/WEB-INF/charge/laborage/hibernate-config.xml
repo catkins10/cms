@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+
+	<!--计费:支付报酬月结账单-->
+	<class name="com.yuanluesoft.charge.laborage.pojo.MonthlyLaborage" table="charge_laborage_monthly">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="providerId"/> <!--服务提供者ID-->
+		<property name="providerName"/> <!--服务提供者姓名-->
+		<property name="beginDate"/> <!--开始时间-->
+		<property name="endDate"/> <!--结束时间-->
+		<property name="paymentCount"/> <!--单据数量-->
+		<property name="totalMoney"/> <!--总金额-->
+		<property name="totalLaborage"/> <!--报酬总金额-->
+		<property name="taxRate"/> <!--税率-->
+		<property name="moneyPay"/> <!--实际报酬金额-->
+		<property name="status"/> <!--状态-->
+		<property name="payMode"/> <!--支付方式-->
+		<property name="payModeTitle"/> <!--支付方式-->
+		<property name="bank"/> <!--转账银行-->
+		<property name="bankAccountName"/> <!--银行账户名称-->
+		<property name="bankAccount"/> <!--银行帐号-->
+		<property name="payTime"/> <!--支付时间-->
+		<property name="transactor"/> <!--经办人-->
+		<property name="transactorId"/> <!--经办人ID-->
+		<property name="payoffId"/> <!--发放报酬记录ID-->
+		<property name="remark"/> <!--备注-->
+	</class>
+		
+	<!--计费:报酬支付方式-->
+	<class name="com.yuanluesoft.charge.laborage.pojo.LaborageMode" table="charge_laborage_mode">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="providerId"/> <!--服务提供者帐户ID-->
+		<property name="providerName"/> <!--服务提供者帐户名称-->
+		<property name="payMode"/> <!--支付方式-->
+		<property name="bank"/> <!--转账银行-->
+		<property name="bankAccountName"/> <!--银行账户名称-->
+		<property name="bankAccount"/> <!--银行帐号-->
+	</class>
+	
+	<!--计费:月结报酬账单最近的月份-->
+	<class name="com.yuanluesoft.charge.laborage.pojo.LaborageLastMonth" table="charge_laborage_last_month">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="lastMonth"/> <!--最后生成时间-->
+	</class>
+</hibernate-mapping>

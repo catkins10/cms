@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--龙海市场监督管理局个体信用-->
+	<class name="com.yuanluesoft.credit.enterprisecredit.market.pojo.MarketPerson" table="credit_market_person">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="registCode"/> <!-- 注册号 -->
+		<property name="name"/><!-- 字号名称 -->
+		<property name="person"/> <!-- 经营者 -->
+		<property name="addr"/> <!-- 经营场所 -->
+		<property name="buildDate"/> <!--成立日期 -->
+		<property name="registrar"/> <!-- 登记机关 -->
+		<property name="aic"/> <!-- 工商所 -->
+		<property name="area"/><!-- 片区 -->
+		<property name="creditType"/> <!-- 信用类别 -->
+		<property name="creditScore"/> <!-- 信用分值 -->
+		<property name="tel"/> <!--电话 -->
+		<property name="businessScope"/> <!-- 经营范围 -->
+		<property name="startDate"/> <!-- 经营期限起 -->
+		<property name="endDate"/> <!-- 经营期限止 -->
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+		
+	</class>
+	
+	<!--龙海市场监督管理局企业信用-->
+	<class name="com.yuanluesoft.credit.enterprisecredit.market.pojo.MarketEnterprise" table="credit_market_enterprise">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="registCode"/> <!-- 注册号 -->
+		<property name="name"/><!-- 企业名称 -->
+		<property name="type"/><!-- 企业类型 -->
+		<property name="addr"/> <!-- 住所 -->
+		<property name="buildDate"/> <!--成立日期 -->
+		<property name="registrar"/> <!-- 登记机关 -->
+		<property name="aic"/> <!-- 工商所 -->
+		<property name="area"/><!-- 片区 -->
+		<property name="creditType"/> <!-- 信用类别 -->
+		<property name="creditScore"/> <!-- 信用分值 -->
+		<property name="person"/> <!-- 负责人 -->
+		<property name="tel"/> <!--电话 -->
+		<property name="businessScope"/> <!-- 经营范围 -->
+		<property name="startDate"/> <!-- 经营期限起 -->
+		<property name="endDate"/> <!-- 经营期限止 -->
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+		
+	</class>
+	
+	
+	
+	
+</hibernate-mapping>

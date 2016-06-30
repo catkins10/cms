@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="toFilterInfo" form="infoReceive" title="待筛选来稿" viewServiceName="infoViewService" hide="noPrivilege(manageUnit_filter)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.pojo.InfoReceive</pojo>
+			<where>InfoReceive.contributeTime is not null and InfoReceive.filterTime is null</where>
+			<orderBy>year(InfoReceive.contributeTime) DESC, month(InfoReceive.contributeTime) DESC, day(InfoReceive.contributeTime) DESC, InfoReceive.fromUnit</orderBy>
+			<quickFilter>InfoReceive.subject like '%{KEY}%' or lazyBody.body like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="标题" name="subject"/>
+			<column title="投稿单位" name="fromUnit" width="120"/>
+			<column title="投稿时间" name="contributeTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="filteredInfo" form="infoReceive" title="已筛选来稿" hide="noPrivilege(manageUnit_filter)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.pojo.InfoReceive</pojo>
+			<where>InfoReceive.contributeTime is not null and InfoReceive.filterTime is not null</where>
+			<orderBy>InfoReceive.contributeTime DESC</orderBy>
+			<quickFilter>InfoReceive.subject like '%{KEY}%' or lazyBody.body like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="标题" name="subject"/>
+			<column title="投稿单位" name="fromUnit" width="120"/>
+			<column title="投稿时间" name="contributeTime" width="110" align="center"/>
+			<column title="筛选时间" name="filterTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="todoInfo" form="info" title="待处理稿件" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.pojo.InfoFilter</pojo>
+			<where>InfoFilter.isBeCombined=0</where>
+			<orderBy>infoReceive.filterTime DESC</orderBy>
+			<filter>TODO</filter>
+			<quickFilter>InfoFilter.subject like '%{KEY}%' or lazyBody.body like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="多条合一" execute="var ids = document.getElementsByName('viewPackage.selectedIds')[0].value;if(ids.indexOf(',')!=-1){PageUtils.newrecord('j2oa/info', 'info', 'mode=fullscreen', 'combineInfoIds=' + ids);}"/>
+		</actions>
+		<categories root="所有稿件" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.info.pojo.InfoFilter</pojo>
+				<filter>TODO</filter>
+			</data>
+			<category value="InfoFilter.magazineName"> <!--value必须有-->
+				<data>InfoFilter.magazineName={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" /> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="标题" name="subject"/>
+			<column title="刊型" name="magazineName" width="80"/>
+			<column title="投稿单位" name="infoReceive.fromUnit" width="120"/>
+			<column title="投稿时间" name="infoReceive.contributeTime" width="110" align="center"/>
+			<column title="筛选时间" name="infoReceive.filterTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="processingInfo" form="info" title="在处理稿件" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.pojo.InfoFilter</pojo>
+			<where>InfoFilter.isBeCombined=0</where>
+			<orderBy>infoReceive.filterTime DESC</orderBy>
+			<filter>INPROCESS</filter>
+			<quickFilter>InfoFilter.subject like '%{KEY}%' or lazyBody.body like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有稿件" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.info.pojo.InfoFilter</pojo>
+				<filter>INPROCESS</filter>
+			</data>
+			<category value="InfoFilter.magazineName"> <!--value必须有-->
+				<data>InfoFilter.magazineName={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="标题" name="subject"/>
+			<column title="刊型" name="magazineName" width="80"/>
+			<column title="投稿单位" name="infoReceive.fromUnit" width="120"/>
+			<column title="投稿时间" name="infoReceive.contributeTime" width="110" align="center"/>
+			<column title="筛选时间" name="infoReceive.filterTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="completedInfo" form="info" title="已处理稿件" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="infoViewService">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.pojo.InfoFilter</pojo>
+			<where>InfoFilter.isBeCombined=0</where>
+			<orderBy>infoReceive.filterTime DESC</orderBy>
+			<filter>COMPLETED</filter>
+			<quickFilter>InfoFilter.subject like '%{KEY}%' or lazyBody.body like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有稿件" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.info.pojo.InfoFilter</pojo>
+				<filter>COMPLETED</filter>
+			</data>
+			<category value="InfoFilter.magazineName"> <!--value必须有-->
+				<data>InfoFilter.magazineName={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="标题" name="subject"/>
+			<column title="刊型" name="magazineName" width="80"/>
+			<column title="投稿单位" name="infoReceive.fromUnit" width="120"/>
+			<column title="投稿时间" name="infoReceive.contributeTime" width="110" align="center"/>
+			<column title="筛选时间" name="infoReceive.filterTime" width="110" align="center"/>
+			<column title="状态" name="status" width="50"/>
+		</columns>
+	</view>
+	
+	<view name="toTypesetInfo" form="info" title="待排版稿件" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.pojo.InfoFilter</pojo>
+			<where>InfoFilter.status=2 and InfoFilter.isBeCombined=0</where>
+			<orderBy>infoReceive.filterTime DESC</orderBy>
+			<filter>READABLE</filter>
+			<quickFilter>InfoFilter.subject like '%{KEY}%' or lazyBody.body like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有稿件" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.info.pojo.InfoFilter</pojo>
+				<filter>READABLE</filter>
+			</data>
+			<category value="InfoFilter.magazineName"> <!--value必须有-->
+				<where>InfoFilter.status=2</where>
+				<data>InfoFilter.magazineName={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" /> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="标题" name="subject"/>
+			<column title="刊型" name="magazineName" width="80"/>
+			<column title="投稿单位" name="infoReceive.fromUnit" width="120"/>
+			<column title="投稿时间" name="infoReceive.contributeTime" width="110" align="center"/>
+			<column title="筛选时间" name="infoReceive.filterTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="isuedInfo" form="info" title="已采用稿件" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.pojo.InfoFilter</pojo>
+			<where>InfoFilter.status=4 and InfoFilter.isBeCombined=0</where>
+			<orderBy>InfoFilter.issueTime DESC</orderBy>
+			<filter>READABLE</filter>
+			<quickFilter>InfoFilter.subject like '%{KEY}%' or lazyBody.body like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有稿件" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.info.pojo.InfoFilter</pojo>
+				<filter>READABLE</filter>
+			</data>
+			<category value="InfoFilter.magazineName"> <!--value必须有-->
+				<where>InfoFilter.status=4</where>
+				<data>InfoFilter.magazineName={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="补录" execute="PageUtils.newrecord('j2oa/info', 'info', 'mode=fullscreen');"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" /> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="标题" name="subject"/>
+			<column title="刊型" name="magazineName" width="80"/>
+			<column title="投稿单位" name="infoReceive.fromUnit" width="120"/>
+			<column title="投稿时间" name="infoReceive.contributeTime" width="110" align="center"/>
+			<column title="定版时间" name="issueTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="reviseInfo" form="reviseInfo" title="退改稿" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.pojo.InfoRevise</pojo>
+			<where>InfoRevise.revisePersonId={USERID}</where>
+			<orderBy>InfoRevise.reviseTime DESC</orderBy>
+			<quickFilter>InfoRevise.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="标题" name="subject"/>
+			<column title="退改稿意见" name="reviseOpinion"/>
+			<column title="退改稿时间" name="reviseTime" width="110" align="center"/>
+			<column title="修改时间" name="editTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="todoMagazine" form="magazine" title="待处理刊物" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="infoMagazineViewService">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.pojo.InfoMagazine</pojo>
+			<orderBy>InfoMagazine.typesetTime DESC</orderBy>
+			<filter>TODO</filter>
+			<quickFilter>useInfos.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有刊物" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.info.pojo.InfoMagazine</pojo>
+				<filter>TODO</filter>
+			</data>
+			<category value="InfoMagazine.name"> <!--value必须有-->
+				<data>InfoMagazine.name={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+			<column title="期数" name="sn" width="60" align="center"/>
+			<column title="总期数" name="snTotal" width="60" align="center"/>
+			<column title="排版时间" name="typesetTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="processingMagazine" form="magazine" title="在处理刊物" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="infoMagazineViewService">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.pojo.InfoMagazine</pojo>
+			<orderBy>InfoMagazine.typesetTime DESC</orderBy>
+			<filter>INPROCESS</filter>
+			<quickFilter>useInfos.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有刊物" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.info.pojo.InfoMagazine</pojo>
+				<filter>INPROCESS</filter>
+			</data>
+			<category value="InfoMagazine.name"> <!--value必须有-->
+				<data>InfoMagazine.name={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+			<column title="期数" name="sn" width="60" align="center"/>
+			<column title="总期数" name="snTotal" width="60" align="center"/>
+			<column title="排版时间" name="typesetTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="issuedMagazine" form="magazine" title="已定版刊物" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.pojo.InfoMagazine</pojo>
+			<where>InfoMagazine.issueTime is not null</where>
+			<orderBy>InfoMagazine.issueTime DESC</orderBy>
+			<filter>READABLE</filter>
+			<quickFilter>useInfos.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有刊物" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.info.pojo.InfoMagazine</pojo>
+				<filter>READABLE</filter>
+			</data>
+			<category value="InfoMagazine.name"> <!--value必须有-->
+				<data>InfoMagazine.name={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+			<column title="期数" name="sn" width="60" align="center"/>
+			<column title="总期数" name="snTotal" width="60" align="center"/>
+			<column title="排版时间" name="typesetTime" width="110" align="center"/>
+			<column title="定版时间" name="issueTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="selectUseInfos" form="info" title="采用稿件" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.pojo.InfoFilter</pojo>
+			<where>InfoFilter.status=2 and InfoFilter.isBeCombined=0 and InfoFilter.magazineDefineId={PARAMETER:magazineDefineId}</where>
+			<orderBy>infoReceive.filterTime DESC</orderBy>
+			<filter>READABLE</filter>
+			<quickFilter>InfoFilter.subject like '%{KEY}%' or lazyBody.body like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" /> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="标题" name="subject"/>
+			<column title="投稿单位" name="infoReceive.fromUnit" width="80"/>
+			<column title="投稿时间" name="infoReceive.contributeTime" width="60" align="center" format="MM-dd"/>
+		</columns>
+	</view>
+	
+	<view name="magazineDefine" form="magazineDefine" title="刊物配置" hide="noPrivilege(application_manager)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.pojo.InfoMagazineDefine</pojo>
+			<orderBy>InfoMagazineDefine.name</orderBy>
+			<quickFilter>InfoMagazineDefine.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加刊物" execute="PageUtils.newrecord('j2oa/info','magazineDefine','mode=fullscreen')"/>
+			<action title="刊物发布流程配置" execute="PageUtils.openurl('{WEBAPPLICATIONURL}/j2oa/info/workflowConfig.shtml?type=2', 'mode=fullscreen', 'workflowConfig')"/>
+			<action title="稿件审核流程配置" execute="PageUtils.openurl('{WEBAPPLICATIONURL}/j2oa/info/workflowConfig.shtml?type=1', 'mode=fullscreen', 'workflowConfig')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+			<column title="期号" name="sn" width="50" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="selectMagazineDefine" title="选择刊物" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.pojo.InfoMagazineDefine</pojo>
+			<orderBy>InfoMagazineDefine.name</orderBy>
+			<quickFilter>InfoMagazineDefine.name like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" /> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+		</columns>
+	</view>
+	
+	<view name="selectEditableMagazineDefine" title="选择刊物" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.pojo.InfoMagazineDefine</pojo>
+			<orderBy>InfoMagazineDefine.name</orderBy>
+			<filter>READABLE</filter>
+			<quickFilter>InfoMagazineDefine.name like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" /> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+		</columns>
+	</view>
+	
+	<view name="point" form="point" title="积分和稿酬" hide="noPrivilege(application_manager)" pageRows="20" openFeatures="mode=dialog,width=430,height=300">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.pojo.InfoPoint</pojo>
+			<orderBy>InfoPoint.item</orderBy>
+			<quickFilter>InfoPoint.magazineNames like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加项目" execute="PageUtils.newrecord('j2oa/info', 'point', 'mode=dialog,width=430,height=300')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="项目" name="item"  width="80"/>
+			<column title="刊物名称" name="magazineNames"/>
+			<column title="积分" name="point" width="60" align="center"/>
+			<column title="稿酬" name="remuneration" width="60" align="center"/>
+			<column title="简讯积分" name="briefPoint" width="60" align="center"/>
+			<column title="简讯稿酬" name="briefRemuneration" width="60" align="center"/>
+		</columns>
+	</view>
+	
+	<statisticView name="contributeStatistic" title="报送统计" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.pojo.InfoReceive</pojo>
+			<where>InfoReceive.contributeTime is not null</where>
+			<quickFilter>InfoReceive.fromUnit like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.info.pojo.InfoReceive</pojo>
+			</data>
+			<category value="year(InfoReceive.contributeTime)"> <!--value必须有-->
+				<data>year(InfoReceive.contributeTime)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(InfoReceive.contributeTime)"> <!--value必须有-->
+				<where>year(InfoReceive.contributeTime)={PARENTVALUE}</where>
+				<data>year(InfoReceive.contributeTime)={CATEGORY1VALUE} and month(InfoReceive.contributeTime)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<statistics hideDetail="true">
+			<statistic title="{PARAMETER:rowIndex}.{PARAMETER:fromUnit}">
+				<groupFields>
+					<groupField name="fromUnit"/>
+					<groupField name="fromUnitId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="contributeCount" function="count(distinct InfoReceive.id)"/> <!-- 上报数 -->
+					<statisticColumn name="issueCount" function="count(distinct InfoReceive.id)" whereExtend="infoFilters.status=4"/> <!-- 采用数量 -->
+				</statisticColumns>
+			</statistic>
+			<statistic statisticAll="true" title="合计">
+				<statisticColumns>
+					<statisticColumn name="contributeCount" function="count(distinct InfoReceive.id)"/> <!-- 上报数 -->
+					<statisticColumn name="issueCount" function="count(distinct InfoReceive.id)" whereExtend="infoFilters.status=4"/> <!-- 采用数量 -->
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<columns>
+			<column title="单位名称" name="fromUnit"/>
+			<column title="投稿数量" name="contributeCount" type="statistic" align="center" width="100"/>
+			<column title="采用数量" name="issueCount" type="statistic" align="center" width="100"/>
+			<column title="采用比例" name="issuePercentage" type="formula" formula="(issueCount + 0.0)/contributeCount" formulaFields="contributeCount,issueCount" format="#.##%" align="center" width="100"/>
+		</columns>
+	</statisticView>
+	
+	<view name="issueStatistic" title="采用统计" url="/j2oa/info/issueStatistic.shtml" pageRows="25" openFeatures="mode=fullscreen" viewServiceName="infoStatisticViewService">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.info.model.IssueTotal</pojo>
+		</data>
+		<columns>
+			<column title="单位名称" name="unitName"/>
+			<column title="积分" name="point" align="center" hideZero="true" width="50"/>
+			<column title="稿酬" name="remuneration" align="center" hideZero="true" width="50"/>
+			<column title="采用数" name="issue" align="center" hideZero="true" width="50"/>
+			<column title="简讯" name="briefIssue" align="center" hideZero="true" width="50"/>
+			<column title="上报省办" name="sendProvincial" align="center" hideZero="true" width="55"/>
+			<column title="省办采用" name="provincialIssue" align="center" hideZero="true" width="55"/>
+			<column title="上报国办" name="sendCountry" align="center" hideZero="true" width="55"/>
+			<column title="国办采用" name="countryIssue" align="center" hideZero="true" width="55"/>
+			<column title="市领导批示" name="cityInstruct" align="center" hideZero="true" width="66"/>
+			<column title="省领导批示" name="provincialInstruct" align="center" hideZero="true" width="66"/>
+			<column title="国家领导批示" name="countryInstruct" align="center" hideZero="true" width="80"/>
+		</columns>
+		<extendParameters>
+			<parameter name="extendPage">/j2oa/info/issueStatistic.jsp</parameter> <!-- 扩展页面 -->
+		</extendParameters>
+	</view>
+</views>

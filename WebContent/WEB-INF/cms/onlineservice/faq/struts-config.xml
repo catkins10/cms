@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminFaqView" type="com.yuanluesoft.cms.onlineservice.faq.forms.admin.FaqView"/>
+  <form-bean name="adminFaq" type="com.yuanluesoft.cms.onlineservice.faq.forms.admin.Faq"/>
+  <form-bean name="selectFaq" type="com.yuanluesoft.cms.onlineservice.faq.forms.SelectFaq"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminFaqView" path="/admin/faqView" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.faqview.admin.FaqViewAction" validate="false">
+   <forward name="load" path="/../../../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action name="adminFaq" path="/admin/faq" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.faq.admin.Load" validate="false">
+   <forward name="load" path="/admin/faq.jsp"/>
+  </action>
+  <action input="/admin/faq.jsp" name="adminFaq" path="/admin/saveFaq"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.faq.admin.Save" validate="false"/>
+  <action input="/admin/faq.jsp" name="adminFaq" path="/admin/deleteFaq"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.faq.admin.Delete" validate="false"/>
+  <action name="adminFaq" path="/admin/selectAttachment" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.faq.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action path="/faqs" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.faqs.Load" validate="false"/>
+  <action path="/faq" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.faq.Load" validate="false"/>
+  <action input="/admin/faq.jsp" name="adminFaq"
+   path="/admin/runFaqApproval" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.faq.admin.Run" validate="false"/>
+  <action input="/admin/faq.jsp" name="adminFaq" path="/admin/issueFaq"
+   scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.faq.admin.Issue" validate="false"/>
+  <action input="/admin/faq.jsp" name="adminFaq"
+   path="/admin/unissueFaq" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.faq.admin.Unissue" validate="false"/>
+  <action input="/admin/faq.jsp" name="adminFaq"
+   path="/admin/reissueFaq" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.faq.admin.Reissue" validate="false"/>
+  <action input="/admin/faq.jsp" name="adminFaq"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.faq.admin.WriteOpinion" validate="false"/>
+  <action input="/admin/faq.jsp" name="adminFaq"
+   path="/admin/undeleteFaq" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.faq.admin.Undelete" validate="false"/>
+  <action input="/admin/faq.jsp" name="adminFaq"
+   path="/admin/addRelationFaqs" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.faq.admin.AddRelationFaqs" validate="false"/>
+  <action input="/admin/faq.jsp" name="adminFaq"
+   path="/admin/removeRelationFaqs" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.faq.admin.RemoveRelationFaqs" validate="false"/>
+  <action name="selectFaq" path="/selectFaq" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.selectfaq.Load" validate="false">
+   <forward name="load" path="/../../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="selectFaq" path="/listFaqs" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.selectfaq.ListFaqs" validate="false">
+   <forward name="load" path="/../../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action path="/robot" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.robot.Load" validate="false"/>
+  <action input="/../../../jeaf/application/applicationView.jsp"
+   name="adminFaqView" path="/admin/importFaqs" scope="request"
+   type="com.yuanluesoft.cms.onlineservice.faq.actions.faqview.admin.ImportFaqs" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/localtax" form="admin/localtax" title="年度纳税信用评价Ａ级企业" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.localtax.pojo.LocalTax</pojo>
+			<orderBy>LocalTax.created</orderBy>
+			<quickFilter>LocalTax.name like '%{KEY}%' or LocalTax.number like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_localtax)" execute="PageUtils.newrecord('credit/enterprisecredit/localtax', 'admin/importData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_localtax)" execute="PageUtils.newrecord('credit/enterprisecredit/localtax','admin/localtax','mode=fullscreen')"/>
+			<action title="批量删除" hide="noPrivilege(manageUnit_localtax)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/localtax/batchOperate.shtml?pojoName=LocalTax')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" /> 		
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="number" title="纳税人识别号"/>
+			<column name="name" title="纳税人名称"  align="center"/>
+			<column name="level" title="联合评定等级" align="center"/>
+			<column name="department" title="地税主管税务机关" align="center"/>
+			<column name="year" title="所属年度" align="center"/>
+		</columns>
+	</view>
+	
+	
+</views>

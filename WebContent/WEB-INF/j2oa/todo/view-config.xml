@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="todo" form="todo" title="未办结事宜" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.todo.pojo.Todo</pojo>
+			<orderBy>Todo.beginTime</orderBy>
+			<where>Todo.completed!='1' 
+				   and ((Todo.isHand!='1' and Todo.personId={USERID})
+				    or (Todo.isHand='1' and (select count(*) from HandPerson HandPerson where HandPerson.mainRecordId=Todo.id and HandPerson.personId={USERID})>0))</where>
+			<quickFilter>Todo.subject like '%{KEY}%' or Todo.description like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有待办事宜" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.todo.pojo.Todo</pojo>
+			</data>
+			<category value="category"> <!--value必须有-->
+				<orderBy>Todo.category</orderBy>
+				<data>Todo.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="新建待办事宜" execute="PageUtils.newrecord('j2oa/todo','todo','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="开始时间" name="beginTime" width="110" format='M月d日H时' align="center" display="portlet"/>
+			<column title="开始时间" name="beginTime" width="110" format='yyyy-MM-dd HH:mm' align="center" display="normal,condition,print"/>
+			<column title="结束时间" name="endTime" width="110" format='yyyy-MM-dd HH:mm' align="center" display="normal,condition,print"/>
+			<column title="交办人" name="personName" width="60"/>
+		</columns>
+	</view>
+	
+	<calendarView defaultMode="month" name="todoCalendar" form="todo" title="未办结的待办事宜" pageRows="20" openFeatures="width=720,height=480">
+		<calendarAction execute="PageUtils.newrecord('j2oa/todo','todo','width=720,height=480', 'beginTime={CALENDAR_TIMESTAMP}')"/>
+		<data>
+			<pojo>com.yuanluesoft.j2oa.todo.pojo.Todo</pojo>
+			<orderBy>Todo.beginTime</orderBy>
+			<where>Todo.completed!='1' 
+				   and ((Todo.isHand!='1' and Todo.personId={USERID})
+				    or (Todo.isHand='1' and (select count(*) from HandPerson HandPerson where HandPerson.mainRecordId=Todo.id and HandPerson.personId={USERID})>0))</where>
+			<quickFilter>Todo.subject like '%{KEY}%' or Todo.description like '%{KEY}%'</quickFilter>
+			<calendarColumn>Todo.beginTime</calendarColumn>
+		</data>
+		<categories root="所有待办事宜" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.todo.pojo.Todo</pojo>
+			</data>
+			<category value="category"> <!--value必须有-->
+				<orderBy>Todo.category</orderBy>
+				<data>Todo.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="新建待办事宜" execute="PageUtils.newrecord('j2oa/todo','todo','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="主题" name="subject"/>
+		</columns>
+	</calendarView>
+	
+	<view name="todoCompleted" form="todo" title="已办结的待办事宜" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.todo.pojo.Todo</pojo>
+			<orderBy>Todo.beginTime</orderBy>
+			<where>Todo.completed='1' 
+				   and ((Todo.isHand!='1' and Todo.personId={USERID})
+				    or (Todo.isHand='1' and (select count(*) from HandPerson HandPerson where HandPerson.mainRecordId=Todo.id and HandPerson.personId={USERID})>0))</where>
+			<quickFilter>Todo.subject like '%{KEY}%' or Todo.description like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有待办事宜" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.todo.pojo.Todo</pojo>
+			</data>
+			<category value="category"> <!--value必须有-->
+				<orderBy>Todo.category</orderBy>
+				<data>Todo.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="新建待办事宜" execute="PageUtils.newrecord('j2oa/todo','todo','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="主题" name="subject"/>
+			<column title="开始时间" name="beginTime" width="110" format='yyyy-MM-dd HH:mm' align="center"/>
+			<column title="结束时间" name="endTime" width="110" format='yyyy-MM-dd HH:mm' align="center"/>
+			<column title="交办人" name="personName" width="60"/>
+		</columns>
+	</view>
+	
+	<view name="hand" form="hand" title="未办结的交办事宜" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.todo.pojo.Todo</pojo>
+			<orderBy>Todo.beginTime</orderBy>
+			<where>Todo.completed!='1' 
+				   and (Todo.isHand='1' and Todo.personId={USERID})</where>
+			<quickFilter>Todo.subject like '%{KEY}%' or Todo.description like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有交办事宜" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.todo.pojo.Todo</pojo>
+			</data>
+			<category value="category"> <!--value必须有-->
+				<orderBy>Todo.category</orderBy>
+				<data>Todo.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="新建交办事宜" hide="noPrivilege(manageUnit_createHand)"  execute="PageUtils.newrecord('j2oa/todo','hand','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="主题" name="subject"/>
+			<column title="开始时间" name="beginTime" width="110" format='yyyy-MM-dd HH:mm' align="center"/>
+			<column title="结束时间" name="endTime" width="110" format='yyyy-MM-dd HH:mm' align="center"/>
+		</columns>
+	</view>
+	
+	<view name="handCompleted" form="hand" title="已办结的交办事宜" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.todo.pojo.Todo</pojo>
+			<orderBy>Todo.beginTime</orderBy>
+			<where>Todo.completed='1' 
+				   and (Todo.isHand='1' and Todo.personId={USERID})</where>
+			<quickFilter>Todo.subject like '%{KEY}%' or Todo.description like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有交办事宜" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.todo.pojo.Todo</pojo>
+			</data>
+			<category value="category"> <!--value必须有-->
+				<orderBy>Todo.category</orderBy>
+				<data>Todo.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="新建交办事宜" hide="noPrivilege(manageUnit_createHand)" execute="PageUtils.newrecord('j2oa/todo','hand','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="主题" name="subject"/>
+			<column title="开始时间" name="beginTime" width="110" format='yyyy-MM-dd HH:mm' align="center"/>
+			<column title="结束时间" name="endTime" width="110" format='yyyy-MM-dd HH:mm' align="center"/>
+		</columns>
+	</view>
+</views>

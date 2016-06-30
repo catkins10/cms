@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminSignUp" type="com.yuanluesoft.onlinesignup.forms.admin.SignUpForm"/>
+  <form-bean name="signUp" type="com.yuanluesoft.onlinesignup.forms.SignUpForm"/>
+  <form-bean name="signUpStat" type="com.yuanluesoft.onlinesignup.forms.admin.SignUpStat"/>
+  <form-bean name="applicationView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminSignUp" path="/admin/signUp" scope="request"
+   type="com.yuanluesoft.onlinesignup.action.admin.Load" validate="false">
+   <forward name="load" path="/admin/signUp.jsp"/>
+  </action>
+  <action input="/admin/signUp.jsp" name="adminSignUp"
+   path="/admin/saveSignUp" scope="request"
+   type="com.yuanluesoft.onlinesignup.action.admin.Save" validate="false"/>
+  
+  <action input="/admin/signUp.jsp" name="adminSignUp" 
+   path="/admin/deleteSignUp" scope="request"
+   type="com.yuanluesoft.onlinesignup.action.admin.Delete" validate="false"/>
+  
+  <action input="/admin/signUp.jsp" name="adminSignUp"
+   path="/admin/runSignUp" scope="request"
+   type="com.yuanluesoft.onlinesignup.action.admin.Run" validate="false"/>
+   
+   
+  <action input="/admin/signUp.jsp" name="adminSignUp"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.onlinesignup.action.admin.WriteOpinion" validate="false"/>
+   
+   
+   <action name="signUp" path="/signUp" scope="request"
+   type="com.yuanluesoft.onlinesignup.action.Load" validate="false">
+   <forward name="load" path="/signUp.jsp"/>
+  </action>
+  
+  <action input="/signUp.jsp" name="signUp"
+   path="/saveSignUp" scope="request"
+   type="com.yuanluesoft.onlinesignup.action.Save" validate="false">
+   		<forward name="load" path="/signUp.jsp"/>
+   		<forward name="result" path="/signUpSubmitted.jsp"/>
+   </action>
+  
+  
+  <action input="/admin/signUp.jsp" name="adminSignUp" path="/admin/doAudit" scope="request"
+   type="com.yuanluesoft.onlinesignup.action.admin.Audit" validate="false"/>
+     <action input="/admin/signUp.jsp" name="adminSignUp" path="/admin/doAuditFailure" scope="request"
+   type="com.yuanluesoft.onlinesignup.action.admin.Audit" validate="false"/>
+    <action input="/admin/signUp.jsp" name="adminSignUp" path="/admin/submitToAudit" scope="request"
+   type="com.yuanluesoft.onlinesignup.action.admin.Audit" validate="false"/>
+   <action input="/admin/signUp.jsp" name="adminSignUp" path="/admin/unAudit" scope="request"
+   type="com.yuanluesoft.onlinesignup.action.admin.Audit" validate="false"/>
+   <!-- 统计 -->
+   <action name="signUpStat" path="/admin/signUpStat" scope="request"
+   type="com.yuanluesoft.onlinesignup.action.admin.IssueStatAction" validate="false">
+   <forward name="load" path="/../jeaf/application/applicationView.jsp"/>
+  </action>
+  
+   <!-- 批量删除操作 -->
+   <action input="/../jeaf/application/applicationView.jsp" name="applicationView" 
+   path="/batchOperate" scope="request" 
+   type="com.yuanluesoft.onlinesignup.action.admin.BatchOperate" validate="false" />
+   
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="20M"/>
+</struts-config>
+

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 依申请公开 -->
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/infopublic/request"/>
+		
+		<page name="publicRequest" title="信息公开申请" systemLink="false">
+			<subPage name="base" title="填写申请"/>
+			<field title="内容描述" name="subject"/>
+			<field title="用途" name="purpose"/>
+			<field title="编号" name="sn"/>
+			<field title="申请人" name="creator"/>
+			<field title="邮箱" name="creatorMail"/>
+			<field title="创建时间" name="created" type="timestamp"/>
+		</page>
+		
+		<page name="personalRequest" title="个人申请" url="/cms/infopublic/request/personalRequest.shtml" parentPage="publicRequest">
+			<subPage name="base" title="填写申请"/>
+			<field title="内容描述" name="subject"/>
+			<field title="用途" name="purpose"/>
+			<field title="编号" name="sn"/>
+			<field title="申请人" name="creator"/>
+			<field title="邮箱" name="creatorMail"/>
+			<field title="证件号码" name="creatorIdentityCard"/>
+			<field title="创建时间" name="created" type="timestamp"/>
+		</page>
+		
+		<page name="companyRequest" title="企业申请" url="/cms/infopublic/request/companyRequest.shtml" parentPage="publicRequest">
+			<subPage name="base" title="填写申请"/>
+			<field title="内容描述" name="subject"/>
+			<field title="用途" name="purpose"/>
+			<field title="编号" name="sn"/>
+			<field title="申请人" name="creator"/>
+			<field title="邮箱" name="creatorMail"/>
+			<field title="证件号码" name="creatorIdentityCard"/>
+			<field title="创建时间" name="created" type="timestamp"/>
+		</page>
+		
+		<page name="publicRequestSearch" title="搜索" searchPage="true" searchResults="publicRequests" url="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/infopublic/request&amp;pageName=publicRequestSearch"/>
+	</pages>
+	
+	<recordLists>
+		<recordList title="信息公开申请列表" name="publicRequests" recordPage="request" hostPage="index"/>
+		<recordList title="个人信息公开申请列表" name="personalPublicRequests" recordPage="personalRequest" hostPage="index"/>
+		<recordList title="企业信息公开申请列表" name="companyPublicRequests" recordPage="companyRequest" hostPage="index"/>
+	</recordLists>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="publicRequests" processor="publicRequestsProcessor"/> <!-- 信息公开申请列表处理器 -->
+		<pageElement name="personalPublicRequests" processor="publicRequestsProcessor"/> <!-- 信息公开个人申请列表处理器 -->
+		<pageElement name="companyPublicRequests" processor="publicRequestsProcessor"/> <!-- 信息公开企业申请列表处理器 -->
+	</pageElements>
+</application>

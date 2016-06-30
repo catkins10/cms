@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--公交线路-->
+	<class name="com.yuanluesoft.traffic.busline.pojo.BusLine" table="traffic_busline">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--线路名称,varchar2(50)-->
+		<property name="ticketPrice"/> <!--票价,varchar2(200)-->
+		<property name="summerUplinkFirst"/> <!--夏季首班车(上行),varchar2(20)-->
+		<property name="summerUplinkLast"/> <!--夏季末班车(上行),varchar2(20)-->
+		<property name="winterUplinkFirst"/> <!--冬季首班车(上行),varchar2(20)-->
+		<property name="winterUplinkLast"/> <!--冬季末班车(上行),varchar2(20)-->
+		<property name="summerDownlinkFirst"/> <!--夏季首班车(下行),varchar2(20)-->
+		<property name="summerDownlinkLast"/> <!--夏季末班车(下行),varchar2(20)-->
+		<property name="winterDownlinkFirst"/> <!--冬季首班车(下行),varchar2(20)-->
+		<property name="winterDownlinkLast"/> <!--冬季末班车(下行),varchar2(20)-->
+		<property name="uplinkDistance"/> <!--上行线路长度,number(6,3)-->
+		<property name="downlinkDistance"/> <!--下行线路长度,number(6,3)-->
+		<property name="uplinkLine"/> <!--上行主要线路,varchar2(1000)-->
+		<property name="downlinkLine"/> <!--下行主要线路,varchar2(1000)-->
+		<property name="busTotal"/> <!--配车总数,number(3,0)-->
+		<property name="dutyNumber"/> <!--班次,number(5,0)-->
+		<property name="peakFrequency"/> <!--高峰发车间隔,number(3,0)-->
+		<property name="commonFrequency"/> <!--平峰发车间隔,number(3,0)-->
+		<property name="modifyPersonId"/> <!--最后更新人ID,number(20) -->
+		<property name="modifyPerson"/> <!--最后更新人姓名,varchar2(50)-->
+		<property name="lastModified"/> <!--最后更新时间,timestamp-->
+		<set inverse="true" lazy="true" name="stations" table="traffic_busline_station" cascade="delete" order-by="priority DESC, id">
+			<key column="busLineId" />
+			<one-to-many class="com.yuanluesoft.traffic.busline.pojo.BusLineStation" />
+		</set>
+		<set inverse="true" lazy="true" name="changes" table="traffic_busline_change" cascade="delete" order-by="beginDate DESC">
+			<key column="busLineId" />
+			<one-to-many class="com.yuanluesoft.traffic.busline.pojo.BusLineChange" />
+		</set>
+	</class>
+	
+	<!--公交线路:途径的车站-->
+	<class name="com.yuanluesoft.traffic.busline.pojo.BusLineStation" table="traffic_busline_station">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="busLineId"/> <!--公交线路ID,number(20)-->
+		<property name="name"/> <!--站点名称,varchar2(30)-->
+		<property name="direction"/> <!--上行/下行,0/上行, 1/下行, 2/上下行,char(1)-->
+		<property name="status"/> <!--状态,0/正常,1/临时增加,2/临时取消,char(1)-->
+		<property name="priority"/> <!--优先级,number(7,4)-->
+	</class>
+	
+	<!--公交线路:变更通知-->
+	<class name="com.yuanluesoft.traffic.busline.pojo.BusLineChange" table="traffic_busline_change">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="busLineId"/> <!--公交线路ID,number(20)-->
+		<property name="content" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--变更说明,clob-->
+		<property name="interim"/> <!--是否临时变更,char(1)-->
+		<property name="beginDate"/> <!--开始时间,date null-->
+		<property name="endDate"/> <!--结束时间,date null-->
+		<property name="creatorId"/> <!--发布人ID,number(20) -->
+		<property name="creator"/> <!--发布人姓名,varchar2(50)-->
+		<property name="created"/> <!--发布时间,timestamp null-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="行业分类配置" class="com.yuanluesoft.fdi.industry.pojo.FdiIndustry">
+		<field name="category" title="分类名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="parentCategoryId" title="父分类ID" length="20" type="number" inputMode="hidden"/>
+		<field name="visitors" title="访问者" type="components">
+			<parameter name="class">com.yuanluesoft.fdi.industry.pojo.FdiIndustryPrivilege</parameter>
+		</field>
+		<field name="childCategories" title="下级分类" type="components">
+			<parameter name="class">com.yuanluesoft.fdi.industry.pojo.FdiIndustry</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

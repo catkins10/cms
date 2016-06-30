@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--物流联盟用户-->
+	<class name="com.yuanluesoft.logistics.usermanage.pojo.LogisticsUser" table="logistics_user">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="loginName"/> <!--登录用户名-->
+		<property name="password"/> <!--登录密码-->
+		<property name="isCompany"/> <!--公司/个人-->
+		<property name="isHalt"/> <!--是否停用-->
+		<property name="name"/> <!--公司名称/个人姓名-->
+		<property name="areaId"/> <!--所在地区ID-->
+		<property name="area"/> <!--所在地区-->
+		<property name="address"/> <!--地址-->
+		<property name="fax"/> <!--传真-->
+		<property name="tel"/> <!--电话-->
+		<property name="businessLicence"/> <!--公司营业执照号码-->
+		<property name="legalRepresentative"/> <!--法人代表-->
+		<property name="representativeIdNumber"/> <!--法人代表身份证号码-->
+		<property name="representativeTel"/> <!--法人代表联系电话-->
+		<property name="webSite"/> <!--公司网址-->
+		<property name="linkman"/> <!--联系人-->
+		<property name="linkmanTel"/> <!--联系电话-->
+		<property name="linkmanQQ"/> <!--联系人QQ-->
+		<property name="linkmanMail"/> <!--联系人邮箱-->
+		<property name="isDeleted"/> <!--是否删除-->
+		<property name="creatorId"/> <!--注册人ID-->
+		<property name="creator"/> <!--注册人姓名-->
+		<property name="created"/> <!--注册时间-->
+		<property name="creatorIP"/> <!--注册人IP-->
+		<property name="isApproval"/> <!--待审核,char(1)-->
+		<property name="approverId"/> <!--审核人ID,numeric(2)-->
+		<property name="approver"/> <!--审核人姓名,varchar(50)-->
+		<property name="approverIP"/> <!--审核人IP,varchar(50)-->
+		<property name="approvalTime"/> <!--审核时间,timestamp null-->
+		<property name="remark"/> <!--备注-->
+		<set name="blacklists" table="logistics_blacklist" lazy="true" inverse="true" cascade="delete" order-by="blacklistBegin desc">
+			<key column="userId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.logistics.usermanage.pojo.LogisticsBlacklist" />
+		</set>
+	</class>
+	
+	<!--物流联盟用户:黑名单-->
+	<class name="com.yuanluesoft.logistics.usermanage.pojo.LogisticsBlacklist" table="logistics_blacklist">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="userId"/> <!--用户ID-->
+		<property name="userName"/> <!--公司名称/个人姓名-->
+		<property name="blacklistBegin"/> <!--列入黑名单时间-->
+		<property name="blacklistEnd"/> <!--黑名单解禁时间-->
+		<property name="reason"/> <!--列入原因-->
+		<property name="remark"/> <!--备注-->
+	</class>
+</hibernate-mapping>

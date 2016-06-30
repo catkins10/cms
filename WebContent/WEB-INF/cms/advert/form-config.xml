@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/advertSpace" class="com.yuanluesoft.cms.advert.forms.admin.AdvertSpace" title="广告位" pojo="com.yuanluesoft.cms.advert.pojo.AdvertSpace">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteAdvertSpace')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/advertPutPage" class="com.yuanluesoft.cms.advert.forms.admin.AdvertPutPage" title="广告投放页面" pojo="com.yuanluesoft.cms.advert.pojo.AdvertSpace">
+		<formFields>
+			<field name="putPage" title="投放页面" type="component">
+				<parameter name="class">com.yuanluesoft.cms.advert.pojo.AdvertPutPage</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteAdvertPutPage')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/advertCustomer" class="com.yuanluesoft.cms.advert.forms.admin.AdvertCustomer" title="广告客户" pojo="com.yuanluesoft.cms.advert.pojo.AdvertCustomer">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteAdvertCustomer')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/advert" class="com.yuanluesoft.cms.advert.forms.admin.Advert" title="广告" pojo="com.yuanluesoft.cms.advert.pojo.Advert">
+		<formFields>
+			<field name="opener" title="opener" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="投放" hide="isRead() or isNew()" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/advert/admin/advertPut.shtml?siteId={PARAMETER:siteId}&amp;advertId={PARAMETER:id}', 500, 300)"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteAdvert')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/advertPut" class="com.yuanluesoft.cms.advert.forms.admin.AdvertPut" title="广告投放" pojo="com.yuanluesoft.cms.advert.pojo.AdvertPut">
+		<formFields>
+			<field name="currentAdvertPut" title="当前投放的广告" type="component" inputMode="readonly">
+				<parameter name="class">com.yuanluesoft.cms.advert.pojo.AdvertPut</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="投放" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="结束投放" hide="isRead() or isNew()" execute="if(confirm('是否确定要结束投放？'))FormUtils.doAction('finishAdvertPut')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.advert.forms.admin.InsertAdvertSpace" title="插入广告位">
+		<formFields>
+			<field title="广告位ID" name="advertSpaceId" type="string" inputMode="hidden"/>
+			<field title="广告位名称" name="advertSpaceName" type="string" inputMode="select">
+				<parameter name="js">/cms/advert/js/selectadvert.js</parameter>
+				<parameter name="execute">selectAdvert(500, 320, false, "advertSpaceId{id},advertSpaceName{name}", "", "", 0, false, true)</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field title="加载方式" name="loadMode" type="string" inputMode="dropdown">
+				<parameter name="itemsText">直接加载|0\0从下至上移动|1\0从上至下移动|2\0从左至右移动|3\0从右至左移动|4</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field title="加载速度(像数/毫秒)" name="speed" type="number" inputMode="dropdown">
+				<parameter name="itemsText">10\0 5\0 3\0 2\0 1\0 0.5\0 0.2\0 0.1</parameter>
+			</field>
+			<field title="关闭方式" name="hideMode" type="string" inputMode="dropdown">
+				<parameter name="itemsText">直接关闭|0\0从下至上移动|2\0从右至左移动|3\0从左至右移动|4</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field title="显示时长(秒)" name="displaySeconds" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

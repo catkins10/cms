@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 事项类别增加其他 -->
+<businessObjects>
+	<businessObject title="目录" class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectory" businessServiceName="onlineServiceDirectoryService">
+		<field name="code" title="编号" type="string" length="30" inputMode="text"/>
+		<field name="acceptWorkflowId" title="在线受理流程ID" length="20" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="acceptWorkflowName" title="在线受理流程" length="100" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('directoryWorkflowConfig', 'workflowConfigTarget=accept')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+		<field name="complaintWorkflowId" title="在线投诉流程ID" length="20" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="complaintWorkflowName" title="在线投诉流程" length="100" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('directoryWorkflowConfig', 'workflowConfigTarget=complaint')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+		<field name="consultWorkflowId" title="在线咨询流程ID" length="20" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="consultWorkflowName" title="在线咨询流程" length="100" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('directoryWorkflowConfig', 'workflowConfigTarget=consult')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+		<field name="faqWorkflowId" title="常见问题发布流程ID" length="20" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="faqWorkflowName" title="常见问题发布流程" length="100" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('directoryWorkflowConfig', 'workflowConfigTarget=faq')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+		<field name="itemSynchSiteIds" title="办理事项同步的网站栏目" length="200" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="complaintSynchSiteIds" title="投诉同步的网站栏目" length="200" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="consultSynchSiteIds" title="咨询同步的网站栏目" length="200" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="siteId" title="隶属站点ID" type="number" inputMode="hidden"/>
+		<field name="siteName" title="隶属站点名称" length="50" type="string" inputMode="select">
+			<parameter name="execute">selectSite(550, 360, false, 'siteId{id},siteName{name}', '', '', '', 'site')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+		</field>
+		<field name="halt" title="是否停用" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">启用|0\0停用|1</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="主目录" class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceMainDirectory" businessServiceName="onlineServiceDirectoryService">
+		<field name="acceptWorkflowId" title="在线受理流程ID" type="string" inputMode="hidden"/>
+		<field name="acceptWorkflowName" title="在线受理流程" length="50" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('mainDirectoryWorkflowConfig', 'workflowConfigTarget=accept')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+		<field name="complaintWorkflowId" title="在线投诉流程ID" type="string" inputMode="hidden"/>
+		<field name="complaintWorkflowName" title="在线投诉流程" length="50" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('mainDirectoryWorkflowConfig', 'workflowConfigTarget=complaint')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+		<field name="consultWorkflowId" title="在线咨询流程ID" type="string" inputMode="hidden"/>
+		<field name="consultWorkflowName" title="在线咨询流程" length="50" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('mainDirectoryWorkflowConfig', 'workflowConfigTarget=consult')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="办理事项编号规则" class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemCodeRule">
+		<field name="itemType" title="事项类型" length="80" type="string" inputMode="dropdown" required="true">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsText">行政许可|XK\0非行政许可|FXK\0行政处罚|CF\0行政确认|QR\0行政征收|ZS\0行政强制|QZ\0行政裁决|CJ\0行政监督检查|JD\0行政给付|GF\0其他行政行为|QT</parameter>
+			<parameter name="valueField">itemTypeShortName</parameter>
+		</field>
+		<field name="rule" title="规则" length="200" type="string" inputMode="text" required="true">
+			<parameter name="defaultValue">&lt;目录编号&gt;-[类型简称]-&lt;序号*3&gt;</parameter>
+		</field>
+		<field name="manualCodeEnabled" title="是否允许手工编号" length="80" type="char" inputMode="radio">
+			<parameter name="itemsText">允许|1\0不允许|0</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="办理事项" class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem" businessServiceName="onlineServiceItemService">
+		<field name="code" title="编号" length="100" type="string" inputMode="text"/>
+		<field name="name" title="办理事项名称" length="500" required="true" type="string" inputMode="textarea">
+			<parameter name="rssTitleField">true</parameter>
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="isPublic" title="是否发布" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">发布|1\0不发布|0</parameter>
+		</field>
+		<field name="priority" title="优先级" type="number" inputMode="none"/>
+		<field name="itemType" title="事项类型" length="80" type="string" inputMode="hidden">
+			<parameter name="itemsText">行政许可\0非行政许可\0行政处罚\0行政确认\0行政征收\0行政强制\0行政裁决\0行政监督检查\0行政给付\0其他行政行为\0其他</parameter>
+		</field>
+		<field name="publicServiceType" title="公共服务类别" length="80" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsText">管理服务\0便民服务\0其他事项</parameter>
+		</field>
+		<field name="acceptSupport" title="是否支持在线受理" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">支持|1\0不支持|0</parameter>
+		</field>
+		<field name="acceptWorkflowId" title="在线受理流程ID" length="20" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="acceptWorkflowName" title="在线受理流程" length="100" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('serviceItemWorkflowConfig', 'workflowConfigTarget=accept')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+		<field name="complaintSupport" title="是否支持在线投诉" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">支持|1\0不支持|0</parameter>
+		</field>
+		<field name="complaintWorkflowId" title="在线投诉流程ID" length="20" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="complaintWorkflowName" title="在线投诉流程" length="100" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('serviceItemWorkflowConfig', 'workflowConfigTarget=complaint')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+		<field name="consultSupport" title="是否支持在线咨询" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">支持|1\0不支持|0</parameter>
+		</field>
+		<field name="consultWorkflowId" title="在线咨询流程ID" length="20" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="consultWorkflowName" title="在线咨询流程" length="100" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('serviceItemWorkflowConfig', 'workflowConfigTarget=consult')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+		<field name="acceptUrl" title="在线受理链接" length="200" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="complaintUrl" title="在线投诉链接" length="200" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="consultUrl" title="在线咨询链接" length="200" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="querySupport" title="是否支持状态查询" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">支持|1\0不支持|0</parameter>
+		</field>
+		<field name="queryUrl" title="状态查询链接" length="200" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="resultSupport" title="是否支持结果查询" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">支持|1\0不支持|0</parameter>
+		</field>
+		<field name="resultUrl" title="结果查询链接" length="200" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="remark" title="备注" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="创建人ID" type="string" inputMode="none"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="rssPubDateField">true</parameter>
+		</field>
+		<field name="serviceItemGuide" title="办事指南" type="component" persistence="false">
+			<parameter name="class">com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemGuide</parameter>
+			<parameter name="readonly">true</parameter>
+			<parameter name="referenceFields">guide</parameter>
+		</field>
+		<field name="subjections" title="隶属目录列表" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemSubjection</parameter>
+		</field>
+		<field name="guide" title="办事指南" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemGuide</parameter>
+		</field>
+		<field name="materials" title="材料列表" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemMaterial</parameter>
+		</field>
+		<field name="downloads" title="表格下载列表" persistence="false" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemMaterial</parameter>
+			<parameter name="referenceFields">materials</parameter>
+		</field>
+		<field name="exampleDownloads" title="样表下载列表" persistence="false" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemMaterial</parameter>
+			<parameter name="referenceFields">materials</parameter>
+		</field>
+		<field name="units" title="办理机构列表" type="components">
+			<parameter name="class">com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemUnit</parameter>
+		</field>
+		<field name="transactors" title="办理人列表" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemTransactor</parameter>
+		</field>
+		<field name="faqs" title="常见问题解答列表" type="components">
+			<parameter name="class">com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemFaq</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="recordList">false</parameter>
+			<parameter name="serviceName">siteImageService</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="recordList">false</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">1000000</parameter>
+			<parameter name="recordList">false</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">100000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="recordList">false</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+			<parameter name="serviceName">siteVideoService</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="办理指南" class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemGuide" businessServiceName="onlineServiceItemService">
+		<field name="itemId" title="办理事项ID" length="20" type="number" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="condition" title="申办条件" length="4000" type="html" inputMode="htmleditor">
+			<parameter name="height">330</parameter>
+		</field>
+		<field name="according" title="办理依据" length="4000" type="html" inputMode="htmleditor">
+			<parameter name="height">330</parameter>
+		</field>
+		<field name="program" title="办理程序" length="4000" type="html" inputMode="htmleditor">
+			<parameter name="height">330</parameter>
+		</field>
+		<field name="legalLimit" title="法定时限" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="timeLimit" title="承诺时限" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="chargeAccording" title="收费依据" length="2000" type="html" inputMode="htmleditor">
+			<parameter name="height">330</parameter>
+		</field>
+		<field name="chargeStandard" title="收费标准" length="2000" type="string" inputMode="text"/>
+		<field name="legalRight" title="法律权利" length="4000" type="html" inputMode="htmleditor">
+			<parameter name="height">330</parameter>
+		</field>
+		<field name="responsibleDepartment" title="责任部门" length="200" type="string" inputMode="text"/>
+		<field name="address" title="办理地点" length="200" type="string" inputMode="text"/>
+		<field name="traffic" title="交通线路" length="200" type="string" inputMode="text"/>
+		<field name="transactor" title="经办人" length="100" type="string" inputMode="text"/>
+		<field name="transactorTel" title="经办人联系电话" length="300" type="string" inputMode="text"/>
+		<field name="acceptLimit" title="受理数量限制" length="200" type="string" inputMode="text"/>
+		<field name="acceptTime" title="受理时间" length="200" type="string" inputMode="text"/>
+		<field name="superviseLevel" title="监管等级" length="30" type="string" inputMode="text"/>
+		<field name="complaintTel" title="监督投诉电话" length="100" type="string" inputMode="text"/>
+		<field name="punishType" title="处罚种类" length="200" type="string" inputMode="text"/>
+		<field name="discretionRule" title="裁量规则" length="2000" type="string" inputMode="text"/>
+		<field name="coerciveMeasure" title="强制措施" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="acceptMode" title="受理形式" length="100" type="string" inputMode="dropdown">
+			<parameter name="itemsText">网上申报\0窗口受理\0网上申报或窗口受理</parameter>
+		</field>
+		<field name="publicMode" title="公开形式" length="100" type="string" inputMode="text"/>
+		<field name="publicRange" title="公开范围" length="100" type="string" inputMode="text"/>
+		<field name="publicTime" title="公开时间" length="100" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="申报材料" class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemMaterial" businessServiceName="onlineServiceItemService">
+		<field name="itemId" title="办理事项ID" length="20" type="number" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="name" title="申报材料名称" length="4000" required="true" type="string" inputMode="text"/>
+		<field name="description" title="申报说明" length="1000" type="string" inputMode="text"/>
+		<field name="tableName" title="表格名称" length="200" type="string" inputMode="text"/>
+		<field name="tableURL" title="表格URL" length="1000" type="string" inputMode="select">
+			<parameter name="execute">selectFile('tableURL')</parameter>
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="exampleURL" title="样表URL" length="1000" type="string" inputMode="select">
+			<parameter name="execute">selectFile('exampleURL')</parameter>
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="remark" title="备注" length="1000" type="string" inputMode="text"/>
+		<field name="item" title="办理事项" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="常见问题解答" class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemFaq" businessServiceName="onlineServiceItemService">
+		<field name="itemId" title="办理事项ID" length="20" type="number" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="question" title="问题" length="600" required="true" type="string" inputMode="text"/>
+		<field name="answer" title="解答" required="true" type="html" inputMode="htmleditor">
+			<parameter name="height">300</parameter>
+		</field>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="hidden"/>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="item" title="办理事项" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="办理机构" class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemUnit">
+		<field name="itemId" title="办理事项ID" length="20" type="number" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="unitId" title="单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="unitName" title="单位名称" length="100" type="String" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="模板配置" class="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceTemplate" businessServiceName="onlineServiceTemplateService">
+		<field name="directoryId" title="目录ID" length="20" type="number" inputMode="hidden"/>
+		<field name="directoryName" title="目录名称" length="30" type="string" inputMode="hidden"/>
+		<field name="itemTypes" title="事项类型" length="300" type="string" inputMode="hidden"/>
+	</businessObject>
+	
+	<businessObject title="事项类型" class="com.yuanluesoft.cms.onlineservice.model.OnlineServiceItemType">
+		<field name="itemType" title="类型" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="公共服务类别" class="com.yuanluesoft.cms.onlineservice.model.PublicServiceType">
+		<field name="type" title="类别" type="string" inputMode="text"/>
+	</businessObject>
+</businessObjects>

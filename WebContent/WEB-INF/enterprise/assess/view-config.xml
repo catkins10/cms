@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="todo" form="assess" title="待办考核" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="assessViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.assess.pojo.Assess</pojo>
+			<orderBy>Assess.created DESC</orderBy>
+			<quickFilter>Assess.creator like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="新建考核" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="被考核人" name="results.personName" ellipsis="等" length="10"/>
+			<column title="项目" name="projectTitle" width="200"/>
+			<column title="考核时间" name="created" format="yyyy-MM-dd" width="80" align="center"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="100" display="normal,print,portlet"/>
+		</columns>
+	</view>
+	
+	<view name="processing" form="assess" title="在办考核" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="assessViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.assess.pojo.Assess</pojo>
+			<orderBy>Assess.created DESC</orderBy>
+			<quickFilter>Assess.creator like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="新建考核" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="被考核人" name="results.personName" ellipsis="等" length="10"/>
+			<column title="项目" name="projectTitle" width="200"/>
+			<column title="考核时间" name="created" format="yyyy-MM-dd" width="80" align="center"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="100" display="normal,print,portlet"/>
+		</columns>
+	</view>
+	
+	<view name="completed" form="assess" title="办结考核" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="assessViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.assess.pojo.Assess</pojo>
+			<orderBy>Assess.created DESC</orderBy>
+			<quickFilter>Assess.creator like '%{KEY}%'</quickFilter>
+			<filter>COMPLETED</filter>
+		</data>
+		<actions>
+			<action title="新建考核" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="被考核人" name="results.personName" ellipsis="等" length="10"/>
+			<column title="项目" name="projectTitle" width="200"/>
+			<column title="考核时间" name="created" format="yyyy-MM-dd" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="assess" form="assess" title="所有考核" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="assessViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.assess.pojo.Assess</pojo>
+			<orderBy>Assess.created DESC</orderBy>
+			<quickFilter>Assess.creator like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="新建考核" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="被考核人" name="results.personName" ellipsis="等" length="10"/>
+			<column title="项目" name="projectTitle" width="200"/>
+			<column title="考核时间" name="created" format="yyyy-MM-dd" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="assessClassify" form="assessClassify" title="考核类型" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.assess.pojo.AssessClassify</pojo>
+			<orderBy>AssessClassify.priority DESC</orderBy>
+			<quickFilter>AssessClassify.classify like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新增类型" execute="PageUtils.newrecord('enterprise/assess', 'assessClassify', 'mode=fullscreen')"/>
+			<action title="调整优先级" execute="DialogUtils.adjustPriority('enterprise/assess', 'assessClassify', '考核类型优先级', 600, 400)"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="考核类型" name="classify"/>
+		</columns>
+	</view>
+</views>

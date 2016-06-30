@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="timetable" form="timetable" title="作息时间" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.timetable.pojo.Timetable</pojo>
+			<orderBy>Timetable.priority DESC, Timetable.effectiveDate DESC</orderBy>
+			<quickFilter>Timetable.description like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="配置作息时间" execute="PageUtils.newrecord('jeaf/timetable', 'timetable', 'mode=fullscreen')"/>
+			<action title="调整优先级" execute="DialogUtils.adjustPriority('jeaf/timetable', 'timetable', '作息时间优先级', 600, 400)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="描述" name="description"/>
+			<column title="生效时间" name="effectiveDate" align="center" width="100"/>
+		</columns>
+	</view>
+</views>

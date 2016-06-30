@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--日程安排-->
+	<class name="com.yuanluesoft.j2oa.calendar.pojo.Calendar" table="calendar_calendar">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="subject"/> <!--主题-->
+		<property name="description" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--内容-->
+		<property name="address"/> <!--地点-->
+		<property name="important"/> <!--重要性-->
+		<property name="department"/> <!--主办部门-->
+		<property name="beginTime"/> <!--开始时间-->
+		<property name="endTime"/> <!--结束时间-->
+		<property name="creatorId"/> <!--经办人ID-->
+		<property name="created"/> <!--安排时间-->
+		<property name="publish"/> <!--是否发布-->
+		<set name="visitors" table="calendar_calendar_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.calendar.pojo.CalendarPrivilege"/>
+		</set>
+	</class>
+	
+	<!--日程安排权限控制/参加人-->
+	<class name="com.yuanluesoft.j2oa.calendar.pojo.CalendarPrivilege"
+		table="calendar_calendar_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+</hibernate-mapping>

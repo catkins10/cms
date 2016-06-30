@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<SCRIPT>window.onerror=function(){return true;}</SCRIPT>
+</head>
+<body>
+	<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td>
+				<div class="titleBar" id="titleBar">
+					<button title="关闭" class="returnButton" onclick="window.closeWindow();">&nbsp;</button>
+					<a id="pageLink" class="button" href="/cms/complaint/complaint.shtml" urn="siteId=-1&amp;linkTitle=结果反馈" target="_blank">结果反馈</a>
+       				<a id="pageLink" class="button" href="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/complaint&amp;pageName=myComplaints" urn="siteId=-1&amp;linkTitle=建议列表" target="_blank">征集结果</a>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" style="height: 100%; background-color: rgb(255, 255, 255); padding: 8px 8px 8px 8px;">
+				<div title="内容区域" id="contentArea">
+					<div style="text-align: center; padding-bottom: 5px; clear: both;"><b><a id="field" urn="name=subject">&lt;主题&gt;</a></b></div>
+			        <div style="text-align: left"><a id="field" urn="name=body">&lt;正文&gt;</a></div>
+					提交您的建议：
+			        <form id="adviceForm" class="form" title="表单:建议提交" action="applicationName=cms/advice">
+			        	<table class="editabledTable" width="100%">
+				            <tr>
+				                <td><input id="field" class="field" title="主题" alt="主题" name="subject" type="text" /></td>
+				            </tr>
+				            <tr>
+				                <td><textarea id="field" class="field" title="正文" alt="正文" name="content"></textarea></td>
+				            </tr>
+				            <tr>
+				                <td align="right"><input id="field" class="field" title="建议人" alt="您的姓名" name="creator" type="text" /></td>
+				            </tr>
+				            <tr>
+				                <td><input id="field" class="field" title="写信人手机" alt="您的手机" name="creatorMobile" type="text" /></td>
+				            </tr>
+				            <tr>
+				                <td><input id="field" class="field" title="写信人邮箱" alt="您的邮箱" name="creatorMail" type="text" /></td>
+				            </tr>
+				        </table>
+				        <div style="text-align:center">
+				        	<button style="margin-top: 5px; margin-bottom: 3px; margin-right: 5px" id="button" class="button" title="提交">&nbsp;提交&nbsp;</button>
+				        </div>
+			        </form>
+				</div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="客户单位" class="com.yuanluesoft.fdi.customer.pojo.FdiCustomerCompany" businessServiceName="fdiCustomerService">
+		<field name="name" title="中文名称" length="300" required="true" type="string" inputMode="text"/>
+		<field name="englishName" title="英文名称" length="300" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="address" title="地址" length="500" required="true" type="string" inputMode="text"/>
+		<field name="webSite" title="网站地址" length="300" type="string" inputMode="text"/>
+		<field name="country" title="母公司所在国家或地区" length="200" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(500, 350, false, 'country{fullName}', '', 'area', '', '', '', false, false, false)</parameter>
+		</field>
+		<field name="introduction" title="单位简介" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+		<field name="chinaHeadOffice" title="中国区总部名称" length="300" type="string" inputMode="text"/>
+		<field name="contact" title="联络方式" length="300" type="string" inputMode="text"/>
+		<field name="worldTop500" title="是否世界500强企业" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+		<field name="chosenYear" title="入选年份" length="4" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="ranking" title="排名" length="3" type="string" inputMode="text"/>
+		<field name="remark" title="备注" length="1000" type="string" inputMode="text"/>
+		<field name="creatorId" title="登记人ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="industries" title="所属行业" type="components">
+			<parameter name="class">com.yuanluesoft.fdi.customer.pojo.FdiCustomerCompanyIndustry</parameter>
+			<parameter name="lazyLoad">false</parameter>
+		</field>
+		<field name="contacts" title="客户联系人" type="components">
+			<parameter name="class">com.yuanluesoft.fdi.customer.pojo.FdiCustomerContact</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="单位所属行业" class="com.yuanluesoft.fdi.customer.pojo.FdiCustomerCompanyIndustry">
+		<field name="companyId" title="单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="industryId" title="行业ID" length="20" type="number" inputMode="hidden"/>
+		<field name="industry" title="行业名称" length="200" type="string" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="客户联系人" class="com.yuanluesoft.fdi.customer.pojo.FdiCustomerContact" businessServiceName="fdiCustomerService">
+		<field name="companyId" title="客户单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="companyName" title="客户单位名称" length="300" type="string" inputMode="readonly"/>
+		<field name="name" title="中文姓名" length="50" required="true" type="string" inputMode="text"/>
+		<field name="englishName" title="英文姓名" length="100" type="string" inputMode="text"/>
+		<field name="sex" title="性别" required="true" type="string" inputMode="radio">
+			<parameter name="itemsText">男|M\0女|F</parameter>
+		</field>
+		<field name="address" title="个人地址" length="500" type="string" inputMode="text"/>
+		<field name="tel" title="电话" length="200" type="string" inputMode="text"/>
+		<field name="mobile" title="手机" length="200" type="string" inputMode="text"/>
+		<field name="fax" title="传真" length="200" type="string" inputMode="text"/>
+		<field name="email" title="E-mail" length="200" type="string" inputMode="text"/>
+		<field name="im" title="QQ\MSN\微博" length="200" type="string" inputMode="text"/>
+		<field name="post" title="所在部门及职务" length="200" type="string" inputMode="text"/>
+		<field name="remark" title="个人备注" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="discuss" title="商谈事项" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="source" title="信息来源" length="1000" type="string" inputMode="text"/>
+		<field name="chinaContact" title="最初中方联系人" length="100" type="string" inputMode="text"/>
+		<field name="created" title="收录时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="creatorId" title="录入者ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="录入者" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="discusses" title="往来情况" type="components">
+			<parameter name="class">com.yuanluesoft.fdi.customer.pojo.FdiCustomerContactDiscuss</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="往来情况" class="com.yuanluesoft.fdi.customer.pojo.FdiCustomerContactDiscuss" businessServiceName="fdiCustomerService">
+		<field name="contactId" title="客户联系人ID" length="20" type="number" inputMode="hidden"/>
+		<field name="discussTime" title="时间" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="discussAddress" title="地点" length="200" required="true" type="string" inputMode="text"/>
+		<field name="discussPerson" title="洽谈人" length="200" required="true" type="string" inputMode="text"/>
+		<field name="discussContent" title="洽谈内容" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

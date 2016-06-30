@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Application>
+	<Actions>
+		<Action Name="作废" DeleteAction="true"/>
+		<Action Name="增加传阅人"/>
+		<Action Name="归档" Send="true"/> <!-- Prompt="尚未归档" Necessary="true" -->
+	</Actions>
+	<SubForms>
+		<SubForm Id="Regist" Name="登记"/>
+		<SubForm Id="Approval" Name="批阅"/>
+		<SubForm Id="Read" Name="只读"/>
+	</SubForms>
+	<TypeDeclarations/>
+	<DataFields>
+		<DataField Id="docWord" Name="文件字号">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="keyword" Name="主题词">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="fromUnit" Name="来文单位">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+	</DataFields>
+	<Applications/>
+</Application>

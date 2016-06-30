@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--中国银行:B2C订单-->
+	<class name="com.yuanluesoft.jeaf.payment.paymentmethod.bocbank.pojo.BocbankB2COrder" table="payment_bocbank_b2c_order">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="paymentId"/> <!--支付单ID,NUMERIC(20)-->
+		<property name="merchantNo"/> <!--商户号,BOC商户ID,VARCHAR(20)-->
+		<property name="orderNo"/> <!--BOC商户ID,商户系统产生的订单号,VARCHAR(19)-->
+		<property name="orderSeq"/> <!--银行订单流水号,银行的订单流水号（银行产生的订单唯一标识）,VARCHAR(20)-->
+		<property name="orderStatus"/> <!--订单状态,订单状态：0-未处理 1-支付 4-未明 5-失败,VARCHAR(2)-->
+		<property name="cardTyp"/> <!--银行卡类别,银行卡类别：01：中行借记卡 02：中行信用卡，信用卡（分行卡） 04：中行信用卡，信用卡（总行卡） 11：银联借记卡 21：VISA借记卡 22：VISA信用卡 31：MC 借记卡 32：MC 信用卡 42：运通卡 52：大来卡 62：JCB卡,VARCHAR(2)-->
+		<property name="acctNo"/> <!--支付卡号,为保护个人客户信息，我行暂不提供该数据项，以****反馈,VARCHAR(18)-->
+		<property name="holderName"/> <!--持卡人姓名,为保护个人客户信息，我行暂不提供该数据项，以****反馈,VARCHAR(30)-->
+		<property name="ibknum"/> <!--支付卡省行联行号,为保护个人客户信息，我行暂不提供该数据项，以****反馈,VARCHAR(5)-->
+		<property name="payTime"/> <!--支付时间,支付交易的日期时间 格式：YYYYMMDDHHMISS,VARCHAR(14)-->
+		<property name="payAmount"/> <!--支付金额,支付金额，格式：整数位不前补零,小数位补齐2位 即：不超过10位整数位+1位小数点+2位小数  无效格式如123，.10，1.1,有效格式如1.00，0.10,VARCHAR(13)-->
+		<property name="visitorIp"/> <!--访问者IP,客户通过网银支付时的IP地址信息,VARCHAR(40)-->
+		<property name="visitorRefer"/> <!--访问者Refer信息,客户浏览器跳转至网银支付登录界面前所在页面的URL（urlEncode格式）,VARCHAR(3000)-->
+	</class>
+	
+	<!--中国银行:B2B订单-->
+	<class name="com.yuanluesoft.jeaf.payment.paymentmethod.bocbank.pojo.BocbankB2BOrder" table="payment_bocbank_b2b_order">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="paymentId"/> <!--支付单ID,NUMERIC(20)-->
+		<property name="bocNo"/> <!--商户号,网关商户号,VARCHAR(20)-->
+		<property name="orderNo"/> <!--商户订单号,商户系统产生的订单号；数字与26个英文字母以及中划线（-）和下划线（_）,VARCHAR(20)-->
+		<property name="orderSeq"/> <!--订单流水,网关保存的订单唯一流水号,NUMERIC(20)-->
+		<property name="curCode"/> <!--订单币种,目前只支持001-人民币 固定填001,VARCHAR(3)-->
+		<property name="orderAmount"/> <!--订单金额,订单总金额,NUMERIC(15,2)-->
+		<property name="recvTime"/> <!--接单时间,网关接收订单的时间 格式：YYYYMMDDHHMISS 其中时间为24小时格式，例:2010年3月2日下午4点5分28秒表示为20100302160528,VARCHAR(14)-->
+		<property name="lastTranTime"/> <!--最后交易时间,后台最近一次交易的处理时间,VARCHAR(14)-->
+		<property name="refundedAmount"/> <!--订单累计退款金额,针对一笔订单支持多次退款，该域表示订单成功退款交易的累计金额,NUMERIC(15,2)-->
+		<property name="orderStatus"/> <!--订单状态,订单状态 0:未确认/1:确认/T1:支付成功/T2:支付失败/T3:支付故障/ 10:过期失效,VARCHAR(2)-->
+		<property name="actnumT"/> <!--收款账号,收款账户账号，收款账户为他行有可能超过18位,VARCHAR(30)-->
+		<property name="actnamT"/> <!--收款账户名称,收款账户的户名 受控于订单类型属性，订单类型为0-B2B直付时，该信息为空；订单类型为1-B2B保付时，该信息有值,VARCHAR(30)-->
+		<property name="bocFlag"/> <!--中行标志,收款账户是否是中行的标志  0:他行/1:中行 受控于订单类型属性，订单类型为0-B2B直付时，该信息为空；订单类型为1-B2B保付时，该信息有值,VARCHAR(1)-->
+		<property name="ibkNamT"/> <!--收款行名称,中行标志表示为他行时必填 收款账户开户行名称，最长29位汉字符 受控于订单类型属性，订单类型为0-B2B直付时，该信息为空；订单类型为1-B2B保付时，该信息有值,VARCHAR(58)-->
+		<property name="cnapsNo"/> <!--人行行号,中行标志表示为他行时必填 人民银行分配给各行的支付行行号 受控于订单类型属性，订单类型为0-B2B直付时，该信息为空；订单类型为1-B2B保付时，该信息有值,VARCHAR(12)-->
+		<property name="ibkNumT"/> <!--收款省行联行号,中行标志表示为中行时必填 收款账户所属省行联行号（收款账户是中行账户时） 受控于订单类型属性，订单类型为0-B2B直付时，该信息为空；订单类型为1-B2B保付时，该信息有值,VARCHAR(5)-->
+		<property name="orgidtT"/> <!--收款行机构号,可选项 收款账户开户行机构号（收款账户是中行账户时，旧线为orgidt机构号，新线要求是bancs机构号） 受控于订单类型属性，订单类型为0-B2B直付时，该信息为空；订单类型为1-B2B保付时，该信息有值,VARCHAR(5)-->
+		<property name="orderType"/> <!--订单类型,订单类型为0-B2B直付;订单类型为1-B2B保付;,CHAR(1)-->
+		<property name="ibknumF"/> <!--付款省行联行号,付款账户所属省行联行号，为保护客户信息，我行暂不提供该数据项，以****反馈商户。,VARCHAR(5)-->
+		<property name="actnumF"/> <!--付款账号,付款账户账号，为保护客户信息，我行暂不提供该数据项，以****反馈商户,VARCHAR(30)-->
+		<property name="actnamF"/> <!--付款账户名称,付款账户的户名，为保护客户信息，我行暂不提供该数据项，以****反馈商户,VARCHAR(30)-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<statisticView name="smsActivateMonitor" title="短信开通监察统计" url="/cms/monitor/monitorStat.shtml?applicationName=cms/monitor/sms&amp;viewName=smsActivateMonitor" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorStatViewService">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.usermanage.pojo.Org</pojo>
+			<join>, OrgSubjection OrgSubjection, Unit Unit</join>
+			<where>OrgSubjection.parentDirectoryId=Org.id and OrgSubjection.directoryId=Unit.id</where>
+		</data>
+		<statistics hideDetail="true">
+			<statistic> <!-- 单位统计 -->
+				<groupFields>
+					<groupField name="id"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="unitCount" function="count(distinct Unit.id)"/> <!-- 总数 -->
+					<statisticColumn name="activateUnitCount" function="count(distinct Unit.id)" whereExtend="Unit.id in (select MonitorSmsActivate.unitId from MonitorSmsActivate MonitorSmsActivate where MonitorSmsActivate.activate=1)"/> <!-- 已开通单位 -->
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位名称" name="directoryName">
+				<link>monitorStat.shtml?applicationName={PARAMETER:applicationName}&amp;viewName={PARAMETER:viewName}&amp;viewPackage.categories={PARAMETER:viewPackage.categories}&amp;parentOrgId={PARAMETER:id}</link>
+			</column>
+			<column title="单位总数" name="unitCount" type="statistic" align="center" width="100"/>
+			<column title="已开通数量" name="activateUnitCount" type="statistic" align="center" width="100"/>
+			<column title="未开通数量" type="formula" formula="unitCount-activateUnitCount" formulaFields="unitCount,activateUnitCount" align="center" width="100"/>
+			<column title="开通率" type="formula" formula="(activateUnitCount+0.0)/unitCount" formulaFields="unitCount,activateUnitCount" format="#.##%" align="center" width="100"/>
+		</columns>
+		<extendParameters>
+			<parameter name="unitIdFieldName">id</parameter> <!-- 单位ID字段名称,默认是unitId -->
+			<parameter name="unitNameFieldName">directoryName</parameter> <!-- 单位名称字段名称,默认是unitName -->
+		</extendParameters>
+	</statisticView>
+	
+	<view name="smsActivate" title="短信开通列表" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.sms.pojo.MonitorSmsActivate</pojo>
+			<where>MonitorSmsActivate.activate=1</where>
+			<orderBy>MonitorSmsActivate.unitName</orderBy>
+			<quickFilter>MonitorSmsActivate.unitName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位名称" name="unitName"/>
+			<column title="开通时间" name="activateTime" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="采集时间" name="captureTime" align="center" width="70" format="yyyy-MM-dd"/>
+		</columns>
+	</view>
+
+	<statisticView name="smsSendMonitor" title="短信发送监察统计" url="/cms/monitor/monitorStat.shtml?applicationName=cms/monitor/sms&amp;viewName=smsSendMonitor" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorStatViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.sms.pojo.MonitorSmsSend</pojo>
+		</data>
+		<statistics hideDetail="true">
+			<statistic> <!-- 单位统计 -->
+				<groupFields>
+					<groupField name="unitName"/>
+					<groupField name="unitId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="count" function="count(MonitorSmsSend.id)"/> <!-- 总数 -->
+					<statisticColumn name="thisMonthCount" function="count(MonitorSmsSend.id)" whereExtend="MonitorSmsSend.timeoutLevel=0 and year(MonitorSmsSend.sendTime)={YEAR} and month(MonitorSmsSend.sendTime)={MONTH}"/> <!-- 本月度新增短信数 -->
+					<statisticColumn name="lastMonthCount" function="count(MonitorSmsSend.id)" whereExtend="MonitorSmsSend.timeoutLevel=0 and ((year(MonitorSmsSend.sendTime)={YEAR} and month(MonitorSmsSend.sendTime)={MONTH}-1) or ({MONTH}=1 and year(MonitorSmsSend.sendTime)={YEAR}-1 and month(MonitorSmsSend.sendTime)=12))"/> <!-- 上月短信数 -->
+					<statisticColumn name="thisYearCount" function="count(MonitorSmsSend.id)" whereExtend="MonitorSmsSend.timeoutLevel=0 and year(MonitorSmsSend.sendTime)={YEAR}"/> <!-- 本年度新增短信数 -->
+					<statisticColumn name="lastYearCount" function="count(MonitorSmsSend.id)" whereExtend="MonitorSmsSend.timeoutLevel=0 and year(MonitorSmsSend.sendTime)={YEAR}-1"/> <!-- 去年短信数 -->
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位名称" name="unitName">
+				<link>monitorStat.shtml?applicationName={PARAMETER:applicationName}&amp;viewName={PARAMETER:viewName}&amp;viewPackage.categories={PARAMETER:viewPackage.categories}&amp;beginDate={PARAMETER:beginDate}&amp;endDate={PARAMETER:endDate}&amp;parentOrgId={PARAMETER:unitId}</link>
+			</column>
+			<column title="短信总数" name="count" type="statistic" align="center" width="100"/>
+			<column title="本月新增短信数" name="thisMonthCount" type="statistic" align="center" width="100"/>
+			<column title="上月短信数" name="lastMonthCount" type="statistic" align="center" width="100"/>
+			<column title="本年度新增短信数" name="thisYearCount" type="statistic" align="center" width="100"/>
+			<column title="去年短信数" name="lastYearCount" type="statistic" align="center" width="100"/>
+		</columns>
+	</statisticView>
+	
+	<view name="smsSend" form="smsSend" title="短信发送列表" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.sms.pojo.MonitorSmsSend</pojo>
+			<orderBy>MonitorSmsSend.captureTime DESC</orderBy>
+			<quickFilter>MonitorSmsSend.content like '%{KEY}%' or MonitorSmsSend.unitName like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.monitor.sms.pojo.MonitorSmsSend</pojo>
+			</data>
+			<category value="MonitorSmsSend.unitName"> <!--value必须有-->
+				<data>MonitorSmsSend.unitName={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="内容" name="content"/>
+			<column title="单位名称" name="unitName" width="100"/>
+			<column title="发送时间" name="sendTime" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="发送条数" name="sendCount" align="center" width="70"/>
+			<column title="采集时间" name="captureTime" align="center" width="70" format="yyyy-MM-dd"/>
+		</columns>
+	</view>
+	
+	<statisticView name="smsReceiveMonitor" title="短信接收监察统计" url="/cms/monitor/monitorStat.shtml?applicationName=cms/monitor/sms&amp;viewName=smsReceiveMonitor" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorStatViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.sms.pojo.MonitorSmsReceive</pojo>
+		</data>
+		<!-- categories root="全部" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.monitor.sms.pojo.MonitorSmsReceive</pojo>
+			</data>
+			<category value="year(MonitorSmsReceive.receiveTime)">
+				<orderBy>year(MonitorSmsReceive.receiveTime) DESC</orderBy>
+				<data>year(MonitorSmsReceive.receiveTime)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(MonitorSmsReceive.receiveTime)">
+				<where>year(MonitorSmsReceive.receiveTime)={CATEGORY1VALUE}</where>
+				<orderBy>month(MonitorSmsReceive.receiveTime) DESC</orderBy>
+				<data>year(MonitorSmsReceive.receiveTime)={CATEGORY1VALUE} and month(MonitorSmsReceive.receiveTime)={CATEGORYVALUE}</data>
+			</category>
+		</categories -->
+		<statistics hideDetail="true">
+			<statistic> <!-- 单位统计 -->
+				<groupFields>
+					<groupField name="unitName"/>
+					<groupField name="unitId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="count" function="count(distinct MonitorSmsReceive.id)"/> <!-- 总数 -->
+					<statisticColumn name="timeoutLevel1Count" function="count(distinct MonitorSmsReceive.id)" whereExtend="MonitorSmsReceive.replyTime is null"/> <!-- 未答复数 -->
+					<statisticColumn name="ontimeCount" function="count(distinct MonitorSmsReceive.id)" whereExtend="MonitorSmsReceive.timeoutLevel=0 and MonitorSmsReceive.replyTime is not null"/> <!-- 合格数量 -->
+					<statisticColumn name="timeoutCount" function="count(distinct MonitorSmsReceive.id)" whereExtend="MonitorSmsReceive.timeoutLevel>0"/> <!-- 超时信息数量 -->
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位名称" name="unitName">
+				<link>monitorStat.shtml?applicationName={PARAMETER:applicationName}&amp;viewName={PARAMETER:viewName}&amp;viewPackage.categories={PARAMETER:viewPackage.categories}&amp;beginDate={PARAMETER:beginDate}&amp;endDate={PARAMETER:endDate}&amp;parentOrgId={PARAMETER:unitId}</link>
+			</column>
+			<column title="意见数量" name="count" type="statistic" align="center" width="70"/>
+			<column title="未答复数量" name="timeoutLevel1Count" type="statistic" align="center" width="70"/>
+			<column title="及时答复数量" name="ontimeCount" type="statistic" align="center" width="90"/>
+			<column title="超时答复数量" name="timeoutCount" type="statistic" align="center" width="90"/>
+			<column title="超时百分比" name="timeoutPercentage" type="formula" formula="(timeoutCount + 0.0)/count" formulaFields="timeoutCount,count" format="#.##%" align="center" width="100"/>
+		</columns>
+		<extendParameters>
+			<parameter name="statTimeFieldName">receiveTime</parameter> <!-- 统计时间字段 -->
+			<parameter name="extendPage">/cms/monitor/monitorStat.jsp</parameter> <!-- 扩展页面 -->
+		</extendParameters>
+	</statisticView>
+	
+	<view name="smsReceive" form="smsReceive" title="短信接收列表" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.sms.pojo.MonitorSmsReceive</pojo>
+			<orderBy>MonitorSmsReceive.captureTime DESC</orderBy>
+			<quickFilter>MonitorSmsReceive.content like '%{KEY}%' or MonitorSmsReceive.unitName like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.monitor.sms.pojo.MonitorSmsReceive</pojo>
+			</data>
+			<category value="MonitorSmsReceive.unitName"> <!--value必须有-->
+				<data>MonitorSmsReceive.unitName={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="内容" name="content"/>
+			<column title="单位名称" name="unitName" width="100"/>
+			<column title="接收时间" name="receiveTime" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="答复时间" name="replyTime" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="采集时间" name="captureTime" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="状态" name="monitorStatus" width="50" align="center"/>
+		</columns>
+	</view>
+</views>

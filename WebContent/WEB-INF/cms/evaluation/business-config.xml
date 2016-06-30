@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="测评主题" class="com.yuanluesoft.cms.evaluation.pojo.EvaluationTopic" businessServiceName="evaluationService">
+		<field name="name" title="主题" length="200" required="true" type="string" inputMode="text"/>
+		<field name="description" title="描述" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="anonymous" title="是否匿名测评" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">匿名|1\0实名|0</parameter>
+		</field>
+		<field name="endTime" title="截止日期" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="issueTime" title="发布时间" type="timestamp" inputMode="readonly"/>
+		<field name="issue" title="是否发布" length="1" type="char" inputMode="none"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="creatorId" title="创建者ID" type="number" inputMode="none"/>
+		<field name="creator" title="创建者" length="50" type="string" inputMode="readonly"/>
+		<field name="options" title="选择项列表" type="components">
+			<parameter name="class">com.yuanluesoft.cms.evaluation.pojo.EvaluationOption</parameter>
+		</field>
+		<field name="items" title="测评项目列表" type="components">
+			<parameter name="class">com.yuanluesoft.cms.evaluation.pojo.EvaluationItem</parameter>
+		</field>
+		<field name="visitors" title="访问者列表" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.evaluation.pojo.EvaluationPrivilege</parameter>
+		</field>
+		<field name="marks" title="测评记录列表" type="components">
+			<parameter name="lazyLoad">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.evaluation.pojo.EvaluationMark</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="权限控制(参与人)" class="com.yuanluesoft.cms.evaluation.pojo.EvaluationTopicPrivilege"/>
+	<businessObject title="测评选择项" class="com.yuanluesoft.cms.evaluation.pojo.EvaluationOption" businessServiceName="evaluationService">
+		<field name="topicId" title="测评主题ID" length="20" type="number" inputMode="hidden"/>
+		<field name="name" title="选项名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="description" title="描述" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="score" title="选中时对应的分数" length="3" required="true" type="number" inputMode="text"/>
+	</businessObject>
+	<businessObject title="测评项目" class="com.yuanluesoft.cms.evaluation.pojo.EvaluationItem" businessServiceName="evaluationService">
+		<field name="topicId" title="测评主题ID" length="20" type="number" inputMode="hidden"/>
+		<field name="category" title="分类" length="100" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsHql">select distinct EvaluationItem.category from EvaluationItem EvaluationItem where EvaluationItem.topicId={PARAMETER:id}</parameter>
+		</field>
+		<field name="name" title="测评项目名称" length="1000" required="true" type="string" inputMode="text"/>
+		<field name="description" title="描述" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="score" title="分值" length="4,1" type="number" inputMode="text"/>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+	</businessObject>
+	<businessObject title="测评记录" class="com.yuanluesoft.cms.evaluation.pojo.EvaluationMark" businessServiceName="evaluationService">
+		<field name="topicId" title="主题ID" length="20" type="number" inputMode="hidden"/>
+		<field name="targetPersonId" title="被测评人ID" length="20" type="number" inputMode="hidden"/>
+		<field name="targetPersonName" title="被测评人名称" length="50" type="string" inputMode="readonly"/>
+		<field name="evaluatePersonId" title="测评人ID" length="20" type="number" inputMode="none"/>
+		<field name="evaluatePersonName" title="测评人名称" length="100" type="string" inputMode="readonly"/>
+		<field name="evaluatePersonIP" title="测评人IP" length="50" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="evaluateTime" title="测评时间" type="timestamp" inputMode="readonly"/>
+		<field name="scores" title="测评分数列表" type="components">
+			<parameter name="class">com.yuanluesoft.cms.evaluation.pojo.EvaluationScore</parameter>
+		</field>
+		<field name="optionCount" title="选择项统计" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">scores</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="评分" class="com.yuanluesoft.cms.evaluation.pojo.EvaluationScore">
+		<field name="markId" title="测评记录ID" length="20" type="number" inputMode="hidden"/>
+		<field name="itemId" title="测评项目ID" length="20" type="number" inputMode="hidden"/>
+		<field name="optionId" title="选择项ID" length="20" type="number" inputMode="hidden"/>
+		<field name="option" title="选择项名称" length="50" type="string" inputMode="readonly"/>
+		<field name="score" title="分值" length="4,1" type="number" inputMode="text"/>
+		<field name="remark" title="备注" length="1000" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="被测评用户" class="com.yuanluesoft.cms.evaluation.model.EvaluationTargetPerson">
+		<field name="personId" title="用户ID" type="number" inputMode="text"/>
+		<field name="personName" title="用户名" type="string" inputMode="text"/>
+		<field name="orgName" title="所在组织机构名称" type="string" inputMode="text"/>
+		<field name="evluateTime" title="测评时间" type="timestamp" inputMode="datetime"/>
+	</businessObject>
+</businessObjects>

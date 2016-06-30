@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.portal.container.forms.PortletEntityView" title="PORTLET实体视图">
+		<formFields>
+			<field name="siteId" title="站点ID" type="number" inputMode="hidden"/>
+			<field name="orgId" title="组织机构ID" type="number" inputMode="hidden"/>
+			<field name="category" title="修改分类" type="string" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form name="portletEntity" class="com.yuanluesoft.portal.container.forms.PortletEntity" title="PORTLET" pojo="com.yuanluesoft.portal.container.pojo.PortletEntity">
+		<formFields>
+			<field name="entityVisitors" title="访问者" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+	 	<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deletePortletEntity')"/>
+		</actions>
+	</form>
+	
+	<form name="template" class="com.yuanluesoft.portal.container.forms.PortletEntityTemplate" title="PORTLET模板" pojo="com.yuanluesoft.portal.container.pojo.PortletEntityTemplate"/>
+	
+	<form name="portletPage" class="com.yuanluesoft.portal.server.forms.PortalForm" title="PORTAL表单">
+		<formFields>
+			<field name="siteId" title="站点ID" type="number" inputMode="hidden"/>
+			<field name="userId" title="用户ID" type="number" inputMode="hidden"/>
+			<field name="applicationName" title="应用名称" length="100" type="string" inputMode="hidden"/>
+			<field name="pageName" title="页面名称" length="100" type="string" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form name="portletPage" class="com.yuanluesoft.portal.server.forms.PortalPage" title="页面" pojo="com.yuanluesoft.portal.server.model.PortalPage">
+		<formFields>
+			<field name="initPortletEntityCategory" title="初始化时载入的PORTLET分类" type="string" inputMode="radio">
+				<parameter name="itemsServiceName">portletDefinitionService</parameter>
+				<parameter name="itemsName">initPortletEntityCategory</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="删除"  execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deletePortalPage')"/>
+			<action title="还原默认设置" execute="if(confirm('还原后，您所配置的全部页面都将被删除，是否继续？'))FormUtils.doAction('restoreDefaultPortal')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="addPortlet" class="com.yuanluesoft.portal.server.forms.AddPortlet" title="添加内容">
+		<formFields>
+			<field name="pageId" title="页面ID" type="number" inputMode="hidden"/>
+			<field name="portletStyle" title="PORTLET风格" type="string" inputMode="dropdown"/>
+			<field name="columnIndex" title="列号" type="number" inputMode="dropdown"/>
+		</formFields>
+		<actions>
+			<action title="添加" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="previewPortlet" class="com.yuanluesoft.portal.server.forms.PreviewPortlet" title="预览内容"/>
+</forms>

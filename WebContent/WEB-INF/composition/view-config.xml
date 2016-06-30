@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views>
+	<view name="todoComposition" form="composition" title="待办作文" pageRows="25" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.composition.pojo.Composition</pojo>
+			<quickFilter>Composition.title like '%{KEY}%' 
+				or Composition.content like '%{KEY}%' 
+				or Composition.writer like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="写作文" type="workflow" module="composition"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="标题" name="title" align="center"/>
+			<column title="作者" name="writer" align="center" width="80"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="80" display="normal,print,portlet" format="yyyy-MM-dd"/>
+			<column title="发送人" name="workflowSender" align="center" width="70" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="120" display="normal,print"/>
+		</columns>
+	</view>
+	<view name="inProcessComposition" form="composition" title="在办作文" pageRows="25" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.composition.pojo.Composition</pojo>
+			<orderBy>Composition.writer</orderBy>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="写作文" type="workflow" module="leave"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="标题" name="title" align="center"/>
+			<column title="作者" name="writer" align="center" width="80"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="80" display="normal,print,portlet" format="yyyy-MM-dd"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	<view name="allComposition" form="composition" title="所有作文" pageRows="25" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.composition.pojo.Composition</pojo>
+			<orderBy>Composition.writer</orderBy>
+		</data>
+		<actions>
+			<action title="写作文" type="workflow" module="composition"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="标题" name="title"/>
+			<column title="作者" name="writer" align="center" width="80"/>
+		</columns>
+	</view>
+</views>

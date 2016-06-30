@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminIndustry" type="com.yuanluesoft.fdi.industry.forms.admin.Industry"/>
+  <form-bean name="adminSelectIndustry" type="com.yuanluesoft.fdi.industry.forms.admin.SelectIndustry"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminIndustry" path="/admin/industry" scope="request"
+   type="com.yuanluesoft.fdi.industry.actions.industry.admin.Load" validate="false">
+   <forward name="load" path="/admin/industry.jsp"/>
+  </action>
+  <action input="/admin/industry.jsp" name="adminIndustry"
+   path="/admin/saveIndustry" scope="request"
+   type="com.yuanluesoft.fdi.industry.actions.industry.admin.Save" validate="false"/>
+  <action input="/admin/industry.jsp" name="adminIndustry"
+   path="/admin/deleteIndustry" scope="request"
+   type="com.yuanluesoft.fdi.industry.actions.industry.admin.Delete" validate="false"/>
+  <action input="/admin/industry.jsp" name="adminIndustry"
+   path="/admin/createNextIndustry" scope="request"
+   type="com.yuanluesoft.fdi.industry.actions.industry.admin.CreateNext" validate="false"/>
+  <action name="adminSelectIndustry" path="/admin/selectIndustry"
+   scope="request"
+   type="com.yuanluesoft.fdi.industry.actions.selectindustry.admin.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

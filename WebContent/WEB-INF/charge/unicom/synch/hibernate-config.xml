@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+
+	<!--联通数据同步-->
+	<class name="com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomSynch" table="BMS_SYN_9191_DETAIL">
+		<id name="id" column="syn_id" type="integer">
+			<generator class="assigned"/>
+		</id>
+		<property name="serviceNum" column="SERVICE_NUM"/> <!--账号-->
+		<property name="certNum" column="CERT_NUM"/> <!--证件号码-->
+		<property name="contactName" column="CONTACT_NAME"/> <!--证件姓名-->
+		<property name="contactPhone" column="CONTACT_PHONE"/> <!--联系电话-->
+		<property name="contactEMail" column="CONTACT_EMAIL"/> <!--联系邮箱-->
+		<property name="packageId" column="PACKAGE_ID"/> <!--套餐编码(用营业系统编码)-->
+		<property name="packageTime" column="PACKAGE_TIME"/> <!--套餐生效时间-->
+		<property name="operationType" column="OP_TYPE"/> <!--操作类型1  资料同步  2订购套餐同步 3取消套餐同步 4用户注销-->
+		<property name="status" column="STATUS"/> <!--状态 0 待处理  1 处理中  2处理完成(处理完成后营业系统会删除此记录)  3处理失败-->
+		<property name="failReason" column="FAIL_REASON"/> <!--失败原因 status为3的时候原因写这里-->
+		<property name="createTime" column="CREATE_TIME"/> <!--创建时间-->
+		<property name="updateTime" column="UPDATE_TIME"/> <!--处理时间-->
+	</class>
+</hibernate-mapping>

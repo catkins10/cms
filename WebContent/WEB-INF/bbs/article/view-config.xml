@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="admin/article" form="admin/article" title="主题" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.bbs.article.pojo.BbsArticle</pojo>
+			<orderBy>BbsArticle.created DESC</orderBy>
+			<quickFilter>BbsArticle.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link target="_blank">../viewArticle.shtml?id={PARAMETER:id}&amp;siteId={PARAMETER:siteId}</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="发帖人" name="creatorNickname" align="center" width="80"/>
+			<column title="发帖时间" name="created" format="yyyy-MM-dd" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="article" form="article" title="主题" pageRows="30" openFeatures="width=720,height=480" viewServiceName="bbsArticleViewService">
+		<data>
+			<pojo>com.yuanluesoft.bbs.article.pojo.BbsArticle</pojo>
+			<where>not (BbsArticle.created is null)</where>
+			<orderBy>BbsArticle.created DESC</orderBy>
+			<quickFilter>BbsArticle.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加主题" execute="createArticle()"/>
+			<action title="我的主题" execute="location='../usermanage/personalPanel.shtml?target=myArticles&amp;siteId={PARAMETER:siteId}'"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="发帖人" name="creatorNickname" align="center" width="80"/>
+			<column title="发帖时间" name="created" format="yyyy-MM-dd" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="reply" form="reply" title="回复" pageRows="30" openFeatures="width=720,height=480" viewServiceName="bbsReplyViewService">
+		<data>
+			<pojo>com.yuanluesoft.bbs.article.pojo.BbsReply</pojo>
+			<where>not (BbsReply.created is null)</where>
+			<orderBy>BbsReply.created</orderBy>
+			<quickFilter>BbsReply.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="发帖" execute="createArticle()"/>
+			<action title="回复" execute="reply()"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="回复人" name="creatorNickname" align="center" width="80"/>
+			<column title="回复时间" name="created" format="yyyy-MM-dd" align="center" width="108"/>
+			<column title="内容" name="lazyBody.body" align="center" width="100"/>
+		</columns>
+	</view>
+	
+	<view name="myArticles" form="article" title="我发表的主题" pageRows="30" openFeatures="width=720,height=480" viewServiceName="bbsArticleViewService">
+		<data>
+			<pojo>com.yuanluesoft.bbs.article.pojo.BbsArticle</pojo>
+			<where>BbsArticle.creatorId={USERID}</where>
+			<orderBy>BbsArticle.created DESC</orderBy>
+			<quickFilter>BbsArticle.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="发帖时间" name="created" format="yyyy-MM-dd" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="myReplyArticles" title="我回复过的主题" pageRows="30" openFeatures="width=720,height=480" viewServiceName="bbsArticleViewService">
+		<data>
+			<pojo>com.yuanluesoft.bbs.article.pojo.BbsArticle</pojo>
+			<where>BbsArticle.id in (select BbsReply.articleId from BbsReply BbsReply where BbsReply.creatorId={USERID})</where>
+			<orderBy>BbsArticle.created DESC</orderBy>
+			<quickFilter>BbsArticle.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="发帖人" name="creatorNickname" align="center" width="80"/>
+			<column title="发帖时间" name="created" format="yyyy-MM-dd" align="center" width="108"/>
+		</columns>
+	</view>
+</views>

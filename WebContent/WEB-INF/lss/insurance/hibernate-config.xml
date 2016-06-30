@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--养老保险:用户-->
+	<class name="com.yuanluesoft.lss.insurance.pojo.InsuranceUser" table="insurance_user">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="identityCardNumber"/> <!--身份证号码,VARCHAR(50)-->
+		<property name="password"/> <!--密码,VARCHAR(50)-->
+	</class>
+	
+	<!--养老保险:个人账户查询-->
+	<class name="com.yuanluesoft.lss.insurance.pojo.InsuranceAccount" table="insurance_account">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="identityCardNumber"/> <!--身份证号码,VARCHAR(50)-->
+		<property name="name"/> <!--姓名,VARCHAR(50)-->
+		<property name="year"/> <!--年度,NUMERIC(4)-->
+		<property name="accountCapital"/> <!--本年度个人账户本金,NUMERIC(13,2)-->
+		<property name="payCapital"/> <!--其中个人缴纳本金,NUMERIC(13,2)-->
+		<property name="monthNumber"/> <!--本年底累计缴费月数,NUMERIC(4)-->
+		<property name="yearTotal"/> <!--年底账户本息累计,NUMERIC(13,2)-->
+		<property name="yearPayTotal"/> <!--其中个人缴纳本息,NUMERIC(13,2)-->
+		<property name="cardinalNumber"/> <!--年缴费基数（含补缴）,NUMERIC(13,2)-->
+	</class>
+	
+	<!--养老保险:记账利率、缴纳比例-->
+	<class name="com.yuanluesoft.lss.insurance.pojo.InsuranceParameter" table="insurance_parameter">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="year"/> <!--年度,NUMERIC(4)-->
+		<property name="rate"/> <!--年记账利率,NUMERIC(5,2)-->
+		<property name="accountRatio"/> <!--个人账户比例,NUMERIC(5,2)-->
+		<property name="payRatio"/> <!--个人缴纳比例,NUMERIC(5,2)-->
+	</class>
+</hibernate-mapping>

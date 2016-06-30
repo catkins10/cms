@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,177,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="336,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,177,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="336,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#inquiry" NAME="action0"
+  PATH="/inquiry" SHAPE="32,1928,177,41" TITLE="inquiry" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/inquiry.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/inquiry.jsp" SHAPE="336,1944,50,40" SUBTYPE="jsp"
+  TITLE="inquiry.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/submitInquiry" TARGET="action1" TITLE="submitInquiry" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#submitInquiry"
+  NAME="action1" PATH="/submitInquiry" SHAPE="512,1960,177,41"
+  TITLE="inquiry" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/inquirySubmitted.jsp" TARGET="page8"
+   TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#inquirySubject"
+  NAME="action2" PATH="/admin/inquirySubject" SHAPE="32,208,177,41"
+  TITLE="adminInquirySubject" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/inquirySubject.jsp" TARGET="page3"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/admin/inquirySubject.jsp" SHAPE="336,224,50,70" SUBTYPE="jsp"
+  TITLE="inquirySubject.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/saveInquirySubject" TARGET="action3"
+   TITLE="deleteInquirySubject" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/deleteInquirySubject" TARGET="action4"
+   TITLE="refreshInquirySubject" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/refreshInquirySubject" TARGET="action15"
+   TITLE="refreshInquirySubject" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/admin/setVoteNumber" TARGET="action21" TITLE="setVoteNumber" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link4"
+   PATH="/admin/publishInquirySubject.shtml" TARGET="action17"
+   TITLE="publishInquirySubject.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link5"
+   PATH="/admin/unpublishInquirySubject.shtml" TARGET="action27"
+   TITLE="unpublishInquirySubject.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveInquirySubject"
+  NAME="action3" PATH="/admin/saveInquirySubject" SHAPE="512,240,177,25"
+  TITLE="adminInquirySubject" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#deleteInquirySubject" NAME="action4"
+  PATH="/admin/deleteInquirySubject" SHAPE="512,296,177,25"
+  TITLE="adminInquirySubject" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#inquiryResult"
+  NAME="action7" PATH="/inquiryResult" SHAPE="32,2056,177,57"
+  TITLE="inquiry" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/inquiryResult.jsp" TARGET="page5" TITLE="load" TYPE="forward"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput"
+   ID="inquiryNotEnd" NAME="forward1" PATH="/inquiryNotEnd.jsp"
+   TARGET="page12" TITLE="inquiryNotEnd" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/inquiryResult.jsp" SHAPE="336,2072,50,25" SUBTYPE="jsp"
+  TITLE="inquiryResult.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#inquirySubject"
+  NAME="action5" PATH="/inquirySubject" SHAPE="32,1784,177,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listInquirySubjects"
+  NAME="action11" PATH="/listInquirySubjects" SHAPE="32,1688,177,41"
+  TITLE="selectInquirySubject" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/tree/listChildNodes.jsp"
+   TARGET="page9" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectInquirySubject"
+  NAME="action13" PATH="/selectInquirySubject" SHAPE="32,1600,178,41"
+  TITLE="selectInquirySubject" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/dialog/treedialog/treeDialog.jsp"
+   TARGET="page10" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page10"
+  PATH="/../../jeaf/dialog/treedialog/treeDialog.jsp"
+  SHAPE="336,1616,50,25" SUBTYPE="jsp" TITLE="treeDialog.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page9"
+  PATH="/../../jeaf/tree/listChildNodes.jsp" SHAPE="336,1704,50,25"
+  SUBTYPE="jsp" TITLE="listChildNodes.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page8"
+  PATH="/inquirySubmitted.jsp" SHAPE="824,1976,50,25" SUBTYPE="jsp"
+  TITLE="inquirySubmitted.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#inquiryOption"
+  NAME="action12" PATH="/admin/inquiryOption" SHAPE="32,792,178,41"
+  TITLE="adminInquiryOption" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/inquiryOption.jsp" TARGET="page11"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveInquiryOption"
+  NAME="action14" PATH="/admin/saveInquiryOption" SHAPE="512,824,177,25"
+  TITLE="adminInquiryOption" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page11"
+  PATH="/admin/inquiryOption.jsp" SHAPE="336,808,50,70" SUBTYPE="jsp"
+  TITLE="inquiryOption.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveInquiryOption" TARGET="action14"
+   TITLE="saveInquiryOption" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteInquiryOption" TARGET="action6"
+   TITLE="deleteInquiryOption" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/createNextInquiryOption" TARGET="action20"
+   TITLE="inquiryOption.jsp" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#refreshInquirySubject" NAME="action15"
+  PATH="/admin/refreshInquirySubject" SHAPE="512,352,177,25"
+  TITLE="adminInquirySubject" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#inquiryOption"
+  NAME="action16" PATH="/inquiryOption" SHAPE="32,1856,177,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#deleteInquiryOption" NAME="action6"
+  PATH="/admin/deleteInquiryOption" SHAPE="512,880,177,25"
+  TITLE="adminInquiryOption" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page12"
+  PATH="/inquiryNotEnd.jsp" SHAPE="336,2136,50,25" SUBTYPE="jsp"
+  TITLE="inquiryNotEnd.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#template"
+  NAME="action8" PATH="/admin/template" SHAPE="32,1272,177,41"
+  TITLE="adminTemplate" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../cms/templatemanage/template.jsp"
+   TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveTemplate"
+  NAME="action18" PATH="/admin/saveTemplate" SHAPE="512,1304,177,25"
+  TITLE="adminTemplate" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteTemplate"
+  NAME="action19" PATH="/admin/deleteTemplate" SHAPE="512,1368,177,25"
+  TITLE="adminTemplate" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/../../cms/templatemanage/template.jsp" SHAPE="336,1288,50,55"
+  SUBTYPE="jsp" TITLE="template.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveTemplate" TARGET="action18" TITLE="saveTemplate" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteTemplate" TARGET="action19" TITLE="deleteTemplate" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#createNextInquiryOption" NAME="action20"
+  PATH="/admin/createNextInquiryOption" SHAPE="512,936,177,25"
+  TITLE="adminInquiryOption" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#setVoteNumber"
+  NAME="action21" PATH="/admin/setVoteNumber" SHAPE="512,408,177,25"
+  TITLE="adminInquirySubject" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#selectAttachment"
+  NAME="action22" PATH="/admin/selectAttachment" SHAPE="32,1168,177,41"
+  TITLE="adminInquirySubject" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/selectAttachment.jsp"
+   TARGET="page13" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page13"
+  PATH="/../../jeaf/attachment/selectAttachment.jsp"
+  SHAPE="336,1184,50,25" SUBTYPE="jsp" TITLE="selectAttachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#inquiry"
+  NAME="action23" PATH="/admin/inquiry" SHAPE="32,568,177,41"
+  TITLE="adminInquiry" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/inquiry.jsp" TARGET="page14"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page14"
+  PATH="/admin/inquiry.jsp" SHAPE="336,584,50,70" SUBTYPE="jsp"
+  TITLE="inquiry.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveInquiry.shtml" TARGET="action24"
+   TITLE="saveInquiry.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteInquiry.shtml" TARGET="action25"
+   TITLE="deleteInquiry.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/refreshInquiry.shtml" TARGET="action26"
+   TITLE="refreshInquiry.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveInquiry"
+  NAME="action24" PATH="/admin/saveInquiry" SHAPE="512,600,177,25"
+  TITLE="adminInquiry" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteInquiry"
+  NAME="action25" PATH="/admin/deleteInquiry" SHAPE="512,656,177,25"
+  TITLE="adminInquiry" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#refreshInquiry"
+  NAME="action26" PATH="/admin/refreshInquiry" SHAPE="512,712,177,25"
+  TITLE="adminInquiry" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#publishInquirySubject" NAME="action17"
+  PATH="/admin/publishInquirySubject" SHAPE="512,464,177,25"
+  TITLE="adminInquirySubject" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#unpublishInquirySubject" NAME="action27"
+  PATH="/admin/unpublishInquirySubject" SHAPE="512,520,177,25"
+  TITLE="adminInquirySubject" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#editorplugins#insertInquiry" NAME="action28"
+  PATH="/editorplugins/insertInquiry" SHAPE="32,1472,177,41"
+  TITLE="adminInquirySubject" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/editorplugins/insertInquiry.jsp"
+   TARGET="page7" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#inquiryFeedback"
+  NAME="action9" PATH="/admin/inquiryFeedback" SHAPE="32,1008,177,41"
+  TITLE="adminInquiryFeedback" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/inquiryFeedback.jsp" TARGET="page6"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/admin/inquiryFeedback.jsp" SHAPE="336,1024,50,25" SUBTYPE="jsp"
+  TITLE="inquiryFeedback.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveInquiryFeedback.shtml" TARGET="action10"
+   TITLE="saveInquiryFeedback.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteInquiryFeedback.shtml" TARGET="action29"
+   TITLE="deleteInquiryFeedback.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#saveInquiryFeedback" NAME="action10"
+  PATH="/admin/saveInquiryFeedback" SHAPE="512,1040,178,25"
+  TITLE="adminInquiryFeedback" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#deleteInquiryFeedback" NAME="action29"
+  PATH="/admin/deleteInquiryFeedback" SHAPE="512,1096,178,25"
+  TITLE="adminInquiryFeedback" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#inquiryFeedback"
+  NAME="action30" PATH="/inquiryFeedback" SHAPE="32,2224,177,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#inquiryDescription"
+  NAME="action31" PATH="/inquiryDescription" SHAPE="32,2288,177,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page7"
+  PATH="/editorplugins/insertInquiry.jsp" SHAPE="336,1488,50,25"
+  SUBTYPE="jsp" TITLE="insertInquiry.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#inquiryResultChart"
+  NAME="action32" PATH="/inquiryResultChart" SHAPE="32,2352,177,57" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#inquiryResultRich"
+  NAME="action33" PATH="/inquiryResultRich" SHAPE="32,2865,0,0"
+  TITLE="adminInquirySubject" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput"
+   ID="inquiryNotEnd" NAME="forward0" PATH="/inquiryNotEnd.jsp"
+   TARGET="page12" TITLE="inquiryNotEnd" TYPE="forward"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward1" PATH="/inquiryResultRich.jsp" TARGET="page15"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page15"
+  PATH="/inquiryResultRich.jsp" SHAPE="256,2882,0,0" SUBTYPE="jsp"
+  TITLE="inquiryResultRich.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#submitInquiryBySingleOption" NAME="action34"
+  PATH="/submitInquiryBySingleOption" SHAPE="448,1457,0,0"
+  TITLE="inquiry" TYPE="action"/>
+</PROCESS>

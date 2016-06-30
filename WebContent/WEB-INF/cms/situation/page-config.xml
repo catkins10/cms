@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/situation"/>
+		
+		<page name="situation" title="提交民情" recordClass="com.yuanluesoft.cms.situation.pojo.Situation" url="/cms/situation/situation.shtml">
+			<subPage title="提交民情" name="situation" type="template"/>
+		</page>
+		
+		<page name="situationSubmitted" title="民情提交完成">
+			<subPage title="民情提交完成" name="situationSubmitted" type="template"/>
+		</page>
+		
+		<!-- page name="situationFailed" title="民情查询失败">
+			<subPage title="民情查询失败" name="situationFailed" type="template"/>
+		</page>
+		
+		<page name="poorSituation" title="民情查看(公开主题)" recordClass="com.yuanluesoft.cms.situation.pojo.Situation">
+			<subPage title="民情查看(公开主题)" name="poorSituation" type="template"/>
+		</page>
+		
+		<page name="originalSituation" title="民情查看(公开内容)" recordClass="com.yuanluesoft.cms.situation.pojo.Situation">
+			<subPage title="民情查看(公开内容)" name="originalSituation" type="template"/>
+		</page>
+		
+		<page name="processingSituation" title="民情查看(公开办理情况)" recordClass="com.yuanluesoft.cms.situation.pojo.Situation">
+			<subPage title="民情查看(公开办理情况)" name="processingSituation" type="template"/>
+		</page>
+		
+		<page name="fullySituation" title="民情查看(完全公开)" recordClass="com.yuanluesoft.cms.situation.pojo.Situation">
+			<subPage title="民情查看(完全公开)" name="fullySituation" type="template"/>
+		</page -->
+		
+		<page name="fullySituation" title="民情查看" recordClass="com.yuanluesoft.cms.situation.pojo.Situation">
+			<subPage title="民情查看" name="fullySituation" type="template"/>
+		</page>
+		
+		<page name="situationSearch" title="搜索" searchPage="true" searchResults="situations" url="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/situation&amp;pageName=situationSearch"/>
+	</pages>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="situations" processor="publicServicesProcessor"/> <!-- 民情 -->
+	</pageElements>
+</application>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="project" class="com.yuanluesoft.enterprise.project.forms.Project" title="项目" pojo="com.yuanluesoft.enterprise.project.pojo.EnterpriseProject">
+		<formFields>
+			<field name="projectTeam" title="项目组" type="component">
+				<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectTeam</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="作废" hide="isNew() or workflow() and noPrivilege(application_manager)" execute="if(confirm('作废后不可恢复，是否确定要作废？'))FormUtils.doAction('deleteProject')"/>
+			<action title="完成登记" execute="FormUtils.doAction('runProject')" hide="isOld() and workflow()"/>
+			<action title="完成合同盖章" execute="FormUtils.doAction('switchPage', 'pageName=completeSeal')" hide="workflow()"/>
+			<action title="完成合同签订" execute="FormUtils.doAction('switchPage', 'pageName=completeSign')" hide="workflow()"/>
+			<action title="完成合同归档" execute="FormUtils.doAction('switchPage', 'pageName=completeArchive')" hide="workflow()"/>
+			<action title="项目安排" execute="FormUtils.doAction('schedule')" hide="workflow()"/> <!-- 设计部主任 -->
+			<action title="完成设计" execute="FormUtils.doAction('completeDesign')" hide="workflow()"/> <!-- 项目组负责人 -->
+			<action title="审核设计" execute="FormUtils.doAction('runProject', 'workflowAction=approval&amp;approvalPage=/enterprise/project/transact/approvalDesign.jsp')" hide="workflow()"/> <!-- 总工 -->
+			<action title="打印会稿传递单" hide="isNew()" execute="window.open('projectPrint.shtml?id={PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="projectContract" class="com.yuanluesoft.enterprise.project.forms.ProjectContract" title="合同" pojo="com.yuanluesoft.enterprise.project.pojo.EnterpriseProject">
+		<formFields>
+			<field name="contract" title="合同" type="component">
+				<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectContract</parameter>
+			</field>
+			<field name="selectedContractTemplateId" title="合同模板ID" type="number" inputMode="hidden"/>
+			<field name="selectedContractTemplateName" title="合同模板名称" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">enterpriseProjectService</parameter>
+				<parameter name="itemsName">contractTemplate</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="valueField">selectedContractTemplateId</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteProjectContract')"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="wordFields">contract.contractNo,contract.contractName,contract.contractValue,name,city,overview,bridgeScale,bridgeWidth,bridgeLength,tunnelScale,tunnelWidth,tunnelLength,highwayLevel,highwaySpeed,highwayMileage,scale,completionDate,beginDate,endDate,owner,constructionUnit,surveillanceUnit,projectLeader,biddingNumber</parameter> <!-- WORD需要使用的字段 -->
+		</extendedParameters>
+	</form>
+	
+	<form class="com.yuanluesoft.enterprise.project.forms.ProjectCollect" title="收款" pojo="com.yuanluesoft.enterprise.project.pojo.EnterpriseProject">
+		<formFields>
+			<field name="contractName" title="合同名称" type="string" inputMode="dropdown" required="true">
+				<parameter name="itemsServiceName">enterpriseProjectService</parameter>
+				<parameter name="itemsName">contract</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="valueField">collect.contractId</parameter>
+			</field>
+			<field name="collect" title="收款" type="component">
+				<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectCollect</parameter>
+			</field>
+			<field name="openerTabPage" title="打开当前页面的TAB" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteProjectCollect')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.enterprise.project.forms.ProjectPay" title="付款" pojo="com.yuanluesoft.enterprise.project.pojo.EnterpriseProject">
+		<formFields>
+			<field name="pay" title="付款" type="component">
+				<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectPay</parameter>
+			</field>
+			<field name="openerTabPage" title="打开当前页面的TAB" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteProjectPay')"/>
+		</actions>
+	</form>
+	
+	<form name="projectTeamPlan" class="com.yuanluesoft.enterprise.project.forms.ProjectTeamPlan" title="项目组工作计划" pojo="com.yuanluesoft.enterprise.project.pojo.EnterpriseProject">
+		<formFields>
+			<field name="plan" title="项目组工作计划" type="component">
+				<parameter name="class">com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectTeamPlan</parameter>
+			</field>
+			<field name="teamMembers" title="项目组成员" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteProjectTeamPlan')"/>
+		</actions>
+	</form>
+	
+	<form name="projectType" class="com.yuanluesoft.enterprise.project.forms.ProjectType" title="项目类型" pojo="com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectType">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteProjectType')"/>
+		</actions>
+	</form>
+	
+	<form name="contractTemplate" class="com.yuanluesoft.enterprise.project.forms.ContractTemplate" title="合同模板" pojo="com.yuanluesoft.enterprise.project.pojo.EnterpriseContractTemplate">
+		<formFields>
+			<field name="appliedProjectTypeArray" title="适用的项目类别" type="string[]" inputMode="multibox">
+				<parameter name="itemsServiceName">enterpriseProjectService</parameter>
+				<parameter name="itemsName">projectType</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteContractTemplate')"/>
+			<action title="配置模板" hide="isRead()" execute="DocumentUtils.openRemoteDocument('editTemplate', '', 'FormUtils.doAction(&quot;saveTemplate&quot;)', 'editTemplate')"/>
+		</actions>
+	</form>
+</forms>

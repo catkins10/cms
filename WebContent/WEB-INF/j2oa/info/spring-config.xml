@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>	
+	<!-- 信息采编服务 -->
+	<bean id="infoService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.j2oa.info.service.spring.InfoServiceImpl">
+				<property name="unitLevel"><value>2</value></property> <!-- 单位级别,1/县,2/市,3/省 -->
+				<property name="soapPassport">
+					<bean class="com.yuanluesoft.jeaf.soap.SoapPassport">
+						<property name="url"><value>http://127.0.0.1/cms/services/</value></property>
+						<property name="userName"><value>InfoContribute</value></property>
+						<property name="password"><value>InfoContribute@2014</value></property>
+					</bean>
+				</property>
+				<property name="unitName"><value>漳州市政府</value></property>
+				<property name="soapConnectionPool"><ref bean="soapConnectionPool"/></property>
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="attachmentService"><ref bean="attachmentService"/></property>
+				<property name="recordControlService"><ref bean="recordControlService"/></property>
+				<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+				<property name="remoteDocumentService"><ref bean="remoteDocumentService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="load*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="process*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="filter*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="use*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="issue*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="unissue*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="combineInfos">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="uncombineInfos">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 信息采编视图服务 -->
+	<bean id="infoViewService" class="com.yuanluesoft.j2oa.info.service.spring.InfoViewServiceImpl">
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="infoService"><ref bean="infoService"/></property>
+	</bean>
+	
+	<!-- 信息采编刊物视图服务 -->
+	<bean id="infoMagazineViewService" class="com.yuanluesoft.j2oa.info.service.spring.InfoMagazineViewServiceImpl">
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="infoService"><ref bean="infoService"/></property>
+	</bean>
+	
+	<!-- 信息采编统计视图服务 -->
+	<bean id="infoStatisticViewService" class="com.yuanluesoft.j2oa.info.service.spring.InfoStatisticViewServiceImpl">
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="orgService"><ref bean="orgService"/></property>
+	</bean>
+</beans>

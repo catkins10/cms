@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping>
+	<!--投诉单-->
+	<class name="com.yuanluesoft.customise.complaint.pojo.CustomiseComplaint" table="_complaint_complaint"  polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<!--TEST-->
+		<property name="TEST"/>
+		<!--投诉时间-->
+		<property name="complaintTime"/>
+		<!--办理时间-->
+		<property name="workDay"/>
+		<!--投诉人单位-->
+		<property name="unit"/>
+		<!--投诉人姓名-->
+		<property name="name"/>
+		<!--地点-->
+		<property name="address"/>
+		<!--回访内容-->
+		<property name="returnContent" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/>
+		<!--回访人-->
+		<property name="returnPerson"/>
+		<!--回访时间-->
+		<property name="returnTime"/>
+		<!--流程实例ID-->
+		<property name="workflowInstanceId"/>
+		<!--a-->
+		<property name="a"/>
+		<!--b-->
+		<property name="b"/>
+		<!--工作项列表-->
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem"/>
+		</set>
+		<!--办理意见-->
+		<set name="opinions" table="_complaint_complaint_opinion" lazy="true" inverse="true" cascade="delete" order-by="created DESC">
+			<key column="mainRecordId"/>
+			<one-to-many class="com.yuanluesoft.customise.complaint.pojo.CustomiseComplaintOpinion"/>
+		</set>
+		<!--访问者-->
+		<set name="visitors" table="_complaint_complaint_privilege" lazy="false" inverse="true" cascade="delete" order-by="id">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.customise.complaint.pojo.CustomiseComplaintPrivilege"/>
+		</set>
+	</class>
+	<!--投诉单:办理意见-->
+	<class name="com.yuanluesoft.customise.complaint.pojo.CustomiseComplaintOpinion" table="_complaint_complaint_opinion"  polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<!--主记录ID-->
+		<property name="mainRecordId"/>
+		<!--工作项ID-->
+		<property name="workItemId"/>
+		<!--办理环节名称-->
+		<property name="activityName"/>
+		<!--环节ID-->
+		<property name="activityId"/>
+		<!--填写人ID-->
+		<property name="personId"/>
+		<!--填写人姓名-->
+		<property name="personName"/>
+		<!--代理人ID-->
+		<property name="agentId"/>
+		<!--代理人姓名-->
+		<property name="agentName"/>
+		<!--意见内容-->
+		<property name="opinion" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/>
+		<!--意见类型-->
+		<property name="opinionType"/>
+		<!--填写时间-->
+		<property name="created"/>
+	</class>
+	<!--投诉单:访问者-->
+	<class name="com.yuanluesoft.customise.complaint.pojo.CustomiseComplaintPrivilege" table="_complaint_complaint_privilege"  polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<!--访问者ID-->
+		<property name="visitorId"/>
+		<!--访问级别-->
+		<property name="accessLevel"/>
+		<!--主记录ID-->
+		<property name="recordId"/>
+	</class>
+	<!--参数配置-->
+	<class name="com.yuanluesoft.customise.complaint.pojo.CustomiseParameter" table="_complaint_parameter"  polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<!--投诉类型-->
+		<property name="type"/>
+	</class>
+</hibernate-mapping>

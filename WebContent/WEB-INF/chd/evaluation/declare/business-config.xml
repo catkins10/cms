@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="申报" class="com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclare" businessServiceName="chdEvaluationDeclareService">
+		<field name="plantId" title="发电企业ID" length="20" type="number" inputMode="hidden"/>
+		<field name="declareYear" title="申报年度" length="4" required="true" type="number" inputMode="text"/>
+		<field name="objectiveLevelId" title="申报等级ID" length="20" type="number" inputMode="hidden"/>
+		<field name="objectiveLevel" title="申报等级" length="20" required="true" type="string" inputMode="select">
+			<parameter name="execute">selectEvaluationDirectory(600, 400, false, 'levelId{id},level{name}', '', 'level')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="js">/chd/evaluation/js/evaluation.js</parameter>
+		</field>
+		<field name="creatorId" title="提交人ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="提交人" length="30" type="string" inputMode="readonly"/>
+		<field name="created" title="提交时间" type="timestamp" inputMode="readonly"/>
+		<field name="approvedLevelId" title="核准等级ID" length="20" type="number" inputMode="hidden"/>
+		<field name="approvedLevel" title="核准等级" length="20" type="string" inputMode="text">
+			<parameter name="execute">selectEvaluationDirectory(600, 400, false, 'approvedLevelId{id},approvedLevel{name}', '', 'level')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="js">/chd/evaluation/js/evaluation.js</parameter>
+		</field>
+		<field name="approveTime" title="核准时间" type="timestamp" inputMode="readonly"/>
+		<field name="approverId" title="核准人ID" length="20" type="number" inputMode="none"/>
+		<field name="approver" title="核准人" length="30" type="string" inputMode="readonly"/>
+		<field name="rules" title="chd_eval_declar_rule" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclareRule</parameter>
+		</field>
+		<field name="prerequisites" title="必备条件完成情况" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclarePrerequisites</parameter>
+		</field>
+		<field name="indicators" title="主要指标完成情况" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclareIndicator</parameter>
+		</field>
+		<field name="generators" title="机组综合数据上报" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclareGenerator</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="评价细则完成情况" class="com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclareRule" businessServiceName="chdEvaluationDeclareService">
+		<field name="declareId" title="申报ID" length="20" type="number" inputMode="hidden"/>
+		<field name="ruleId" title="细则ID" length="20" type="number" inputMode="hidden"/>
+		<field name="ruleNumber" title="编号" length="20" required="true" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="rule" title="细则" length="1000" required="true" type="string" inputMode="readonly"/>
+		<field name="result" title="自评结果" length="100" type="string" inputMode="text"/>
+		<field name="score" title="自评分" length="5,1" type="number" inputMode="text"/>
+		<field name="approvedResult" title="考核结果" length="100" type="string" inputMode="text"/>
+		<field name="approvedScore" title="考核分数" length="5,1" type="number" inputMode="text"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="必备条件完成情况" class="com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclarePrerequisites" businessServiceName="chdEvaluationDeclareService">
+		<field name="declareId" title="申报ID" length="20" type="number" inputMode="hidden"/>
+		<field name="prerequisitesId" title="必备条件ID" length="20" type="number" inputMode="hidden"/>
+		<field name="prerequisites" title="必备条件" length="1000" required="true" type="string" inputMode="readonly"/>
+		<field name="result" title="完成情况说明" length="200" type="string" inputMode="text"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="主要指标完成情况" class="com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclareIndicator" businessServiceName="chdEvaluationDeclareService">
+		<field name="declareId" title="申报ID" length="20" type="number" inputMode="hidden"/>
+		<field name="indicatorId" title="指标ID" length="20" type="number" inputMode="hidden"/>
+		<field name="indicator" title="指标名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="standard" title="标准值" length="50" required="true" type="string" inputMode="text"/>
+		<field name="result" title="实际值" length="50" required="true" type="string" inputMode="text"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="机组综合数据上报" class="com.yuanluesoft.chd.evaluation.declare.pojo.ChdEvaluationDeclareGenerator" businessServiceName="chdEvaluationDeclareService">
+		<field name="declareId" title="申报ID" length="20" type="number" inputMode="hidden"/>
+		<field name="body" title="机组综合数据" required="true" type="html" inputMode="htmleditor">
+			<parameter name="height">280</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

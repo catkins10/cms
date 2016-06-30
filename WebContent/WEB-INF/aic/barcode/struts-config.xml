@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminCompany" type="com.yuanluesoft.aic.barcode.forms.admin.Company"/>
+  <form-bean name="barcode" type="com.yuanluesoft.aic.barcode.forms.Barcode"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminCompany" path="/admin/company" scope="request"
+   type="com.yuanluesoft.aic.barcode.actions.company.admin.Load" validate="false">
+   <forward name="load" path="/admin/company.jsp"/>
+  </action>
+  <action input="/admin/company.jsp" name="adminCompany"
+   path="/admin/saveCompany" scope="request"
+   type="com.yuanluesoft.aic.barcode.actions.company.admin.Save" validate="false"/>
+  <action input="/admin/company.jsp" name="adminCompany"
+   path="/admin/deleteCompany" scope="request"
+   type="com.yuanluesoft.aic.barcode.actions.company.admin.Delete" validate="false"/>
+  <action name="barcode" path="/barcode" scope="request"
+   type="com.yuanluesoft.aic.barcode.actions.barcode.Load" validate="false">
+   <forward name="load" path="/barcode.jsp"/>
+  </action>
+  <action input="/barcode.jsp" name="barcode" path="/saveBarcode"
+   scope="request"
+   type="com.yuanluesoft.aic.barcode.actions.barcode.Save" validate="false">
+   <forward name="result" path="/barcodeSubmitted.jsp"/>
+  </action>
+  <action input="/barcode.jsp" name="barcode" path="/deleteBarcode"
+   scope="request"
+   type="com.yuanluesoft.aic.barcode.actions.barcode.Delete" validate="false">
+   <forward name="result" path="/barcodeSubmitted.jsp"/>
+  </action>
+  <action path="/listMyBarcodes" scope="request"
+   type="com.yuanluesoft.aic.barcode.actions.listmybarcodes.Load" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

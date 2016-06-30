@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../../jeaf/form/error.jsp"
+  SHAPE="32,48,161,21" TARGET="page2" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../../jeaf/form/result.jsp" SHAPE="32,112,161,21"
+  TARGET="page0" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#receiveTelegram"
+  NAME="action0" PATH="/receiveTelegram" SHAPE="32,216,161,41"
+  TITLE="receiveTelegram" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/receiveTelegram.jsp" TARGET="page3"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteReceiveTelegram"
+  NAME="action1" PATH="/deleteReceiveTelegram" SHAPE="528,360,161,25"
+  TITLE="receiveTelegram" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveReceiveTelegram"
+  NAME="action2" PATH="/saveReceiveTelegram" SHAPE="528,248,161,25"
+  TITLE="receiveTelegram" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/receiveTelegram.jsp" SHAPE="304,232,50,25" SUBTYPE="jsp"
+  TITLE="receiveTelegram.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveReceiveTelegram.shtml" SUBTYPE="confirmed"
+   TARGET="action2" TITLE="/saveReceiveTelegram.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link12"
+   PATH="/synchSigns.shtml" TARGET="action14" TITLE="synchSigns.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteReceiveTelegram.shtml" TARGET="action1"
+   TITLE="deleteReceiveTelegram.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link4"
+   PATH="/appendSigns.shtml" TARGET="action5" TITLE="appendSigns.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link5"
+   PATH="/deleteSigns.shtml" TARGET="action6" TITLE="deleteSigns.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link6"
+   PATH="/saveOpinion.shtml" TARGET="action7" TITLE="saveOpinion.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link7"
+   PATH="/editOpinion.shtml" TARGET="action9" TITLE="editOpinion.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link8"
+   PATH="/deleteOpinion.shtml" TARGET="action8"
+   TITLE="deleteOpinion.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link9"
+   PATH="/archive.shtml" TARGET="action11" TITLE="archive.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link10"
+   PATH="/unarchive.shtml" TARGET="action15" TITLE="sign.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link11"
+   PATH="/sign.shtml" TARGET="action12" TITLE="doSign.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link13"
+   PATH="/doSign.shtml" TARGET="action13" TITLE="doSign.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#appendSigns"
+  NAME="action5" PATH="/appendSigns" SHAPE="528,416,161,25"
+  TITLE="receiveTelegram" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteSigns"
+  NAME="action6" PATH="/deleteSigns" SHAPE="528,472,161,25"
+  TITLE="receiveTelegram" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveOpinion"
+  NAME="action7" PATH="/saveOpinion" SHAPE="528,528,161,25"
+  TITLE="receiveTelegram" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteOpinion"
+  NAME="action8" PATH="/deleteOpinion" SHAPE="528,640,161,25"
+  TITLE="receiveTelegram" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#editOpinion"
+  NAME="action9" PATH="/editOpinion" SHAPE="528,584,161,25"
+  TITLE="receiveTelegram" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/../../../jeaf/form/error.jsp" SHAPE="304,48,50,25"
+  SUBTYPE="jsp" TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../../jeaf/form/result.jsp" SHAPE="304,112,50,25"
+  SUBTYPE="jsp" TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#printTransactionSheet"
+  NAME="action10" PATH="/printTransactionSheet" SHAPE="32,1088,161,41"
+  TITLE="printTransactionSheet" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/printTransactionSheet.jsp" TARGET="page1"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/printTransactionSheet.jsp" SHAPE="304,1104,50,25" SUBTYPE="jsp"
+  TITLE="printTransactionSheet.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#archive" NAME="action11"
+  PATH="/archive" SHAPE="528,696,161,25" TITLE="receiveTelegram" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#sign" NAME="action12"
+  PATH="/sign" SHAPE="528,808,161,25" TITLE="receiveTelegram" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#doSign" NAME="action13"
+  PATH="/doSign" SHAPE="528,864,161,25" TITLE="receiveTelegram" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#synchSigns"
+  NAME="action14" PATH="/synchSigns" SHAPE="528,304,161,25"
+  TITLE="receiveTelegram" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#unarchive"
+  NAME="action15" PATH="/unarchive" SHAPE="528,752,161,25"
+  TITLE="receiveTelegram" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#attachmentEditor"
+  NAME="action16" PATH="/attachmentEditor" SHAPE="32,944,161,41"
+  TITLE="receiveTelegram" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../../jeaf/attachment/attachment.jsp"
+   TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/../../../jeaf/attachment/attachment.jsp" SHAPE="304,960,50,25"
+  SUBTYPE="jsp" TITLE="attachment.jsp" TYPE="page"/>
+</PROCESS>

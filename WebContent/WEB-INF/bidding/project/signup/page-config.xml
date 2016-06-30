@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 招投标:投标管理 -->
+<application>
+	<pages>
+		<page name="biddingSignUp" title="投标报名" recordPage="false" recordClass="com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUp">
+			<link title="投标报名查询" url="/bidding/project/signup/signUpQuery.shtml"/>
+		</page>
+		
+		<page name="realNameBiddingSignUp" title="投标报名(实名)" recordPage="false" recordClass="com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUp">
+			<link title="投标报名查询" url="/bidding/project/signup/signUpQuery.shtml"/>
+		</page>
+		
+		<page name="biddingSignUpAnonymous" title="匿名报名提示">
+			<link title="注销" url="{WEBAPPLICATIONSAFEURL}/jeaf/sessionmanage/logout.shtml?external=true&amp;redirect={PARAMETER:redirect}"/>
+		</page>
+		
+		<page name="enterpriseInvalidPrompt" title="企业未通过审核提示"/>
+		
+		
+		<page name="biddingSignUpPrint" title="报名号打印" recordPage="false" recordClass="com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUp"/>
+		
+		<page name="uploadBid" title="上传投标书">
+			<subPage name="base" title="上传投标书"/>
+		</page>
+		
+		<page name="biddingSignUpQuery" title="投标报名查询" url="/bidding/project/signup/signUpQuery.shtml"/>
+		
+		<page name="biddingSignUpVerify" title="报名号验证" url="/bidding/project/signup/signUpQuery.shtml?pageName=biddingSignUpVerify"/>
+		
+		<page name="paymentFailed" title="支付失败提示"/>
+		
+		<page name="biddingSignUpQueryResult" title="投标报名查询结果" systemLink="false" recordPage="false" recordClass="com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUp">
+			<link title="网上购买标书和图纸" url="javascript:if(confirm('报名号{PARAMETER:signUpNo}是您报名的唯一标识，请确定您已经打印或者保存报名号?'))location='payment.shtml?signUpNo={PARAMETER:signUpNo}&amp;type=biddingDocuments,drawing&amp;siteId={PARAMETER:siteId}'"/>
+			<link title="网上购买标书" url="javascript:if(confirm('报名号{PARAMETER:signUpNo}是您报名的唯一标识，请确定您已经打印或者保存报名号?'))location='payment.shtml?signUpNo={PARAMETER:signUpNo}&amp;type=biddingDocuments&amp;siteId={PARAMETER:siteId}'"/>
+			<link title="网上购买图纸" url="javascript:if(confirm('报名号{PARAMETER:signUpNo}是您报名的唯一标识，请确定您已经打印或者保存报名号?'))location='payment.shtml?signUpNo={PARAMETER:signUpNo}&amp;type=drawing&amp;siteId={PARAMETER:siteId}'"/>
+			<link title="网上缴纳保证金" url="javascript:if(confirm('报名号{PARAMETER:signUpNo}是您报名的唯一标识，请确定您已经打印或者保存报名号?'))location='payment.shtml?signUpNo={PARAMETER:signUpNo}&amp;type=pledge&amp;siteId={PARAMETER:siteId}'"/>
+			
+			<link title="上传投标书" url="/bidding/project/signup/uploadBid.shtml?signUpNo={PARAMETER:signUpNo}"/>
+			<link title="打印报名号" url="/bidding/project/signup/signUpPrint.shtml?signUpNo={PARAMETER:signUpNo}"/>
+			
+			<!-- 供当前项目的代理使用 -->
+			<link title="领取纸质标书和图纸" url="javascript:if(confirm('是否确定纸质标书和图纸已领取？'))location.href='{CONTEXTPATH}/bidding/project/signup/receivePaperDocuments.shtml?signUpNo={PARAMETER:signUpNo}&amp;projectId={PARAMETER:projectId}&amp;siteId={PARAMETER:siteId}';"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+		</page>
+		
+		<page name="biddingSignUpHistory" title="我的报名历史记录" url="/bidding/project/signup/signUpHistory.shtml"/>
+	</pages>
+	
+	<pageElements>
+		<pageElement name="biddingSignUpHistory" staticPageSupport="false" processor="biddingSignUpHistoryProcessor"/> <!-- 报名历史 -->
+	</pageElements>
+</application>

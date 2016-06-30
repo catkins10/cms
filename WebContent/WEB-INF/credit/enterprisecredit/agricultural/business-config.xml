@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="龙海市农业局关于企业、个人诚信信息表" class="com.yuanluesoft.credit.enterprisecredit.agricultural.pojo.Agricultural" >
+		<field name="name" title="姓名（企业、个人)" required="true" length="100" type="string" inputMode="text"/>
+		<field name="summary" title="奖惩情况" required="true" length="100" type="string" inputMode="text"/>
+		<field name="time" title="时间" required="true" length="200" type="string" inputMode="text"/>
+		<field name="addr" title="地点" required="true" length="200" type="string" inputMode="text"/>
+		<field name="reason" title="事由" required="true"  length="200" type="string" inputMode="text"/>
+		<field name="remark" title="备注" required="true" length="200" type="string" inputMode="text"/>
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	
+</businessObjects>

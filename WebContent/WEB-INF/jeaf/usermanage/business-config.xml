@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="组织机构" class="com.yuanluesoft.jeaf.usermanage.pojo.Org" businessServiceName="orgService">
+		<field name="lastModified" title="最后修改时间" type="timestamp" inputMode="readonly"/>
+		<field name="leaders" title="领导" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.usermanage.pojo.OrgLeader</parameter>
+		</field>
+		<field name="supervisors" title="主管领导" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.usermanage.pojo.OrgSupervisor</parameter>
+		</field>
+		<field name="leaderIds" title="部门领导ID" type="string" inputMode="hidden"/>
+		<field name="leaderNames" title="部门领导" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(640, 400, true, 'leaderIds{id},leaderNames{name|部门领导|100%}', '', 'employee,teacher')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="supervisorIds" title="主管领导ID" type="string" inputMode="hidden"/>
+		<field name="supervisorNames" title="主管领导" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(640, 400, true, 'supervisorIds{id},supervisorNames{name|主管领导|100%}', '', 'employee,teacher')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="单位" class="com.yuanluesoft.jeaf.usermanage.pojo.Unit" businessServiceName="orgService">
+		<field name="fullName" title="全称" length="200" type="string" inputMode="text"/>
+		<field name="unitCode" title="单位编码" length="100" type="string" inputMode="text"/>
+		<field name="responsibility" title="主要职责" length="200" type="string" inputMode="text"/>
+		<field name="address" title="单位地址" length="200" type="string" inputMode="text"/>
+		<field name="postcode" title="邮政编码" length="20" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="linkman" title="联系人" length="50" type="string" inputMode="text"/>
+		<field name="tel" title="联系电话" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="way" title="交通线路" length="100" type="string" inputMode="text"/>
+		<field name="webSite" title="网站" length="200" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="email" title="EMAIL" length="200" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="subordinateUnitIds" title="下级单位ID" length="2000" type="string" inputMode="hidden"/>
+		<field name="subordinateUnitNames" title="下级单位名称" length="2000" type="string" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectOrg(640, 400, true, 'subordinateUnitIds{id},subordinateUnitNames{name|下级单位|100%}', '', 'unit')</parameter>
+		</field>
+		<field name="secondaryUnitIds" title="二级单位ID" length="2000" type="string" inputMode="hidden"/>
+		<field name="secondaryUnitNames" title="二级单位名称" length="2000" type="string" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectOrg(640, 400, true, 'secondaryUnitIds{id},secondaryUnitNames{name|二级单位|100%}', '', 'unit')</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="学校" class="com.yuanluesoft.jeaf.usermanage.pojo.School" businessServiceName="orgService">
+		<field name="category" title="类别" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">小学\0初中\0高中\0完全中学</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="fullName" title="全称" length="200" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="班级" class="com.yuanluesoft.jeaf.usermanage.pojo.SchoolClass" businessServiceName="orgService">
+		<field name="classNumber" title="编号" length="3" required="true" type="number" inputMode="text"/>
+		<field name="enrollTime" title="入学年份" length="4" required="true" type="number" inputMode="text"/>
+		<field name="lengthOfSchooling" title="学制" length="2" type="number" inputMode="text"/>
+		<field name="isGraduated" title="是否毕业" length="1" type="char" inputMode="none"/>
+		<field name="teachers" title="任课老师和班主任" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.usermanage.pojo.ClassTeacher</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="任课老师和班主任" class="com.yuanluesoft.jeaf.usermanage.pojo.ClassTeacher">
+		<field name="title" title="称谓" length="30" type="string" inputMode="text"/>
+		<field name="classId" title="班级ID" type="number" inputMode="hidden"/>
+		<field name="teacherId" title="教师ID" type="number" inputMode="hidden"/>
+		<field name="teacher" title="老师" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.jeaf.usermanage.pojo.Teacher</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="用户" class="com.yuanluesoft.jeaf.usermanage.pojo.Person" businessServiceName="personService">
+		<field name="sid" title="SID" length="10" type="number" inputMode="none"/>
+		<field name="name" title="姓名" length="100" required="true" type="string" inputMode="text"/>
+		<field name="loginName" title="登录用户名" length="80" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="sex" title="性别" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">男|M\0女|F</parameter>
+		</field>
+		<field name="type" title="类别" length="1" type="string" inputMode="none"/>
+		<field name="password" title="密码" length="100" required="true" type="password" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+		<field name="creator" title="注册人" length="50" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="注册人ID" type="number" inputMode="none"/>
+		<field name="created" title="注册时间" type="timestamp" inputMode="readonly"/>
+		<field name="lastModified" title="最后修改时间" type="timestamp" inputMode="readonly"/>
+		<field name="mailAddress" title="邮件地址" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="tel" title="电话" length="16" type="phone" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="telFamily" title="家庭电话" length="16" type="phone" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="mobile" title="手机" length="16" type="phone" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="familyAddress" title="家庭地址" length="100" type="string" inputMode="text"/>
+		<field name="identityCard" title="身份证号码" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="identityCardName" title="身份证姓名" length="30" type="string" inputMode="text"/>
+		<field name="deleteDisable" title="禁止删除" length="1" type="char" inputMode="none"/>
+		<field name="preassign" title="系统预置" length="1" type="char" inputMode="none"/>
+		<field name="portraitURL" title="用户头像URL" type="imageName" inputMode="readonly"/>
+		<field name="remark" title="备注" length="250" type="string" inputMode="text"/>
+		<field name="subjections" title="用户所在机构" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.usermanage.pojo.PersonSubjection</parameter>
+		</field>
+		<field name="subjectionRoles" title="用户角色" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.usermanage.pojo.RoleMember</parameter>
+		</field>
+		<field name="agents" title="代理人" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.usermanage.pojo.Agent</parameter>
+		</field>
+		<field name="children" title="孩子" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.usermanage.pojo.StudentGenearch</parameter>
+		</field>
+		<field name="supervisors" title="分管领导" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.usermanage.pojo.PersonSupervisor</parameter>
+		</field>
+		<field name="supervisePersons" title="分管的人员" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.usermanage.pojo.PersonSupervisor</parameter>
+		</field>
+		<field name="superviseOrgs" title="分管的部门" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.usermanage.pojo.OrgSupervisor</parameter>
+		</field>
+		<field name="leadOrgs" title="任领导的部门" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.usermanage.pojo.OrgLeader</parameter>
+		</field>
+		<field name="logins" title="登录情况" type="components">
+			<parameter name="lazyLoad">false</parameter>
+			<parameter name="class">com.yuanluesoft.jeaf.stat.pojo.LoginStat</parameter>
+		</field>
+		<field name="portrait" title="用户头像" length="1" type="image" inputMode="attachment">
+			<parameter name="imageClipHeight">100</parameter>
+			<parameter name="imageClipWidth">100</parameter>
+			<parameter name="clipEnabled">true</parameter>
+			<parameter name="maxSaveSize">20000</parameter>
+		</field>
+		<field name="supervisorIds" title="分管领导ID列表" type="string" inputMode="hidden"/>
+		<field name="supervisorNames" title="分管领导姓名列表" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(640, 400, true, 'supervisorIds{id},supervisorNames{name|我的分管领导|100%}', '', 'employee,teacher')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="supervisePersonIds" title="被分管的用户ID列表" type="string" inputMode="hidden"/>
+		<field name="supervisePersonNames" title="被分管的用户姓名列表" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(640, 400, true, 'supervisePersonIds{id},supervisePersonNames{name|我分管的用户|100%}', '', 'employee,teacher')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="superviseOrgIds" title="分管的部门ID列表" type="string" inputMode="hidden"/>
+		<field name="superviseOrgNames" title="分管的部门列表" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(640, 400, true, 'superviseOrgIds{id},superviseOrgNames{name|我分管的部门|100%}', '', 'school,schoolDepartment,unit,unitDepartment')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="leadOrgIds" title="用户任领导的部门ID" type="string" inputMode="hidden"/>
+		<field name="leadOrgNames" title="用户任领导的部门" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(640, 400, true, 'leadOrgIds{id},leadOrgNames{name|我任领导的部门|100%}', '', 'school,schoolDepartment,unit,unitDepartment')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="教师" class="com.yuanluesoft.jeaf.usermanage.pojo.Teacher" businessServiceName="personService"/>
+	
+	<businessObject title="学生" class="com.yuanluesoft.jeaf.usermanage.pojo.Student" businessServiceName="personService">
+		<field name="seatNumber" title="座号" length="3" type="number" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="用户引用" class="com.yuanluesoft.jeaf.usermanage.pojo.PersonLink" businessServiceName="personService">
+		<field name="userClassName" title="用户类名称" length="100" type="string" inputMode="none"/>
+	</businessObject>
+	
+	<businessObject title="用户所在机构" class="com.yuanluesoft.jeaf.usermanage.pojo.PersonSubjection">
+		<field name="personId" title="用户ID" type="number" inputMode="none"/>
+		<field name="orgId" title="机构ID" type="number" inputMode="none"/>
+	</businessObject>
+	
+	<businessObject title="学生和家长对应关系" class="com.yuanluesoft.jeaf.usermanage.pojo.StudentGenearch">
+		<field name="studentId" title="学生ID" type="number" inputMode="hidden"/>
+		<field name="genearchId" title="家长ID" type="number" inputMode="hidden"/>
+		<field name="relation" title="与学生的关系" length="20" type="string" inputMode="text"/>
+		<field name="genearch" title="用户" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.jeaf.usermanage.pojo.Person</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="角色" class="com.yuanluesoft.jeaf.usermanage.pojo.Role" businessServiceName="roleService">
+		<field name="orgId" title="组织机构ID" type="number" inputMode="hidden"/>
+		<field name="roleName" title="名称" length="30" required="true" type="string" inputMode="text"/>
+		<field name="isPost" title="是否岗位" type="number" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+		<field name="lastModified" title="最后修改时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="备注" type="string" length="200" inputMode="text"/>
+		<field name="members" title="成员列表" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.usermanage.pojo.RoleMember</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="角色成员" class="com.yuanluesoft.jeaf.usermanage.pojo.RoleMember">
+		<field name="roleId" title="角色ID" type="number" inputMode="hidden"/>
+		<field name="memberId" title="成员ID" type="number" inputMode="hidden"/>
+		<field name="memberName" title="成员姓名" length="30" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="代理人" class="com.yuanluesoft.jeaf.usermanage.pojo.Agent">
+		<field name="personId" title="用户ID" type="number" inputMode="hidden"/>
+		<field name="agentId" title="代理人ID" type="number" inputMode="hidden"/>
+		<field name="beginTime" title="开始时间" type="timestamp" inputMode="datetime"/>
+		<field name="endTime" title="结束时间" type="timestamp" inputMode="datetime"/>
+		<field name="source" title="设置代理人的系统" length="50" type="string" inputMode="hidden"/>
+	</businessObject>
+	
+	<businessObject title="主管领导" class="com.yuanluesoft.jeaf.usermanage.pojo.OrgSupervisor">
+		<field name="orgId" title="组织机构ID" type="number" inputMode="hidden"/>
+		<field name="orgName" title="组织机构名称" length="50" type="string" inputMode="select"/>
+		<field name="supervisorId" title="分管领导ID" type="number" inputMode="text"/>
+		<field name="supervisor" title="分管领导姓名" length="30" type="string" inputMode="select"/>
+	</businessObject>
+	
+	<businessObject title="部门领导" class="com.yuanluesoft.jeaf.usermanage.pojo.OrgLeader">
+		<field name="orgId" title="组织机构ID" type="number" inputMode="hidden"/>
+		<field name="orgName" title="组织机构名称" length="50" type="string" inputMode="select"/>
+		<field name="leaderId" title="领导ID" type="number" inputMode="hidden"/>
+		<field name="leader" title="领导姓名" length="50" type="string" inputMode="select"/>
+	</businessObject>
+	
+	<businessObject title="分管领导" class="com.yuanluesoft.jeaf.usermanage.pojo.PersonSupervisor">
+		<field name="personId" title="用户ID" type="number" inputMode="hidden"/>
+		<field name="personName" title="用户名" length="50" type="string" inputMode="select"/>
+		<field name="supervisorId" title="分管领导ID" type="number" inputMode="hidden"/>
+		<field name="supervisor" title="分管领导姓名" length="50" type="string" inputMode="select"/>
+	</businessObject>
+	
+	<businessObject title="用户注册" class="com.yuanluesoft.jeaf.usermanage.pojo.RegistPerson"/>
+	
+	<businessObject title="学生注册" class="com.yuanluesoft.jeaf.usermanage.pojo.RegistStudent"/>
+	
+	<businessObject title="教师" class="com.yuanluesoft.jeaf.usermanage.pojo.RegistTeacher"/>
+	
+	<businessObject title="学校注册码" class="com.yuanluesoft.jeaf.usermanage.pojo.SchoolRegistCode"/>
+	
+	<businessObject title="问卷" class="com.yuanluesoft.jeaf.usermanage.pojo.Questionnaire"/>
+	
+	<businessObject title="记录访问者列表" class="com.yuanluesoft.jeaf.security.model.RecordVisitorList">
+		<field name="visitorIds" title="用户ID" type="string" inputMode="hidden"/>
+		<field name="visitorNames" title="用户名" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectVisitors('', '', this);</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="用户页面模板主题" class="com.yuanluesoft.jeaf.usermanage.pojo.UserPageTemplateTheme" businessServiceName="userPageTemplateThemeService">
+		<field name="userId" title="用户ID" type="number" inputMode="hidden"/>
+	</businessObject>
+	
+	<businessObject title="用户页面模板" class="com.yuanluesoft.jeaf.usermanage.pojo.UserPageTemplate" businessServiceName="userPageTemplateService">
+		<field name="userId" title="用户ID" type="number" inputMode="hidden"/>
+		<field name="applicationNames" title="适用的应用名称" type="string" length="1000" inputMode="hidden"/>
+		<field name="applicationTitles" title="适用的应用标题" type="string" length="1000" inputMode="hidden"/>
+	</businessObject>
+	
+	<businessObject title="登录模板" class="com.yuanluesoft.jeaf.usermanage.pojo.UserLoginTemplate" businessServiceName="userPageTemplateService">
+		<field name="hostNames" title="域名" type="string" length="1000" inputMode="hidden"/>
+		<field name="hostNamesText" title="域名" persistence="false" type="string" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

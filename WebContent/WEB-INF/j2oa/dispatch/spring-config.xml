@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 发文服务 -->
+	<bean id="dispatchService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.j2oa.dispatch.service.spring.DispatchServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="administrativeArchivesService"><ref bean="administrativeArchivesService"/></property>
+				<property name="attachmentService"><ref bean="attachmentService"/></property>
+				<property name="databankDataService"><ref bean="databankDataService"/></property>
+				<property name="recordControlService"><ref bean="recordControlService"/></property>
+				<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+				<property name="remoteDocumentService"><ref bean="remoteDocumentService"/></property>
+				<property name="soapConnectionPool"><ref bean="soapConnectionPool"/></property>
+				<property name="soapPassport">
+					<bean class="com.yuanluesoft.jeaf.soap.SoapPassport">
+						<property name="url"><value>http://localhost/cms/services/</value></property>
+					</bean>
+				</property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="upload*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="change*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="distribute">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="filing">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 发文模板服务-->
+	<bean id="dispatchTemplateService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.j2oa.dispatch.service.spring.DispatchTemplateServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<!-- property name="fileTransferServer"><ref bean="fileTransferServer"/></property -->
+				<property name="fileDownloadService"><ref bean="fileDownloadService"/></property>
+				<property name="attachmentService"><ref bean="attachmentService"/></property>
+				<property name="remoteDocumentService"><ref bean="remoteDocumentService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 发文文件字服务 -->
+	<bean id="dispatchDocWordService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.j2oa.dispatch.service.spring.DispatchDocWordServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="numerationService"><ref bean="numerationService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="reset*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="generateDocWord">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

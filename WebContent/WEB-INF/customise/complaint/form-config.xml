@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<forms>
+	<form class="com.yuanluesoft.customise.complaint.forms.Complaint" name="complaint" title="投诉单" pojo="com.yuanluesoft.customise.complaint.pojo.CustomiseComplaint">
+		<extendedParameters>
+			<parameter name="editPrivilege">application_manager</parameter>
+			<parameter name="deletePrivilege">manageUnit_投诉管理</parameter>
+			<parameter name="visitPrivilege">manageUnit_投诉查询</parameter>
+		</extendedParameters>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteComplaint');"/>
+		</actions>
+	</form>
+	<form class="com.yuanluesoft.customise.complaint.forms.Parameter" name="parameter" title="参数配置" pojo="com.yuanluesoft.customise.complaint.pojo.CustomiseParameter">
+		<extendedParameters>
+			<parameter name="editPrivilege">manageUnit_参数配置</parameter>
+			<parameter name="deletePrivilege">manageUnit_投诉管理</parameter>
+			<parameter name="visitPrivilege">application_manager</parameter>
+		</extendedParameters>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteParameter');"/>
+		</actions>
+	</form>
+</forms>

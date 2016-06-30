@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminService" type="com.yuanluesoft.charge.servicemanage.forms.admin.Service"/>
+  <form-bean name="service" type="com.yuanluesoft.charge.servicemanage.forms.Service"/>
+  <form-bean name="serviceDeductTransaction" type="com.yuanluesoft.charge.servicemanage.forms.ServiceDeductTransaction"/>
+  <form-bean name="adminServicePrice" type="com.yuanluesoft.charge.servicemanage.forms.admin.ServicePrice"/>
+  <form-bean name="adminServicePolicy" type="com.yuanluesoft.charge.servicemanage.forms.admin.ServicePolicy"/>
+  <form-bean name="adminServiceTry" type="com.yuanluesoft.charge.servicemanage.forms.admin.ServiceTry"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminService" path="/admin/service" scope="request"
+   type="com.yuanluesoft.charge.servicemanage.actions.admin.service.Load" validate="false">
+   <forward name="load" path="/admin/service.jsp"/>
+  </action>
+  <action input="/admin/service.jsp" name="adminService"
+   path="/admin/saveService" scope="request"
+   type="com.yuanluesoft.charge.servicemanage.actions.admin.service.Save" validate="false"/>
+  <action input="/admin/service.jsp" name="adminService"
+   path="/admin/deleteService" scope="request"
+   type="com.yuanluesoft.charge.servicemanage.actions.admin.service.Delete" validate="false"/>
+  <action name="service" path="/service" scope="request"
+   type="com.yuanluesoft.charge.servicemanage.actions.service.Load" validate="false">
+   <forward name="load" path="/service.jsp"/>
+  </action>
+  <action name="service" path="/displayService" scope="request" validate="false"/>
+  <action input="/admin/servicePrice.jsp" name="adminServicePrice"
+   path="/admin/appendDeductPolicy" scope="request"
+   type="com.yuanluesoft.charge.servicemanage.actions.admin.service.serviceprice.AppendDeductPolicy" validate="false"/>
+  <action input="/admin/servicePrice.jsp" name="adminServicePrice"
+   path="/admin/deleteDeductPolicy" scope="request"
+   type="com.yuanluesoft.charge.servicemanage.actions.admin.service.serviceprice.DeleteDeductPolicy" validate="false"/>
+  <action name="serviceDeductTransaction"
+   path="/serviceDeductTransaction" scope="request"
+   type="com.yuanluesoft.charge.servicemanage.actions.servicededucttransaction.Load" validate="false">
+   <forward name="load" path="/serviceDeductTransaction.jsp"/>
+  </action>
+  <action name="serviceDeductTransaction"
+   path="/displayServiceDeductTransaction" scope="request"
+   type="com.yuanluesoft.charge.servicemanage.actions.servicededucttransaction.Load" validate="false"/>
+  <action name="adminServicePrice" path="/admin/servicePrice"
+   scope="request"
+   type="com.yuanluesoft.charge.servicemanage.actions.admin.service.serviceprice.Load" validate="false">
+   <forward name="load" path="/admin/servicePrice.jsp"/>
+  </action>
+  <action input="/admin/servicePrice.jsp" name="adminServicePrice"
+   path="/admin/saveServicePrice" scope="request"
+   type="com.yuanluesoft.charge.servicemanage.actions.admin.service.serviceprice.Save" validate="false"/>
+  <action input="/admin/servicePrice.jsp" name="adminServicePrice"
+   path="/admin/deleteServicePrice" scope="request"
+   type="com.yuanluesoft.charge.servicemanage.actions.admin.service.serviceprice.Delete" validate="false"/>
+  <action name="adminServicePolicy" path="/admin/servicePolicy"
+   scope="request"
+   type="com.yuanluesoft.charge.servicemanage.actions.admin.servicepolicy.Load" validate="false">
+   <forward name="load" path="/admin/servicePolicy.jsp"/>
+  </action>
+  <action input="/admin/servicePolicy.jsp" name="adminServicePolicy"
+   path="/admin/saveServicePolicy" scope="request"
+   type="com.yuanluesoft.charge.servicemanage.actions.admin.servicepolicy.Save" validate="false"/>
+  <action input="/admin/servicePolicy.jsp" name="adminServicePolicy"
+   path="/admin/deleteServicePolicy" scope="request"
+   type="com.yuanluesoft.charge.servicemanage.actions.admin.servicepolicy.Delete" validate="false"/>
+  <action name="adminServiceTry" path="/admin/serviceTry"
+   scope="request"
+   type="com.yuanluesoft.charge.servicemanage.actions.admin.servicetry.Load" validate="false">
+   <forward name="load" path="/admin/serviceTry.jsp"/>
+  </action>
+  <action name="adminServiceTry" path="/admin/saveServiceTry"
+   scope="request"
+   type="com.yuanluesoft.charge.servicemanage.actions.admin.servicetry.Save" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

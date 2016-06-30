@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view title="商户" name="paymentMerchants">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.payment.pojo.PaymentMerchant</pojo>
+		</data>
+		<links>
+			<link>/jeaf/payment/selectPaymentMerchant.shtml?id={PARAMETER:payment.id}&amp;selectedMerchantId={PARAMETER:id}&amp;b2cOnly={PARAMETER:b2cOnly}&amp;b2bOnly={PARAMETER:b2bOnly}</link>
+		</links>
+	</view>
+	
+	<view title="账户类型" name="accountTypes">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.payment.model.AccountType</pojo>
+		</data>
+		<links>
+			<link>/jeaf/payment/selectAccountType.shtml?id={PARAMETER:payment.id}&amp;selectedMerchantId={PARAMETER:selectedMerchantId}&amp;selectedAccountType={PARAMETER:name}</link>
+		</links>
+	</view>
+	
+	<view name="admin/paymentMerchant" form="admin/paymentMerchant" title="商户" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.payment.pojo.PaymentMerchant</pojo>
+			<quickFilter>PaymentMerchant.name like '%{KEY}%' or PaymentMerchant.paymentMethod like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新增商户" execute="PageUtils.newrecord('jeaf/payment', 'admin/paymentMerchant', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="商户" name="fullName"/>
+			<column title="帐户类型" name="accountTypes" width="200"/>
+			<column title="是否停用" name="halt" align="center" width="66"/>
+		</columns>
+	</view>
+	
+	<view name="admin/successPayment" title="成功支付记录" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.payment.pojo.Payment</pojo>
+			<where>Payment.transactSuccess='1'</where>
+			<orderBy>Payment.transactTime DESC</orderBy>
+			<quickFilter>Payment.paymentMethod like '%{KEY}%' or Payment.paymentReason like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="订单ID" name="applicationOrderId" width="90"/>
+			<column title="银行端订单ID" name="bankOrderId" width="110" align="center"/>
+			<column title="支付原因" name="paymentReason"/>
+			<column title="金额" name="money" width="36" align="center"/>
+			<column title="银行" name="paymentMethod" width="56" align="center"/>
+			<column title="帐户类型" name="accountType" width="80"/>
+			<column title="完成时间" name="transactTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/payment" title="支付记录" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.payment.pojo.Payment</pojo>
+			<orderBy>Payment.created DESC</orderBy>
+			<quickFilter>Payment.paymentMethod like '%{KEY}%' or Payment.paymentReason like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="订单ID" name="applicationOrderId" width="90"/>
+			<column title="银行端订单ID" name="bankOrderId" width="115" align="center"/>
+			<column title="支付原因" name="paymentReason"/>
+			<column title="金额" name="money" width="36" align="center"/>
+			<column title="银行" name="paymentMethod" width="56" align="center"/>
+			<column title="帐户类型" name="accountType" width="80"/>
+			<column title="支付时间" name="created" width="110" align="center"/>
+			<column title="完成时间" name="transactTime" width="110" align="center"/>
+		</columns>
+	</view>
+</views>

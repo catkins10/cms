@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminItem" type="com.yuanluesoft.enterprise.exam.forms.admin.Item"/>
+  <form-bean name="adminKnowledge" type="com.yuanluesoft.enterprise.exam.forms.admin.Knowledge"/>
+  <form-bean name="adminExam" type="com.yuanluesoft.enterprise.exam.forms.admin.Exam"/>
+  <form-bean name="adminExamPaper" type="com.yuanluesoft.enterprise.exam.forms.admin.ExamPaper"/>
+  <form-bean name="examTest" type="com.yuanluesoft.enterprise.exam.forms.ExamTest"/>
+  <form-bean name="adminExamTestReport" type="com.yuanluesoft.enterprise.exam.forms.admin.ExamTestReport"/>
+  <form-bean name="adminExamStatView" type="com.yuanluesoft.enterprise.exam.forms.admin.ExamStatView"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminKnowledge" path="/admin/knowledge" scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.knowledge.Load" validate="false">
+   <forward name="load" path="/admin/knowledge.jsp"/>
+  </action>
+  <action input="/admin/knowledge.jsp" name="adminKnowledge"
+   path="/admin/saveKnowledge" scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.knowledge.Save" validate="false"/>
+  <action input="/admin/knowledge.jsp" name="adminKnowledge"
+   path="/admin/deleteKnowledge" scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.knowledge.Delete" validate="false"/>
+  <action name="adminItem" path="/admin/item" scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.item.Load" validate="false">
+   <forward name="load" path="/admin/item.jsp"/>
+  </action>
+  <action input="/admin/item.jsp" name="adminItem"
+   path="/admin/saveItem" scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.item.Save" validate="false"/>
+  <action input="/admin/item.jsp" name="adminItem"
+   path="/admin/deleteItem" scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.item.Delete" validate="false"/>
+  <action name="adminExam" path="/admin/exam" scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.exam.admin.Load" validate="false">
+   <forward name="load" path="/admin/exam.jsp"/>
+  </action>
+  <action input="/admin/exam.jsp" name="adminExam"
+   path="/admin/saveExam" scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.exam.admin.Save" validate="false"/>
+  <action input="/admin/exam.jsp" name="adminExam"
+   path="/admin/deleteExam" scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.exam.admin.Delete" validate="false"/>
+  <action name="adminExamPaper" path="/admin/examPaper" scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.exampaper.admin.Load" validate="false">
+   <forward name="load" path="/admin/examPaper.jsp"/>
+  </action>
+  <action input="/admin/examPaper.jsp" name="adminExamPaper"
+   path="/admin/saveExamPaper" scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.exampaper.admin.Save" validate="false"/>
+  <action input="/admin/examPaper.jsp" name="adminExamPaper"
+   path="/admin/deleteExamPaper" scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.exampaper.admin.Delete" validate="false"/>
+  <action input="/admin/examPaper.jsp" name="adminExamPaper"
+   path="/admin/generateExamPaper" scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.exampaper.admin.Generate" validate="false"/>
+  <action input="/admin/examPaper.jsp" name="adminExamPaper"
+   path="/admin/releaseExamPaper" scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.exampaper.admin.Release" validate="false"/>
+  <action path="/admin/printExamPaper" scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.exampaper.admin.Print" validate="false"/>
+  <action name="examTest" path="/examTest" scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.examtest.Load" validate="false">
+   <forward name="load" path="/examTest.jsp"/>
+  </action>
+  <action input="/examTest.jsp" name="examTest" path="/submitExamTest"
+   scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.examtest.Submit" validate="false"/>
+  <action input="/examTest.jsp" name="examTest" path="/cancelExamTest"
+   scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.examtest.Cancel" validate="false"/>
+  <action name="adminExamTestReport" path="/admin/examTestReport"
+   scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.examtestreport.Load" validate="false">
+   <forward name="load" path="/admin/examTestReport.jsp"/>
+  </action>
+  <action name="adminExamStatView" path="/admin/examStatView"
+   scope="request"
+   type="com.yuanluesoft.enterprise.exam.actions.examstat.ExamStatViewAction" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

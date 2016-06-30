@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="工作汇报" class="com.yuanluesoft.enterprise.workreport.pojo.WorkReport" businessServiceName="workReportService">
+		<field name="reporterId" title="汇报人ID" type="number" inputMode="none"/>
+		<field name="reporterName" title="汇报人姓名" length="50" type="string" inputMode="readonly"/>
+		<field name="teamId" title="项目组ID" type="number" inputMode="hidden"/>
+		<field name="workDescription" title="前一阶段完成情况" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+		<field name="problem" title="存在的问题" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+		<field name="plan" title="下一阶段计划" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+		<field name="reportType" title="汇报类型" length="30" type="string" inputMode="text"/>
+		<field name="reportTime" title="汇报时间" type="timestamp" inputMode="readonly"/>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审核,审批</parameter>
+			<parameter name="class">com.yuanluesoft.enterprise.workreport.pojo.WorkReportOpinion</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

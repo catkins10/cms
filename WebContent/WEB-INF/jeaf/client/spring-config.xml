@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 客户端主页服务 -->	
+	<bean id="clientMainPageService" class="com.yuanluesoft.jeaf.client.pages.ClientMainPageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+		<property name="siteService"><ref bean="siteService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="databaseDefineService"><ref bean="databaseDefineService"/></property>
+	</bean>
+	
+	<!-- 客户端引导页面服务 -->	
+	<bean id="clientPilotPageService" class="com.yuanluesoft.jeaf.client.pages.ClientPilotPageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+	</bean>
+	
+	<!-- 客户端提示页面服务 -->	
+	<bean id="clientHintPageService" class="com.yuanluesoft.jeaf.client.pages.ClientHintPageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+	</bean>
+	
+	<!-- 客户端文件页面服务 -->	
+	<bean id="clientFilePageService" class="com.yuanluesoft.jeaf.client.pages.ClientFilePageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+	</bean>
+</beans>

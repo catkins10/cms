@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="物流联盟用户" class="com.yuanluesoft.logistics.usermanage.pojo.LogisticsUser" businessServiceName="logisticsUserService">
+		<field name="loginName" title="登录用户名" length="32" required="true" type="string" inputMode="text"/>
+		<field name="password" title="登录密码" length="50" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="isCompany" title="公司/个人" length="1" type="char" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="isHalt" title="是否停用" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">停用|1\0启用|0</parameter>
+		</field>
+		<field name="name" title="公司名称/个人姓名" length="200" required="true" type="string" inputMode="text"/>
+		<field name="areaId" title="所在地区ID" length="20" required="true" type="number" inputMode="hidden"/>
+		<field name="area" title="所在地区" length="100" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(500, 300, false, 'areaId{id},area{name}', '', 'area')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="address" title="地址" length="200" type="string" inputMode="text"/>
+		<field name="fax" title="传真" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="tel" title="电话" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="businessLicence" title="公司营业执照号码" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="legalRepresentative" title="法人代表" length="32" required="true" type="string" inputMode="text"/>
+		<field name="representativeIdNumber" title="法人代表身份证号码" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="representativeTel" title="法人代表联系电话" length="50" type="string" inputMode="text"/>
+		<field name="webSite" title="公司网址" length="200" type="string" inputMode="text"/>
+		<field name="linkman" title="联系人" length="50" required="true" type="string" inputMode="text"/>
+		<field name="linkmanTel" title="联系电话" length="100" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="linkmanQQ" title="联系人QQ" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="linkmanMail" title="联系人邮箱" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="creator" title="注册人姓名" length="50" type="string" inputMode="readonly"/>
+		<field name="created" title="注册时间" type="string" inputMode="readonly"/>
+		<field name="creatorIP" title="注册人IP" length="50" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="isApproval" title="待审核" length="1" type="char" inputMode="none"/>
+		<field name="approverId" title="审核人ID" length="20" type="number" inputMode="none"/>
+		<field name="approver" title="审核人姓名" length="50" type="string" inputMode="readonly"/>
+		<field name="approverIP" title="审核人IP" length="50" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+		<field name="blacklists" title="黑名单" type="components">
+			<parameter name="class">com.yuanluesoft.logistics.usermanage.pojo.LogisticsBlacklist</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="黑名单" class="com.yuanluesoft.logistics.usermanage.pojo.LogisticsBlacklist">
+		<field name="userId" title="用户ID" length="20" type="number" inputMode="hidden"/>
+		<field name="userName" title="公司名称/个人姓名" length="200" type="string" inputMode="readonly"/>
+		<field name="blacklistBegin" title="列入黑名单时间" type="timestamp" inputMode="readonly"/>
+		<field name="blacklistEnd" title="黑名单解禁时间" type="timestamp" inputMode="readonly"/>
+		<field name="reason" title="列入原因" length="2000" required="true" type="string" inputMode="text"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+	</businessObject>
+</businessObjects>

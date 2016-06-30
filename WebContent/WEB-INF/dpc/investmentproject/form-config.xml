@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/project" class="com.yuanluesoft.dpc.investmentproject.forms.admin.Project" title="项目" pojo="com.yuanluesoft.dpc.investmentproject.pojo.InvestmentProject">
+		<formFields>
+			<field name="investModes" title="投资方式列表" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="isNew() or workflow() and noPrivilege(application_manager)" execute="if(confirm('是否确定要作废？'))FormUtils.doAction('deleteProject')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/projectReport" class="com.yuanluesoft.dpc.investmentproject.forms.admin.ProjectReport" title="项目报表">
+		<formFields>
+			<field name="beginDate" title="开始时间" type="date" inputMode="date" required="true"/>
+			<field name="endDate" title="结束时间" type="date" inputMode="date" required="true"/>
+			<field name="area" title="所在地区(开发区)" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsServiceName">investmentProjectService</parameter>
+				<parameter name="itemsName">area</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/parameter" class="com.yuanluesoft.dpc.investmentproject.forms.admin.Parameter" title="参数配置" pojo="com.yuanluesoft.dpc.investmentproject.pojo.InvestmentProjectParameter">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/industry" class="com.yuanluesoft.dpc.investmentproject.forms.admin.Industry" title="行业配置" pojo="com.yuanluesoft.dpc.investmentproject.pojo.InvestmentProjectParameter">
+		<formFields>
+			<field name="industry" title="行业配置" type="component">
+				<parameter name="class">com.yuanluesoft.dpc.investmentproject.pojo.InvestmentProjectIndustry</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteIndustry')"/>
+		</actions>
+	</form>
+</forms>

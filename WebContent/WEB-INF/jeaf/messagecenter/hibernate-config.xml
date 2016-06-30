@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--消息-->
+	<class name="com.yuanluesoft.jeaf.messagecenter.pojo.Message" table="messagecenter_message">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="receivePersonId"/> <!--接收人ID-->
+		<property name="senderId"/> <!--发送人ID-->
+		<property name="senderName"/> <!--发送人-->
+		<property name="sendTime"/> <!--通知时间-->
+		<property name="priority"/> <!--优先级-->
+		<property name="content"/> <!--内容-->
+		<property name="webLink"/> <!--HTTP链接-->
+		<property name="lastSendMode"/> <!--上次通知方式-->
+		<property name="faildCount"/> <!--发送失败次数-->
+		<property name="sourceRecordId"/> <!--源记录ID-->
+		<property name="bindSendMode"/> <!--是否指定某种发送方式-->
+		<property name="cyclicMode"/> <!--循环通知方式-->
+		<property name="cyclicTime"/> <!--循环周期-->
+		<property name="cyclicEnd"/> <!--截止时间-->
+	</class>
+</hibernate-mapping>

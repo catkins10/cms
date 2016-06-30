@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/serviceorgInfo" form="admin/org" title="服务机构" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.serviceorg.org.pojo.ServiceOrg</pojo>
+			<orderBy>ServiceOrg.created DESC</orderBy>
+			<quickFilter>ServiceOrg.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="type" title="机构类别"  align="center"/>
+			<column name="addr" title="地址" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allServiceitem" form="admin/item" title="所有办事事项" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.serviceorg.serviceitem.pojo.ServiceItem</pojo>
+			<orderBy>ServiceItem.created DESC</orderBy>
+			<quickFilter>ServiceItem.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="事项名称"/>
+			<column name="person" title="联系人"  align="center"/>
+			<column name="tel" title="电话" align="center"/>
+		</columns>
+	</view>
+	
+	
+	
+</views>

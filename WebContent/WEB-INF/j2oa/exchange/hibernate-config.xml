@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--公文-->
+	<class name="com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocument" table="exchange_document">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="sourceRecordId"/> <!--源记录ID-->
+		<property name="subject"/> <!--标题-->
+		<property name="documentUnit"/> <!--发文单位-->
+		<property name="sign"/> <!--签发人-->
+		<property name="docWord"/> <!--发文字号-->
+		<property name="generateDate"/> <!--成文日期-->
+		<property name="docType"/> <!--发文种类-->
+		<property name="secureLevel"/> <!--秘密等级-->
+		<property name="secureTerm"/> <!--保密期限-->
+		<property name="priority"/> <!--紧急程度-->
+		<property name="keyword"/> <!--主题词-->
+		<property name="printNumber"/> <!--印发份数-->
+		<property name="distributeDate"/> <!--印发日期-->
+		<property name="mainSend"/> <!--主送单位-->
+		<property name="copySend"/> <!--抄送单位-->
+		<property name="otherSend"/> <!--其他接收单位-->
+		<property name="created"/> <!--创建时间-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="creator"/> <!--创建人-->
+		<property name="creatorUnit"/> <!--创建人所在单位-->
+		<property name="creatorUnitId"/> <!--创建人所在单位ID-->
+		<property name="issue"/> <!--是否发布-->
+		<property name="issuePersonId"/> <!--最后发布人Id-->
+		<property name="issuePerson"/> <!--最后发布人-->
+		<property name="issueTime"/> <!--最后发布时间-->
+		<property name="remark"/> <!--备注-->
+		<set cascade="delete" inverse="true" lazy="true" name="exchangeUnits" table="exchange_document_unit" order-by="id">
+			<key column="documentId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocumentUnit"/>
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="exchangeUndos" table="exchange_document_undo" order-by="undoTime">
+			<key column="documentId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocumentUndo"/>
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="exchangeMessages" table="exchange_message" order-by="created DESC">
+			<key column="documentId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.exchange.pojo.ExchangeMessage"/>
+		</set>
+	</class>
+	
+	<!--公文:接收单位-->
+	<class name="com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocumentUnit" table="exchange_document_unit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="documentId"/> <!--公文ID-->
+		<property name="unitId"/> <!--单位ID-->
+		<property name="unitName"/> <!--单位名称-->
+		<property name="unitType"/> <!--单位类别-->
+		<property name="signTime"/> <!--签收时间-->
+		<property name="signPerson"/> <!--签收人-->
+		<property name="signPersonId"/> <!--签收人ID-->
+	</class>
+	
+	<!--公文:撤销记录-->
+	<class name="com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocumentUndo" table="exchange_document_undo">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="documentId"/> <!--公文ID-->
+		<property name="undoReason"/> <!--撤销发布的原因-->
+		<property name="resign"/> <!--是否重新签收-->
+		<property name="undoTime"/> <!--撤销时间-->
+		<property name="undoPerson"/> <!--撤销人-->
+		<property name="undoPersonId"/> <!--撤销人ID-->
+	</class>
+	
+	<!--消息反馈-->
+	<class name="com.yuanluesoft.j2oa.exchange.pojo.ExchangeMessage" table="exchange_message">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="documentId"/> <!--关联的公文ID-->
+		<property name="replyMessageId"/> <!--被答复的消息ID-->
+		<property name="subject"/> <!--标题-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文-->
+		<property name="created"/> <!--创建时间-->
+		<property name="creator"/> <!--创建人-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="creatorUnit"/> <!--创建人所在单位-->
+		<property name="creatorUnitId"/> <!--创建人所在单位ID-->
+		<many-to-one name="document" class="com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocument" column="documentId" update="false" insert="false"/>
+		<set cascade="delete" inverse="true" lazy="false" name="replies" table="exchange_message">
+			<key column="replyMessageId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.exchange.pojo.ExchangeMessage"/>
+		</set>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<portlet-app id="cms" version="1.0">
+	<portlet id="todo">
+		<display-name>待处理项目</display-name>
+		<init-param>
+			<name>viewName</name> <!-- portlet显示的视图 -->
+			<value>admin/todoGeotechnical</value>
+		</init-param>
+		<init-param>
+			<name>showRows</name> <!-- 默认状态下显示记录数/最大化时显示记录数 -->
+			<value>8/30</value>
+		</init-param>
+		<portlet-class>com.yuanluesoft.portal.portlet.ViewPortlet</portlet-class>
+	</portlet>
+	
+	<portlet id="inProcess">
+		<display-name>在处理项目</display-name>
+		<portlet-class>com.yuanluesoft.portal.portlet.ViewPortlet</portlet-class>
+		<init-param>
+			<name>viewName</name> <!-- portlet显示的视图 -->
+			<value>admin/inProcessGeotechnical</value>
+		</init-param>
+		<init-param>
+			<name>showRows</name> <!-- 默认状态下显示记录数/最大化时显示记录数 -->
+			<value>8/30</value>
+		</init-param>
+	</portlet>
+</portlet-app>

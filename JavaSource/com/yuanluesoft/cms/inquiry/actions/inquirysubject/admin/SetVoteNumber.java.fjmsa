@@ -1,0 +1,81 @@
+package com.yuanluesoft.cms.inquiry.actions.inquirysubject.admin;
+
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
+import com.yuanluesoft.cms.inquiry.pojo.InquiryVote;
+import com.yuanluesoft.cms.inquiry.services.InquiryService;
+import com.yuanluesoft.jeaf.database.DatabaseService;
+import com.yuanluesoft.jeaf.database.Record;
+import com.yuanluesoft.jeaf.exception.ServiceException;
+import com.yuanluesoft.jeaf.sessionmanage.model.SessionInfo;
+import com.yuanluesoft.jeaf.util.RequestUtils;
+import com.yuanluesoft.jeaf.util.UUIDLongGenerator;
+
+/**
+ * 设置投票数
+ * @author linchuan
+ *
+ */
+public class SetVoteNumber extends InquirySubjectAction {
+   
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	return executeSaveAction(mapping, form, request, response, true, "result", null, null);
+    }
+
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.inquiry.actions.inquirysubject.admin.InquirySubjectAction#saveRecord(com.yuanluesoft.jeaf.form.ActionForm, javax.servlet.http.HttpServletRequest, com.yuanluesoft.jeaf.database.Record, com.yuanluesoft.jeaf.sessionmanage.model.SessionInfo, java.lang.String)
+	 */
+	public Record saveRecord(com.yuanluesoft.jeaf.form.ActionForm form, Record record, String openMode, HttpServletRequest request, HttpServletResponse response, SessionInfo sessionInfo) throws Exception {
+		long optionId = RequestUtils.getParameterLongValue(request, "optionId");
+		if(optionId>0) {
+			setVoteNumber(optionId, RequestUtils.getParameterIntValue(request, "voteNumber"));
+		}
+		return super.saveRecord(form, record, openMode, request, response, sessionInfo);
+	}
+	
+	public void setVoteNumber(long optionId, int count) throws ServiceException {
+		DatabaseService databaseService = (DatabaseService)getService("databaseService");
+		InquiryService inquiryService = (InquiryService)getService("inquiryService");
+		String hql = "select count(InquiryVote.id) from InquiryVote InquiryVote where InquiryVote.optionId=" + optionId;
+		Number voteCount = (Number)databaseService.findRecordByHql(hql);
+		if(voteCount!=null && voteCount.intValue()>count) { //超过需要的数量
+			//删除投票记录
+			hql = "from InquiryVote InquiryVote" +
+				  " where InquiryVote.optionId=" + optionId +
+				  " order by InquiryVote.ip DESC, InquiryVote.id";
+			for(int i=count; ;) {
+				List votes = databaseService.findRecordsByHql(hql, i, 100); //每次删除100个
+				if(votes==null || votes.isEmpty()) {
+					break;
+				}
+				for(Iterator iterator = votes.iterator(); iterator.hasNext();) {
+					InquiryVote vote = (InquiryVote)iterator.next();
+					inquiryService.delete(vote);
+				}
+				if(votes.size()<100) {
+					break;
+				}
+			}
+		}
+		else { //数量不够
+			//添加投票记录
+			for(int i=(voteCount==null ? 0 : voteCount.intValue()); i<count; i++) {
+				InquiryVote vote = new InquiryVote();
+				vote.setId(UUIDLongGenerator.generateId()); //ID
+				vote.setIp("0");
+				vote.setOptionId(optionId);
+				//vote.setVoter(voter); //投票人姓名
+				//vote.setVoterId(voterId); //投票人ID
+				inquiryService.save(vote);
+			}
+		}
+	}
+}

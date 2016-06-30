@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="recent" form="memorabilia" title="近期大事" pageRows="20" openFeatures="width=780,height=550">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.memorabilia.pojo.Memorabilia</pojo>
+			<orderBy>Memorabilia.time DESC</orderBy>
+			<where>Memorabilia.time &gt; DATE({TODAY-30})</where> <!--30天内的事件-->
+			<quickFilter>Memorabilia.subject like '%{KEY}%' or Memorabilia.content like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="发布" hide="noPrivilege(manageUnit_create)"  execute="PageUtils.newrecord('j2oa/memorabilia','memorabilia','width=780,height=550')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="主题" name="subject"/>
+			<column title="发生时间" name="time" width="110" format='yyyy-MM-dd' align="center" displayExcept="portlet"/>
+		</columns>
+	</view>
+	<view name="all" form="memorabilia" title="所有大事" pageRows="20" openFeatures="width=780,height=550">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.memorabilia.pojo.Memorabilia</pojo>
+			<orderBy>Memorabilia.time DESC</orderBy>
+			<quickFilter>Memorabilia.subject like '%{KEY}%' or Memorabilia.content like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="发布" hide="noPrivilege(manageUnit_create)"  execute="PageUtils.newrecord('j2oa/memorabilia','memorabilia','width=780,height=550')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="主题" name="subject"/>
+			<column title="发生时间" name="time" width="110" format='yyyy-MM-dd' align="center"/>
+		</columns>
+	</view>
+</views>

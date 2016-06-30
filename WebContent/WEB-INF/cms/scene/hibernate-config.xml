@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--场景服务:服务-->
+	<class name="com.yuanluesoft.cms.scene.pojo.SceneService" table="scene_service">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--服务名称-->
+		<property name="creator"/> <!--创建人-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="created"/> <!--创建时间-->
+		<property name="siteId"/> <!--站点ID-->
+		<set inverse="true" lazy="true" name="sceneDirectories" table="scene_directory" cascade="delete" order-by="priority desc, id">
+			<key column="parentDirectoryId"/>
+			<one-to-many class="com.yuanluesoft.cms.scene.pojo.SceneDirectory"/>
+		</set>
+	</class>
+	
+	<!--场景服务:场景目录-->
+	<class name="com.yuanluesoft.cms.scene.pojo.SceneDirectory" table="scene_directory">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="parentDirectoryId"/> <!--上级目录ID-->
+		<property name="directoryName"/> <!--目录名称-->
+		<property name="priority"/> <!--优先级-->
+		<property name="directoryType"/> <!--类型-->
+		<set inverse="true" lazy="true" name="childDirectories" table="scene_directory" cascade="delete" order-by="priority desc, id">
+			<key column="parentDirectoryId"/>
+			<one-to-many class="com.yuanluesoft.cms.scene.pojo.SceneDirectory"/>
+		</set>
+		<!--场景服务:服务内容-->
+		<joined-subclass name="com.yuanluesoft.cms.scene.pojo.SceneContent" table="scene_content">
+            <key>
+                <column name="id" />
+            </key>
+            <property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文-->
+        </joined-subclass>
+        <!--场景服务:链接-->
+        <joined-subclass name="com.yuanluesoft.cms.scene.pojo.SceneLink" table="scene_link">
+            <key>
+                <column name="id" />
+            </key>
+            <property name="url"/> <!--链接-->
+        </joined-subclass>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminInterviewSubject" type="com.yuanluesoft.cms.interview.forms.admin.InterviewSubject"/>
+  <form-bean name="adminSpeakFlow" type="com.yuanluesoft.cms.interview.forms.admin.SpeakFlow"/>
+  <form-bean name="adminInterviewRole" type="com.yuanluesoft.cms.interview.forms.admin.InterviewRole"/>
+  <form-bean name="interviewSpeak" type="com.yuanluesoft.cms.interview.forms.Speak"/>
+  <form-bean name="interviewLiveLogin" type="com.yuanluesoft.cms.interview.forms.InterviewLiveLogin"/>
+  <form-bean name="uploadImage" type="com.yuanluesoft.cms.interview.forms.UploadImage"/>
+  <form-bean name="adminInterviewImage" type="com.yuanluesoft.cms.interview.forms.admin.InterviewImage"/>
+  <form-bean name="adminInterviewVideo" type="com.yuanluesoft.cms.interview.forms.admin.InterviewVideo"/>
+  <form-bean name="adminInterviewSpeak" type="com.yuanluesoft.cms.interview.forms.admin.InterviewSpeak"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminInterviewSubject" path="/admin/interviewSubject"
+   scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewsubject.Load" validate="false">
+   <forward name="load" path="/admin/interviewSubject.jsp"/>
+  </action>
+  <action input="/admin/interviewSubject.jsp"
+   name="adminInterviewSubject" path="/admin/saveInterviewSubject"
+   scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewsubject.Save" validate="false"/>
+  <action input="/admin/interviewSubject.jsp"
+   name="adminInterviewSubject" path="/admin/deleteInterviewSubject"
+   scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewsubject.Delete" validate="false"/>
+  <action name="adminSpeakFlow" path="/admin/speakFlow" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.speakflow.Load" validate="false">
+   <forward name="load" path="/admin/speakFlow.jsp"/>
+  </action>
+  <action input="/admin/speakFlow.jsp" name="adminSpeakFlow"
+   path="/admin/saveSpeakFlow" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.speakflow.Save" validate="false"/>
+  <action name="adminInterviewRole" path="/admin/interviewRole"
+   scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewrole.Load" validate="false">
+   <forward name="load" path="/admin/interviewRole.jsp"/>
+  </action>
+  <action input="/admin/interviewRole.jsp" name="adminInterviewRole"
+   path="/admin/saveInterviewRole" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewrole.Save" validate="false"/>
+  <action input="/admin/interviewRole.jsp" name="adminInterviewRole"
+   path="/admin/deleteInterviewRole" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewrole.Delete" validate="false"/>
+  <action name="adminInterviewSubject" path="/admin/selectAttachment"
+   scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewsubject.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action path="/interviewLive" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.interviewlive.Load" validate="false"/>
+  <action name="interviewSpeak" path="/submitSpeak" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.speak.Submit" validate="false"/>
+  <action name="interviewSpeak" path="/selectAttachment" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.speak.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action path="/liveUpdate" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.interviewlive.LiveUpdate" validate="false"/>
+  <action name="interviewLiveLogin" path="/interviewLiveLogin"
+   scope="request"
+   type="com.yuanluesoft.cms.interview.actions.interviewlivelogin.Load" validate="false">
+   <forward name="load" path="/interviewLiveLogin.jsp"/>
+  </action>
+  <action name="interviewLiveLogin" path="/displayInterviewLiveLogin"
+   scope="request" validate="false"/>
+  <action path="/approvalSpeak" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.interviewlive.Approval" validate="false"/>
+  <action path="/endInterview" scope="session"
+   type="com.yuanluesoft.cms.interview.actions.interviewlive.EndInterview" validate="false"/>
+  <action path="/interview" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.interview.Load" validate="false"/>
+  <action path="/listAllToApprovalSpeaks" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.interviewlive.ListAllToApprovalSpeaks" validate="false"/>
+  <action name="adminInterviewImage" path="/uploadImage" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.uploadimage.Load" validate="false">
+   <forward name="load" path="/uploadImage.jsp"/>
+  </action>
+  <action input="/uploadImage.jsp" name="adminInterviewImage"
+   path="/doUploadImage" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.uploadimage.Save" validate="false"/>
+  <action name="adminInterviewImage" path="/admin/interviewImage"
+   scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewsubject.interviewimage.Load" validate="false">
+   <forward name="load" path="/admin/interviewImage.jsp"/>
+  </action>
+  <action input="/admin/interviewImage.jsp" name="adminInterviewImage"
+   path="/admin/saveInterviewImage" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewsubject.interviewimage.Save" validate="false"/>
+  <action input="/admin/interviewImage.jsp" name="adminInterviewImage"
+   path="/admin/deleteInterviewImage" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewsubject.interviewimage.Delete" validate="false"/>
+  <action name="adminInterviewVideo" path="/admin/interviewVideo"
+   scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewsubject.interviewvideo.Load" validate="false">
+   <forward name="load" path="/admin/interviewVideo.jsp"/>
+  </action>
+  <action input="/admin/interviewVideo.jsp" name="adminInterviewVideo"
+   path="/admin/saveInterviewVideo" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewsubject.interviewvideo.Save" validate="false"/>
+  <action input="/admin/interviewVideo.jsp" name="adminInterviewVideo"
+   path="/admin/deleteInterviewVideo" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewsubject.interviewvideo.Delete" validate="false"/>
+  <action input="/admin/interviewSubject.jsp"
+   name="adminInterviewSubject" path="/admin/refreshInterviewSubject"
+   scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewsubject.Refresh" validate="false"/>
+  <action path="/interviewImage" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.interviewimage.Load" validate="false"/>
+  <action path="/interviewBackground" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.interviewbackground.Load" validate="false"/>
+  <action path="/interviewGuestsIntro" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.interviewguestsintro.Load" validate="false"/>
+  <action name="adminInterviewSpeak" path="/admin/interviewSpeak"
+   scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewsubject.interviewspeak.Load" validate="false">
+   <forward name="load" path="/admin/interviewSpeak.jsp"/>
+  </action>
+  <action input="/admin/interviewSpeak.jsp" name="adminInterviewSpeak"
+   path="/admin/saveInterviewSpeak" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewsubject.interviewspeak.Save" validate="false"/>
+  <action input="/admin/interviewSpeak.jsp" name="adminInterviewSpeak"
+   path="/admin/deleteInterviewSpeak" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewsubject.interviewspeak.Delete" validate="false"/>
+  <action name="adminInterviewImage" path="/admin/selectInterviewImage"
+   scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewsubject.interviewimage.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="adminInterviewVideo" path="/admin/selectInterviewVideo"
+   scope="request"
+   type="com.yuanluesoft.cms.interview.actions.admin.interviewsubject.interviewvideo.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action path="/interviewVideo" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.interviewvideo.Load" validate="false"/>
+  <action path="/listInterviewImages" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.listinterviewimages.Load" validate="false"/>
+  <action path="/listInterviewVideos" scope="request"
+   type="com.yuanluesoft.cms.interview.actions.listinterviewvideos.Load" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

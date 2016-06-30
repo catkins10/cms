@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="messengerLogin" type="com.yuanluesoft.jeaf.messagecenter.forms.MessengerLogin"/>
+  <form-bean name="personMessageCenterConfig" type="com.yuanluesoft.jeaf.messagecenter.forms.PersonMessageCenterConfig"/>
+  <form-bean name="sendMessage" type="com.yuanluesoft.jeaf.messagecenter.forms.SendMessage"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="messengerLogin" path="/messengerLogin" scope="request"
+   type="com.yuanluesoft.jeaf.messagecenter.actions.messenger.Login" validate="false"/>
+  <action path="/messengerOnline" scope="request"
+   type="com.yuanluesoft.jeaf.messagecenter.actions.messenger.Online" validate="false"/>
+  <action path="/messengerLogout" scope="request"
+   type="com.yuanluesoft.jeaf.messagecenter.actions.messenger.Logout" validate="false"/>
+  <action path="/messengerFeedback" scope="request"
+   type="com.yuanluesoft.jeaf.messagecenter.actions.messenger.Feedback" validate="false"/>
+  <action name="personMessageCenterConfig"
+   path="/personMessageCenterConfig" scope="request"
+   type="com.yuanluesoft.jeaf.messagecenter.actions.personmessagecenterconfig.Load" validate="false">
+   <forward name="load" path="/personMessageCenterConfig.jsp"/>
+  </action>
+  <action input="/../cas/messagecenter/personMessageCenterConfig.jsp"
+   name="personMessageCenterConfig" path="/saveConfig" scope="request"
+   type="com.yuanluesoft.jeaf.messagecenter.actions.personmessagecenterconfig.Save" validate="false"/>
+  <action name="sendMessage" path="/sendMessage" scope="request"
+   type="com.yuanluesoft.jeaf.messagecenter.actions.sendmessage.Load" validate="false">
+   <forward name="load" path="/sendMessage.jsp"/>
+  </action>
+  <action input="/sendMessage.jsp" name="sendMessage"
+   path="/doSendMessage" scope="request"
+   type="com.yuanluesoft.jeaf.messagecenter.actions.sendmessage.Send" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

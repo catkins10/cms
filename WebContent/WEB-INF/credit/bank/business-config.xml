@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="银行" class="com.yuanluesoft.credit.bank.bank.pojo.Bank" businessServiceName="registService">
+		<field name="loginName" title="登录用户名" length="80" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="password" title="密码" length="100" required="true" type="password" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="name" title="名称" required="true" length="200" type="string" inputMode="text"/>
+		<field name="introduction" title="简介"  type="html" inputMode="htmleditor">
+			<parameter name="height">280</parameter>
+			<parameter name="attachmentSelector">bankAttachment.shtml</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="maxSaveSize">10000000</parameter>
+		</field>
+		<field name="addr" title="地址" required="true" length="200" type="string" inputMode="text"/>
+		<field name="postcode" title="邮编" length="50" type="string" inputMode="text"/>
+		<field name="linkMan" title="联系人" required="true" length="50" type="string" inputMode="text"/>
+		<field name="email" title="邮箱" type="string" inputMode="text" length="100"/>
+		<field name="faxes" title="传真" length="50" type="string" inputMode="text"/>
+		<field name="tel" title="电话" required="true" length="50" type="string" inputMode="text"/>
+		<!-- 授信（保险）部门 -->
+		<field name="person" title="负责人" required="true" length="50" type="string" inputMode="text"/>
+		<field name="operator" title="经办人" required="true" length="50" type="string" inputMode="text"/>
+		<field name="orgUrl" title="网址"  length="100" type="string" inputMode="text"/>
+		<field name="orgEmail" title="邮箱"  required="true" length="100" type="string" inputMode="text"/>
+		<field name="orgFaxes" title="传真"  length="50" type="string" inputMode="text"/>
+		<field name="orgTel" title="电话"  required="true" length="50" type="string" inputMode="text"/>
+		<!-- 举报投诉渠道 -->
+		<field name="complainUrl" title="网址" required="true" length="200" type="string" inputMode="text"/>
+		<field name="complainEmail" title="邮箱" required="true" length="100" type="string" inputMode="text"/>
+		<field name="complainFaxes" title="传真"  length="50" type="string" inputMode="text"/>
+		<field name="complainTel" title="电话" required="true" length="50" type="string" inputMode="text"/>
+		
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="30" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="products" title="金融产品" type="components">
+			<parameter name="class">com.yuanluesoft.credit.bank.financialproducts.pojo.Product</parameter>
+		</field>
+		<field name="logoImage" title="银行图片" persistence="false"  type="imageName" inputMode="readonly">
+			<parameter name="referenceFields">logoImages</parameter>
+		</field>
+		<field name="logoImages" title="logo图片" persistence="false" type="image" inputMode="attachment" length="1">
+			<parameter name="maxSaveSize">2000000</parameter>
+			<parameter name="serviceName">imageService</parameter>
+			<parameter name="attachmentEditor">bankAttachmentEditor.shtml</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="金融产品" class="com.yuanluesoft.credit.bank.financialproducts.pojo.Product" businessServiceName="productService">
+		<field name="name" title="名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="typeId" title="种类ID" required="true" length="20" type="number" inputMode="text"/>
+		<field name="type" title="种类" length="50" required="true" type="string" inputMode="text"/>
+		<field name="introduction" title="简介" required="true"  type="html" inputMode="htmleditor">
+			<parameter name="height">280</parameter>
+			<parameter name="attachmentSelector">productAttachment.shtml</parameter>
+		</field>
+		<field name="forWho" title="适用对象" required="true" length="1000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="condition" title="贷款条件" required="true"  type="html" inputMode="htmleditor">
+			<parameter name="height">280</parameter>
+			<parameter name="attachmentSelector">productAttachment.shtml</parameter>
+		</field>
+		<field name="material" title="申请材料" required="true" length="1000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="maxMoney" title="最高额度" required="true" length="50" type="string" inputMode="text"/>
+		<field name="how" title="申请流程" required="true"  type="html" inputMode="htmleditor">
+			<parameter name="height">280</parameter>
+			<parameter name="attachmentSelector">productAttachment.shtml</parameter>
+		</field>
+		<field name="linkMan" title="联系人" required="true" length="50" type="string" inputMode="text"/>
+		<field name="email" title="邮箱"  length="100" type="string" inputMode="text"/>
+		<field name="faxes" title="传真"  length="50" type="string" inputMode="text"/>
+		<field name="tel" title="电话"  required="true" length="50" type="string" inputMode="text"/>
+		<field name="issueTime" title="发布时间" type="timestamp" inputMode="readonly"/>
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="30" type="string" inputMode="text">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="maxSaveSize">10000000</parameter>
+		</field>
+		<field name="logoImage" title="金融产品图片" persistence="false"  type="imageName" inputMode="readonly">
+			<parameter name="referenceFields">logoImages</parameter>
+		</field>
+		<field name="logoImages" title="logo图片" persistence="false" type="image" inputMode="attachment" length="1">
+			<parameter name="maxSaveSize">2000000</parameter>
+			<parameter name="serviceName">imageService</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="贷款信息" class="com.yuanluesoft.credit.bank.loan.pojo.BankLoan" businessServiceName="bankLoanService">
+		<field name="enterpriseName" title="企业名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="productId" title="项目ID"  length="20" type="number" inputMode="hidden"/>
+		<field name="productName" title="贷款项目" required="true" length="200" type="string" inputMode="text"/>
+		<field name="mony" title="贷款金额（万元）" required="true" type="number" inputMode="text"/>
+		<field name="time" title="贷款发放时间" required="true" type="timestamp" inputMode="date"/>
+		<field name="issueTime" title="发布时间" type="timestamp" inputMode="readonly"/>
+		<field name="creatorId" title="登记人ID" type="number" inputMode="hidden">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="30" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(500,300,false,'creator{name}');</parameter>
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="借款申请信息" class="com.yuanluesoft.credit.bank.apply.pojo.Apply" >
+		<field name="bankId" title="拟申请银行ID" required="true" type="number" inputMode="hidden"/>
+		<field name="bankName" title="拟申请银行名称" required="true" length="100" type="string" inputMode="text"/>
+		<field name="applyPerson" title="申请人" required="true" length="200" type="string" inputMode="text"/>
+		<field name="nature" title="企业性质" required="true" length="100" type="string" inputMode="text"/>
+		<field name="industry" title="行业类别" required="true" length="100" type="string" inputMode="text"/>
+		<field name="level" title="信用等级" required="true" length="50" type="string" inputMode="text"/>
+		<field name="companyAddr" title="公司地址" required="true" length="200" type="string" inputMode="text"/>
+		<field name="code" title="三证合一信用代码" required="true" length="100" type="string" inputMode="text"/>
+		<field name="licenseNo" title="营业执照号" required="true" length="100" type="string" inputMode="text"/>
+		<field name="orgCode" title="组织机构代码" required="true" length="100" type="string" inputMode="text"/>
+		<field name="legalPerson" title="法定代表人" required="true" length="50" type="string" inputMode="text"/>
+		<field name="phone" title="联系电话" required="true" length="50" type="string" inputMode="text"/>
+		<field name="idCard" title="身份证号码" required="true" length="50" type="string" inputMode="text"/>
+		<field name="totalMoney" title="总资产（万元）" required="true"  type="number" inputMode="text"/>
+		<field name="cleanMoney" title="净资产(万元)" required="true"  type="number" inputMode="text"/>
+		<field name="totalOwe" title="总负债(万元)" required="true"  type="number" inputMode="text"/>
+		<field name="nowOwe" title="目前结欠贷款(万元)" required="true"  type="number" inputMode="text"/>
+		<field name="saleMoney" title="销售收入（万元）" required="true"  type="number" inputMode="text"/>
+		<field name="scale" title="经营规模（万元）" required="true"  type="number" inputMode="text"/>
+		<field name="applyMoney" title="申请金额（万元）" required="true"   type="number" inputMode="text"/>
+		<field name="borrowNature" title="借款性质" required="true"   length="1" type="number" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsText">新增|0\0还旧借新|1\0借新还旧|2\0转换主体|3</parameter>
+		</field>
+		<field name="borrowType" title="贷款方式" required="true"   length="1" type="number" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsText">保证|0\0抵押|1</parameter>
+		</field>
+		<field name="applyPurpose" title="借款用途" required="true" length="50" type="string" inputMode="text"/>
+		<field name="applyStart" title="借款期限自" required="true"  type="timestamp" inputMode="date"/>
+		<field name="applyEnd" title="至" required="true"  type="timestamp" inputMode="date"/>
+		<field name="payment" title="还款来源" required="true" length="50" type="string" inputMode="text"/>
+		<field name="payMethod" title="还款方式" required="true" length="50" type="string" inputMode="text"/>
+		<field name="guarantorf" title="保证人名称1" required="true" length="50" type="string" inputMode="text"/>
+		<field name="guarantorLevelf" title="保证人信用等级1" required="true" length="50" type="string" inputMode="text"/>
+		<field name="guarantors" title="保证人名称2" required="true" length="50" type="string" inputMode="text"/>
+		<field name="guarantorLevels" title="保证人信用等级2" required="true" length="50" type="string" inputMode="text"/>
+		<field name="guarantort" title="保证人名称3" required="true" length="50" type="string" inputMode="text"/>
+		<field name="guarantorLevelt" title="保证人信用等级3" required="true" length="50" type="string" inputMode="text"/>
+		<field name="guarantorfo" title="保证人名称4" required="true" length="50" type="string" inputMode="text"/>
+		<field name="guarantorLevelfo" title="保证人信用等级4" required="true" length="50" type="string" inputMode="text"/>
+		<field name="mortgager" title="抵押人（出质人）名称" required="true" length="50" type="string" inputMode="text"/>
+		<field name="collateral" title="抵押物（质物）名称" required="true" length="100" type="string" inputMode="text"/>
+		<field name="collateralAddr" title="抵押物（质物）具体地理位置" required="true" length="200" type="string" inputMode="text"/>
+		<field name="collateralDetail" title="抵押物（质物）具体情况" required="true" length="500" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="applyReason" title="申请理由" required="true" length="500" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="status" title="状态" required="true"   length="1" type="number" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsText">提交|0\0同意|1\0不同意|2</parameter>
+		</field>
+		<field name="opinions" title="办理意见"  length="500" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="30" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="发布统计" class="com.yuanluesoft.credit.stat.pojo.CreditStat" >
+		<field name="unitName" title="单位名称"  type="string" inputMode="text"/>
+		<field name="data" title="统计数据" type="components">
+			<parameter name="class">com.yuanluesoft.credit.stat.pojo.Datas</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="统计数据" class="com.yuanluesoft.credit.stat.pojo.Datas" >
+		<field name="unitId" title="单位ID" type="number" inputMode="text"/>
+		<field name="unitName" title="单位名称" type="string" inputMode="text"/>
+		<field name="statObj" title="统计对象"  type="string" inputMode="text"/>
+		<field name="num" title="发布数量" type="number" inputMode="text"/>
+		<field name="newesIssueTime" title="最近更新时间" type="timestamp" inputMode="datetime" />
+		<field name="flag" title="标示"  type="string" inputMode="text"/>
+	</businessObject>
+	
+	
+	
+</businessObjects>

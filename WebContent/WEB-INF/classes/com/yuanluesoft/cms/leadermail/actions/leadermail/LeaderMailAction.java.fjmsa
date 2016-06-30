@@ -1,0 +1,68 @@
+package com.yuanluesoft.cms.leadermail.actions.leadermail;
+
+import com.yuanluesoft.cms.leadermail.pojo.LeaderMailType;
+import com.yuanluesoft.cms.leadermail.service.LeaderMailService;
+import com.yuanluesoft.cms.publicservice.actions.PublicServiceAction;
+import com.yuanluesoft.jeaf.database.Record;
+import com.yuanluesoft.jeaf.form.ActionForm;
+import com.yuanluesoft.jeaf.sessionmanage.model.SessionInfo;
+import com.yuanluesoft.jeaf.util.ListUtils;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class LeaderMailAction extends PublicServiceAction
+{
+  public LeaderMailAction()
+  {
+    this.anonymousEnable = true;
+  }
+
+  public void fillForm(ActionForm form, Record record, char accessLevel, SessionInfo sessionInfo, HttpServletRequest request, HttpServletResponse response)
+    throws Exception
+  {
+    try
+    {
+      super.fillForm(form, record, accessLevel, sessionInfo, request, response);
+    }
+    catch (Exception localException)
+    {
+    }
+  }
+
+  public void loadResource(ActionForm form, Record record, List acl, char accessLevel, boolean deleteEnable, String openMode, HttpServletRequest request, SessionInfo sessionInfo)
+    throws Exception
+  {
+    super.loadResource(form, record, acl, accessLevel, deleteEnable, openMode, request, sessionInfo);
+    com.yuanluesoft.cms.leadermail.pojo.LeaderMail leaderMail = (com.yuanluesoft.cms.leadermail.pojo.LeaderMail)record;
+    com.yuanluesoft.cms.leadermail.forms.LeaderMail leaderMailForm = (com.yuanluesoft.cms.leadermail.forms.LeaderMail)form;
+    if ("create".equals(openMode) && request.getParameter("approvalQuerySN") == null) {
+      leaderMailForm.setSubForm("leaderMail");
+    }
+    else if ((leaderMail == null) || (leaderMail.getPublicPass() != '1')) {
+      leaderMailForm.setSubForm("leaderMailFailed");
+    }
+    else if ((leaderMail.getPublicBody() == '1') && (leaderMail.getPublicWorkflow() == '1')) {
+      leaderMailForm.setSubForm("fullyMail");
+    }
+    else if (leaderMail.getPublicBody() == '1') {
+      leaderMailForm.setSubForm("originalMail");
+    }
+    else if (leaderMail.getPublicWorkflow() == '1') {
+      leaderMailForm.setSubForm("processingMail");
+    }
+    else
+      leaderMailForm.setSubForm("poorMail");
+  }
+
+  public Record saveRecord(ActionForm form, Record record, String openMode, HttpServletRequest request, HttpServletResponse response, SessionInfo sessionInfo)
+    throws Exception
+  {
+    com.yuanluesoft.cms.leadermail.pojo.LeaderMail leaderMail = (com.yuanluesoft.cms.leadermail.pojo.LeaderMail)record;
+    LeaderMailService leaderMailService = (LeaderMailService)getService("leaderMailService");
+
+    LeaderMailType leaderMailType = (LeaderMailType)ListUtils.findObjectByProperty(leaderMailService.listTypes(leaderMail.getSiteId()), "type", leaderMail.getType());
+    leaderMail.setWorkingDay(leaderMailType == null ? 15 : leaderMailType.getWorkingDay());
+    return super.saveRecord(form, record, openMode, request, response, sessionInfo);
+  }
+}

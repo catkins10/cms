@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="complaint" title="投诉或建议" method="post" action="/cms/complaint/saveComplaint.shtml" class="com.yuanluesoft.cms.complaint.forms.Complaint" pojo="com.yuanluesoft.cms.complaint.pojo.Complaint">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="complaintSearch" title="搜索" method="get" action="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/complaint&amp;pageName=complaintSearch">
+		<formFields>
+			<field title="主题" name="subject">
+				<parameter name="searchCondition">Complaint.subject like '%{PARAMETER:subject}%' or Complaint.publicSubject like '%{PARAMETER:subject}%'</parameter> <!-- 搜索条件定义 -->
+			</field>
+			<field title="正文" name="lazyBody.content">
+				<parameter name="searchCondition">Complaint.publicBody='1' and lazyBody.body like '%{PARAMETER:lazyBody.content}%'</parameter> <!-- 搜索条件定义 -->
+			</field>
+			<field name="type" title="类型" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">complaintService</parameter>
+			</field>
+			<field title="创建人姓名" name="creator"/>
+			<field title="证件号码" name="creatorIdentityCard"/>
+			<field title="开始时间" name="createdBegin" type="date"/>
+			<field title="结束时间" name="createdEnd" type="date"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="approvalQuery" title="办理情况查询" method="post" action="/cms/complaint/complaint.shtml?id={PARAMETER:id}">
+		<formFields>
+			<field title="编号" name="approvalQuerySN"/>
+			<field title="密码" name="approvalQueryPassword" inputMode="password"/>
+		</formFields>
+		<actions>
+			<action title="查询" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="admin/complaint" class="com.yuanluesoft.cms.complaint.forms.admin.Complaint" title="投诉或建议" pojo="com.yuanluesoft.cms.complaint.pojo.Complaint">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="批转" hide="workflow()" execute="FormUtils.doAction('runComplaint', 'workflowAction=send')"/>
+			<action title="公布到网站" hide="workflow() and noPrivilege(application_manager) and noPrivilege(site_manager)  and noPrivilege(publish)" execute="FormUtils.doAction('setPublishOption')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteComplaint')"/>
+			<action title="永久删除" hide="isNew()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteComplaint', 'physical=true')"/>
+			<action title="撤销删除" hide="isNew()" execute="FormUtils.doAction('undeleteComplaint')"/>
+			<action title="打印办理单" execute="window.open('printComplaint.shtml?id={PARAMETER:id}&amp;siteId={PARAMETER:siteId}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/complaintType" class="com.yuanluesoft.cms.complaint.forms.admin.ComplaintType" title="投诉类型" pojo="com.yuanluesoft.cms.complaint.pojo.ComplaintType">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteComplaintType')"/>
+		</actions>
+	</form>
+	
+	<form title="插入投诉列表" class="com.yuanluesoft.cms.complaint.forms.admin.InsertComplaints">
+		<formFields>
+			<field title="投诉类型" name="complaintTypes" type="string" inputMode="select">
+				<parameter name="execute">selectComplaintTypes()</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.complaint.forms.admin.InsertLink" title="插入链接">
+		<formFields>
+			<field title="链接类型" name="type" type="string" inputMode="hidden"/>
+			<field title="隶属站点" name="relationSite" type="string" inputMode="radio">
+				<parameter name="itemsText">当前站点|currentSite\0指定站点|specialSite</parameter>
+				<parameter name="defaultValue">currentSite</parameter>
+			</field>		
+			<field title="隶属站点ID" name="relationSiteId" type="string" inputMode="hidden"/>
+			<field title="隶属站点名称" name="relationSiteName" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 300, false, 'relationSiteId{id},relationSiteName{name}', '', '', '', 'site')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="complaintType" title="投诉类型" length="30" type="string" inputMode="select">
+				<parameter name="execute">selectComplaintType()</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

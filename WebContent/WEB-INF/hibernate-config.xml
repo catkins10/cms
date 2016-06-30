@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- hibernate会话 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate.LocalSessionFactoryBean">
+		<property name="mappingResources">
+			<list>
+				<value>../customise/complaint/hibernate-config.xml</value>
+				<value>../customise/shifang/hibernate-config.xml</value>
+				<value>../jeaf/system/hibernate-config.xml</value> <!-- EAI -->
+				<value>../jeaf/view/hibernate-config.xml</value> <!-- 视图 -->
+				<value>../jeaf/application/builder/hibernate-config.xml</value> <!-- 应用生成器 -->
+				<value>../jeaf/opinionmanage/hibernate-config.xml</value> <!-- 意见管理 -->
+				<value>../jeaf/logger/hibernate-config.xml</value> <!-- 日志 -->
+				<value>../jeaf/attachmentmanage/hibernate-config.xml</value> <!-- 附件管理 -->
+				<value>../jeaf/usermanage/hibernate-config.xml</value> <!-- 用户管理 -->
+				<value>../jeaf/messagecenter/hibernate-config.xml</value> <!-- 消息中心 -->
+				<value>../jeaf/messagecenter/sms/hibernate-config.xml</value> <!-- 短信服务 -->
+				<value>../jeaf/messagecenter/msn/hibernate-config.xml</value> <!-- MSN服务 -->
+				<value>../jeaf/messagecenter/messenger/hibernate-config.xml</value> <!-- 即时消息服务 -->
+				<value>../jeaf/usermanage/member/hibernate-config.xml</value> <!-- 网上用户注册 -->
+				<value>../jeaf/usermanage/security/hibernate-config.xml</value> <!-- 网上用户注册 -->
+				<value>../jeaf/sensitive/hibernate-config.xml</value> <!-- 敏感词 -->
+				<value>../jeaf/stat/hibernate-config.xml</value> <!-- 站点统计 -->
+				<value>../jeaf/sms/hibernate-config.xml</value> <!-- 站点统计 -->
+				<value>../jeaf/workflow/hibernate-config.xml</value> <!-- 工作流服务 -->
+				<value>../jeaf/numeration/hibernate-config.xml</value> <!-- 编号服务 -->
+				<value>../jeaf/dataimport/hibernate-config.xml</value> <!-- 数据导入服务 -->
+				<value>../jeaf/weather/hibernate-config.xml</value> <!-- 天气预报 -->
+				<value>../jeaf/point/hibernate-config.xml</value> <!-- 积分服务 -->
+				<value>../jeaf/payment/hibernate-config.xml</value> <!-- 支付 -->
+				<value>../jeaf/payment/cebbank/hibernate-config.xml</value> <!-- 支付:光大银行 -->
+				<value>../jeaf/payment/cibbank/hibernate-config.xml</value> <!-- 支付:兴业银行 -->
+				<value>../jeaf/payment/abcbank/hibernate-config.xml</value> <!-- 支付:农业银行 -->
+				<value>../jeaf/payment/ccbbank/hibernate-config.xml</value> <!-- 支付:建设银行 -->
+				<value>../jeaf/payment/icbcbank/hibernate-config.xml</value> <!-- 支付:工商银行 -->
+				<value>../jeaf/payment/bocbank/hibernate-config.xml</value> <!-- 支付:中国银行 -->
+				<value>../jeaf/gps/hibernate-config.xml</value> <!-- GPS -->
+				<value>../jeaf/gps/fsti/hibernate-config.xml</value> <!-- GPS:邮科GPS -->
+				<value>../jeaf/timetable/hibernate-config.xml</value> <!-- 作息时间 -->
+				<value>../jeaf/fingerprint/hibernate-config.xml</value> <!-- 指纹认证 -->
+				<value>../jeaf/word/hibernate-config.xml</value> <!-- 词库服务 -->
+				<value>../jeaf/mail/hibernate-config.xml</value> <!-- 邮件服务 -->
+				<value>../portal/hibernate-config.xml</value> <!-- PORTAL -->
+				<value>../exchange/client/hibernate-config.xml</value> <!-- 数据交换 -->
+				<value>../eai/hibernate-config.xml</value> <!-- EAI -->
+				<value>../im/hibernate-config.xml</value> <!-- IM -->
+				<value>../im/cs/hibernate-config.xml</value> <!-- IM:客服 -->
+				<value>../workflow/hibernate-config.xml</value>
+				<value>../webmail/hibernate-config.xml</value>
+				<value>../bbs/usermanage/hibernate-config.xml</value> <!-- 论坛管理 -->
+				<value>../bbs/forum/hibernate-config.xml</value> <!-- 论坛版块管理 -->
+				<value>../bbs/article/hibernate-config.xml</value> <!-- 论坛文章管理 -->
+				<value>../credit/bank/hibernate-config.xml</value>
+				<value>../credit/enterprise/hibernate-config.xml</value>
+				<value>../credit/enterprisecredit/agricultural/hibernate-config.xml</value>
+				<value>../credit/regist/hibernate-config.xml</value>
+				
+				<value>../credit/serviceorg/hibernate-config.xml</value>
+				<value>../cms/pagebuilder/hibernate-config.xml</value>
+				<value>../cms/sitemanage/hibernate-config.xml</value>
+				<value>../cms/siteresource/hibernate-config.xml</value>
+				<value>../cms/templatemanage/hibernate-config.xml</value>
+				<value>../cms/capture/hibernate-config.xml</value>
+				<value>../cms/smssubscription/hibernate-config.xml</value>
+				<value>../cms/smssend/hibernate-config.xml</value>
+				<value>../cms/smsreceive/hibernate-config.xml</value>
+				<value>../cms/advert/hibernate-config.xml</value>
+				<value>../cms/publicservice/hibernate-config.xml</value>
+				<value>../cms/complaint/hibernate-config.xml</value>
+				<value>../cms/leadermail/hibernate-config.xml</value>
+				<value>../cms/messageboard/hibernate-config.xml</value>
+				<value>../cms/preapproval/hibernate-config.xml</value>
+				<value>../cms/inquiry/hibernate-config.xml</value>
+				<value>../cms/advice/hibernate-config.xml</value>
+				<value>../cms/scene/hibernate-config.xml</value>
+				<value>../cms/interview/hibernate-config.xml</value>
+				<value>../cms/interview/collect/hibernate-config.xml</value>
+				<value>../cms/infopublic/hibernate-config.xml</value>
+				<value>../cms/infopublic/request/hibernate-config.xml</value>
+				<value>../cms/onlineservice/hibernate-config.xml</value>
+				<value>../cms/onlineservice/accept/hibernate-config.xml</value>
+				<value>../cms/onlineservice/faq/hibernate-config.xml</value> <!-- 常见问题解答 -->
+				<value>../cms/evaluation/hibernate-config.xml</value> <!-- 民主测评 -->
+				<value>../cms/monitor/hibernate-config.xml</value> <!-- 监察 -->
+				<value>../cms/monitor/infopublic/hibernate-config.xml</value> <!-- 监察:信息公开 -->
+				<value>../cms/monitor/sms/hibernate-config.xml</value> <!-- 监察:短信 -->
+				<value>../cms/photocollect/hibernate-config.xml</value> <!-- 图片征集 -->
+				<value>../cms/situation/hibernate-config.xml</value> <!-- 民情回应 -->
+				<value>../wechat/hibernate-config.xml</value> <!-- 微信 -->
+				<value>../microblog/hibernate-config.xml</value> <!-- 微博 -->
+				<value>../j2oa/document/hibernate-config.xml</value>
+				<value>../j2oa/dispatch/hibernate-config.xml</value>
+				<value>../j2oa/receival/hibernate-config.xml</value>
+				<value>../j2oa/supervise/hibernate-config.xml</value> <!-- 督办 -->
+				<value>../j2oa/addresslist/hibernate-config.xml</value>
+				<value>../j2oa/bulletin/hibernate-config.xml</value>
+				<value>../j2oa/businesstrip/hibernate-config.xml</value>
+				<value>../j2oa/calendar/hibernate-config.xml</value>
+				<value>../j2oa/leave/hibernate-config.xml</value>
+				<value>../j2oa/loan/hibernate-config.xml</value>
+				<value>../j2oa/meeting/hibernate-config.xml</value>
+				<value>../j2oa/memorabilia/hibernate-config.xml</value>
+				<value>../j2oa/reimburse/hibernate-config.xml</value>
+				<value>../j2oa/todo/hibernate-config.xml</value>
+				<value>../j2oa/databank/hibernate-config.xml</value>
+				<value>../j2oa/attendance/hibernate-config.xml</value>
+				<value>../j2oa/personnel/hibernate-config.xml</value>
+				<value>../j2oa/book/hibernate-config.xml</value>
+				<value>../j2oa/exchange/hibernate-config.xml</value> <!-- 公文交换 -->
+				<value>../j2oa/info/hibernate-config.xml</value> <!-- 信息采编 -->
+				<value>../j2oa/infocontribute/hibernate-config.xml</value> <!-- 信息采编:投稿 -->
+				<value>../archives/hibernate-config.xml</value>
+				<value>../archives/administrative/hibernate-config.xml</value>
+				<value>../fet/tradestat/hibernate-config.xml</value>
+				<value>../fet/project/hibernate-config.xml</value>
+				<value>../traffic/busline/hibernate-config.xml</value>
+				<value>../bidding/enterprise/hibernate-config.xml</value> <!-- 招投标:企业管理 -->
+				<value>../bidding/project/hibernate-config.xml</value> <!-- 招投标:工程管理 -->
+				<value>../bidding/project/signup/hibernate-config.xml</value> <!-- 招投标:报名 -->
+				<value>../bidding/project/ask/hibernate-config.xml</value> <!-- 招投标:提问 -->
+				<value>../bidding/biddingroom/hibernate-config.xml</value> <!-- 招投标:开标室管理 -->
+				<value>../municipal/facilities/hibernate-config.xml</value> <!-- 市政设施监控案件 -->
+				<value>../dpc/keyproject/hibernate-config.xml</value> <!-- 重点项目管理 -->
+				<value>../dpc/investmentproject/hibernate-config.xml</value> <!-- 招商项目管理 -->
+				<value>../enterprise/project/hibernate-config.xml</value> <!-- 企业应用:项目管理 -->
+				<value>../enterprise/quality/hibernate-config.xml</value> <!-- 企业应用:质量管理 -->
+				<value>../enterprise/workreport/hibernate-config.xml</value> <!-- 企业应用:工作汇报 -->
+				<value>../enterprise/assess/hibernate-config.xml</value> <!-- 企业应用:绩效考核 -->
+				<value>../enterprise/bidding/hibernate-config.xml</value> <!-- 企业应用:招投标管理 -->
+				<value>../enterprise/iso/hibernate-config.xml</value> <!-- 企业应用:ISO管理 -->
+				<value>../enterprise/customer/hibernate-config.xml</value> <!-- 企业应用:客户管理 -->
+				<value>../enterprise/exam/hibernate-config.xml</value> <!-- 考试 -->
+				<value>../enterprise/exam/question/hibernate-config.xml</value> <!-- 试题管理 -->
+				<value>../enterprise/exam/learn/hibernate-config.xml</value> <!-- 学习 -->
+				<value>../enterprise/workload/hibernate-config.xml</value> <!-- 工作量考核 -->
+				<value>../enterprise/evaluation/mutual/hibernate-config.xml</value> <!-- 考核:互评 -->
+				<value>../enterprise/evaluation/department/hibernate-config.xml</value> <!-- 考核:部门考核 -->
+				<value>../logistics/usermanage/hibernate-config.xml</value> <!-- 物流:联盟用户 -->
+				<value>../logistics/vehicle/hibernate-config.xml</value> <!-- 物流:车源 -->
+				<value>../logistics/supply/hibernate-config.xml</value> <!-- 物流:货源 -->
+				<value>../logistics/farmproduce/hibernate-config.xml</value> <!-- 物流:农产品 -->
+				<value>../msa/seafarer/hibernate-config.xml</value> <!-- 海事局:船员管理 -->
+				<value>../msa/exam/hibernate-config.xml</value> <!-- 海事局:船员考试 -->
+				<value>../msa/fees/hibernate-config.xml</value> <!-- 海事局:规费征缴 -->
+				<value>../msa/lawmen/hibernate-config.xml</value> <!-- 海事局:执法人员 -->
+				<value>../chd/evaluation/hibernate-config.xml</value> <!-- 华电:创建星级企业 -->
+				<value>../chd/evaluation/data/hibernate-config.xml</value> <!-- 华电:创建星级企业数据上报 -->
+				<value>../chd/evaluation/selfeval/hibernate-config.xml</value> <!-- 华电:创建星级企业自评 -->
+				<value>../land/landcertificate/hibernate-config.xml</value> <!-- 国土:土地证查询 -->
+				<value>../land/declare/hibernate-config.xml</value> <!-- 国土:便民查询 -->
+				<value>../aic/barcode/hibernate-config.xml</value> <!-- 工商:地理商标查询 -->
+				<value>../railway/evaluation/hibernate-config.xml</value> <!-- 动车段:综合评价 -->
+				<value>../railway/event/hibernate-config.xml</value> <!-- 动车段:南昌铁路局数据导入 -->
+				<value>../lss/insurance/hibernate-config.xml</value> <!-- 劳动局:养老保险查询 -->
+				<value>../lss/cardquery/hibernate-config.xml</value> <!-- 劳动局:社保卡查询 -->
+				<value>../sportsevents/contestschedule/hibernate-config.xml</value> <!-- 体育局:赛事管理 -->
+				<value>../fdi/industry/hibernate-config.xml</value> <!-- 投资服务中心:行业管理 -->
+				<value>../fdi/customer/hibernate-config.xml</value> <!-- 投资服务中心:客户管理 -->
+				<value>../fdi/project/hibernate-config.xml</value> <!-- 投资服务中心:项目管理 -->
+				<value>../telex/hibernate-config.xml</value> <!-- 电报管理 -->
+				<value>../telex/send/hibernate-config.xml</value> <!-- 电报管理:发报 -->
+				<value>../telex/receive/hibernate-config.xml</value> <!-- 电报管理:收报 -->
+				<value>../appraise/hibernate-config.xml</value> <!-- 评议 -->
+				<value>../appraise/appraiser/hibernate-config.xml</value> <!-- 评议:评议员 -->
+				<value>../job/company/hibernate-config.xml</value> <!-- 人才网:企业管理 -->
+				<value>../job/talent/hibernate-config.xml</value> <!-- 人才网:人才管理 -->
+				<value>../job/apply/hibernate-config.xml</value> <!-- 人才网:应聘管理 -->
+				<value>../message/hibernate-config.xml</value> <!-- 其他应用:个人信息管理 -->
+ 			    <value>../emp/hibernate-config.xml</value> <!-- 员工管理:员工管理 -->
+ 			    <value>../composition/hibernate-config.xml</value>	<!-- 作文管理：作文管理 -->
+ 			    <value>../qualification/hibernate-config.xml</value>	<!-- 证书管理：证书管理 -->
+ 			    <value>../qualification/beauty/hibernate-config.xml</value>	<!-- 证书管理：美容、化妆证书管理 -->
+ 			    <value>../educ/teach/hibernate-config.xml</value>	<!-- 终身教育管理：教师管理 -->
+ 			    <value>../educ/powera/hibernate-config.xml</value>	<!-- 终身教育管理：管理员管理 -->
+			</list>
+		</property>
+		<property name="dataSource"> 
+			<ref local="dataSource"/>
+		</property> 
+		<property name="hibernateProperties"> 
+			<props> 
+				<!-- prop key="hibernate.dialect">net.sf.hibernate.dialect.MySQLDialect</prop -->
+				<prop key="hibernate.dialect">com.yuanluesoft.jeaf.database.hibernate.dialect.PostgreSQLDialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 数据库监控地址 -->
+	<bean id="databaseMonitorAddress" class="java.lang.String">
+		<constructor-arg><value></value></constructor-arg>
+	</bean>
+	
+	<!-- hibernate数据源 -->
+	<bean id="dataSource" class="com.yuanluesoft.jeaf.database.SecurityDataSource" destroy-method="close"> 
+	    <property name="driverClassName"><value>y3bV1vHwUeUISomE02LeHeSgFqoDNXOE</value></property>
+	    <property name="url"><value>jdbc:postgresql://localhost:5432/cms2016</value></property> <!-- jMonpiYdobTf/aizjB2rPfgYAUxcxva/d/hUxrX4QAYFzN/IxmFeRg== jMonpiYdobTf/aizjB2rPfgYAUxcxva/d/hUxrX4QAZPG9GX1V2bGw== fjmsa -->
+	    <property name="username"><value>postgres</value></property>
+	    <property name="password"><value>12345678</value></property>
+	    <property name="maxActive"><value>100</value></property> <!-- 连接池支持的最大连接数 -->
+	    <property name="minIdle"><value>5</value></property> <!-- 连接池中最少空闲maxIdle个连接 -->
+	    <property name="maxIdle"><value>10</value></property> <!-- 连接池中最多可空闲maxIdle个连接 -->
+	    <property name="maxWait"><value>30000</value></property> <!-- 连接池中连接用完时,新的请求等待时间,毫秒 -->
+	    <property name="removeAbandoned"><value>true</value></property> <!--是否清理removeAbandonedTimeout秒没有使用的活动连接,清理后并没有放回连接池,当连接数快要到达maxActive时启动清理-->
+	    <property name="removeAbandonedTimeout"><value>60</value></property> <!-- 活动连接的最大空闲时间 -->
+	    <property name="logAbandoned"><value>true</value></property> <!-- 连接池收回空闲的活动连接时是否打印消息 -->
+	</bean>
+	
+	<!-- hibernate事务管理 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate.HibernateTransactionManager">
+		<property name="sessionFactory"><ref local="sessionFactory"/></property>
+	</bean>
+	
+	<!-- 数据库方言 -->
+	<bean id="databaseDialect" class="com.yuanluesoft.jeaf.database.dialect.postgres.PostgresDatabaseDialect" init-method="init"/>
+
+	<!-- 数据库服务 -->
+	<bean id="databaseService" class="com.yuanluesoft.jeaf.database.hibernate.DatabaseServiceImpl">
+		<property name="sessionFactory"><ref local="sessionFactory"/></property>
+		<property name="databaseDialect"><ref local="databaseDialect"/></property>
+	</bean>
+
+	<!-- 数据库定义解析器 -->
+	<bean id="databaseDefineParser" class="com.yuanluesoft.jeaf.database.parser.dom4j.DatabaseDefineParserImpl"/>
+	
+	<!-- 数据库定义服务 -->
+	<bean id="databaseDefineService" class="com.yuanluesoft.jeaf.database.hibernate.DatabaseDefineServiceImpl">
+		<property name="databaseDefineParser"><ref bean="databaseDefineParser"/></property>
+		<property name="cache"><ref bean="modelCache"/></property>
+	</bean>
+</beans>

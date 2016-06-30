@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="barcode" title="我的条码">
+		<data>
+			<pojo>com.yuanluesoft.aic.barcode.pojo.Barcode</pojo>
+			<where>Barcode.companyId={USERID}</where>
+			<orderBy>Barcode.barcode</orderBy>
+		</data>
+		<links>
+			<link>/aic/barcode/barcode.shtml</link>
+		</links>
+	</view>
+	
+	<view name="barcodeSearch" title="条码查询">
+		<data>
+			<pojo>com.yuanluesoft.aic.barcode.pojo.Barcode</pojo>
+			<where>Barcode.barcode='{PARAMETER:barcode}'</where>
+		</data>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+
+	<view name="admin/company" form="admin/company" title="厂商" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.aic.barcode.pojo.BarcodeCompany</pojo>
+			<orderBy>BarcodeCompany.name</orderBy>
+			<quickFilter>BarcodeCompany.name like '%{KEY}%' or BarcodeCompany.code like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action hide="noPrivilege(application_manager) and noPrivilege(manageUnit_regist)" title="注册厂商" execute="PageUtils.newrecord('aic/barcode','admin/company','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name"/>
+			<column title="厂商识别代码" name="code" align="center" width="80"/>
+			<column title="联系电话" name="tel" align="center" width="100" />
+			<column title="登录用户名" name="loginName" width="68"/>
+			<column title="注册时间" name="created" align="center" width="110" />
+		</columns>
+	</view>
+</views>

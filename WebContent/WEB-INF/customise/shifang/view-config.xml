@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/todoNews" title="待办现场报道" form="admin/news" openFeatures="mode=fullscreen" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.customise.shifang.pojo.CustomiseNews</pojo>
+			<orderBy>CustomiseNews.created DESC</orderBy>
+			<filter>TODO</filter>
+			<quickFilter>CustomiseNews.subject like '%{KEY}%' or CustomiseNews.workflowSender like '%{KEY}%' or CustomiseNews.workflowStatus like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" width="32" align="center" hideTitle="true"/>
+			<column name="subject" title="主题" width="100%" align="left" ellipsis="..." maxCharCount="200"/>
+			<column name="created" title="创建时间" width="110" align="center"/>
+			<column name="workflowSendTime" title="发送时间" width="110" align="center"/>
+			<column name="workflowSender" title="发送人" width="37" align="center"/>
+			<column name="workflowStatus" title="流程状态" width="53" align="center"/>
+		</columns>
+	</view>
+	<view name="admin/inprocessNews" title="在办现场报道" form="admin/news" openFeatures="mode=fullscreen" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.customise.shifang.pojo.CustomiseNews</pojo>
+			<orderBy>CustomiseNews.created DESC</orderBy>
+			<filter>INPROCESS</filter>
+			<quickFilter>CustomiseNews.subject like '%{KEY}%' or CustomiseNews.workflowParticipants like '%{KEY}%' or CustomiseNews.workflowStatus like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" width="32" align="center" hideTitle="true"/>
+			<column name="subject" title="主题" width="100%" align="left" ellipsis="..." maxCharCount="200"/>
+			<column name="created" title="创建时间" width="110" align="center"/>
+			<column name="workflowSendTime" title="发送时间" width="110" align="center"/>
+			<column name="workflowParticipants" title="办理人" width="60" align="center"/>
+			<column name="workflowStatus" title="流程状态" width="51" align="center"/>
+		</columns>
+	</view>
+	<view name="admin/completedNews" title="办结现场报道" form="admin/news" openFeatures="mode=fullscreen" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.customise.shifang.pojo.CustomiseNews</pojo>
+			<orderBy>CustomiseNews.created DESC</orderBy>
+			<filter>COMPLETED</filter>
+			<quickFilter>CustomiseNews.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" width="32" align="center" hideTitle="true"/>
+			<column name="subject" title="主题" width="100%" align="left" ellipsis="..." maxCharCount="200"/>
+			<column name="created" title="创建时间" width="110" align="center"/>
+		</columns>
+	</view>
+	<view name="admin/allNews" title="所有现场报道" form="admin/news" openFeatures="mode=fullscreen" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.customise.shifang.pojo.CustomiseNews</pojo>
+			<orderBy>CustomiseNews.created DESC</orderBy>
+			<filter>READABLE</filter>
+			<quickFilter>CustomiseNews.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" width="32" align="center" hideTitle="true"/>
+			<column name="subject" title="主题" width="100%" align="left" ellipsis="..." maxCharCount="200"/>
+			<column name="created" title="创建时间" width="110" align="center"/>
+		</columns>
+	</view>
+	<view name="admin/deletedNews" title="回收站" form="admin/news" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager)" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.customise.shifang.pojo.CustomiseNews</pojo>
+			<where>isDeleted=1</where>
+			<orderBy>CustomiseNews.created DESC</orderBy>
+			<quickFilter>CustomiseNews.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" width="32" align="center" hideTitle="true"/>
+			<column name="subject" title="主题" width="100%" align="left" ellipsis="..." maxCharCount="200"/>
+			<column name="created" title="创建时间" width="110" align="center"/>
+		</columns>
+	</view>
+	<view name="newses" title="现场报道">
+		<data>
+			<pojo>com.yuanluesoft.customise.shifang.pojo.CustomiseNews</pojo>
+			<where>CustomiseNews.siteId={PARAMETER:siteId} and CustomiseNews.publicPass='1' and CustomiseNews.isDeleted=0</where>
+			<orderBy>CustomiseNewscreated DESC</orderBy>
+			<quickFilter>CustomiseNews.subject like '%{KEY}%' or CustomiseNews.creator like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="现场报道">/customise/shifang/news.shtml</link>
+			<link type="hostLink">//cms/sitemanage/applicationIndex.shtml?applicationName=customise/shifang</link>
+		</links>
+	</view>
+	<view name="allNewses" title="现场报道(站群)">
+		<data>
+			<pojo>com.yuanluesoft.customise.shifang.pojo.CustomiseNews</pojo>
+			<where>CustomiseNews.publicPass='1' and CustomiseNews.isDeleted=0</where>
+			<orderBy>CustomiseNewscreated DESC</orderBy>
+			<quickFilter>CustomiseNews.subject like '%{KEY}%' or CustomiseNews.creator like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="现场报道">/customise/shifang/news.shtml</link>
+			<link type="hostLink">//cms/sitemanage/applicationIndex.shtml?applicationName=customise/shifang</link>
+		</links>
+	</view>
+	<view name="type" title="报道类型" form="type" openFeatures="mode=fullscreen" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.customise.shifang.pojo.CustomiseType</pojo>
+			<quickFilter>CustomiseType.type like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新增报道类型" execute="PageUtils.newrecord('customise/shifang', 'type', 'mode=fullscreen', 'siteId={PARAMETER:siteId}')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" width="32" align="center" hideTitle="true"/>
+			<column name="type" title="类型" width="100%" align="left"/>
+		</columns>
+	</view>
+</views>

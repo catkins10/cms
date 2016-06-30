@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="待办事项" class="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationTodo" businessServiceName="chdEvaluationDataService">
+		<field name="task" title="事项名称" length="300" type="string" inputMode="readonly"/>
+		<field name="directoryId" title="目录ID" length="20" type="number" inputMode="readonly"/>
+		<field name="directorName" title="目录名称" length="200" type="string" inputMode="readonly"/>
+		<field name="taskType" title="事项类型" length="1" type="char" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="actionName" title="操作名称" length="20" type="string" inputMode="readonly"/>
+		<field name="actionLink" title="操作链接" length="300" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="必备条件完成情况" class="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationPrerequisitesData" businessServiceName="chdEvaluationDataService">
+		<field name="plantId" title="发电企业ID" type="number" inputMode="hidden"/>
+		<field name="plant" title="发电企业名称" length="200" type="string" inputMode="readonly"/>
+		<field name="declareYear" title="年度" length="4" type="number" inputMode="readonly"/>
+		<field name="prerequisitesId" title="必备条件ID" type="number" inputMode="hidden"/>
+		<field name="prerequisites" title="必备条件" length="1000" type="string" inputMode="readonly"/>
+		<field name="result" title="完成情况说明" length="200" required="true" type="string" inputMode="text"/>
+		<field name="created" title="提交时间" type="timestamp" inputMode="readonly"/>
+		<field name="creatorId" title="提交人ID" type="number" inputMode="none"/>
+		<field name="creator" title="提交人姓名" length="30" type="string" inputMode="readonly"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="资料" class="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationData" businessServiceName="chdEvaluationDataService">
+		<field name="dataType" title="资料类型" length="1" required="true" type="char" inputMode="radio">
+			<parameter name="itemsText">文件|0\0链接|1\0纸质文件|2</parameter>
+		</field>
+		<field name="point" title="评价要点" length="2000" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsHql">select ChdEvaluationPoint.point from ChdEvaluationPoint ChdEvaluationPoint where ChdEvaluationPoint.detailId=(select ChdEvaluationDirectory.sourceDirectoryId from ChdEvaluationDirectory ChdEvaluationDirectory where ChdEvaluationDirectory.id={PARAMETER:directoryId|0}) order by ChdEvaluationPoint.priority desc, ChdEvaluationPoint.created</parameter>
+		</field>
+		<field name="name" title="资料名称" length="300" required="true" type="string" inputMode="text"/>
+		<field name="link" title="链接地址" length="300" type="string" inputMode="text"/>
+		<field name="place" title="纸质文件存放位置" length="300" type="string" inputMode="text"/>
+		<field name="created" title="提交时间" type="timestamp" inputMode="readonly"/>
+		<field name="creatorId" title="提交人ID" type="number" inputMode="none"/>
+		<field name="creator" title="提交人姓名" length="30" type="string" inputMode="readonly"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+		<field name="subjections" title="资料:所属目录" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationDataSubjection</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="fileExtension">所有文件|*.rar;*.zip;*.doc;*.xls;*.ppt;*.tif;*.txt;*.chm;*.docx;*.xlsx;*.pptx;*.pdf;*.vsd;*.mpp;*.jpg;*.jpeg;*.jpe;*.bmp;*.gif;*.png;*.avi;*.asx;*.asf;*.mpg;*.wmv;*.3gp;*.mp3;*.mp4;*.mov;*.flv;*.wmv9,rm;*.rmvb;*.et;*.wps;*.dps|</parameter>
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+			<parameter name="attachmentEditor">/chd/evaluation/data/admin/attachmentEditor.shtml</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审核</parameter>
+			<parameter name="class">com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationDataOpinion</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="资料:所属目录" class="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationDataSubjection">
+		<field name="dataId" title="资料ID" length="20" type="number" inputMode="hidden"/>
+		<field name="directoryId" title="目录ID" length="20" type="number" inputMode="hidden"/>
+	</businessObject>
+	<businessObject title="指标完成情况" class="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationIndicatorData" businessServiceName="chdEvaluationDataService">
+		<field name="dataYear" title="年度" length="4" type="number" inputMode="text"/>
+		<field name="dataMonth" title="月份" length="4" type="number" inputMode="text"/>
+		<field name="indicatorId" title="指标ID" type="number" inputMode="hidden"/>
+		<field name="indicator" title="指标名称" length="200" type="string" inputMode="readonly"/>
+		<field name="data" title="完成情况" length="200" required="true" type="string" inputMode="text"/>
+		<field name="creatorId" title="填报人ID" type="number" inputMode="none"/>
+		<field name="creator" title="填报人" length="30" type="string" inputMode="readonly"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+	</businessObject>
+</businessObjects>

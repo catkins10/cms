@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/forestry" form="admin/forestry" title="龙海市林业局林政案件数据" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.forestry.pojo.Forestry</pojo>
+			<orderBy>Forestry.created</orderBy>
+			<quickFilter>Forestry.person like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_forestry)" execute="PageUtils.newrecord('credit/enterprisecredit/forestry', 'admin/forestryImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_forestry)" execute="PageUtils.newrecord('credit/enterprisecredit/forestry','admin/forestry','mode=fullscreen')"/>
+			<action title="批量删除" hide="noPrivilege(manageUnit_forestry)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/forestry/batchOperate.shtml?pojoName=Forestry')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="person" title="被处罚人（单位）"/>
+			<column name="cardNum" title="身份证号或其他证件名称"  align="center"/>
+			<column name="bookNum" title="处罚决定书号" align="center"/>
+			<column name="addr" title="违法地点" align="center"/>
+		</columns>
+	</view>
+	
+	
+</views>

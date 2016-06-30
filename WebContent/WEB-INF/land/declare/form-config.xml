@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form title="EXCEL数据导入" name="admin/importData" class="com.yuanluesoft.land.declare.forms.ExcelImport">
+	   <formFields>
+	   		<field name="data" title="数据文件" type="attachment" inputMode="attachment" length="1">
+				<parameter name="fileExtension">Excel表格|*.xls|</parameter>
+				<parameter name="simpleMode">true</parameter>
+			</field>
+	   </formFields>
+	   <actions>
+			<action title="导入" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="采矿权" name="admin/miningRights" class="com.yuanluesoft.land.declare.forms.MiningRights" pojo="com.yuanluesoft.land.declare.pojo.MiningRights">
+		<actions>
+			<action title="关闭" execute="window.close()" />
+			<action title="保存" execute="FormUtils.submitForm()" hide="notEditable()"/>
+			<action title="删除" hide="isNew() or notEditable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteMiningRights')" />
+		</actions>
+	</form>
+
+	<form title="采矿权审批查询" name="miningRightsQuery" action="/cms/sitemanage/applicationSearch.shtml?applicationName=land/declare&amp;pageName=miningRightsQuery" method="get">
+		<formFields>
+			<field title="申请人" name="applicant"/>
+			<field title="矿山名称" name="mineName"/>
+			<field title="许可证号" name="licenseNum"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit" />
+		</actions>
+	</form>
+
+	<form title="探矿权" name="admin/explorationRights" class="com.yuanluesoft.land.declare.forms.ExplorationRights" pojo="com.yuanluesoft.land.declare.pojo.ExplorationRights">
+		<actions>
+			<action title="关闭" execute="window.close()" />
+			<action title="保存" execute="FormUtils.submitForm()" hide="notEditable()"/>
+			<action title="删除" hide="isNew() or notEditable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteExplorationRights')" />
+		</actions>
+	</form>
+
+	<form title="探矿权审批查询" name="explorationRightsQuery" action="/cms/sitemanage/applicationSearch.shtml?applicationName=land/declare&amp;pageName=explorationRightsQuery" method="get">
+		<formFields>
+			<field title="申请人" name="applicant"/>
+			<field title="项目名称" name="projectName"/>
+			<field title="许可证号" name="licenseNum"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit" />
+		</actions>
+	</form>
+
+	<form title="地质灾害单位资质" name="admin/disastersUnit" class="com.yuanluesoft.land.declare.forms.DisastersUnit" pojo="com.yuanluesoft.land.declare.pojo.DisastersUnit">
+		<actions>
+			<action title="关闭" execute="window.close()" />
+			<action title="保存" execute="FormUtils.submitForm()" hide="notEditable()"/>
+			<action title="删除" hide="isNew() or notEditable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteDisastersUnit')" />
+		</actions>
+	</form>
+
+	<form title="地址灾害单位资质查询" name="disastersUnitQuery" method="get" action="/cms/sitemanage/applicationSearch.shtml?applicationName=land/declare&amp;pageName=disastersUnitQuery">
+		<formFields>
+			<field title="勘查单位" name="investigationUnit"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit" />
+		</actions>
+	</form>
+	
+	<form title="地质勘察单位资质" name="admin/investigateUnit" class="com.yuanluesoft.land.declare.forms.InvestigateUnit" pojo="com.yuanluesoft.land.declare.pojo.InvestigateUnit">
+		<actions>
+			<action title="关闭" execute="window.close()" />
+			<action title="保存" execute="FormUtils.submitForm()" hide="notEditable()"/>
+			<action title="删除" hide="isNew() or notEditable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteInvestigateUnit')" />
+		</actions>
+	</form>
+
+	<form title="地质勘察单位资质查询" name="investigateUnitQuery" action="/cms/sitemanage/applicationSearch.shtml?applicationName=land/declare&amp;pageName=investigateUnitQuery" method="get">
+		<formFields>
+			<field title="单位名称" name="unitName"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit" />
+		</actions>
+	</form>
+	
+	<form title="地质公园登记" name="admin/geopark" class="com.yuanluesoft.land.declare.forms.Geopark" pojo="com.yuanluesoft.land.declare.pojo.Geopark">
+		<actions>
+			<action title="关闭" execute="window.close()" />
+			<action title="保存" execute="FormUtils.submitForm()" hide="notEditable()"/>
+			<action title="删除" hide="isNew() or notEditable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteGeopark')" />
+		</actions>
+	</form>
+
+	<form title="地质公园查询" name="geoparkQuery" action="/cms/sitemanage/applicationSearch.shtml?applicationName=land/declare&amp;pageName=geoparkQuery" method="get">
+		<formFields>
+			<field title="公园名称" name="parkName"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit" />
+		</actions>
+	</form>
+	
+	<form title="土地登记" name="admin/landRegister" class="com.yuanluesoft.land.declare.forms.LandRegister" pojo="com.yuanluesoft.land.declare.pojo.LandRegister">
+		<actions>
+			<action title="关闭" execute="window.close()" />
+			<action title="保存" execute="FormUtils.submitForm()" hide="notEditable()"/>
+			<action title="删除" hide="isNew() or notEditable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteLandRegister')" />
+		</actions>
+	</form>
+
+	<form title="土地登记查询" name="landRegisterQuery" action="/cms/sitemanage/applicationSearch.shtml?applicationName=land/declare&amp;pageName=landRegisterQuery" method="get">
+		<formFields>
+			<field title="权利人名称" name="personName"/>
+			<field title="土地证号" name="certificateNum"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit" />
+		</actions>
+	</form>
+</forms>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="admin/questionByPost" form="admin/question" title="试题(按岗位)" pageRows="25" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_editor)">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.question.pojo.Question</pojo>
+			<orderBy>Question.created DESC</orderBy>
+			<quickFilter>questionContents.questionContent like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有岗位" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.enterprise.exam.question.pojo.QuestionPost</pojo>
+			</data>
+			<category value="QuestionPost.postId" valueType="number" title="QuestionPost.post"> <!--value必须有-->
+				<data>questionPosts.postId={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="添加试题" execute="PageUtils.newrecord('enterprise/exam/question', 'admin/question', 'mode=fullscreen')"/>
+			<action title="题库导入" execute="PageUtils.newrecord('enterprise/exam/question', 'admin/questionImport', 'mode=dialog,width=500,height=200')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="题型" name="questionType" width="60" align="center"/>
+			<column title="题目内容" name="questionContents.questionContent"/>
+			<column title="难度系数" name="difficulty" width="60" align="center"/>
+			<column title="创建时间" name="created" align="center" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="admin/questionByType" form="admin/question" title="试题(按题型)" pageRows="25" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_editor)">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.question.pojo.Question</pojo>
+			<orderBy>Question.created DESC</orderBy>
+			<quickFilter>questionContents.questionContent like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有题型" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.enterprise.exam.question.pojo.Question</pojo>
+			</data>
+			<category value="Question.questionType"> <!--value必须有-->
+				<data>Question.questionType={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="添加试题" execute="PageUtils.newrecord('enterprise/exam/question', 'admin/question', 'mode=fullscreen')"/>
+			<action title="题库导入" execute="PageUtils.newrecord('enterprise/exam/question', 'admin/questionImport', 'mode=dialog,width=500,height=200')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="题型" name="questionType" width="60" align="center"/>
+			<column title="题目内容" name="questionContents.questionContent"/>
+			<column title="难度系数" name="difficulty" width="60" align="center"/>
+			<column title="创建时间" name="created" align="center" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="admin/questionByKnowledge" form="admin/question" title="试题(按知识类别)" pageRows="25" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_editor)">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.question.pojo.Question</pojo>
+			<orderBy>Question.created DESC</orderBy>
+			<quickFilter>questionContents.questionContent like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有类别" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.enterprise.exam.question.pojo.QuestionKnowledge</pojo>
+			</data>
+			<category value="QuestionKnowledge.knowledge"> <!--value必须有-->
+				<data>questionKnowledges.knowledge={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="添加试题" execute="PageUtils.newrecord('enterprise/exam/question', 'admin/question', 'mode=fullscreen')"/>
+			<action title="题库导入" execute="PageUtils.newrecord('enterprise/exam/question', 'admin/questionImport', 'mode=dialog,width=500,height=200')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="题型" name="questionType" width="60" align="center"/>
+			<column title="题目内容" name="questionContents.questionContent"/>
+			<column title="难度系数" name="difficulty" width="60" align="center"/>
+			<column title="创建时间" name="created" align="center" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="admin/questionByItem" form="admin/question" title="试题(按项目分类)" pageRows="25" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_editor)">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.question.pojo.Question</pojo>
+			<orderBy>Question.created DESC</orderBy>
+			<quickFilter>questionContents.questionContent like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有分类" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.enterprise.exam.question.pojo.QuestionItem</pojo>
+			</data>
+			<category value="QuestionItem.item"> <!--value必须有-->
+				<data>questionItems.item={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="添加试题" execute="PageUtils.newrecord('enterprise/exam/question', 'admin/question', 'mode=fullscreen')"/>
+			<action title="题库导入" execute="PageUtils.newrecord('enterprise/exam/question', 'admin/questionImport', 'mode=dialog,width=500,height=200')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="题型" name="questionType" width="60" align="center"/>
+			<column title="题目内容" name="questionContents.questionContent"/>
+			<column title="难度系数" name="difficulty" width="60" align="center"/>
+			<column title="创建时间" name="created" align="center" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="admin/questionImport" form="admin/questionImport" title="导入日志" pageRows="25" openFeatures="mode=dialog,width=500,height=200" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_editor)">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.question.pojo.QuestionImport</pojo>
+			<orderBy>QuestionImport.created DESC</orderBy>
+			<quickFilter>QuestionImport.description like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="题库导入" execute="PageUtils.newrecord('enterprise/exam/question', 'admin/questionImport', 'mode=dialog,width=500,height=200')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="说明" name="description"/>
+			<column title="导入时间" name="created" align="center" width="110"/>
+		</columns>
+	</view>
+</views>

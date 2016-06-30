@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="carImportData" type="com.yuanluesoft.credit.enterprisecredit.trafficcredit.forms.CarImportDateExcel"/>
+  <form-bean name="adminCarCredit" type="com.yuanluesoft.credit.enterprisecredit.trafficcredit.forms.CarCredit"/>
+  <form-bean name="trafficImportData" type="com.yuanluesoft.credit.enterprisecredit.trafficcredit.forms.ImportDateExcel"/>
+  <form-bean name="adminTrafficCredit" type="com.yuanluesoft.credit.enterprisecredit.trafficcredit.forms.TrafficCredit"/>
+  <form-bean name="applicationView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminTrafficCredit" path="/admin/trafficCredit" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.trafficcredit.actions.Load" validate="false">
+   <forward name="load" path="/trafficCredit.jsp"/>
+  </action>
+  <action input="/trafficCredit.jsp" name="adminTrafficCredit" path="/admin/saveTrafficCredit" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.trafficcredit.actions.Save" validate="false"/>
+  <action input="/trafficCredit.jsp" name="adminTrafficCredit" path="/admin/deleteTrafficCredit"
+   scope="request" type="com.yuanluesoft.credit.enterprisecredit.trafficcredit.actions.Delete" validate="false"/>
+   
+   <action name="adminCarCredit" path="/admin/carCredit" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.trafficcredit.actions.car.Load" validate="false">
+   <forward name="load" path="/carCredit.jsp"/>
+  </action>
+  <action input="/carCredit.jsp" name="adminCarCredit" path="/admin/saveCarCredit" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.trafficcredit.actions.car.Save" validate="false"/>
+  <action input="/carCredit.jsp" name="adminCarCredit" path="/admin/deleteCarCredit"
+   scope="request" type="com.yuanluesoft.credit.enterprisecredit.trafficcredit.actions.car.Delete" validate="false"/>
+  
+  <!-- 附件选择处理。页面的data标签加载时跳转该path调用相应action处理附件页面 -->
+  <action name="trafficImportData" path="/admin/attachmentEditor" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.localtax.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <!-- excel数据导入页面加载 -->
+   <action name="trafficImportData" path="/admin/trafficImportData" scope="request" validate="false"
+   type="com.yuanluesoft.credit.enterprisecredit.trafficcredit.actions.excelimport.Load">
+   <forward name="load" path="/importData.jsp"/>
+   </action>
+   <action name="trafficImportData" path="/admin/doImportData" scope="request" validate="false" input="/importData.jsp"
+   type="com.yuanluesoft.credit.enterprisecredit.trafficcredit.actions.excelimport.DoImportData"/>
+   
+   <!-- 附件选择处理。页面的data标签加载时跳转该path调用相应action处理附件页面 -->
+  <action name="carImportData" path="/admin/carAttachmentEditor" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.localtax.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <!-- excel数据导入页面加载 -->
+   <action name="carImportData" path="/admin/carImportData" scope="request" validate="false"
+   type="com.yuanluesoft.credit.enterprisecredit.trafficcredit.actions.car.excelimport.Load">
+   <forward name="load" path="/carImportData.jsp"/>
+   </action>
+   <action name="carImportData" path="/admin/doCarImportData" scope="request" validate="false" input="/carImportData.jsp"
+   type="com.yuanluesoft.credit.enterprisecredit.trafficcredit.actions.car.excelimport.DoImportData"/>
+    <!-- 批量删除操作 -->
+   <action input="/../../../jeaf/application/applicationView.jsp" name="applicationView" 
+   path="/batchOperate" scope="request" 
+   type="com.yuanluesoft.credit.enterprisecredit.batchoperate.BatchOperate" validate="false" />
+ </action-mappings>
+ <controller/>
+</struts-config>

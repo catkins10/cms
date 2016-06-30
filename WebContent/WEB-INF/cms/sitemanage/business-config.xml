@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="站点目录" class="com.yuanluesoft.cms.sitemanage.pojo.WebDirectory" businessServiceName="siteService">
+		<field name="directoryName" title="站点/栏目名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="shortName" title="目录简称(英文)" length="8" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="description" title="描述" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="workflowId" title="流程ID" type="string" inputMode="hidden"/>
+		<field name="workflowName" title="流程名称" length="50" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction(document.getElementsByName('hostName')[0] ? 'siteWorkflowConfig' : 'columnWorkflowConfig', '', false, null, '_self')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+		<field name="editorDeleteable" title="允许编辑删除" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">从上级继承|0\0允许|1\0不允许|2</parameter>
+		</field>
+		<field name="editorReissueable" title="允许编辑撤销" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">从上级继承|0\0允许|1\0不允许|2</parameter>
+		</field>
+		<field name="anonymousLevel" title="匿名用户访问级别" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">从上级继承|0\0不能访问|1\0仅标题|2\0完全访问|3</parameter>
+		</field>
+		<field name="synchIssue" title="同步的文章发布" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">从上级继承|0\0直接发布|1\0相同站点的直接发布|2\0不直接发布|3</parameter>
+		</field>
+		<field name="halt" title="是否停用" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">启用|0\0停用|1</parameter>
+		</field>
+		<field name="redirectUrl" title="重定向URL" length="800" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="logo" title="LOGO" length="1" type="image" inputMode="attachment">
+			<parameter name="url">/cms/sitemanage/index.shtml?siteId={PARAMETER:recordId}</parameter>
+		</field>
+		<field name="accessCount" title="访问次数" persistence="false" type="number" inputMode="readonly">
+			<parameter name="referenceFields">accessStats</parameter>
+		</field>
+		<field name="resourceCount" title="文章数量" persistence="false" type="number" inputMode="readonly"/>
+		<field name="synchToDirectories" title="同步到其他栏目" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.sitemanage.pojo.WebDirectorySynch</parameter>
+		</field>
+		<field name="synchFromDirectories" title="被指定的栏目所同步" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.sitemanage.pojo.WebDirectorySynch</parameter>
+		</field>
+		<field name="accessStats" title="访问统计" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="lazyLoad">false</parameter>
+			<parameter name="class">com.yuanluesoft.jeaf.stat.pojo.AccessStat</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="站点" class="com.yuanluesoft.cms.sitemanage.pojo.WebSite" businessServiceName="siteService">
+		<field name="directoryName" title="站点名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="hostName" title="域名" length="1000" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="useSiteTemplate" title="是否使用本站的文章模板" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">使用文章所在栏目的文章模板|0\0使用本站的文章模板|1</parameter>
+		</field>
+		<field name="waterMark" title="水印图片" length="1" type="image" inputMode="attachment"/>
+		<field name="waterMarkAlign" title="水印显示位置" length="50" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsText">左上\0左下\0右上\0右下</parameter>
+		</field>
+		<field name="waterMarkXMargin" title="水印图片水平边距" length="5" type="number" inputMode="text"/>
+		<field name="waterMarkYMargin" title="水印图片垂直边距" length="5" type="number" inputMode="text"/>
+		<field name="isInternal" title="是否内部网站" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+		<field name="videoPlayerLogo" title="视频播放器LOGO" length="1" type="image" inputMode="attachment"/>
+		<field name="ownerUnitId" title="隶属单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="ownerUnitName" title="隶属单位名称" type="string" length="200" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'ownerUnitId{id},ownerUnitName{name}', '', 'unit')</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="栏目" class="com.yuanluesoft.cms.sitemanage.pojo.WebColumn" businessServiceName="siteService">
+		<field name="relationLinks" title="相关链接" type="components">
+			<parameter name="class">com.yuanluesoft.cms.sitemanage.pojo.WebColumnRelationLink</parameter>
+			<parameter name="recordList">false</parameter>
+		</field>
+		<field name="validRelationLinks" title="相关链接(有效的)" type="components" persistence="false">
+			<parameter name="class">com.yuanluesoft.cms.sitemanage.pojo.WebColumnRelationLink</parameter>
+			<parameter name="url">{PARAMETER:url}</parameter>
+			<parameter name="referenceFields">relationLinks</parameter>
+		</field>
+		<field name="relatedLinks" title="被引用情况" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="lazyLoad">false</parameter>
+			<parameter name="class">ccom.yuanluesoft.cms.sitemanage.pojo.WebColumnRelationLink</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="相关链接" class="com.yuanluesoft.cms.sitemanage.pojo.WebColumnRelationLink" businessServiceName="siteService">
+		<field name="columnId" title="栏目ID" length="20" type="number" inputMode="hidden"/>
+		<field name="relationColumnId" title="关联栏目ID" length="20" type="number" inputMode="hidden"/>
+		<field name="linkName" title="链接名称" length="300" type="string" inputMode="text" required="true"/>
+		<field name="linkUrl" title="链接地址" length="300" type="string" inputMode="text" required="true"/>
+		<field name="linkTime" title="发布时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+		<field name="halt" title="是否停用" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">启用|0\0停用|1</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="视图引用" class="com.yuanluesoft.cms.sitemanage.pojo.WebViewReference" businessServiceName="siteService">
+		<field name="viewTitle" title="引用的视图描述" length="100" required="true" type="string" inputMode="select">
+			<parameter name="execute">selectReferenceView()</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="applicationName" title="引用的视图所在应用" length="100" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="viewName" title="引用的视图名称" length="50" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="referenceParameter" title="参数" length="500" type="string" inputMode="hidden"/>
+		<field name="referenceDescription" title="参数说明" length="500" type="string" inputMode="select">
+			<parameter name="execute">siteReferenceConfigure()</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="同步设置" class="com.yuanluesoft.cms.sitemanage.pojo.WebDirectorySynch">
+		<field name="directoryId" title="目录ID" type="number" inputMode="hidden"/>
+		<field name="synchDirectoryId" title="同步的目录ID" type="number" inputMode="hidden"/>
+	</businessObject>
+	
+	<businessObject title="头版头条" class="com.yuanluesoft.cms.sitemanage.pojo.Headline">
+		<field name="directoryId" title="目录ID" type="number" inputMode="hidden"/>
+		<field name="headlineName" title="标题" length="100" required="true" type="string" inputMode="text"/>
+		<field name="headlineURL" title="链接地址" length="200" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="summarize" title="概述" length="500" type="string" inputMode="textarea">
+			<parameter name="rows">4</parameter>
+		</field>
+		<field name="lastModified" title="最后修改时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="主题" class="com.yuanluesoft.cms.sitemanage.pojo.SiteTemplateTheme" businessServiceName="siteTemplateThemeService">
+		<field name="siteId" title="站点ID" type="number" inputMode="hidden"/>
+	</businessObject>
+	
+	<businessObject title="模板配置" class="com.yuanluesoft.cms.sitemanage.pojo.SiteTemplate" businessServiceName="siteTemplateService">
+		<field name="columnNames" title="适用的栏目" length="4000" type="number" inputMode="hidden"/>
+		<field name="columnIds" title="适用的栏目ID" length="4000" type="number" inputMode="hidden"/>
+		<field name="matchByName" title="按栏目名称匹配栏目" type="number" inputMode="hidden"/>
+		<field name="formattedColumnNames" title="适用的栏目" persistence="false" type="number" inputMode="readonly">
+			<parameter name="referenceFields">columnNames</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="栏目统计" class="com.yuanluesoft.cms.sitemanage.model.TotalColumn">
+		<field name="name" title="名称" type="string" inputMode="readonly"/>
+		<field name="total" title="统计" type="number" inputMode="readonly"/>
+		<field name="link" title="链接" type="string" inputMode="none"/>
+	</businessObject>
+	
+	<businessObject title="发布统计" class="com.yuanluesoft.cms.sitemanage.model.IssueTotal">
+		<field name="unitName" title="单位名称" type="string" inputMode="readonly"/>
+		<field name="issueCount" title="发布数量" type="number" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="手机页面配置" class="com.yuanluesoft.cms.sitemanage.model.PhonePageConfig">
+		<field name="systemName" title="系统名称" type="string" inputMode="readonly"/>
+		<field name="screenWidth" title="屏幕宽度" type="number" inputMode="readonly"/>
+		<field name="screenHeight" title="屏幕高度" type="number" inputMode="readonly"/>
+		<field name="recommendedThemes" title="推荐的主题" type="components">
+			<parameter name="class">com.yuanluesoft.cms.templatemanage.pojo.TemplateTheme</parameter>
+			<parameter name="url">javascript:location.replace('{CONTEXTPATH}/cms/sitemanage/savePhonePage.shtml?pageWidth={PARAMETER:pageWidth}&amp;flashSupport={PARAMETER:flashSupport}&amp;redirect={PARAMETER:redirect|/}')</parameter>
+		</field>
+		<field name="otherThemes" title="其他备选主题" type="components">
+			<parameter name="class">com.yuanluesoft.cms.templatemanage.pojo.TemplateTheme</parameter>
+			<parameter name="url">javascript:location.replace('{CONTEXTPATH}/cms/sitemanage/savePhonePage.shtml?pageWidth={PARAMETER:pageWidth}&amp;flashSupport={PARAMETER:flashSupport}&amp;redirect={PARAMETER:redirect|/}')</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="站点数据" class="com.yuanluesoft.cms.sitemanage.pojo.SiteData">
+		<field name="siteId" title="站点ID" type="number" length="20" inputMode="hidden"/>
+	</businessObject>
+	
+	<businessObject title="站点数据" class="com.yuanluesoft.cms.sitemanage.model.SynchSetDefaultTheme" businessServiceName="siteTemplateThemeService">
+		<field name="themeId" title="主题ID" type="number" length="20"/>
+		<field name="siteId" title="站点ID" type="number" length="20"/>
+		<field name="default" title="设为默认" type="boolean"/>
+		<field name="temporaryOpening" title="设置/取消临时启用" type="boolean"/>
+	</businessObject>
+</businessObjects>

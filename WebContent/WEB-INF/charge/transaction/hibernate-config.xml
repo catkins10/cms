@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	
+	<!--计费:交易记录-->
+	<class name="com.yuanluesoft.charge.transaction.pojo.ChargeTransaction" table="charge_transaction">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="personId" /> <!--账户ID-->
+		<property name="type" /> <!--交易类型-->
+		<property name="money" /> <!--交易金额-->
+		<property name="balance" /> <!--交易后的账户余额-->
+		<property name="created" /> <!--交易时间-->
+		<property name="remark" /> <!--备注-->
+		
+		<!--计费:支付单-->
+		<joined-subclass name="com.yuanluesoft.charge.payment.pojo.ChargePayment" table="charge_payment">
+            <key>
+                <column name="id" />
+            </key>
+			<property name="applicationName"/> <!--应用名称-->
+			<property name="payReason"/> <!--支付目的-->
+			<property name="providerId"/> <!--服务提供者ID,0表示系统，如出售在线备课软件时提供者ID为0-->
+			<property name="providerName"/> <!--服务提供者姓名-->
+			<property name="providerMoney"/> <!--支付给服务提供者的金额-->
+		</joined-subclass>
+		
+		<!--计费:自助缴费单-->
+		<joined-subclass name="com.yuanluesoft.charge.topup.pojo.SelfTopUp" table="charge_top_up_self">
+            <key>
+                <column name="id" />
+            </key>
+            <property name="payMode"/> <!--缴费方式-->
+		</joined-subclass>
+		
+		<!--计费:代缴费单-->
+		<joined-subclass name="com.yuanluesoft.charge.topup.pojo.AgencyTopUp" table="charge_top_up_agency">
+            <key>
+                <column name="id" />
+            </key>
+			<property name="carrierId"/> <!--运营商账户ID-->
+			<property name="carrierName"/> <!--运营商名称-->
+		</joined-subclass>
+		
+		<!--计费:充值卡充值-->
+		<joined-subclass name="com.yuanluesoft.charge.topup.pojo.CardTopUp" table="charge_top_up_card">
+            <key>
+                <column name="id" />
+            </key>
+            <property name="cardId"/> <!--充值卡ID-->
+		</joined-subclass>
+		
+		<!--计费:服务扣款记录-->
+		<joined-subclass name="com.yuanluesoft.charge.servicemanage.pojo.ServiceDeduction" table="charge_service_deduction">
+            <key>
+                <column name="id" />
+            </key>
+          	<property name="serviceId"/> <!--服务ID-->
+			<property name="serviceName"/> <!--服务名称-->
+			<property name="orderItemId"/> <!--订单条目ID-->
+			<property name="servicePrice"/> <!--服务价格-->
+		</joined-subclass>
+		
+		<!--计费:发放报酬-->
+		<joined-subclass name="com.yuanluesoft.charge.laborage.pojo.Payoff" table="charge_laborage_payoff">
+            <key>
+                <column name="id" />
+            </key>
+            <property name="monthlyLaborageId"/> <!--报酬月结账单ID-->
+        </joined-subclass>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="query" type="com.yuanluesoft.traffic.expenses.forms.Query"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="query" path="/query" scope="request"
+   type="com.yuanluesoft.traffic.expenses.actions.Load" validate="false">
+   <forward name="load" path="/query.jsp"/>
+  </action>
+  <action input="/query.jsp" name="query" path="/doQuery"
+   scope="request" type="com.yuanluesoft.traffic.expenses.actions.Query" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

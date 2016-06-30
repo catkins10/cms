@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+<!-- 
+	<view name="admin/myUser" form="admin/regist" title="我的会员信息" hide="Privilege(application_manager)" pageRows="20" openFeatures="fullscreen" >
+		<data>
+			<pojo>com.yuanluesoft.credit.regist.pojo.admin.CreditUser</pojo>
+			<where>CreditUser.id={USERID}</where>
+			<orderBy>CreditUser.created desc</orderBy>
+			<quickFilter>CreditUser.loginName like '%{KEY}%' or CreditUser.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="登录用户名" name="loginName" />
+			<column title="姓名" name="name" />
+			<column title="注册时间" name="created"  />
+		</columns>
+	</view> -->
+	
+	<view name="admin/user" form="admin/regist" hide="noPrivilege(application_manager)" title="未审核用户"  pageRows="20" openFeatures="fullscreen" >
+		<data>
+			<pojo>com.yuanluesoft.credit.regist.pojo.admin.CreditUser</pojo>
+			<where>CreditUser.status=0</where>
+			<orderBy>CreditUser.created desc</orderBy>
+			<quickFilter>CreditUser.loginName like '%{KEY}%' or CreditUser.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="注册" hide="noPrivilege(application_manager)"  execute="PageUtils.newrecord('credit/regist', 'admin/regist', 'mode=fullscreen')"/>
+			<action title="批量审核" hide="noPrivilege(application_manager)"  execute="if(confirm('是否确定完成审核？'))FormUtils.doAction('{CONTEXTPATH}/credit/regist/admin/batchOperate.shtml')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="登录用户名" name="loginName" />
+			<column title="姓名" name="name" />
+			<column title="注册时间" name="created"  />
+		</columns>
+	</view>
+	
+	<view name="admin/userYes" form="admin/regist" title="审核通过用户" hide="noPrivilege(application_manager)"  pageRows="20" openFeatures="fullscreen" >
+		<data>
+			<pojo>com.yuanluesoft.credit.regist.pojo.admin.CreditUser</pojo>
+			<where>CreditUser.status=1</where>
+			<orderBy>CreditUser.created desc</orderBy>
+			<quickFilter>CreditUser.loginName like '%{KEY}%' or CreditUser.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="注册" hide="noPrivilege(application_manager)"  execute="PageUtils.newrecord('credit/regist', 'admin/regist', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="登录用户名" name="loginName" />
+			<column title="姓名" name="name" />
+			<column title="注册时间" name="created"  />
+		</columns>
+	</view>
+	
+	<view name="admin/userNo" form="admin/regist" title="审核不通过用户" hide="noPrivilege(application_manager)" pageRows="20" openFeatures="fullscreen" >
+		<data>
+			<pojo>com.yuanluesoft.credit.regist.pojo.admin.CreditUser</pojo>
+			<where>CreditUser.status=2</where>
+			<orderBy>CreditUser.created desc</orderBy>
+			<quickFilter>CreditUser.loginName like '%{KEY}%' or CreditUser.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="注册" hide="noPrivilege(application_manager)"  execute="PageUtils.newrecord('credit/regist', 'admin/regist', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="登录用户名" name="loginName" />
+			<column title="姓名" name="name" />
+			<column title="注册时间" name="created"  />
+		</columns>
+	</view>
+	
+	<view name="registQueryResult" form="admin/regist" title="用户查询结果"  pageRows="20" openFeatures="fullscreen" >
+		<data>
+			<pojo>com.yuanluesoft.credit.regist.pojo.admin.CreditUser</pojo>
+			<orderBy>CreditUser.created desc</orderBy>
+		</data>
+	</view>
+	
+</views>

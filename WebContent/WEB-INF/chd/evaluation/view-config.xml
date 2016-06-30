@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="plants" title="发电企业">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlant</pojo>
+			<orderBy>ChdEvaluationPlant.priority DESC, ChdEvaluationPlant.directoryName</orderBy>
+		</data>
+		<links>
+			<link>/chd/evaluation/plantIndex.shtml?plantId={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view name="prerequisitesData" title="必备条件完成情况">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationPrerequisitesData</pojo>
+			<where>ChdEvaluationPrerequisitesData.plantId={PARAMETER:plantId} and ChdEvaluationPrerequisitesData.declareYear={YEAR}</where>
+			<orderBy>ChdEvaluationPrerequisitesData.id</orderBy>
+		</data>
+	</view>
+	
+	<view name="childDirectories" title="下级目录列表">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationDirectory</pojo>
+			<where>ChdEvaluationDirectory.parentDirectoryId={PARAMETER:directoryId}</where>
+			<orderBy>ChdEvaluationDirectory.priority DESC, ChdEvaluationDirectory.created</orderBy>
+		</data>
+		<links>
+			<link>/chd/evaluation/directory.shtml?directoryId={PARAMETER:id}&amp;selfEval={PARAMETER:selfEval}</link>
+		</links>
+	</view>
+
+	<view name="data" title="资料">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationData</pojo>
+			<join>, ChdEvaluationDirectorySubjection ChdEvaluationDirectorySubjection</join>
+			<where>subjections.directoryId=ChdEvaluationDirectorySubjection.directoryId and ChdEvaluationDirectorySubjection.parentDirectoryId={PARAMETER:directoryId}</where>
+			<orderBy>ChdEvaluationData.created DESC</orderBy>
+			<quickFilter>ChdEvaluationData.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>/chd/evaluation/data/data.shtml?act=edit</link>
+		</links>
+	</view>
+	
+	<view name="selfEval" title="自查">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.selfeval.pojo.ChdEvaluationSelf</pojo>
+			<join>, ChdEvaluationDirectorySubjection ChdEvaluationDirectorySubjection</join>
+			<where>subjections.directoryId=ChdEvaluationDirectorySubjection.directoryId and ChdEvaluationDirectorySubjection.parentDirectoryId={PARAMETER:directoryId}</where>
+			<orderBy>ChdEvaluationSelf.created DESC</orderBy>
+			<quickFilter>ChdEvaluationSelf.evalResult like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>/chd/evaluation/selfeval/selfEval.shtml?act=edit</link>
+		</links>
+	</view>
+	
+	<view name="selfEvalByMonth" title="自查:按月分类" viewServiceName="selfEvalViewService">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.selfeval.model.SelfEvalByMonth</pojo>
+		</data>
+	</view>
+	
+	<view name="indicatorData" title="指标完成情况" viewServiceName="chdIndicatorDataViewService">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationIndicatorData</pojo>
+		</data>
+	</view>
+	
+	<view name="todo" title="待办事宜">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationTodo</pojo>
+			<orderBy>ChdEvaluationTodo.created DESC</orderBy>
+			<quickFilter>ChdEvaluationTodo.task like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<links>
+			<link>{PARAMETER:actionLink}</link>
+		</links>
+	</view>
+	
+	<view name="todoData" title="待处理资料">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationData</pojo>
+			<orderBy>ChdEvaluationData.created DESC</orderBy>
+			<quickFilter>ChdEvaluationData.name like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<links>
+			<link>/chd/evaluation/data/data.shtml</link>
+		</links>
+	</view>
+	
+	<view name="processingData" title="在处理资料">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationData</pojo>
+			<orderBy>ChdEvaluationData.created DESC</orderBy>
+			<quickFilter>ChdEvaluationData.name like '%{KEY}%'</quickFilter>
+			<filter>PROCESSING</filter>
+		</data>
+		<links>
+			<link>/chd/evaluation/data/data.shtml</link>
+		</links>
+	</view>
+	
+	<view name="todoSelfEval" title="待处理自查">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.selfeval.pojo.ChdEvaluationSelf</pojo>
+			<orderBy>ChdEvaluationSelf.created DESC</orderBy>
+			<quickFilter>ChdEvaluationSelf.evalResult like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<links>
+			<link>/chd/evaluation/selfeval/selfEval.shtml</link>
+		</links>
+	</view>
+	
+	<view name="processingSelfEval" title="在处理自查">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.selfeval.pojo.ChdEvaluationSelf</pojo>
+			<orderBy>ChdEvaluationSelf.created DESC</orderBy>
+			<quickFilter>ChdEvaluationSelf.evalResult like '%{KEY}%'</quickFilter>
+			<filter>PROCESSING</filter>
+		</data>
+		<links>
+			<link>/chd/evaluation/selfeval/selfEval.shtml</link>
+		</links>
+	</view>
+
+	<view name="admin/data" form="admin/data" title="资料" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationData</pojo>
+			<orderBy>ChdEvaluationData.created DESC</orderBy>
+			<quickFilter>ChdEvaluationData.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>javascript:PageUtils.editrecord('chd/evaluation/data', 'admin/data', '{PARAMETER:id}', 'width=720,height=480')</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name"/>
+			<column title="提交时间" name="created" width="110" align="center"/>
+			<column title="提交人" name="creator" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/selfEval" form="admin/selfEval" title="自查" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.selfeval.pojo.ChdEvaluationSelf</pojo>
+			<orderBy>ChdEvaluationSelf.created DESC</orderBy>
+			<quickFilter>ChdEvaluationSelf.evalResult like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>javascript:PageUtils.editrecord('chd/evaluation/selfeval', 'admin/selfEval', '{PARAMETER:id}', 'width=720,height=480')</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="自查情况说明" name="evalResult"/>
+			<column title="提交时间" name="created" width="110" align="center"/>
+			<column title="提交人" name="creator" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/evaluationDirectory" title="目录优先级调整" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationDirectory</pojo>
+			<orderBy>ChdEvaluationDirectory.priority DESC, ChdEvaluationDirectory.created</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" /> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="名称" name="directoryName"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="admin/level" title="评价等级优先级调整" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationLevel</pojo>
+			<where>ChdEvaluationLevel.companyId={PARAMETER:companyId}</where>
+			<orderBy>ChdEvaluationLevel.priority DESC, ChdEvaluationLevel.created</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" /> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="等级" name="level"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="admin/prerequisites" title="必备条件优先级调整" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPrerequisites</pojo>
+			<where>ChdEvaluationPrerequisites.plantTypeId={PARAMETER:plantTypeId}</where>
+			<orderBy>ChdEvaluationPrerequisites.priority DESC, ChdEvaluationPrerequisites.created</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" /> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="必备条件" name="prerequisites"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="admin/indicator" title="主要指标优先级调整" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationIndicator</pojo>
+			<where>ChdEvaluationIndicator.plantTypeId={PARAMETER:plantTypeId}</where>
+			<orderBy>ChdEvaluationIndicator.priority DESC, ChdEvaluationIndicator.created</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" /> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="指标名称" name="name"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="admin/point" title="考评要点优先级调整" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPoint</pojo>
+			<where>ChdEvaluationPoint.detailId={PARAMETER:detailId}</where>
+			<orderBy>ChdEvaluationPoint.priority DESC, ChdEvaluationPoint.created</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" /> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="要点" name="point"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+</views>

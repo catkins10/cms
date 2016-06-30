@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<class name="com.yuanluesoft.j2oa.memorabilia.pojo.Memorabilia" table="memorabilia_memorabilia">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="time" column="happenTime"/> <!--发生时间-->
+		<property name="creatorId"/> <!--录入人ID-->
+		<property name="creatorName"/> <!--录入人姓名-->
+		<property name="created"/> <!--录入时间-->
+		<property name="subject"/> <!--主题-->
+		<property name="content" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--详细内容-->
+	</class>
+</hibernate-mapping>

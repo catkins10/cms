@@ -1,0 +1,21 @@
+<form id="inquiry" class="form" title="表单:提交调查" action="applicationName=cms/inquiry" style="border-bottom: #ffc0c0 1px dotted; border-left: #ffc0c0 1px dotted; margin: 0px; border-top: #ffc0c0 1px dotted; border-right: #ffc0c0 1px dotted">
+    <table class="editabledTable">
+         <col align="right">
+         <col width="100%">
+         <tr>
+             <td valign="bottom" nowrap="nowrap">验证码：</td>
+             <td colspan="3"><img id="validateCodeImage" title="验证码" alt="" src="{CONTEXTPATH}/jeaf/validatecode/generateValidateCodeImage.shtml" /> <a href="#" onclick="document.getElementById('validateCodeImage').src=document.getElementById('validateCodeImage').src.split('?')[0] + '?reload=true&amp;seq=' + Math.random();return false;">看不清，换一张</a> </td>
+         </tr>
+         <tr>
+             <td nowrap="nowrap">输入验证码：</td>
+             <td colspan="3"><input class="field" name="validateCode" type="text" /></td>
+         </tr>
+         <tr>
+             <td nowrap="nowrap"></td>
+             <td colspan="3" align="center">
+             	<br/>
+             	<input id="button" class="submitButton" title="提交" tabindex="0" type="button" value="提交" />
+             </td>
+         </tr>
+    </table>
+</form>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="opinion" type="com.yuanluesoft.cms.infopublic.opinion.forms.Opinion"/>
+  <form-bean name="adminOpinion" type="com.yuanluesoft.cms.infopublic.opinion.forms.admin.Opinion"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="opinion" path="/opinion" scope="request"
+   type="com.yuanluesoft.cms.infopublic.opinion.actions.opinion.Load" validate="false">
+   <forward name="load" path="/opinion.jsp"/>
+  </action>
+  <action input="/opinion.jsp" name="opinion" path="/saveOpinion"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.opinion.actions.opinion.Save" validate="false">
+   <forward name="result" path="/opinionResult.jsp"/>
+  </action>
+  <action name="adminOpinion" path="/admin/opinion" scope="request"
+   type="com.yuanluesoft.cms.infopublic.opinion.actions.opinion.admin.Load" validate="false">
+   <forward name="load" path="/admin/opinion.jsp"/>
+  </action>
+  <action input="/admin/opinion.jsp" name="adminOpinion"
+   path="/admin/runOpinion" scope="request"
+   type="com.yuanluesoft.cms.infopublic.opinion.actions.opinion.admin.Run" validate="false"/>
+  <action input="/admin/opinion.jsp" name="adminOpinion"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.cms.infopublic.opinion.actions.opinion.admin.WriteOpinion" validate="false"/>
+  <action input="/admin/opinion.jsp" name="adminOpinion"
+   path="/admin/deleteOpinion" scope="request"
+   type="com.yuanluesoft.cms.infopublic.opinion.actions.opinion.admin.Delete" validate="false"/>
+  <action input="/admin/opinion.jsp" name="adminOpinion"
+   path="/admin/setPublishOption" scope="request"
+   type="com.yuanluesoft.cms.infopublic.opinion.actions.opinion.admin.SetPublishOption" validate="false"/>
+  <action input="/admin/opinion.jsp" name="adminOpinion"
+   path="/admin/publish" scope="request"
+   type="com.yuanluesoft.cms.infopublic.opinion.actions.opinion.admin.Publish" validate="false"/>
+  <action input="/admin/opinion.jsp" name="adminOpinion"
+   path="/admin/savePublicOpinion" scope="request"
+   type="com.yuanluesoft.cms.infopublic.opinion.actions.opinion.admin.Save" validate="false"/>
+  <action name="adminOpinion" path="/admin/printOpinion" scope="request"
+   type="com.yuanluesoft.cms.infopublic.opinion.actions.opinion.admin.Print" validate="false">
+   <forward name="load" path="/admin/opinion.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

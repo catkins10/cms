@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="payment" type="com.yuanluesoft.charge.payment.forms.Payment"/>
+  <form-bean name="paymentTransaction" type="com.yuanluesoft.charge.payment.forms.PaymentTransaction"/>
+  <form-bean name="changePaymentPassword" type="com.yuanluesoft.charge.payment.forms.ChangePaymentPassword"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="payment" path="/payment" scope="request"
+   type="com.yuanluesoft.charge.payment.actions.Load" validate="false">
+   <forward name="load" path="/payment.jsp"/>
+  </action>
+  <action input="/payment.jsp" name="payment" path="/submitPayment"
+   scope="request"
+   type="com.yuanluesoft.charge.payment.actions.Submit" validate="false"/>
+  <action path="/example" scope="request"
+   type="com.yuanluesoft.charge.payment.example.Payment" validate="false"/>
+  <action name="paymentTransaction" path="/paymentTransaction"
+   scope="request"
+   type="com.yuanluesoft.charge.payment.actions.paymenttransaction.Load" validate="false">
+   <forward name="load" path="/paymentTransaction.jsp"/>
+  </action>
+  <action name="paymentTransaction" path="/displayPaymentTransaction"
+   scope="request" validate="false"/>
+  <action input="/changePayPassword.jsp" name="changePaymentPassword"
+   path="/changePaymentPassword" scope="request"
+   type="com.yuanluesoft.charge.payment.actions.changepaymentpassword.Load" validate="false">
+   <forward name="load" path="/changePaymentPassword.jsp"/>
+  </action>
+  <action input="/changePaymentPassword.jsp"
+   name="changePaymentPassword" path="/submitNewPaymentPassword"
+   scope="request"
+   type="com.yuanluesoft.charge.payment.actions.changepaymentpassword.Save" validate="false">
+   <forward name="result" path="/actionResultSimple.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

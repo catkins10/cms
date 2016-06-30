@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="todo" type="com.yuanluesoft.j2oa.todo.forms.Todo"/>
+  <form-bean name="hand" type="com.yuanluesoft.j2oa.todo.forms.Hand"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="todo" path="/todo" scope="request"
+   type="com.yuanluesoft.j2oa.todo.actions.todo.Load" validate="false">
+   <forward name="load" path="/todo.jsp"/>
+  </action>
+  <action input="/todo.jsp" name="todo" path="/saveTodo"
+   scope="request" type="com.yuanluesoft.j2oa.todo.actions.todo.Save" validate="false"/>
+  <action input="/todo.jsp" name="todo" path="/deleteTodo"
+   scope="request" type="com.yuanluesoft.j2oa.todo.actions.todo.Delete" validate="false"/>
+  <action input="/todo.jsp" name="todo"
+   path="/completeTodo" scope="request"
+   type="com.yuanluesoft.j2oa.todo.actions.todo.Complete" validate="false"/>
+  <action name="hand" path="/hand" scope="request"
+   type="com.yuanluesoft.j2oa.todo.actions.hand.Load" validate="false">
+   <forward name="load" path="/hand.jsp"/>
+  </action>
+  <action input="/hand.jsp" name="hand" path="/saveHand"
+   scope="request" type="com.yuanluesoft.j2oa.todo.actions.hand.Save" validate="false"/>
+  <action input="/hand.jsp" name="hand" path="/deleteHand"
+   scope="request" type="com.yuanluesoft.j2oa.todo.actions.hand.Delete" validate="false"/>
+  <action input="/hand.jsp" name="hand" path="/doHand"
+   scope="request" type="com.yuanluesoft.j2oa.todo.actions.hand.Hand" validate="false"/>
+  <action input="/hand.jsp" name="hand" path="/feedback"
+   scope="request"
+   type="com.yuanluesoft.j2oa.todo.actions.hand.Feedback" validate="false"/>
+  <action input="/hand.jsp" name="hand"
+   path="/completeHand" scope="request"
+   type="com.yuanluesoft.j2oa.todo.actions.hand.Complete" validate="false"/>
+  <action input="/hand.jsp" name="hand" path="/undoHand"
+   scope="request"
+   type="com.yuanluesoft.j2oa.todo.actions.hand.UndoHand" validate="false"/>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="200M"/>
+</struts-config>

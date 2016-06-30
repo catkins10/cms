@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views>
+	<view name="todoLoan" form="loan" title="待处理借款单" pageRows="25" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.loan.pojo.Loan</pojo>
+			<quickFilter>Loan.reason like '%{KEY}%' 
+				or Loan.remark like '%{KEY}%' 
+				or Loan.projectName like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="新建借款单" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="借款事由" name="reason"/>
+			<column title="金额" name="money" width="80"/>
+			<column title="借款人" name="loanPersonName" align="center" width="60"/>
+			<column title="借款时间" name="loanDate" align="center" width="80"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="105" display="normal,print,portlet"/>
+			<column title="发送人" name="workflowSender" align="center" width="50" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="120" display="normal,print"/>
+		</columns>
+	</view>
+	<view name="allLoan" form="loan" title="所有借款单" pageRows="20" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.loan.pojo.Loan</pojo>
+			<filter>READABLE</filter>
+			<orderBy>Loan.loanDate DESC</orderBy>
+			<quickFilter>Loan.reason like '%{KEY}%' 
+				or Loan.remark like '%{KEY}%' 
+				or Loan.projectName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新借款单" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="借款事由" name="reason"/>
+			<column title="金额" name="money" width="80"/>
+			<column title="借款人" name="loanPersonName" align="center" width="60"/>
+			<column title="借款时间" name="loanDate" align="center" width="80"/>
+		</columns>
+	</view>
+	<view name="topayLoan" form="loan" title="未付款借款单" pageRows="20" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.loan.pojo.Loan</pojo>
+			<where>prepaid!='1'</where>
+			<filter>READABLE</filter>
+			<orderBy>Loan.loanDate DESC</orderBy>
+			<quickFilter>Loan.reason like '%{KEY}%' 
+				or Loan.remark like '%{KEY}%' 
+				or Loan.projectName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建借款单" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="借款事由" name="reason"/>
+			<column title="金额" name="money" width="80"/>
+			<column title="借款人" name="loanPersonName" align="center" width="60"/>
+			<column title="借款时间" name="loanDate" align="center" width="80"/>
+		</columns>
+	</view>
+	<view name="torepayLoan" form="loan" title="待还款借款单" pageRows="20" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.loan.pojo.Loan</pojo>
+			<where>prepaid='1' and repaid!='1'</where>
+			<filter>READABLE</filter>
+			<orderBy>Loan.loanDate DESC</orderBy>
+			<quickFilter>Loan.reason like '%{KEY}%' 
+				or Loan.remark like '%{KEY}%' 
+				or Loan.projectName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建借款单" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="借款事由" name="reason"/>
+			<column title="金额" name="money" width="80"/>
+			<column title="已核销金额" name="reimburseMoney" width="80"/>
+			<column title="借款时间" name="loanDate" align="center" width="80"/>
+			<column title="支付时间" name="payDate" align="center" width="80"/>
+		</columns>
+	</view>
+	<view name="personalTorepayLoan" form="loan" title="个人待还款借款单" pageRows="20" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.loan.pojo.Loan</pojo>
+			<where>loanPersonId={USERID} and prepaid='1' and repaid!='1' and  money>reimburseMoney</where>
+			<orderBy>Loan.loanDate</orderBy>
+			<quickFilter>Loan.reason like '%{KEY}%' 
+				or Loan.remark like '%{KEY}%' 
+				or Loan.projectName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建借款单" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="借款事由" name="reason"/>
+			<column title="金额" name="money" align="center" width="80"/>
+			<column title="已核销金额" name="reimburseMoney" align="center" width="80"/>
+			<column title="借款时间" name="loanDate" align="center" width="80"/>
+			<column title="支付时间" name="payDate" align="center" width="80"/>
+		</columns>
+	</view>
+</views>

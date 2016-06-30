@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="mailSend" title="已发邮件" pageRows="30" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.mail.pojo.MailSend</pojo>
+			<quickFilter>MailSend.subject like '%{KEY}%' or MailSend.body like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="接收人" name="receivers" width="160"/>
+			<column title="发送时间" name="sent" align="center" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="account" form="admin/account" title="帐号设置" url="/jeaf/usermanage/admin/orgRelationConfigView.shtml?applicationName=jeaf/mail&amp;viewName=account&amp;orgTypes=root,unit" hide="noPrivilege(application_manager) and isNotOrgManager(unit)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.mail.pojo.MailAccount</pojo>
+			<quickFilter>MailAccount.mailAddress like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="配置邮件帐号" execute="PageUtils.newrecord('jeaf/mail', 'admin/account', 'mode=fullscreen', 'orgId={PARAMETER:orgId}')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name" width="200"/>
+			<column title="邮箱" name="mailAddress"/>
+		</columns>
+	</view>
+</views>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="服务机构" class="com.yuanluesoft.credit.serviceorg.org.pojo.ServiceOrg" businessServiceName="registService">
+		<field name="loginName" title="登录用户名" length="80" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="password" title="密码" length="100" required="true" type="password" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="name" title="名称" required="true" length="200" type="string" inputMode="text"/>
+		<field name="typeId" title="类别ID"  type="number" inputMode="hiddent"/>
+		<field name="type" title="类别" required="true" length="200" type="string" inputMode="text"/>
+		<field name="introduction" title="简介"  type="html" inputMode="htmleditor">
+			<parameter name="height">280</parameter>
+			<parameter name="attachmentSelector">serviceorgAttachment.shtml</parameter>
+		</field>
+		<field name="addr" title="地址" required="true" length="200" type="string" inputMode="text"/>
+		<field name="postcode" title="邮编"  length="50" type="string" inputMode="text"/>
+		<field name="linkMan" title="联系人" required="true" length="50" type="string" inputMode="text"/>
+		<field name="email" title="邮箱" length="100" type="string" inputMode="text"/>
+		<field name="faxes" title="传真" length="20" type="string" inputMode="text"/>
+		<field name="tel" title="电话" required="true" length="50" type="string" inputMode="text"/>
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="30" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="serviceItems" title="办事事项" type="components">
+			<parameter name="class">com.yuanluesoft.credit.serviceorg.serviceitem.pojo.ServiceItem</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="maxSaveSize">10000000</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="办事事项" class="com.yuanluesoft.credit.serviceorg.serviceitem.pojo.ServiceItem" businessServiceName="serviceItemService">
+		<field name="name" title="事项名称" required="true" length="200" type="string" inputMode="text"/>
+		<field name="condition" title="申办条件" required="true" length="500" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="workFlow" title="办理流程" required="true" type="html" inputMode="htmleditor">
+			<parameter name="height">280</parameter>
+			<parameter name="attachmentSelector">serviceTtemAttachment.shtml</parameter>
+		</field>
+		<field name="timeLimit" title="办理时限" required="true" length="100" type="string" inputMode="text"/>
+		<field name="type" title="办理方式" required="true" length="100" type="string" inputMode="text"/>
+		<field name="material" title="办理材料" required="true" length="500" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="chargeStandard" title="收费项目及标准标准" required="true" length="500" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="promise" title="服务承诺" length="500" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="person" title="联系人" required="true" length="100" type="string" inputMode="text"/>
+		<field name="mail" title="邮箱" required="true" length="100" type="string" inputMode="text"/>
+		<field name="faxes" title="传真" required="true" length="20" type="string" inputMode="text"/>
+		<field name="tel" title="电话" required="true" length="50" type="string" inputMode="text"/>
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="30" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="products" title="金融产品" type="components">
+			<parameter name="class">com.yuanluesoft.credit.bank.financialproducts.pojo.Product</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="maxSaveSize">10000000</parameter>
+		</field>
+	</businessObject>
+	
+	
+	
+</businessObjects>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=asc/consult"/>
+		
+		<page name="consult" title="96123在线咨询" recordClass="com.yuanluesoft.asc.consult.pojo.AscConsult" url="/asc/consult/consult.shtml">
+			<subPage title="96123在线咨询" name="consult" type="template"/>
+		</page>
+		
+		<page name="consultSubmitted" title="咨询完成提示">
+			<subPage title="咨询完成提示" name="consultSubmitted" type="template"/>
+		</page>
+		
+		<page name="consultFailed" title="咨询查询失败">
+			<subPage title="咨询查询失败" name="consultFailed" type="template"/>
+		</page>
+		
+		<page name="poorConsult" title="咨询查看(公开主题)" recordClass="com.yuanluesoft.asc.consult.pojo.AscConsult">
+			<subPage title="咨询查看(公开主题)" name="poorConsult" type="template"/>
+		</page>
+		
+		<page name="originalConsult" title="咨询查看(公开正文)" recordClass="com.yuanluesoft.asc.consult.pojo.AscConsult">
+			<subPage title="咨询查看(公开主题)" name="originalConsult" type="template"/>
+		</page>
+		
+		<page name="processingConsult" title="咨询查看(公开办理情况)" recordClass="com.yuanluesoft.asc.consult.pojo.AscConsult">
+			<subPage title="咨询查看(公开办理情况)" name="processingConsult" type="template"/>
+		</page>
+		
+		<page name="fullyConsult" title="咨询查看(完全公开)" recordClass="com.yuanluesoft.asc.consult.pojo.AscConsult">
+			<subPage title="咨询查看(完全公开)" name="fullyConsult" type="template"/>
+		</page>
+		
+		<page name="consultPrint" title="办理单" realtimeStaticPage="false" recordPage="false" recordClass="com.yuanluesoft.asc.consult.pojo.AscConsult"/>
+		
+		<page name="consults" title="已受理咨询列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=asc/consult&amp;pageName=consults"/>
+		
+		<page name="consultPrint" title="办理单" recordPage="false" recordClass="com.yuanluesoft.asc.consult.pojo.AscConsult"/>
+		
+		<page name="search" title="96123咨询搜索" searchPage="true" searchResults="ascConsults" url="/cms/sitemanage/applicationSearch.shtml?applicationName=asc/consult&amp;pageName=search"/>
+	</pages>
+	
+	<pageElements>
+		<pageElement name="ascConsult" processor="onlineServiceInteractiveFormProcessor"/> <!-- 96123在线互动表单 -->
+	</pageElements>
+</application>

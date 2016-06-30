@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="signUp" title="项目投标报名汇总" pageRows="5000" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUp</pojo>
+			<where>not BiddingSignUp.paymentTime is null</where>
+			<orderBy>BiddingSignUp.signUpNo</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="报名号" name="signUpNo" width="120" align="center"/>
+			<column title="招标编号" name="project.projectNumber" width="120" align="center"/>
+			<column title="报名费金额" name="paymentMoney" width="120" align="center"/>
+			<column title="支付银行" name="paymentBank" align="center"/>
+			<column title="支付时间" name="paymentTime" align="center" width="120"/>
+		</columns>
+	</view>
+</views>

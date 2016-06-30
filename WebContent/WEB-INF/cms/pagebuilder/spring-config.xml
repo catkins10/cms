@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 页面生成器 -->
+	<bean id="pageBuilder" class="com.yuanluesoft.cms.pagebuilder.spring.PageBuilderImpl">
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="siteService"><ref bean="siteServiceImpl"/></property>
+		<property name="siteTemplateThemeService"><ref bean="siteTemplateThemeService"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="cache"><ref bean="recordCache"/></property>
+		<property name="dialogPageService"><ref bean="dialogPageService"/></property>
+	</bean>
+	
+	<!-- 页面定义服务 -->
+	<bean id="pageDefineService" class="com.yuanluesoft.cms.pagebuilder.spring.PageDefineServiceImpl">
+		<property name="pageDefineParser"><ref bean="pageDefineParser"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="cache"><ref bean="modelCache"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="viewDefineService"><ref bean="viewDefineService"/></property>
+		<property name="applicationNavigatorService"><ref bean="applicationNavigatorService"/></property>
+	</bean>
+	
+	<!-- 页面定义解析器 -->
+	<bean id="pageDefineParser" class="com.yuanluesoft.cms.pagebuilder.parser.dom4j.PageDefineParserImpl"/>
+	
+	<!-- 站点表单服务 -->
+	<bean id="siteFormService" class="com.yuanluesoft.cms.pagebuilder.spring.SiteFormServiceImpl">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+	</bean>
+	
+	<!--****************  CMS预置的页面元素处理器 ****************-->
+	<!-- 日期时间处理器 -->
+	<bean id="systemDateProcessor" class="com.yuanluesoft.cms.pagebuilder.processor.spring.SystemDateProcessor"/>
+	
+	<!-- 系统预置链接处理器 -->
+	<bean id="systemLinkProcessor" class="com.yuanluesoft.cms.pagebuilder.processor.spring.SystemLinkProcessor"/>
+	
+	<!-- 页面专有链接处理器 -->
+	<bean id="sitePageLinkProcessor" class="com.yuanluesoft.cms.pagebuilder.processor.spring.PageLinkProcessor"/>
+	
+	<!-- 上一篇/下一篇链接处理器 -->
+	<bean id="recordPagingLinkProcessor" class="com.yuanluesoft.cms.pagebuilder.processor.spring.RecordPagingLinkProcessor">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+	</bean>
+
+	<!-- 视图操作链接处理器 -->
+	<bean id="viewActionProcessor" class="com.yuanluesoft.cms.pagebuilder.processor.spring.ViewActionProcessor">
+		<property name="viewDefineService"><ref bean="viewDefineService"/></property>
+	</bean>
+	
+	<!-- 导航栏链接 -->
+	<bean id="navigatorLinkProcessor" class="com.yuanluesoft.cms.pagebuilder.processor.spring.NavigatorLinkProcessor">
+		<property name="applicationNavigatorService"><ref bean="applicationNavigatorService"/></property>
+	</bean>
+	
+	<!-- 应用链接处理器 -->
+	<bean id="applicationLinkProcessor" class="com.yuanluesoft.cms.pagebuilder.processor.spring.ApplicationLinkProcessor">
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+	</bean>
+			
+	<!-- 登录用户处理器 -->
+	<bean id="loginUserProcessor" class="com.yuanluesoft.cms.pagebuilder.processor.spring.LoginUserProcessor">
+		<property name="pointService"><ref bean="pointService"/></property>
+		<property name="memberServiceList"><ref bean="memberServiceList"/></property>
+	</bean>
+	
+	<!-- 记录列表处理器 -->
+	<bean id="recordListProcessor" class="com.yuanluesoft.cms.pagebuilder.processor.spring.RecordListProcessor">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+	</bean>
+	
+	<!-- 字段处理器 -->
+	<bean id="recordFieldProcessor" class="com.yuanluesoft.cms.pagebuilder.processor.spring.RecordFieldProcessor"/>
+	
+	<!-- 默认的表单处理器 -->
+	<bean id="formProcessor" class="com.yuanluesoft.cms.pagebuilder.processor.spring.FormProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="formFieldService"><ref bean="formFieldService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="formSecurityService"><ref bean="formSecurityService"/></property>
+	</bean>
+	
+	<!-- 分页元素处理器 -->
+	<bean id="pagingElementProcessor" class="com.yuanluesoft.cms.pagebuilder.processor.spring.PagingElementProcessor"/>
+	
+	<!-- 子页面处理器 -->
+	<bean id="subPageProcessor" class="com.yuanluesoft.cms.pagebuilder.processor.spring.SubPageProcessor"/>
+	
+	<!-- 导航栏处理器 -->
+	<bean id="navigatorProcessor" class="com.yuanluesoft.cms.pagebuilder.processor.spring.NavigatorProcessor">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+	</bean>
+	
+	<!-- TAB选项卡处理器 -->
+	<bean id="tabstripProcessor" class="com.yuanluesoft.cms.pagebuilder.processor.spring.TabstripProcessor">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+	</bean>
+	
+	<!-- 应用名称处理器 -->
+	<bean id="applicationTitleProcessor" class="com.yuanluesoft.cms.pagebuilder.processor.spring.ApplicationTitleProcessor">
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+	</bean>
+	
+	<!-- 日志处理器 -->
+	<bean id="loggerProcessor" class="com.yuanluesoft.cms.pagebuilder.processor.spring.LoggerProcessor"/>
+	
+	<!-- 页面服务 -->
+	<bean id="pageService" class="com.yuanluesoft.cms.pagebuilder.PageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+	</bean>
+	
+	<!-- 客户端页面服务 -->
+	<bean id="clientPageService" class="com.yuanluesoft.cms.pagebuilder.ClientPageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+	</bean>
+	
+	<!-- 静态页面服务 -->
+	<bean id="staticPageBuilder" class="com.yuanluesoft.cms.pagebuilder.spring.StaticPageBuilderImpl" init-method="startup" destroy-method="shutdown">
+		<property name="distributionService"><ref bean="distributionService"/></property>
+		<property name="staticPagePath"><ref bean="staticPagePath"/></property> <!-- 静态页面存放路径 -->
+		<property name="staticPageUrl"><ref bean="staticPageUrl"/></property> <!-- 静态页面URL -->
+		<property name="webApplicationLocalUrl"><ref bean="webApplicationLocalUrl"/></property> <!-- 应用程序本地访问时的URL -->
+		<property name="databaseService"><ref bean="databaseService"/></property> 
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="exchangeClient"><ref bean="exchangeClient"/></property>
+		<property name="reduildDelaySeconds"><value>20</value></property>
+		<property name="buildDisabled"><value>false</value></property>
+	</bean>
+</beans>

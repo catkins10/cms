@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="landCertificates" title="土地证">
+		<data>
+			<pojo>com.yuanluesoft.land.landcertificate.pojo.LandCertificate</pojo>
+			<where>LandCertificate.caseNumber='{PARAMETER:caseNumber}' and LandCertificate.idCard='{PARAMETER:idCard}' and LandCertificate.applicant='{PARAMETER:applicant}'</where>
+		</data>
+	</view>
+	
+	<view name="admin/landCertificate" title="土地证" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.land.landcertificate.pojo.LandCertificate</pojo>
+			<orderBy>LandCertificate.created DESC</orderBy>
+			<quickFilter>LandCertificate.applicant like '%{KEY}%' or LandCertificate.address like '%{KEY}%' or LandCertificate.certificateNumber like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="导入申报记录" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importCases)" execute="DialogUtils.openDialog('{CONTEXTPATH}/land/landcertificate/admin/importCases.shtml', 400, 200)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="受理编号" name="caseNumber" width="100" align="center"/>
+			<column title="申请人" name="applicant" width="50" align="center"/>
+			<column title="身份证号码" name="idCard" width="120" align="center"/>
+			<column title="收件时间" name="created" align="center" width="110"/>
+			<column title="土地座落" name="address"/>
+			<column title="证号" name="certificateNumber" width="160" align="center"/>
+		</columns>
+	</view>
+</views>

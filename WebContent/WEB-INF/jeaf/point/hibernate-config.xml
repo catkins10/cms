@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--积分-->
+	<class name="com.yuanluesoft.jeaf.point.pojo.Point" table="point_point">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="personId"/> <!--用户ID-->
+		<property name="point"/> <!--积分-->
+	</class>
+	
+	<!--积分:各单项积分-->
+	<class name="com.yuanluesoft.jeaf.point.pojo.ItemPoint" table="point_item">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="personId"/> <!--用户ID-->
+		<property name="itemName"/> <!--项目名称-->
+		<property name="point"/> <!--积分-->
+	</class>
+</hibernate-mapping>

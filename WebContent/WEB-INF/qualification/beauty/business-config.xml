@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="美容、化妆证书" class="com.yuanluesoft.qualification.beauty.pojo.Beauty">
+		<field name="number" title="证书编号" length="16" type="number" required="true" inputMode="text"/>
+		<field name="testAdmissionTicketNumber" title="准考证号" length="19" type="number" inputMode="text"/>
+		<field name="personId" title="身份证号" length="18" type="string" inputMode="text"/>
+		<field name="name" title="姓名" length="100" type="string" required="true" inputMode="text"/>
+		<field name="sex" title="性别" length="2" type="string" inputMode="radio">
+			<parameter name="itemsText">男|男\0女|女\0未知|N</parameter>
+		</field>
+		<field name="birthday" title="出生日期" type="date" inputMode="date"/>
+		<field name="educationLevel" title="文化程度" length="50" type="string" inputMode="text"/>
+		<field name="phone" title="联系电话" length="11" type="string" inputMode="text"/>
+		<field name="profession" title="鉴定职业" length="50" required="true" type="string" inputMode="text"/>
+		<field name="level" title="鉴定等级" length="4" type="string" inputMode="text"/>
+		<field name="subject" title="鉴定科目" length="20" type="string" inputMode="text"/>
+		<field name="type" title="鉴定分类" length="10" type="string" inputMode="text"/>
+		<field name="company" title="工作单位" length="100" type="string" inputMode="text"/>
+		<field name="serviceYears" title="工作年限" length="3" type="number" inputMode="text"/>
+		<field name="mark" title="评定成绩" length="6" type="string" required="true" inputMode="text"/>
+		<field name="authority" title="上报机构" length="100" type="string" inputMode="text"/>
+		<field name="theoryMark" title="理论成绩" type="number" inputMode="text"/>
+		<field name="theorySituation" title="理论情况" length="10" type="string" inputMode="text"/>
+		<field name="practiceMark" title="实操成绩" type="number" inputMode="text"/>
+		<field name="practiceSituation" title="实操情况" length="10" type="string" inputMode="text"/>
+		<field name="foreignMark" title="外语成绩" type="number" inputMode="text"/>
+		<field name="foreignSituation" title="外语情况" length="10" type="string" inputMode="text"/>
+		<field name="generalMark" title="综合成绩" type="number" inputMode="text"/>
+		<field name="generalSituation" title="综合情况" length="10" type="string" inputMode="text"/>
+		<field name="markDecidedDate" title="成绩认定日期" type="date" inputMode="date"/>
+		<field name="sendDate" title="发证日期" type="date" inputMode="date"/>
+	</businessObject>
+</businessObjects>

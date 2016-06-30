@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.j2oa.todo.forms.Todo" title="待办事宜" pojo="com.yuanluesoft.j2oa.todo.pojo.Todo">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteTodo')"/>
+			<action title="办结" hide="isNew() or isRead()" execute="if(confirm('是否确定已经办结？'))FormUtils.doAction('completeTodo')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.todo.forms.Hand" title="交办事宜" pojo="com.yuanluesoft.j2oa.todo.pojo.Todo">
+		<formFields>
+			<field title="办理人ID" name="handPersonIds" type="string" inputMode="hidden"/>
+			<field title="办理人" name="handPersonNames" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectPerson(560,320,true,'handPersonIds{id},handPersonNames{name|办理人|100%}')</parameter>
+			</field>
+			<field title="反馈" name="feedback" type="string" inputMode="textarea">
+				<parameter name="rows">5</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="notSubform(Edit)" execute="FormUtils.submitForm()"/>
+			<action title="交办" hide="notSubform(Edit)" execute="FormUtils.doAction('doHand')"/>
+			<action title="撤销" execute="FormUtils.doAction('undoHand')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteHand')"/>
+			<action title="办结" execute="if(confirm('是否确定已经办结？'))FormUtils.doAction('completeHand')"/>
+			<action title="提交反馈" hide="notSubform(Feedback)" execute="FormUtils.doAction('feedback')"/>
+		</actions>
+	</form>
+</forms>

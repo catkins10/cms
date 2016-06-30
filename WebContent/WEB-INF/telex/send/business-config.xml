@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="发报登记" class="com.yuanluesoft.telex.send.base.pojo.SendTelegram" businessServiceName="sendTelegramService">
+		<field name="isCryptic" title="明/密" length="1" required="true" type="char" inputMode="radio">
+			<parameter name="itemsText">明文|0\0密文|1</parameter>
+		</field>
+		<field name="subject" title="标题" length="100" required="true" type="string" inputMode="text"/>
+		<field name="summary" title="内容摘要" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="sequence" title="流水号" length="30" required="true" type="string" inputMode="text"/>
+		<field name="category" title="发电类型" length="20" required="true" type="string" inputMode="dropdown">
+			 <parameter name="itemsServiceName">telexService</parameter>
+			 <parameter name="itemsName">telegramCategories</parameter>
+		</field>
+		<field name="securityLevel" title="密级" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">telexService</parameter>
+			<parameter name="itemsName">telegramSecurityLevels</parameter>
+		</field>
+		<field name="telegramLevel" title="等级" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">telexService</parameter>
+			<parameter name="itemsName">telegramLevels</parameter>
+		</field>
+		<field name="pages" title="页数" length="3" required="true" type="number" inputMode="text">
+			<parameter name="minValue">1</parameter>
+			<parameter name="maxValue">300</parameter>
+		</field>
+		<field name="telegramNumber" title="份数" length="3" required="true" type="number" inputMode="text"/>
+		<field name="totalPages" title="总页数" length="5" required="true" type="number" inputMode="text"/>
+		<field name="sendTime" title="发电时间" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="unitCode" title="部委号" length="30" type="string" inputMode="text"/>
+		<field name="fromUnitIds" title="发电单位ID" length="500" required="true" type="string" inputMode="hidden"/>
+		<field name="fromUnitNames" title="发电单位名称" length="500" required="true" type="string" inputMode="select">
+			<parameter name="js">/telex/js/telex.js</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">selectFromUnits(this)</parameter>
+		</field>
+		<field name="toUnitIds" title="收电单位ID" length="500" required="true" type="string" inputMode="hidden"/>
+		<field name="toUnitNames" title="收电单位名称" length="500" required="true" type="string" inputMode="select">
+			<parameter name="js">/telex/js/telex.js</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">selectToUnits(this)</parameter>
+		</field>
+		<field name="creatorId" title="登记人ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="登记人" length="20" type="string" inputMode="readonly"/>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly"/>
+		<field name="archiveTime" title="归档时间" type="timestamp" inputMode="readonly"/>
+		<field name="archivePersonId" title="归档人ID" length="20" type="number" inputMode="none"/>
+		<field name="archivePersonName" title="归档人姓名" length="20" type="string" inputMode="readonly"/>
+		<field name="remark" title="备注" length="100" type="string" inputMode="text"/>
+		<field name="attachments" title="正文" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

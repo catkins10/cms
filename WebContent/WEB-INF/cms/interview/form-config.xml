@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/interviewRole" class="com.yuanluesoft.cms.interview.forms.admin.InterviewRole" title="发言审核人角色" pojo="com.yuanluesoft.cms.interview.pojo.InterviewRole">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteInterviewRole')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/speakFlow" class="com.yuanluesoft.cms.interview.forms.admin.SpeakFlow" title="发言审核顺序" pojo="com.yuanluesoft.cms.interview.pojo.InterviewSpeakFlow">
+		<formFields>
+			<field name="roles" title="角色列表" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/interviewSubject" class="com.yuanluesoft.cms.interview.forms.admin.InterviewSubject" title="访谈主题" pojo="com.yuanluesoft.cms.interview.pojo.InterviewSubject">
+		<formFields>
+			<field name="roleNames" title="角色列表" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteInterviewSubject')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/interviewSpeak" class="com.yuanluesoft.cms.interview.forms.admin.InterviewSpeak" title="访谈发言" pojo="com.yuanluesoft.cms.interview.pojo.InterviewSubject">
+		<formFields>
+			<field name="interviewSpeak" title="访谈发言" type="component">
+				<parameter name="class">com.yuanluesoft.cms.interview.pojo.InterviewSpeak</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteInterviewSpeak')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/interviewImage" class="com.yuanluesoft.cms.interview.forms.admin.InterviewImage" title="访谈图片" pojo="com.yuanluesoft.cms.interview.pojo.InterviewSubject">
+		<formFields>
+			<field name="interviewImage" title="访谈图片" type="component">
+				<parameter name="class">com.yuanluesoft.cms.interview.pojo.InterviewImage</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteInterviewImage')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/interviewVideo" class="com.yuanluesoft.cms.interview.forms.admin.InterviewVideo" title="访谈视频" pojo="com.yuanluesoft.cms.interview.pojo.InterviewSubject">
+		<formFields>
+			<field name="interviewVideo" title="访谈图片" type="component">
+				<parameter name="class">com.yuanluesoft.cms.interview.pojo.InterviewVideo</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteInterviewVideo')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.interview.forms.InterviewLiveLogin" title="登录">
+		<formFields>
+			<field name="userType" title="用户类型" type="string" inputMode="radio">
+				<parameter name="itemsText">嘉宾登录|guest\0主持人及审核人登录|systemUser</parameter>
+			</field>
+			<field name="guest" title="嘉宾" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">interviewService</parameter>
+				<parameter name="itemsName">guests</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form name="speak" class="com.yuanluesoft.cms.interview.forms.Speak" title="访谈发言" pojo="com.yuanluesoft.cms.interview.pojo.InterviewSpeak"/>
+	
+	<form name="interviewSpeak" title="访谈发言" method="post" action="/cms/interview/submitSpeak.shtml?act=create&amp;subjectId={PARAMETER:id}">
+		<formFields>
+			<field title="ID" name="id" inputMode="hidden"/>
+			<field title="发言人姓名" name="speaker"/>
+			<field title="联系方式" name="speakerContacts"/>
+			<field title="内容" name="content" type="html" inputMode="htmleditor">
+				<parameter name="commandSet">outer</parameter>
+				<parameter name="height">180</parameter>
+				<parameter name="centerImage">false</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+</forms>

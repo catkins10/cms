@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="会议安排" class="com.yuanluesoft.j2oa.meeting.pojo.Meeting" businessServiceName="meetingService">
+		<field name="subject" title="名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="content" title="议题" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">8</parameter>
+		</field>
+		<field name="address" title="会议地点" length="30" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">meetingRoomService</parameter>
+		</field>
+		<field name="beginTime" title="开始时间" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="endTime" title="结束时间" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="issued" title="是否发布" type="char" inputMode="radio">
+			<parameter name="itemsText">已发布|1\0未发布|0</parameter>
+		</field>
+		<field name="issueTime" title="发布时间" type="timestamp" inputMode="readonly"/>
+		<field name="handlerId" title="经办人ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="handlerName" title="经办人" length="50" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="reamrk" title="备注" length="255" type="string" inputMode="text"/>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审核</parameter>
+			<parameter name="class">com.yuanluesoft.j2oa.meeting.pojo.MeetingOpinion</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="会议室" class="com.yuanluesoft.j2oa.meeting.pojo.MeetingRoom" businessServiceName="meetingRoomService">
+		<field name="name" title="会议室名称" length="30" required="true" type="string" inputMode="text"/>
+		<field name="seating" title="座位容量数" length="4" type="number" inputMode="text"/>
+		<field name="tableAndChair" title="桌椅配备情况" length="250" type="string" inputMode="text"/>
+		<field name="fixture" title="设备情况" length="250" type="string" inputMode="text"/>
+		<field name="remark" title="备注" length="250" type="string" inputMode="text"/>
+		<field name="meetingsInfo" title="使用情况" persistence="false" type="string" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

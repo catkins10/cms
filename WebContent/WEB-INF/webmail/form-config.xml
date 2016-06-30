@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form title="邮件" class="com.yuanluesoft.webmail.forms.Mail" pojo="com.yuanluesoft.webmail.pojo.Mail">
+		<formFields>
+			<field name="htmlBody" title="正文" type="html" inputMode="htmleditor">
+				<parameter name="linkBrowser">false</parameter>
+				<parameter name="height">260</parameter>
+				<parameter name="commands">
+					cut,copy,paste,-,undo,redo,-,find,-,selectAll,-,insertOrderedList,insertUnorderedList,-,outdent,indent,|,
+					image,flash,link,unlink,rule,-,fontName,fontSize,bold,italic,-,textColor,bgColor,-,justifyLeft,justifyCenter,justifyRight,justifyFull,-,fitWindow,source
+				</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="javascript:window.close()"/>
+			<action title="发送" hide="isRead()" execute="javascript:FormUtils.doAction('send')"/>
+			<action title="发送并保存" hide="isRead()" execute="javascript:FormUtils.doAction('sendandsave')"/>
+			<action title="保存为草稿" hide="isRead()" execute="javascript:FormUtils.doAction('saveasdraft')"/>
+			<action title="回复" hide="isEdit()" execute="javascript:location.href='replyMail.shtml?mailId={PARAMETER:id}'"/>
+			<action title="转发" hide="isEdit()" execute="javascript:location.href='forwardMail.shtml?mailId={PARAMETER:id}'"/>
+			<action title="删除" hide="isNew()" execute="javascript:if(confirm('删除后将不可恢复，是否确定要删除？'))FormUtils.doAction('deleteMail')"/>
+		</actions>
+	</form>
+	
+	<form title="邮箱" class="com.yuanluesoft.webmail.forms.Mailbox" pojo="com.yuanluesoft.webmail.pojo.Mailbox">
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="doOK()"/>
+			<action title="删除" hide="isNew() or isRead()" execute="javascript:if(confirm('删除后将不可恢复，是否确定要删除？'))FormUtils.doAction('deleteMailbox')"/>
+		</actions>
+	</form>
+	
+	<form title="邮件过滤规则" class="com.yuanluesoft.webmail.forms.MailFilter" pojo="com.yuanluesoft.webmail.pojo.MailFilter">
+		<formFields>
+			<field name="actionType" title="执行的操作" type="string" inputMode="hidden"/>
+			<field name="actionTypeTitle" title="执行的操作" type="string" inputMode="dropdown">
+				<parameter name="itemsText">直接删除|delete\0发送到邮箱|move</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="valueField">actionType</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="javascript:window.close()"/>
+			<action title="保存" hide="isRead()" execute="javascript:FormUtils.doAction('saveMailFilter')"/>
+			<action title="增加过滤条件" hide="isRead()" execute="javascript:addCondition()"/>
+			<action title="删除过滤条件" hide="isRead()" execute="javascript:deleteCondition()"/>
+			<action title="删除" hide="isNew() or isRead()" execute="javascript:if(confirm('删除后将不可恢复，是否确定要删除？'))FormUtils.doAction('deleteMailFilter')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.webmail.forms.WebmailViewForm" title="邮件视图">
+		<formFields>
+			<field name="mailboxId" title="邮箱ID" type="number" inputMode="hidden"/>
+			<field name="viewName" title="视图名称" type="string" inputMode="hidden"/>
+			<field name="moveto" title="邮件移动的目标邮箱ID" type="number" inputMode="hidden"/>
+		</formFields>
+	</form>
+</forms>

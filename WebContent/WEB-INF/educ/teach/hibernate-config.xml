@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--教师信息-->
+	<class name="com.yuanluesoft.educ.teach.pojo.Teach" table="educ_teacher">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--姓名,VARCHAR(100)-->
+		<property name="sex"/> <!--性别,VARCHAR(2)-->
+		<property name="idcardNumber"/> <!--身份证号,VARCHAR(36)-->
+		<property name="department"/> <!--系部,VARCHAR(100)-->
+		<property name="loginId"/> <!--工号/账号,VARCHAR(100)-->
+		<property name="password"/> <!--密码,VARCHAR(100)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+	</class>
+</hibernate-mapping>

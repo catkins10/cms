@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="网上办事目录" name="onlineServiceDirectories">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectory</pojo>
+			<orderBy>OnlineServiceDirectory.priority DESC, OnlineServiceDirectory.directoryName</orderBy>
+			<quickFilter>OnlineServiceDirectory.directoryName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="网上办事目录首页">/cms/onlineservice/directory.shtml</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/onlineservice/templatemanage/insertDirectories.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="embedViews">onlineServiceItems,allOnlineServiceItems,onlineServiceDirectories</parameter> <!-- 可以内嵌的其他记录列表,允许多个,用逗号分隔,格式:应用名称_视图名称,如:cms/sitemanage_resources或者resources(默认就是当前应用) -->
+			<parameter name="rssChannel">false</parameter>
+			<parameter name="totalSupport">false</parameter> <!-- 不支持统计 -->
+		</extendParameters>
+	</view>
+	
+	<view title="办理事项" name="onlineServiceItems">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem</pojo>
+			<where>OnlineServiceItem.isPublic='1' and OnlineServiceItem.itemType in ('行政许可', '非行政许可', '行政处罚', '行政确认', '行政征收', '行政强制', '行政裁决', '行政监督检查', '行政给付', '其他行政行为')</where>
+			<orderBy>OnlineServiceItem.name</orderBy>
+			<quickFilter>OnlineServiceItem.name like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="办事指南">/cms/onlineservice/guide.shtml?itemId={PARAMETER:id}&amp;directoryId={PARAMETER:directoryId}&amp;siteId={PARAMETER:siteId}</link>
+			<link title="表格下载">/cms/onlineservice/download.shtml?itemId={PARAMETER:id}&amp;directoryId={PARAMETER:directoryId}&amp;siteId={PARAMETER:siteId}</link>
+			<link title="常见问题解答">/cms/onlineservice/faq.shtml?itemId={PARAMETER:id}&amp;directoryId={PARAMETER:directoryId}&amp;siteId={PARAMETER:siteId}</link>
+			<link title="办理机构">/cms/onlineservice/unit.shtml?itemId={PARAMETER:id}&amp;directoryId={PARAMETER:directoryId}&amp;siteId={PARAMETER:siteId}</link>
+			<link title="在线咨询">{PARAMETER:internetConsultUrl}</link>
+			<link title="在线投诉">{PARAMETER:internetComplaintUrl}</link>
+			<link title="在线受理">{PARAMETER:internetAcceptUrl}</link>
+			<link title="状态查询">{PARAMETER:internetQueryUrl}</link>
+			<link title="结果查询">{PARAMETER:internetResultUrl}</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/onlineservice</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/onlineservice/templatemanage/insertServiceItems.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view title="全部事项" name="allOnlineServiceItems">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem</pojo>
+			<where>OnlineServiceItem.isPublic='1'</where>
+			<orderBy>OnlineServiceItem.name</orderBy>
+			<quickFilter>OnlineServiceItem.name like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="办事指南">/cms/onlineservice/guide.shtml?itemId={PARAMETER:id}&amp;directoryId={PARAMETER:directoryId}&amp;siteId={PARAMETER:siteId}</link>
+			<link title="表格下载">/cms/onlineservice/download.shtml?itemId={PARAMETER:id}&amp;directoryId={PARAMETER:directoryId}&amp;siteId={PARAMETER:siteId}</link>
+			<link title="常见问题解答">/cms/onlineservice/faq.shtml?itemId={PARAMETER:id}&amp;directoryId={PARAMETER:directoryId}&amp;siteId={PARAMETER:siteId}</link>
+			<link title="办理机构">/cms/onlineservice/unit.shtml?itemId={PARAMETER:id}&amp;directoryId={PARAMETER:directoryId}&amp;siteId={PARAMETER:siteId}</link>
+			<link title="在线咨询">{PARAMETER:internetConsultUrl}</link>
+			<link title="在线投诉">{PARAMETER:internetComplaintUrl}</link>
+			<link title="在线受理">{PARAMETER:internetAcceptUrl}</link>
+			<link title="状态查询">{PARAMETER:internetQueryUrl}</link>
+			<link title="结果查询">{PARAMETER:internetResultUrl}</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/onlineservice</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/onlineservice/templatemanage/insertServiceItems.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+
+	<view title="表格下载目录" name="onlineServiceDownloadDirectories">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectory</pojo>
+			<orderBy>OnlineServiceDirectory.priority DESC, OnlineServiceDirectory.directoryName</orderBy>
+			<quickFilter>OnlineServiceDirectory.directoryName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link>/cms/onlineservice/downloads.shtml</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/onlineservice/templatemanage/insertDirectories.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="rssChannel">false</parameter>
+			<parameter name="totalSupport">false</parameter> <!-- 不支持统计 -->
+		</extendParameters>
+	</view>
+	
+	<view title="表格下载" name="onlineServiceDownloads">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemMaterial</pojo>
+			<where>item.isPublic='1' and not OnlineServiceItemMaterial.tableName is null and not OnlineServiceItemMaterial.tableURL is null</where>
+			<orderBy>OnlineServiceItemMaterial.tableName</orderBy>
+			<quickFilter>OnlineServiceItemMaterial.tableName like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link title="表格下载">{PARAMETER:tableURL}</link>
+			<link title="样表下载">{PARAMETER:exampleURL}</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/onlineservice/templatemanage/insertServiceItems.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="rssChannel">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view title="样表下载" name="onlineServiceExampleDownloads">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemMaterial</pojo>
+			<where>item.isPublic='1' and not OnlineServiceItemMaterial.exampleURL is null</where>
+			<orderBy>OnlineServiceItemMaterial.tableName</orderBy>
+			<quickFilter>OnlineServiceItemMaterial.tableName like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link title="表格下载">{PARAMETER:tableURL}</link>
+			<link title="样表下载">{PARAMETER:exampleURL}</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/onlineservice/templatemanage/insertServiceItems.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="rssChannel">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view title="申报材料" name="onlineServiceMaterials">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemMaterial</pojo>
+			<where>item.isPublic='1'</where>
+			<orderBy>OnlineServiceItemMaterial.priority DESC, OnlineServiceItemMaterial.name</orderBy>
+			<quickFilter>OnlineServiceItemMaterial.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link title="表格下载">{PARAMETER:tableURL}</link>
+			<link title="样表下载">{PARAMETER:exampleURL}</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/onlineservice/templatemanage/insertServiceItems.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="rssChannel">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view title="常见问题解答" name="onlineServiceItemFaqs">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemFaq</pojo>
+			<where>item.isPublic='1'</where>
+			<orderBy>item.name, OnlineServiceItemFaq.question</orderBy>
+			<quickFilter>item.name like '%{KEY}%' or OnlineServiceItemFaq.question like '%{KEY}%'</quickFilter>
+		</data>
+	</view>
+	
+	<view title="行政职权类别" name="authorityTypes">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.model.OnlineServiceItemType</pojo>
+		</data>
+		<links>
+			<link title="行政职权目录">/cms/onlineservice/authorityDirectory.shtml?authorityItemType={PARAMETER:itemType}&amp;publicServiceType={PARAMETER:publicServiceType}&amp;authorityDirectoryId={PARAMETER:authorityDirectoryId}</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/onlineservice/templatemanage/insertAuthorityTypes.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="embedViews">authorityItems</parameter> <!-- 可以内嵌的其他记录列表,允许多个,用逗号分隔,格式:应用名称_视图名称,如:cms/sitemanage_resources或者resources(默认就是当前应用) -->
+		</extendParameters>
+	</view>
+	
+	<view title="公共服务类别" name="publicServiceTypes">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.model.PublicServiceType</pojo>
+		</data>
+		<links>
+			<link title="行政职权目录">/cms/onlineservice/authorityDirectory.shtml?authorityItemType={PARAMETER:authorityItemType}&amp;publicServiceType={PARAMETER:type}&amp;authorityDirectoryId={PARAMETER:authorityDirectoryId}</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/onlineservice/templatemanage/insertAuthorityTypes.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="embedViews">authorityItems</parameter> <!-- 可以内嵌的其他记录列表,允许多个,用逗号分隔,格式:应用名称_视图名称,如:cms/sitemanage_resources或者resources(默认就是当前应用) -->
+		</extendParameters>
+	</view>
+	
+	<view title="行政职权部门目录" name="authorityDirectories">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectory</pojo>
+			<orderBy>OnlineServiceDirectory.priority DESC, OnlineServiceDirectory.directoryName</orderBy>
+		</data>
+		<links>
+			<link title="职权目录">/cms/onlineservice/authorityDirectory.shtml?authorityItemType={PARAMETER:authorityItemType}&amp;publicServiceType={PARAMETER:publicServiceType}&amp;authorityDirectoryId={PARAMETER:id}</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/onlineservice/templatemanage/insertAuthorityDirectories.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view title="行政职权目录" name="authorityItems">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem</pojo>
+			<where>OnlineServiceItem.isPublic='1'</where>
+			<orderBy>OnlineServiceItem.name</orderBy>
+			<quickFilter>OnlineServiceItem.name like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="办事指南">/cms/onlineservice/guide.shtml?itemId={PARAMETER:id}&amp;directoryId={PARAMETER:directoryId}&amp;siteId={PARAMETER:siteId}</link>
+			<link title="表格下载">/cms/onlineservice/download.shtml?itemId={PARAMETER:id}&amp;directoryId={PARAMETER:directoryId}&amp;siteId={PARAMETER:siteId}</link>
+			<link title="常见问题解答">/cms/onlineservice/faq.shtml?itemId={PARAMETER:id}&amp;directoryId={PARAMETER:directoryId}&amp;siteId={PARAMETER:siteId}</link>
+			<link title="办理机构">/cms/onlineservice/unit.shtml?itemId={PARAMETER:id}&amp;directoryId={PARAMETER:directoryId}&amp;siteId={PARAMETER:siteId}</link>
+			<link title="在线咨询">{PARAMETER:internetConsultUrl}</link>
+			<link title="在线投诉">{PARAMETER:internetComplaintUrl}</link>
+			<link title="在线受理">{PARAMETER:internetAcceptUrl}</link>
+			<link title="状态查询">{PARAMETER:internetQueryUrl}</link>
+			<link title="结果查询">{PARAMETER:internetResultUrl}</link>
+			<link type="hostLink">/cms/onlineservice/authorityDirectory.shtml</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/onlineservice/templatemanage/insertAuthorityItems.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view name="admin/serviceItemCodeRule" form="admin/serviceItemCodeRule" title="办理事项编号规则" pageRows="25" openFeatures="mode=dialog,width=500,height=230">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemCodeRule</pojo>
+			<orderBy>OnlineServiceItemCodeRule.itemType</orderBy>
+			<quickFilter>OnlineServiceItemCodeRule.itemType like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建规则" execute="PageUtils.newrecord('cms/onlineservice', 'admin/serviceItemCodeRule', 'mode=dialog,width=500,height=230')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="事项类型" name="itemType" width="120"/>
+			<column title="编号规则" name="rule"/>
+		</columns>
+	</view>
+
+	<view name="admin/serviceItem" form="admin/serviceItem" hide="noPrivilege(application_visitor)" title="办理事项" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem</pojo>
+			<orderBy>OnlineServiceItem.name</orderBy>
+			<quickFilter>OnlineServiceItem.name like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有类型" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem</pojo>
+			</data>
+			<category value="OnlineServiceItem.itemType"> <!--value必须有-->
+				<where>not OnlineServiceItem.itemType is null</where>
+				<data>OnlineServiceItem.itemType={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<scripts>
+			<script>/cms/onlineservice/js/onlineservice.js</script>
+		</scripts>
+		<actions>
+			<action title="导入办理事项或窗口" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importItems)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/onlineservice/admin/importItems.shtml?act=create', 400, 200)"/>
+			<action title="打印" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name"/>
+			<column title="事项类型" name="itemType" width="100"/>
+			<column title="创建人" name="creator" width="80" align="center"/>
+			<column title="创建时间" name="created" format="yyyy-MM-dd" align="center" width="70" displayExcept="portlet"/>
+		</columns>
+		<extendParameters>
+			<parameter name="siteReferenceSupport">true</parameter> <!-- 支持站点引用 -->
+			<parameter name="siteReferenceRecordList">allOnlineServiceItems</parameter> <!-- 对应的记录列表视图 -->
+			<parameter name="siteReferenceConfigureJs">/cms/onlineservice/js/onlineservice.js</parameter> <!-- 引用参数配置需要引入的脚本 -->
+			<parameter name="siteReferenceConfigure">selectOnlineServiceDirectory(640, 400, true, 'referenceParameter{id},referenceDescription{name|网上办事目录|100%},referenceParameter{id|网上办事目录ID|0}', '', '', '', 'directory')</parameter>
+			<!-- 引用时,新增的join -->
+			<parameter name="siteReferenceJoin">
+				,OnlineServiceItemSubjection OnlineServiceItemSubjection
+				,OnlineServiceDirectorySubjection OnlineServiceDirectorySubjection
+			</parameter>
+			<!-- 引用时,新增的where条件,如果无法通过配置完成,可以自定义视图服务,并通过request.getAttribute("referenceParameter")读取参数-->
+			<parameter name="siteReferenceWhere">
+				OnlineServiceItemSubjection.itemId=OnlineServiceItem.id
+			 	and OnlineServiceItemSubjection.directoryId=OnlineServiceDirectorySubjection.directoryId
+			 	and OnlineServiceDirectorySubjection.parentDirectoryId in ({PARAMETER:referenceParameter|0})
+			</parameter>
+			<parameter name="siteReferenceRecordListJoin"></parameter> <!-- 记录列表需要扩展的join子句,默认siteReferenceJoin -->
+			<parameter name="siteReferenceRecordListWhere"></parameter> <!-- 记录列表需要扩展的where子句,默认siteReferenceWhere -->
+		</extendParameters>
+	</view>
+	
+	<view title="常见问题解答优先级调整" name="admin/onlineServiceFaq">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemFaq</pojo>
+			<where>OnlineServiceItemFaq.itemId={PARAMETER:itemId}</where>
+			<orderBy>OnlineServiceItemFaq.priority DESC, OnlineServiceItemFaq.created</orderBy>
+			<quickFilter>OnlineServiceItemFaq.question like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="问题" name="question"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view title="申报材料优先级调整" name="admin/onlineServiceMaterial">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemMaterial</pojo>
+			<where>OnlineServiceItemMaterial.itemId={PARAMETER:itemId}</where>
+			<orderBy>OnlineServiceItemMaterial.priority DESC, OnlineServiceItemMaterial.name</orderBy>
+			<quickFilter>OnlineServiceItemMaterial.name like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="admin/directory" form="admin/directory" hide="noPrivilege(application_visitor)" title="目录" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectory</pojo>
+			<orderBy>OnlineServiceDirectory.priority DESC, OnlineServiceDirectory.directoryName</orderBy>
+			<quickFilter>OnlineServiceDirectory.directoryName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/>
+			<column title="名称" name="directoryName"/>
+		</columns>
+	</view>
+	
+	<view name="admin/template" form="admin/template" title="模板配置" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceTemplate</pojo>
+			<orderBy>OnlineServiceTemplate.directoryName</orderBy>
+			<quickFilter>OnlineServiceTemplate.templateName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="templateName"/>
+			<column title="最后修改时间" name="lastModified" align="center" width="110"/>
+			<column title="最后修改人" name="lastModifier" align="center" width="80"/>
+			<column title="模板作用范围" name="directoryName" width="120"/>
+			<column title="事项类型" name="itemTypes" width="180"/>
+			<column title="默认" name="isDefault" align="center" width="35"/>
+		</columns>
+	</view>
+</views>

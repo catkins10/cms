@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--商户-->
+	<class name="com.yuanluesoft.jeaf.payment.pojo.PaymentMerchant" table="payment_merchant">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--户名,VARCHAR(100)-->
+		<property name="account"/> <!--帐号,VARCHAR(100)-->
+		<property name="bank"/> <!--开户银行,VARCHAR(200)-->
+		<property name="transferPassword"/> <!--转账密码,VARCHAR(200)-->
+		<property name="paymentMethod"/> <!--支付方式,如:建设银行,光大银行,VARCHAR(100)-->
+		<property name="accountTypes"/> <!--启用的帐户类型,如:个人,企业,VARCHAR(200)-->
+		<property name="halt"/> <!--是否停用,NUMERIC(1)-->
+		<!-- 参数列表 -->
+		<set name="parameters" table="payment_merchant_parameter" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="merchantId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.jeaf.payment.pojo.PaymentMerchantParameter" />
+		</set>
+	</class>
+	
+	<!--商户:参数-->
+	<class name="com.yuanluesoft.jeaf.payment.pojo.PaymentMerchantParameter" table="payment_merchant_parameter">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="merchantId"/> <!--商户ID,NUMERIC(20)-->
+		<property name="parameterName"/> <!--参数名称,VARCHAR(100)-->
+		<property name="parameterValue"/> <!--参数值,VARCHAR(1000)-->
+	</class>
+
+	<!--支付:支付记录-->
+	<class name="com.yuanluesoft.jeaf.payment.pojo.Payment" table="payment_payment">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="applicationName"/> <!--应用名称,VARCHAR(50)-->
+		<property name="applicationOrderId"/> <!--应用指定的订单ID,VARCHAR(50)-->
+		<property name="payerId"/> <!--支付人ID,VARCHAR(50)-->
+		<property name="payerName"/> <!--支付人姓名,VARCHAR(50)-->
+		<property name="paymentReason"/> <!--支付原因,VARCHAR(200)-->
+		<property name="money"/> <!--支付金额,NUMERIC(13,2)-->
+		<property name="providerId"/> <!--服务提供者ID,VARCHAR(50)-->
+		<property name="providerName"/> <!--服务提供者姓名,VARCHAR(50)-->
+		<property name="providerMoney"/> <!--服务提供者报酬,NUMERIC(13,2)-->
+		<property name="pageMode"/> <!--页面打开方式,dialog/对话框,popup/弹出页面,redirect/重定向,VARCHAR(20)-->
+		<property name="redirectOfSuccess"/> <!--支付完成跳转的URL,重定向方式时有效,VARCHAR(1000)-->
+		<property name="redirectOfFailed"/> <!--支付失败跳转的URL,重定向方式时有效,VARCHAR(1000)-->
+		<property name="paymentFrom"/> <!--打开支付页面的URL,VARCHAR(1000)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="payerIp"/> <!--支付人IP,VARCHAR(30)-->
+		<property name="merchantId"/> <!--商户ID,NUMERIC(20)-->
+		<property name="paymentMethod"/> <!--支付方式,如:光大银行,VARCHAR(50)-->
+		<property name="accountType"/> <!--支付帐户类型,如:个人,企业,VARCHAR(20)-->
+		<property name="lastQueryTime"/> <!--最后查询时间,timestamp null-->
+		<property name="transactSuccess"/> <!--支付是否成功,CHAR(1)-->
+		<property name="transactSn"/> <!--支付系统流水号,由支付方式决定,VARCHAR(50)-->
+		<property name="failedReason"/> <!--支付失败的原因,VARCHAR(1000)-->
+		<property name="transactTime"/> <!--支付完成时间,timestamp null-->
+		<property name="transactMoney"/> <!--实际交易金额,NUMERIC(13,2)-->
+		<property name="fee"/> <!--手续费,NUMERIC(13,2)-->
+		<property name="bankOrderId"/> <!--银行端订单ID,VARCHAR(100)-->
+		<property name="payerAccountName"/> <!--支付人账户名称,VARCHAR(200)-->
+		<property name="payerBank"/> <!--支付人开户行,VARCHAR(200)-->
+		<property name="payerAccount"/> <!--支付人账号,VARCHAR(200)-->
+	</class>
+</hibernate-mapping>

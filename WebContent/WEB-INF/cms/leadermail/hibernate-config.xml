@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--领导信箱:信息类型配置-->
+	<class name="com.yuanluesoft.cms.leadermail.pojo.LeaderMailType" table="cms_leader_mail_type">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="type"/> <!--类型-->
+		<property name="workingDay"/> <!--指定工作日-->
+		<property name="siteId"/> <!--绑定的站点ID-->
+	</class>
+	
+	<!--领导信箱:受理部门配置-->
+	<class name="com.yuanluesoft.cms.leadermail.pojo.LeaderMailDepartment" table="cms_leader_mail_dept">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="departments"/> <!--部门名称,VARCHAR(4000)-->
+		<property name="siteId"/> <!--绑定的站点ID,NUMERIC(20,0)-->
+	</class>
+</hibernate-mapping>

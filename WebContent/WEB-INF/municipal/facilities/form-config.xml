@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/event" class="com.yuanluesoft.municipal.facilities.forms.admin.FacilitiesEvent" title="市政设施监控案件" pojo="com.yuanluesoft.municipal.facilities.pojo.FacilitiesEvent">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="打印" execute="window.print()"/>
+			<action title="作废" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteEvent')"/>
+			<action title="立案" hide="workflow()" execute="FormUtils.doAction('runEvent', 'workflowAction=send')"/>
+			<action title="任务派遣" hide="workflow()" execute="FormUtils.doAction('runEvent', 'workflowAction=send')"/>
+			<!-- action title="PDA验证真实性" hide="workflow()" execute="pdaValidate()"/ -->
+			<!-- action title="PDA验证处理结果" hide="workflow()" execute="pdaValidate()"/ -->
+		</actions>
+	</form>
+	
+	<form name="admin/pdaUser" class="com.yuanluesoft.municipal.facilities.forms.admin.PdaUser" title="PDA使用者" pojo="com.yuanluesoft.municipal.facilities.pojo.PdaUser">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="登记下一个" hide="isOld()" execute="FormUtils.doAction('createNextPdaUser')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deletePdaUser')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/eventParameter" class="com.yuanluesoft.municipal.facilities.forms.admin.FacilitiesEventParameter" title="参数配置" pojo="com.yuanluesoft.municipal.facilities.pojo.FacilitiesEventParameter">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+</forms>

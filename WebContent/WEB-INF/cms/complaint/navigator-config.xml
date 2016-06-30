@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<application title="网上投诉">
+	<viewLink local="admin/todoComplaint" title="待办投诉"/>
+	<viewLink local="admin/inProcessComplaint" title="在办投诉"/>
+	<viewLink local="admin/completedComplaint" title="办结投诉"/>
+	<viewLink local="admin/allComplaint" title="所有投诉"/>
+	<viewLink local="admin/deleted" title="回收站"/>
+	<viewLink local="admin/complaintType" title="投诉类型"/>
+	<link title="办理流程" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/complaint&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/workflowSetting
+	</link>
+	<link title="办结短信格式" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/complaint&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/smsFormat
+	</link>
+</application>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--龙海市工贸行业标准化网上申报通过名单-->
+	<class name="com.yuanluesoft.credit.enterprisecredit.item.pojo.BigStandard" table="credit_bigstandard">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unit"/> <!-- 单位 -->
+		<property name="name"/><!-- 企业名称 -->
+		<property name="industry"/> <!-- 行业 -->
+		<property name="level"/> <!-- 拟达标等级 -->
+		<property name="situation"/> <!-- 进展情况 -->
+		<property name="bookNum"/> <!-- 证书编号 -->
+		<property name="usefulDate"/> <!-- 有效期 -->
+		<property name="remark"/> <!-- 备注 -->
+		
+		
+		
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+	</class>
+	
+	<!--龙海市安监局行政处罚情况统计-->
+	<class name="com.yuanluesoft.credit.enterprisecredit.item.pojo.Punish" table="credit_punish">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		
+		<property name="name"/> <!-- 案件名称 -->
+		<property name="unit"/><!-- 行政处罚单位或个人名称 -->
+		<property name="reason"/> <!-- 处罚事由 -->
+		<property name="person"/> <!-- 法定代表人（负责人）姓名 -->
+		<property name="code"/> <!-- 统一社会信用代码 -->
+		<property name="remark"/> <!-- 备注 -->
+		
+		
+		
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+	</class>
+	
+	<!--龙海市安监局行政许可情况统计-->
+	<class name="com.yuanluesoft.credit.enterprisecredit.item.pojo.Permit" table="credit_permit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		
+		<property name="permitNum"/> <!-- 许可证号 -->
+		<property name="unit"/><!--单位名称-->
+		<property name="range"/> <!-- 许可经营范围 -->
+		<property name="overTime"/> <!-- 办结时间 -->
+		<property name="usefulDate"/> <!-- 证书有效期 -->
+		<property name="remark"/> <!-- 备注 -->
+		
+		
+		
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+	</class>
+	
+	<!--龙海市安监局事故调查处理情况统计-->
+	<class name="com.yuanluesoft.credit.enterprisecredit.item.pojo.Handle" table="credit_handle">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!-- 案件名称 -->
+		<property name="unit"/><!--处罚单位或个人名称-->
+		<property name="reason"/> <!-- 案件事由 -->
+		<property name="person"/> <!-- 法定代表人（负责人）姓名 -->
+		<property name="bookAndCode"/> <!-- 处罚决定书及其文号 -->
+		<property name="remark"/> <!-- 备注 -->
+		
+		
+		
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+	</class>
+	
+	<!--龙海市小、微型企业标准化网上申报通过名单-->
+	<class name="com.yuanluesoft.credit.enterprisecredit.item.pojo.SmallStandard" table="credit_smallstandard">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		
+		<property name="unit"/> <!-- 单位名称 -->
+		<property name="industry"/><!--行业-->
+		<property name="level"/> <!-- 所属乡镇 -->
+		<property name="bookNum"/> <!-- 证书编号 -->
+		<property name="startDate"/> <!-- 达标日期 -->
+		<property name="usefulDate"/> <!-- 有效期 -->
+		<property name="mainUnit"/> <!-- 行业主管单位 -->
+		
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+	</class>
+	
+	<!--联系人-->
+	<class name="com.yuanluesoft.credit.enterprisecredit.item.pojo.LinkPerson" table="credit_linkperson">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="role"/> <!-- 角色 -->
+		<property name="name"/><!--姓名-->
+		<property name="job"/> <!-- 职务 -->
+		<property name="tel"/> <!-- 联系电话 -->
+		
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+	</class>
+	
+	
+	
+</hibernate-mapping>

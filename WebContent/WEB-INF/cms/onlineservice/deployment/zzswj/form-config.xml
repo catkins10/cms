@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="onlineServiceSearch" title="网上办事高级搜索" method="get" action="/cms/onlineservice/search.shtml">
+		<formFields>
+			<field title="搜索内容" name="searchContent" inputMode="radio">
+				<parameter name="itemsText">办事指南\0表格下载\0样表下载\0常见问题</parameter> <!-- 办事事项\0 -->
+				<parameter name="defaultValue">办事指南</parameter>
+			</field>
+			<field title="关键字" name="key"/>
+			<field name="itemTypes" title="行政职权类别" type="string[]" inputMode="multibox">
+				<parameter name="itemsText">全部\0行政许可\0非行政许可\0行政处罚\0行政确认\0行政征收\0行政强制\0行政裁决\0行政监督检查\0行政给付\0其他行政行为</parameter>
+			</field>
+			<field title="目录列表" name="directoryIds" type="number[]" inputMode="multibox">
+				<parameter name="itemsServiceName">onlineServiceDirectoryService</parameter>
+				<parameter name="itemsName">childDirectories</parameter>
+				<parameter name="itemsCacheable">false</parameter>
+				<parameter name="templateExtendURL">/cms/onlineservice/templatemanage/insertSearchDirectoryField.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			</field>
+			<field title="办事目录ID" name="directoryId" inputMode="hidden"/>
+			<field title="办事目录" name="directoryName" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/onlineservice/js/onlineservice.js</parameter>
+				<parameter name="execute">selectOnlineServiceDirectory(600, 400, false, 'directoryId{id},directoryName{name}', '', '', '', 'directory')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+
+	<form name="onlineServiceItemQuery" title="办理事项搜索" method="get" action="/cms/onlineservice/search.shtml?id={PARAMETER:id}&amp;siteId={PARAMETER:siteId}">
+		<formFields>
+			<field title="办理事项名称(已作废)" name="name"/>
+			<field title="办理事项名称" name="key"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="onlineServiceDownloadQuery" title="表格下载搜索" method="get" action="/cms/onlineservice/downloadSearch.shtml?siteId={PARAMETER:siteId}">
+		<formFields>
+			<field title="表格名称(已作废)" name="tableName"/>
+			<field title="表格名称" name="key"/>
+		</formFields>
+		<actions>
+			<action title="查询" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="onlineServiceExampleDownloadQuery" title="样表下载搜索" method="get" action="/cms/onlineservice/downloadSearch.shtml?exampleSearch=true&amp;siteId={PARAMETER:siteId}">
+		<formFields>
+			<field title="表格名称" name="key"/>
+		</formFields>
+		<actions>
+			<action title="查询" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="authoritySearch" title="行政职权搜索" method="get" action="/cms/onlineservice/authoritySearch.shtml?authorityItemType={PARAMETER:authorityItemType}&amp;authorityDirectoryId={PARAMETER:authorityDirectoryId}">
+		<formFields>
+			<field title="事项名称" name="key"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="admin/mainDirectory" class="com.yuanluesoft.cms.onlineservice.forms.admin.MainDirectory" title="主目录" pojo="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceMainDirectory">
+		<formFields>
+			<field title="上级目录" name="parentDirectoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/onlineservice/js/onlineservice.js</parameter>
+				<parameter name="execute">selectOnlineServiceDirectory(600, 400, false, 'parentDirectoryId{id},parentDirectoryName{name}', '', '', '', 'mainDirectory')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="添加下一个" hide="isOld()" execute="FormUtils.doAction('createNextMainDirectory')"/>
+			<action title="拷贝主目录" hide="isRead() or isNew()" execute="location.href='copyDirectory.shtml?fromDirectoryId={PARAMETER:id}'"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteMainDirectory')"/>
+		</actions>
+	</form>
+
+	<form name="admin/directory" class="com.yuanluesoft.cms.onlineservice.forms.admin.Directory" title="目录" pojo="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectory">
+		<formFields>
+			<field title="上级目录" name="parentDirectoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/onlineservice/js/onlineservice.js</parameter>
+				<parameter name="execute">selectOnlineServiceDirectory(600, 400, false, 'parentDirectoryId{id},parentDirectoryName{name}', '', '', '', 'mainDirectory,directory')</parameter>
+			</field>
+			<field name="itemSynchSiteNames" title="办理事项同步的网站栏目" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectSite(700, 400, true, 'itemSynchSiteIds{id},itemSynchSiteNames{name|名称|100%}', '', '', '', 'column')</parameter>
+			</field>
+			<field name="complaintSynchSiteNames" title="投诉同步的网站栏目" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectSite(700, 400, true, 'complaintSynchSiteIds{id},complaintSynchSiteNames{name|名称|100%}', '', '', '', 'column')</parameter>
+			</field>
+			<field name="consultSynchSiteNames" title="咨询同步的网站栏目" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectSite(700, 400, true, 'consultSynchSiteIds{id},consultSynchSiteNames{name|名称|100%}', '', '', '', 'column')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="添加下一个" hide="isOld()" execute="FormUtils.doAction('createNextDirectory')"/>
+			<action title="拷贝目录" hide="isRead() or isNew()" execute="location.href='copyDirectory.shtml?fromDirectoryId={PARAMETER:id}'"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteDirectory')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.onlineservice.forms.admin.CopyDirectory" title="目录拷贝">
+		<formFields>
+			<field title="目标目录名称" name="toDirectoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/onlineservice/js/onlineservice.js</parameter>
+				<parameter name="execute">selectOnlineServiceDirectory(600, 400, false, 'toDirectoryId{id},toDirectoryName{name}', '', '', ',', '{PARAMETER:toDirectoryTypes}')</parameter>
+			</field>
+		</formFields>
+	  	<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="拷贝" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/serviceItemCodeRule" class="com.yuanluesoft.cms.onlineservice.forms.admin.ServiceItemCodeRule" title="编号规则" pojo="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemCodeRule">
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteServiceItemCodeRule')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/serviceItem" class="com.yuanluesoft.cms.onlineservice.forms.admin.ServiceItem" title="办理事项" pojo="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem">
+		<formFields>
+			<!-- field name="workflowConfigTarget" title="当前需要配置的流程" type="string" inputMode="hidden"/-->
+			<field name="directoryId" title="所属目录ID" type="number" inputMode="hidden"/>
+			<field name="directoryName" title="所属目录" type="string" inputMode="select" required="true">
+				<parameter name="js">/cms/onlineservice/js/onlineservice.js"></parameter>
+				<parameter name="execute">selectOnlineServiceDirectory(640, 400, false, 'directoryId{id},directoryName{name}', '', '', '', 'directory', true)</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="otherDirectoryIds" title="所属其它目录ID" type="string" inputMode="hidden"/>
+			<field name="otherDirectoryNames" title="所属其它目录" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectOnlineServiceDirectory(640, 400, true, 'otherDirectoryIds{id},otherDirectoryNames{name|所属其它目录|100%}', '', '', '', 'directory', true)</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="serviceItemUnitIds" title="办理机构ID" type="string" inputMode="hidden"/>
+			<field name="serviceItemUnitNames" title="办理机构" type="string" inputMode="select">
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, true, 'serviceItemUnitIds{id},serviceItemUnitNames{name|办理机构|100%}', '', 'unit,unitDepartment')</parameter>
+				<!--parameter name="selectOnly">true</parameter-->
+			</field>
+			<field name="serviceItemTransactorIds" title="在线受理办理人ID" type="string" inputMode="hidden"/>
+			<field name="serviceItemTransactorNames" title="在线受理办理人" type="string" inputMode="select" >
+				<parameter name="execute">DialogUtils.selectUser(this, 600, 400, true, "serviceItemTransactorIds{id},serviceItemTransactorNames{name|办理人|100%}", '', '', '部门\0个人\0角色')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="serviceItemGuide" title="办理指南" type="component">
+				 <parameter name="class">com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemGuide</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="更新同名事项" hide="isRead()" execute="if(confirm('操作后所有同名的事项均同步更新，是否确定更新？'))FormUtils.doAction('updateSameNames')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteServiceItem')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/serviceItemFaq" class="com.yuanluesoft.cms.onlineservice.forms.admin.ServiceItemFaq" title="常见问题解答" pojo="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem">
+		<formFields>
+			<field name="faq" title="常见问题解答" type="component">
+				<parameter name="class">com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemFaq</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteServiceItemFaq')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/serviceItemMaterial" class="com.yuanluesoft.cms.onlineservice.forms.admin.ServiceItemMaterial" title="申报材料" pojo="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem">
+		<formFields>
+			<field name="material" title="申报材料" type="component">
+				<parameter name="class">com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemMaterial</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteServiceItemMaterial')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/serviceItemComplaint" class="com.yuanluesoft.cms.onlineservice.forms.admin.ServiceItemComplaint" title="投诉" pojo="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem">
+		<formFields>
+			<field name="complaint" title="投诉" type="component">
+				<parameter name="class">com.yuanluesoft.cms.onlineservice.interactive.complaint.pojo.OnlineServiceComplaint</parameter>
+			</field>
+			<field name="opinion" title="办理意见" type="component">
+				<parameter name="class">com.yuanluesoft.cms.publicservice.pojo.PublicServiceOpinion</parameter>
+			</field>
+			<field name="complaint.creatorTel" title="联系电话" type="string" length="100" inputMode="text"/>
+			<field name="complaint.creatorMail" title="邮箱" type="string" length="100" inputMode="text"/>
+			<field name="complaint.creatorCertificateName" title="证件名称" type="string" length="10" inputMode="text"/>
+			<field name="complaint.creatorIdentityCard" title="证件号码" type="string" length="30" inputMode="text"/>
+			<field name="complaint.creatorMobile" title="手机" type="string" length="100" inputMode="text"/>
+			<field name="complaint.creatorFax" title="传真" type="string" length="100" inputMode="text"/>
+			<field name="complaint.creatorUnit" title="所在单位" type="string" length="100" inputMode="text"/>
+			<field name="opinion.personName" title="意见填写人" type="string" length="100" inputMode="text"/>
+			<field name="opinion.created" title="意见填写时间" type="timestamp" length="100" inputMode="datetime"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteServiceItemComplaint')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/serviceItemCosult" class="com.yuanluesoft.cms.onlineservice.forms.admin.ServiceItemConsult" title="咨询" pojo="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem">
+		<formFields>
+			<field name="consult" title="咨询" type="component">
+				<parameter name="class">com.yuanluesoft.cms.onlineservice.interactive.consult.pojo.OnlineServiceConsult</parameter>
+			</field>
+			<field name="opinion" title="办理意见" type="component">
+				<parameter name="class">com.yuanluesoft.cms.publicservice.pojo.PublicServiceOpinion</parameter>
+			</field>
+			<field name="consult.creatorTel" title="联系电话" type="string" length="100" inputMode="text"/>
+			<field name="consult.creatorMail" title="邮箱" type="string" length="100" inputMode="text"/>
+			<field name="consult.creatorCertificateName" title="证件名称" type="string" length="10" inputMode="text"/>
+			<field name="consult.creatorIdentityCard" title="证件号码" type="string" length="30" inputMode="text"/>
+			<field name="consult.creatorMobile" title="手机" type="string" length="100" inputMode="text"/>
+			<field name="consult.creatorFax" title="传真" type="string" length="100" inputMode="text"/>
+			<field name="consult.creatorUnit" title="所在单位" type="string" length="100" inputMode="text"/>
+			<field name="opinion.personName" title="意见填写人" type="string" length="100" inputMode="text"/>
+			<field name="opinion.created" title="意见填写时间" type="timestamp" length="100" inputMode="datetime"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteServiceItemConsult')"/>
+		</actions>
+	</form>
+
+	<form name="admin/template" class="com.yuanluesoft.cms.onlineservice.forms.admin.Template" title="模板配置" pojo="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceTemplate"/>
+	
+	<form class="com.yuanluesoft.cms.onlineservice.forms.admin.ServiceItemView" title="办理事项视图">
+		<formFields>
+			<field name="directoryId" title="目录ID" type="number" inputMode="hidden"/>
+			<field name="importServiceItemIds" title="需要引入的办理事项ID列表" type="string" inputMode="hidden"/>
+			<field name="importServiceItemNames" title="需要引入的办理事项名称列表" type="string" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form name="admin/importItems" class="com.yuanluesoft.cms.onlineservice.forms.admin.ImportItems" title="上传办理事项或部门">
+		<formFields>
+			<field title="办理事项或部门数据" name="files" type="attachment" inputMode="attachment" length="2">
+				<parameter name="attachmentEditor">importItemsAttachmentEditor.shtml</parameter>
+				<parameter name="fileExtension">办理事项或部门数据(*.data)|department*.data;service*.data;materialItem*.data|</parameter>
+				<parameter name="simpleMode">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/importAuthority" class="com.yuanluesoft.cms.onlineservice.forms.admin.ImportAuthority" title="导入行政职权目录">
+		<formFields>
+			<field title="目录ID" name="directoryId" type="number" inputMode="hidden" length="20"/>
+			<field title="行政职权目录" name="files" type="attachment" inputMode="attachment" length="1">
+				<parameter name="attachmentEditor">importAuthorityAttachmentEditor.shtml</parameter>
+				<parameter name="fileExtension">行政职权目录(*.xls)|*.xls|</parameter>
+				<parameter name="simpleMode">true</parameter>
+			</field>
+			<field title="把SHEET作为目录" name="sheetAsDirectory" type="boolean" inputMode="radio">
+				<parameter name="itemsText">是|true\0不是|false</parameter>
+			</field>
+			<field name="otherDirectoryIds" title="导入到其他目录ID" length="1000"  type="string" inputMode="hidden"/>
+				<field name="otherDirectoryName" title="导入到其他目录" length="1000"  type="string" inputMode="select">
+				<parameter name="execute">selectOnlineServiceDirectory(600, 400, true, 'otherDirectoryIds{id},otherDirectoryName{name|目录名称|100%}', '', '', ',')</parameter>
+				<parameter name="js">/cms/onlineservice/js/onlineservice.js</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+
+	<form class="com.yuanluesoft.cms.onlineservice.forms.admin.InsertAuthorityDirectories" title="插入行政职权目录列表">
+		<formFields>
+			<field title="目录ID" name="directoryId" type="number" inputMode="hidden"/>
+			<field title="目录名称" name="directoryName" type="string" inputMode="select">
+				<parameter name="execute">selectOnlineServiceDirectory(500, 300, false, 'directoryId{id},directoryName{name}')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field title="显示“全部”" name="showAll" type="boolean" inputMode="radio">
+				<parameter name="itemsText">显示|yes\0不显示|no</parameter>
+				<parameter name="defaultValue">no</parameter>
+			</field>
+		</formFields>
+	</form>
+
+	<form class="com.yuanluesoft.cms.onlineservice.forms.admin.InsertAuthorityItems" title="插入行政职权列表">
+		<formFields>
+			<field title="目录ID" name="directoryId" type="number" inputMode="hidden"/>
+			<field title="目录名称" name="directoryName" type="string" inputMode="select">
+				<parameter name="execute">selectOnlineServiceDirectory(500, 300, false, 'directoryId{id},directoryName{name}')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+	</form>
+
+	<form class="com.yuanluesoft.cms.onlineservice.forms.admin.InsertAuthorityTypes" title="插入行政职权类别">
+		<formFields>
+			<field title="显示“全部”" name="showAll" type="boolean" inputMode="radio">
+				<parameter name="itemsText">显示|yes\0不显示|no</parameter>
+				<parameter name="defaultValue">no</parameter>
+			</field>
+		</formFields>
+	</form>
+
+	<form class="com.yuanluesoft.cms.onlineservice.forms.admin.InsertDirectories" title="插入网上办事目录">
+		<formFields>
+			<field title="上级目录类型" name="directorySelect" type="string" inputMode="radio">
+				<parameter name="itemsText">当前目录|current\0指定目录|other</parameter>
+				<parameter name="defaultValue">current</parameter>
+			</field>
+			<field title="目录ID" name="directoryId" type="number" inputMode="hidden"/>
+			<field title="目录名称" name="directoryName" type="string" inputMode="select">
+				<parameter name="execute">selectOnlineServiceDirectory(500, 300, false, 'directoryId{id},directoryName{name}')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field title="目录类别" name="directoryType" type="string" inputMode="radio">
+				<parameter name="itemsText">子目录|child\0父目录|parent\0兄弟目录|sibling</parameter>
+				<parameter name="defaultValue">child</parameter>
+			</field>
+		</formFields>
+	</form>
+
+	<form class="com.yuanluesoft.cms.onlineservice.forms.admin.InsertServiceItems" title="插入办理事项列表">
+		<formFields>
+			<field title="上级目录类型" name="directorySelect" type="string" inputMode="radio">
+				<parameter name="itemsText">当前目录|current\0指定目录|other</parameter>
+				<parameter name="defaultValue">current</parameter>
+			</field>
+			<field title="目录ID" name="directoryId" type="number" inputMode="hidden"/>
+			<field title="目录名称" name="directoryName" type="string" inputMode="select">
+				<parameter name="execute">selectOnlineServiceDirectory(500, 300, false, 'directoryId{id},directoryName{name}')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.onlineservice.forms.admin.InsertInteractiveForm" title="插入办理互动表单">
+		<formFields>
+			<field title="目录ID" name="directoryId" type="number" inputMode="hidden"/>
+			<field title="目录名称" name="directoryName" type="string" inputMode="select">
+				<parameter name="js">/cms/onlineservice/js/onlineservice.js</parameter>
+				<parameter name="execute">selectOnlineServiceDirectory(500, 300, false, 'directoryId{id},directoryName{name}')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.onlineservice.forms.admin.InsertDirectoryLink" title="插入网上办事目录链接">
+		<formFields>
+			<field title="目录ID" name="directoryId" type="string" inputMode="hidden"/>
+			<field title="目录名称" name="directoryName" type="string" inputMode="select">
+				<parameter name="js">/cms/onlineservice/js/onlineservice.js</parameter>
+				<parameter name="execute">selectOnlineServiceDirectory(500, 300, false, 'directoryId{id},directoryName{name}')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.onlineservice.forms.admin.InsertAuthorityDirectoryLink" title="插入职权目录链接">
+		<formFields>
+			<field title="事项类型" name="itemType" type="string" inputMode="select">
+				<parameter name="js">/cms/onlineservice/js/onlineservice.js</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectItemType("事项类型", 600, 360, true, "itemType{title},itemType{title|类型|100%}", "", ",")</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.onlineservice.forms.admin.InsertLocation" title="插入网上办事目录位置">
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.onlineservice.forms.admin.InsertSearchDirectoryField" title="插入搜索目录字段">
+		<formFields>
+			<field title="上级目录ID" name="parentDirectoryIds" type="string" inputMode="hidden"/>
+			<field title="上级目录" name="parentDirectoryNames" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/onlineservice/js/onlineservice.js</parameter>
+				<parameter name="execute">selectOnlineServiceDirectory(600, 400, true, 'parentDirectoryIds{id},parentDirectoryNames{name|上级目录|100%}')</parameter>
+			</field>
+		</formFields>
+	</form>
+</forms>

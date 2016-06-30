@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="作文" class="com.yuanluesoft.composition.pojo.Composition">
+		<field name="title" title="标题" length="100" type="string" inputMode="text"></field>
+		<field name="writer" title="作者" length="50" type="string" inputMode="readonly"></field>
+		<field name="comType" title="所属类型" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsText">应用文|应用文\0说明文|说明文\0抒情文|抒情文\0记叙文|记叙文\0议论文|议论文</parameter>
+		</field>
+<!-- 	<field name="correctId" title="批改人id" length="20" type="number" inputMode="hidden"></field> -->	
+		<field name="correctName" title="批改人" length="100" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(500, 330, false, 'correctName{name}')</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment"/>
+		<field name="content" title="正文" type="html" inputMode="htmleditor">
+			<parameter name="height">260</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment"/>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">1000000</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment"/>
+	</businessObject>
+</businessObjects>

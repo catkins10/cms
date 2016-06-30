@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="广告位" class="com.yuanluesoft.cms.advert.pojo.AdvertSpace" businessServiceName="advertService">
+		<field name="siteId" title="站点ID" length="20" type="number" inputMode="hidden"/>
+		<field name="name" title="名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="isFloat" title="是否浮动广告" length="1" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">浮动|1\0固定位置|0</parameter>
+		</field>
+		<field name="freeContent" title="无广告时显示内容" type="html" inputMode="htmleditor">
+			<parameter name="attachmentSelector">/cms/advert/admin/selectAdvertSpaceAttachment.shtml</parameter>
+			<parameter name="height">300</parameter>
+			<parameter name="centerImage">false</parameter>
+			<parameter name="plugins">/cms/inquiry/editorplugins/plugin.js,/cms/advert/editorplugins/plugin.js,/cms/templatemanage/editorplugins/plugin.js</parameter>
+			<parameter name="commands">
+				cut,copy,paste,|,undo,redo,-,selectAll,removeFormat,|,insertOrderedList,insertUnorderedList,-,outdent,indent,|,
+				justifyLeft,justifyCenter,justifyRight,justifyFull,|,image,flash,inquiry,link,unlink,table,|,
+				fontName,fontSize,-,Bold,italic,underline,strikeThrough,-,textColor,bgColor;
+				advertAction,form,recordList,templateLink,|,location,weather,date,user,|,tabstrip,navigator,|,source,editElementHtml
+			</parameter>
+		</field>
+		<field name="width" title="宽度" length="10" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="height" title="高度" length="10" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="price" title="参考单价" length="300" type="string" inputMode="text"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none"/>
+		<field name="adverts" title="广告" type="components">
+			<parameter name="class">com.yuanluesoft.cms.advert.pojo.Advert</parameter>
+		</field>
+		<field name="putPages" title="投放页面" type="components">
+			<parameter name="class">com.yuanluesoft.cms.advert.pojo.AdvertPutPage</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="serviceName">siteImageService</parameter>
+		</field>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="fileExtension">FLASH文件|*.swf|</parameter>
+			<parameter name="maxUploadSize">1000000</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">500000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+			<parameter name="serviceName">siteVideoService</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="浮动广告投放页面" class="com.yuanluesoft.cms.advert.pojo.AdvertPutPage" businessServiceName="advertService">
+		<field name="spaceId" title="广告位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="siteIds" title="站点/栏目ID" length="4000" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="siteNames" title="站点/栏目名称" length="4000" required="true" type="string" inputMode="select">
+			<parameter name="execute">selectSite(600, 400, true, 'putPage.siteIds{id},putPage.siteNames{fullName/site|站点/栏目|100%}', '', '', '', 'site,column')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+		</field>
+		<field name="containChildSite" title="是否含子站/子栏目" length="1" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">不含子站和子栏目|0\0含子站和子栏目|1\0仅含子栏目|2</parameter>
+		</field>
+		<field name="pageNames" title="页面名称" length="4000" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="pageTitles" title="页面标题" length="4000" type="string" inputMode="select">
+			<parameter name="execute">selectPage(600, 400, true, 'putPage.pageNames{id},putPage.pageTitles{fullName/application|页面|100%}', '', '', false, 0, false, 0, true)</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+		</field>
+		<field name="clientTypes" title="客户端类型" length="100" type="string" inputMode="none"/>
+		<field name="clientTypeArray" title="客户端类型" persistence="false" required="true" type="string[]" inputMode="multibox">
+			<parameter name="referenceFields">clientTypes</parameter>
+			<parameter name="itemsText">电脑|computer\0手机|phone\0微信|wechat</parameter>
+		</field>
+		<field name="mode" title="投放方式" length="1" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">飘动|fly\0窗口左上角|windowLeftTop\0窗口右上角|windowRightTop\0窗口右下角|windowRightBottom\0窗口左下角|windowLeftBottom\0页面左上角|pageLeftTop\0页面右上角|pageRightTop\0页面右下角|pageRightBottom\0页面左下角|pageLeftBottom\0页面顶部(居中)|pageTop\0页面底部(居中)|pageBottom\0窗口中部|windowCenter\0窗口上方(左右对称)|windowTopBalance\0窗口下方(左右对称)|windowBottomBalance\0页面上方(左右对称)|pageTopBalance\0页面下方(左右对称)|pageBottomBalance</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="onchange">onModeChanged()</parameter>
+		</field>
+		<field name="x" title="水平边距" length="5" type="number" inputMode="text"/>
+		<field name="y" title="垂直边距" length="5" type="number" inputMode="text"/>
+		<field name="speed" title="移动速度" length="4,2" type="number" inputMode="dropdown">
+			<parameter name="itemsText">10\0 5\0 3\0 2\0 1\0 0.5\0 0.2\0 0.1</parameter>
+		</field>
+		<field name="displaySeconds" title="显示时长" length="3" type="number" inputMode="text"/>
+		<field name="loadMode" title="加载方式" length="1" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">直接加载|0\0从下至上移动|1\0从上至下移动|2\0从左至右移动|3\0从右至左移动|4</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="hideMode" title="隐藏方式" length="1" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">直接关闭|0\0从上至下移动|1\0从下至上移动|2\0从右至左移动|3\0从左至右移动|4</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="广告客户" class="com.yuanluesoft.cms.advert.pojo.AdvertCustomer" businessServiceName="advertService">
+		<field name="siteId" title="站点ID" length="20" type="number" inputMode="hidden"/>
+		<field name="name" title="名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="linkman" title="联系人" length="60" type="string" inputMode="text"/>
+		<field name="tel" title="联系电话" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="account" title="账户余额" length="16,2" type="number" inputMode="text"/>
+		<field name="lastTopupTime" title="最后充值时间" type="timestamp" inputMode="datetime"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none"/>
+		<field name="adverts" title="广告" type="components">
+			<parameter name="class">com.yuanluesoft.cms.advert.pojo.Advert</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="广告" class="com.yuanluesoft.cms.advert.pojo.Advert" businessServiceName="advertService">
+		<field name="siteId" title="站点ID" length="20" type="number" inputMode="hidden"/>
+		<field name="spaceId" title="广告位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="spaceName" title="广告位名称" length="100" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.openSelectDialog('cms/advert', 'selectAdvertSpace', 600, 360, false, 'spaceId{id},spaceName{name},width{width},height{height}', '', '', '', '', false, 'siteId={PARAMETER:siteId}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="customerId" title="广告客户ID" length="20" type="number" inputMode="hidden"/>
+		<field name="customerName" title="广告客户名称" length="200" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsHql">select AdvertCustomer.name, AdvertCustomer.id from AdvertCustomer AdvertCustomer where AdvertCustomer.siteId={PARAMETER:siteId}</parameter>
+			<parameter name="valueField">customerId</parameter>
+		</field>
+		<field name="name" title="名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="content" title="广告内容HTML" required="true" type="html" inputMode="htmleditor">
+			<parameter name="height">200</parameter>
+			<parameter name="attachmentSelector">/cms/advert/admin/selectAdvertAttachment.shtml</parameter>
+			<parameter name="centerImage">false</parameter>
+			<parameter name="plugins">/cms/inquiry/editorplugins/plugin.js,/cms/advert/editorplugins/plugin.js,/cms/templatemanage/editorplugins/plugin.js</parameter>
+			<parameter name="commands">
+				cut,copy,paste,|,undo,redo,-,selectAll,removeFormat,|,insertOrderedList,insertUnorderedList,-,outdent,indent,|,
+				justifyLeft,justifyCenter,justifyRight,justifyFull,|,image,flash,inquiry,link,unlink,table,|,
+				fontName,fontSize,-,Bold,italic,underline,strikeThrough,-,textColor,bgColor;
+				advertAction,form,recordList,templateLink,|,location,weather,date,user,|,tabstrip,navigator,|,source,editElementHtml
+			</parameter>
+		</field>
+		<field name="minimizeContent" title="最小化时HTML" type="html" inputMode="htmleditor">
+			<parameter name="height">200</parameter>
+			<parameter name="attachmentSelector">/cms/advert/admin/selectAdvertAttachment.shtml</parameter>
+			<parameter name="centerImage">false</parameter>
+			<parameter name="plugins">/cms/inquiry/editorplugins/plugin.js,/cms/advert/editorplugins/plugin.js,/cms/templatemanage/editorplugins/plugin.js</parameter>
+			<parameter name="commands">
+				cut,copy,paste,|,undo,redo,-,selectAll,removeFormat,|,insertOrderedList,insertUnorderedList,-,outdent,indent,|,
+				justifyLeft,justifyCenter,justifyRight,justifyFull,|,image,flash,inquiry,link,unlink,table,|,
+				fontName,fontSize,-,Bold,italic,underline,strikeThrough,-,textColor,bgColor;
+				advertAction,form,recordList,templateLink,|,location,weather,date,user,|,tabstrip,navigator,|,source,editElementHtml
+			</parameter>
+		</field>
+		<field name="width" title="宽度" length="10" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="height" title="高度" length="10" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="minimizeWidth" title="最小化时宽度" length="10" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="minimizeHeight" title="最小化时高度" length="10" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="href" title="链接" length="1000" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none"/>
+		<field name="puts" title="广告投放" type="components">
+			<parameter name="class">com.yuanluesoft.cms.advert.pojo.AdvertPut</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="serviceName">siteImageService</parameter>
+		</field>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="fileExtension">FLASH文件|*.swf|</parameter>
+			<parameter name="maxUploadSize">1000000</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">500000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+			<parameter name="serviceName">siteVideoService</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="广告投放" class="com.yuanluesoft.cms.advert.pojo.AdvertPut" businessServiceName="advertService">
+		<field name="advertId" title="广告ID" length="20" type="number" inputMode="hidden"/>
+		<field name="siteId" title="站点ID" length="20" type="number" inputMode="hidden"/>
+		<field name="advertName" title="广告名称" length="200" type="string" inputMode="readonly"/>
+		<field name="spaceName" title="广告位名称" length="200" type="string" inputMode="readonly"/>
+		<field name="customerName" title="客户名称" length="200" type="string" inputMode="readonly"/>
+		<field name="beginTime" title="投放开始时间" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="endTime" title="投放结束时间" type="timestamp" inputMode="datetime"/>
+		<field name="factEndTime" title="实际结束时间" type="timestamp" inputMode="readonly"/>
+		<field name="end" title="实际结束时间" persistence="false" type="timestamp" inputMode="readonly">
+			<parameter name="referenceFields">endTime,factEndTime</parameter>
+		</field>
+		<field name="price" title="价格" length="10,2" type="number" inputMode="text"/>
+		<field name="accessTimes" title="点击次数" length="10" type="number" inputMode="readonly"/>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly"/>
+		<field name="creator" title="登记人" length="30" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="登记人ID" length="20" type="number" inputMode="none"/>
+		<field name="putError" title="投放错误" type="string" inputMode="readonly"/>
+		<field name="quotedPrice" title="报价说明" type="string" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

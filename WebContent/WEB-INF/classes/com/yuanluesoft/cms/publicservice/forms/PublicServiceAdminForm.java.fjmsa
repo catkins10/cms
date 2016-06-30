@@ -1,0 +1,430 @@
+package com.yuanluesoft.cms.publicservice.forms;
+
+import com.yuanluesoft.jeaf.security.model.RecordVisitorList;
+import com.yuanluesoft.jeaf.workflow.form.WorkflowForm;
+import java.sql.Timestamp;
+import java.util.Set;
+
+public class PublicServiceAdminForm extends WorkflowForm
+{
+  private String sn;
+  private String queryPassword;
+  private String subject;
+  private String content;
+  private int workingDay;
+  private String creator;
+  private Timestamp created;
+  private String creatorTel;
+  private String creatorMail;
+  private char creatorSex = 'M';
+  private String creatorCertificateName;
+  private String creatorIdentityCard;
+  private String creatorIP;
+  private String creatorMobile;
+  private String creatorFax;
+  private String creatorUnit;
+  private String creatorJob;
+  private String creatorAddress;
+  private String creatorPostalcode;
+  private String workflowInstanceId;
+  private char isPublic = '0';
+  private String remark;
+  private long siteId;
+  private Set workItems;
+  private Set opinions;
+  private char publicPass = '0';
+  private char publicBody = '0';
+  private char publicWorkflow = '0';
+  private String publicSubject;
+	private Timestamp publicEnd; //公开截止时间
+	private String publicPersonName; //公开经办人
+	private long publicPersonId; //公开经办人ID
+
+  private int isDeleted = 0;
+  private Timestamp workingDate;
+  private boolean isAlwaysPublishAll;
+  private RecordVisitorList readers = new RecordVisitorList();
+  private String siteName;
+
+  public String getContent()
+  {
+    return this.content;
+  }
+
+  public void setContent(String content)
+  {
+    this.content = content;
+  }
+
+  public Timestamp getCreated()
+  {
+    return this.created;
+  }
+
+  public void setCreated(Timestamp created)
+  {
+    this.created = created;
+  }
+
+  public String getCreator()
+  {
+    return this.creator;
+  }
+
+  public void setCreator(String creator)
+  {
+    this.creator = creator;
+  }
+
+  public String getCreatorFax()
+  {
+    return this.creatorFax;
+  }
+
+  public void setCreatorFax(String creatorFax)
+  {
+    this.creatorFax = creatorFax;
+  }
+
+  public String getCreatorIdentityCard()
+  {
+    return this.creatorIdentityCard;
+  }
+
+  public void setCreatorIdentityCard(String creatorIdentityCard)
+  {
+    this.creatorIdentityCard = creatorIdentityCard;
+  }
+
+  public String getCreatorIP()
+  {
+    return this.creatorIP;
+  }
+
+  public void setCreatorIP(String creatorIP)
+  {
+    this.creatorIP = creatorIP;
+  }
+
+  public String getCreatorJob()
+  {
+    return this.creatorJob;
+  }
+
+  public void setCreatorJob(String creatorJob)
+  {
+    this.creatorJob = creatorJob;
+  }
+
+  public String getCreatorMail()
+  {
+    return this.creatorMail;
+  }
+
+  public void setCreatorMail(String creatorMail)
+  {
+    this.creatorMail = creatorMail;
+  }
+
+  public String getCreatorMobile()
+  {
+    return this.creatorMobile;
+  }
+
+  public void setCreatorMobile(String creatorMobile)
+  {
+    this.creatorMobile = creatorMobile;
+  }
+
+  public String getCreatorTel()
+  {
+    return this.creatorTel;
+  }
+
+  public void setCreatorTel(String creatorTel)
+  {
+    this.creatorTel = creatorTel;
+  }
+
+  public String getCreatorUnit()
+  {
+    return this.creatorUnit;
+  }
+
+  public void setCreatorUnit(String creatorUnit)
+  {
+    this.creatorUnit = creatorUnit;
+  }
+
+  public char getIsPublic()
+  {
+    return this.isPublic;
+  }
+
+  public void setIsPublic(char isPublic)
+  {
+    this.isPublic = isPublic;
+  }
+
+  public Set getOpinions()
+  {
+    return this.opinions;
+  }
+
+  public void setOpinions(Set opinions)
+  {
+    this.opinions = opinions;
+  }
+
+  public String getQueryPassword()
+  {
+    return this.queryPassword;
+  }
+
+  public void setQueryPassword(String queryPassword)
+  {
+    this.queryPassword = queryPassword;
+  }
+
+  public String getRemark()
+  {
+    return this.remark;
+  }
+
+  public void setRemark(String remark)
+  {
+    this.remark = remark;
+  }
+
+  public String getSn()
+  {
+    return this.sn;
+  }
+
+  public void setSn(String sn)
+  {
+    this.sn = sn;
+  }
+
+  public String getSubject()
+  {
+    return this.subject;
+  }
+
+  public void setSubject(String subject)
+  {
+    this.subject = subject;
+  }
+
+  public String getWorkflowInstanceId()
+  {
+    return this.workflowInstanceId;
+  }
+
+  public void setWorkflowInstanceId(String workflowInstanceId)
+  {
+    this.workflowInstanceId = workflowInstanceId;
+  }
+
+  public int getWorkingDay()
+  {
+    return this.workingDay;
+  }
+
+  public void setWorkingDay(int workingDay)
+  {
+    this.workingDay = workingDay;
+  }
+
+  public Set getWorkItems()
+  {
+    return this.workItems;
+  }
+
+  public void setWorkItems(Set workItems)
+  {
+    this.workItems = workItems;
+  }
+
+  public char getCreatorSex()
+  {
+    return this.creatorSex;
+  }
+
+  public void setCreatorSex(char creatorSex)
+  {
+    this.creatorSex = creatorSex;
+  }
+
+  public String getCreatorAddress()
+  {
+    return this.creatorAddress;
+  }
+
+  public void setCreatorAddress(String creatorAddress)
+  {
+    this.creatorAddress = creatorAddress;
+  }
+
+  public String getCreatorPostalcode()
+  {
+    return this.creatorPostalcode;
+  }
+
+  public void setCreatorPostalcode(String creatorPostalcode)
+  {
+    this.creatorPostalcode = creatorPostalcode;
+  }
+
+  public String getCreatorCertificateName()
+  {
+    return this.creatorCertificateName;
+  }
+
+  public void setCreatorCertificateName(String creatorCertificateName)
+  {
+    this.creatorCertificateName = creatorCertificateName;
+  }
+
+  public long getSiteId()
+  {
+    return this.siteId;
+  }
+
+  public void setSiteId(long siteId)
+  {
+    this.siteId = siteId;
+  }
+
+  public char getPublicBody()
+  {
+    return this.publicBody;
+  }
+
+  public void setPublicBody(char publicBody)
+  {
+    this.publicBody = publicBody;
+  }
+
+  public char getPublicPass()
+  {
+    return this.publicPass;
+  }
+
+  public void setPublicPass(char publicPass)
+  {
+    this.publicPass = publicPass;
+  }
+
+  public char getPublicWorkflow()
+  {
+    return this.publicWorkflow;
+  }
+
+  public void setPublicWorkflow(char publicWorkflow)
+  {
+    this.publicWorkflow = publicWorkflow;
+  }
+
+  public String getPublicSubject()
+  {
+    return this.publicSubject;
+  }
+
+  public void setPublicSubject(String publicSubject)
+  {
+    this.publicSubject = publicSubject;
+  }
+
+  public boolean isAlwaysPublishAll()
+  {
+    return this.isAlwaysPublishAll;
+  }
+
+  public void setAlwaysPublishAll(boolean isAlwaysPublishAll)
+  {
+    this.isAlwaysPublishAll = isAlwaysPublishAll;
+  }
+
+  public Timestamp getWorkingDate()
+  {
+    return this.workingDate;
+  }
+
+  public void setWorkingDate(Timestamp workingDate)
+  {
+    this.workingDate = workingDate;
+  }
+
+  public RecordVisitorList getReaders()
+  {
+    return this.readers;
+  }
+
+  public void setReaders(RecordVisitorList readers)
+  {
+    this.readers = readers;
+  }
+
+  public String getSiteName()
+  {
+    return this.siteName;
+  }
+
+  public void setSiteName(String siteName)
+  {
+    this.siteName = siteName;
+  }
+
+  public int getIsDeleted()
+  {
+    return this.isDeleted;
+  }
+
+  public void setIsDeleted(int isDeleted)
+  {
+    this.isDeleted = isDeleted;
+  }
+
+/**
+ * @return the publicEnd
+ */
+public Timestamp getPublicEnd() {
+	return publicEnd;
+}
+
+/**
+ * @param publicEnd the publicEnd to set
+ */
+public void setPublicEnd(Timestamp publicEnd) {
+	this.publicEnd = publicEnd;
+}
+
+/**
+ * @return the publicPersonId
+ */
+public long getPublicPersonId() {
+	return publicPersonId;
+}
+
+/**
+ * @param publicPersonId the publicPersonId to set
+ */
+public void setPublicPersonId(long publicPersonId) {
+	this.publicPersonId = publicPersonId;
+}
+
+/**
+ * @return the publicPersonName
+ */
+public String getPublicPersonName() {
+	return publicPersonName;
+}
+
+/**
+ * @param publicPersonName the publicPersonName to set
+ */
+public void setPublicPersonName(String publicPersonName) {
+	this.publicPersonName = publicPersonName;
+}
+}

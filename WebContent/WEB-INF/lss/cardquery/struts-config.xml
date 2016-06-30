@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminImportData" type="com.yuanluesoft.lss.cardquery.forms.admin.ImportData"/>
+  <form-bean name="adminconfig" type="com.yuanluesoft.lss.cardquery.forms.admin.CardQueryConfig"/>
+  <form-bean name="adminCardQuery" type="com.yuanluesoft.lss.cardquery.forms.admin.CardQuery"/>
+  <form-bean name="applicationView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/> 
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+ <!-- 数据导入 -->
+  <action name="adminImportData" path="/admin/importData"
+   scope="request"
+   type="com.yuanluesoft.lss.cardquery.actions.admin.importdata.admin.Load" validate="false">
+   <forward name="load" path="/admin/importData.jsp"/>
+  </action>
+  <action input="/admin/importData.jsp" name="adminImportData"
+   path="/admin/doImportData" scope="request"
+   type="com.yuanluesoft.lss.cardquery.actions.admin.importdata.admin.DoImport" validate="false"/>
+  <action name="adminImportData" path="/admin/attachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.lss.cardquery.actions.admin.importdata.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <!-- 社保卡查询 -->
+  <action name="adminCardQuery" path="/admin/cardQuery" scope="request" validate="false"
+   type="com.yuanluesoft.lss.cardquery.actions.admin.cardquery.Load" >
+     <forward name="load" path="/admin/cardQuery.jsp"/>
+  </action>
+  
+  <action name="adminCardQuery" path="/admin/saveCardQuery" scope="request" validate="false" input="/admin/cardQuery.jsp"
+   type="com.yuanluesoft.lss.cardquery.actions.admin.cardquery.Save" />
+
+  <action name="adminCardQuery" path="/admin/deleteCardQuery" scope="request" validate="false" input="/admin/cardQuery.jsp"
+   type="com.yuanluesoft.lss.cardquery.actions.admin.cardquery.Delete" />
+ <!-- 参数配置 -->
+   <action name="adminconfig" path="/admin/config" scope="request" validate="false"
+   type="com.yuanluesoft.lss.cardquery.actions.admin.config.Load" >
+     <forward name="load" path="/admin/config.jsp"/>
+  </action>
+  
+  <action name="adminconfig" path="/admin/saveConfig" scope="request" validate="false" input="/admin/config.jsp"
+   type="com.yuanluesoft.lss.cardquery.actions.admin.config.Save" />
+
+  <action name="adminconfig" path="/admin/deleteConfig" scope="request" validate="false" input="/admin/config.jsp"
+   type="com.yuanluesoft.lss.cardquery.actions.admin.config.Delete" />
+   
+  <!-- 前台社保卡办卡详情 -->
+  <action  path="/cardQueryDetail" scope="request" validate="false"
+   type="com.yuanluesoft.lss.cardquery.page.action.Load" />
+   <!-- 批量操作 -->
+   <action input="/../../jeaf/application/applicationView.jsp"
+   name="applicationView" path="/batchOperate" scope="request"
+   type="com.yuanluesoft.lss.cardquery.actions.admin.batchoperate.BatchOperate" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

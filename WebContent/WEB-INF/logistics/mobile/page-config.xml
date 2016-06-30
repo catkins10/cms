@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="main" title="客户端主页" systemLink="false">
+			<link title="空车" url="/logistics/mobile/supplyQuery.shtml?mobileNumber={PARAMETER:mobileNumber}&amp;empty=true&amp;seq={RANDOMNUMBER}"/>
+			<link title="重车" url="/logistics/mobile/supplyQuery.shtml?mobileNumber={PARAMETER:mobileNumber}&amp;empty=false&amp;seq={RANDOMNUMBER}"/>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		<page name="supplyQuery" title="货源查询" systemLink="false" searchPage="true" searchResults="mobileSupplies">
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		<page name="supply" title="货源详情" recordClass="com.yuanluesoft.logistics.supply.pojo.LogisticsSupply" url="/logistics/mobile/supply.shtml" systemLink="false">
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		<page name="authentication" title="身份验证" systemLink="false">
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+	</pages>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="mobileSupplies" processor="mobileSuppliesProcessor"/> <!-- 手机端货源列表处理器 -->
+	</pageElements>
+</application>

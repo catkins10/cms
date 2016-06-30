@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="beauty" type="com.yuanluesoft.qualification.beauty.forms.Beauty"/>
+  <form-bean name="beautyImportData" type="com.yuanluesoft.qualification.beauty.forms.ImportDateExcel"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="beauty" path="/beauty" scope="request"
+   type="com.yuanluesoft.qualification.beauty.actions.Load" validate="false">
+   <forward name="load" path="/beauty.jsp"/>
+  </action>
+  <action input="/beauty.jsp" name="beauty" path="/saveBeauty" scope="request"
+   type="com.yuanluesoft.qualification.beauty.actions.Save" validate="false"/>
+  <action input="/beauty.jsp" name="beauty" path="/deleteBeauty"
+   scope="request" type="com.yuanluesoft.qualification.beauty.actions.Delete" validate="false"/>
+   
+  <!-- 附件选择处理。页面的data标签加载时跳转该path调用相应action处理附件页面 -->
+  <action name="beautyImportData" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.qualification.beauty.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <!-- excel数据导入页面加载 -->
+   <action name="beautyImportData" path="/beautyImportData" scope="request" validate="false"
+   type="com.yuanluesoft.qualification.beauty.actions.excelimport.Load">
+   <forward name="load" path="/importData.jsp"/>
+   </action>
+   
+   <action name="beautyImportData" path="/doImportData" scope="request" validate="false" input="/importData.jsp"
+   type="com.yuanluesoft.qualification.beauty.actions.excelimport.DoImportData"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

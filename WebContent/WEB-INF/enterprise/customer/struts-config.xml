@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="customer" type="com.yuanluesoft.enterprise.customer.forms.Customer"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="customer" path="/customer" scope="request"
+   type="com.yuanluesoft.enterprise.customer.actions.customer.Load" validate="false">
+   <forward name="load" path="/customer.jsp"/>
+  </action>
+  <action input="/customer.jsp" name="customer" path="/saveCustomer"
+   scope="request"
+   type="com.yuanluesoft.enterprise.customer.actions.customer.Save" validate="false"/>
+  <action input="/customer.jsp" name="customer" path="/deleteCustomer"
+   scope="request"
+   type="com.yuanluesoft.enterprise.customer.actions.customer.Delete" validate="false"/>
+  <action name="customer" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.enterprise.customer.actions.customer.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

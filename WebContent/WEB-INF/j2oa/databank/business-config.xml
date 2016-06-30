@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="目录" class="com.yuanluesoft.j2oa.databank.pojo.DatabankDirectory" businessServiceName="databankDirectoryService">
+		<field name="directoryName" title="目录名称" length="50" required="true" type="string" inputMode="text"/>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="资料" class="com.yuanluesoft.j2oa.databank.pojo.DatabankData" businessServiceName="databankDataService">
+		<field name="subject" title="标题" length="200" required="true" type="string" inputMode="text"/>
+		<field name="docmark" title="文件字号" length="80" type="string" inputMode="text"/>
+		<field name="dataType" title="文件类型" length="30" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">documentService</parameter>
+		</field>
+		<field name="secureLevel" title="密级" length="15" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">documentService</parameter>
+		</field>
+		<field name="fromUnit" title="成文单位" length="200" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(500, 300, false, 'fromUnit{name}', 'unit')</parameter>
+		</field>
+		<field name="generateDate" title="成文日期" type="date" inputMode="date"/>
+		<field name="creator" title="创建人" length="50" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="附注" length="250" type="string" inputMode="text"/>
+		<field name="body" title="正文" type="html" inputMode="htmleditor">
+			<parameter name="height">260</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment"/>
+		<field name="images" title="图片" type="image" inputMode="attachment"/>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">1000000</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment"/>
+		<field name="visitors" title="访问者" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.databank.pojo.DatabankDataPrivilege</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.j2oa.addresslist.forms.AddressListForm" title="通讯录" pojo="com.yuanluesoft.j2oa.addresslist.pojo.AddressList">
+		<formFields>
+			<field title="是否公共通讯录" name="common" type="string" inputMode="hidden"/>
+			<field title="来往记录ID" name="logId" type="number" inputMode="hidden"/>
+			<field title="来往时间" name="logTime" type="date" inputMode="date"/>
+			<field title="来往描述" name="logContent" type="string" inputMode="textarea">
+				<parameter name="rows">6</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteAddressList')"/>
+		</actions>
+	</form>
+</forms>

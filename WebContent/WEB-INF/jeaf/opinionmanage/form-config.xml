@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="opinionType" class="com.yuanluesoft.jeaf.opinionmanage.forms.OpinionType" title="意见类型配置" pojo="com.yuanluesoft.jeaf.opinionmanage.pojo.OpinionType">
+		<actions>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteOpinionType')"/>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="opinion" class="com.yuanluesoft.jeaf.opinionmanage.forms.Opinion" title="意见" pojo="com.yuanluesoft.jeaf.opinionmanage.pojo.Opinion">
+		<formFields>
+			<field title="主记录类名称" name="mainRecordClassName" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteOpinion')"/>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.opinionmanage.forms.InsertOpinions" title="插入意见列表">
+		<formFields>
+			<field title="意见类型" name="opinionType" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">opinionService</parameter>
+				<parameter name="itemsName">opinionTypes</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">全部</parameter>
+			</field>
+		</formFields>
+	</form>
+</forms>

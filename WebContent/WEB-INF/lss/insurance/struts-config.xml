@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminImportData" type="com.yuanluesoft.lss.insurance.forms.admin.ImportData"/>
+  <form-bean name="adminUser" type="com.yuanluesoft.lss.insurance.forms.admin.User"/>
+  <form-bean name="registUser" type="com.yuanluesoft.lss.insurance.forms.RegistUser"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminImportData" path="/admin/importData"
+   scope="request"
+   type="com.yuanluesoft.lss.insurance.actions.importdata.admin.Load" validate="false">
+   <forward name="load" path="/admin/importData.jsp"/>
+  </action>
+  <action input="/admin/importData.jsp" name="adminImportData"
+   path="/admin/doImportData" scope="request"
+   type="com.yuanluesoft.lss.insurance.actions.importdata.admin.DoImport" validate="false"/>
+  <action name="adminImportData" path="/admin/attachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.lss.insurance.actions.importdata.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="adminUser" path="/admin/user" scope="request"
+   type="com.yuanluesoft.lss.insurance.actions.user.admin.Load" validate="false">
+   <forward name="load" path="/admin/user.jsp"/>
+  </action>
+  <action input="/admin/user.jsp" name="adminUser"
+   path="/admin/saveUser" scope="request"
+   type="com.yuanluesoft.lss.insurance.actions.user.admin.Save" validate="false"/>
+  <action name="registUser" path="/registUser" scope="request"
+   type="com.yuanluesoft.lss.insurance.actions.registuser.Load" validate="false">
+   <forward name="load" path="/registUser.jsp"/>
+  </action>
+  <action input="/registUser.jsp" name="registUser" path="/doRegistUser"
+   scope="request"
+   type="com.yuanluesoft.lss.insurance.actions.registuser.Regist" validate="false">
+   <forward name="result" path="/registUserSuccess.jsp"/>
+  </action>
+  <action path="/index" scope="request"
+   type="com.yuanluesoft.lss.insurance.actions.index.Load" validate="false"/>
+  <action path="/account" scope="request"
+   type="com.yuanluesoft.lss.insurance.actions.account.Load" validate="false"/>
+  <action path="/parameter" scope="request"
+   type="com.yuanluesoft.lss.insurance.actions.parameter.Load" validate="false"/>
+  <action input="/admin/user.jsp" name="adminUser"
+   path="/admin/deleteUser" scope="request"
+   type="com.yuanluesoft.lss.insurance.actions.user.admin.Delete" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

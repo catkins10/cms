@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 工作流利用服务 -->	
+	<bean id="workflowExploitService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.jeaf.workflow.service.spring.WorkflowExploitServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="personService"><ref bean="personService"/></property>
+				<property name="orgService"><ref bean="orgService"/></property>
+				<property name="roleService"><ref bean="roleService"/></property>
+				<property name="recordControlService"><ref bean="recordControlService"/></property>
+				<property name="workflowConnectionPool"><ref bean="workflowConnectionPool"/></property>
+				<property name="timetableService"><ref bean="timetableService"/></property>
+				<property name="sessionService"><ref bean="sessionService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="onWorkDayChanged">PROPAGATION_NEVER,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 工作流配置服务 -->
+	<bean id="workflowConfigureService" class="com.yuanluesoft.jeaf.workflow.service.spring.WorkflowConfigureServiceImpl">
+		<property name="workflowConfigurePassword"><value>yuanluesoft</value></property>
+		<property name="workflowConnectionPool"><ref bean="workflowConnectionPool"/></property>
+		<property name="personService"><ref bean="personService"/></property>
+		<property name="sessionService"><ref bean="sessionService"/></property>
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+	</bean>
+	
+	<!-- 工作流连接池 -->
+	<bean id="workflowConnectionPool" class="com.yuanluesoft.jeaf.workflow.connectionpool.spring.WorkflowConnectionPoolImpl" init-method="startup"/>
+	
+	<!-- 超时统计视图服务 -->
+	<bean id="workItemTimeoutStatisticsViewService" class="com.yuanluesoft.jeaf.workflow.service.spring.WorkItemTimeoutStatisticsViewServiceImpl">
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+	</bean>
+</beans>

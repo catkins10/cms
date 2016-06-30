@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<views>
+	<view name="opinionType" form="opinionType" title="意见类型" pageRows="20" openFeatures="mode=dialog,width=430,height=260">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.opinionmanage.pojo.OpinionType</pojo>
+			<where>OpinionType.businessClassName='{PARAMETER:businessClassName}'</where>
+			<orderBy>OpinionType.priority DESC, OpinionType.id</orderBy>
+		</data>
+		<actions>
+			<action title="新增意见类型" execute="DialogUtils.openDialog('{CONTEXTPATH}/jeaf/opinionmanage/opinionType.shtml?businessClassName={PARAMETER:businessClassName}', 430, 260)"/>
+			<action title="加载预设类型" execute="DialogUtils.openDialog('{CONTEXTPATH}/jeaf/opinionmanage/loadDefault.shtml?businessClassName={PARAMETER:businessClassName}', 360, 150)"/>
+			<action title="调整优先级" execute="DialogUtils.openDialog('{CONTEXTPATH}/jeaf/opinionmanage/adjustPriority.shtml?businessClassName={PARAMETER:businessClassName}', 600, 400)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="类型" name="opinionType" width="160"/>
+			<column title="未填写时提示信息" name="inputPrompt"/>
+			<column title="是否必填" name="required" width="60" align="center"/>
+		</columns>
+	</view>
+</views>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="提问" class="com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAsk" businessServiceName="biddingProjectAskService">
+		<field name="projectId" title="工程ID" type="number" inputMode="hidden"/>
+		<field name="projectName" title="工程名称" length="255" type="string" inputMode="readonly"/>
+		<field name="enterpriseId" title="企业ID" type="number" inputMode="none"/>
+		<field name="enterpriseName" title="企业名称" length="100" type="string" inputMode="readonly"/>
+		<field name="askPersonId" title="提问用户ID" type="number" inputMode="none"/>
+		<field name="askPersonName" title="提问用户名称" length="30" type="string" inputMode="readonly"/>
+		<field name="askFrom" title="发起点" length="20" type="string" inputMode="hidden"/>
+		<field name="askTime" title="提问时间" type="timestamp" inputMode="readonly"/>
+		<field name="question" title="内容" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">12</parameter>
+		</field>
+		<field name="reply" title="答复" type="string" inputMode="textarea">
+			<parameter name="rows">12</parameter>
+		</field>
+		<field name="replierId" title="答复人ID" type="number" inputMode="none"/>
+		<field name="replierName" title="答复人" length="200" type="string" inputMode="readonly"/>
+		<field name="isPublic" title="是否公开" length="1" type="char" inputMode="none"/>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">办理,批示</parameter>
+			<parameter name="class">com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAskOpinion</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

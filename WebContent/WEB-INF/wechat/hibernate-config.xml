@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--微信:接收消息-->
+	<class name="com.yuanluesoft.wechat.pojo.WechatMessageReceive" table="wechat_message_receive">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20,0)-->
+		<property name="toUserName"/> <!--开发者微信号,VARCHAR(200)-->
+		<property name="fromUserOpenId"/> <!--发送方帐号,一个OpenID,VARCHAR(200)-->
+		<property name="fromUserNickname"/> <!--发送方用户昵称,一个OpenID,VARCHAR(200)-->
+		<property name="fromUserId"/> <!--发送方用户ID,NUMERIC(20,0)-->
+		<property name="createTime"/> <!--消息创建时间,TIMESTAMP-->
+		<property name="msgId"/> <!--消息ID,64位整型,VARCHAR(100)-->
+		<property name="msgType"/> <!--消息类型,text/image/voice/location/link,VARCHAR(20)-->
+		<property name="content"/> <!--消息内容,VARCHAR(4000)-->
+		<property name="picUrl"/> <!--图片链接,消息类型为image时有效,VARCHAR(500)-->
+		<property name="mediaId"/> <!--消息媒体ID,可以调用多媒体文件下载接口拉取数据,VARCHAR(200)-->
+		<property name="voiceFormat"/> <!--语音格式,amr，speex等,VARCHAR(20)-->
+		<property name="locationX"/> <!--地理位置纬度,VARCHAR(100)-->
+		<property name="locationY"/> <!--地理位置经度,VARCHAR(100)-->
+		<property name="mapScale"/> <!--地图缩放大小,VARCHAR(100)-->
+		<property name="locationLabel"/> <!--地理位置信息,VARCHAR(300)-->
+		<property name="linkTitle"/> <!--链接消息标题,VARCHAR(300)-->
+		<property name="linkDescription"/> <!--链接消息描述,VARCHAR(1000)-->
+		<property name="url"/> <!--消息链接,VARCHAR(500)-->
+		<property name="replyTime"/> <!--答复时间,TIMESTAMP-->
+		<property name="replierId"/> <!--答复人ID,NUMERIC(20)-->
+		<property name="replier"/> <!--答复人,VARCHAR(30)-->
+	</class>
+	
+	<!--微信:消息发送-->
+	<class name="com.yuanluesoft.wechat.pojo.WechatMessageSend" table="wechat_message_send">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="type"/> <!--消息类型,text/voice/video/music/news,VARCHAR(20)-->
+		<property name="creatorId"/> <!--创建人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--创建人,VARCHAR(30)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+		<property name="sendTime"/> <!--发送时间,TIMESTAMP-->
+		<property name="rangeMode"/> <!--发送范围,0/全部,1/指定分组,2/指定用户,NUMERIC(1)-->
+		<property name="groupNames"/> <!--分组名称列表,VARCHAR(300)-->
+		<property name="groupIds"/> <!--分组ID列表,VARCHAR(300)-->
+		<property name="userNames"/> <!--用户列表,VARCHAR(4000)-->
+		<property name="userIds"/> <!--用户ID列表,VARCHAR(4000)-->
+		<property name="title"/> <!--消息标题,消息类型为视频时有效,VARCHAR(200)-->
+		<property name="description"/> <!--消息描述,消息类型为视频时有效,VARCHAR(1000)-->
+		<property name="content"/> <!--消息内容,VARCHAR(4000)-->
+		<property name="showCoverPic"/> <!--是否显示封面,type=news时有效,0/不显示,1/显示,NUMERIC(1)-->
+		<property name="msgId"/> <!--微信消息ID,用于检查发送状态,VARCHAR(100)-->
+		<property name="status"/> <!--状态,send success/send fail/err(num),VARCHAR(30)-->
+		<property name="totalCount"/> <!--用户数,group_id下粉丝数；或者openid_list中的粉丝数 ,NUMERIC(8)-->
+		<property name="filterCount"/> <!--过滤后用户数,FilterCount = SentCount + ErrorCount ,NUMERIC(8)-->
+		<property name="sentCount"/> <!--发送成功用户数,NUMERIC(8)-->
+		<property name="receiveMessageId"/> <!--接收消息ID,客服消息,48小时内允许答复,NUMERIC(20)-->
+		<property name="errorCount"/> <!--发送失败用户数,NUMERIC(8)-->
+		<property name="workflowInstanceId"/> <!--流程实例ID,VARCHAR(20)-->
+		<set name="news" table="wechat_message_news" lazy="true" inverse="true" cascade="delete" order-by="priority desc, id">
+			<key column="messageId"/>
+			<one-to-many class="com.yuanluesoft.wechat.pojo.WechatMessageNews" />
+		</set>
+		<set name="visitors" table="wechat_message_send_privilege" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.wechat.pojo.WechatMessageSendPrivilege" />
+		</set>
+		<set name="opinions" table="wechat_message_send_opinion" lazy="true" inverse="true" cascade="delete" order-by="created">
+			<key column="mainRecordId"/>
+			<one-to-many class="com.yuanluesoft.wechat.pojo.WechatMessageSendOpinion" />
+		</set>
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+	</class>
+	
+	<!--微信:自动应答-->
+	<class name="com.yuanluesoft.wechat.pojo.WechatMessageResponse" table="wechat_message_response">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="type"/> <!--消息类型,text/voice/video/news,VARCHAR(20)-->
+		<property name="responseType"/> <!--响应目标,subscribe(关注)、unsubscribe(取消关注)、menu_(菜单事件)、location(上报地理位置事件) 、qrscene(扫描带参数二维码)、talk(用户发言),VARCHAR(30)-->
+		<property name="keywords"/> <!--关键字,分隔符:或/空格,与/加号,VARCHAR(200)-->
+		<property name="title"/> <!--消息标题,消息类型为视频时有效,VARCHAR(200)-->
+		<property name="description"/> <!--消息描述,消息类型为视频时有效,VARCHAR(1000)-->
+		<property name="content"/> <!--消息内容,VARCHAR(4000)-->
+		<set name="news" table="wechat_message_news" lazy="true" inverse="true" cascade="delete" order-by="priority desc, id">
+			<key column="messageId"/>
+			<one-to-many class="com.yuanluesoft.wechat.pojo.WechatMessageNews" />
+		</set>
+	</class>
+	
+	<!--微信:消息内容-->
+	<class name="com.yuanluesoft.wechat.pojo.WechatMessageNews" table="wechat_message_news">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="messageId"/> <!--消息ID,NUMERIC(20)-->
+		<property name="title"/> <!--标题,VARCHAR(200)-->
+		<property name="description"/> <!--描述,VARCHAR(4000)-->
+		<property name="content"/> <!--内容,群发消息时有效,支持HTML标签,TEXT-->
+		<property name="author"/> <!--作者,群发消息时有效,VARCHAR(50)-->
+		<property name="url"/> <!--链接,VARCHAR(500)-->
+		<property name="showCoverPic"/> <!--是否显示封面,0/不显示,1/显示,2/继承,NUMERIC(1)-->
+		<property name="priority"/> <!--优先级,NUMERIC(7,4)-->
+	</class>
+	
+	<!--微信:消息发送权限控制信息-->
+	<class name="com.yuanluesoft.wechat.pojo.WechatMessageSendPrivilege" table="wechat_message_send_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,numeric(20)-->
+		<property name="accessLevel"/> <!--访问级别,CHAR(1)-->
+		<property name="recordId"/> <!--主记录ID,numeric(20)-->
+	</class>
+	
+	<!--微信:消息发送办理意见-->
+	<class name="com.yuanluesoft.wechat.pojo.WechatMessageSendOpinion" table="wechat_message_send_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID,numeric(20)-->
+		<property name="workItemId"/> <!--工作项ID,VARCHAR(32)-->
+		<property name="activityName"/> <!--环节名称,VARCHAR(50)-->
+		<property name="activityId"/> <!--环节ID,VARCHAR(32)-->
+		<property name="personId"/> <!--填写人ID,numeric(20)-->
+		<property name="personName"/> <!--填写人姓名,VARCHAR(32)-->
+		<property name="agentId"/> <!--代理人ID,numeric(20)-->
+		<property name="agentName"/> <!--代理人姓名,VARCHAR(32)-->
+		<property name="opinion"/> <!--意见内容,VARCHAR(1000)-->
+		<property name="opinionType"/> <!--意见类型,VARCHAR(20)-->
+		<property name="created"/> <!--填写时间,timestamp null-->
+	</class>
+	
+	<!--微信:多媒体文件-->
+	<class name="com.yuanluesoft.wechat.pojo.WechatMedia" table="wechat_media">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="path"/> <!--文件路径,VARCHAR(500)-->
+		<property name="mediaId"/> <!--多媒体文件ID,每个多媒体文件（media_id）会在上传、用户发送到微信服务器3天后自动删除,VARCHAR(200)-->
+		<property name="uploadTime"/> <!--上传时间,TIMESTAMP-->
+	</class>
+	
+	<!--微信:用户-->
+	<class name="com.yuanluesoft.wechat.pojo.WechatUser" table="wechat_user">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="openId"/> <!--用户标识,对当前公众号唯一,VARCHAR(200)-->
+		<property name="nickname"/> <!--用户昵称,VARCHAR(200)-->
+		<property name="sex"/> <!--用户的性别,M/F,CHAR-->
+		<property name="city"/> <!--用户所在城市,VARCHAR(50)-->
+		<property name="province"/> <!--用户所在省份,VARCHAR(50)-->
+		<property name="country"/> <!--用户所在国家,VARCHAR(50)-->
+		<property name="language"/> <!--用户的语言,简体中文为zh_CN,VARCHAR(50)-->
+		<property name="headimgUrl"/> <!--用户头像,最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空,VARCHAR(300)-->
+		<property name="subscribeTime"/> <!--用户关注时间,为时间戳。如果用户曾多次关注，则取最后关注时间 ,TIMESTAMP-->
+		<property name="unsubscribeTime"/> <!--取消关注时间,TIMESTAMP-->
+		<property name="name"/> <!--真实姓名,VARCHAR(30)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+		<property name="remark"/> <!--备注,VARCHAR(500)-->
+		<set name="groupMembers" table="wechat_user_group_member" lazy="true" inverse="true" cascade="delete">
+			<key column="memberId"/>
+			<one-to-many class="com.yuanluesoft.wechat.pojo.WechatUserGroupMember" />
+		</set>
+	</class>
+	
+	<!--微信:用户分组-->
+	<class name="com.yuanluesoft.wechat.pojo.WechatUserGroup" table="wechat_user_group">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20,0)-->
+		<property name="name"/> <!--分组名称,VARCHAR(30)-->
+		<set name="members" table="wechat_user_group_member" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="groupId"/>
+			<one-to-many class="com.yuanluesoft.wechat.pojo.WechatUserGroupMember" />
+		</set>
+	</class>
+	
+	<!--微信:用户分组成员-->
+	<class name="com.yuanluesoft.wechat.pojo.WechatUserGroupMember" table="wechat_user_group_member">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="groupId"/> <!--分组ID,NUMERIC(20)-->
+		<property name="memberId"/> <!--成员ID,NUMERIC(20)-->
+		<property name="memberNickname"/> <!--成员昵称,VARCHAR(200)-->
+	</class>
+	
+	<!--微信:公众号配置-->
+	<class name="com.yuanluesoft.wechat.pojo.WechatAccount" table="wechat_account">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20,0)-->
+		<property name="siteUrl"/> <!--网址,VARCHAR(20)-->
+		<property name="name"/> <!--名称,VARCHAR(50)-->
+		<property name="accountType"/> <!--帐号类型,0/服务号,1/订阅号,NUMERIC(1)-->
+		<property name="certificate"/> <!--是否认证过,NUMERIC(1)-->
+		<property name="token"/> <!--令牌,VARCHAR(200)-->
+		<property name="appId"/> <!--用户唯一凭证,VARCHAR(200)-->
+		<property name="appSecret"/> <!--用户唯一凭证密钥,VARCHAR(500)-->
+		<set name="menuItems" table="wechat_menu_item" lazy="true" inverse="true" cascade="delete" order-by="priority desc, id">
+			<key column="accountId"/>
+			<one-to-many class="com.yuanluesoft.wechat.pojo.WechatMenuItem" />
+		</set>
+	</class>
+	
+	<!--微信:菜单项-->
+	<class name="com.yuanluesoft.wechat.pojo.WechatMenuItem" table="wechat_menu_item">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="accountId"/> <!--公众号配置ID,NUMERIC(20,0)-->
+		<property name="parentItemId"/> <!--父菜单项ID,NUMERIC(20,0)-->
+		<property name="name"/> <!--菜单名称,VARCHAR(50)-->
+		<property name="type"/> <!--类型,0/父菜单,1/链接,2/触发点击事件,NUMERIC(1)-->
+		<property name="url"/> <!--链接地址,VARCHAR(300)-->
+		<property name="priority"/> <!--优先级,NUMERIC(7,4)-->
+		<set name="subItems" table="wechat_menu_item" lazy="true" inverse="true" cascade="delete" order-by="priority desc, id">
+			<key column="parentItemId"/>
+			<one-to-many class="com.yuanluesoft.wechat.pojo.WechatMenuItem" />
+		</set>
+	</class>
+	
+	<!--微信:消息发送流程配置-->
+	<class name="com.yuanluesoft.wechat.pojo.WechatWorkflowConfig" table="wechat_workflow_config">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="orgId"/> <!--组织机构ID,NUMERIC(20,0)-->
+		<property name="workflowId"/> <!--流程ID,VARCHAR(20)-->
+		<property name="workflowName"/> <!--流程名称,VARCHAR(200)-->
+	</class>
+</hibernate-mapping>

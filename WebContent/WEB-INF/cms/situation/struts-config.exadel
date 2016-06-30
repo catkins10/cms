@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,40,177,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="336,40,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,112,177,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="336,112,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#situation" NAME="action0"
+  PATH="/situation" SHAPE="32,208,177,41" TITLE="situation" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/situation.jsp" TARGET="page8" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveSituation"
+  NAME="action1" PATH="/saveSituation" SHAPE="528,240,177,41"
+  TITLE="situation" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/situationSubmitted.jsp" TARGET="page3"
+   TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#situation"
+  NAME="action2" PATH="/admin/situation" SHAPE="32,512,177,41"
+  TITLE="adminSituation" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/situation.jsp" TARGET="page5"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#feedback"
+  NAME="action5" PATH="/admin/feedback" SHAPE="528,928,178,25"
+  TITLE="adminSituation" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#runSituation"
+  NAME="action6" PATH="/admin/runSituation" SHAPE="528,640,177,25"
+  TITLE="adminSituation" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#writeOpinion"
+  NAME="action8" PATH="/admin/writeOpinion" SHAPE="528,688,177,25"
+  TITLE="adminSituation" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteSituation"
+  NAME="action11" PATH="/admin/deleteSituation" SHAPE="528,592,177,25"
+  TITLE="adminSituation" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#setPublishOption"
+  NAME="action15" PATH="/admin/setPublishOption" SHAPE="528,736,177,25"
+  TITLE="adminSituation" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#publish"
+  NAME="action16" PATH="/admin/publish" SHAPE="528,784,177,25"
+  TITLE="adminSituation" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#switchPage"
+  NAME="action17" PATH="/admin/switchPage" SHAPE="528,880,177,25"
+  TITLE="adminSituation" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveSituation"
+  NAME="action19" PATH="/admin/saveSituation" SHAPE="528,544,177,25"
+  TITLE="adminSituation" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page8"
+  PATH="/situation.jsp" SHAPE="336,224,50,40" SUBTYPE="jsp"
+  TITLE="situation.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveSituation.shtml" TARGET="action1"
+   TITLE="saveSituation.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/admin/situation.jsp" SHAPE="336,528,50,220" SUBTYPE="jsp"
+  TITLE="situation.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveSituation.shtml" TARGET="action19"
+   TITLE="saveSituation.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteSituation.shtml" TARGET="action11"
+   TITLE="deleteSituation.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/admin/runSituation.shtml" TARGET="action6"
+   TITLE="runSituation.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link4"
+   PATH="/admin/writeOpinion.shtml" TARGET="action8"
+   TITLE="writeOpinion.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link5"
+   PATH="/admin/setPublishOption.shtml" TARGET="action15"
+   TITLE="setPublishOption.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link6"
+   PATH="/admin/publish.shtml" TARGET="action16" TITLE="publish.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link7"
+   PATH="/admin/undeleteMessage.shtml" TARGET="action3"
+   TITLE="situation.jsp" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link8"
+   PATH="/admin/switchPage.shtml" TARGET="action17"
+   TITLE="submitSituationFeedback.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/feedback.shtml" TARGET="action5" TITLE="feedback.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link10"
+   PATH="/admin/coordinate.shtml" TARGET="action7"
+   TITLE="coordinate.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link11"
+   PATH="/admin/feedbackLetter.shtml" TARGET="action9"
+   TITLE="feedbackLetter.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link12"
+   PATH="/admin/transact.shtml" TARGET="action12" TITLE="transact.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/situationSubmitted.jsp" SHAPE="784,256,50,25" SUBTYPE="jsp"
+  TITLE="situationSubmitted.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#undeleteMessage"
+  NAME="action3" PATH="/admin/undeleteMessage" SHAPE="528,832,177,25"
+  TITLE="adminMessage" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#coordinate"
+  NAME="action7" PATH="/admin/coordinate" SHAPE="528,976,177,25"
+  TITLE="adminSituation" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#feedbackLetter"
+  NAME="action9" PATH="/admin/feedbackLetter" SHAPE="528,1024,177,25"
+  TITLE="adminSituation" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#attachmentEditor"
+  NAME="action10" PATH="/attachmentEditor" SHAPE="32,320,177,41"
+  TITLE="situation" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/attachment.jsp"
+   TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/../../jeaf/attachment/attachment.jsp" SHAPE="336,336,50,25"
+  SUBTYPE="jsp" TITLE="attachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#transact"
+  NAME="action12" PATH="/admin/transact" SHAPE="528,1072,177,25"
+  TITLE="adminSituation" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#attachmentEditor"
+  NAME="action13" PATH="/admin/attachmentEditor" SHAPE="32,384,177,41"
+  TITLE="adminSituation" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/attachment.jsp"
+   TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+</PROCESS>

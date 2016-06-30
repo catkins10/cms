@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="场景服务" class="com.yuanluesoft.cms.scene.pojo.SceneService" businessServiceName="sceneService">
+		<field name="name" title="服务名称" length="100" required="true" type="string" inputMode="text">
+			<parameter name="rssTitleField">true</parameter>
+		</field>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="rssPubDateField">true</parameter>
+		</field>
+		<field name="siteId" title="站点ID" length="20" type="number" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="sceneDirectories" title="场景列表" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.scene.pojo.SceneDirectory</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="场景" class="com.yuanluesoft.cms.scene.pojo.SceneDirectory" businessServiceName="sceneService">
+		<field name="parentDirectoryId" title="上级目录ID" length="20" type="number" inputMode="hidden"/>
+		<field name="directoryName" title="场景名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="priority" title="优先级" length="7.4" type="number" inputMode="none"/>
+		<field name="directoryType" title="类型" length="20" type="string" inputMode="none">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="childDirectories" title="子场景列表" type="components">
+			<parameter name="recordList">false</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="内容" class="com.yuanluesoft.cms.scene.pojo.SceneContent" businessServiceName="sceneService">
+		<field name="parentDirectoryId" title="上级目录ID" length="20" type="number" inputMode="hidden"/>
+		<field name="directoryName" title="场景名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="priority" title="优先级" length="7.4" type="number" inputMode="none"/>
+		<field name="directoryType" title="类型" length="20" type="string" inputMode="none"/>
+		<field name="childDirectories" title="子场景列表" type="components"/>
+		<field name="body" title="内容" required="true" type="html" inputMode="htmleditor">
+			<parameter name="height">300</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="serviceName">siteImageService</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">1000000</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">100000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+			<parameter name="serviceName">siteVideoService</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="链接" class="com.yuanluesoft.cms.scene.pojo.SceneLink" businessServiceName="sceneService">
+		<field name="parentDirectoryId" title="上级目录ID" length="20" type="number" inputMode="hidden"/>
+		<field name="directoryName" title="场景名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="priority" title="优先级" length="7.4" type="number" inputMode="none"/>
+		<field name="directoryType" title="类型" length="20" type="string" inputMode="none"/>
+		<field name="childDirectories" title="子场景列表" type="components"/>
+		<field name="url" title="链接地址" length="300" required="true" type="string" inputMode="select">
+			<parameter name="js">/cms/js/reference.js</parameter>
+			<parameter name="execute">reference(this, 'url')</parameter>
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="模板配置" class="com.yuanluesoft.cms.scene.pojo.SceneTemplate" businessServiceName="sceneTemplateService">
+		<field name="directoryId" title="模板作用范围ID" type="number" inputMode="hidden"/>
+		<field name="directoryName" title="模板作用范围" length="100" type="string" inputMode="hidden"/>
+	</businessObject>
+</businessObjects>

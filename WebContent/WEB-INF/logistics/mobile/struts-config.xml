@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="authentication" type="com.yuanluesoft.logistics.mobile.forms.Authentication"/>
+  <form-bean name="supplyQuery" type="com.yuanluesoft.logistics.mobile.forms.SupplyQuery"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/error.jsp" scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="authentication" path="/authentication" scope="request"
+   type="com.yuanluesoft.logistics.mobile.actions.authentication.Load" validate="false">
+   <forward name="load" path="/authentication.jsp"/>
+  </action>
+  <action input="/authentication.jsp" name="authentication"
+   path="/doAuthentication" scope="request"
+   type="com.yuanluesoft.logistics.mobile.actions.authentication.Authentication" validate="false"/>
+  <action path="/main" scope="request"
+   type="com.yuanluesoft.logistics.mobile.actions.main.Load" validate="false"/>
+  <action name="supplyQuery" path="/supplyQuery" scope="request"
+   type="com.yuanluesoft.logistics.mobile.actions.supplyquery.Load" validate="false"/>
+  <action path="/supply" scope="request"
+   type="com.yuanluesoft.logistics.mobile.actions.supply.Load" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

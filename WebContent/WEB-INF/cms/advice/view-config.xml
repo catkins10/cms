@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="民意征集主题(全部)" name="adviceTopics">
+		<data>
+			<pojo>com.yuanluesoft.cms.advice.pojo.AdviceTopic</pojo>
+			<where>AdviceTopic.issue='1'</where>
+			<orderBy>AdviceTopic.endDate DESC, AdviceTopic.created DESC</orderBy>
+			<quickFilter>AdviceTopic.subject like '%{KEY}%' or AdviceTopic.body like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="民意征集主题">/cms/advice/adviceTopic.shtml?topicId={PARAMETER:id}</link>
+			<link title="建议列表">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/advice&amp;pageName=advices&amp;topicId={PARAMETER:id}</link>
+			<link title="结果反馈">/cms/advice/adviceFeedback.shtml?topicId={PARAMETER:id}</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/advice</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSiteRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view title="民意征集主题(征集中)" name="processingAdviceTopics">
+		<data>
+			<pojo>com.yuanluesoft.cms.advice.pojo.AdviceTopic</pojo>
+			<where>AdviceTopic.issue='1' and (AdviceTopic.endDate is null or AdviceTopic.endDate>=DATE({TODAY}))</where>
+			<orderBy>AdviceTopic.endDate DESC, AdviceTopic.created DESC</orderBy>
+			<quickFilter>AdviceTopic.subject like '%{KEY}%' or AdviceTopic.body like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="民意征集主题">/cms/advice/adviceTopic.shtml?topicId={PARAMETER:id}</link>
+			<link title="建议列表">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/advice&amp;pageName=advices&amp;topicId={PARAMETER:id}</link>
+			<link title="结果反馈">/cms/advice/adviceFeedback.shtml?topicId={PARAMETER:id}</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/advice</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSiteRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view title="民意征集主题(已结束)" name="completedAdviceTopics">
+		<data>
+			<pojo>com.yuanluesoft.cms.advice.pojo.AdviceTopic</pojo>
+			<where>AdviceTopic.issue='1' and (not AdviceTopic.endDate is null and AdviceTopic.endDate&lt;DATE({TODAY}))</where>
+			<orderBy>AdviceTopic.endDate DESC, AdviceTopic.created DESC</orderBy>
+			<quickFilter>AdviceTopic.subject like '%{KEY}%' or AdviceTopic.body like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="民意征集主题">/cms/advice/adviceTopic.shtml?topicId={PARAMETER:id}</link>
+			<link title="建议列表">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/advice&amp;pageName=advices&amp;topicId={PARAMETER:id}</link>
+			<link title="结果反馈">/cms/advice/adviceFeedback.shtml?topicId={PARAMETER:id}</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/advice</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSiteRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view title="民意征集主题(已反馈)" name="feedbackAdviceTopics">
+		<data>
+			<pojo>com.yuanluesoft.cms.advice.pojo.AdviceTopic</pojo>
+			<where>AdviceTopic.issue='1' and (AdviceTopic.endDate is null or AdviceTopic.endDate&lt;DATE({TODAY})) and not feedbacks.id is null</where>
+			<orderBy>AdviceTopic.endDate DESC, AdviceTopic.created DESC</orderBy>
+			<quickFilter>AdviceTopic.subject like '%{KEY}%' or AdviceTopic.body like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="民意征集主题">/cms/advice/adviceTopic.shtml?topicId={PARAMETER:id}</link>
+			<link title="建议列表">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/advice&amp;pageName=advices&amp;topicId={PARAMETER:id}</link>
+			<link title="结果反馈">/cms/advice/adviceFeedback.shtml?topicId={PARAMETER:id}</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/advice</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSiteRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view title="民意征集建议列表(按主题)" name="advices">
+		<data>
+			<pojo>com.yuanluesoft.cms.advice.pojo.Advice</pojo>
+			<where>Advice.publicPass='1' and Advice.isDeleted=0 and Advice.topicId={PARAMETER:topicId|0}</where>
+			<orderBy>Advice.created DESC</orderBy>
+			<quickFilter>Advice.subject like '%{KEY}%' or Advice.creator like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="建议">/cms/advice/advice.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/advice</link>
+		</links>
+		<extendParameters>
+			<parameter name="unrelatedToSites">true</parameter> <!-- 和站点无关 -->
+		</extendParameters>
+	</view>
+	
+	<view title="民意征集建议列表(按站点)" name="advicesBySite">
+		<data>
+			<pojo>com.yuanluesoft.cms.advice.pojo.Advice</pojo>
+			<where>Advice.publicPass='1' and Advice.isDeleted=0</where>
+			<orderBy>Advice.created DESC</orderBy>
+			<quickFilter>Advice.subject like '%{KEY}%' or Advice.creator like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="建议">/cms/advice/advice.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/advice</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSiteRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+
+	<view name="admin/adviceTopic" form="admin/adviceTopic" title="征集主题" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/advice&amp;viewName=admin/adviceTopic" hide="noPrivilege(application_manager) and isNotSiteManager() and isNotSiteEditor()" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.advice.pojo.AdviceTopic</pojo>
+			<orderBy>AdviceTopic.created DESC</orderBy>
+			<quickFilter>AdviceTopic.subject like '%{KEY}%' or AdviceTopic.body like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="创建征集主题" execute="PageUtils.newrecord('cms/advice','admin/adviceTopic','mode=fullscreen', 'siteId={PARAMETER:siteId}')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="创建人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+
+	<view name="admin/todoAdvice" form="admin/advice" title="待办" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.advice.pojo.Advice</pojo>
+			<where>Advice.isDeleted=0</where>
+			<orderBy>Advice.created DESC</orderBy>
+			<quickFilter>Advice.subject like '%{KEY}%' or Advice.creator like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="建议主题" name="subject"/>
+			<column title="征集主题" name="topic.subject"/>
+			<column title="创建人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessAdvice" form="admin/advice" title="在办" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.advice.pojo.Advice</pojo>
+			<where>Advice.isDeleted=0</where>
+			<orderBy>Advice.created DESC</orderBy>
+			<quickFilter>Advice.subject like '%{KEY}%' or Advice.creator like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="建议主题" name="subject"/>
+			<column title="征集主题" name="topic.subject"/>
+			<column title="创建人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedAdvice" form="admin/advice" title="办结" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.advice.pojo.Advice</pojo>
+			<where>Advice.isDeleted=0</where>
+			<filter>COMPLETED</filter>
+			<quickFilter>Advice.subject like '%{KEY}%' or Advice.creator like '%{KEY}%'</quickFilter>
+			<orderBy>Advice.created DESC</orderBy>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="建议主题" name="subject"/>
+			<column title="征集主题" name="topic.subject"/>
+			<column title="创建人" name="creator" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allAdvice" form="admin/advice" title="所有" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.advice.pojo.Advice</pojo>
+			<where>Advice.isDeleted=0</where>
+			<filter>READABLE</filter>
+			<quickFilter>Advice.subject like '%{KEY}%' or Advice.creator like '%{KEY}%'</quickFilter>
+			<orderBy>Advice.created DESC</orderBy>
+		</data>
+		<actions>
+			<action title="建议授权" hide="noPrivilege(application_manager)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/publicservice/admin/readersModifyOption.shtml?applicationName={PARAMETER:applicationName}', 430, 200)"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="建议主题" name="subject"/>
+			<column title="征集主题" name="topic.subject"/>
+			<column title="创建人" name="creator" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+</views>

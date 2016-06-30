@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- Excel导入服务 -->
+	<bean id="beautyImportServiceImpl" class="com.yuanluesoft.qualification.beauty.service.spring.BeautyImportServiceImpl">
+		<property name="databaseService"><ref bean="databaseService" /></property>
+		<property name="businessDefineService"><ref bean="businessDefineService" /></property>
+		<property name="attachmentService"><ref bean="attachmentService" /></property>
+	</bean>
+	
+</beans>

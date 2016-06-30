@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="龙海市工贸行业标准化网上申报通过名单" class="com.yuanluesoft.credit.enterprisecredit.item.pojo.BigStandard" >
+		
+		<field name="unit" title="单位" required="true" length="200" type="string" inputMode="text"/>
+		<field name="name" title="企业名称" required="true" length="200" type="string" inputMode="text"/>
+		<field name="industry" title="行业" required="true" length="200" type="string" inputMode="text"/>
+		<field name="level" title="拟达标等级" required="true" length="200" type="string" inputMode="text"/>
+		<field name="situation" title="进展情况" required="true" length="200" type="string" inputMode="text"/>
+		<field name="bookNum" title="证书编号" required="true" length="200" type="string" inputMode="text"/>
+		<field name="usefulDate" title="有效期" required="true" length="100" type="string" inputMode="text"/>
+		<field name="remark" title="备注" required="true" length="200" type="string" inputMode="text"/>
+
+
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="龙海市安监局事故调查处理情况统计" class="com.yuanluesoft.credit.enterprisecredit.item.pojo.Handle" >
+		<field name="name" title="案件名称" required="true" length="200" type="string" inputMode="text"/>
+		<field name="unit" title="行政处罚单位或个人名称" required="true" length="200" type="string" inputMode="text"/>
+		<field name="reason" title="处罚事由" required="true" length="200" type="string" inputMode="text"/>
+		<field name="person" title="法定代表人（负责人）姓名" required="true" length="200" type="string" inputMode="text"/>
+		<field name="bookAndCode" title="bookAndCode" required="true" length="200" type="string" inputMode="text"/>
+		<field name="remark" title="备注" required="true" length="200" type="string" inputMode="text"/>
+
+
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="龙海市安监局行政许可情况统计" class="com.yuanluesoft.credit.enterprisecredit.item.pojo.Permit" >
+		
+		<field name="permitNum" title="许可证号" required="true" length="200" type="string" inputMode="text"/>
+		<field name="unit" title="单位名称" required="true" length="200" type="string" inputMode="text"/>
+		<field name="range" title="许可经营范围" required="true" length="200" type="string" inputMode="text"/>
+		<field name="overTime" title="办结时间" required="true" length="200" type="string" inputMode="text"/>
+		<field name="usefulDate" title="证书有效期" required="true" length="200" type="string" inputMode="text"/>
+		<field name="remark" title="备注" required="true" length="200" type="string" inputMode="text"/>
+
+
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="龙海市安监局事故调查处理情况统计" class="com.yuanluesoft.credit.enterprisecredit.item.pojo.Punish" >
+		<field name="name" title="案件名称" required="true" length="200" type="string" inputMode="text"/>
+		<field name="unit" title="处罚单位或个人名称" required="true" length="200" type="string" inputMode="text"/>
+		<field name="reason" title="案件事由" required="true" length="200" type="string" inputMode="text"/>
+		<field name="person" title="法定代表人（负责人）姓名" required="true" length="200" type="string" inputMode="text"/>
+		<field name="code" title="统一社会信用代码" required="true" length="200" type="string" inputMode="text"/>
+		<field name="remark" title="备注" required="true" length="200" type="string" inputMode="text"/>
+
+
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="龙海市小、微型企业标准化网上申报通过名单" class="com.yuanluesoft.credit.enterprisecredit.item.pojo.SmallStandard" >
+		
+		<field name="unit" title="单位名称" required="true" length="200" type="string" inputMode="text"/>
+		<field name="industry" title="行业" required="true" length="200" type="string" inputMode="text"/>
+		<field name="level" title="所属乡镇" required="true" length="200" type="string" inputMode="text"/>
+		<field name="bookNum" title="证书编号" required="true" length="200" type="string" inputMode="text"/>
+		<field name="startDate" title="达标日期" required="true" length="200" type="string" inputMode="text"/>
+		<field name="usefulDate" title="有效期" required="true" length="200" type="string" inputMode="text"/>
+		<field name="mainUnit" title="行业主管单位" required="true" length="200" type="string" inputMode="text"/>
+
+
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="联系人" class="com.yuanluesoft.credit.enterprisecredit.item.pojo.LinkPerson" >
+		<field name="role" title="角色" required="true" length="200" type="string" inputMode="text"/>
+		<field name="name" title="姓名" required="true" length="200" type="string" inputMode="text"/>
+		<field name="job" title="职务" required="true" length="200" type="string" inputMode="text"/>
+		<field name="tel" title="联系电话" required="true" length="200" type="string" inputMode="text"/>
+
+
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	
+</businessObjects>

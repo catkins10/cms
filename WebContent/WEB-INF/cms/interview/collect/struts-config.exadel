@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../../jeaf/form/error.jsp"
+  SHAPE="32,48,193,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../../jeaf/form/error.jsp" SHAPE="336,48,50,25"
+  SUBTYPE="jsp" TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../../jeaf/form/result.jsp" SHAPE="32,128,193,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../../jeaf/form/result.jsp" SHAPE="336,128,50,25"
+  SUBTYPE="jsp" TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#collectPrologue"
+  NAME="action0" PATH="/admin/collectPrologue" SHAPE="32,240,193,41"
+  TITLE="adminCollectPrologue" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/collectPrologue.jsp" TARGET="page5"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#selectAttachment"
+  NAME="action1" PATH="/admin/selectAttachment" SHAPE="32,392,193,41"
+  TITLE="adminCollectPrologue" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../../jeaf/attachment/selectAttachment.jsp"
+   TARGET="page3" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/../../../jeaf/attachment/selectAttachment.jsp"
+  SHAPE="336,408,50,25" SUBTYPE="jsp" TITLE="selectAttachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectAttachment"
+  NAME="action2" PATH="/selectAttachment" SHAPE="32,464,193,41"
+  TITLE="collect" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../../jeaf/attachment/selectAttachment.jsp"
+   TARGET="page3" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#deleteCollectPrologue" NAME="action3"
+  PATH="/admin/deleteCollectPrologue" SHAPE="544,328,193,25"
+  TITLE="adminCollectPrologue" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#saveCollectPrologue" NAME="action4"
+  PATH="/admin/saveCollectPrologue" SHAPE="544,272,193,25"
+  TITLE="adminCollectPrologue" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#collect"
+  NAME="action5" PATH="/admin/collect" SHAPE="32,584,193,41"
+  TITLE="adminCollect" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/collect.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#runCollect"
+  NAME="action6" PATH="/admin/runCollect" SHAPE="544,728,193,25"
+  TITLE="adminCollect" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteCollect"
+  NAME="action7" PATH="/admin/deleteCollect" SHAPE="544,672,193,25"
+  TITLE="adminCollect" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveCollect"
+  NAME="action8" PATH="/admin/saveCollect" SHAPE="544,616,193,25"
+  TITLE="adminCollect" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#writeOpinion"
+  NAME="action9" PATH="/admin/writeOpinion" SHAPE="544,784,193,25"
+  TITLE="adminCollect" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/admin/collectPrologue.jsp" SHAPE="336,256,50,25" SUBTYPE="jsp"
+  TITLE="collectPrologue.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/saveCollectPrologue.shtml" TARGET="action4"
+   TITLE="saveCollectPrologue.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/deleteCollectPrologue.shtml" TARGET="action3"
+   TITLE="deleteCollectPrologue.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/admin/collect.jsp" SHAPE="336,600,50,25" SUBTYPE="jsp"
+  TITLE="collect.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveCollect.shtml" TARGET="action8"
+   TITLE="saveCollect.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteCollect.shtml" TARGET="action7"
+   TITLE="deleteCollect.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/runCollect.shtml" TARGET="action6"
+   TITLE="runCollect.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/admin/writeOpinion.shtml" TARGET="action9"
+   TITLE="writeOpinion.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link4"
+   PATH="/admin/undeleteCollect.shtml" TARGET="action12"
+   TITLE="undeleteCollect.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#collect" NAME="action10"
+  PATH="/collect" SHAPE="32,904,193,41" TITLE="collect" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/collect.jsp" TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/collect.jsp" SHAPE="336,920,50,40" SUBTYPE="jsp"
+  TITLE="collect.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/submitCollect.shtml" TARGET="action11"
+   TITLE="saveCollect.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#submitCollect"
+  NAME="action11" PATH="/submitCollect" SHAPE="544,936,193,41"
+  TITLE="collect" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/collectSubmitted.jsp" TARGET="page6"
+   TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/collectSubmitted.jsp" SHAPE="872,952,50,25" SUBTYPE="jsp"
+  TITLE="collectSubmitted.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#undeleteCollect"
+  NAME="action12" PATH="/admin/undeleteCollect" SHAPE="544,840,193,25"
+  TITLE="adminCollect" TYPE="action"/>
+</PROCESS>

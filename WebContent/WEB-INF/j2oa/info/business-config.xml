@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="来稿" class="com.yuanluesoft.j2oa.info.pojo.InfoReceive" businessServiceName="infoService">
+		<field name="subject" title="标题" length="200" required="true" type="string" inputMode="text"/>
+		<field name="keywords" title="主题词" length="100" type="string" inputMode="text"/>
+		<field name="presetMagazines" title="预选刊型" length="200" type="string" inputMode="readonly"/>
+		<field name="secretLevel" title="密级" length="10" type="string" inputMode="radio">
+			<parameter name="itemsText">普通\0秘密\0机密</parameter>
+			<parameter name="defaultValue">普通</parameter>
+		</field>
+		<field name="fromUnit" title="来稿单位名称" length="200" type="string" required="true" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectOrg(600, 400, false, "infoReceive.fromUnitId{id},infoReceive.fromUnit{name}", "", "unit")</parameter>
+		</field>
+		<field name="fromUnitId" title="来稿单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="source" title="信息来源" length="100" type="string" inputMode="text"/>
+		<field name="sn" title="期数" length="20" type="string" inputMode="readonly"/>
+		<field name="editor" title="责任编辑" length="50" type="string" inputMode="text"/>
+		<field name="editorTel" title="电话" length="100" type="string" inputMode="text"/>
+		<field name="signer" title="签发领导" length="50" type="string" inputMode="text"/>
+		<field name="signerTel" title="签发领导电话" length="100" type="string" inputMode="text"/>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly"/>
+		<field name="contributeTime" title="投稿时间" type="timestamp" inputMode="readonly"/>
+		<field name="filterPersonId" title="筛选人ID" length="20" type="number" inputMode="none"/>
+		<field name="filterPerson" title="筛选人" length="30" type="string" inputMode="readonly"/>
+		<field name="filterTime" title="筛选时间" type="timestamp" inputMode="readonly"/>
+		<field name="filterOpinion" title="筛选意见" length="1000" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="lazyBody" title="正文" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoReceiveBody</parameter>
+		</field>
+		<field name="infoFilters" title="过滤后的信息列表" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoFilter</parameter>
+		</field>
+		<field name="revises" title="退改稿记录" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoRevise</parameter>
+		</field>
+		<field name="body" title="正文" persistence="false" type="string" inputMode="textarea">
+			<parameter name="rows">8</parameter>
+			<parameter name="referenceFields">lazyBody</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">10000000</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="拟采用稿件" class="com.yuanluesoft.j2oa.info.pojo.InfoFilter" businessServiceName="infoService">
+		<field name="infoReceiveId" title="来稿ID" length="20" type="number" inputMode="none"/>
+		<field name="magazineDefineId" title="刊物配置ID" length="20" type="number" inputMode="hidden"/>
+		<field name="magazineName" title="刊物名称" length="20" type="string" required="true" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.openSelectDialog('j2oa/info', 'selectEditableMagazineDefine', 600, 400, false, 'magazineDefineId{id},magazineName{name}')</parameter>
+		</field>
+		<field name="subject" title="标题" length="200" required="true" type="string" inputMode="text"/>
+		<field name="level" title="采用级别" length="10" type="string" inputMode="radio">
+			<parameter name="itemsText">普通\0优先</parameter>
+		</field>
+		<field name="isBrief" title="是否简讯" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">不是|0\0是|1</parameter>
+		</field>
+		<field name="isVerified" title="是否核实" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">未核实|0\0已核实|1</parameter>
+		</field>
+		<field name="isCircular" title="是否通报" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">不是|0\0是|1</parameter>
+		</field>
+		<field name="isCombined" title="是否多条合一" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">不是|0\0是|1</parameter>
+		</field>
+		<field name="isBeCombined" title="是否被合并" length="1" type="number" inputMode="none"/>
+		<field name="combineInfoIds" title="合并的稿件ID" length="200" type="string" inputMode="none"/>
+		<field name="status" title="状态" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">审核中|0\0未采用|1\0待排版|2\0已排版|3\0已定版|4</parameter>
+		</field>
+		<field name="magazineId" title="刊物ID" length="20" type="number" inputMode="none"/>
+		<field name="magazineColumn" title="栏目" length="30" type="string" inputMode="readonly"/>
+		<field name="priority" title="序号" length="7,4" type="number" inputMode="none"/>
+		<field name="issueTime" title="定版时间" type="timestamp" inputMode="readonly"/>
+		<field name="magazineSN" title="刊物期数" length="8" type="string" inputMode="text"/>
+		<field name="supplementPersonId" title="补录人ID" length="20" type="number" inputMode="none"/>
+		<field name="supplementPerson" title="补录人" length="30" type="string" inputMode="readonly"/>
+		<field name="supplementTime" title="补录时间" type="timestamp" inputMode="readonly"/>
+		<field name="infoReceive" title="来稿" type="component">
+			<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoReceive</parameter>
+		</field>
+		<field name="sendHighers" title="报送情况" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoSendHigher</parameter>
+		</field>
+		<field name="instructs" title="领导批示" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoInstruct</parameter>
+		</field>
+		<field name="revises" title="退改稿记录" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoRevise</parameter>
+		</field>
+		<field name="lazyBody" title="正文" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoFilterBody</parameter>
+		</field>
+		<field name="body" title="正文" persistence="false" type="string" inputMode="textarea">
+			<parameter name="rows">15</parameter>
+			<parameter name="referenceFields">lazyBody</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审核,签发</parameter>
+			<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoFilterOpinion</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="报送情况" class="com.yuanluesoft.j2oa.info.pojo.InfoSendHigher" businessServiceName="infoService">
+		<field name="infoId" title="稿件ID" length="20" type="number" inputMode="hidden"/>
+		<field name="level" title="报送级别" length="1" type="number" inputMode="radio" required="true">
+			<parameter name="itemsServiceName">infoService</parameter>
+			<parameter name="itemsName">sendLevel</parameter>
+		</field>
+		<field name="sendTime" title="报送时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="senderId" title="报送人ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="sender" title="报送人" length="30" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="useTime" title="采用时间" type="timestamp" inputMode="readonly"/>
+		<field name="useMagazine" title="采用刊物名称" length="30" type="string" inputMode="text"/>
+		<field name="useRegisterId" title="采用登记人ID" length="20" type="number" inputMode="none"/>
+		<field name="useRegister" title="采用登记人" length="30" type="string" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="领导批示" class="com.yuanluesoft.j2oa.info.pojo.InfoInstruct" businessServiceName="infoService">
+		<field name="infoId" title="稿件ID" length="20" type="number" inputMode="hidden"/>
+		<field name="leader" title="领导姓名" length="20" required="true" type="string" inputMode="text"/>
+		<field name="level" title="领导级别" length="1" type="number" inputMode="radio" required="true">
+			<parameter name="itemsServiceName">infoService</parameter>
+			<parameter name="itemsName">leaderLevel</parameter>
+		</field>
+		<field name="instruct" title="批示内容" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="instructTime" title="批示时间" type="timestamp" inputMode="datetime"/>
+		<field name="creatorId" title="录入人ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="录入人" length="30" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="录入时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="退改稿" class="com.yuanluesoft.j2oa.info.pojo.InfoRevise" businessServiceName="infoService">
+		<field name="infoId" title="稿件ID" length="20" type="number" inputMode="hidden"/>
+		<field name="isReceive" title="是否来稿" length="1" type="number" inputMode="hidden"/>
+		<field name="subject" title="稿件标题" length="200" type="string" inputMode="readonly"/>
+		<field name="revisePersonId" title="退改稿人ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="revisePerson" title="退改稿人" length="30" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="revisePersonTel" title="退改稿人电话" length="30" type="string" inputMode="text"/>
+		<field name="reviseOpinion" title="退改稿意见" length="1000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="reviseTime" title="退改稿时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="newBody" title="修改后的正文" type="string" inputMode="readonly"/>
+		<field name="editTime" title="修改时间" type="timestamp" inputMode="readonly"/>
+		<field name="editorId" title="修改人ID" length="20" type="number" inputMode="none"/>
+		<field name="editor" title="修改人" length="30" type="string" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="刊物配置" class="com.yuanluesoft.j2oa.info.pojo.InfoMagazineDefine" businessServiceName="infoService">
+		<field name="name" title="名称" length="20" required="true" type="string" inputMode="text"/>
+		<field name="hasBrief" title="有无简讯" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">无|0\0有|1</parameter>
+		</field>
+		<field name="sn" title="当前期号" length="8" type="number" inputMode="text"/>
+		<field name="snYear" title="编号年度" length="4" type="number" inputMode="none">
+			<parameter name="defaultValue">{YEAR}</parameter>
+		</field>
+		<field name="snTotal" title="当前总期号" length="8" type="number" inputMode="text"/>
+		<field name="resetSnByYear" title="每年重排期号" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">不重排|0\0重排|1</parameter>
+		</field>
+		<field name="columns" title="栏目列表" length="1000" type="string" inputMode="text"/>
+		<field name="visitors" title="发布范围、编辑、主编" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoMagazineDefinePrivilege</parameter>
+		</field>
+		<field name="template" title="模板" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">5000000</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="积分和稿酬" class="com.yuanluesoft.j2oa.info.pojo.InfoPoint" businessServiceName="infoService">
+		<field name="item" title="得分项目" length="2" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsServiceName">infoService</parameter>
+			<parameter name="itemsName">pointItem</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="magazineIds" title="刊物ID列表" length="500" type="string" inputMode="hidden"/>
+		<field name="magazineNames" title="刊物名称列表" length="500" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.openSelectDialog('j2oa/info', 'selectMagazineDefine', 640, 400, true, 'magazineIds{id},magazineNames{name|刊物|100%}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="point" title="积分" length="6,2" type="number" inputMode="text"/>
+		<field name="remuneration" title="稿酬" length="6,2" type="number" inputMode="text"/>
+		<field name="briefPoint" title="简讯积分" length="6,2" type="number" inputMode="text"/>
+		<field name="briefRemuneration" title="简讯稿酬" length="6,2" type="number" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="刊物" class="com.yuanluesoft.j2oa.info.pojo.InfoMagazine"  businessServiceName="infoService">
+		<field name="defineId" title="刊物配置ID" length="20" type="number" inputMode="hidden"/>
+		<field name="name" title="刊物名称" length="20" type="string" inputMode="readonly"/>
+		<field name="sn" title="期数" length="8" type="number" inputMode="readonly"/>
+		<field name="snTotal" title="总期数" length="8" type="number" inputMode="readonly"/>
+		<field name="typesetPersonId" title="排版人ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="typesetPerson" title="排版人" length="30" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="typesetTime" title="排版时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="generateDate" title="生成日期" type="date" inputMode="readonly"/>
+		<field name="issuePersonId" title="定版人ID" length="20" type="number" inputMode="none"/>
+		<field name="issuePerson" title="定版人" length="30" type="string" inputMode="readonly"/>
+		<field name="issueTime" title="定版时间" type="timestamp" inputMode="readonly"/>
+		<field name="useInfos" title="采用的稿件" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoFilter</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审核,签发</parameter>
+			<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoMagazineOpinion</parameter>
+		</field>
+		<field name="htmlBodies" title="HTML正文" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoMagazineBody</parameter>
+		</field>
+		<field name="htmlBody" title="HTML正文" persistence="false" type="string" inputMode="htmleditor">
+			<parameter name="referenceFields">htmlBodies</parameter>
+		</field>
+		<field name="body" title="正文" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+		<field name="html" title="HTML文件及附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="fileExtension">所有文件|*.*|</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+		<field name="official" title="正式文件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="刊物栏目" class="com.yuanluesoft.j2oa.info.model.MagazineColumn">
+		<field name="columnName" title="栏目名称" length="30" type="string" inputMode="readonly"/>
+		<field name="columnUseInfos" title="采用的稿件(非简讯)" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoFilter</parameter>
+		</field>
+		<field name="columnUseBriefs" title="采用的稿件(简讯)" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.info.pojo.InfoFilter</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="刊物栏目" class="com.yuanluesoft.j2oa.info.model.IssueTotal">
+		<field name="unitName" title="单位名称" type="string" inputMode="readonly"/>
+		<field name="point" title="积分" type="number" inputMode="readonly"/>
+		<field name="remuneration" title="稿酬" type="number" inputMode="readonly"/>
+		<field name="issue" title="采用数" type="number" inputMode="readonly"/>
+		<field name="briefIssue" title="简讯采用数" type="number" inputMode="readonly"/>
+		<field name="sendCounty" title="上报县办" type="number" inputMode="readonly"/>
+		<field name="sendCity" title="上报市办" type="number" inputMode="readonly"/>
+		<field name="sendProvincial" title="上报省办" type="number" inputMode="readonly"/>
+		<field name="sendCountry" title="上报国办" type="number" inputMode="readonly"/>
+		<field name="countyIssue" title="县办采用" type="number" inputMode="readonly"/>
+		<field name="cityIssue" title="市办采用" type="number" inputMode="readonly"/>
+		<field name="provincialIssue" title="省办采用" type="number" inputMode="readonly"/>
+		<field name="countryIssue" title="国办采用" type="number" inputMode="readonly"/>
+		<field name="countyInstruct" title="县领导批示" type="number" inputMode="readonly"/>
+		<field name="cityInstruct" title="市领导批示" type="number" inputMode="readonly"/>
+		<field name="provincialInstruct" title="省领导批示" type="number" inputMode="readonly"/>
+		<field name="countryInstruct" title="国家领导批示" type="number" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

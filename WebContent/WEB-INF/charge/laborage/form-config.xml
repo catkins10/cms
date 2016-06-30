@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<forms>
+	<form name="laborageMode" class="com.yuanluesoft.charge.laborage.forms.LaborageMode" title="报酬支出方式" pojo="com.yuanluesoft.charge.laborage.pojo.LaborageMode">
+	</form>
+	
+	<form name="admin/monthlyLaborage" class="com.yuanluesoft.charge.laborage.forms.admin.MonthlyLaborage" title="报酬月结账单" pojo="com.yuanluesoft.charge.laborage.pojo.MonthlyLaborage">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="完成支付" hide="isRead()" execute="if(confirm('是否确定已经完成支付？'))FormUtils.doAction('payoffMonthlyLaborage')"/>
+		</actions>
+	</form>
+	
+	<form name="monthlyLaborage" class="com.yuanluesoft.charge.laborage.forms.MonthlyLaborage" title="报酬月结账单" pojo="com.yuanluesoft.charge.laborage.pojo.MonthlyLaborage">
+	</form>
+	
+	<form name="payoffTransaction" class="com.yuanluesoft.charge.laborage.forms.PayoffTransaction" title="报酬月结账单支付" pojo="com.yuanluesoft.charge.laborage.pojo.Payoff">
+		<actions/>
+	</form>
+</forms>

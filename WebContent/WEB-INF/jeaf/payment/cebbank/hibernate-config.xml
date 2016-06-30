@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--光大银行:支付记录-->
+	<class name="com.yuanluesoft.jeaf.payment.paymentmethod.cebbank.pojo.CebbankOrder" table="payment_cebbank_order">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="paymentId"/> <!--支付单ID-->
+		<property name="originalTransId"/> <!--原交易代码-->
+		<property name="orderId"/> <!--订单号-->
+		<property name="transSeqNo"/> <!--支付系统交易流水号-->
+		<property name="merchantId"/> <!--商户ID-->
+		<property name="transDateTime"/> <!--交易时间-->
+		<property name="ppDateTime"/> <!--支付系统交易时间-->
+		<property name="clearingDate"/> <!--清算日期-->
+		<property name="transAmt"/> <!--交易金额-->
+		<property name="transAmt1"/> <!--已退货金额-->
+		<property name="feeAmt"/> <!--手续费金额-->
+		<property name="transStatus"/> <!--交易状态-->
+		<property name="respCode"/> <!--响应代码-->
+	</class>
+</hibernate-mapping>

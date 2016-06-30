@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+   <!--用户信息-->
+	<class name="com.yuanluesoft.credit.regist.pojo.admin.CreditUser" table="credit_user">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="loginName"/> <!--登录用户名-->
+		<property name="password"/> <!--密码-->
+		<property name="name"/> <!--姓名-->
+		<property name="email"/> <!--邮箱-->
+		<property name="tel"/> <!--电话-->
+		<property name="addr"/> <!--地址-->
+		<property name="unitName"/> <!--单位名称-->
+		<property name="job"/> <!--职务-->
+		<property name="buniessScope"/> <!--经营范围-->
+		
+		<property name="status"/> <!--状态-->
+		<property name="remark"/> <!--审核意见-->
+		<property name="created"/> <!--注册时间-->
+		<property name="approverId"/> <!--审核人ID-->
+		<property name="approver"/> <!--审核人-->
+		<property name="approveDate"/> <!--审核时间-->
+	</class>
+
+</hibernate-mapping>

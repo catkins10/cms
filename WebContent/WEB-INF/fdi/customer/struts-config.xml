@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminCompany" type="com.yuanluesoft.fdi.customer.forms.admin.Company"/>
+  <form-bean name="adminContact" type="com.yuanluesoft.fdi.customer.forms.admin.Contact"/>
+  <form-bean name="adminDiscuss" type="com.yuanluesoft.fdi.customer.forms.admin.Discuss"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminCompany" path="/admin/company" scope="request"
+   type="com.yuanluesoft.fdi.customer.actions.company.admin.Load" validate="false">
+   <forward name="load" path="/admin/company.jsp"/>
+  </action>
+  <action input="/admin/company.jsp" name="adminCompany"
+   path="/admin/saveCompany" scope="request"
+   type="com.yuanluesoft.fdi.customer.actions.company.admin.Save" validate="false"/>
+  <action input="/admin/company.jsp" name="adminCompany"
+   path="/admin/deleteCompany" scope="request"
+   type="com.yuanluesoft.fdi.customer.actions.company.admin.Delete" validate="false"/>
+  <action name="adminContact" path="/admin/contact" scope="request"
+   type="com.yuanluesoft.fdi.customer.actions.contact.admin.Load" validate="false">
+   <forward name="load" path="/admin/contact.jsp"/>
+  </action>
+  <action input="/admin/contact.jsp" name="adminContact"
+   path="/admin/saveContact" scope="request"
+   type="com.yuanluesoft.fdi.customer.actions.contact.admin.Save" validate="false"/>
+  <action input="/admin/contact.jsp" name="adminContact"
+   path="/admin/deleteContact" scope="request"
+   type="com.yuanluesoft.fdi.customer.actions.contact.admin.Delete" validate="false"/>
+  <action name="adminDiscuss" path="/admin/discuss" scope="request"
+   type="com.yuanluesoft.fdi.customer.actions.contact.admin.discuss.Load" validate="false">
+   <forward name="load" path="/admin/discuss.jsp"/>
+  </action>
+  <action input="/admin/company.jsp" name="adminCompany"
+   path="/admin/refreshCompany" scope="request"
+   type="com.yuanluesoft.fdi.customer.actions.company.admin.Refresh" validate="false"/>
+  <action input="/admin/contact.jsp" name="adminContact"
+   path="/admin/refreshContact" scope="request"
+   type="com.yuanluesoft.fdi.customer.actions.contact.admin.Refresh" validate="false"/>
+  <action input="/admin/discuss.jsp" name="adminDiscuss"
+   path="/admin/saveDiscuss" scope="request"
+   type="com.yuanluesoft.fdi.customer.actions.contact.admin.discuss.Save" validate="false"/>
+  <action input="/admin/discuss.jsp" name="adminDiscuss"
+   path="/admin/deleteDiscuss" scope="request"
+   type="com.yuanluesoft.fdi.customer.actions.contact.admin.discuss.Delete" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

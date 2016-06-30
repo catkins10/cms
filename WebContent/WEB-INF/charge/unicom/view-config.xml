@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views>
+	<view name="admin/serviceMapping" form="admin/serviceMapping" title="服务映射" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomServiceMapping</pojo>
+			<orderBy>UnicomServiceMapping.servicePriceName</orderBy>
+			<quickFilter>UnicomServiceMapping.servicePriceName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加映射" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('charge/unicom','admin/serviceMapping','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="服务报价" name="servicePriceName"/>
+			<column title="联通套餐编码" name="unicomServiceId"  align="center" width="100"/>
+		</columns>
+	</view>
+	
+	<view name="admin/telNumber" form="admin/telNumber" title="号码段" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomTelNumber</pojo>
+			<orderBy>UnicomTelNumber.area</orderBy>
+			<quickFilter>UnicomTelNumber.area like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加号码段" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('charge/unicom','admin/telNumber','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="地区" name="area" width="100"/>
+			<column title="区号" name="areaCode" width="100"/>
+			<column title="起始号码" name="beginNumber"  align="center"/>
+			<column title="结束号码" name="endNumber"  align="center"/>
+			<column title="最后使用的号码" name="lastUseNumber"  align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/cardOrder" form="admin/cardOrder" title="账号卡订单" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomCardOrder</pojo>
+			<orderBy>UnicomCardOrder.area</orderBy>
+			<quickFilter>UnicomCardOrder.area like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="创建账号卡" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('charge/unicom','admin/cardOrder','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="地区" name="area"/>
+			<column title="区号" name="areaCode" width="100"/>
+			<column title="起始号码" name="beginNumber"  align="center" width="120"/>
+			<column title="结束号码" name="endNumber"  align="center" width="120"/>
+			<column title="创建人" name="creator"  align="center" width="120"/>
+			<column title="创建时间" name="created" width="120" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/card" form="admin/card" title="账号卡" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomCard</pojo>
+			<orderBy>UnicomCard.effectiveTime, UnicomCard.cardNumber</orderBy>
+			<quickFilter>UnicomCard.orderId like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="创建账号卡" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('charge/unicom','admin/cardOrder','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="卡号" name="cardNumber" />
+			<column title="生效时间" name="effectiveTime" width="120" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/cardGroup" form="admin/cardGroup" title="计费组代码" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomCardGroup</pojo>
+			<orderBy>UnicomCardGroup.areaCode</orderBy>
+			<quickFilter>UnicomCardGroup.groupCode like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="创建计费组代码" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('charge/unicom','admin/cardGroup','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="计费组代码" name="groupCode"/>
+			<column title="区号" name="areaCode" width="100"/>
+			<column title="起始号码" name="beginNumber"  align="center" width="120"/>
+			<column title="结束号码" name="endNumber"  align="center" width="120"/>
+			<column title="创建人" name="creator"  align="center" width="120"/>
+			<column title="创建时间" name="created" width="120" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/unicomPerson" title="注册情况" pageRows="20" hide="noPrivilege(application_visitor)" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomPersonExtend</pojo>
+			<orderBy>UnicomPersonExtend.created DESC</orderBy>
+			<quickFilter>UnicomPersonExtend.unicomPersonId like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="打印" execute="printAsExcel()"/>
+		</actions>
+		<links>
+			<link>javascript:PageUtils.openurl('https://passport.9191edu.com/jeai/usermanage/admin/student.shtml?act=edit&amp;id={person.id}','width=720,height=480', '{person.id}')</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="用户名" name="person.name" width="80"/>
+			<column title="联通帐号" name="unicomPersonId" width="120" align="center"/>
+			<column title="电话" name="person.telFamily" width="120"/>
+			<column title="邮箱" name="person.mailAddress"/>
+			<column title="身份证号码" name="person.identityCard" width="120"/>
+			<column title="注册时间" name="created" width="120" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/unicomBill" title="扣费情况" hide="noPrivilege(application_visitor)" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomDeduct</pojo>
+			<orderBy>UnicomDeduct.created DESC</orderBy>
+			<quickFilter>UnicomDeduct.unicomPersonId like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="打印" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="联通帐号" name="unicomPersonId" align="center"/>
+			<column title="扣费金额" name="money" width="120" align="center"/>
+			<column title="扣费时间" name="created" width="120" align="center"/>
+		</columns>
+	</view>
+</views>

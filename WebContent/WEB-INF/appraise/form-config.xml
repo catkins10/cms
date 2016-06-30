@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="internetAppraise" title="网络评议" method="post" action="/appraise/submitInternetAppraise.shtml" class="com.yuanluesoft.appraise.forms.InternetAppraise" pojo="com.yuanluesoft.appraise.pojo.Appraise" js="/appraise/js/appraise.js">
+		<formFields>
+			<field name="appraiserNumber" title="评议员手机号码" type="string" inputMode="hidden"/>
+			<field name="appraiseCode" title="评议验证码" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="提交" execute="submitInternetAppraise()"/>
+		</actions>
+	</form>
+	
+	<form name="wapAppraise" title="WAP评议" method="post" action="/appraise/submitWapAppraise.shtml" class="com.yuanluesoft.appraise.forms.WapAppraise" pojo="com.yuanluesoft.appraise.pojo.Appraise">
+		<formFields>
+			<field name="appraiserNumber" title="评议员手机号码" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="internetAppraiseCode" title="网络评议验证码认证" method="get" action="/appraise/internetAppraise.shtml">
+		<formFields>
+			<field name="appraiserNumber" title="评议员手机号码" type="string" inputMode="text"/>
+			<field name="appraiseCode" title="评议验证码" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="开始评议" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="complaint" title="投诉或建议" method="post" action="/cms/complaint/saveComplaint.shtml" class="com.yuanluesoft.cms.complaint.forms.Complaint" pojo="com.yuanluesoft.cms.complaint.pojo.Complaint">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+
+	<form name="admin/task" class="com.yuanluesoft.appraise.forms.admin.Task" title="评议任务" pojo="com.yuanluesoft.appraise.pojo.AppraiseTask">
+		<formFields>
+			<field name="months" title="评议月份" type="string[]" inputMode="multibox">
+				<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10\0 11\0 12</parameter>
+			</field>
+			<field name="allAppraiserJobs" title="是否全部" type="boolean" inputMode="checkbox">
+				<parameter name="value">true</parameter>
+				<parameter name="label">全部</parameter>
+			</field>
+			<field name="selectedAppraiserJobs" title="评议员身份" type="string[]" inputMode="multibox">
+				<parameter name="itemsText">人大代表\0政协委员\0党代表\0民评代表\0特邀监察员\0党风、效能监督员\0党政领导\0企业主\0其它</parameter> <!-- 公务员\0人大代表\0政协委员\0企业主\0城市居民\0农民 -->
+			</field>
+			<field name="allRecipientJobs" title="是否全部" type="boolean" inputMode="checkbox">
+				<parameter name="value">true</parameter>
+				<parameter name="label">全部</parameter>
+			</field>
+			<field name="selectedRecipientJobs" title="评议员身份" type="string[]" inputMode="multibox">
+				<parameter name="itemsText">农业劳动者\0产业工人\0服务和流通行业从业人员\0科教文卫部门专业人员\0市场主体管理人员\0国家机关、党政机关工作人员\0群（社）团组织工作人员\0社区居民\0部队及其它人</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteTask')"/>
+			<action title="发起评议" hide="isRead() or isNew()" execute="PageUtils.newrecord('appraise', 'admin/appraise', 'mode=fullscreen', 'taskId={PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/option" class="com.yuanluesoft.appraise.forms.admin.Option" title="评议选项" pojo="com.yuanluesoft.appraise.pojo.AppraiseTask">
+		<formFields>
+			<field name="option" title="评议选项" type="component">
+				<parameter name="class">com.yuanluesoft.appraise.pojo.AppraiseOption</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteOption')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/appraise" class="com.yuanluesoft.appraise.forms.admin.Appraise" title="评议" pojo="com.yuanluesoft.appraise.pojo.Appraise">
+		<formFields>
+			<field name="cancelNoAppraisersUnit" title="是否不考核没有评议员的单位" type="boolean" inputMode="radio">
+				<parameter name="itemsText">评议|false\0不评议|true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="启动评议" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="补发短信" hide="isNew() or noPrivilege(application_manager)" execute="FormUtils.doAction('supplySendSms')"/>
+			<action title="短信发送明细"  hide="isNew()" execute="DialogUtils.openSelectDialog('jeaf/sms', 'admin/smsSendBySourceRecord', '80%', '80%', false, '', '', '', '', '', true, 'sourceRecordId={PARAMETER:id}')"/>
+			<action title="意见或建议汇总"  hide="isNew()" execute="DialogUtils.openSelectDialog('appraise', 'admin/allPropose', '80%', '80%', false, '', '', '', '', '', true, 'appraiseId={PARAMETER:id}&amp;showPrintBuddon=true')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/unitAppraise" class="com.yuanluesoft.appraise.forms.admin.UnitAppraise" title="单位评议" pojo="com.yuanluesoft.appraise.pojo.UnitAppraise">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<!-- action title="查看投票明细" execute="DialogUtils.openSelectDialog('appraise', 'admin/vote', '80%', '80%', false, '', '', '', '', '', true, 'unitAppraiseId={PARAMETER:id}')"/ -->
+			<action title="意见或建议" execute="DialogUtils.openSelectDialog('appraise', 'admin/propose', '80%', '80%', false, '', '', '', '', '', true, 'unitAppraiseId={PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/participateUnit" class="com.yuanluesoft.appraise.forms.admin.ParticipateUnit" title="参评单位" pojo="com.yuanluesoft.appraise.pojo.AppraiseParticipateUnit">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteParticipateUnit')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/appraiseUnitSms" class="com.yuanluesoft.appraise.forms.admin.AppraiseUnitSms" title="短信通知" pojo="com.yuanluesoft.appraise.pojo.AppraiseUnitSms">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="发送" hide="isRead()" execute="FormUtils.doAction('sendAppraiseUnitSms')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteAppraiseUnitSms')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/deduct" class="com.yuanluesoft.appraise.forms.admin.Deduct" title="扣分" pojo="com.yuanluesoft.appraise.pojo.AppraiseDeduct">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteDeduct')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/markStandard" class="com.yuanluesoft.appraise.forms.admin.MarkStandard" title="评分标准" pojo="com.yuanluesoft.appraise.pojo.AppraiseMarkStandard">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteMarkStandard')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/parameter" class="com.yuanluesoft.appraise.forms.admin.Parameter" title="参数配置" pojo="com.yuanluesoft.appraise.pojo.AppraiseParameter">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+
+	<form class="com.yuanluesoft.appraise.forms.admin.AppraiseUnitArticleTotalView" title="文章发布统计">
+		<formFields>
+			<field name="beginDate" title="开始时间" type="date" inputMode="date"/>
+			<field name="endDate" title="结束时间" type="date" inputMode="date"/>
+			<field name="category" title="分类" length="200" type="string" inputMode="dropdown">
+				<parameter name="itemsText">经济和社会管理部门\0行政执法监督部门\0公共服务行业</parameter>
+			</field>
+		</formFields>
+	</form>	
+	
+	<form class="com.yuanluesoft.appraise.forms.admin.AppraiseResultView" title="评议汇总">
+		<formFields>
+			<field name="year" title="年度" type="number" inputMode="text"/>
+			<field name="category" title="分类" length="200" type="string" inputMode="dropdown">
+				<parameter name="itemsText">经济和社会管理部门\0行政执法监督部门\0公共服务行业</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.appraise.forms.admin.InsertParticipateUnits" title="插入参评单位">
+		<formFields>
+			<field name="category" title="单位分类" length="200" type="string" inputMode="dropdown">
+				<parameter name="itemsText">经济和社会管理部门\0行政执法监督部门\0公共服务行业</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.appraise.forms.admin.InsertAppraises" title="插入评议列表">
+		<formFields>
+			<field name="appraiserType" title="评议对象类别" length="200" type="string" inputMode="radio">
+				<parameter name="itemsText">基础库|0\0管理服务对象|1</parameter>
+				<parameter name="defaultValue">0</parameter>
+			</field>
+		</formFields>
+	</form>
+</forms>

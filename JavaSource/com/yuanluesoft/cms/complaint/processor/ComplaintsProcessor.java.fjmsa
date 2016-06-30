@@ -1,0 +1,27 @@
+package com.yuanluesoft.cms.complaint.processor;
+
+import com.yuanluesoft.cms.pagebuilder.model.page.SitePage;
+import com.yuanluesoft.cms.pagebuilder.model.recordlist.RecordList;
+import com.yuanluesoft.cms.pagebuilder.processor.spring.RecordListProcessor;
+import com.yuanluesoft.cms.publicservice.processor.PublicServicesProcessor;
+import com.yuanluesoft.cms.sitemanage.pojo.WebDirectory;
+import com.yuanluesoft.cms.sitemanage.pojo.WebSite;
+import com.yuanluesoft.jeaf.exception.ServiceException;
+import com.yuanluesoft.jeaf.htmlparser.HTMLParser;
+import com.yuanluesoft.jeaf.util.StringUtils;
+import com.yuanluesoft.jeaf.view.model.View;
+import javax.servlet.http.HttpServletRequest;
+import org.w3c.dom.html.HTMLDocument;
+import org.w3c.dom.html.HTMLElement;
+
+public class ComplaintsProcessor extends PublicServicesProcessor
+{
+  protected void resetView(View view, HTMLElement pageElement, RecordList recordListModel, HTMLDocument recordFormatDocument, WebDirectory webDirectory, WebSite parentSite, HTMLParser htmlParser, SitePage sitePage, HttpServletRequest request)
+    throws ServiceException
+  {
+    super.resetView(view, pageElement, recordListModel, recordFormatDocument, webDirectory, parentSite, htmlParser, sitePage, request);
+    String complaintTypes = StringUtils.getPropertyValue(recordListModel.getExtendProperties(), "complaintTypes");
+    if ((complaintTypes != null) && (!complaintTypes.isEmpty()))
+      view.addWhere("Complaint.type in ('" + complaintTypes.replaceAll(",", "','") + "')");
+  }
+}

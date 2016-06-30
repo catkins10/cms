@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminAppraiserView" type="com.yuanluesoft.appraise.appraiser.forms.admin.AppraiserView"/>
+  <form-bean name="adminImportAppraiser" type="com.yuanluesoft.appraise.appraiser.forms.admin.ImportAppraiser"/>
+  <form-bean name="adminImportRecipient" type="com.yuanluesoft.appraise.appraiser.forms.admin.ImportRecipient"/>
+  <form-bean name="adminAppraiser" type="com.yuanluesoft.appraise.appraiser.forms.admin.Appraiser"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminAppraiserView" path="/admin/appraiserView"
+   scope="request"
+   type="com.yuanluesoft.appraise.appraiser.actions.appraiserview.admin.AppraiserViewAction" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action name="adminImportAppraiser" path="/admin/importAppraiser"
+   scope="request"
+   type="com.yuanluesoft.appraise.appraiser.actions.importappraiser.admin.Load" validate="false">
+   <forward name="load" path="/admin/importAppraiser.jsp"/>
+  </action>
+  <action name="adminImportRecipient" path="/admin/importRecipient"
+   scope="request"
+   type="com.yuanluesoft.appraise.appraiser.actions.importrecipient.admin.Load" validate="false">
+   <forward name="load" path="/admin/importRecipient.jsp"/>
+  </action>
+  <action input="/admin/importAppraiser.jsp" name="adminImportAppraiser"
+   path="/admin/doImportAppraiser" scope="request"
+   type="com.yuanluesoft.appraise.appraiser.actions.importappraiser.admin.DoImport" validate="false"/>
+  <action input="/admin/importRecipient.jsp" name="adminImportRecipient"
+   path="/admin/saveImportRecipient" scope="request"
+   type="com.yuanluesoft.appraise.appraiser.actions.importrecipient.admin.Save" validate="false"/>
+  <action input="/admin/importRecipient.jsp" name="adminImportRecipient"
+   path="/admin/deleteImportRecipient" scope="request"
+   type="com.yuanluesoft.appraise.appraiser.actions.importrecipient.admin.Delete" validate="false"/>
+  <action input="/admin/importRecipient.jsp" name="adminImportRecipient"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.appraise.appraiser.actions.importrecipient.admin.WriteOpinion" validate="false"/>
+  <action input="/admin/importRecipient.jsp" name="adminImportRecipient"
+   path="/admin/runImportRecipient" scope="request"
+   type="com.yuanluesoft.appraise.appraiser.actions.importrecipient.admin.Run" validate="false"/>
+  <action input="/admin/importRecipient.jsp" name="adminImportRecipient"
+   path="/admin/approvalImportRecipient" scope="request"
+   type="com.yuanluesoft.appraise.appraiser.actions.importrecipient.admin.Approval" validate="false"/>
+  <action name="adminAppraiser" path="/admin/appraiser" scope="request"
+   type="com.yuanluesoft.appraise.appraiser.actions.appraiser.admin.Load" validate="false">
+   <forward name="load" path="/admin/appraiser.jsp"/>
+  </action>
+  <action input="/admin/appraiser.jsp" name="adminAppraiser"
+   path="/admin/saveAppraiser" scope="request"
+   type="com.yuanluesoft.appraise.appraiser.actions.appraiser.admin.Save" validate="false"/>
+  <action input="/admin/appraiser.jsp" name="adminAppraiser"
+   path="/admin/deleteAppraiser" scope="request"
+   type="com.yuanluesoft.appraise.appraiser.actions.appraiser.admin.Delete" validate="false"/>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="adminAppraiserView" path="/admin/emptyAppraisers"
+   scope="request"
+   type="com.yuanluesoft.appraise.appraiser.actions.appraiserview.admin.EmptyAppraisers" validate="false"/>
+  <action name="adminImportAppraiser"
+   path="/admin/importAppraiserAttachmentEditor" scope="request"
+   type="com.yuanluesoft.appraise.appraiser.actions.importappraiser.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="adminImportRecipient"
+   path="/admin/importRecipientAttachmentEditor" scope="request"
+   type="com.yuanluesoft.appraise.appraiser.actions.importrecipient.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action input="/admin/importRecipient.jsp" name="adminImportRecipient"
+   path="/admin/reimportRecipient" scope="request"
+   type="com.yuanluesoft.appraise.appraiser.actions.importrecipient.admin.Reimport" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

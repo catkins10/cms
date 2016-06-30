@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,161,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="336,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,161,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="336,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#task" NAME="action0"
+  PATH="/task" SHAPE="32,224,161,25" TITLE="task" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/task.jsp" TARGET="page3" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteTask"
+  NAME="action1" PATH="/deleteTask" SHAPE="544,312,161,25" TITLE="task" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveTask" NAME="action2"
+  PATH="/saveTask" SHAPE="544,256,161,25" TITLE="task" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3" PATH="/task.jsp"
+  SHAPE="336,240,50,25" SUBTYPE="jsp" TITLE="task.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveTask" TARGET="action2" TITLE="saveTask" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteTask" TARGET="action1" TITLE="deleteTask" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/nextStep" TARGET="action3" TITLE="nextStep" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#nextStep" NAME="action3"
+  PATH="/nextStep" SHAPE="544,368,161,25" TITLE="task" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listCaptureTest"
+  NAME="action4" PATH="/listCaptureTest" SHAPE="32,560,161,41"
+  TITLE="listCaptureTest" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/listCaptureTest.jsp" TARGET="page2"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#recordCaptureTest"
+  NAME="action5" PATH="/recordCaptureTest" SHAPE="32,640,161,41"
+  TITLE="recordCaptureTest" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/recordCaptureTest.jsp" TARGET="page5"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/listCaptureTest.jsp" SHAPE="336,576,50,25" SUBTYPE="jsp"
+  TITLE="listCaptureTest.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/recordCaptureTest.jsp" SHAPE="336,656,50,25" SUBTYPE="jsp"
+  TITLE="recordCaptureTest.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#startupCapture"
+  NAME="action6" PATH="/startupCapture" SHAPE="32,752,161,41"
+  TITLE="task" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/startupCapture.jsp" TARGET="page4"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/startupCapture.jsp" SHAPE="336,768,50,25" SUBTYPE="jsp"
+  TITLE="startupCapture.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#copyTask" NAME="action7"
+  PATH="/copyTask" SHAPE="32,432,161,41" TITLE="task" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/copyTask.jsp" TARGET="page6" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/copyTask.jsp" SHAPE="336,448,50,25" SUBTYPE="jsp"
+  TITLE="copyTask.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/doCopyTask" TARGET="action8" TITLE="doCopyTask" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#doCopyTask"
+  NAME="action8" PATH="/doCopyTask" SHAPE="544,464,161,25" TITLE="task" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/completeCopyTask.jsp" TARGET="page7"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page7"
+  PATH="/completeCopyTask.jsp" SHAPE="816,480,50,25" SUBTYPE="jsp"
+  TITLE="completeCopyTask.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteCaptureLogs"
+  NAME="action9" PATH="/deleteCaptureLogs" SHAPE="32,848,161,25"
+  TITLE="applicationView" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#startupTasks"
+  NAME="action10" PATH="/startupTasks" SHAPE="32,928,161,41"
+  TITLE="startupTasks" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/startupTasks.jsp" TARGET="page8" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page8"
+  PATH="/startupTasks.jsp" SHAPE="336,944,50,40" SUBTYPE="jsp"
+  TITLE="startupTasks.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/doStartupTasks" TARGET="action11"
+   TITLE="doStartupTasks" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#doStartupTasks"
+  NAME="action11" PATH="/doStartupTasks" SHAPE="544,960,161,25"
+  TITLE="startupTasks" TYPE="action"/>
+</PROCESS>

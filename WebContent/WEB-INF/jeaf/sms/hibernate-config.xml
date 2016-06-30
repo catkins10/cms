@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--短信接收-->
+	<class name="com.yuanluesoft.jeaf.sms.pojo.SmsReceive" table="sms_receive">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="smsClientName"/> <!--短信客户端名称,多个短信客户端时,用来识别客户端,VARCHAR(50)-->
+		<property name="senderNumber"/> <!--发送人号码,VARCHAR(30)-->
+		<property name="receiverNumber"/> <!--短信接收号码,VARCHAR(30)-->
+		<property name="message"/> <!--短信内容,VARCHAR(4000)-->
+		<property name="receiveTime"/> <!--接收时间,timestamp null-->
+		<property name="businessName"/> <!--短信业务名称,VARCHAR(30)-->
+		<property name="businessId"/> <!--短信业务ID,NUMERIC(20)-->
+		<property name="receiverUnit"/> <!--单位名称,VARCHAR(200)-->
+		<property name="receiverUnitId"/> <!--单位ID,NUMERIC(20)-->
+	</class>
+	
+	<!--短信发送-->
+	<class name="com.yuanluesoft.jeaf.sms.pojo.SmsSend" table="sms_send">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="smsClientName"/> <!--短信客户端名称,多个短信客户端时,用来识别客户端,VARCHAR(50)-->
+		<property name="taskId"/> <!--任务ID,NUMERIC(20)-->
+		<property name="sourceRecordId"/> <!--源记录ID,NUMERIC(20)-->
+		<property name="senderId"/> <!--发送人ID,NUMERIC(20)-->
+		<property name="senderName"/> <!--发送人姓名,VARCHAR(100)-->
+		<property name="senderUnitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="senderUnit"/> <!--单位名称,VARCHAR(200)-->
+		<property name="businessId"/> <!--短信业务ID,NUMERIC(20)-->
+		<property name="businessName"/> <!--短信业务名称,VARCHAR(30)-->
+		<property name="receiverId"/> <!--接收人ID,NUMERIC(20)-->
+		<property name="receiverName"/> <!--接收人姓名,VARCHAR(100)-->
+		<property name="receiverNumber"/> <!--接收人号码,VARCHAR(30)-->
+		<property name="message"/> <!--短信内容,VARCHAR(4000)-->
+		<property name="splitCount"/> <!--分拆条数,NUMERIC(2)-->
+		<property name="senderNumber"/> <!--短信发送号码,VARCHAR(100)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="sendTime"/> <!--发送时间,timestamp null-->
+		<property name="messageId"/> <!--短信ID,由短信客户端返回,VARCHAR(60)-->
+		<property name="arriveTime"/> <!--短信到达时间,需要短信服务器支持,timestamp null-->
+		<property name="arriveCheck"/> <!--是否需要到达检查,CHAR(1)-->
+		<property name="remark"/> <!--备注,VARCHAR(200)-->
+	</class>
+	
+	<!--短信服务:业务配置-->
+	<class name="com.yuanluesoft.jeaf.sms.pojo.SmsBusiness" table="sms_business">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--业务名称,如:农政通、党务村务、短信订阅、系统消息，其中短信订阅、系统消息是系统预设类型,VARCHAR(30)-->
+		<property name="chargeMode"/> <!--默认的计费方式,固定费用/按条计费,NUMERIC(1)-->
+		<property name="price"/> <!--默认的价格,NUMERIC(8,2)-->
+		<property name="discount"/> <!--默认的折扣,如:9.5,默认:10,NUMERIC(4,2)-->
+		<property name="postfix"/> <!--附加信息格式,如:[<单位名称>农政通],VARCHAR(50)-->
+	</class>
+	
+	<!--短信服务:单位配置-->
+	<class name="com.yuanluesoft.jeaf.sms.pojo.SmsUnitConfig" table="sms_unit_config">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(200)-->
+		<property name="enabled"/> <!--是否启用,NUMERIC(1)-->
+		<property name="smsClientName"/> <!--短信客户端名称,VARCHAR(50)-->
+		<property name="lastModified"/> <!--最后修改时间,TIMESTAMP-->
+		<property name="lastModifierId"/> <!--最后修改人ID,NUMERIC(20)-->
+		<property name="lastModifier"/> <!--最后修改人,VARCHAR(50)-->
+		<set cascade="delete" inverse="true" lazy="true" name="businessConfigs" table="sms_unit_business" order-by="businessName">
+			<key column="unitConfigId" />
+			<one-to-many class="com.yuanluesoft.jeaf.sms.pojo.SmsUnitBusiness" />
+		</set>
+	</class>
+	
+	<!--短信服务:单位业务配置-->
+	<class name="com.yuanluesoft.jeaf.sms.pojo.SmsUnitBusiness" table="sms_unit_business">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitConfigId"/> <!--单位配置ID,NUMERIC(20)-->
+		<property name="businessId"/> <!--业务ID,NUMERIC(20)-->
+		<property name="businessName"/> <!--业务名称,VARCHAR(30)-->
+		<property name="chargeMode"/> <!--计费方式,固定费用/按条计费,NUMERIC(1)-->
+		<property name="price"/> <!--价格,NUMERIC(8,2)-->
+		<property name="discount"/> <!--折扣,如:9.5,默认:10,NUMERIC(4,2)-->
+		<property name="smsNumber"/> <!--短信号码,VARCHAR(20)-->
+		<property name="enabled"/> <!--是否启用,NUMERIC(1)-->
+		<property name="postfix"/> <!--附加信息格式,如:[<单位名称>农政通],VARCHAR(50)-->
+		<property name="lastModified"/> <!--最后修改时间,TIMESTAMP-->
+		<property name="lastModifierId"/> <!--最后修改人ID,NUMERIC(20)-->
+		<property name="lastModifier"/> <!--最后修改人,VARCHAR(50)-->
+		<set cascade="delete" inverse="true" lazy="true" name="transactors" table="sms_unit_privilege" order-by="id">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.sms.pojo.SmsUnitBusinessPrivilege" />
+		</set>
+		<many-to-one name="unitConfig" class="com.yuanluesoft.jeaf.sms.pojo.SmsUnitConfig" column="unitConfigId" update="false" insert="false"/>
+	</class>
+	
+	<!--短信服务:权限控制-->
+	<class name="com.yuanluesoft.jeaf.sms.pojo.SmsUnitBusinessPrivilege" table="sms_unit_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,NUMERIC(20,0)-->
+		<property name="accessLevel"/> <!--访问级别,CHAR(1)-->
+		<property name="recordId"/> <!--主记录ID,NUMERIC(20,0)-->
+	</class>
+</hibernate-mapping>

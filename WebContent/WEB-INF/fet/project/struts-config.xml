@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminProject" type="com.yuanluesoft.fet.project.forms.admin.Project"/>
+  <form-bean name="adminFair" type="com.yuanluesoft.fet.project.forms.admin.Fair"/>
+  <form-bean name="adminMerchant" type="com.yuanluesoft.fet.project.forms.admin.Merchant"/>
+  <form-bean name="adminTarget" type="com.yuanluesoft.fet.project.forms.admin.Target"/>
+  <form-bean name="adminSelectFair" type="com.yuanluesoft.fet.project.forms.admin.SelectFair"/>
+  <form-bean name="adminPlan" type="com.yuanluesoft.fet.project.forms.admin.Plan"/>
+  <form-bean name="adminFairProjectReport" type="com.yuanluesoft.fet.project.forms.admin.FairProjectReport"/>
+  <form-bean name="adminProjectInvestmentReport" type="com.yuanluesoft.fet.project.forms.admin.ProjectInvestmentReport"/>
+  <form-bean name="adminProjectEvolveReport" type="com.yuanluesoft.fet.project.forms.admin.ProjectEvolveReport"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminProject" path="/admin/project" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.project.Load" validate="false">
+   <forward name="load" path="/admin/project.jsp"/>
+  </action>
+  <action name="adminFair" path="/admin/fair" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.fair.Load" validate="false">
+   <forward name="load" path="/admin/fair.jsp"/>
+  </action>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/saveProject" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.project.Save" validate="false"/>
+  <action input="/admin/fair.jsp" name="adminFair"
+   path="/admin/saveFair" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.fair.Save" validate="false"/>
+  <action input="/admin/fair.jsp" name="adminFair"
+   path="/admin/deleteFair" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.fair.Delete" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/deleteProject" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.project.Delete" validate="false"/>
+  <action name="adminMerchant" path="/admin/merchant" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.merchant.Load" validate="false">
+   <forward name="load" path="/admin/merchant.jsp"/>
+  </action>
+  <action input="/admin/merchant.jsp" name="adminMerchant"
+   path="/admin/saveMerchant" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.merchant.Save" validate="false"/>
+  <action input="/admin/merchant.jsp" name="adminMerchant"
+   path="/admin/deleteMerchant" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.merchant.Delete" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/addInvestment" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.project.AddInvestment" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/deleteInvestment" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.project.DeleteInvestment" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/addProblem" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.project.AddProblem" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/deleteProblem" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.project.DeleteProblem" validate="false"/>
+  <action name="adminTarget" path="/admin/target" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.target.Load" validate="false">
+   <forward name="load" path="/admin/target.jsp"/>
+  </action>
+  <action input="/admin/target.jsp" name="adminTarget"
+   path="/admin/saveTarget" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.target.Save" validate="false"/>
+  <action input="/admin/target.jsp" name="adminTarget"
+   path="/admin/deleteTarget" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.target.Delete" validate="false"/>
+  <action name="adminFairProjectReport" path="/admin/fairProjectReport"
+   scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.fairprojectreport.Load" validate="false">
+   <forward name="load" path="/admin/fairProjectReport.jsp"/>
+  </action>
+  <action name="adminProjectEvolveReport"
+   path="/admin/projectEvolveReport" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.projectevolvereport.Load" validate="false">
+   <forward name="load" path="/admin/projectEvolveReport.jsp"/>
+  </action>
+  <action name="adminPlan" path="/admin/plan" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.plan.Load" validate="false">
+   <forward name="load" path="/admin/plan.jsp"/>
+  </action>
+  <action input="/admin/plan.jsp" name="adminPlan"
+   path="/admin/savePlan" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.plan.Save" validate="false"/>
+  <action input="/admin/plan.jsp" name="adminPlan"
+   path="/admin/deletePlan" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.plan.Delete" validate="false"/>
+  <action name="adminProjectInvestmentReport"
+   path="/admin/projectInvestmentReport" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.projectinvestmentreport.Load" validate="false">
+   <forward name="load" path="/admin/projectInvestmentReport.jsp"/>
+  </action>
+  <action name="adminFairProjectReport"
+   path="/admin/writeFairProjectReport" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.fairprojectreport.WriteReport" validate="false"/>
+  <action name="adminProjectEvolveReport"
+   path="/admin/writeProjectEvolveReport" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.projectevolvereport.WriteReport" validate="false"/>
+  <action name="adminProjectInvestmentReport"
+   path="/admin/writeProjectInvestmentReport" scope="request"
+   type="com.yuanluesoft.fet.project.actions.admin.projectinvestmentreport.WriteReport" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

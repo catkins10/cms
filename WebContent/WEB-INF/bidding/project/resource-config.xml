@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Application>
+	<Actions>
+		<!-- 登记和代理抽签 -->
+		<Action Name="填写代理抽签公告"/>
+		<Action Name="完成登记" Send="true"/>
+		<Action Name="完成前期资料备案" Send="true"/>
+		<Action Name="发布中选代理公示" Send="true"/>
+		
+		<!-- 预审 -->
+		<!-- Action Name="上传预审文件"/>
+		<Action Name="预审文件盖章" Prompt="尚未对预审文件盖章" Necessary="true"/>
+		<Action Name="发布预审文件" Send="true"/>
+		<Action Name="提交答疑会议纪要(预审)" Send="true"/>
+		<Action Name="发布答疑会议纪要(预审)" Send="true"/>
+		<Action Name="提交补充通知(预审)" Send="true"/>
+		<Action Name="发布补充通知(预审)" Send="true"/-->
+		<Action Name="发布预审公示" Send="true"/>
+		
+		<!-- 招标 -->
+		<Action Name="上传招标文件"/>
+		<!--Action Name="招标文件盖章" Prompt="尚未对招标文件盖章" Necessary="true"/-->
+		<Action Name="完成场地费缴纳" Send="true"/>
+		<Action Name="完成开标室分配" Send="true"/>
+		<Action Name="完成开标室分配并发布招标文件" Send="true"/>
+		<Action Name="完成招标文件备案" Send="true"/>
+		<Action Name="发布招标文件" Send="true"/>
+		<Action Name="提交答疑会议纪要" Send="true"/>
+		<Action Name="发布答疑会议纪要" Send="true"/>
+		<Action Name="提交补充通知" Send="true"/>
+		<Action Name="发布补充通知" Send="true"/>
+		<Action Name="调整开标室"/>
+
+		<!-- 评标 -->
+		<!--Action Name="完成评标室分配" Send="true"/-->
+		<Action Name="提交开标公示" Send="true"/>
+		<Action Name="发布开标公示" Send="true"/>
+		<Action Name="招标失败" Send="true"/>
+		<Action Name="提交中标结果公示" Send="true"/>
+		<Action Name="完善投标人账户信息" Prompt="投标人账户信息尚未全部完善" Necessary="true"/>
+		<Action Name="发布中标结果公示" Send="true"/>
+		<Action Name="提交中标通知书" Send="true"/>
+		<Action Name="打印中标通知书"/>
+		<Action Name="发放中标通知书" Send="true"/>
+		
+		<!-- 缴费/归档 -->
+		<Action Name="完成缴费" Send="true"/>
+		<Action Name="完成书面报告备案" Send="true"/>
+		
+		<!-- 报建/施工许可证 -->
+		<Action Name="完成报建受理" Send="true"/>
+		<Action Name="完成报建" Send="true"/>
+		<Action Name="发放施工许可证" Send="true"/>
+		<Action Name="竣工" Send="true"/>
+		
+		<Action Name="完成保证金确认" Send="true"/>
+		<Action Name="完成保证金返还名单确认" Send="true"/>
+		<Action Name="完成保证金返还" Send="true"/>
+		
+		<!-- 其他 -->
+		<Action Name="作废" DeleteAction="true"/>
+	</Actions>
+	<ProgrammingParticipants>
+		<ProgrammingParticipant Id="projectAgent" Name="中选代理"/>
+		<ProgrammingParticipant Id="agent" Name="招标代理"/>
+		<ProgrammingParticipant Id="cityManager" Name="地区管理员"/>
+		<ProgrammingParticipant Id="cityProjectCreator" Name="项目登记人员"/>
+		<ProgrammingParticipant Id="cityProjectApprover" Name="项目审核人员"/>
+	</ProgrammingParticipants>
+	<SubForms>
+		<SubForm Id="Create" Name="登记"/>
+		<SubForm Id="Edit" Name="办理"/>
+		<SubForm Id="Read" Name="只读"/>
+	</SubForms>
+	<TypeDeclarations>
+		<TypeDeclaration Id="biddingMode" Name="招标方式">
+			<SchemaType>
+				<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"  attributeFormDefault="unqualified">
+					<xsd:element name="biddingMode">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="公开招标"/>
+								<xsd:enumeration value="邀请招标"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+		<TypeDeclaration Id="yesOrNo" Name="是/否">
+			<SchemaType>
+				<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"  attributeFormDefault="unqualified">
+					<xsd:element name="yesOrNo">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="是"/>
+								<xsd:enumeration value="否"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+		<TypeDeclaration Id="approvalMode" Name="资格审查方式">
+			<SchemaType>
+				<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"  attributeFormDefault="unqualified">
+					<xsd:element name="biddingMode">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="资格后审"/>
+								<xsd:enumeration value="资格预审"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+		<TypeDeclaration Id="agentMode" Name="代理产生方式">
+			<SchemaType>
+				<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"  attributeFormDefault="unqualified">
+					<xsd:element name="biddingMode">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="随机抽签"/>
+								<xsd:enumeration value="直接指定"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+		<TypeDeclaration Id="has" Name="有/没有">
+			<SchemaType>
+				<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"  attributeFormDefault="unqualified">
+					<xsd:element name="yesOrNo">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="有"/>
+								<xsd:enumeration value="没有"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+	</TypeDeclarations>
+	<DataFields>
+		<DataField Id="projectName" Name="项目名称">
+			<DataType><BasicType Type="STRING"/></DataType>
+		</DataField>
+		<DataField Id="biddingMode" Name="招标方式">
+			<DataType><DeclaredType Id="biddingMode"/></DataType>
+		</DataField>
+		<DataField Id="agentEnable" Name="是否委托招标代理"> <!-- 是/否 -->
+			<DataType><DeclaredType Id="yesOrNo"/></DataType>
+		</DataField>
+		<DataField Id="approvalMode" Name="资格审查方式">
+			<DataType><DeclaredType Id="approvalMode"/></DataType>
+		</DataField>
+		<DataField Id="projectCategory" Name="项目类别">
+			<DataType><BasicType Type="STRING"/></DataType>
+		</DataField>
+		<DataField Id="agentMode" Name="代理产生方式">
+			<DataType><DeclaredType Id="agentMode"/></DataType>
+		</DataField>
+		<DataField Id="hasAnswer" Name="有无答疑会议纪要">
+			<DataType><DeclaredType Id="has"/></DataType>
+		</DataField>
+		<DataField Id="hasSupplement" Name="有无补充通知">
+			<DataType><DeclaredType Id="has"/></DataType>
+		</DataField>
+		<DataField Id="signUpCount" Name="报名数">
+			<DataType><BasicType Type="INTEGER"/></DataType>
+		</DataField>
+		<DataField Id="bidopeningCount" Name="开标企业数">
+			<DataType><BasicType Type="INTEGER"/></DataType>
+		</DataField>
+		<DataField Id="failed" Name="招标失败"> <!-- 是/否 -->
+			<DataType><DeclaredType Id="yesOrNo"/></DataType>
+		</DataField>
+		<DataField Id="pitchonEnterprise" Name="中标人">
+			<DataType><BasicType Type="STRING"/></DataType>
+		</DataField>
+		<DataField Id="adjustBidopeningTime" Name="是否调整开标时间"> <!-- 是/否 -->
+			<DataType><DeclaredType Id="yesOrNo"/></DataType>
+		</DataField>
+		<DataField Id="completeReturnPledge" Name="保证金是否退还完毕"> <!-- 是/否 -->
+			<DataType><DeclaredType Id="yesOrNo"/></DataType>
+		</DataField>
+		<DataField Id="pledgeBank" Name="保证金开户行">
+			<DataType><BasicType Type="STRING"/></DataType>
+		</DataField>
+		<DataField Id="pledgeAccountName" Name="保证金帐户名">
+			<DataType><BasicType Type="STRING"/></DataType>
+		</DataField>
+		<DataField Id="pledgeAccount" Name="保证金帐号">
+			<DataType><BasicType Type="STRING"/></DataType>
+		</DataField>
+		<DataField Id="isRealNameSignUp" Name="是否实名报名"> <!-- 是/否 -->
+			<DataType><DeclaredType Id="yesOrNo"/></DataType>
+		</DataField>
+	</DataFields>
+	<Applications/>
+</Application>

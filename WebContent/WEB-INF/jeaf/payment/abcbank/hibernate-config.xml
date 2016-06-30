@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--农业银行:B2C支付记录-->
+	<class name="com.yuanluesoft.jeaf.payment.paymentmethod.abcbank.pojo.AbcbankB2COrder" table="payment_abcbank_b2c_order">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="paymentId"/> <!--支付单ID-->
+		<property name="orderNo"/> <!--订单编号-->
+		<property name="orderAmount"/> <!--订单金额-->
+		<property name="orderDesc"/> <!--订单说明-->
+		<property name="orderDate"/> <!--订单日期-->
+		<property name="orderTime"/> <!--订单时间-->
+		<property name="orderURL"/> <!--订单网址-->
+		<property name="payAmount"/> <!--支付金额-->
+		<property name="refundAmount"/> <!--退货金额-->
+		<property name="orderStatus"/> <!--订单状态-->
+		<property name="errorMessage"/> <!--交易失败原因-->
+	</class>
+	
+	<!--农业银行:B2B支付记录-->
+	<class name="com.yuanluesoft.jeaf.payment.paymentmethod.abcbank.pojo.AbcbankB2BOrder" table="payment_abcbank_b2b_order">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="paymentId"/> <!--支付单ID-->
+		<property name="merchantID"/> <!--商户代码-->
+		<property name="corporationCustomerNo"/> <!--买方企业客户代码-->
+		<property name="merchantTrnxNo"/> <!--商户交易编号-->
+		<property name="trnxSN"/> <!--交易流水号-->
+		<property name="trnxType"/> <!--交易类型-->
+		<property name="trnxAMT"/> <!--交易金额-->
+		<property name="accountNo"/> <!--付款方账号-->
+		<property name="accountName"/> <!--付款方名称-->
+		<property name="accountBank"/> <!--付款方账户行联行号-->
+		<property name="accountDBNo"/> <!--收款方账号-->
+		<property name="accountDBName"/> <!--收款方名称-->
+		<property name="accountDBBank"/> <!--收款方账户行联行号-->
+		<property name="trnxTime"/> <!--交易时间-->
+		<property name="trnxStatus"/> <!--交易状态-->
+		<property name="errorMessage"/> <!--交易执行失败原因-->
+	</class>
+</hibernate-mapping>

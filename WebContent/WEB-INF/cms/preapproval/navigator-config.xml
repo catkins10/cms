@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<application title="网上预审">
+	<viewLink local="admin/todoPreapproval" title="待办预审件"/>
+	<viewLink local="admin/inProcessPreapproval" title="在办预审件"/>
+	<viewLink local="admin/completedPreapproval" title="已办预审件"/>
+	<viewLink local="admin/allPreapproval" title="所有预审件"/>
+	<link title="办理流程" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/preapproval&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/workflowSetting
+	</link>
+	<link title="办结短信格式" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/preapproval&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/smsFormat
+	</link>
+</application>

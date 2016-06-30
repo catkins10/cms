@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminAgentSalesReport" type="com.yuanluesoft.bidding.project.report.forms.admin.AgentSalesReport"/>
+  <form-bean name="adminProjectReport" type="com.yuanluesoft.bidding.project.report.forms.admin.ProjectReport"/>
+  <form-bean name="adminSignUpView" type="com.yuanluesoft.bidding.project.report.forms.admin.SignUpView"/>
+  <form-bean name="adminProjectSignUpReport" type="com.yuanluesoft.bidding.project.report.forms.admin.ProjectSignUpReport"/>
+  <form-bean name="adminProjectPledgeReport" type="com.yuanluesoft.bidding.project.report.forms.admin.ProjectPledgeReport"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminAgentSalesReport" path="/admin/agentSalesReport"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.report.actions.agentsalesreport.Load" validate="false">
+   <forward name="load" path="/admin/agentSalesReport.jsp"/>
+  </action>
+  <action input="/admin/agentSalesReport.jsp"
+   name="adminAgentSalesReport" path="/admin/writeAgentSalesReport"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.report.actions.agentsalesreport.Write" validate="false"/>
+  <!-- action name="adminSignUpView" path="/admin/signUpView"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.report.actions.signupview.SignUpViewAction" validate="false">
+   <forward name="laod" path="/../../../jeaf/application/applicationView.jsp"/>
+  </action-->
+  <action name="adminProjectReport" path="/admin/projectReport"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.report.actions.projectreport.Load" validate="false">
+   <forward name="load" path="/admin/projectReport.jsp"/>
+  </action>
+  <action input="/admin/projectReport.jsp" name="adminProjectReport"
+   path="/admin/writeProjectReport" scope="request"
+   type="com.yuanluesoft.bidding.project.report.actions.projectreport.Write" validate="false"/>
+  <action name="adminSignUpView" path="/admin/signUpView"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.report.forms.admin.SignUpView" validate="false"/>
+  <action name="adminAgentSalesReport" path="/admin/documentSalesReport"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.report.actions.documentsalesreport.Load" validate="false">
+   <forward name="load" path="/admin/documentSalesReport.jsp"/>
+  </action>
+  <action name="adminAgentSalesReport"
+   path="/admin/writeDocumentSalesReport" scope="request"
+   type="com.yuanluesoft.bidding.project.report.actions.documentsalesreport.Write" validate="false"/>
+  <action name="adminProjectSignUpReport"
+   path="/admin/projectSignUpReport" scope="request"
+   type="com.yuanluesoft.bidding.project.report.actions.signupreport.Write" validate="false"/>
+  <action name="adminAgentSalesReport"
+   path="/admin/documentSalesReturnReport" scope="request"
+   type="com.yuanluesoft.bidding.project.report.actions.documentsalesreturnreport.Load" validate="false">
+   <forward name="load" path="/admin/documentSalesReturnReport.jsp"/>
+  </action>
+  <action name="adminAgentSalesReport"
+   path="/admin/writeDocumentSalesReturnReport" scope="request"
+   type="com.yuanluesoft.bidding.project.report.actions.documentsalesreturnreport.Write" validate="false"/>
+  <action name="adminProjectPledgeReport"
+   path="/admin/projectPledgeReport" scope="request"
+   type="com.yuanluesoft.bidding.project.report.actions.pledgereport.Write" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

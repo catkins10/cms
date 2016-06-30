@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminDataView" type="com.yuanluesoft.chd.evaluation.forms.admin.DataView"/>
+  <form-bean name="adminCompany" type="com.yuanluesoft.chd.evaluation.forms.admin.Company"/>
+  <form-bean name="adminPlantType" type="com.yuanluesoft.chd.evaluation.forms.admin.PlantType"/>
+  <form-bean name="adminPlant" type="com.yuanluesoft.chd.evaluation.forms.admin.Plant"/>
+  <form-bean name="adminRule" type="com.yuanluesoft.chd.evaluation.forms.admin.Rule"/>
+  <form-bean name="adminLevel" type="com.yuanluesoft.chd.evaluation.forms.admin.Level"/>
+  <form-bean name="adminIndicator" type="com.yuanluesoft.chd.evaluation.forms.admin.Indicator"/>
+  <form-bean name="adminPrerequisites" type="com.yuanluesoft.chd.evaluation.forms.admin.Prerequisites"/>
+  <form-bean name="adminHonor" type="com.yuanluesoft.chd.evaluation.forms.admin.Honor"/>
+  <form-bean name="adminDetail" type="com.yuanluesoft.chd.evaluation.forms.admin.Detail"/>
+  <form-bean name="adminPlantRule" type="com.yuanluesoft.chd.evaluation.forms.admin.PlantRule"/>
+  <form-bean name="adminPoint" type="com.yuanluesoft.chd.evaluation.forms.admin.Point"/>
+  <form-bean name="adminPlantDetail" type="com.yuanluesoft.chd.evaluation.forms.admin.PlantDetail"/>
+  <form-bean name="adjustPriority" type="com.yuanluesoft.jeaf.dialog.forms.AdjustPriority"/>
+  <form-bean name="adminObjective" type="com.yuanluesoft.chd.evaluation.forms.admin.Objective"/>
+  <form-bean name="select" type="com.yuanluesoft.chd.evaluation.forms.Select"/>
+  <form-bean name="plant" type="com.yuanluesoft.chd.evaluation.forms.Plant"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminDataView" path="/admin/dataView" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.dataview.DataViewAction" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action name="adminCompany" path="/admin/company" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.company.Load" validate="false">
+   <forward name="load" path="/admin/company.jsp"/>
+  </action>
+  <action input="/admin/company.jsp" name="adminCompany"
+   path="/admin/saveCompany" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.company.Save" validate="false"/>
+  <action input="/admin/company.jsp" name="adminCompany"
+   path="/admin/deleteCompany" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.company.Delete" validate="false"/>
+  <action name="adminPlantType" path="/admin/plantType" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.planttype.Load" validate="false">
+   <forward name="load" path="/admin/plantType.jsp"/>
+  </action>
+  <action input="/admin/plantType.jsp" name="adminPlantType"
+   path="/admin/savePlantType" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.planttype.Save" validate="false"/>
+  <action input="/admin/plantType.jsp" name="adminPlantType"
+   path="/admin/deletePlantType" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.planttype.Delete" validate="false"/>
+  <action name="adminPlant" path="/admin/plant" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plant.Load" validate="false">
+   <forward name="load" path="/admin/plant.jsp"/>
+  </action>
+  <action input="/admin/plant.jsp" name="adminPlant"
+   path="/admin/savePlant" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plant.Save" validate="false"/>
+  <action input="/admin/plant.jsp" name="adminPlant"
+   path="/admin/deletePlant" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plant.Delete" validate="false"/>
+  <action name="adminRule" path="/admin/rule" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.rule.Load" validate="false">
+   <forward name="load" path="/admin/rule.jsp"/>
+  </action>
+  <action input="/admin/rule.jsp" name="adminRule"
+   path="/admin/saveRule" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.rule.Save" validate="false"/>
+  <action input="/admin/rule.jsp" name="adminRule"
+   path="/admin/deleteRule" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.rule.Delete" validate="false"/>
+  <action name="select" path="/select" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.select.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="adjustPriority" path="/admin/adjustDirectoryPriority"
+   scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.adjustsitepriority.AdjustDirectoryPriorityAction" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/adjustpriority/adjustPriority.jsp"/>
+  </action>
+  <action input="/admin/company.jsp" name="adminCompany"
+   path="/admin/createNextCompany" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.company.CreateNext" validate="false"/>
+  <action input="/admin/plantType.jsp" name="adminPlantType"
+   path="/admin/createNextPlantType" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.planttype.CreateNext" validate="false"/>
+  <action input="/admin/plant.jsp" name="adminPlant"
+   path="/admin/createNextPlant" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plant.CreateNext" validate="false"/>
+  <action input="/admin/rule.jsp" name="adminRule"
+   path="/admin/createNextRule" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.rule.CreateNext" validate="false"/>
+  <action name="adminLevel" path="/admin/level" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.company.level.Load" validate="false">
+   <forward name="load" path="/admin/level.jsp"/>
+  </action>
+  <action input="/admin/level.jsp" name="adminLevel"
+   path="/admin/saveLevel" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.company.level.Save" validate="false"/>
+  <action input="/admin/level.jsp" name="adminLevel"
+   path="/admin/deleteLevel" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.company.level.Delete" validate="false"/>
+  <action name="adminIndicator" path="/admin/indicator" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.planttype.indicator.Load" validate="false">
+   <forward name="load" path="/admin/indicator.jsp"/>
+  </action>
+  <action input="/admin/indicator.jsp" name="adminIndicator"
+   path="/admin/saveIndicator" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.planttype.indicator.Save" validate="false"/>
+  <action input="/admin/indicator.jsp" name="adminIndicator"
+   path="/admin/deleteIndicator" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.planttype.indicator.Delete" validate="false"/>
+  <action name="adminPrerequisites" path="/admin/prerequisites"
+   scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.planttype.prerequisites.Load" validate="false">
+   <forward name="load" path="/admin/prerequisites.jsp"/>
+  </action>
+  <action input="/admin/prerequisites.jsp" name="adminPrerequisites"
+   path="/admin/savePrerequisites" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.planttype.prerequisites.Save" validate="false"/>
+  <action input="/admin/prerequisites.jsp" name="adminPrerequisites"
+   path="/admin/deletePrerequisites" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.planttype.prerequisites.Delete" validate="false"/>
+  <action name="adminHonor" path="/admin/honor" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plant.honor.Load" validate="false">
+   <forward name="load" path="/admin/honor.jsp"/>
+  </action>
+  <action input="/admin/honor.jsp" name="adminHonor"
+   path="/admin/saveHonor" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plant.honor.Save" validate="false"/>
+  <action input="/admin/honor.jsp" name="adminHonor"
+   path="/admin/deleteHonor" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plant.honor.Delete" validate="false"/>
+  <action name="adminDetail" path="/admin/detail" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.detail.Load" validate="false">
+   <forward name="load" path="/admin/detail.jsp"/>
+  </action>
+  <action input="/admin/detail.jsp" name="adminDetail"
+   path="/admin/saveDetail" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.detail.Save" validate="false"/>
+  <action input="/admin/detail.jsp" name="adminDetail"
+   path="/admin/deleteDetail" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.detail.Delete" validate="false"/>
+  <action input="/admin/rule.jsp" name="adminRule"
+   path="/admin/refreshRule" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.rule.Refresh" validate="false"/>
+  <action input="/admin/plant.jsp" name="adminPlant"
+   path="/admin/refreshPlant" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plant.Refresh" validate="false"/>
+  <action input="/admin/plantType.jsp" name="adminPlantType"
+   path="/admin/refreshPlantType" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.planttype.Refresh" validate="false"/>
+  <action input="/admin/company.jsp" name="adminCompany"
+   path="/admin/refreshCompany" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.company.Refresh" validate="false"/>
+  <action name="adminPlantRule" path="/admin/plantRule" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plantrule.Load" validate="false">
+   <forward name="load" path="/admin/plantRule.jsp"/>
+  </action>
+  <action input="/admin/plantRule.jsp" name="adminPlantRule"
+   path="/admin/savePlantRule" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plantrule.Save" validate="false"/>
+  <action input="/admin/detail.jsp" name="adminDetail"
+   path="/admin/createNextDetail" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.detail.CreateNext" validate="false"/>
+  <action input="/admin/detail.jsp" name="adminDetail"
+   path="/admin/refreshDetail" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.detail.Refresh" validate="false"/>
+  <action name="adminPoint" path="/admin/point" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.detail.point.Load" validate="false">
+   <forward name="load" path="/admin/point.jsp"/>
+  </action>
+  <action input="/admin/point.jsp" name="adminPoint"
+   path="/admin/savePoint" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.detail.point.Save" validate="false"/>
+  <action input="/admin/point.jsp" name="adminPoint"
+   path="/admin/deletePoint" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.detail.point.Delete" validate="false"/>
+  <action name="adminPlantDetail" path="/admin/plantDetail"
+   scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plantdetail.Load" validate="false">
+   <forward name="load" path="/admin/plantDetail.jsp"/>
+  </action>
+  <action input="/admin/plantDetail.jsp" name="adminPlantDetail"
+   path="/admin/savePlantDetail" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plantdetail.Save" validate="false"/>
+  <action path="/plantIndex" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.plantindex.Load" validate="false"/>
+  <action input="/admin/plant.jsp" name="adminPlant"
+   path="/admin/plantWorkflowConfig" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plant.WorkflowConfig" validate="false"/>
+  <action input="/admin/company.jsp" name="adminCompany"
+   path="/admin/companyWorkflowConfig" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.company.WorkflowConfig" validate="false"/>
+  <action name="adminObjective" path="/admin/objective" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plant.objective.Load" validate="false">
+   <forward name="load" path="/admin/objective.jsp"/>
+  </action>
+  <action input="/admin/objective.jsp" name="adminObjective"
+   path="/admin/saveObjective" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plant.objective.Save" validate="false"/>
+  <action input="/admin/objective.jsp" name="adminObjective"
+   path="/admin/deleteObjective" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plant.objective.Delete" validate="false"/>
+  <action path="/plantPrerequisitesData" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.plantprerequisitesdata.Load" validate="false"/>
+  <action path="/plantDirectory" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.plantdirectory.Load" validate="false"/>
+  <action name="select" path="/plantDirectoryTree" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.plantdirectorytree.Load" validate="false">
+   <forward name="load" path="/plantDirectoryTree.jsp"/>
+  </action>
+  <action path="/directory" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.directory.Load" validate="false"/>
+  <action name="select" path="/listChildDirectories" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.select.ListChildDirectoris" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action name="plant" path="/plant" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plant.Load" validate="false">
+   <forward name="load" path="/plant.jsp"/>
+  </action>
+  <action input="/admin/plant.jsp" name="plant" path="/savePlant"
+   scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plant.Save" validate="false">
+   <forward name="result" path="/result.jsp"/>
+  </action>
+  <action input="/admin/plant.jsp" name="plant" path="/refreshPlant"
+   scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plant.Refresh" validate="false">
+   <forward name="result" path="/result.jsp"/>
+  </action>
+  <action input="/admin/plant.jsp" name="plant"
+   path="/plantWorkflowConfig" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plant.WorkflowConfig" validate="false"/>
+  <action input="/admin/plant.jsp" name="plant" path="/deletePlant"
+   scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.admin.plant.Delete" validate="false">
+   <forward name="result" path="/result.jsp"/>
+  </action>
+  <action path="/list" scope="request"
+   type="com.yuanluesoft.chd.evaluation.actions.list.Load" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

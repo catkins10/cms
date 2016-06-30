@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/faq" class="com.yuanluesoft.cms.onlineservice.faq.forms.admin.Faq" title="常见问题解答" pojo="com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaq">
+		<formFields>
+			<field name="directoryId" title="所属目录ID" type="number" inputMode="hidden"/>
+			<field name="directoryName" title="所属目录" type="string" inputMode="select" required="true">
+				<parameter name="js">/cms/onlineservice/js/onlineservice.js"></parameter>
+				<parameter name="execute">selectOnlineServiceDirectory(640, 400, false, 'directoryId{id},directoryName{name}', '', '', '', '', false)</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="otherDirectoryIds" title="所属其它目录ID" type="string" inputMode="hidden"/>
+			<field name="otherDirectoryNames" title="所属其它目录" type="string" inputMode="select">
+				<parameter name="execute">selectOnlineServiceDirectory(640, 400, true, 'otherDirectoryIds{id},otherDirectoryNames{name|所属其它目录|100%}', '', '', '', '', falses)</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="itemIds" title="隶属事项ID" type="string" inputMode="hidden"/>
+			<field name="itemNames" title="隶属事项名称" type="string" inputMode="select">
+				<parameter name="execute">selectOnlineServiceItem(640, 400, true, 'itemIds{id},itemNames{name|所属其它目录|100%}')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="newRelationFaqIds" title="新增的相关问题ID" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteFaq')"/>
+			<action title="永久删除" hide="isNew() or noPrivilege(application_manager)" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteFaq', 'physical=true')"/>
+			<action title="撤销删除" hide="isNew() or noPrivilege(application_manager)" execute="FormUtils.doAction('undeleteFaq')"/>
+			<action title="发布" hide="workflow()" execute="if(confirm('是否要发布？'))FormUtils.doAction('issueFaq')"/>
+			<action title="撤销发布" hide="noPrivilege(unissue)" execute="FormUtils.doAction('unissueFaq')"/>
+			<action title="重新发布" hide="noPrivilege(reissue)" execute="FormUtils.doAction('reissueFaq')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.onlineservice.faq.forms.admin.FaqView" title="常见问题解答视图">
+		<formFields>
+			<field name="directoryId" title="目录ID" type="number" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form name="chat" title="智能互动提问" method="get" action="/cms/onlineservice/faq/robot.shtml?action=submitQuestion">
+		<formFields>
+			<field title="问题" name="question" type="string" length="200" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="发送" execute="sendQuestion('{PARAMETER:siteId}')"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="onlineServiceFaqSearch" title="常见问题搜索" method="get" action="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/onlineservice/faq&amp;pageName=search&amp;directoryId={PARAMETER:directoryId}">
+		<formFields>
+			<field title="关键字" name="key"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+</forms>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="addresslist" type="com.yuanluesoft.j2oa.addresslist.forms.AddressListForm"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="addresslist" path="/addressList" scope="request"
+   type="com.yuanluesoft.j2oa.addresslist.actions.Load" validate="false">
+   <forward name="load" path="/addresslist.jsp"/>
+  </action>
+  <action input="/addresslist.jsp" name="addresslist"
+   path="/saveAddressList" scope="request"
+   type="com.yuanluesoft.j2oa.addresslist.actions.Save" validate="false"/>
+  <action name="addresslist" path="/deleteAddressList" scope="request"
+   type="com.yuanluesoft.j2oa.addresslist.actions.Delete" validate="false"/>
+  <action input="/addresslist.jsp" name="addresslist" path="/loadLog"
+   scope="request"
+   type="com.yuanluesoft.j2oa.addresslist.actions.LoadLog" validate="false"/>
+  <action input="/addresslist.jsp" name="addresslist" path="/deleteLog"
+   scope="request"
+   type="com.yuanluesoft.j2oa.addresslist.actions.DeleteLog" validate="false"/>
+  <action input="/addresslist.jsp" name="addresslist" path="/saveLog"
+   scope="request"
+   type="com.yuanluesoft.j2oa.addresslist.actions.SaveLog" validate="false"/>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="200M"/>
+</struts-config>

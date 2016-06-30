@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.archives.forms.ArchivesFonds" title="全宗设置" pojo="com.yuanluesoft.archives.pojo.ArchivesFonds">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="submit()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteArchivesFonds')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.archives.forms.ArchivesSecureLevel" title="密级配置" pojo="com.yuanluesoft.archives.pojo.ArchivesSecureLevel">
+		<formFields>
+			<field title="访问者" name="visitors" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="submit()"/>
+			<action title="新增下一个" hide="isOld()" execute="FormUtils.doAction('createNextArchivesSecureLevel')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteArchivesSecureLevel')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.archives.forms.ArchivesRotentionPeriod" title="保管期限配置" pojo="com.yuanluesoft.archives.pojo.ArchivesRotentionPeriod">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="submit()"/>
+			<action title="新增下一个" hide="isOld()" execute="FormUtils.doAction('createNextArchivesRotentionPeriod')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteArchivesRotentionPeriod')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.archives.forms.ArchivesCategory" title="分类配置" pojo="com.yuanluesoft.archives.pojo.ArchivesCategory">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="submit()"/>
+			<action title="新增下一个" hide="isOld()" execute="FormUtils.doAction('createNextArchivesCategory')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteArchivesCategory')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.archives.forms.ArchivesUnit" title="机构或问题配置" pojo="com.yuanluesoft.archives.pojo.ArchivesUnit">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="submit()"/>
+			<action title="新增下一个" hide="isOld()" execute="FormUtils.doAction('createNextArchivesUnit')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteArchivesUnit')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.archives.forms.ArchivesCode" title="档号配置" pojo="com.yuanluesoft.archives.pojo.ArchivesCode">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="submit()"/>
+			<action title="新增下一个" hide="isOld()" execute="FormUtils.doAction('createNextArchivesCode')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteArchivesCode')"/>
+		</actions>
+	</form>
+</forms>

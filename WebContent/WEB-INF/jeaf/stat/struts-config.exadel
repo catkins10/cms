@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#track" NAME="action0"
+  PATH="/track" SHAPE="48,96,161,25" TITLE="track" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#statistics"
+  NAME="action1" PATH="/statistics" SHAPE="48,208,161,25"
+  TITLE="statistics" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/statistics.jsp" TARGET="page0" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/statistics.jsp" SHAPE="352,224,50,25" SUBTYPE="jsp"
+  TITLE="statistics.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/displayStatistics" TARGET="action2"
+   TITLE="displayStatistics.do" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#displayStatistics"
+  NAME="action2" PATH="/displayStatistics" SHAPE="544,240,161,25"
+  TITLE="statistics" TYPE="action"/>
+</PROCESS>

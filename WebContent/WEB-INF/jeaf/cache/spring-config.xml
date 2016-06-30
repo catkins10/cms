@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- object cache factory -->
+	<bean id="objectCacheFactory" class="com.yuanluesoft.jeaf.cache.objectcache.CacheFactory" init-method="startup" destroy-method="shutdown"/>
+
+	<!-- 模板缓存 -->
+	<bean id="templateCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>template</value></property>
+	</bean>
+
+	<!-- 模型缓存 -->
+	<bean id="modelCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>model</value></property>
+	</bean>
+	
+	<!-- 数据库记录缓存 -->
+	<bean id="recordCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>record</value></property>
+	</bean>
+
+	<!-- EAI缓存 -->
+	<bean id="eaiCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>eai</value></property>
+	</bean>
+	
+	<!-- 工作流缓存 -->
+	<bean id="workflowCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>workflow</value></property>
+	</bean>
+	
+	<!-- 工作流配置许可证缓存 -->
+	<bean id="workflowPassportCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>workflowPassport</value></property>
+	</bean>
+	
+	<!-- 会话信息缓存 -->
+	<bean id="sessionInfoCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>sessionInfo</value></property>
+	</bean>
+	
+	<!-- 记录加锁缓存 -->
+	<bean id="recordLockCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>recordLock</value></property>
+	</bean>
+
+	<!-- 文件下载缓存 -->
+	<bean id="fileDownloadCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>fileDownload</value></property>
+	</bean>
+	
+	<!-- 文件上传缓存 -->
+	<bean id="fileUploadCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>fileUpload</value></property>
+	</bean>
+	
+	<!-- 远程文档任务缓存 -->
+	<bean id="remoteDocumentTaskCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>remoteDocumentTask</value></property>
+	</bean>
+	
+	<!-- SSO会话缓存 -->
+	<bean id="ssoSessionCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>ssoSession</value></property>
+	</bean>
+
+	<!-- TICKET缓存 -->
+	<bean id="ticketCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>ticket</value></property>
+	</bean>
+
+	<!-- ACL缓存 -->
+	<bean id="aclCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>acl</value></property>
+	</bean>
+	
+	<!-- 分布式服务缓存 -->
+	<bean id="distributionCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>distributionCache</value></property>
+	</bean>
+	
+	<!-- 共享缓存 -->
+	<bean id="shareCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>shareCache</value></property>
+	</bean>
+	
+	<!-- 请求代码缓存 -->
+	<bean id="requestCodeCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>requestCode</value></property>
+	</bean>
+	
+	<!-- PORTLET定义缓存 -->
+	<bean id="portletDefinitionCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>portletDefinition</value></property>
+	</bean>
+	
+	<!-- PORTLET定义缓存 -->
+	<bean id="portletCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>portlet</value></property>
+	</bean>
+	
+	<!-- IM登录用户缓存 -->
+	<bean id="imSessionCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>imSession</value></property>
+	</bean>
+	
+	<!-- IM对话缓存 -->
+	<bean id="imChatCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>imChat</value></property>
+	</bean>
+	
+	<!-- IM系统消息缓存 -->
+	<bean id="imSystemMessageCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>imSystemMessage</value></property>
+	</bean>
+	
+	<!-- IM服务器信息缓存 -->
+    <bean id="imServerInfoCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>imServerInfoCache</value></property>
+	</bean>
+	
+	<!-- IM连接缓存 -->
+	<bean id="imConnectionCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>imConnectionCache</value></property>
+	</bean>
+	
+	<!-- 广告缓存 -->
+	<bean id="advertCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>advert</value></property>
+	</bean>
+	
+	<!-- 短信接收及消息通知缓存 -->
+	<bean id="smsCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>sms</value></property>
+	</bean>
+	
+	<!-- 微博缓存 -->
+	<bean id="microblogCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>microblog</value></property>
+	</bean>
+	
+	 <!-- 民评缓存 -->
+	 <bean id="appraiseCache" class="com.yuanluesoft.jeaf.cache.objectcache.ObjectCache">
+		<property name="cacheFactory"><ref bean="objectCacheFactory"/></property>
+		<property name="cacheName"><value>appraise</value></property>
+	</bean>
+</beans>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="ask" class="com.yuanluesoft.bidding.project.ask.forms.Ask" title="提问" pojo="com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAsk">
+		<actions>
+			<action title="提交" hide="isOld()" execute="FormUtils.doAction('submitAsk')"/>
+			<action title="删除" hide="isNew() or workflow()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteAsk')"/>
+			<action title="完成答复" hide="workflow()" execute="if(document.getElementsByName('reply')[0].value=='') {alert('答复为空，不能提交。');}else{FormUtils.doAction('replyAsk')}"/>
+			<action title="向所有人公开" hide="workflow() and noPrivilege(application_manager)" execute="FormUtils.doAction('publicAsk', 'isPublic=1')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/ask" class="com.yuanluesoft.bidding.project.ask.forms.admin.Ask" title="提问" pojo="com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAsk">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="isNew() or workflow()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteAsk')"/>
+			<action title="完成答复" hide="workflow()" execute="if(document.getElementsByName('reply')[0].value=='') {alert('答复为空，不能提交。');}else{FormUtils.doAction('replyAsk')}"/>
+			<action title="向所有人公开" hide="workflow() and noPrivilege(application_manager)" execute="FormUtils.doAction('publicAsk', 'isPublic=1')"/>
+		</actions>
+	</form>
+</forms>

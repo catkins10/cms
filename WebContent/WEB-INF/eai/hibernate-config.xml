@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--EAI配置-->
+	<class name="com.yuanluesoft.eai.server.pojo.EAIConfigure" table="eai_configure">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="configure" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/>
+		<property name="configureExtend" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/>
+	</class>
+</hibernate-mapping>

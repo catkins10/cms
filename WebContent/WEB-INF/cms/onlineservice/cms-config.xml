@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/onlineservice"/>
+		
+		<page name="directory" title="网上办事目录" url="/cms/onlineservice/directory.shtml" systemLink="false">
+			<templateView name="admin/template" application="cms/onlineservice"/>
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugins" private="true">
+				<templateActions>onlineservice_select_directory</templateActions> <!-- 模板操作 -->
+				<pageElementActions>onlineservice_location</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+
+			<field title="目录名称" name="directoryName"/>
+			
+			<link title="网上办事目录首页" url="/cms/onlineservice/directory.shtml?id={PARAMETER:id}"/>
+		</page>
+		
+		<page name="branchDirectory" title="网上办事子目录(非末级)" url="/cms/onlineservice/directory.shtml"> systemLink="false"
+			<templateView name="admin/template" application="cms/onlineservice"/>
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugins" private="true">
+				<templateActions>onlineservice_select_directory</templateActions> <!-- 模板操作 -->
+				<pageElementActions>onlineservice_location</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+
+			<field title="目录名称" name="directoryName"/>
+		</page>
+		
+		<page name="leafDirectory" title="网上办事子目录(末级)" url="/cms/onlineservice/directory.shtml" systemLink="false">
+			<templateView name="admin/template" application="cms/onlineservice"/>
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugins" private="true">
+				<templateActions>onlineservice_select_directory</templateActions> <!-- 模板操作 -->
+				<pageElementActions>onlineservice_location</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+
+			<field title="目录名称" name="directoryName"/>
+		</page>
+		
+		<page name="search" title="办理事项搜索" searchPage="true" searchResults="onlineServiceItems" url="/cms/onlineservice/search.shtml"/>
+		
+		<page name="guide" title="办事指南" systemLink="false">
+			<templateView name="admin/template" application="cms/onlineservice"/>
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugins" private="true">
+				<templateActions>onlineservice_select_directory</templateActions> <!-- 模板操作 -->
+				<pageElementActions>onlineservice_location</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+
+			<field title="办理事项名称" name="name"/>
+			<field title="审批服务类型" name="itemType"/>
+			
+			<field title="申办条件" name="serviceItemGuide.condition" type="html"/>
+			<field title="办理依据" name="serviceItemGuide.according" type="html"/>
+			<field title="办理程序" name="serviceItemGuide.program" type="html"/>
+			<field title="承诺时限" name="serviceItemGuide.timeLimit"/>
+			<field title="收费依据" name="serviceItemGuide.chargeAccording" type="html"/>
+			<field title="收费标准" name="serviceItemGuide.chargeStandard"/>
+			<field title="法律权利,申请人法律权利及申诉途径" name="serviceItemGuide.legalRight" type="html"/>
+			<field title="办理地点" name="serviceItemGuide.address"/>
+			<field title="交通线路" name="serviceItemGuide.traffic"/>
+			<field title="经办人" name="serviceItemGuide.transactor"/>
+			<field title="经办人联系电话" name="serviceItemGuide.transactorTel"/>
+			
+			<recordList title="申报材料列表" name="onlineServiceItemMaterials" >
+				<field name="name" title="申报材料名称"/>
+				<field name="description" title="申报说明"/>
+				<field name="tableName" title="表格名称"/>
+				
+				<link title="表格下载" url="{PARAMETER:tableURL}"/>
+				<link title="样表下载" url="{PARAMETER:exampleURL}"/>
+			</recordList>
+			
+			<recordList title="下载列表" name="onlineServiceItemDownloads" >
+				<field name="tableName" title="表格名称"/>
+				<link title="表格下载" url="{PARAMETER:tableURL}"/>
+				<link title="样表下载" url="{PARAMETER:exampleURL}"/>
+			</recordList>
+			
+			<recordList title="受理单位列表" name="onlineServiceItemUnits" >
+				<field name="unitName" title="单位名称"/>
+			</recordList>
+			
+			<link title="办事指南" url="/cms/onlineservice/guide.shtml?itemId={PARAMETER:itemId}"/>
+			<link title="表格下载" url="/cms/onlineservice/download.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="常见问题解答" url="/cms/onlineservice/faq.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="办理机构" url="/cms/onlineservice/unit.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="在线咨询" url="/cms/onlineservice/consult/consult.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="在线投诉" url="/cms/onlineservice/complaint/complaint.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="在线受理" url="/cms/onlineservice/accept/accept.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+		</page>
+		
+		<page name="download" title="表格下载" systemLink="false">
+			<templateView name="admin/template" application="cms/onlineservice"/>
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugins" private="true">
+				<templateActions>onlineservice_select_directory</templateActions> <!-- 模板操作 -->
+				<pageElementActions>onlineservice_location</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+
+			<field title="办理事项名称" name="name"/>
+			
+			<recordList title="下载列表" name="onlineServiceItemDownloads" >
+				<field name="tableName" title="表格名称"/>
+				<link title="表格下载" url="{PARAMETER:tableURL}"/>
+				<link title="样表下载" url="{PARAMETER:exampleURL}"/>
+			</recordList>
+			
+			<link title="办事指南" url="/cms/onlineservice/guide.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="表格下载" url="/cms/onlineservice/download.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="常见问题解答" url="/cms/onlineservice/faq.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="办理机构" url="/cms/onlineservice/unit.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="在线咨询" url="/cms/onlineservice/consult/consult.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="在线投诉" url="/cms/onlineservice/complaint/complaint.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="在线受理" url="/cms/onlineservice/accept/accept.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+		</page>
+		
+		<page name="faq" title="常见问题解答" systemLink="false">
+			<templateView name="admin/template" application="cms/onlineservice"/>
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugins" private="true">
+				<templateActions>onlineservice_select_directory</templateActions> <!-- 模板操作 -->
+				<pageElementActions>onlineservice_location</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+
+			<field title="办理事项名称" name="name"/>
+			<field title="正文" name="serviceItemFaq.faq" type="html"/>
+			
+			<link title="办事指南" url="/cms/onlineservice/guide.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="表格下载" url="/cms/onlineservice/download.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="常见问题解答" url="/cms/onlineservice/faq.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="办理机构" url="/cms/onlineservice/unit.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="在线咨询" url="/cms/onlineservice/consult/consult.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="在线投诉" url="/cms/onlineservice/complaint/complaint.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="在线受理" url="/cms/onlineservice/accept/accept.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+		</page>
+		
+		<page name="unit" title="办理机构" systemLink="false">
+			<templateView name="admin/template" application="cms/onlineservice"/>
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugins" private="true">
+				<templateActions>onlineservice_select_directory</templateActions> <!-- 模板操作 -->
+				<pageElementActions>onlineservice_location</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+
+			<recordList title="受理单位列表" name="onlineServiceItemUnits" >
+				<field name="unitName" title="单位名称"/>
+			</recordList>
+			
+			<link title="办事指南" url="/cms/onlineservice/guide.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="表格下载" url="/cms/onlineservice/download.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="常见问题解答" url="/cms/onlineservice/faq.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="办理机构" url="/cms/onlineservice/unit.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="在线咨询" url="/cms/onlineservice/consult/consult.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="在线投诉" url="/cms/onlineservice/complaint/complaint.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+			<link title="在线受理" url="/cms/onlineservice/accept/accept.shtml?itemId={PARAMETER:itemId}&amp;directoryId={PARAMETER:directoryId}"/>
+		</page>
+
+		<page name="downloads" title="表格下载首页" url="/cms/onlineservice/downloads.shtml"/>
+		
+		<page name="downloadsByDirectory" title="表格下载目录" url="/cms/onlineservice/downloads.shtml" systemLink="false">
+			<templatePlugin path="/cms/onlineservice/templatemanage/plugins" private="true">
+				<pageElementActions>onlineservice_location</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+
+			<field title="目录名称" name="directoryName"/>
+		</page>
+		
+		<page name="downloadSearch" title="表格下载搜索" searchPage="true" searchResults="onlineServiceDownloads" url="/cms/onlineservice/downloadSearch.shtml"/>
+		
+		<!-- 
+		<page name="unitDetail" title="单位详情" url="/cms/onlineservice/unitDetail.shtml" systemLink="false">
+			<field title="单位名称" name="name"/>
+			<field title="地址" name="name"/> TODO：单位的详细信息在usermanage
+			<recordList title="单位办理项目列表" name="unitServiceItems">
+				
+			</recordList>
+		</page>
+		 -->	
+	</pages>
+	
+	<recordLists>
+		<recordList title="网上办事目录列表" totalSupport="false" name="onlineServiceDirectories" rssSupport="false" recordPage="directory" hostPage="index" embedRecordLists="onlineServiceItems" dialogExtendURL="/cms/onlineservice/templatemanage/dialog/insertDirectories.jsp"/>
+		
+		<recordList title="网上办事办理事项列表" name="onlineServiceItems" rssSupport="false" hostPage="index" dialogExtendURL="/cms/onlineservice/templatemanage/dialog/insertServiceItems.jsp">
+			<field title="事项名称" name="name"/>
+			<link title="办事指南" url="/cms/onlineservice/guide.shtml?itemId={PARAMETER:id}"/>
+			<link title="表格下载" url="/cms/onlineservice/download.shtml?itemId={PARAMETER:id}"/>
+			<link title="常见问题解答" url="/cms/onlineservice/faq.shtml?itemId={PARAMETER:id}"/>
+			<link title="办理机构" url="/cms/onlineservice/unit.shtml?itemId={PARAMETER:id}"/>
+			<link title="在线咨询" url="/cms/onlineservice/consult/consult.shtml?itemId={PARAMETER:id}"/>
+			<link title="在线投诉" url="/cms/onlineservice/complaint/complaint.shtml?itemId={PARAMETER:id}"/>
+			<link title="在线受理" url="/cms/onlineservice/accept/accept.shtml?itemId={PARAMETER:id}"/>
+		</recordList>
+
+		<recordList title="表格下载目录列表" totalSupport="false" name="onlineServiceDownloadDirectories" rssSupport="false" recordPage="downloadsByDirectory" hostPage="index" dialogExtendURL="/cms/onlineservice/templatemanage/dialog/insertDirectories.jsp"/>		
+		
+		<recordList title="表格列表" name="onlineServiceDownloads" rssSupport="false" hostPage="index" dialogExtendURL="/cms/onlineservice/templatemanage/dialog/insertServiceItems.jsp">
+			<field name="tableName" title="表格名称"/>
+			<link title="表格下载" url="{PARAMETER:tableURL}"/>
+			<link title="样表下载" url="{PARAMETER:exampleURL}"/>
+		</recordList>
+	</recordLists>
+	
+	<!-- 链接 -->
+	<links>
+		<link title="网上办事目录链接" dialogURL="/cms/onlineservice/templatemanage/dialog/insertDirectoryLink.jsp"/>
+	</links>
+	
+	<!-- 页面元素,name必须在所有的应用中唯一 -->
+	<pageElements>
+		<pageElement name="onlineServiceDirectories" processor="onlineServiceDirectoriesProcessor"/> <!-- 网上办事目录列表 -->
+		<pageElement name="onlineServiceItems" processor="onlineServiceItemsProcessor"/> <!-- 网上办事办理事项列表 -->
+		
+		<!-- 办理事项组成部分 -->
+		<pageElement name="onlineServiceItemMaterials" processor="onlineServiceItemComponentsProcessor"/> <!-- 申报材料列表 -->
+		<pageElement name="onlineServiceItemDownloads" processor="onlineServiceItemComponentsProcessor"/> <!-- 下载列表 -->
+		<pageElement name="onlineServiceItemUnits" processor="onlineServiceItemComponentsProcessor"/> <!-- 下载列表 -->
+	
+		<pageElement name="onlineServiceDownloadDirectories" processor="onlineServiceDirectoriesProcessor"/> <!-- 表格下载目录列表 -->
+		<pageElement name="onlineServiceDownloads" processor="onlineServiceDownloadsProcessor"/> <!-- 表格列表 -->
+		
+		<pageElement name="onlineServiceDirectoryLink" processor="onlineServiceDirectoryLinkProcessor"/> <!-- 网上办事目录链接 -->
+		
+		<pageElement name="onlineServiceLocation" processor="onlineServiceLocationProcessor"/> <!-- 网上办事位置处理器 -->
+	</pageElements>
+</application>

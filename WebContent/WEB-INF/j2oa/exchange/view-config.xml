@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="admin/todoSend" form="admin/document" title="待发公文" hide="noMyUnitPopedom(sendDocument)" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocument</pojo>
+			<where>ExchangeDocument.issue!='1' and ExchangeDocument.creatorUnitId={UNITID}</where>
+			<orderBy>ExchangeDocument.created DESC</orderBy>
+			<quickFilter>ExchangeDocument.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="登记公文"  execute="PageUtils.newrecord('j2oa/exchange', 'admin/document', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="标题" name="subject"/>
+			<column title="创建人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/sent" form="admin/document" title="已发公文" hide="noMyUnitPopedom(sendDocument)" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocument</pojo>
+			<where>ExchangeDocument.issue='1' and ExchangeDocument.creatorUnitId={UNITID}</where>
+			<orderBy>ExchangeDocument.created DESC</orderBy>
+			<quickFilter>ExchangeDocument.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有公文" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocument</pojo>
+			</data>
+			<category value="year(ExchangeDocument.created)"> <!--value必须有-->
+				<data>year(ExchangeDocument.created)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="登记公文" execute="PageUtils.newrecord('j2oa/exchange', 'admin/document', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="标题" name="subject"/>
+			<column title="创建人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/todoSign" form="admin/document" title="待签收公文" hide="noMyUnitPopedom(receiveDocument)" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocument</pojo>
+			<where>ExchangeDocument.issue='1' and exchangeUnits.unitId={UNITID} and exchangeUnits.signPersonId=0</where>
+			<orderBy>ExchangeDocument.created DESC</orderBy>
+			<quickFilter>ExchangeDocument.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="登记公文" hide="noMyUnitPopedom(sendDocument)" execute="PageUtils.newrecord('j2oa/exchange', 'admin/document', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="标题" name="subject"/>
+			<column title="创建人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/signed" form="admin/document" title="已签收公文" hide="noMyUnitPopedom(receiveDocument)" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocument</pojo>
+			<where>ExchangeDocument.issue='1' and exchangeUnits.unitId={UNITID} and exchangeUnits.signPersonId>0</where>
+			<orderBy>ExchangeDocument.created DESC</orderBy>
+			<quickFilter>ExchangeDocument.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有公文" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocument</pojo>
+			</data>
+			<category value="year(ExchangeDocument.created)"> <!--value必须有-->
+				<data>year(ExchangeDocument.created)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="登记公文" hide="noMyUnitPopedom(sendDocument)" execute="PageUtils.newrecord('j2oa/exchange', 'admin/document', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="标题" name="subject"/>
+			<column title="创建人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/message" form="admin/message" title="反馈信息" hide="noMyUnitPopedom(sendDocument)" pageRows="25" openFeatures="width=500,height=400,mode=dialog">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.exchange.pojo.ExchangeMessage</pojo>
+			<where>document.creatorUnitId={UNITID} and ExchangeMessage.replyMessageId=0</where>
+			<orderBy>ExchangeMessage.created DESC</orderBy>
+			<quickFilter>ExchangeMessage.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="公文标题" name="document.subject"/>
+			<column title="反馈主题" name="subject"/>
+			<column title="单位" name="creatorUnit" width="120" displayExcept="portlet"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+			<column title="答复" name="replied" type="formula" formula="(reply==null ? &quot;&quot; : &quot;√&quot;)" formulaFields="reply" align="center" width="30"/>
+		</columns>
+	</view>
+</views>

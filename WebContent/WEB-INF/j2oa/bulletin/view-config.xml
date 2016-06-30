@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="recent" form="bulletin" title="最新公告" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.bulletin.pojo.Bulletin</pojo>
+			<filter>READABLE</filter>
+			<where>Bulletin.issued='1' and Bulletin.issueTime &gt; DATE({TODAY-30})</where> <!--30天内发布的公告-->
+			<orderBy>Bulletin.issueTime DESC</orderBy>
+			<quickFilter>Bulletin.subject like '%{KEY}%' or Bulletin.content like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有公告" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.bulletin.pojo.Bulletin</pojo>
+			</data>
+			<category value="category"> <!--value必须有-->
+				<orderBy>Bulletin.category</orderBy>
+				<data>Bulletin.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="发布公告" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50" displayExcept="portlet"/>
+			<column title="主题" name="subject"/>
+			<column title="发布时间" name="issueTime" width="110" align="center" displayExcept="portlet"/>
+		</columns>
+	</view>
+	
+	<view name="todo" form="bulletin" title="待发布公告" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.bulletin.pojo.Bulletin</pojo>
+			<filter>TODO</filter>
+			<orderBy>Bulletin.created DESC</orderBy>
+			<quickFilter>Bulletin.subject like '%{KEY}%' or Bulletin.content like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有公告" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.bulletin.pojo.Bulletin</pojo>
+			</data>
+			<category value="category"> <!--value必须有-->
+				<orderBy>Bulletin.category</orderBy>
+				<data>Bulletin.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="发布公告" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="主题" name="subject"/>
+			<column title="发送人" name="workflowSender" align="center" width="70" displayExcept="condition"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="105" displayExcept="condition"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="all" form="bulletin" title="所有公告" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.bulletin.pojo.Bulletin</pojo>
+			<filter>READABLE</filter>
+			<orderBy>Bulletin.created DESC</orderBy>
+			<quickFilter>Bulletin.subject like '%{KEY}%' or Bulletin.content like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有公告" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.j2oa.bulletin.pojo.Bulletin</pojo>
+			</data>
+			<category value="category"> <!--value必须有-->
+				<orderBy>Bulletin.category</orderBy>
+				<data>Bulletin.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="发布公告" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="主题" name="subject"/>
+			<column title="创建时间" name="created" width="110" align="center"/>
+			<column title="是否发布" name="issued" width="80" align="center" type="formula" formula="(issued=='1' ? &quot;√&quot; : null)" formulaFields="issued" />
+		</columns>
+	</view>
+</views>

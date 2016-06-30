@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,177,21" TARGET="page1" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,177,21"
+  TARGET="page11" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="promptReordered"
+  NAME="forward1" PATH="/personalweborder/promptReordered.jsp"
+  SHAPE="32,624,177,21" TARGET="page2" TITLE="promptReordered" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/personalweborder/promptReordered.jsp" SHAPE="336,624,50,40"
+  SUBTYPE="jsp" TITLE="promptReordered.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="promptInsufficientBalance"
+  NAME="forward2" PATH="/personalweborder/promptInsufficientBalance.jsp"
+  SHAPE="32,720,177,21" TARGET="page3" TITLE="promptInsufficientBalance" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/personalweborder/promptInsufficientBalance.jsp"
+  SHAPE="336,720,50,40" SUBTYPE="jsp"
+  TITLE="promptInsufficientBalance.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="confirmPersonalOrder"
+  NAME="forward3" PATH="/personalweborder/confirmPersonalOrder.jsp"
+  SHAPE="32,808,178,21" TARGET="page4" TITLE="confirmPersonalOrder" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/personalweborder/confirmPersonalOrder.jsp"
+  SHAPE="336,808,50,40" SUBTYPE="jsp" TITLE="confirmPersonalOrder.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listPersonalOrders"
+  NAME="action0" PATH="/listPersonalOrders" SHAPE="32,240,177,41"
+  TITLE="listPersonalOrders" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/listPersonalOrders.jsp" TARGET="page5"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/listPersonalOrders.jsp" SHAPE="336,256,50,40" SUBTYPE="jsp"
+  TITLE="listPersonalOrders.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#displayPersonalOrders"
+  NAME="action1" PATH="/displayPersonalOrders" SHAPE="560,272,177,25"
+  TITLE="listPersonalOrders" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#personalWebOrder"
+  NAME="action2" PATH="/personalWebOrder" SHAPE="32,504,177,41"
+  TITLE="personalWebOrder" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/personalweborder/selectServicePrices.jsp"
+   TARGET="page6" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/personalweborder/selectServicePrices.jsp" SHAPE="336,520,50,40"
+  SUBTYPE="jsp" TITLE="selectServices.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#submitSelectedServicePrices" NAME="action3"
+  PATH="/submitSelectedServicePrices" SHAPE="560,536,177,25"
+  TITLE="personalWebOrder" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#submitPersonalWebOrder"
+  NAME="action4" PATH="/submitPersonalWebOrder" SHAPE="560,824,177,25"
+  TITLE="personalWebOrder" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/personalweborder/personalOrderCreated.jsp"
+   TARGET="page8" TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#continueWhenInsufficientBalance" NAME="action5"
+  PATH="/continueWhenInsufficientBalance" SHAPE="560,736,177,25"
+  TITLE="personalWebOrder" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#continueWhenReordered"
+  NAME="action6" PATH="/continueWhenReordered" SHAPE="560,640,177,25"
+  TITLE="personalWebOrder" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#personalOrder"
+  NAME="action7" PATH="/personalOrder" SHAPE="32,336,177,41"
+  TITLE="personalOrder" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/personalOrder.jsp" TARGET="page7" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page7"
+  PATH="/personalOrder.jsp" SHAPE="336,352,50,40" SUBTYPE="jsp"
+  TITLE="personalOrder.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#cancelOrderItem"
+  NAME="action8" PATH="/cancelOrderItem" SHAPE="32,920,177,41"
+  TITLE="cancelOrderItem" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/cancelOrderItem.jsp" TARGET="page9"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#displayPersonalOrder"
+  NAME="action9" PATH="/displayPersonalOrder" SHAPE="560,368,177,25"
+  TITLE="personalOrder" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page8"
+  PATH="/personalweborder/personalOrderCreated.jsp"
+  SHAPE="864,840,50,25" SUBTYPE="jsp" TITLE="personalOrderCreated.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page9"
+  PATH="/cancelOrderItem.jsp" SHAPE="336,936,50,25" SUBTYPE="jsp"
+  TITLE="cancelOrderItem.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#doCancelOrderItem"
+  NAME="action10" PATH="/doCancelOrderItem" SHAPE="560,952,177,25"
+  TITLE="cancelOrderItem" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/orderItemCanceled.jsp" TARGET="page10"
+   TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page10"
+  PATH="/orderItemCanceled.jsp" SHAPE="864,968,50,25" SUBTYPE="jsp"
+  TITLE="orderItemCanceled.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page11"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="336,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="336,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+</PROCESS>

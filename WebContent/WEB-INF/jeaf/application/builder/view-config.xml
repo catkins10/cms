@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="application" form="application" title="应用" pageRows="20" hide="noPrivilege(application_manager)" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.application.builder.pojo.Application</pojo>
+			<orderBy>Application.name</orderBy>
+		</data>
+		<actions>
+			<action title="创建应用" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('jeaf/application/builder','application','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="应用名称"/>
+			<column name="buildTime" title="生成时间" width="110" align="center"/>
+			<column name="created" title="创建时间" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="selectField" title="选择字段" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.application.builder.pojo.ApplicationField</pojo>
+			<where>ApplicationField.formId={PARAMETER:formId} and ApplicationField.fieldType in ('varchar', 'text', 'number', 'date', 'timestamp')</where>
+			<orderBy>ApplicationField.priority, ApplicationField.id</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column name="name" title="字段名称"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="selectDbField" title="选择数据库字段" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.application.builder.pojo.ApplicationField</pojo>
+			<where>ApplicationField.formId={PARAMETER:formId} and ApplicationField.isPersistence=1 and ApplicationField.fieldType in ('varchar', 'text', 'number', 'date', 'timestamp')</where>
+			<orderBy>ApplicationField.priority, ApplicationField.id</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column name="name" title="字段名称"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="adjustFormFieldPriority" title="字段优先级调整" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.application.builder.pojo.ApplicationField</pojo>
+			<where>ApplicationField.formId={PARAMETER:formId}</where>
+			<orderBy>ApplicationField.priority, ApplicationField.id</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column name="name" title="字段名称"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="adjustNavigatorPriority" title="导航优先级调整" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.application.builder.pojo.ApplicationNavigator</pojo>
+			<where>ApplicationNavigator.applicationId={PARAMETER:applicationId}</where>
+			<orderBy>ApplicationNavigator.priority, ApplicationNavigator.id</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column name="label" title="名称"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+</views>

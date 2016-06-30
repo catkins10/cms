@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,32,161,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="304,34,56,30" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,96,161,21" TARGET="page1"
+  TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="304,96,56,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#runArticleApproval"
+  NAME="action0" PATH="/admin/runArticleApproval" SHAPE="528,264,161,25"
+  TITLE="article" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/article.jsp" SHAPE="304,192,56,175" SUBTYPE="jsp"
+  TITLE="article.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveArticle" TARGET="action10" TITLE="saveArticle" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/runArticleApproval" TARGET="action0"
+   TITLE="runArticleApproval" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/deleteArticle" TARGET="action5" TITLE="deleteArticle" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/admin/issueArticle" TARGET="action9" TITLE="issueArticle" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link4"
+   PATH="/admin/unissueArticle" TARGET="action3" TITLE="unissueArticle" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link5"
+   PATH="/admin/reissueArticle" TARGET="action4" TITLE="reissueArticle" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link6"
+   PATH="/admin/writeOpinion" TARGET="action8" TITLE="saveOpinion" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link7"
+   PATH="/admin/approvalArticle" TARGET="action2"
+   TITLE="approvalArticle" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link9"
+   PATH="/admin/undeleteArticle" TARGET="action29"
+   TITLE="undeleteArticle" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link10"
+   PATH="/admin/refreshArticle" TARGET="action52" TITLE="refreshArticle" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link11"
+   PATH="/admin/addRelationLinks" TARGET="action53"
+   TITLE="addRelationLinks" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#unissueArticle"
+  NAME="action3" PATH="/admin/unissueArticle" SHAPE="528,432,161,25"
+  TITLE="article" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#reissueArticle"
+  NAME="action4" PATH="/admin/reissueArticle" SHAPE="528,488,161,25"
+  TITLE="article" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#article"
+  NAME="action7" PATH="/admin/article" SHAPE="32,176,161,41"
+  TITLE="article" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/article.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#selectAttachment"
+  NAME="action6" PATH="/admin/selectAttachment" SHAPE="32,2136,161,41"
+  TITLE="article" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/selectAttachment.jsp"
+   TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteArticle"
+  NAME="action5" PATH="/admin/deleteArticle" SHAPE="528,320,161,25"
+  TITLE="article" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#writeOpinion"
+  NAME="action8" PATH="/admin/writeOpinion" SHAPE="528,544,161,25"
+  TITLE="article" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#issueArticle"
+  NAME="action9" PATH="/admin/issueArticle" SHAPE="528,376,161,25"
+  TITLE="article" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveArticle"
+  NAME="action10" PATH="/admin/saveArticle" SHAPE="528,208,161,25"
+  TITLE="article" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/../../jeaf/attachment/selectAttachment.jsp"
+  SHAPE="304,2152,50,25" SUBTYPE="jsp" TITLE="selectAttachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#article" NAME="action12"
+  PATH="/article" SHAPE="32,2848,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#search" NAME="action13"
+  PATH="/search" SHAPE="32,2904,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#resourceView"
+  NAME="action14" PATH="/admin/resourceView" SHAPE="32,2312,161,41"
+  TITLE="resourceView" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/application/applicationView.jsp"
+   TARGET="page9" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectResource"
+  NAME="action16" PATH="/selectResource" SHAPE="32,2688,161,41"
+  TITLE="select" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/dialog/treedialog/treeDialog.jsp"
+   TARGET="page6" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/../../jeaf/dialog/treedialog/treeDialog.jsp"
+  SHAPE="304,2704,50,25" SUBTYPE="jsp" TITLE="treeDialog.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listResources"
+  NAME="action17" PATH="/listResources" SHAPE="32,2768,161,41"
+  TITLE="select" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/tree/listChildNodes.jsp"
+   TARGET="page7" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page7"
+  PATH="/../../jeaf/tree/listChildNodes.jsp" SHAPE="304,2784,50,25"
+  SUBTYPE="jsp" TITLE="listChildNodes.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#link"
+  NAME="action18" PATH="/admin/link" SHAPE="32,1544,161,41" TITLE="link" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/link.jsp" TARGET="page8" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page8" PATH="/link.jsp"
+  SHAPE="304,1560,50,175" SUBTYPE="jsp" TITLE="link.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveLink" TARGET="action19" TITLE="saveLink" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteLink" TARGET="action21" TITLE="deleteLink" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/runLinkApproval" TARGET="action20"
+   TITLE="runLinkApproval" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/admin/issueLink" TARGET="action22" TITLE="issueLink" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link4"
+   PATH="/admin/unissueLink" TARGET="action23" TITLE="unissueLink" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link5"
+   PATH="/admin/reissueLink" TARGET="action24" TITLE="reissueLink" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link6"
+   PATH="/admin/writeLinkOpinion" TARGET="action25"
+   TITLE="saveLinkOpinion" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link7"
+   PATH="/admin/approvalLink" TARGET="action11" TITLE="approvalLink" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link9"
+   PATH="/admin/undeleteLink" TARGET="action30" TITLE="undeleteLink" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveLink"
+  NAME="action19" PATH="/admin/saveLink" SHAPE="528,1576,161,25"
+  TITLE="link" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#runLinkApproval"
+  NAME="action20" PATH="/admin/runLinkApproval" SHAPE="528,1688,161,25"
+  TITLE="link" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteLink"
+  NAME="action21" PATH="/admin/deleteLink" SHAPE="528,1632,161,25"
+  TITLE="link" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#issueLink"
+  NAME="action22" PATH="/admin/issueLink" SHAPE="528,1744,161,25"
+  TITLE="link" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#unissueLink"
+  NAME="action23" PATH="/admin/unissueLink" SHAPE="528,1800,161,25"
+  TITLE="link" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#reissueLink"
+  NAME="action24" PATH="/admin/reissueLink" SHAPE="528,1856,161,25"
+  TITLE="link" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#writeLinkOpinion"
+  NAME="action25" PATH="/admin/writeLinkOpinion" SHAPE="528,1912,161,25"
+  TITLE="link" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#selectLinkAttachment" NAME="action28"
+  PATH="/admin/selectLinkAttachment" SHAPE="32,2216,161,41" TITLE="link" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/selectAttachment.jsp"
+   TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page9"
+  PATH="/../../jeaf/application/applicationView.jsp"
+  SHAPE="304,2328,50,70" SUBTYPE="jsp" TITLE="applicationView.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/moveResources" TARGET="action15" TITLE="removeResources" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/importResources" TARGET="action33"
+   TITLE="importResources" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/modifyReaders" TARGET="action38" TITLE="doModifyReaders" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/admin/sendToWechat.shtml" TARGET="action67"
+   TITLE="sendToWechat.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#moveResources"
+  NAME="action15" PATH="/admin/moveResources" SHAPE="528,2344,161,25"
+  TITLE="resourceView" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#approvalArticle"
+  NAME="action2" PATH="/admin/approvalArticle" SHAPE="528,600,161,25"
+  TITLE="article" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#approvalLink"
+  NAME="action11" PATH="/admin/approvalLink" SHAPE="528,1968,161,25"
+  TITLE="link" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#undeleteArticle"
+  NAME="action29" PATH="/admin/undeleteArticle" SHAPE="528,656,161,25"
+  TITLE="article" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#undeleteLink"
+  NAME="action30" PATH="/admin/undeleteLink" SHAPE="528,2024,161,25"
+  TITLE="link" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#issueStat"
+  NAME="action31" PATH="/admin/issueStat" SHAPE="32,2384,161,41"
+  TITLE="issueStat" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/application/applicationView.jsp"
+   TARGET="page9" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#templatemanage#updateResourcesView.js" NAME="action32"
+  PATH="/templatemanage/updateResourcesView.js" SHAPE="32,3976,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#importResources"
+  NAME="action33" PATH="/admin/importResources" SHAPE="528,2392,161,25"
+  TITLE="resourceView" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#report#columnStat"
+  NAME="action1" PATH="/report/columnStat" SHAPE="32,3072,161,41"
+  TITLE="columnStatReport" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/report/columnStat.jsp" TARGET="page3"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/report/columnStat.jsp" SHAPE="304,3088,50,40" SUBTYPE="jsp"
+  TITLE="columnStat.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/report/writeColumnStatReport" TARGET="action34"
+   TITLE="writeColumnStatReport" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#report#writeColumnStatReport" NAME="action34"
+  PATH="/report/writeColumnStatReport" SHAPE="528,3104,161,25"
+  TITLE="columnStatReport" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#openCopy"
+  NAME="action35" PATH="/admin/openCopy" SHAPE="32,2064,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#captureColumn"
+  NAME="action36" PATH="/admin/captureColumn" SHAPE="32,2976,161,41"
+  TITLE="captureColumn" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/capture/captureColumn.jsp" TARGET="page5"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/capture/captureColumn.jsp" SHAPE="304,2992,50,25" SUBTYPE="jsp"
+  TITLE="captureColumn.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#readersModifyOption" NAME="action37"
+  PATH="/admin/readersModifyOption" SHAPE="32,2592,161,41"
+  TITLE="modifyReaders" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/readersModifyOption.jsp" TARGET="page10"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page10"
+  PATH="/readersModifyOption.jsp" SHAPE="304,2608,50,25" SUBTYPE="jsp"
+  TITLE="modifyReaders.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#modifyReaders"
+  NAME="action38" PATH="/admin/modifyReaders" SHAPE="528,2440,161,25"
+  TITLE="resourceView" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#report#listEnsureUnitCategories" NAME="action39"
+  PATH="/report/listEnsureUnitCategories" SHAPE="32,3176,161,41"
+  TITLE="listEnsureUnitCategories" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/report/listEnsureUnitCategories.jsp"
+   TARGET="page11" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#report#listEnsureColumnConfigs" NAME="action40"
+  PATH="/report/listEnsureColumnConfigs" SHAPE="32,3272,161,41"
+  TITLE="listEnsureColumnConfigs" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/report/listEnsureColumnConfigs.jsp"
+   TARGET="page12" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#report#ensureUnitCategory" NAME="action41"
+  PATH="/report/ensureUnitCategory" SHAPE="32,3392,161,41"
+  TITLE="ensureUnitCategory" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/report/ensureUnitCategory.jsp" TARGET="page13"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#report#ensureColumnConfig" NAME="action42"
+  PATH="/report/ensureColumnConfig" SHAPE="32,3528,161,41"
+  TITLE="ensureColumnConfig" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/report/ensureColumnConfig.jsp" TARGET="page14"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page11"
+  PATH="/report/listEnsureUnitCategories.jsp" SHAPE="304,3192,50,25"
+  SUBTYPE="jsp" TITLE="listEnsureUnitCategories.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page12"
+  PATH="/report/listEnsureColumnConfigs.jsp" SHAPE="304,3288,50,25"
+  SUBTYPE="jsp" TITLE="listEnsureColumnConfigs.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page13"
+  PATH="/report/ensureUnitCategory.jsp" SHAPE="304,3408,50,55"
+  SUBTYPE="jsp" TITLE="ensureUnitCategory.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/report/saveEnsureUnitCategory" TARGET="action45"
+   TITLE="saveEnsureUnitCategory" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/report/deleteEnsureUnitCategory" TARGET="action46"
+   TITLE="deleteEnsureUnitCategory" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page14"
+  PATH="/report/ensureColumnConfig.jsp" SHAPE="304,3544,50,55"
+  SUBTYPE="jsp" TITLE="ensureColumnConfig.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/report/saveEnsureColumnConfig" TARGET="action43"
+   TITLE="saveEnsureColumnConfig" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/report/deleteEnsureColumnConfig" TARGET="action44"
+   TITLE="deleteEnsureColumnConfig" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#report#saveEnsureColumnConfig" NAME="action43"
+  PATH="/report/saveEnsureColumnConfig" SHAPE="528,3560,164,25"
+  TITLE="ensureColumnConfig" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#report#deleteEnsureColumnConfig" NAME="action44"
+  PATH="/report/deleteEnsureColumnConfig" SHAPE="528,3616,164,25"
+  TITLE="ensureColumnConfig" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#report#saveEnsureUnitCategory" NAME="action45"
+  PATH="/report/saveEnsureUnitCategory" SHAPE="528,3424,164,25"
+  TITLE="ensureUnitCategory" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#report#deleteEnsureUnitCategory" NAME="action46"
+  PATH="/report/deleteEnsureUnitCategory" SHAPE="528,3480,164,25"
+  TITLE="ensureUnitCategory" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#report#ensureReport"
+  NAME="action47" PATH="/report/ensureReport" SHAPE="32,3672,164,41"
+  TITLE="ensureReport" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/report/ensureReport.jsp" TARGET="page15"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page15"
+  PATH="/report/ensureReport.jsp" SHAPE="304,3688,50,40" SUBTYPE="jsp"
+  TITLE="ensureReport.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/report/writeEnsureReport" TARGET="action48"
+   TITLE="writeEnsureReport" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#report#writeEnsureReport"
+  NAME="action48" PATH="/report/writeEnsureReport"
+  SHAPE="528,3704,161,25" TITLE="ensureReport" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#relationLink"
+  NAME="action49" PATH="/admin/relationLink" SHAPE="32,992,161,41"
+  TITLE="relationLink" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/relationLink.jsp" TARGET="page17" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page17"
+  PATH="/relationLink.jsp" SHAPE="304,1008,50,55" SUBTYPE="jsp"
+  TITLE="relationLink.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveRelationLink" TARGET="action50"
+   TITLE="saveRelationLink" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteRelationLink" TARGET="action51"
+   TITLE="deleteRelationLink" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveRelationLink"
+  NAME="action50" PATH="/admin/saveRelationLink" SHAPE="528,1024,161,25"
+  TITLE="relationLink" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteRelationLink"
+  NAME="action51" PATH="/admin/deleteRelationLink"
+  SHAPE="528,1072,161,25" TITLE="relationLink" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#refreshArticle"
+  NAME="action52" PATH="/admin/refreshArticle" SHAPE="528,712,161,25"
+  TITLE="article" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#addRelationLinks"
+  NAME="action53" PATH="/admin/addRelationLinks" SHAPE="528,768,161,25"
+  TITLE="article" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#portletEntity"
+  NAME="action54" PATH="/portletEntity" SHAPE="32,3808,161,41"
+  TITLE="portletEntity" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/portletEntity.jsp" TARGET="page16"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page16"
+  PATH="/portletEntity.jsp" SHAPE="304,3824,50,55" SUBTYPE="jsp"
+  TITLE="portletEntity.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/savePortletEntity.shtml" TARGET="action55"
+   TITLE="savePortletEntity.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deletePortletEntity.shtml" TARGET="action56"
+   TITLE="deletePortletEntity.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#savePortletEntity"
+  NAME="action55" PATH="/savePortletEntity" SHAPE="528,3840,161,25"
+  TITLE="portletEntity" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deletePortletEntity"
+  NAME="action56" PATH="/deletePortletEntity" SHAPE="528,3904,161,25"
+  TITLE="portletEntity" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#issueOption"
+  NAME="action57" PATH="/admin/issueOption" SHAPE="32,864,161,41"
+  TITLE="issueOption" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/issueOption.jsp" TARGET="page19" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page19"
+  PATH="/issueOption.jsp" SHAPE="304,880,50,25" SUBTYPE="jsp"
+  TITLE="issueOption.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#templatemanage#insertResources" NAME="action58"
+  PATH="/templatemanage/insertResources" SHAPE="32,4056,161,41"
+  TITLE="insertResources" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templatemanage/insertResources.jsp"
+   TARGET="page18" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page18"
+  PATH="/templatemanage/insertResources.jsp" SHAPE="304,4072,50,25"
+  SUBTYPE="jsp" TITLE="insertResources.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#templatemanage#insertSiteSearchForm" NAME="action59"
+  PATH="/templatemanage/insertSiteSearchForm" SHAPE="32,4160,161,41"
+  TITLE="insertSiteSearchForm" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templatemanage/insertSiteSearchForm.jsp"
+   TARGET="page20" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page20"
+  PATH="/templatemanage/insertSiteSearchForm.jsp" SHAPE="304,4176,50,25"
+  SUBTYPE="jsp" TITLE="insertSiteSearchForm.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#templatemanage#insertResourceLink" NAME="action60"
+  PATH="/templatemanage/insertResourceLink" SHAPE="32,4248,161,41"
+  TITLE="insertResourceLink" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templatemanage/insertResourceLink.jsp"
+   TARGET="page21" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page21"
+  PATH="/templatemanage/insertResourceLink.jsp" SHAPE="304,4264,50,25"
+  SUBTYPE="jsp" TITLE="insertResourceLink.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#photo"
+  NAME="action61" PATH="/admin/photo" SHAPE="32,1104,161,41"
+  TITLE="photo" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/photo.jsp" TARGET="page22" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#video"
+  NAME="action62" PATH="/admin/video" SHAPE="32,1216,161,41"
+  TITLE="video" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/video.jsp" TARGET="page23" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page22"
+  PATH="/photo.jsp" SHAPE="304,1120,50,55" SUBTYPE="jsp"
+  TITLE="photo.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/savePhoto.shtml" TARGET="action63"
+   TITLE="savePhoto.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deletePhoto.shtml" TARGET="action64"
+   TITLE="deletePhoto.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page23"
+  PATH="/video.jsp" SHAPE="304,1232,50,55" SUBTYPE="jsp"
+  TITLE="video.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveVideo.shtml" TARGET="action65"
+   TITLE="saveVideo.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteVideo.shtml" TARGET="action66"
+   TITLE="updateVideo.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#savePhoto"
+  NAME="action63" PATH="/admin/savePhoto" SHAPE="528,1136,161,25"
+  TITLE="photo" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deletePhoto"
+  NAME="action64" PATH="/admin/deletePhoto" SHAPE="528,1184,161,25"
+  TITLE="photo" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveVideo"
+  NAME="action65" PATH="/admin/saveVideo" SHAPE="528,1248,161,25"
+  TITLE="video" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteVideo"
+  NAME="action66" PATH="/admin/deleteVideo" SHAPE="528,1296,161,25"
+  TITLE="video" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#setTop"
+  NAME="action26" PATH="/admin/setTop" SHAPE="32,1360,161,41"
+  TITLE="setTop" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/setTop.jsp" TARGET="page24" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page24"
+  PATH="/setTop.jsp" SHAPE="304,1376,50,25" SUBTYPE="jsp"
+  TITLE="setTop.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveSetTop.shtml" TARGET="action27"
+   TITLE="saveSetTop.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveSetTop"
+  NAME="action27" PATH="/admin/saveSetTop" SHAPE="528,1392,161,25"
+  TITLE="setTop" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#sendToWechat"
+  NAME="action67" PATH="/admin/sendToWechat" SHAPE="528,2488,161,25"
+  TITLE="resourceView" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#templatemanage#insertSearchSiteField" NAME="action68"
+  PATH="/templatemanage/insertSearchSiteField" SHAPE="32,4336,161,41"
+  TITLE="insertSearchSiteField" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templatemanage/insertSearchSiteField.jsp"
+   TARGET="page25" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page25"
+  PATH="/templatemanage/insertSearchSiteField.jsp"
+  SHAPE="304,4352,50,25" SUBTYPE="jsp" TITLE="insertSearchSiteField.jsp" TYPE="page"/>
+</PROCESS>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--服务机构-->
+	<class name="com.yuanluesoft.credit.serviceorg.org.pojo.ServiceOrg" table="credit_serviceorg">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="loginName"/> 
+		<property name="password"/>
+		<property name="name"/> 
+		<property name="typeId"/> 
+		<property name="type"/> 
+		<property name="introduction"/> 
+		<property name="addr"/> 
+		<property name="postcode"/> 
+		<property name="linkMan"/> 
+		<property name="email"/> 
+		<property name="faxes"/> 
+		<property name="tel"/> 
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+		<!--办事事项-->
+		<set name="serviceItems" table="credit_serviceitem" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="creatorId"/>
+			<one-to-many class="com.yuanluesoft.credit.serviceorg.serviceitem.pojo.ServiceItem"/>
+		</set>
+	</class>
+	
+	<!--办事事项-->
+	<class name="com.yuanluesoft.credit.serviceorg.serviceitem.pojo.ServiceItem" table="credit_serviceitem">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> 
+		<property name="condition"/>
+		<property name="workFlow"/> 
+		<property name="timeLimit"/> 
+		<property name="type"/> 
+		<property name="material"/> 
+		<property name="chargeStandard"/> 
+		<property name="promise"/> 
+		<property name="person"/> 
+		<property name="mail"/> 
+		<property name="faxes"/> 
+		<property name="tel"/> 
+		<property name="creatorId"/> 
+		<property name="creator"/> 
+		<property name="created"/> 
+	</class>
+	
+	
+	
+	
+</hibernate-mapping>

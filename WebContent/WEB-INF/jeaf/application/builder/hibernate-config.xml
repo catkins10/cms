@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--应用-->
+	<class name="com.yuanluesoft.jeaf.application.builder.pojo.Application" table="application_application">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--名称,VARCHAR(30)-->
+		<property name="englishName"/> <!--英文名称,VARCHAR(17)-->
+		<property name="buildTime"/> <!--生成时间,TIMESTAMP null-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+		<property name="creatorId"/> <!--创建人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--创建人,VARCHAR(60)-->
+		<!--表单-->
+		<set name="forms" table="application_form" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="applicationId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.application.builder.pojo.ApplicationForm"/>
+		</set>
+		<!--导航栏-->
+		<set name="navigators" table="application_navigator" lazy="true" inverse="true" cascade="delete" order-by="priority DESC, id">
+			<key column="applicationId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.application.builder.pojo.ApplicationNavigator"/>
+		</set>
+	</class>
+	
+	<!--应用:导航栏-->
+	<class name="com.yuanluesoft.jeaf.application.builder.pojo.ApplicationNavigator" table="application_navigator">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="applicationId"/> <!--应用ID,NUMERIC(20)-->
+		<property name="label"/> <!--名称,VARCHAR(30)-->
+		<property name="viewId"/> <!--视图ID,NUMERIC(20)-->
+		<property name="viewName"/> <!--视图名称,VARCHAR(30)-->
+		<property name="url"/> <!--链接,视图ID为0时有效,VARCHAR(300)-->
+		<property name="accessPrivilege"/> <!--访问权限,VARCHAR(30)-->
+		<property name="priority"/> <!--优先级,NUMERIC(7,4)-->
+	</class>
+	
+	<!--表单-->
+	<class name="com.yuanluesoft.jeaf.application.builder.pojo.ApplicationForm" table="application_form">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="applicationId"/> <!--应用ID,NUMERIC(20)-->
+		<property name="name"/> <!--表单名称,VARCHAR(30)-->
+		<property name="englishName"/> <!--表单英文名称,VARCHAR(12)-->
+		<property name="newActionName"/> <!--新建操作名称,如:发布公告、登记收文,VARCHAR(30)-->
+		<property name="templateName"/> <!--模板名称,VARCHAR(30)-->
+		<property name="editPrivilege"/> <!--编辑权限,不需要工作流时有效,VARCHAR(30)-->
+		<property name="deletePrivilege"/> <!--删除权限,为空时,有编辑权限的用户可以删除,VARCHAR(30)-->
+		<property name="visitPrivilege"/> <!--查询权限,VARCHAR(30)-->
+		<property name="custom" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--表单定制,TEXT-->
+		<property name="buildTime"/> <!--生成时间,TIMESTAMP null-->
+		<!--字段-->
+		<set name="fields" table="application_field" lazy="true" inverse="true" cascade="delete" order-by="priority DESC, id">
+			<key column="formId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.application.builder.pojo.ApplicationField"/>
+		</set>
+		<!--视图-->
+		<set name="views" table="application_view" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="formId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.application.builder.pojo.ApplicationView"/>
+		</set>
+		<!--索引-->
+		<set name="indexes" table="application_index" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="formId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.application.builder.pojo.ApplicationIndex"/>
+		</set>
+	</class>
+	
+	<!--表单:字段-->
+	<class name="com.yuanluesoft.jeaf.application.builder.pojo.ApplicationField" table="application_field">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="formId"/> <!--表单ID,NUMERIC(20)-->
+		<property name="name"/> <!--字段名称,VARCHAR(30)-->
+		<property name="englishName"/> <!--英文名称,VARCHAR(30)-->
+		<property name="fieldType"/> <!--数据类型,varchar/text/number/date/timesatmp,VARCHAR(30)-->
+		<property name="fieldLength"/> <!--字段长度,VARCHAR(10)-->
+		<property name="inputMode"/> <!--输入方式,VARCHAR(30)-->
+		<property name="required"/> <!--是否必填,NUMERIC(1)-->
+		<property name="priority"/> <!--优先级,NUMERIC(7,4)-->
+		<property name="isPresetting"/> <!--是否预设字段,NUMERIC(1)-->
+		<property name="isPersistence"/> <!--是否数据库字段,NUMERIC(1)-->
+		<!--参数配置-->
+		<set name="parameters" table="application_field_parameter" lazy="false" inverse="true" cascade="delete">
+			<key column="fieldId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.application.builder.pojo.ApplicationFieldParameter"/>
+		</set>
+	</class>
+	
+	<!--字段:参数配置-->
+	<class name="com.yuanluesoft.jeaf.application.builder.pojo.ApplicationFieldParameter" table="application_field_parameter">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="fieldId"/> <!--字段ID,NUMERIC(20)-->
+		<property name="parameterName"/> <!--参数名称,VARCHAR(50)-->
+		<property name="parameterValue"/> <!--参数值,VARCHAR(2000)-->
+	</class>
+	
+	<!--索引-->
+	<class name="com.yuanluesoft.jeaf.application.builder.pojo.ApplicationIndex" table="application_index">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="formId"/> <!--表单ID,NUMERIC(20)-->
+		<property name="fieldIds"/> <!--字段ID,VARCHAR(300)-->
+		<property name="fieldNames"/> <!--字段名称,VARCHAR(300)-->
+		<property name="fieldDirections"/> <!--排序方式,asc/desc,VARCHAR(300)-->
+	</class>
+	
+	<!--视图-->
+	<class name="com.yuanluesoft.jeaf.application.builder.pojo.ApplicationView" table="application_view">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="formId"/> <!--表单ID,NUMERIC(20)-->
+		<property name="name"/> <!--视图名称,VARCHAR(30)-->
+		<property name="englishName"/> <!--视图英文名称,VARCHAR(30)-->
+		<property name="filterMode"/> <!--过滤方式,VARCHAR(30)-->
+		<property name="hqlWhere"/> <!--条件,where子句,VARCHAR(300)-->
+		<property name="viewFieldIds"/> <!--视图字段ID,VARCHAR(300)-->
+		<property name="viewFieldNames"/> <!--视图字段名称,VARCHAR(300)-->
+		<property name="sortFieldIds"/> <!--排序字段ID,VARCHAR(300)-->
+		<property name="sortFieldNames"/> <!--排序字段名称,VARCHAR(300)-->
+		<property name="sortFieldDirections"/> <!--排序字段排序方式,asc/desc,VARCHAR(300)-->
+		<property name="accessPrivilege"/> <!--访问权限,VARCHAR(30)-->
+	</class>
+</hibernate-mapping>

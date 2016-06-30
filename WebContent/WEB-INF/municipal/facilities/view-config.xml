@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/todoEvent" form="admin/event" title="待办案件" pageRows="20" openFeatures="width=800,height=600">
+		<data>
+			<pojo>com.yuanluesoft.municipal.facilities.pojo.FacilitiesEvent</pojo>
+			<orderBy>FacilitiesEvent.created DESC</orderBy>
+			<where>WorkItem.activityName!='安排计划'</where>
+			<quickFilter>FacilitiesEvent.eventNumber like '%{KEY}%' or FacilitiesEvent.position like '%{KEY}%' or FacilitiesEvent.source like '%{KEY}%' or FacilitiesEvent.childCategory like '%{KEY}%' or FacilitiesEvent.description like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="案件登记" type="workflow"/>
+			<action title="批量处理" execute="batchSend('admin/runEvent')"/>
+			<action title="导出EXCEL" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" width="28"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="等级" type="image" name="levelImage" align="center" width="32" display="normal"/>
+			<column title="时限" type="image" name="limitImage" align="center" width="32" display="normal"/>
+			<column title="等级" name="level" align="center" width="70" display="print,condition"/>
+			<column title="时限" name="timeLeftTitle" align="center" width="80" display="print"/>
+			<column title="案件编号" name="eventNumber" align="center" width="100"/>
+			<column title="事发位置" name="position" width="200"/>
+			<column title="案件描述" name="description"/>
+			<column title="上报人" name="observer" align="center" width="50"/>
+			<column title="所属片区" name="zone" width="60" align="center"/>
+			<column title="最新办理意见" name="opinions.opinion" width="120" length="1"/>
+			<column title="来件时间" name="created" width="110" align="center"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="66" display="normal"/>
+		</columns>
+	</view>
+	
+	<view name="admin/reverseEvent" form="admin/event" title="回退案件" pageRows="20" openFeatures="width=800,height=600">
+		<data>
+			<pojo>com.yuanluesoft.municipal.facilities.pojo.FacilitiesEvent</pojo>
+			<where>WorkItem.isReverse='1'</where>
+			<orderBy>FacilitiesEvent.created DESC</orderBy>
+			<quickFilter>FacilitiesEvent.eventNumber like '%{KEY}%' or FacilitiesEvent.position like '%{KEY}%' or FacilitiesEvent.source like '%{KEY}%' or FacilitiesEvent.childCategory like '%{KEY}%' or FacilitiesEvent.description like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="案件登记" type="workflow"/>
+			<action title="批量处理" execute="batchSend('admin/runEvent')"/>
+			<action title="导出EXCEL" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" width="28"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="等级" type="image" name="levelImage" align="center" width="32" display="normal"/>
+			<column title="时限" type="image" name="limitImage" align="center" width="32" display="normal"/>
+			<column title="等级" name="level" align="center" width="70" display="print,condition"/>
+			<column title="时限" name="timeLeftTitle" align="center" width="80" display="print"/>
+			<column title="案件编号" name="eventNumber" align="center" width="100"/>
+			<column title="事发位置" name="position" width="200"/>
+			<column title="案件描述" name="description"/>
+			<column title="上报人" name="observer" align="center" width="50"/>
+			<column title="所属片区" name="zone" width="60" align="center"/>
+			<column title="最新办理意见" name="opinions.opinion" width="120" length="1"/>
+			<column title="来件时间" name="created" width="110" align="center"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="66" display="normal"/>
+		</columns>
+	</view>
+	
+	<view name="admin/planEvent" form="admin/event" title="安排计划" pageRows="20" openFeatures="width=800,height=600">
+		<data>
+			<pojo>com.yuanluesoft.municipal.facilities.pojo.FacilitiesEvent</pojo>
+			<where>WorkItem.activityName='安排计划'</where>
+			<orderBy>FacilitiesEvent.created DESC</orderBy>
+			<quickFilter>FacilitiesEvent.eventNumber like '%{KEY}%' or FacilitiesEvent.position like '%{KEY}%' or FacilitiesEvent.source like '%{KEY}%' or FacilitiesEvent.childCategory like '%{KEY}%' or FacilitiesEvent.description like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="案件登记" type="workflow"/>
+			<action title="批量处理" execute="batchSend('admin/runEvent')"/>
+			<action title="导出EXCEL" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" width="28"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="等级" type="image" name="levelImage" align="center" width="32" display="normal"/>
+			<column title="时限" type="image" name="limitImage" align="center" width="32" display="normal"/>
+			<column title="等级" name="level" align="center" width="70" display="print,condition"/>
+			<column title="时限" name="timeLeftTitle" align="center" width="80" display="print"/>
+			<column title="案件编号" name="eventNumber" align="center" width="100"/>
+			<column title="事发位置" name="position" width="200"/>
+			<column title="案件描述" name="description"/>
+			<column title="上报人" name="observer" align="center" width="50"/>
+			<column title="所属片区" name="zone" width="60" align="center"/>
+			<column title="最新办理意见" name="opinions.opinion" width="120" length="1"/>
+			<column title="来件时间" name="created" width="110" align="center"/>
+			<column title="流程状态" name="workItems.activityName" align="center" width="88" length="1"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessEvent" form="admin/event" title="在办案件" pageRows="20" openFeatures="width=800,height=600">
+		<data>
+			<pojo>com.yuanluesoft.municipal.facilities.pojo.FacilitiesEvent</pojo>
+			<orderBy>FacilitiesEvent.created DESC</orderBy>
+			<quickFilter>FacilitiesEvent.eventNumber like '%{KEY}%' or FacilitiesEvent.position like '%{KEY}%' or FacilitiesEvent.source like '%{KEY}%' or FacilitiesEvent.childCategory like '%{KEY}%' or FacilitiesEvent.description like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="案件登记" type="workflow"/>
+			<action title="导出EXCEL" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" width="28"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="等级" type="image" name="levelImage" align="center" width="32" display="normal"/>
+			<column title="时限" type="image" name="limitImage" align="center" width="32" display="normal"/>
+			<column title="等级" name="level" align="center" width="70" display="print,condition"/>
+			<column title="时限" name="timeLeftTitle" align="center" width="80" display="print"/>
+			<column title="案件编号" name="eventNumber" align="center" width="100"/>
+			<column title="事发位置" name="position" width="200"/>
+			<column title="案件描述" name="description"/>
+			<column title="上报人" name="observer" align="center" width="50"/>
+			<column title="所属片区" name="zone" width="60" align="center"/>
+			<column title="最新办理意见" name="opinions.opinion" width="120" length="1"/>
+			<column title="来件时间" name="created" width="110" align="center"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="66" display="normal"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedEvent" form="admin/event" title="办结案件" pageRows="20" openFeatures="width=800,height=600">
+		<data>
+			<pojo>com.yuanluesoft.municipal.facilities.pojo.FacilitiesEvent</pojo>
+			<orderBy>FacilitiesEvent.created DESC</orderBy>
+			<quickFilter>FacilitiesEvent.eventNumber like '%{KEY}%' or FacilitiesEvent.position like '%{KEY}%' or FacilitiesEvent.source like '%{KEY}%' or FacilitiesEvent.childCategory like '%{KEY}%' or FacilitiesEvent.description like '%{KEY}%'</quickFilter>
+			<filter>COMPLETED</filter>
+		</data>
+		<actions>
+			<action title="案件登记" type="workflow"/>
+			<action title="导出EXCEL" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" width="28"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="等级" type="image" name="levelImage" align="center" width="32" display="normal"/>
+			<column title="时限" type="image" name="limitImage" align="center" width="32" display="normal"/>
+			<column title="等级" name="level" align="center" width="70" display="print,condition"/>
+			<column title="时限" name="timeLeftTitle" align="center" width="80" display="print"/>
+			<column title="案件编号" name="eventNumber" align="center" width="100"/>
+			<column title="事发位置" name="position" width="200"/>
+			<column title="案件描述" name="description"/>
+			<column title="上报人" name="observer" align="center" width="50"/>
+			<column title="所属片区" name="zone" width="60" align="center"/>
+			<column title="最新办理意见" name="opinions.opinion" width="120" length="1"/>
+			<column title="来件时间" name="created" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allEvent" form="admin/event" title="所有案件" pageRows="20" openFeatures="width=800,height=600">
+		<data>
+			<pojo>com.yuanluesoft.municipal.facilities.pojo.FacilitiesEvent</pojo>
+			<orderBy>FacilitiesEvent.created DESC</orderBy>
+			<quickFilter>FacilitiesEvent.eventNumber like '%{KEY}%' or FacilitiesEvent.position like '%{KEY}%' or FacilitiesEvent.source like '%{KEY}%' or FacilitiesEvent.childCategory like '%{KEY}%' or FacilitiesEvent.description like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="案件登记" type="workflow"/>
+			<action title="导出EXCEL" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" width="28"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="等级" type="image" name="levelImage" align="center" width="32" display="normal"/>
+			<column title="时限" type="image" name="limitImage" align="center" width="32" display="normal"/>
+			<column title="等级" name="level" align="center" width="70" display="print,condition"/>
+			<column title="时限" name="timeLeftTitle" align="center" width="80" display="print"/>
+			<column title="案件编号" name="eventNumber" align="center" width="100"/>
+			<column title="事发位置" name="position" width="200"/>
+			<column title="案件描述" name="description"/>
+			<column title="上报人" name="observer" align="center" width="50"/>
+			<column title="所属片区" name="zone" width="60" align="center"/>
+			<column title="最新办理意见" name="opinions.opinion" width="120" length="1"/>
+			<column title="来件时间" name="created" width="110" align="center"/>
+			<column title="流程状态" name="workItems.activityName" align="center" width="88" length="1"/>
+		</columns>
+	</view>
+	
+	<view name="admin/pdaUser" form="admin/pdaUser" title="PDA使用者" pageRows="200" openFeatures="width=760,height=500" viewServiceName="pdaUserViewService">
+		<data>
+			<pojo>com.yuanluesoft.municipal.facilities.pojo.PdaUser</pojo>
+			<orderBy>PdaUser.name DESC</orderBy>
+			<quickFilter>PdaUser.name like '%{KEY}%' or PdaUser.orgName like '%{KEY}%'</quickFilter>
+		</data>
+		<scripts>
+			 <script>/municipal/facilities/js/map.js"></script>
+		</scripts>
+		<actions>
+			<action title="登记PDA使用者" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('municipal/facilities', 'admin/pdaUser', 'width=760,height=500')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="40"/>
+			<column title="姓名" name="name" width="100"/>
+			<column title="工号" name="code" width="100"/>
+			<column title="PDA号码" name="pdaNumber" width="100"/>
+			<column title="所在单位" name="orgName"/>
+			<column title="登录" name="loginImage" align="center" width="40" type="image"/>
+			<column title="GPS" name="GPSLoginImage" align="center" width="40" type="image"/>
+			<column title="操作" name="actions" align="center" width="150"/>
+		</columns>
+	</view>
+	
+	<view name="admin/selectPdaUser" form="admin/pdaUser" title="PDA使用者选择" pageRows="200" openFeatures="width=760,height=500" viewServiceName="pdaUserViewService">
+		<data>
+			<pojo>com.yuanluesoft.municipal.facilities.pojo.PdaUser</pojo>
+			<orderBy>PdaUser.name DESC</orderBy>
+			<quickFilter>PdaUser.name like '%{KEY}%' or PdaUser.orgName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="登录" name="loginedTitle" width="32"/>
+			<column title="姓名" name="name" width="100"/>
+			<column title="工号" name="code" width="100"/>
+			<column title="PDA号码" name="pdaNumber" width="100"/>
+			<column title="所在单位" name="orgName"/>
+		</columns>
+	</view>
+</views>

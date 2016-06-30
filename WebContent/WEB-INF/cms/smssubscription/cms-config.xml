@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 短信订阅 -->
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/smssubscription"/>
+	</pages>
+	
+	<recordLists>
+		<recordList title="短信服务列表" name="smsServices" rssSupport="false">
+			<field title="内容名称" name="contentName"/>
+			<field title="描述" name="description"/>
+			<field title="订阅规则" name="subscribeRule"/>
+			<field title="退订规则" name="unsubscribeRule"/>
+			<!-- field title="计费周期" name="chargePeriod"/ -->
+			<!-- field title="价格" name="price"/ -->
+		</recordList>
+	</recordLists>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="smsServices" processor="smsServicesProcessor"/> <!-- 短信服务列表处理器 -->
+	</pageElements>
+</application>

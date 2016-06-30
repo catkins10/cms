@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>	
+	<!-- 注册服务 -->
+	<bean id="registService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.credit.bank.bank.service.spring.RegistServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="businessService"><ref bean="businessService"/></property>
+				<property name="cryptService"><ref bean="cryptService"/></property>
+				<property name="orgService"><ref bean="orgService"/></property>
+				<property name="personService"><ref bean="personService"/></property>
+				<property name="sessionService"><ref bean="sessionService"/></property>
+				<property name="pageService"><ref bean="pageService"/></property>
+				<property name="mainOrgId"><value>670366593317380000</value></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="enterpriseImportServiceImpl" class="com.yuanluesoft.credit.enterprise.service.spring.EnterpriseImportServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="attachmentService"><ref bean="attachmentService"/></property>
+				<property name="orgService"><ref bean="orgService"/></property>
+				<property name="personService"><ref bean="personService"/></property>
+				<property name="cryptService"><ref bean="cryptService"/></property>
+				<property name="memberServiceList"><ref bean="memberServiceList"/></property>
+				<property name="pageService"><ref bean="pageService"/></property>
+				<property name="mainOrgId"><value>670366593317380000</value></property>
+			</bean>
+			<bean id="enterpriseInImportServiceImpl" class="com.yuanluesoft.credit.enterprise.service.spring.EnterpriseInImportServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="attachmentService"><ref bean="attachmentService"/></property>
+				<property name="orgService"><ref bean="orgService"/></property>
+				<property name="personService"><ref bean="personService"/></property>
+				<property name="cryptService"><ref bean="cryptService"/></property>
+				<property name="memberServiceList"><ref bean="memberServiceList"/></property>
+				<property name="pageService"><ref bean="pageService"/></property>
+				<property name="mainOrgId"><value>0</value></property>
+	</bean>
+	<bean id="enterpriseOutImportServiceImpl" class="com.yuanluesoft.credit.enterprise.service.spring.EnterpriseOutImportServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="attachmentService"><ref bean="attachmentService"/></property>
+				<property name="orgService"><ref bean="orgService"/></property>
+				<property name="personService"><ref bean="personService"/></property>
+				<property name="cryptService"><ref bean="cryptService"/></property>
+				<property name="memberServiceList"><ref bean="memberServiceList"/></property>
+				<property name="pageService"><ref bean="pageService"/></property>
+				<property name="mainOrgId"><value>0</value></property>
+	</bean>
+	<bean id="productService" class="com.yuanluesoft.credit.bank.financialproducts.spring.ProductServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="pageService"><ref bean="pageService"/></property>
+	</bean>
+	<bean id="bankLoanService" class="com.yuanluesoft.credit.bank.loan.spring.LoanServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="pageService"><ref bean="pageService"/></property>
+	</bean>
+	<bean id="serviceItemService" class="com.yuanluesoft.credit.serviceorg.serviceitem.spring.ServiceItemServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="pageService"><ref bean="pageService"/></property>
+	</bean>
+	<!-- 金融产品查询列表处理器 -->
+	<bean id="productQueryProcessor" class="com.yuanluesoft.credit.bank.financialproducts.processor.ProdcutQueryProcessor">
+		<property name="formDefineService"><ref bean="formDefineService" /></property>
+		<property name="pageBuilder"><ref bean="pageBuilder" /></property>
+		<property name="pageDefineService"><ref bean="pageDefineService" /></property>
+	</bean>
+	<!-- 企业信息查询列表处理器 -->
+	<bean id="enterpriseQueryProcessor" class="com.yuanluesoft.credit.enterprise.processor.EnterpriseQueryProcessor">
+		<property name="formDefineService"><ref bean="formDefineService" /></property>
+		<property name="pageBuilder"><ref bean="pageBuilder" /></property>
+		<property name="pageDefineService"><ref bean="pageDefineService" /></property>
+	</bean>
+	<!-- 内资企业信息查询列表处理器 -->
+	<bean id="enterpriseInQueryProcessor" class="com.yuanluesoft.credit.enterprise.processor.EnterpriseInQueryProcessor">
+		<property name="formDefineService"><ref bean="formDefineService" /></property>
+		<property name="pageBuilder"><ref bean="pageBuilder" /></property>
+		<property name="pageDefineService"><ref bean="pageDefineService" /></property>
+	</bean>
+	<!-- 外资信息查询列表处理器 -->
+	<bean id="enterpriseOutQueryProcessor" class="com.yuanluesoft.credit.enterprise.processor.EnterpriseOutQueryProcessor">
+		<property name="formDefineService"><ref bean="formDefineService" /></property>
+		<property name="pageBuilder"><ref bean="pageBuilder" /></property>
+		<property name="pageDefineService"><ref bean="pageDefineService" /></property>
+	</bean>
+	<!--统计部门列表处理器 -->
+	<bean id="statDepProcessor" class="com.yuanluesoft.credit.stat.processor.StatDepProcessor">
+		<property name="formDefineService"><ref bean="formDefineService" /></property>
+		<property name="pageBuilder"><ref bean="pageBuilder" /></property>
+		<property name="pageDefineService"><ref bean="pageDefineService" /></property>
+		<property name="unitIds"><value>330369980646900000,330369980653720000</value></property>
+		<property name="depIds"><value>290366680834310000</value></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		
+	</bean>
+	<!--栏目发布统计列表处理器 -->
+	<bean id="statColumnResultProcessor" class="com.yuanluesoft.credit.stat.processor.StatColumnResultProcessor">
+		<property name="formDefineService"><ref bean="formDefineService" /></property>
+		<property name="pageBuilder"><ref bean="pageBuilder" /></property>
+		<property name="pageDefineService"><ref bean="pageDefineService" /></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		
+		<property name="orgService"><ref bean="orgService"/></property>
+		
+		<property name="defaultUnitId"><value>670367149281200000</value></property>
+		<property name="defaultUnitName"><value>金融办</value></property>
+		<property name="defaultSiteId"><value>670365984625690000</value></property>
+	</bean>
+	<!--应用发布统计列表处理器 -->
+	<bean id="statAppResultProcessor" class="com.yuanluesoft.credit.stat.processor.StatAppResultProcessor">
+		<property name="formDefineService"><ref bean="formDefineService" /></property>
+		<property name="pageBuilder"><ref bean="pageBuilder" /></property>
+		<property name="pageDefineService"><ref bean="pageDefineService" /></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="defaultUnitId"><value>670367149281200000</value></property>
+		<property name="defaultUnitName"><value>金融办</value></property>
+		<property name="defaultSiteId"><value>670365984625690000</value></property>
+	</bean>
+</beans>

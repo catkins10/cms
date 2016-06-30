@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,177,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="368,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,177,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="368,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#complaint" NAME="action0"
+  PATH="/complaint" SHAPE="32,240,177,41" TITLE="complaint" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/complaint.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/complaint.jsp" SHAPE="368,256,50,25" SUBTYPE="jsp"
+  TITLE="complaint.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveComplaint" TARGET="action1"
+   TITLE="saveComplaint" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveComplaint"
+  NAME="action1" PATH="/saveComplaint" SHAPE="576,272,177,41"
+  TITLE="complaint" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/complaintSubmited.jsp" TARGET="page3"
+   TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/complaintSubmited.jsp" SHAPE="848,288,50,25" SUBTYPE="jsp"
+  TITLE="complaintSubmited.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#complaint"
+  NAME="action2" PATH="/admin/complaint" SHAPE="32,416,177,41"
+  TITLE="adminComplaint" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/complaint.jsp" TARGET="page4"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/admin/complaint.jsp" SHAPE="368,432,50,115" SUBTYPE="jsp"
+  TITLE="complaint.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveComplaint" TARGET="action3"
+   TITLE="saveComplaint" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteComplaint" TARGET="action5"
+   TITLE="deleteComplaint" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/runComplaint" TARGET="action4"
+   TITLE="runComplaint" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/admin/writeOpinion" TARGET="action6"
+   TITLE="writeOpinion" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link4"
+   PATH="/admin/setPublishOption" TARGET="action7"
+   TITLE="setPublishOption" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link5"
+   PATH="/admin/publish" TARGET="action8" TITLE="publish" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link6"
+   PATH="/admin/setSanctionOption" TARGET="action9"
+   TITLE="setSanctionOption" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link7"
+   PATH="/admin/doSanction" TARGET="action10"
+   TITLE="doSanction" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveComplaint"
+  NAME="action3" PATH="/admin/saveComplaint" SHAPE="576,448,177,25"
+  TITLE="adminComplaint" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#runComplaint"
+  NAME="action4" PATH="/admin/runComplaint" SHAPE="576,560,177,25"
+  TITLE="adminComplaint" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteComplaint"
+  NAME="action5" PATH="/admin/deleteComplaint" SHAPE="576,504,177,25"
+  TITLE="adminComplaint" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#writeOpinion"
+  NAME="action6" PATH="/admin/writeOpinion" SHAPE="576,616,177,25"
+  TITLE="adminComplaint" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#setPublishOption"
+  NAME="action7" PATH="/admin/setPublishOption" SHAPE="576,672,177,25"
+  TITLE="adminComplaint" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#publish"
+  NAME="action8" PATH="/admin/publish" SHAPE="576,728,177,25"
+  TITLE="adminComplaint" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#setSanctionOption"
+  NAME="action9" PATH="/admin/setSanctionOption" SHAPE="576,784,177,25"
+  TITLE="adminComplaint" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#doSanction"
+  NAME="action10" PATH="/admin/doSanction" SHAPE="576,840,177,25"
+  TITLE="adminComplaint" TYPE="action"/>
+</PROCESS>

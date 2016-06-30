@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 互联星空服务 -->
+	<bean id="vnetService" class="com.yuanluesoft.charge.thirdparty.vnet.service.spring.VnetServiceImpl">
+		<property name="orderCache"><ref bean="vnetOrderCache"/></property>	 <!-- 交易记录缓存,时间3小时,交易成功完成以后保存到数据库 -->
+		<property name="serviceId"><value>1400022700000001</value></property> <!-- 服务ID -->
+		<property name="serviceItemId"><value>140002270000000100000000000000000001</value></property> <!-- 服务项ID -->
+		<property name="serviceItemName"><value>智能评测</value></property> <!-- 服务名称 -->
+		<property name="spId"><value>14000227</value></property> <!-- 服务供应商的编码  -->
+		<property name="spKey"><value>713277FDD2C18FE059C79B320ED54C37DB7F6706616FAD24</value></property> <!-- 服务供应商的加密密钥 -->
+		<property name="spIv"><value>0102030405060708</value></property> <!-- 服务供应商的加密向量 -->
+		<property name="vnetLoginURL"><value>http://vnetforsp.fj.vnet.cn/login.aspx</value></property> <!-- 互联星空登入URL -->
+		<property name="vnetPayPeriodURL"><value>http://vnetforsp.fj.vnet.cn/PayByPeriod.aspx</value></property> <!-- 按月支付URL -->
+	</bean>
+	
+	<!-- 数字校园服务 -->
+	<bean id="e100Service" class="com.yuanluesoft.charge.thirdparty.vnet.service.spring.E100ServiceImpl">
+		<property name="soapConnectionPool"><ref bean="soapConnectionPool"/></property>
+		<property name="soapPassport"><ref bean="e100SoapPassport"/></property>
+		<property name="soapServiceName"><value>Djg.asmx</value></property>
+	</bean>
+</beans>

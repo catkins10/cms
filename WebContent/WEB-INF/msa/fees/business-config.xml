@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="规费征缴" class="com.yuanluesoft.msa.fees.pojo.MsaFees">
+		<field name="name" title="名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="creatorId" title="创建者ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="创建者" length="50" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="items" title="收费细项" type="components">
+			<parameter name="class">com.yuanluesoft.msa.fees.pojo.MsaFeesItem</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审核,办理</parameter>
+			<parameter name="class">com.yuanluesoft.msa.fees.pojo.MsaFeesOpinion</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="收费细项" class="com.yuanluesoft.msa.fees.pojo.MsaFeesItem">
+		<field name="feesId" title="收费基本信息ID" length="20" type="number" inputMode="hidden"/>
+		<field name="examCategory" title="考试类别" length="50" type="string" inputMode="dropdown">
+			<parameter name="itemsHql">select distinct MsaFeesItem.examCategory from MsaFeesItem MsaFeesItem order by MsaFeesItem.examCategory</parameter>
+		</field>
+		<field name="address" title="院校" length="50" type="string" inputMode="dropdown">
+			<parameter name="itemsHql">select distinct MsaFeesItem.address from MsaFeesItem MsaFeesItem order by MsaFeesItem.address</parameter>
+		</field>
+		<field name="examTime" title="考试时间" required="true" type="date" inputMode="date"/>
+		<field name="examineeNumber" title="考生人数" length="6" required="true" type="number" inputMode="text"/>
+		<field name="charge" title="费用" length="8,2" required="true" type="number" inputMode="text"/>
+		<field name="period" title="期数" length="30" required="true" type="string" inputMode="text"/>
+		<field name="paymentMode" title="缴费方式" length="30" type="string" inputMode="text"/>
+		<field name="unitId" title="负责单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="unitName" title="负责单位" length="30" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'unitId{id},unitName{name}', '', 'unit')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="completeTime" title="完成时间" type="timestamp" inputMode="readonly"/>
+		<field name="isComplete" title="是否办结" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">completeTime</parameter>
+		</field>
+		<field name="transactorId" title="经办人ID" length="20" type="number" inputMode="none"/>
+		<field name="transactor" title="经办人姓名" length="30" type="string" inputMode="readonly"/>
+		<field name="feedback" title="完成情况说明" length="2000" type="string" inputMode="text"/>
+		<field name="remark" title="备注" length="2000" type="string" inputMode="text"/>
+	</businessObject>
+</businessObjects>

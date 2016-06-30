@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="农产品" name="farmProduces">
+		<data>
+			<pojo>com.yuanluesoft.logistics.farmproduce.pojo.LogisticsFarmProduce</pojo>
+			<orderBy>LogisticsFarmProduce.created DESC</orderBy>
+			<quickFilter>LogisticsFarmProduce.name like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link>/logistics/farmproduce/farmProduce.shtml</link>
+		</links>
+	</view>
+
+	<view name="admin/farmProduce" form="admin/farmProduce" title="农产品" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.logistics.farmproduce.pojo.LogisticsFarmProduce</pojo>
+			<orderBy>LogisticsFarmProduce.created DESC</orderBy>
+			<quickFilter>LogisticsFarmProduce.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action hide="noPrivilege(manageUnit_regist)" title="登记农产品" execute="PageUtils.newrecord('logistics/farmproduce', 'admin/farmProduce', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="农产品名称" name="name"/>
+			<column title="数量" name="quantity" align="center" width="50"/>
+			<column title="单价" name="freightTitle" align="center" width="80"/>
+			<column title="联系人" name="linkman" align="center" width="68"/>
+			<column title="联系电话" name="linkmanTel" align="center" width="100"/>
+			<column title="登记时间" name="created" align="center" width="110"/>
+		</columns>
+	</view>
+</views>

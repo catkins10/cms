@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view title="已公开的问题" name="biddingAsks">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAsk</pojo>
+			<where>BiddingProjectAsk.isPublic='1' and ({PARAMETER:projectId|0}=0 or BiddingProjectAsk.projectId={PARAMETER:projectId|0}) and ('{PARAMETER:askFrom}'='' or '{PARAMETER:askFrom}' is null or BiddingProjectAsk.askFrom='{PARAMETER:askFrom}')</where>
+			<orderBy>BiddingProjectAsk.askTime DESC</orderBy>
+			<quickFilter>BiddingProjectAsk.projectName like '%{KEY}%' or BiddingProjectAsk.question like '%{KEY}%' or BiddingProjectAsk.reply like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>/bidding/project/ask/ask.shtml</link>
+		</links>
+		<extendParameters>
+			<parameter name="rssChannel">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view title="我提的问题" name="myBiddingAsks">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAsk</pojo>
+			<where>BiddingProjectAsk.enterpriseId={DEPARTMENTID}</where>
+			<orderBy>BiddingProjectAsk.askTime DESC</orderBy>
+			<quickFilter>BiddingProjectAsk.projectName like '%{KEY}%' or BiddingProjectAsk.question like '%{KEY}%' or BiddingProjectAsk.reply like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>/bidding/project/ask/ask.shtml</link>
+		</links>
+		<extendParameters>
+			<parameter name="rssChannel">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view title="待处理问题" name="todoBiddingAsks">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAsk</pojo>
+			<orderBy>BiddingProjectAsk.askTime DESC</orderBy>
+			<quickFilter>BiddingProjectAsk.projectName like '%{KEY}%' or BiddingProjectAsk.question like '%{KEY}%' or BiddingProjectAsk.reply like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<links>
+			<link>/bidding/project/ask/ask.shtml</link>
+		</links>
+		<extendParameters>
+			<parameter name="rssChannel">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view title="在处理问题" name="processingBiddingAsks">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAsk</pojo>
+			<orderBy>BiddingProjectAsk.askTime DESC</orderBy>
+			<quickFilter>BiddingProjectAsk.projectName like '%{KEY}%' or BiddingProjectAsk.question like '%{KEY}%' or BiddingProjectAsk.reply like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<links>
+			<link>/bidding/project/ask/ask.shtml</link>
+		</links>
+		<extendParameters>
+			<parameter name="rssChannel">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view title="已办结问题" name="completedBiddingAsks">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAsk</pojo>
+			<orderBy>BiddingProjectAsk.askTime DESC</orderBy>
+			<quickFilter>BiddingProjectAsk.projectName like '%{KEY}%' or BiddingProjectAsk.question like '%{KEY}%' or BiddingProjectAsk.reply like '%{KEY}%'</quickFilter>
+			<filter>COMPLETED</filter>
+		</data>
+		<links>
+			<link>/bidding/project/ask/ask.shtml</link>
+		</links>
+		<extendParameters>
+			<parameter name="rssChannel">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view title="参与处理的问题" name="readabledBiddingAsks">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAsk</pojo>
+			<orderBy>BiddingProjectAsk.askTime DESC</orderBy>
+			<quickFilter>BiddingProjectAsk.projectName like '%{KEY}%' or BiddingProjectAsk.question like '%{KEY}%' or BiddingProjectAsk.reply like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<links>
+			<link>/bidding/project/ask/ask.shtml</link>
+		</links>
+		<extendParameters>
+			<parameter name="rssChannel">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="admin/todoAsk" form="admin/ask" title="待办提问" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAsk</pojo>
+			<orderBy>BiddingProjectAsk.askTime DESC</orderBy>
+			<quickFilter>BiddingProjectAsk.projectName like '%{KEY}%' or BiddingProjectAsk.question like '%{KEY}%' or BiddingProjectAsk.reply like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="projectName" width="30%"/>
+			<column title="问题" name="question" width="40%" displayExcept="portlet"/>
+			<column title="答复" name="reply" width="30%" displayExcept="portlet"/>
+			<column title="提问时间" name="askTime" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessAsk" form="admin/ask" title="在办提问" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAsk</pojo>
+			<orderBy>BiddingProjectAsk.askTime DESC</orderBy>
+			<quickFilter>BiddingProjectAsk.projectName like '%{KEY}%' or BiddingProjectAsk.question like '%{KEY}%' or BiddingProjectAsk.reply like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="projectName" width="30%"/>
+			<column title="问题" name="question" width="40%" displayExcept="portlet"/>
+			<column title="答复" name="reply" width="30%" displayExcept="portlet"/>
+			<column title="提问时间" name="askTime" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedAsk" form="admin/ask" title="办结提问" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAsk</pojo>
+			<filter>COMPLETED</filter>
+			<orderBy>BiddingProjectAsk.askTime DESC</orderBy>
+			<quickFilter>BiddingProjectAsk.projectName like '%{KEY}%' or BiddingProjectAsk.question like '%{KEY}%' or BiddingProjectAsk.reply like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="projectName" width="30%"/>
+			<column title="问题" name="question" width="40%" displayExcept="portlet"/>
+			<column title="答复" name="reply" width="30%" displayExcept="portlet"/>
+			<column title="提问时间" name="askTime" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allAsk" form="admin/ask" title="所有提问" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAsk</pojo>
+			<filter>READABLE</filter>
+			<orderBy>BiddingProjectAsk.askTime DESC</orderBy>
+			<quickFilter>BiddingProjectAsk.projectName like '%{KEY}%' or BiddingProjectAsk.question like '%{KEY}%' or BiddingProjectAsk.reply like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="projectName" width="30%"/>
+			<column title="问题" name="question" width="40%" displayExcept="portlet"/>
+			<column title="答复" name="reply" width="30%" displayExcept="portlet"/>
+			<column title="提问时间" name="askTime" align="center" width="108"/>
+		</columns>
+	</view>
+</views>

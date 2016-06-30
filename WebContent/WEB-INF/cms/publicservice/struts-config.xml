@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminSmsFormat" type="com.yuanluesoft.cms.publicservice.forms.admin.SmsFormat"/>
+  <form-bean name="applicationView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/>
+  <form-bean name="adminModifyReaders" type="com.yuanluesoft.cms.publicservice.forms.admin.ModifyReaders"/>
+  <form-bean name="adminReplyStatisticView" type="com.yuanluesoft.cms.publicservice.forms.admin.ReplyStatisticView"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action path="/admin/workflowSetting" scope="request"
+   type="com.yuanluesoft.cms.publicservice.actions.workflowsetting.Load" validate="false"/>
+  <action name="adminSmsFormat" path="/admin/smsFormat" scope="request"
+   type="com.yuanluesoft.cms.publicservice.actions.smsformat.Load" validate="false">
+   <forward name="load" path="/admin/smsFormat.jsp"/>
+  </action>
+  <action input="/admin/smsFormat.jsp" name="adminSmsFormat"
+   path="/admin/saveSmsFormat" scope="request"
+   type="com.yuanluesoft.cms.publicservice.actions.smsformat.Save" validate="false"/>
+  <action name="adminModifyReaders" path="/admin/readersModifyOption"
+   scope="request"
+   type="com.yuanluesoft.cms.publicservice.actions.modifyreaders.SetOption" validate="false">
+   <forward name="load" path="/admin/readersModifyOption.jsp"/>
+  </action>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="applicationView" path="/admin/modifyReaders" scope="request"
+   type="com.yuanluesoft.cms.publicservice.actions.modifyreaders.Submit" validate="false"/>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="applicationView" path="/admin/batchDelete" scope="request"
+   type="com.yuanluesoft.cms.publicservice.actions.batchdelete.Delete" validate="false"/>
+  <action name="adminReplyStatisticView"
+   path="/admin/replyStatisticView" scope="request"
+   type="com.yuanluesoft.cms.publicservice.actions.replystatisticview.ViewAction" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

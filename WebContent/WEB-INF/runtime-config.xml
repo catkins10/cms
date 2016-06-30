@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 应用URL -->
+	<bean id="webApplicationUrl" class="java.lang.String">
+		<constructor-arg><value>/cms</value></constructor-arg>
+	</bean>
+
+	<!-- 应用安全(https)URL -->
+	<bean id="webApplicationSafeUrl" class="java.lang.String">
+		<constructor-arg><value>/cms</value></constructor-arg>
+	</bean>
+	
+	<!-- 在服务器上访问网站时的URL,原则上是localhost,分布式部署时可能是局域网内的其他机器 -->
+	<bean id="webApplicationLocalUrl" class="java.lang.String">
+		<constructor-arg><value>http://localhost:8086/cms</value></constructor-arg>
+	</bean>
+	
+	<!-- 分布式部署时的其他服务器访问时的URL -->
+	<bean id="webApplicationDistributeUrl" class="java.lang.String">
+		<!-- constructor-arg><value>http://localhost/cms</value></constructor-arg-->
+		<constructor-arg><value>http://{LOCALHOSTIP}:8086/cms</value></constructor-arg>
+	</bean>
+	
+	<!-- 模板存放路径 -->
+	<bean id="tempatePath" class="java.lang.String">
+		<constructor-arg><value>f:/workspace/cms/WebContent/cms/templates/</value></constructor-arg>
+	</bean>
+	
+	<!-- 模板URL -->
+	<bean id="tempateUrl" class="java.lang.String">
+		<constructor-arg><value>/cms/cms/templates/</value></constructor-arg>
+	</bean>
+	
+	<!-- 页面存放路径 -->
+	<bean id="sitePagePath" class="java.lang.String">
+		<constructor-arg><value>f:/workspace/cms/WebContent/cms/pages/</value></constructor-arg>
+	</bean>
+	
+	<!-- 页面URL -->
+	<bean id="sitePageUrl" class="java.lang.String">
+		<constructor-arg><value>/cms/cms/pages/</value></constructor-arg>
+	</bean>
+	
+	<!-- 静态页面存放路径 -->
+	<bean id="staticPagePath" class="java.lang.String">
+		<constructor-arg><value>f:/workspace/cms/WebContent/cms/html/</value></constructor-arg>
+	</bean>
+	
+	<!-- 静态页面URL -->
+	<bean id="staticPageUrl" class="java.lang.String">
+		<constructor-arg><value>/cms/cms/html/</value></constructor-arg>
+	</bean>
+	
+	<!-- 附件目录 -->
+	<bean id="attachmentDirectory" class="java.lang.String">
+		<constructor-arg><value>f:/cms/attachments</value></constructor-arg>
+	</bean>
+	
+	<!-- 临时文件目录 -->
+	<bean id="temporaryDirectory" class="java.lang.String">
+		<constructor-arg><value>f:/cms/temp/</value></constructor-arg>
+	</bean>
+	
+	<!-- 单点登录域名列表 -->
+	<bean id="ssoDomains" class="java.lang.String">
+		<constructor-arg><value></value></constructor-arg>
+	</bean>
+	
+	<!-- 本服务器的WEB服务地址及身份验证,不得删除,必须使用localhost -->
+	<bean class="com.yuanluesoft.jeaf.soap.SoapPassport" id="localSoapPassport">
+		<property name="url"><value>http://localhost:8086/cms/services/</value></property>
+		<property name="userName"><value>yuanluesoft</value></property>
+		<property name="password"><value>cms</value></property>
+		<property name="ips">
+			<list>
+				<!-- value>192.168.1.222</value-->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 用户同步客户端列表 -->	
+	<bean id="userSynchClientList" class="com.yuanluesoft.jeaf.usermanage.service.spring.UserSynchClientList">
+		<property name="userSynchClients">
+			<list>
+				<ref bean="mailUserSynchService"/> <!-- 邮件用户服务 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 成员服务列表 -->
+	<bean id="memberServiceList" class="com.yuanluesoft.jeaf.membermanage.service.MemberServiceList">
+		<property name="memberServiceNames">
+			<value>
+				personService, <!-- 系统用户服务 -->
+				fingerprintService, <!-- 指纹认证服务 -->
+				employeeService, <!-- 招投标企业用户服务 -->
+				memberService, <!-- 网上注册用户服务 -->
+				bbsUserService, <!-- BBS用户服务 -->
+				interviewService, <!-- 在线访谈服务 -->
+				fetCompanyService, <!-- 外经贸企业服务 -->
+				logisticsUserService, <!-- 物流联盟 -->
+				barcodeCompanyService, <!-- 地理商标 -->
+				insuranceService, <!-- 养老保险 -->
+				jobCompanyService, <!-- 人才网企业服务 -->
+				jobTalentService <!-- 人才网人才服务 -->
+			</value>
+		</property>
+		<property name="orgService"><ref bean="orgService"/></property>
+	</bean>
+	
+	<!-- 需要做初始化的应用列表 -->
+	<bean id="initializeServices" class="java.util.ArrayList">
+		<constructor-arg><list>
+			<ref bean="siteService"/> <!-- 站点服务 -->
+			<ref bean="forumService"/> <!-- 论坛服务 -->
+			<ref bean="publicDirectoryService"/> <!-- 信息公开目录服务 -->
+			<ref bean="onlineServiceDirectoryService"/> <!-- 网上办事目录服务 -->
+			<ref bean="databankDirectoryService"/> <!-- 资料库目录服务 -->
+			<ref bean="keywordService"/> <!-- 主题词库 -->
+			<ref bean="isoDirectoryService"/> <!-- ISO目录服务 -->
+			<ref bean="chdEvaluationDirectoryService"/> <!-- 华电星级企业评价体系目录服务 -->
+			<ref bean="jobParameterService"/> <!-- 人才网参数配置服务 -->
+		</list></constructor-arg>
+	</bean>
+	
+	<!-- 数据备份 -->
+	<bean id="dataBackupService" class="com.yuanluesoft.jeaf.databackup.service.spring.DataBackupServiceImpl">
+		<!-- 备份策略 -->
+		<property name="dataBackupPolicies"><list>
+			<bean class="com.yuanluesoft.jeaf.databackup.model.DataBackupPolicy">
+				<property name="backupSavePath"><value>f:/backup</value></property> <!-- 存放目录 -->
+				<property name="backupInterval"><value>1</value></property> <!-- 备份间隔:1天一次 -->
+				<property name="backupCycle"><value>10</value></property> <!-- 备份周期:10天一个周期 -->
+				<property name="excludeFileTypes"><value>flv,avi,mpg,rmvb,rm,wmv,mp4</value></property> <!-- 不需要备份的类型:flv视频 -->
+				<property name="zipped"><value>false</value></property> <!-- 是否需要压缩 -->
+			</bean>
+		</list></property>
+		
+		<!-- 备份处理器 -->
+    <property name="dataBackupProcesses">
+      <list>
+        <bean class="com.yuanluesoft.jeaf.databackup.processor.impl.DirectoryBackupProcessor">
+          <property name="path">
+            <value>f:/workspace/cms</value>
+          </property>
+          <property name="alias">
+            <value>cms</value>
+          </property>
+        </bean>
+        <bean class="com.yuanluesoft.jeaf.databackup.processor.impl.PostgresBackupProcessor">
+          <property name="dumpCommandPath">
+            <value>F:/Program Files (x86)/PostgreSQL/9.0/bin/pg_dump.exe</value>
+          </property>
+          <property name="userName">
+            <value>postgres</value>
+          </property>
+          <property name="password">
+            <value>cms2016</value>
+          </property>
+          <property name="dbName">
+            <value>cms</value>
+          </property>
+          <property name="host">
+            <value>KpzZSzDLNpFNHgTUEPN4qQ==</value>
+          </property>
+          <property name="port">
+            <value>2aOLdP9ei80=</value>
+          </property>
+        </bean>
+      </list>
+    </property>
+	</bean>
+</beans>

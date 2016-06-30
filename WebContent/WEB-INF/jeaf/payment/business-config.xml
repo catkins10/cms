@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="商户" class="com.yuanluesoft.jeaf.payment.pojo.PaymentMerchant" businessServiceName="paymentService">
+		<field name="name" title="户名" type="string" length="100" inputMode="text" required="true"/>
+		<field name="account" title="帐号" type="string" length="100" inputMode="text" required="true"/>
+		<field name="bank" title="开户银行" type="string" length="200" inputMode="text" required="true"/>
+		<field name="transferPassword" title="转账密码" type="string" length="200" inputMode="text"/>
+		<field name="paymentMethod" title="支付方式" type="string" length="100" inputMode="dropdown" required="true">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">paymentService</parameter>
+			<parameter name="itemsName">paymentMethodNames</parameter>
+		</field>
+		<field name="fullName" title="全称" type="string" inputMode="readonly" persistence="false">
+			<parameter name="referenceFields">name,paymentMethod</parameter>
+		</field>
+		<field name="accountTypes" title="启用的帐户类型" type="string" length="200" inputMode="readonly"/>
+		<field name="halt" title="是否停用" type="number" length="1" inputMode="radio">
+			<parameter name="itemsText">启用|0\0停用|1</parameter>
+		</field>
+		<field name="parameters" title="参数列表" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.payment.pojo.PaymentMerchantParameter</parameter>
+			<parameter name="recordList">false</parameter>
+		</field>
+		<field title="图标" name="iconUrl" type="imageName" persistence="false"/>
+	</businessObject>
+	
+	<businessObject title="商户参数" class="com.yuanluesoft.jeaf.payment.pojo.PaymentMerchantParameter">
+		<field name="merchantId" title="商户ID" type="number" length="20" inputMode="hidden"/>
+		<field name="parameterName" title="参数名称" type="string" length="100" inputMode="hidden"/>
+		<field name="parameterValue" title="参数值" type="string" length="1000" inputMode="text"/>
+	</businessObject>
+
+	<businessObject title="支付记录" class="com.yuanluesoft.jeaf.payment.pojo.Payment">
+		<field name="applicationName" title="应用名称" type="string" length="50" inputMode="readonly"/>
+		<field name="applicationOrderId" title="应用指定的订单ID" type="string" length="50" inputMode="readonly"/>
+		<field name="payerId" title="支付人ID" type="string" length="50" inputMode="readonly"/>
+		<field name="payerName" title="支付人姓名" type="string" length="50" inputMode="readonly"/>
+		<field name="paymentReason" title="支付原因" type="string" length="200" inputMode="readonly"/>
+		<field name="money" title="支付金额" type="number" length="13,2" inputMode="readonly"/>
+		<field name="providerId" title="服务提供者ID" type="string" length="50" inputMode="readonly"/>
+		<field name="providerName" title="服务提供者姓名,VARCHAR(50)" type="string" length="100" inputMode="readonly"/>
+		<field name="providerMoney" title="服务提供者报酬" type="number" length="13,2" inputMode="readonly"/>
+		<field name="pageMode" title="页面打开方式" type="string" length="20" inputMode="readonly">
+			<parameter name="itemsText">对话框|dialog\0弹出页面|popup\0重定向|redirect</parameter>
+		</field>
+		<field name="redirectOfSuccess" title="支付完成跳转的URL" type="string" length="1000" inputMode="readonly"/>
+		<field name="redirectOfFailed" title="支付失败跳转的URL" type="string" length="1000" inputMode="readonly"/>
+		<field name="paymentFrom" title="打开支付页面的URL" type="string" length="1000" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="payerIp" title="支付人IP" type="string" length="30" inputMode="readonly"/>
+		<field name="merchantId" title="商户ID" type="number" length="20" inputMode="none"/>
+		<field name="paymentMethod" title="支付方式" type="string" length="50" inputMode="readonly"/>
+		<field name="accountType" title="支付帐户类型" type="string" length="20" inputMode="readonly"/>
+		<field name="lastQueryTime" title="最后查询时间" type="timestamp" inputMode="readonly"/>
+		<field name="transactSuccess" title="支付是否成功" type="string" length="1" inputMode="readonly"/>
+		<field name="transactSn" title="支付系统流水号" type="string" length="50" inputMode="readonly"/>
+		<field name="failedReason" title="支付失败的原因" type="string" length="1000" inputMode="readonly"/>
+		<field name="transactTime" title="支付完成时间" type="timestamp" inputMode="readonly"/>
+		<field name="transactMoney" title="实际交易金额" type="number" length="13,2" inputMode="readonly"/>
+		<field name="fee" title="手续费" type="number" length="13,2" inputMode="readonly"/>
+		<field name="bankOrderId" title="银行端订单ID" type="string" length="100" inputMode="readonly"/>
+		<field name="payerAccountName" title="支付人账户名称" type="string" length="200" inputMode="readonly"/>
+		<field name="payerBank" title="支付人开户行" type="string" length="200" inputMode="readonly"/>
+		<field name="payerAccount" title="支付人账号" type="string" length="200" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="帐户类型" class="com.yuanluesoft.jeaf.payment.model.AccountType">
+		<field title="帐户类型" name="name" type="string" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

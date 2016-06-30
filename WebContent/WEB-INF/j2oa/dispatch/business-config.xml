@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="发文" class="com.yuanluesoft.j2oa.dispatch.pojo.Dispatch" businessServiceName="dispatchService">
+		<field name="subject" title="标题" length="200" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="docType" title="文件类别" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">documentService</parameter>
+		</field>
+		<field name="secureLevel" title="秘密等级" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">documentService</parameter>
+		</field>
+		<field name="secureTerm" title="保密期限" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">documentService</parameter>
+		</field>
+		<field name="priority" title="紧急程度" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">documentService</parameter>
+		</field>
+		<field name="mainSend" title="主送" length="2000" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(600, 400, true, 'mainSend{name},mainSend{name|主送单位|100%}', '', 'unit,category', '', '、')</parameter>
+		</field>
+		<field name="copySend" title="抄送" length="2000" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(600, 400, true, 'copySend{name},copySend{name|抄送单位|100%}', '', 'unit,category', '', '、')</parameter>
+		</field>
+		<field name="keyword" title="关键字" length="50" type="string" inputMode="text"/>
+		<field name="docMark" title="文号" length="20" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">dispatchDocWordService</parameter>
+		</field>
+		<field name="markYear" title="文号年度" length="4" type="number" inputMode="text"/>
+		<field name="markSequence" title="文件流水号" length="100" type="string" inputMode="text"/>
+		<field name="docWord" title="发文字号" length="50" type="string" inputMode="readonly"/>
+		<field name="printNumber" title="打印份数" length="4" type="number" inputMode="text"/>
+		<field name="pageCount" title="页数" length="3" type="number" inputMode="hidden"/>
+		<field name="queryLevel" title="查询级别" length="20" type="string" inputMode="text"/>
+		<field name="distributeRange" title="分发范围" length="200" type="string" inputMode="text"/>
+		<field name="draftDepartment" title="拟稿部门" length="100" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(500, 300, false, 'draftDepartment{name}', '', 'unit,unitDepartment')</parameter>
+		</field>
+		<field name="draftPerson" title="起草人" length="10" type="string" inputMode="text"/>
+		<field name="draftDate" title="拟稿日期" type="timestamp" inputMode="readonly">
+			<parameter name="displayFormat">yyyy年M月d日</parameter>
+		</field>
+		<field name="signPerson" title="签发人" length="10" type="string" inputMode="readonly"/>
+		<field name="signDate" title="签发日期" type="date" inputMode="readonly"/>
+		<field name="generateDate" title="生成日期" type="date" inputMode="readonly"/>
+		<field name="distributeDate" title="印发日期" type="date" inputMode="readonly"/>
+		<field name="filingTime" title="归档时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="附注" length="250" type="string" inputMode="text"/>
+		<field name="publicType" title="公开类型" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsText">主动公开\0依申请公开\0不公开</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="publicReason" title="不公开的理由" length="250" type="string" inputMode="text"/>
+		<field name="bodies" title="正文" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.dispatch.pojo.DispatchBody</parameter>
+		</field>
+		<field name="attachment" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+		<field name="body" title="正文" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+		<field name="html" title="HTML文件及附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">500000000</parameter>
+			<parameter name="fileExtension">所有文件|*.*|</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+		<field name="official" title="正式文件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">签发,会签,审核,会审,核稿</parameter>
+			<parameter name="class">com.yuanluesoft.j2oa.dispatch.pojo.DispatchOpinion</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="WORD模板配置" class="com.yuanluesoft.j2oa.dispatch.pojo.DispatchTemplateConfig">
+		<field name="docTypes" title="适用的文件种类" length="200" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.openListDialog('适用的文种', 'allDocTypes', 600, 400, true, 'docTypes{title},docTypes{title|适用的文种|100%}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="docWords" title="适用的文件字" length="300" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.openListDialog('适用的文件字', 'allDocWords', 600, 400, true, 'docWords{title},docWords{title|适用的文件字|100%}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="handlingTemplate" title="办理单模板" type="html" inputMode="htmleditor" required="true">
+			<parameter name="attachmentSelector">/j2oa/dispatch/selectTemplateAttachment.shtml</parameter>
+			<parameter name="height">500</parameter>
+			<parameter name="fullPage">true</parameter>
+			<parameter name="centerImage">false</parameter>
+			<parameter name="plugins">/j2oa/document/editorplugins/plugin.jsp?recordClassName=com.yuanluesoft.j2oa.dispatch.pojo.Dispatch</parameter>
+			<parameter name="commands">
+				documentField,-,cut,copy,paste,|,
+				undo,redo,-,celectAll,removeFormat,|,
+				outdent,indent,-,justifyLeft,justifyCenter,justifyRight,justifyFull,|,
+				fontName,fontSize,textColor,bgColor,-,bold,italic,underline,strikeThrough,|,
+				link,unlink,image,flash,table,|,source
+			</parameter>
+		</field>
+		<field name="template" title="模板" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">5000000</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment"/>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="maxSaveSize">2000000</parameter>
+		</field>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="fileExtension">FLASH文件|*.swf|</parameter>
+			<parameter name="maxUploadSize">2000000</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">500000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="文件字配置" class="com.yuanluesoft.j2oa.dispatch.pojo.DispatchDocWordConfig" businessServiceName="dispatchDocWordService">
+		<field name="docWord" title="文件字名称" length="20" required="true" type="string" inputMode="text"/>
+		<field name="format" title="文件字格式" length="100" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="发文归档配置" class="com.yuanluesoft.j2oa.dispatch.pojo.DispatchFilingConfig">
+		<field name="toArchives" title="是否归档到文书档案" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">是|1\0否|0</parameter>
+		</field>
+		<field name="toDatabank" title="是否归档到资料库" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">是|1\0否|0</parameter>
+		</field>
+		<field name="createDirectoryByYear" title="是否自动按年创建目录" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">是|1\0否|0</parameter>
+		</field>
+		<field title="归档目录ID" name="directoryId" type="number" inputMode="hidden"/>
+	</businessObject>
+</businessObjects>

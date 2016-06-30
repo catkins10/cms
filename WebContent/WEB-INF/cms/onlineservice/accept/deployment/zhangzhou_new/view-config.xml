@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 所有申报记录,不做权限控制 -->
+<views>
+	<view title="已受理申报" name="onlineServiceAccepts">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAccept</pojo>
+			<where>OnlineServiceAccept.caseAccept='1'</where> <!--  and OnlineServiceAccept.siteId={PARAMETER:siteId} -->
+			<orderBy>OnlineServiceAccept.created DESC</orderBy>
+			<quickFilter>OnlineServiceAccept.itemName like '%{KEY}%' or OnlineServiceAccept.sn like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="申报">/cms/onlineservice/accept/accept.shtml?act=edit</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/onlineservice/accept</link>
+		</links>
+		<extendParameters>
+			<parameter name="unrelatedToSites">true</parameter> <!-- 和站点无关 -->
+		</extendParameters>
+	</view>
+	
+	<view title="已受理申报(当前目录)" name="onlineServiceAcceptsByDirectory">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAccept</pojo>
+			<join>,OnlineServiceItemSubjection OnlineServiceItemSubjection, OnlineServiceDirectorySubjection OnlineServiceDirectorySubjection</join>
+			<where>OnlineServiceAccept.caseAccept='1'
+				   and OnlineServiceAccept.itemId=OnlineServiceItemSubjection.itemId
+				   and OnlineServiceItemSubjection.directoryId=OnlineServiceDirectorySubjection.directoryId
+				   and OnlineServiceDirectorySubjection.parentDirectoryId={PARAMETER:directoryId|0}</where> <!--  and OnlineServiceAccept.siteId={PARAMETER:siteId} -->
+			<orderBy>OnlineServiceAccept.created DESC</orderBy>
+			<quickFilter>OnlineServiceAccept.itemName like '%{KEY}%' or OnlineServiceAccept.sn like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="申报">/cms/onlineservice/accept/accept.shtml?act=edit</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/onlineservice/accept</link>
+		</links>
+		<extendParameters>
+			<parameter name="unrelatedToSites">true</parameter> <!-- 和站点无关 -->
+		</extendParameters>
+	</view>
+	
+	<view title="我的申报" name="onlineServiceMyAccepts">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAccept</pojo>
+			<where>OnlineServiceAccept.creatorId={USERID}</where>
+			<orderBy>OnlineServiceAccept.created DESC</orderBy>
+			<quickFilter>OnlineServiceAccept.itemName like '%{KEY}%' or OnlineServiceAccept.sn like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="申报">/cms/onlineservice/accept/accept.shtml?act=edit</link>
+		</links>
+		<extendParameters>
+			<parameter name="totalSupport">false</parameter> <!-- 不支持统计 -->
+			<parameter name="rssChannel">false</parameter> <!-- 不支持RSS -->
+		</extendParameters>
+	</view>
+	
+	<view title="申报统计" name="onlineServiceAcceptStatistic" viewServiceName="onlineServiceAcceptStatisticService">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.interactive.accept.model.AcceptStatistic</pojo>
+		</data>
+	</view>
+	
+	<view name="admin/todoAccept" form="admin/accept" title="待办申报" pageRows="25" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAccept</pojo>
+			<orderBy>OnlineServiceAccept.created DESC</orderBy>
+			<quickFilter>OnlineServiceAccept.itemName like '%{KEY}%' or OnlineServiceAccept.creator like '%{KEY}%' or OnlineServiceAccept.sn like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="导入申报记录" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importCases)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/onlineservice/accept/admin/importCases.shtml?act=create', 400, 200)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="编号" name="sn" align="center" width="80" displayExcept="portlet"/>
+			<column title="办理事项名称" name="itemName" width="60%"/>
+			<column title="申报人" name="creator" width="40%"/>
+			<column title="申报时间" name="created" align="center" width="108"/>
+			<column title="时限" name="timeLeftTitle" align="center" width="80"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessAccept" form="admin/accept" title="在办申报" pageRows="25" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAccept</pojo>
+			<orderBy>OnlineServiceAccept.created DESC</orderBy>
+			<quickFilter>OnlineServiceAccept.itemName like '%{KEY}%' or OnlineServiceAccept.creator like '%{KEY}%' or OnlineServiceAccept.sn like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="导入申报记录" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importCases)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/onlineservice/accept/admin/importCases.shtml?act=create', 400, 200)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="编号" name="sn" align="center" width="80" displayExcept="portlet"/>
+			<column title="办理事项名称" name="itemName" width="60%"/>
+			<column title="申报人" name="creator" width="40%"/>
+			<column title="申报时间" name="created" align="center" width="108"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+			<column title="时限" name="timeLeftTitle" align="center" width="80"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedAccept" form="admin/accept" title="办结申报" pageRows="20" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAccept</pojo>
+			<filter>COMPLETED</filter>
+			<where>OnlineServiceAccept.workflowInstanceId is not null</where>
+			<orderBy>OnlineServiceAccept.created DESC</orderBy>
+			<quickFilter>OnlineServiceAccept.itemName like '%{KEY}%' or OnlineServiceAccept.creator like '%{KEY}%' or OnlineServiceAccept.sn like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="导入申报记录" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importCases)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/onlineservice/accept/admin/importCases.shtml?act=create', 400, 200)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="编号" name="sn" align="center" width="80" displayExcept="portlet"/>
+			<column title="办理事项名称" name="itemName" width="60%"/>
+			<column title="申报人" name="creator" width="40%"/>
+			<column title="申报时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allAccept" hide="privilege(application_manager)" form="admin/accept" title="所有申报" pageRows="20" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAccept</pojo>
+			<filter>READABLE</filter>
+			<where>OnlineServiceAccept.workflowInstanceId is not null</where>
+			<orderBy>OnlineServiceAccept.created DESC</orderBy>
+			<quickFilter>OnlineServiceAccept.itemName like '%{KEY}%' or OnlineServiceAccept.creator like '%{KEY}%' or OnlineServiceAccept.sn like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="导入申报记录" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importCases)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/onlineservice/accept/admin/importCases.shtml?act=create', 400, 200)"/>
+			<action title="申报授权" hide="noPrivilege(application_manager)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/publicservice/admin/readersModifyOption.shtml?applicationName={PARAMETER:applicationName}', 430, 200)"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="编号" name="sn" align="center" width="80" displayExcept="portlet"/>
+			<column title="办理事项名称" name="itemName" width="60%"/>
+			<column title="申报人" name="creator" width="40%"/>
+			<column title="申报时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allAcceptFull" hide="noPrivilege(application_manager)" form="admin/accept" title="所有申报" pageRows="20" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.interactive.accept.pojo.OnlineServiceAccept</pojo>
+			<orderBy>OnlineServiceAccept.created DESC</orderBy>
+			<quickFilter>OnlineServiceAccept.itemName like '%{KEY}%' or OnlineServiceAccept.creator like '%{KEY}%' or OnlineServiceAccept.sn like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="导入申报记录" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importCases)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/onlineservice/accept/admin/importCases.shtml?act=create', 400, 200)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="编号" name="sn" align="center" width="80" displayExcept="portlet"/>
+			<column title="办理事项名称" name="itemName" width="60%"/>
+			<column title="申报人" name="creator" width="40%"/>
+			<column title="申报时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+</views>

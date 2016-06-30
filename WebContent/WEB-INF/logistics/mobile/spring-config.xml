@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 手机端页面服务 -->
+	<bean id="logisticsMobilePageService" class="com.yuanluesoft.logistics.mobile.pages.LogisticsMobilePageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+	</bean>
+	
+	<!-- 手机端货源列表处理器 -->
+	<bean id="mobileSuppliesProcessor" class="com.yuanluesoft.logistics.mobile.processor.MobileSuppliesProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="gpsService"><ref bean="gpsService"/></property>
+		<property name="orgService"><ref bean="orgService"/></property>
+	</bean>
+</beans>

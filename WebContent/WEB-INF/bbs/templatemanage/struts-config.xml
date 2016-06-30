@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="template" type="com.yuanluesoft.bbs.templatemanage.forms.Template"/>
+  <form-bean name="insertBbsArticles" type="com.yuanluesoft.bbs.templatemanage.forms.InsertBbsArticles"/>
+  <form-bean name="insertBbsDirectoryLink" type="com.yuanluesoft.bbs.templatemanage.forms.InsertBbsDirectoryLink"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="template" path="/template" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Load" validate="false">
+   <forward name="load" path="/../../cms/templatemanage/template.jsp"/>
+  </action>
+  <action input="/../../cms/templatemanage/template.jsp" name="template"
+   path="/saveTemplate" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Save" validate="false"/>
+  <action input="/../../cms/templatemanage/template.jsp" name="template"
+   path="/deleteTemplate" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Delete" validate="false"/>
+  <action name="insertBbsArticles" path="/insertBbsArticles"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/insertBbsArticles.jsp"/>
+  </action>
+  <action name="insertBbsDirectoryLink" path="/insertBbsDirectoryLink"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/insertBbsDirectoryLink.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

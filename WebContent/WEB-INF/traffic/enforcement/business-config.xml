@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="公路路政行政处罚案件统计/道路运输违章案件处罚情况/福州市地方海事局行政处罚案件公示" class="CASEINFO" businessServiceName="trafficSqlQueryService">
+		<field name="CASEID" type="string" columnType="VARCHAR2(50)" title="案件ID">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="BRANUM_SHIPNAME" type="string" columnType="VARCHAR2(20)" title="车(船)牌号码">
+			<parameter name="sql">{ALIAS}.BRANUM || {ALIAS}.SHIPNAME</parameter>
+		</field>
+		<field name="ORGANCODE" type="string" columnType="VARCHAR2(10)" title="机构代码"/>
+		<field name="CHEOBJECT" type="string" columnType="VARCHAR2(10)" title="违章主体类别"/>
+		<field name="IETYPE" type="string" columnType="VARCHAR2(4)" title="执法门类" inputMode="radio">
+			<parameter name="itemsText">普通公路路政管理|1\0道路运输管理|3\0地方海事管理|7</parameter>
+		</field>
+		<field name="CASEREGNO" type="string" columnType="VARCHAR(20)" title="案件登记号"/>
+		<field name="CASENAME" type="string" columnType="VARCHAR2(200)" title="案由"/>
+		<field name="LAWLESSACTION" type="string" columnType="VARCHAR2(500)" title="违法行为"/>
+		<field name="PUNISHCONTENT" type="string" columnType="VARCHAR(200)" title="处罚内容"/>
+		<field name="REGITEMNAME" type="string" columnType="VARCHAR2(200)" title="立案依据"/>
+		<field name="PUNITEMNAME" type="string" columnType="VARCHAR2(200)" title="处罚依据"/>
+		<field name="PECDATE" type="string" columnType="char(10)" title="违章日期"/>
+		<field name="PECTIME" type="string" columnType="CHAR(8)" title="违章时间"/>
+		<field name="PRCSITE" type="string" columnType="varchar2(400)" title="违章地点"/>
+		<field name="CMPSNID" type="string" columnType="VARCHAR2(50)" title="当事人ID"/>
+		<field name="PSNNAME" type="string" columnType="VARCHAR2(30)" title="当事人姓名"/>
+		<field name="COUNTRY" type="string" columnType="VARCHAR2(50)" title="国籍"/>
+		<field name="SEX" type="string" columnType="CHAR(1)" title="性别"/>
+		<field name="AGE" type="number" columnType="NUMBER(2)" title="年龄"/>
+		<field name="NATION" type="string" columnType="VARCHAR2(2)" title="民族"/>
+		<field name="NATPLACE" type="string" columnType="VARCHAR2(30)" title="当事人籍贯"/>
+		<field name="JOBDEP" type="string" columnType="VARCHAR2(400)" title="工作单位"/>
+		<field name="TECCLASS" type="string" columnType="VARCHAR2(30)" title="职务"/>
+		<field name="ADDRESS" type="string" columnType="VARCHAR2(400)" title="地址"/>
+		<field name="PSNPHONE" type="string" columnType="VARCHAR2(20)" title="当事人联系电话"/>
+		<field name="PSNCTCTYPE" type="string" columnType="VARCHAR2(20)" title="当事人证件类型"/>
+		<field name="PSNCTCNO" type="string" columnType="VARCHAR2(30)" title="当事人证件号码"/>
+		<field name="CMCLTID" type="string" columnType="VARCHAR2(50)" title="业户ID"/>
+		<field name="CLTNAME" type="string" columnType="VARCHAR2(50)" title="业户名称"/>
+		<field name="JURPERSON" type="string" columnType="VARCHAR2(20)" title="法定代表人"/>
+		<!-- field name="JURPERSONCTCNO" type="string" columnType="VARCHAR2(30)" title="法人证件号码"/-->
+		<field name="CLTADRESS" type="string" columnType="VARCHAR2(50)" title="业户地址"/>
+		<field name="PHONE" type="string" columnType="VARCHAR2(20)" title="联系电话"/>
+		<field name="PERNUM" type="string" columnType="VARCHAR2(30)" title="经营许可证号"/>
+		<field name="CONPERSON" type="string" columnType="VARCHAR2(50)" title="联系人"/>
+		<field name="MIALCODE" type="string" columnType="CHAR(6)" title="邮政编码"/>
+		<field name="CMVECID" type="string" columnType="VARCHAR2(50)" title="车辆ID"/>
+		<field name="BRANUM" type="string" columnType="VARCHAR2(20)" title="车牌号码"/>
+		<field name="BRACOLOR" type="string" columnType="VARCHAR2(4)" title="车牌颜色" inputMode="none"/>
+		<field name="BRACOLOR_TITLE" type="string" title="车牌颜色">
+			<parameter name="sql">SELECT NAME FROM T_PF_DATADICT WHERE DDFLD='BRACOLOR' and CODE={ALIAS}.BRACOLOR and PRDCODE='IEMIS'</parameter>
+		</field>
+		<field name="VECMDLTYPE" type="string" columnType="VARCHAR2(50)" title="车辆型号"/>
+		<field name="VECENGNO" type="string" columnType="VARCHAR2(20)" title="发动机号"/>
+		<field name="VECFANNO" type="string" columnType="VARCHAR2(20)" title="车架号"/>
+		<field name="VECTYPE" type="string" columnType="VARCHAR2(10)" title="车辆类型"/>
+		<field name="VECVIN" type="string" columnType="VARCHAR2(20)" title="车辆VIN码"/>
+		<field name="VECPLACE" type="string" columnType="VARCHAR2(20)" title="车籍地（不存代码"/>
+		<field name="CHENUM" type="number" columnType="NUMBER(12,2)" title="核定吨位"/>
+		<field name="AXLNUM" type="number" columnType="NUMBER(6)" title="车轴数"/>
+		<field name="VECFRETOTALLENGHT" type="number" columnType="NUMBER(8,2)" title="车货总长度"/>
+		<field name="VECFRETOTALWIDTH" type="number" columnType="NUMBER(8,2)" title=""/>
+		<field name="VECFRETOTALHEIGHT" type="number" columnType="NUMBER(8,2)" title="车货总宽度"/>
+		<field name="OVERSTEPLENGHT" type="number" columnType="NUMBER(8,2)" title=""/>
+		<field name="OVERSTEPWIDTH" type="number" columnType="NUMBER(8,2)" title="车货总高度"/>
+		<field name="OVERSTEPHEIGHT" type="number" columnType="NUMBER(8,2)" title="超长"/>
+		<field name="VECFRGROSSWEIGHT" type="number" columnType="NUMBER(8,2)" title="超宽"/>
+		<field name="OVERSTEPTONNAGE" type="number" columnType="NUMBER(8,2)" title="超高"/>
+		<field name="FREIGHTNAME" type="string" columnType="VARCHAR2(100)" title="车货总重"/>
+		<field name="SECTIONSTART" type="string" columnType="VARCHAR2(50)" title="超限吨位"/>
+		<field name="DESTINATION" type="string" columnType="VARCHAR2(50)" title="货物名称"/>
+		<field name="BYWAYOFLINE" type="string" columnType="VARCHAR2(50)" title="起运点"/>
+		<field name="RUNKILOMETRE" type="number" columnType="NUMBER(8,2)" title="目的地"/>
+		<field name="SHIPID" type="string" columnType="VARCHAR2(50)" title="船舶ID"/>
+		<field name="SHIPNAME" type="string" columnType="VARCHAR2(50)" title="船舶名称"/>
+		<field name="SHIPOLDNAME" type="string" columnType="VARCHAR2(80)" title="船舶曾用名"/>
+		<field name="SHIPCALL" type="string" columnType="VARCHAR2(50)" title="船舶呼号"/>
+		<field name="SHIPPORTOFREG" type="string" columnType="VARCHAR2(50)" title="船籍港"/>
+		<field name="SHIPTYPE" type="string" columnType="VARCHAR2(10)" title="船舶种类"/>
+		<field name="SHIPMATERIAL" type="string" columnType="VARCHAR2(50)" title="船体材料"/>
+		<field name="SHIPSTUFF" type="string" columnType="VARCHAR2(10)" title="船舶航区"/>
+		<field name="SHIPOWNERS" type="string" columnType="VARCHAR2(50)" title="船舶所有权人"/>
+		<field name="DETAINNO" type="string" columnType="VARCHAR2(20)" title="暂扣单号"/>
+		<field name="PROJECTNAME" type="string" columnType="VARCHAR2(100)" title="项目名称"/>
+		<field name="LAWEPSN" type="string" columnType="VARCHAR2(30)" title="执法检查人员"/>
+		<field name="LECARDNO" type="string" columnType="VARCHAR2(20)" title="执法证号"/>
+		<field name="LAWEPSN2" type="string" columnType="VARCHAR2(30)" title="执法检查人员2"/>
+		<field name="LECARDNO2" type="string" columnType="VARCHAR2(20)" title="执法证号2"/>
+		<field name="LAWEDEP" type="string" columnType="VARCHAR2(100)" title="执法机构"/>
+		<field name="REGPSN" type="string" columnType="VARCHAR2(30)" title="登记人员"/>
+		<field name="REGDATE" type="string" columnType="CHAR(10)" title="登记时间"/>
+		<field name="CAPITALMONEY" type="string" columnType="VARCHAR2(50)" title="大写金额"/>
+		<field name="DECMONEY" type="number" columnType="NUMBER(8,2)" title="决定金额"/>
+		<field name="EXEMONEY" type="number" columnType="NUMBER(8,2)" title="执行金额"/>
+		<field name="REAMONEY" type="number" columnType="NUMBER(8,2)" title="实缴金额"/>
+		<field name="DERPOINT" type="number" columnType="NUMBER(2)" title="建议扣分数"/>
+		<field name="REALDERPOINT" type="number" columnType="NUMBER(2)" title="实际扣分数"/>
+		<field name="ISEXECUTE" type="string" columnType="CHAR(1)" title="是否执行"/>
+		<field name="ISEFFECT" type="number" columnType="NUMBER(1)" title="是否有效"/>
+		<field name="CREUSRCODE" type="string" columnType="VARCHAR2(50)" title="创建者编号"/>
+		<field name="CREDATE" type="string" columnType="CHAR(10)" title="创建日期"/>
+		<field name="CRETIME" type="string" columnType="CHAR(8)" title="创建时间"/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title="修改者编号"/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title="修改日期"/>
+		<field name="EDITIME" type="string" columnType="CHAR(8)" title="修改时间"/>
+		<field name="CASSOURCE" type="number" columnType="NUMBER(1)" title="案件来源"/>
+		<field name="AREAABBR" type="string" columnType="VARCHAR2(10)" title="地区简称"/>
+		<field name="TRANO" type="string" columnType="VARCHAR2(20)" title="道路运输证号"/>
+		<field name="IEUNITID" type="string" columnType="VARCHAR2(50)" title="执法单位"/>
+		<field name="LESECTIONID" type="string" columnType="VARCHAR2(50)" title="执法编队名称"/>
+		<field name="MAKECASETYPE" type="string" columnType="VARCHAR2(2)" title="生成违章的类型"/>
+		<!-- field name="ISCON" type="string" columnType="CHAR(1)" title=""/-->
+		<!-- field name="LICETYPE" type="string" columnType="CHAR(1)" title=""/-->
+	
+		<field name="VECSHIP" type="string" title="">
+			<parameter name="sql">(CASE WHEN {ALIAS}.BRANUM IS NULL THEN {ALIAS}.SHIPNAME ELSE '('||T6.NAME||')'||{ALIAS}.BRANUM END)</parameter>
+		</field>
+		<!-- 
+			公路路政行政处罚案件统计
+			SELECT 	T2.PUNDATE,T1.PSNNAME,T1.CASENAME,T1.PRCSITE,
+			T1.PUNISHCONTENT ,T1.PECDATE, T1.PECTIME, T1.PRCSITE, T1. PSNPHONE, T1. CLTNAME
+			FROM CASEINFO T1 
+			LEFT JOIN CASEDEALWITH T2 ON T1.CASEID=T2.CASEID  AND T1.IETYPE = '1'
+			
+			道路运输违章案件处罚情况
+			SELECT 	T3.UNITNAME,T1.PECDATE,(CASE WHEN T1.BRANUM IS NULL THEN T1.SHIPNAME ELSE '('||T6.NAME||')'||T1.BRANUM END) AS VECSHIP,T1.CASENAME,T1.DECMONEY  ,T1.PECDATE, T1.PECTIME, T1.PRCSITE, T1. PSNPHONE, T1. CLTNAME
+			FROM  CASEINFO T1 
+			LEFT JOIN CASEDEALWITH T2 ON T1.CASEID=T2.CASEID 
+			LEFT JOIN IEUNIT T3 ON T1.IEUNITID=T3.IEUNITID 
+			LEFT OUTER JOIN T_PF_DATADICT T6 ON T1.BRACOLOR=T6.CODE AND T6.DDFLD='BRACOLOR' AND T6.PRDCODE='IEMIS' AND T1.IETYPE = ‘3’
+			
+			福州市地方海事局行政处罚案件公示
+			SELECT 	T2.APPROVENUM||'字第'||T2.APPROVECASENUM||'号',T1.PECDATE,(CASE WHEN T1.BRANUM IS NULL THEN T1.SHIPNAME ELSE '('||T6.NAME||')'||T1.BRANUM END) AS VECSHIP,T1.CASENAME,T1.PSNNAME,T1.PUNITEMNAME,T1.LAWLESSACTION,T2.PUNDATE,T2.CLOSEDDATE  ,T1.PECDATE, T1.PECTIME, T1.PRCSITE, T1. PSNPHONE, T1. CLTNAME
+			FROM  CASEINFO T1 LEFT JOIN CASEDEALWITH T2 ON T1.CASEID=T2.CASEID LEFT JOIN IEUNIT T3 ON T1.IEUNITID=T3.IEUNITID LEFT OUTER JOIN T_PF_DATADICT T6 ON T1.BRACOLOR=T6.CODE AND T6.DDFLD='BRACOLOR' AND T6.PRDCODE='IEMIS' AND T1.IETYPE = ‘7’
+		 -->
+		<parameter name="sqlFrom">CASEINFO T1</parameter>
+		<field name="T2" type="component" title="稽查案件处理">
+			<parameter name="class">CASEDEALWITH</parameter>
+			<parameter name="sqlJoin">LEFT JOIN CASEDEALWITH T2 ON T1.CASEID=T2.CASEID</parameter>
+		</field>
+		<field name="T3" type="component" title="(执法资格)执法单位">
+			<parameter name="class">IEUNIT</parameter>
+			<parameter name="sqlJoin">LEFT JOIN IEUNIT T3 ON T1.IEUNITID=T3.IEUNITID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="稽查案件处理表" class="CASEDEALWITH" businessServiceName="trafficSqlQueryService">
+		<field name="DEALWITHID" type="string" columnType="VARCHAR2(50)" title="案件处理ID"/>
+		<field name="CASEID" type="string" columnType="VARCHAR2(50)" title="案件ID"/>
+		<field name="SUPRSLSUGDATE" type="string" columnType="VARCHAR2(50)" title="调查日期"/>
+		<field name="SURPROCESS" type="string" columnType="VARCHAR2(2000)" title="调查经过"/>
+		<field name="REPORTEDUSER" type="string" columnType="VARCHAR2(30)" title="呈批人"/>
+		<field name="REPORTEDDATE" type="string" columnType="CHAR(10)" title="呈批日期"/>
+		<field name="FINDINGANDOPINION" type="string" columnType="VARCHAR2(2000)" title="调查结论及处理意见"/>
+		<field name="INVESTIGATORS1" type="string" columnType="VARCHAR2(50)" title="调查人员1"/>
+		<field name="INVESTIGATORS2" type="string" columnType="VARCHAR2(50)" title="调查人员2"/>
+		<field name="INVLECARDNO1" type="string" columnType="VARCHAR2(30)" title="调查人员证件号1"/>
+		<field name="INVLECARDNO2" type="string" columnType="VARCHAR2(30)" title="调查人员证件号2"/>
+		<field name="APPROVENUM" type="string" columnType="VARCHAR2(50)" title="立案案号"/>
+		<field name="APPROVECASENUM" type="string" columnType="VARCHAR2(50)" title="立案流水号"/>
+		<field name="RESPONSIBLEHUMAN" type="string" columnType="VARCHAR2(30)" title="立案负责人"/>
+		<field name="APPROVEDATE" type="string" columnType="CHAR(10)" title="立案日期"/>
+		<field name="NOFILENAME" type="string" columnType="VARCHAR2(50)" title="不予立案审核人"/>
+		<field name="NOFILEDATE" type="string" columnType="CHAR(10)" title="不予立案日期"/>
+		<field name="AUDITPEOPLE" type="string" columnType="VARCHAR2(30)" title="审核人"/>
+		<field name="AUDITOPN" type="string" columnType="VARCHAR2(1000)" title="审核意见"/>
+		<field name="AUDITOPNDATE" type="string" columnType="CHAR(10)" title="审核日期"/>
+		<field name="DEPAUDITPEOPLE" type="string" columnType="VARCHAR2(30)" title="机构负责人"/>
+		<field name="DEPAUDITOPN" type="string" columnType="VARCHAR2(1000)" title="机构负责人审批意见"/>
+		<field name="DEPAUDITOPNDATE" type="string" columnType="CHAR(10)" title="机构负责人审批日期"/>
+		<field name="EXCUSEANDHEAR" type="string" columnType="VARCHAR(8)" title="申辩与听证"/>
+		<field name="APPREMARKS" type="string" columnType="VARCHAR2(500)" title="审批备注"/>
+		<field name="NOTICENUM" type="string" columnType="VARCHAR2(50)" title="告知书案号"/>
+		<field name="NOTICECASENUM" type="string" columnType="VARCHAR2(50)" title="告知书流水号"/>
+		<field name="NOTICEPSNNAME" type="string" columnType="VARCHAR2(80)" title="告知当事人"/>
+		<field name="CORRECTDAYS" type="string" columnType="VARCHAR2(4)" title="限期纠正天数"/>
+		<field name="CORRECTACT" type="string" columnType="VARCHAR2(500)" title="纠正行为"/>
+		<field name="NOTICEDATE" type="string" columnType="CHAR(10)" title="告知日期"/>
+		<field name="NOTICELINKMAN" type="string" columnType="VARCHAR2(50)" title="告知联系人"/>
+		<field name="NOTICELINKTEL" type="string" columnType="VARCHAR2(20)" title="告知联系电话"/>
+		<field name="NOTICESENDWORD" type="string" columnType="VARCHAR2(100)" title="告知送达文书"/>
+		<field name="NOTICESENDDATE" type="string" columnType="CHAR(10)" title="告知送达日期"/>
+		<field name="NOTICESENDREMARKS" type="string" columnType="VARCHAR2(500)" title="告知送达备注"/>
+		<field name="NOTICERECIPIENT" type="string" columnType="VARCHAR2(50)" title="告知收件人"/>
+		<field name="NOTICEADDRESS" type="string" columnType="VARCHAR2(50)" title="告知送达地点"/>
+		<field name="NOTICEPEOSERVED1" type="string" columnType="VARCHAR2(50)" title="告知送达人1"/>
+		<field name="NOTICEPEOSERVED2" type="string" columnType="VARCHAR2(50)" title="告知送达人2"/>
+		<!-- field name="NOTICEEXCUSEANDHEAR" type="string" columnType="VARCHAR(8)" title="告知申辩与听证"/-->
+		<field name="NOTICEREMARKS" type="string" columnType="VARCHAR2(1000)" title="告知备注"/>
+		<field name="PUNNUM" type="string" columnType="VARCHAR2(50)" title="处罚决定书号"/>
+		<field name="PUNCASENUM" type="string" columnType="VARCHAR2(50)" title="处罚决定书流水号"/>
+		<field name="PUNPSNNAME" type="string" columnType="VARCHAR2(80)" title="处罚当事人"/>
+		<field name="PUNDATE" type="string" columnType="CHAR(10)" title="处罚日期"/>
+		<field name="FACTUALEVIDENCE" type="string" columnType="VARCHAR2(1000)" title="违法事实与证据"/>
+		<field name="PUNCONTENT" type="string" columnType="VARCHAR2(500)" title="处罚内容"/>
+		<field name="LAWEDEP" type="string" columnType="VARCHAR2(50)" title="处罚机关"/>
+		<field name="PUNLAWEPSN" type="string" columnType="VARCHAR2(50)" title="处罚执法人员1"/>
+		<field name="PUNLECARDNO" type="string" columnType="VARCHAR2(50)" title="处罚执法证件号1"/>
+		<field name="PUNLAWEPSN2" type="string" columnType="VARCHAR2(50)" title="处罚执法人员2"/>
+		<field name="PUNLECARDNO2" type="string" columnType="VARCHAR2(50)" title="处罚执法证件号2"/>
+		<field name="PUNCORRECTDAYS" type="string" columnType="VARCHAR2(3)" title="处罚纠正天数"/>
+		<field name="FINEAMOUNT" type="string" columnType="VARCHAR2(100)" title="罚款金额"/>
+		<field name="PUNBANK" type="string" columnType="varchar2(100)" title="处罚缴款银行"/>
+		<field name="PUNORGANS" type="string" columnType="varchar2(100)" title="处罚复议机关"/>
+		<field name="PUNSENDWORD" type="string" columnType="VARCHAR2(100)" title="处罚送达文书"/>
+		<field name="PUNSENDPLACE" type="string" columnType="VARCHAR2(100)" title="处罚送达地点"/>
+		<field name="PUNSENDDATE" type="string" columnType="CHAR(10)" title="处罚送达日期"/>
+		<field name="PUNSENDREMARKS" type="string" columnType="VARCHAR2(500)" title="处罚送达备注"/>
+		<field name="PUNRECIPIENT" type="string" columnType="VARCHAR2(50)" title="处罚收件人"/>
+		<field name="PUNPESERVED1" type="string" columnType="VARCHAR2(50)" title="处罚决定送达人1"/>
+		<field name="PUNPESERVED2" type="string" columnType="VARCHAR2(50)" title="处罚决定送达人2"/>
+		<field name="LIMITAMEND" type="string" columnType="VARCHAR2(500)" title="限改事项依据"/>
+		<field name="LIMITOTHER" type="string" columnType="varchar2(100)" title="限改其他"/>
+		<field name="LIMITDATE" type="string" columnType="CHAR(10)" title="限改日期"/>
+		<field name="LIMITPROMISEDAY" type="string" columnType="VARCHAR2(3)" title="限改承诺天数"/>
+		<field name="LIMITPROMISEDATE" type="string" columnType="CHAR(10)" title="限改承诺日期"/>
+		<field name="COMPENNUM" type="string" columnType="VARCHAR2(50)" title="赔补偿决定书号"/>
+		<field name="COMPENCASENUM" type="string" columnType="VARCHAR2(50)" title="赔补偿决定书流水号"/>
+		<field name="ACT" type="string" columnType="varchar2(100)" title="实施行为"/>
+		<field name="FACILITIESLOSS" type="string" columnType="VARCHAR2(1000)" title="设施损失情况"/>
+		<field name="SIGNATUREDATE" type="string" columnType="CHAR(10)" title="当事人签字日期"/>
+		<field name="COMPENCOSTS" type="string" columnType="varchar2(100)" title="补偿费用"/>
+		<field name="OWNILLEGALCURE" type="string" columnType="varchar2(100)" title="自行违法纠正"/>
+		<field name="COMPENBANK" type="string" columnType="varchar2(100)" title="赔偿缴纳银行"/>
+		<field name="COMPENORGANS" type="string" columnType="varchar2(100)" title="赔偿复议机关"/>
+		<field name="COMPENDATE" type="string" columnType="CHAR(10)" title="赔偿决定日期"/>
+		<field name="COMPENDAYS" type="string" columnType="VARCHAR2(3)" title="赔偿期限"/>
+		<field name="COMPENLAWSTAFF1" type="string" columnType="VARCHAR2(50)" title="赔偿执法人员1"/>
+		<field name="COMPENLAWSTAFF2" type="string" columnType="VARCHAR2(50)" title="赔偿执法人员2"/>
+		<field name="COMPENLAWCARDNO1" type="string" columnType="VARCHAR2(30)" title="赔偿执法人员证件号1"/>
+		<field name="COMPENLAWCARDNO2" type="string" columnType="VARCHAR2(30)" title="赔偿执法人员证件号2"/>
+		<field name="TRANSFERNUM" type="string" columnType="VARCHAR2(50)" title="移送通知书案号"/>
+		<field name="TRANSFERCASENUM" type="string" columnType="VARCHAR2(50)" title="移送通知书流水号"/>
+		<field name="RECEIPTDEP" type="string" columnType="VARCHAR2(50)" title="接受单位"/>
+		<field name="SUSPECTED" type="string" columnType="VARCHAR2(20)" title="涉嫌"/>
+		<field name="TRANOBJ" type="string" columnType="VARCHAR2(50)" title="移送对象"/>
+		<field name="TRANDATA" type="string" columnType="" title="移送材料"/>
+		<field name="TRANSFERPUN" type="string" columnType="VARCHAR2(50)" title="移送依据"/>
+		<field name="TRANSFERDEP" type="string" columnType="VARCHAR2(50)" title="移送单位"/>
+		<field name="TRANSFERDATE" type="string" columnType="CHAR(10)" title="移送日期"/>
+		<field name="ACCEPTUSER" type="string" columnType="VARCHAR2(50)" title="接受人"/>
+		<field name="SIGNDATE" type="string" columnType="CHAR(10)" title="签收日期"/>
+		<field name="CONTRDEP" type="string" columnType="VARCHAR2(50)" title="缴款单位"/>
+		<field name="ILLEGALBEHA" type="string" columnType="varchar2(50)" title="违法行为"/>
+		<field name="CONTRFINE" type="string" columnType="VARCHAR2(10)" title="缴款金额"/>
+		<field name="CLOSEDNUM" type="string" columnType="VARCHAR2(50)" title="结案案号"/>
+		<field name="CLOSEDCASENUM" type="string" columnType="VARCHAR2(50)" title="结案案流水号"/>
+		<field name="PARTIESTOCASE" type="string" columnType="VARCHAR2(500)" title="当事人情况"/>
+		<field name="TREATDECIDE" type="string" columnType="VARCHAR2(1000)" title="处理决定"/>
+		<field name="PERFORM" type="string" columnType="VARCHAR2(1000)" title="执行情况"/>
+		<field name="CLOSEDDATE" type="string" columnType="CHAR(10)" title="结案报告日期"/>
+		<field name="BANKFLOWNO" type="string" columnType="VARCHAR2(50)" title="银行进帐单号"/>
+		<field name="CLOSEDREMARKS" type="string" columnType="VARCHAR2(1000)" title="结案备注"/>
+		<field name="LAWSTAFF1" type="string" columnType="VARCHAR2(50)" title="执法人员1"/>
+		<field name="LAWSTAFF2" type="string" columnType="VARCHAR2(50)" title="执法人员2"/>
+		<field name="LAWSTAFF3" type="string" columnType="VARCHAR2(50)" title="执法人员3"/>
+		<field name="LAWSTAFF4" type="string" columnType="VARCHAR2(50)" title="执法人员4"/>
+		<field name="ORGANCODE" type="string" columnType="VARCHAR2(50)" title="执法机构"/>
+		<field name="REVREANUM" type="string" columnType="" title="撤案案号字"/>
+		<field name="REVREACASENUM" type="string" columnType="VARCHAR2(50)" title="撤案文书号"/>
+		<field name="CASEREVIEW" type="string" columnType="VARCHAR2(1000)" title="案件审查意见"/>
+		<field name="REVREASON" type="string" columnType="VARCHAR2(1000)" title="撤销理由"/>
+		<field name="APPLICANT" type="string" columnType="VARCHAR2(30)" title="j决定人"/>
+		<field name="APPLIDATE" type="string" columnType="CHAR(10)" title="撤销申请时间"/>
+		<field name="RESPEOVIEWS" type="string" columnType="VARCHAR2(1000)" title="负责人意见"/>
+		<field name="AUTHORITIES" type="string" columnType="VARCHAR2(50)" title="决定机关"/>
+		<field name="DECISIONDATE" type="string" columnType="CHAR(10)" title="决定时间"/>
+		<field name="REMARKS" type="string" columnType="VARCHAR2(500)" title="备注"/>
+		<field name="PUNBANKACCOUNT" type="string" columnType="VARCHAR2(50)" title="处罚决定银行账户"/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title="修改者编号"/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title="修改日期"/>
+		<field name="EDITIME" type="string" columnType="CHAR(8)" title="修改时间"/>
+		<field name="NOTICEREGFACT" type="string" columnType="VARCHAR2(500)" title="违法事实"/>
+		<!-- field name="COMPENNAME" type="string" columnType="VARCHAR2(500)" title="赔补偿依据"/ -->
+	</businessObject>
+	
+	<businessObject title="(执法资格)执法单位表" class="IEUNIT" businessServiceName="trafficSqlQueryService">
+		<field name="IEUNITID" type="string" columnType="VARCHAR2(50)" title="单位ID"/>
+		<field name="CANTONCODE" type="string" columnType="CHAR(6)" title="行政区划代码"/>
+		<field name="ORGANCODE" type="string" columnType="CHAR(8)" title="组织机构编码"/>
+		<field name="IETYPE" type="string" columnType="VARCHAR2(10)" title="执法门类编码"/>
+		<field name="UNITNAME" type="string" columnType="VARCHAR2(200)" title="单位名称"/>
+		<field name="UNITCODE" type="string" columnType="CHAR(8)" title="单位代码"/>
+		<field name="SUPERIORUNIT" type="string" columnType="NVARCHAR2(200)" title="上级单位"/>
+		<field name="DIRECTORUNIT" type="string" columnType="VARCHAR2(200)" title="主管单位"/>
+		<field name="UNITADDRESS" type="string" columnType="VARCHAR2(100)" title="单位地址"/>
+		<field name="POSTCODE" type="string" columnType="CHAR(6)" title="邮政编码"/>
+		<field name="TELNUMBER" type="string" columnType="VARCHAR2(50)" title="联系电话"/>
+		<field name="FAXNUMBER" type="string" columnType="VARCHAR2(50)" title="单位传真"/>
+		<field name="LEGALSPOKESMAN" type="string" columnType="VARCHAR2(20)" title="法人代表"/>
+		<field name="CASENUMAPPIX" type="string" columnType="VARCHAR2(10)" title="案号简称"/>
+		<field name="REMARKDOC" type="string" columnType="VARCHAR2(500)" title="备注"/>
+		<field name="ISEFFECT" type="string" columnType="CHAR(1)" title="是否有效"/>
+		<field name="CREUSRCODE" type="string" columnType="VARCHAR2(50)" title="创建用户"/>
+		<field name="CREDATE" type="string" columnType="CHAR(10)" title="创建日期"/>
+		<field name="CRETIME" type="string" columnType="CHAR(8)" title="创建时间"/>
+		<field name="EDIUSRCODE" type="string" columnType="VARCHAR2(50)" title="编辑用户"/>
+		<field name="EDIDATE" type="string" columnType="CHAR(10)" title="编辑日期"/>
+		<field name="EDITIME" type="string" columnType="CHAR(8)" title="编辑时间"/>
+		<field name="UNITNUM" type="string" columnType="VARCHAR2(10)" title="单位CODE编号"/>
+	</businessObject>
+</businessObjects>

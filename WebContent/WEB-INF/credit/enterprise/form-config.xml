@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	 <!-- 个体Excel导入表单 -->
+	<form name="admin/enterpriseImportData" class="com.yuanluesoft.credit.enterprise.forms.ImportDateExcel" title="个体企业信息导入">
+	   <formFields>
+	   		<field name="data" title="数据文件" type="attachment" inputMode="attachment" length="1"><!-- 附件操作，length是个数 -->
+				<parameter name="fileExtension">Excel表格|*.xls;*.xlsx|</parameter><!-- 指定过滤文件 -->
+				<parameter name="simpleMode">true</parameter><!-- 简单模式 -->
+			</field>
+	   </formFields>
+	   <actions>
+			<action title="导入" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	 <!-- 内资Excel导入表单 -->
+	<form name="admin/enterpriseInImportData" class="com.yuanluesoft.credit.enterprise.forms.ImportDateExcel" title="内资企业信息导入">
+	   <formFields>
+	   		<field name="data" title="数据文件" type="attachment" inputMode="attachment" length="1"><!-- 附件操作，length是个数 -->
+				<parameter name="fileExtension">Excel表格|*.xls;*.xlsx|</parameter><!-- 指定过滤文件 -->
+				<parameter name="simpleMode">true</parameter><!-- 简单模式 -->
+			</field>
+	   </formFields>
+	   <actions>
+			<action title="导入" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	 <!-- 外资Excel导入表单 -->
+	<form name="admin/enterpriseOutImportData" class="com.yuanluesoft.credit.enterprise.forms.ImportDateExcel" title="外资企业信息导入">
+	   <formFields>
+	   		<field name="data" title="数据文件" type="attachment" inputMode="attachment" length="1"><!-- 附件操作，length是个数 -->
+				<parameter name="fileExtension">Excel表格|*.xls;*.xlsx|</parameter><!-- 指定过滤文件 -->
+				<parameter name="simpleMode">true</parameter><!-- 简单模式 -->
+			</field>
+	   </formFields>
+	   <actions>
+			<action title="导入" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+
+	<form name="admin/enterprise" class="com.yuanluesoft.credit.enterprise.forms.Enterprise" title="企业信息" pojo="com.yuanluesoft.credit.enterprise.pojo.Enterprise">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteEnterprise')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/enterprisein" class="com.yuanluesoft.credit.enterprise.forms.EnterpriseIn" title="内资企业信息" pojo="com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteEnterprisein')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/enterpriseout" class="com.yuanluesoft.credit.enterprise.forms.EnterpriseOut" title="外资企业信息" pojo="com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteEnterpriseout')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/financing" class="com.yuanluesoft.credit.enterprise.financing.forms.Financing" title="融资需求" pojo="com.yuanluesoft.credit.enterprise.financing.pojo.Financing">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteFinancing')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/apply" class="com.yuanluesoft.credit.enterprise.apply.forms.Apply" title="借款申请" pojo="com.yuanluesoft.credit.bank.apply.pojo.Apply">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+		</actions>
+	</form>
+	
+	<form name="enterpriseQuery" title="个体企业信息查询" method="post" action="/cms/sitemanage/applicationSearch.shtml?applicationName=credit/enterprise&amp;pageName=enterpriseQueryResult"
+	 class="com.yuanluesoft.credit.enterprise.forms.Enterprise" pojo="com.yuanluesoft.credit.enterprise.pojo.Enterprise">
+		<formFields>
+			<field title="注册资本大于" name="worthSmall" type="number" inputMode="text"/>
+			<field title="注册资本小于" name="worthBig" type="number" inputMode="text"/>
+			<field title="行业分类" name="industry" type="String" inputMode="dropdown">
+				<parameter name="itemsSql">select distinct industry , industry from credit_enterprise</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="enterpriseInQuery" title="内资企业信息查询" method="post" action="/cms/sitemanage/applicationSearch.shtml?applicationName=credit/enterprise&amp;pageName=enterpriseInQueryResult"
+	 class="com.yuanluesoft.credit.enterprise.forms.EnterpriseIn" pojo="com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn">
+		<formFields>
+			<field title="注册资本大于" name="worthSmall" type="number" inputMode="text"/>
+			<field title="注册资本小于" name="worthBig" type="number" inputMode="text"/>
+			<field title="行业分类" name="industry" type="String" inputMode="dropdown">
+				<parameter name="itemsSql">select distinct industry , industry from credit_enterprise_in</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="enterpriseOutQuery" title="外资企业信息查询" method="post" action="/cms/sitemanage/applicationSearch.shtml?applicationName=credit/enterprise&amp;pageName=enterpriseOutQueryResult"
+	 class="com.yuanluesoft.credit.enterprise.forms.EnterpriseOut" pojo="com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut">
+		<formFields>
+			<field title="注册资本大于" name="worthSmall" type="number" inputMode="text"/>
+			<field title="注册资本小于" name="worthBig" type="number" inputMode="text"/>
+			<field title="行业分类" name="industry" type="String" inputMode="dropdown">
+				<parameter name="itemsSql">select distinct industry , industry from credit_enterprise_out</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+	</form>
+</forms>

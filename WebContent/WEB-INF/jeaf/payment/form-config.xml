@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/paymentMerchant" class="com.yuanluesoft.jeaf.payment.forms.admin.PaymentMerchant" title="商户" pojo="com.yuanluesoft.jeaf.payment.pojo.PaymentMerchant">
+		<formFields>
+			<field title="启用的帐户类型" name="accountTypeArray" type="string[]" inputMode="multibox">
+				<parameter name="itemsServiceName">paymentService</parameter>
+				<parameter name="itemsName">paymentMethodAccountTypes</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deletePaymentMerchant')"/>
+		</actions>
+	</form>
+</forms>

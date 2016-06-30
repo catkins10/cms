@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="article" type="com.yuanluesoft.bbs.article.forms.Article"/>
+  <form-bean name="reply" type="com.yuanluesoft.bbs.article.forms.Reply"/>
+  <form-bean name="adminArticleView" type="com.yuanluesoft.bbs.article.forms.admin.ArticleView"/>
+  <form-bean name="viewArticle" type="com.yuanluesoft.bbs.article.forms.ViewArticle"/>
+  <form-bean name="myArticles" type="com.yuanluesoft.bbs.article.forms.MyArticles"/>
+  <form-bean name="myReplyArticles" type="com.yuanluesoft.bbs.article.forms.MyReplyArticles"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="article" path="/article" scope="request"
+   type="com.yuanluesoft.bbs.article.actions.article.Load" validate="false">
+   <forward name="load" path="/article.jsp"/>
+  </action>
+  <action input="/article.jsp" name="article" path="/saveArticle"
+   scope="request"
+   type="com.yuanluesoft.bbs.article.actions.article.Save" validate="false">
+   <forward name="result" path="/articleResult.jsp"/>
+  </action>
+  <action input="/article.jsp" name="article" path="/deleteArticle"
+   scope="request"
+   type="com.yuanluesoft.bbs.article.actions.article.Delete" validate="false">
+   <forward name="result" path="/articleDeleted.jsp"/>
+  </action>
+  <action name="reply" path="/reply" scope="request"
+   type="com.yuanluesoft.bbs.article.actions.reply.Load" validate="false">
+   <forward name="load" path="/reply.jsp"/>
+  </action>
+  <action input="/reply.jsp" name="reply" path="/saveReply"
+   scope="request" type="com.yuanluesoft.bbs.article.actions.reply.Save" validate="false">
+   <forward name="result" path="/replyResult.jsp"/>
+  </action>
+  <action input="/reply.jsp" name="reply" path="/deleteReply"
+   scope="request"
+   type="com.yuanluesoft.bbs.article.actions.reply.Delete" validate="false">
+   <forward name="result" path="/replyResult.jsp"/>
+  </action>
+  <action name="adminArticleView" path="/admin/articleView"
+   scope="request"
+   type="com.yuanluesoft.bbs.article.actions.admin.articleview.ArticleViewAction" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action name="article" path="/selectAttachment" scope="request"
+   type="com.yuanluesoft.bbs.article.actions.article.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="viewArticle" path="/viewArticle" scope="request"
+   type="com.yuanluesoft.bbs.article.actions.viewarticle.ViewArticleAction" validate="false">
+   <forward name="load" path="/viewArticle.jsp"/>
+  </action>
+  <action name="viewArticle" path="/displayViewArticle" scope="request" validate="false"/>
+  <action name="reply" path="/selectReplyAttachment" scope="request"
+   type="com.yuanluesoft.bbs.article.actions.reply.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="myArticles" path="/myArticles" scope="request"
+   type="com.yuanluesoft.bbs.article.actions.myarticles.MyArticlesAction" validate="false">
+   <forward name="load" path="/myArticles.jsp"/>
+  </action>
+  <action name="myArticles" path="/displayMyArticles" scope="request" validate="false"/>
+  <action name="myReplyArticles" path="/myReplyArticles" scope="request"
+   type="com.yuanluesoft.bbs.article.actions.myreplyarticles.MyReplyArticlesAction" validate="false">
+   <forward name="load" path="/myReplyArticles.jsp"/>
+  </action>
+  <action name="myReplyArticles" path="/displayMyReplyArticles"
+   scope="request" validate="false"/>
+  <action name="article" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.bbs.article.actions.article.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="reply" path="/replyAttachmentEditor" scope="request"
+   type="com.yuanluesoft.bbs.article.actions.reply.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

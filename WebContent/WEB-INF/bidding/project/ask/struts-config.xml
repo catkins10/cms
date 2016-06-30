@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="ask" type="com.yuanluesoft.bidding.project.ask.forms.Ask"/>
+  <form-bean name="adminAsk" type="com.yuanluesoft.bidding.project.ask.forms.admin.Ask"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+  <forward name="outerResult" path="/outerResult.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="ask" path="/ask" scope="request"
+   type="com.yuanluesoft.bidding.project.ask.actions.ask.Load" validate="false">
+   <forward name="load" path="/ask.jsp"/>
+  </action>
+  <action input="/ask.jsp" name="ask" path="/submitAsk" scope="request"
+   type="com.yuanluesoft.bidding.project.ask.actions.ask.Submit" validate="false"/>
+  <action name="adminAsk" path="/admin/ask" scope="request"
+   type="com.yuanluesoft.bidding.project.ask.actions.ask.admin.Load" validate="false">
+   <forward name="load" path="/admin/ask.jsp"/>
+  </action>
+  <action path="/listAsks" scope="request"
+   type="com.yuanluesoft.bidding.project.ask.actions.listasks.Load" validate="false"/>
+  <action input="/admin/ask.jsp" name="adminAsk" path="/admin/saveAsk"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.ask.actions.ask.admin.Save" validate="false"/>
+  <action input="/admin/ask.jsp" name="adminAsk" path="/admin/runAsk"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.ask.actions.ask.admin.Run" validate="false"/>
+  <action input="/admin/ask.jsp" name="adminAsk"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.bidding.project.ask.actions.ask.admin.WriteOpinion" validate="false"/>
+  <action input="/admin/ask.jsp" name="adminAsk" path="/admin/publicAsk"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.ask.actions.ask.admin.PublicAsk" validate="false"/>
+  <action input="/ask.jsp" name="ask" path="/publicAsk" scope="request"
+   type="com.yuanluesoft.bidding.project.ask.actions.ask.PublicAsk" validate="false"/>
+  <action input="/ask.jsp" name="ask" path="/runAsk" scope="request"
+   type="com.yuanluesoft.bidding.project.ask.actions.ask.Run" validate="false"/>
+  <action input="/ask.jsp" name="ask" path="/replyAsk" scope="request"
+   type="com.yuanluesoft.bidding.project.ask.actions.ask.Reply" validate="false"/>
+  <action input="/ask.jsp" name="ask" path="/saveAsk" scope="request"
+   type="com.yuanluesoft.bidding.project.ask.actions.ask.Save" validate="false"/>
+  <action input="/admin/ask.jsp" name="adminAsk" path="/admin/deleteAsk"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.ask.actions.ask.admin.Save" validate="false"/>
+  <action input="/ask.jsp" name="ask" path="/deleteAsk" scope="request"
+   type="com.yuanluesoft.bidding.project.ask.actions.ask.Delete" validate="false"/>
+  <action input="/admin/ask.jsp" name="adminAsk" path="/admin/replyAsk"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.ask.actions.ask.admin.Reply" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

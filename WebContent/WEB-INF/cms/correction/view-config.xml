@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="admin/todoCorrection" form="admin/correction" title="待办纠错" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.correction.pojo.CmsCorrection</pojo>
+			<where>CmsCorrection.isDeleted=0</where>
+			<orderBy>CmsCorrection.created DESC</orderBy>
+			<quickFilter>CmsCorrection.subject like '%{KEY}%' or CmsCorrection.creator like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="页面标题" name="pageTitle"/>
+			<column title="错误描述" name="content" maxCharCount="120" ellipsis="..." displayExcept="portlet"/>
+			<column title="提交人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="提交时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessCorrection" form="admin/correction" title="在办纠错" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.correction.pojo.CmsCorrection</pojo>
+			<where>CmsCorrection.isDeleted=0</where>
+			<orderBy>CmsCorrection.created DESC</orderBy>
+			<quickFilter>CmsCorrection.subject like '%{KEY}%' or CmsCorrection.creator like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="页面标题" name="pageTitle"/>
+			<column title="错误描述" name="content" maxCharCount="120" ellipsis="..." displayExcept="portlet"/>
+			<column title="提交人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="提交时间" name="created" align="center" width="108"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedCorrection" form="admin/correction" title="办结纠错" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.correction.pojo.CmsCorrection</pojo>
+			<where>CmsCorrection.isDeleted=0</where>
+			<filter>COMPLETED</filter>
+			<orderBy>CmsCorrection.created DESC</orderBy>
+			<quickFilter>CmsCorrection.subject like '%{KEY}%' or CmsCorrection.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="页面标题" name="pageTitle"/>
+			<column title="错误描述" name="content" maxCharCount="120" ellipsis="..." displayExcept="portlet"/>
+			<column title="提交人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="提交时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allCorrection" form="admin/correction" title="所有纠错" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.correction.pojo.CmsCorrection</pojo>
+			<where>CmsCorrection.isDeleted=0</where>
+			<filter>READABLE</filter>
+			<orderBy>CmsCorrection.created DESC</orderBy>
+			<quickFilter>CmsCorrection.subject like '%{KEY}%' or CmsCorrection.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="页面标题" name="pageTitle"/>
+			<column title="错误描述" name="content" maxCharCount="120" ellipsis="..." displayExcept="portlet"/>
+			<column title="提交人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="提交时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+</views>

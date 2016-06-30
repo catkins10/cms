@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="unitConfig" class="com.yuanluesoft.cms.monitor.forms.UnitConfig" title="单位配置" pojo="com.yuanluesoft.cms.monitor.pojo.MonitorUnitConfig">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteUnitConfig')"/>
+		</actions>
+	</form>
+	
+	<form name="monitorSql" class="com.yuanluesoft.cms.monitor.forms.MonitorSql" title="SQL配置" pojo="com.yuanluesoft.cms.monitor.pojo.MonitorUnitConfig">
+		<formFields>
+			<field name="monitorSql" title="SQL配置" type="component">
+				<parameter name="class">com.yuanluesoft.cms.monitor.pojo.MonitorUnitSql</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteMonitorSql')"/>
+		</actions>
+	</form>
+	
+	<form name="monitorParameter" class="com.yuanluesoft.cms.monitor.forms.MonitorParameter" title="参数配置" pojo="com.yuanluesoft.cms.monitor.pojo.MonitorParameter">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteMonitorParameter')"/>
+		</actions>
+	</form>
+	
+	<form name="monitorStat" class="com.yuanluesoft.cms.monitor.forms.MonitorStat" title="监察统计">
+		<formFields>
+			<field name="parentOrgId" title="父目录ID" type="number" inputMode="hidden"/>
+			<field name="beginDate" title="开始时间" type="date" inputMode="date"/>
+			<field name="endDate" title="结束时间" type="date" inputMode="date"/>
+		</formFields>
+	</form>
+</forms>

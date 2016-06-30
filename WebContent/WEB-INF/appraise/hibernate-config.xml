@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--评议管理:评议任务-->
+	<class name="com.yuanluesoft.appraise.pojo.AppraiseTask" table="appraise_task">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="areaId"/> <!--地区ID,NUMERIC(20)-->
+		<property name="area"/> <!--地区名称,VARCHAR(200)-->
+		<property name="name"/> <!--任务名称,VARCHAR(200)-->
+		<property name="appraiserType"/> <!--评议员类型,0/基础,1/管理服务对象,2/全部,NUMERIC(1)-->
+		<property name="appraiserJobs"/> <!--评议员身份,空表示全部,具体包括:人大代表,政协委员,民评代表,特邀监察员,党风,效能监督员,党代表,企业主,其他,VARCHAR(1000)-->
+		<property name="recipientJobs"/> <!--服务对象身份,空表示全部,VARCHAR(1000)-->
+		<property name="delegateAttend"/> <!--评议代表是否参与,0/不参与,1/参与短信投票,2/参与网络投票,NUMERIC(1)-->
+		<property name="smsRatio"/> <!--短信评分比例,NUMERIC(5,2)-->
+		<property name="internetRatio"/> <!--网络投票评分比例,NUMERIC(5,2)-->
+		<property name="appraiseMode"/> <!--评议发起方式,0/手动,2/自动,NUMERIC(1)-->
+		<property name="appraiseMonths"/> <!--评议月份,如：每月|1,2,3,4,5,6,7,8,9,10,11,12,指定月份|1,7,VARCHAR(30)-->
+		<property name="appraiseBeginDay"/> <!--评议开始日期,1-28,NUMERIC(2)-->
+		<property name="appraiseDays"/> <!--评议有效期,NUMERIC(2)-->
+		<property name="appraiseTime"/> <!--评议发起时间,如:8:30,VARCHAR(5)-->
+		<property name="inviteSms"/> <!--邀请短信格式,VARCHAR(600)-->
+		<property name="otherCarrierInviteSms"/> <!--电信联通邀请短信格式,VARCHAR(600)-->
+		<property name="delegateInviteSms"/> <!--评议代表邀请短信格式,VARCHAR(600)-->
+		<property name="applauseSms"/> <!--答谢短信格式,VARCHAR(600)-->
+		<property name="isSpecial"/> <!--是否专题评议,NUMERIC(1)-->
+		<property name="specialUnitIds"/> <!--专题评议单位ID,VARCHAR(4000)-->
+		<property name="specialUnitNames"/> <!--专题评议单位,VARCHAR(4000)-->
+		<property name="lastModifierId"/> <!--最后修改人ID,NUMERIC(20)-->
+		<property name="lastModifier"/> <!--最后修改人,VARCHAR(60)-->
+		<property name="lastModified"/> <!--最后修改时间,TIMESTAMP null-->
+		<property name="enabled"/> <!--是否启用,NUMERIC(1)-->
+		<!-- 选项列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="options" table="appraise_option" order-by="type,id">
+			<key column="taskId" />
+			<one-to-many class="com.yuanluesoft.appraise.pojo.AppraiseOption" />
+		</set>
+	</class>
+	
+	<!--评议管理:评议选项-->
+	<class name="com.yuanluesoft.appraise.pojo.AppraiseOption" table="appraise_option">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="taskId"/> <!--评议任务ID,NUMERIC(20)-->
+		<property name="type"/> <!--选项类型,0/短信,1/网络,NUMERIC(1)-->
+		<property name="option"/> <!--选项名称,VARCHAR(30)-->
+		<property name="score"/> <!--分值,NUMERIC(5,2)-->
+		<property name="abstain"/> <!--是否弃权,1/弃权,NUMERIC(1)-->
+		<property name="smsOption"/> <!--短信选项,VARCHAR(10)-->
+	</class>
+	
+	<!--评议管理:评议-->
+	<class name="com.yuanluesoft.appraise.pojo.Appraise" table="appraise_appraise">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--名称,VARCHAR(300)-->
+		<property name="taskId"/> <!--评议任务ID,NUMERIC(20)-->
+		<property name="taskName"/> <!--评议任务名称,VARCHAR(200)-->
+		<property name="isSpecial"/> <!--是否专题评议,NUMERIC(1)-->
+		<property name="appraiserType"/> <!--评议员类型,0/基础,1/管理服务对象,NUMERIC(1)-->
+		<property name="areaId"/> <!--地区ID,NUMERIC(20)-->
+		<property name="area"/> <!--地区名称,VARCHAR(200)-->
+		<property name="appraiseYear"/> <!--评议年度,NUMERIC(4)-->
+		<property name="appraiseMonth"/> <!--评议月份,NUMERIC(2)-->
+		<property name="voteTimes"/> <!--投票人次,NUMERIC(8)-->
+		<property name="creatorId"/> <!--发起人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--发起人,VARCHAR(60)-->
+		<property name="created"/> <!--发起时间,TIMESTAMP null-->
+		<property name="endTime"/> <!--截止时间,TIMESTAMP null-->
+		<!-- 短信列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="shortMessages" table="appraise_sms" order-by="id">
+			<key column="appraiseId" />
+			<one-to-many class="com.yuanluesoft.appraise.pojo.AppraiseSms" />
+		</set>
+		<!-- 单位评议列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="unitAppraises" table="appraise_unit_appraise" order-by="yearScoreComprehensive desc, id">
+			<key column="appraiseId" />
+			<one-to-many class="com.yuanluesoft.appraise.pojo.UnitAppraise" />
+		</set>
+	</class>
+	
+	<!--评议管理:评议短信-->
+	<class name="com.yuanluesoft.appraise.pojo.AppraiseSms" table="appraise_sms">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="appraiseId"/> <!--评议ID,NUMERIC(20)-->
+		<property name="appraiserId"/> <!--评议员ID,NUMERIC(20)-->
+		<property name="appraiserOrgId"/> <!--评议员所在组织ID,NUMERIC(20)-->
+		<property name="appraiser"/> <!--评议员姓名,VARCHAR(60)-->
+		<property name="appraiserNumber"/> <!--评议员手机号码,VARCHAR(20)-->
+		<property name="appraiserType"/> <!--评议员类型,NUMERIC(1)-->
+		<property name="appraiseUnitId"/> <!--被评议单位ID,NUMERIC(20)-->
+		<property name="appraiseCode"/> <!--评议验证码,网上评议时使用,VARCHAR(10)-->
+		<property name="inviteSms"/> <!--邀请短信内容,VARCHAR(200)-->
+		<property name="inviteSmsSent"/> <!--邀请短信发送时间,TIMESTAMP null-->
+		<property name="replySms"/> <!--回复内容,VARCHAR(200)-->
+		<property name="replyTime"/> <!--回复时间,TIMESTAMP null-->
+		<property name="applauseSms"/> <!--答谢短信内容,VARCHAR(200)-->
+		<property name="applauseSmsSent"/> <!--答谢短信发送时间,TIMESTAMP null-->
+	</class>
+	
+	<!--评议管理:单位评议统计-->
+	<class name="com.yuanluesoft.appraise.pojo.UnitAppraise" table="appraise_unit_appraise">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="appraiseId"/> <!--评议ID,NUMERIC(20)-->
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(200)-->
+		<property name="unitCategory"/> <!--单位分类,经济和社会管理部门、行政执法监督部门、公共服务行业,VARCHAR(200)-->
+		<property name="importVoteTotal"/> <!--引用投票数,专家评议时,计入服务对象网络投票结果,NUMERIC(8)-->
+		<property name="importScoreTotal"/> <!--引用投票得分,NUMERIC(10,2)-->
+		<property name="voteTotal"/> <!--本期投票数,NUMERIC(8)-->
+		<property name="smsVoteTotal"/> <!--本期短信投票数,NUMERIC(8)-->
+		<property name="smsScoreTotal"/> <!--本期短信投票得分,NUMERIC(10,2)-->
+		<property name="internetVoteTotal"/> <!--本期网络投票数,NUMERIC(8)-->
+		<property name="internetScoreTotal"/> <!--本期网络投票得分,NUMERIC(10,2)-->
+		<property name="scoreComprehensive"/> <!--本期综合得分,NUMERIC(10,2)-->
+		<property name="yearVoteTotal"/> <!--累计投票数,截止到本期,NUMERIC(8)-->
+		<property name="yearSmsVoteTotal"/> <!--累计短信投票数,截止到本期,NUMERIC(8)-->
+		<property name="yearSmsScoreTotal"/> <!--累计短信投票得分,截止到本期,NUMERIC(10,2)-->
+		<property name="yearInternetVoteTotal"/> <!--累计网络投票数,截止到本期,NUMERIC(8)-->
+		<property name="yearInternetScoreTotal"/> <!--累计网络投票得分,截止到本期,NUMERIC(10,2)-->
+		<property name="yearScoreComprehensive"/> <!--累计综合得分,截止到本期,NUMERIC(10,2)-->
+		<property name="created"/> <!--发起时间,TIMESTAMP null-->
+		<!-- 评议结果列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="votes" table="appraise_vote">
+			<key column="unitAppraiseId" />
+			<one-to-many class="com.yuanluesoft.appraise.pojo.AppraiseVote" />
+		</set>
+		<!-- 选项统计 -->
+		<set cascade="delete" inverse="true" lazy="false" name="optionVotes" table="appraise_option_vote" order-by="optionType, abstain, optionScore desc">
+			<key column="unitAppraiseId" />
+			<one-to-many class="com.yuanluesoft.appraise.pojo.AppraiseOptionVote" />
+		</set>
+	</class>
+	
+	<!--评议管理:评议结果-->
+	<class name="com.yuanluesoft.appraise.pojo.AppraiseVote" table="appraise_vote">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitAppraiseId"/> <!--评议ID,NUMERIC(20)-->
+		<property name="appraiserId"/> <!--评议员ID,NUMERIC(20)-->
+		<property name="appraiserOrgId"/> <!--评议员所在组织ID,NUMERIC(20)-->
+		<property name="appraiser"/> <!--评议员姓名,VARCHAR(60)-->
+		<property name="appraiserNumber"/> <!--评议员手机号码,VARCHAR(20)-->
+		<property name="appraiserType"/> <!--评议员类型,NUMERIC(1)-->
+		<property name="optionId"/> <!--选项ID,NUMERIC(20)-->
+		<property name="option"/> <!--选项名称,VARCHAR(30)-->
+		<property name="score"/> <!--分数,NUMERIC(5,2)-->
+		<property name="propose"/> <!--意见或建议,VARCHAR(4000)-->
+		<property name="created"/> <!--投票时间,TIMESTAMP-->
+		<property name="voteMode"/> <!--投票方式,0/短信,1/网络,NUMERIC(1)-->
+		<many-to-one name="unitAppraise" class="com.yuanluesoft.appraise.pojo.UnitAppraise" column="unitAppraiseId" update="false" insert="false"/>
+	</class>
+	
+	<!--评议管理:评议选项统计-->
+	<class name="com.yuanluesoft.appraise.pojo.AppraiseOptionVote" table="appraise_option_vote">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitAppraiseId"/> <!--单位评议ID,NUMERIC(20)-->
+		<property name="optionId"/> <!--选项ID,NUMERIC(20)-->
+		<property name="option"/> <!--选项名称,VARCHAR(30)-->
+		<property name="optionType"/> <!--选项类型,0/短信,1/网络,NUMERIC(1)-->
+		<property name="smsOption"/> <!--短信选项,VARCHAR(10)-->
+		<property name="optionScore"/> <!--选项分值,NUMERIC(5,2)-->
+		<property name="abstain"/> <!--是否弃权,1/弃权,NUMERIC(1)-->
+		<property name="voteTotal"/> <!--投票数,NUMERIC(8)-->
+		<property name="smsVoteTotal"/> <!--短信投票数,NUMERIC(8)-->
+		<property name="internetVoteTotal"/> <!--网络投票数,NUMERIC(8)-->
+		<property name="score"/> <!--累计分数,NUMERIC(10,2)-->
+		<many-to-one name="unitAppraise" class="com.yuanluesoft.appraise.pojo.UnitAppraise" column="unitAppraiseId" update="false" insert="false"/>
+	</class>
+	
+	<!--评议管理:参评单位-->
+	<class name="com.yuanluesoft.appraise.pojo.AppraiseParticipateUnit" table="appraise_participate_unit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="areaId"/> <!--地区ID,NUMERIC(20)-->
+		<property name="area"/> <!--地区,VARCHAR(200)-->
+		<property name="year"/> <!--年度,NUMERIC(4)-->
+		<property name="category"/> <!--分类,经济和社会管理部门、行政执法监督部门、公共服务行业 VARCHAR(200)-->
+		<property name="unitIds"/> <!--参评单位ID列表,VARCHAR(4000)-->
+		<property name="unitNames"/> <!--参评单位列表,VARCHAR(4000)-->
+	</class>
+	
+	<!--评议管理:短信通知-->
+	<class name="com.yuanluesoft.appraise.pojo.AppraiseUnitSms" table="appraise_unit_sms">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="areaId"/> <!--地区ID,NUMERIC(20)-->
+		<property name="area"/> <!--地区,VARCHAR(200)-->
+		<property name="unitIds"/> <!--接收单位ID列表,VARCHAR(4000)-->
+		<property name="unitNames"/> <!--接收单位列表,VARCHAR(4000)-->
+		<property name="smsContent"/> <!--短信内容,VARCHAR(4000)-->
+		<property name="creator"/> <!--创建人,VARCHAR(60)-->
+		<property name="creatorId"/> <!--创建人ID,NUMERIC(20)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP null-->
+		<property name="sendTime"/> <!--发送时间,TIMESTAMP null-->
+	</class>
+	
+	<!--评议管理:扣分-->
+	<class name="com.yuanluesoft.appraise.pojo.AppraiseDeduct" table="appraise_deduct">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="areaId"/> <!--地区ID,NUMERIC(20)-->
+		<property name="area"/> <!--地区名称,VARCHAR(200)-->
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(200)-->
+		<property name="year"/> <!--评议年度,NUMERIC(4)-->
+		<property name="deduct"/> <!--扣分,NUMERIC(4,2)-->
+		<property name="reason"/> <!--扣分原因,VARCHAR(2000)-->
+		<property name="creatorId"/> <!--登记人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--登记人,VARCHAR(50)-->
+		<property name="created"/> <!--登记时间,TIMESTAMP-->
+	</class>
+	
+	<!--参数配置-->
+	<class name="com.yuanluesoft.appraise.pojo.AppraiseParameter" table="appraise_parameter">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="recipientsUploadEnd"/> <!--服务对象上报截止日期,1-28,NUMERIC(2)-->
+		<property name="recipientsUploadUrgeBegin"/> <!--服务对象上报催办开始日期,1-28,NUMERIC(2)-->
+		<property name="recipientsUploadUrgeDays"/> <!--服务对象上报催办天数,NUMERIC(2)-->
+		<property name="recipientsUploadUrgeTime"/> <!--服务对象上报催办时间,VARCHAR(5)-->
+		<property name="recipientsUploadUrgeSms"/> <!--服务对象上报催办短信格式,如:xxx单位,请上传2013年12月的管理服务对象,VARCHAR(200)-->
+		<property name="recipientsLimit"/> <!--服务对象上限,NUMERIC(4)-->
+	</class>
+	
+	<!--评分标准-->
+	<class name="com.yuanluesoft.appraise.pojo.AppraiseMarkStandard" table="appraise_mark_standard">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="areaIds"/> <!--适用的地区ID,VARCHAR(1000)-->
+		<property name="areaNames"/> <!--适用的地区名称,VARCHAR(1000)-->
+		<property name="categories"/> <!--适用的单位类别,VARCHAR(1000)-->
+		<property name="recipientRatio"/> <!--服务对象评议所占比例,NUMERIC(5,2)-->
+		<property name="expertRatio"/> <!--专家评议所占比例,NUMERIC(5,2)-->
+		<property name="secondaryRatio"/> <!--二级单位所占比例,NUMERIC(5,2)-->
+		<property name="subordinateRatio"/> <!--下级单位所占比例,NUMERIC(5,2)-->
+		<property name="deductLimit"/> <!--扣分上限,NUMERIC(5,2)-->
+	</class>
+</hibernate-mapping>

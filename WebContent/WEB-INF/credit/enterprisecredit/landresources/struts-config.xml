@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+ <form-bean name="applicationView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/>
+  <form-bean name="adminLandResources" type="com.yuanluesoft.credit.enterprisecredit.landresources.forms.LandResources"/>
+  <form-bean name="landResourcesimportData" type="com.yuanluesoft.credit.enterprisecredit.landresources.forms.ImportDateExcel"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminLandResources" path="/admin/landResources" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.landresources.actions.Load" validate="false">
+   <forward name="load" path="/landResources.jsp"/>
+  </action>
+  <action input="/landResources.jsp" name="adminLandResources" path="/admin/saveLandResources" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.landresources.actions.Save" validate="false"/>
+  <action input="/landResources.jsp" name="adminLandResources" path="/admin/deleteLandResources"
+   scope="request" type="com.yuanluesoft.credit.enterprisecredit.landresources.actions.Delete" validate="false"/>
+  
+  <!-- 附件选择处理。页面的data标签加载时跳转该path调用相应action处理附件页面 -->
+  <action name="landResourcesimportData" path="/admin/attachmentEditor" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.localtax.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <!-- excel数据导入页面加载 -->
+   <action name="landResourcesimportData" path="/admin/landresourcesImportData" scope="request" validate="false"
+   type="com.yuanluesoft.credit.enterprisecredit.localtax.actions.excelimport.Load">
+   <forward name="load" path="/importData.jsp"/>
+   </action>
+   
+   <action name="landResourcesimportData" path="/admin/doImportData" scope="request" validate="false" input="/importData.jsp"
+   type="com.yuanluesoft.credit.enterprisecredit.landresources.actions.excelimport.DoImportData"/>
+   <!-- 批量删除操作 -->
+   <action input="/../../../jeaf/application/applicationView.jsp" name="applicationView" 
+   path="/batchOperate" scope="request" 
+   type="com.yuanluesoft.credit.enterprisecredit.batchoperate.BatchOperate" validate="false" />
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<application title="在线报名">
+	<viewLink local="admin/todoSignUp" title="待办报名信息"/>
+	<viewLink local="admin/inSignUp" title="在办报名信息"/>
+	<viewLink local="admin/signUpSuccess" title="已通过报名"/>
+	<viewLink local="admin/signUpFail" title="未通过报名"/>
+	<viewLink local="admin/signUp" title="办结报名信息"/>
+	<link name="signUpStat" title="报名信息统计">
+		/onlinesignup/admin/signUpStat.shtml
+	</link>
+	<link title="办理流程" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=onlinesignup&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/workflowSetting
+	</link>
+</application>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 数据交换服务:提供者 -->
+	<bean id="exchangeProvider" class="com.yuanluesoft.traffic.exchange.provider.service.spring.ExchangeProviderImpl" init-method="startup">
+		<property name="exchangeApplications">
+			<list>
+				<!-- SQL查询:慧舟 -->
+				<bean class="com.yuanluesoft.traffic.exchange.provider.model.ExchangeSqlApplication">
+					<property name="applicationName"><value>hztechOracle</value></property>
+					<property name="jdbcDriverClassName"><value>oracle.jdbc.driver.OracleDriver</value></property>
+					<property name="jdbcUrl"><value>jdbc:oracle:thin:@localhost:1521:kdsoft</value></property>
+					<property name="userName"><value>kd9191edu</value></property>
+					<property name="password"><value>kd9191edu</value></property>
+					<!-- property name="modifiableSqlPrefixList"><list></list></property -->
+				</bean>
+				
+				<bean class="com.yuanluesoft.traffic.exchange.provider.model.ExchangeSqlApplication">
+					<property name="applicationName"><value>hztech</value></property>
+					<property name="jdbcDriverClassName"><value>org.gjt.mm.mysql.Driver</value></property>
+					<property name="jdbcUrl"><value>jdbc:mysql://localhost/cms?useUnicode=true&amp;characterEncoding=gbk</value></property>
+					<property name="userName"><value>root</value></property>
+					<property name="password"><value>root</value></property>
+					<!-- property name="modifiableSqlPrefixList"><list></list></property -->
+				</bean>
+			</list>
+		</property>
+		<property name="exchangeRequestListenIp"><value>127.0.0.1</value></property>
+		<property name="exchangeRequestListenPort"><value>5718</value></property>
+		<property name="exchangeSqlProcessor">
+			<bean class="com.yuanluesoft.traffic.exchange.provider.processor.ExchangeSqlProcessor">
+				<property name="maxProcess"><value>20</value></property>
+			</bean>
+		</property>
+		<property name="exchangeSoapProcessor">
+			<bean class="com.yuanluesoft.traffic.exchange.provider.processor.ExchangeSoapProcessor">
+				<property name="maxProcess"><value>20</value></property>
+			</bean>
+		</property>
+	</bean>
+</beans>

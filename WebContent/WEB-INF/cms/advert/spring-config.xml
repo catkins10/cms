@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 广告服务 -->
+	<bean id="advertService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.cms.advert.service.spring.AdvertServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="advertCache"><ref bean="advertCache"/></property>
+				<property name="htmlParser"><ref bean="htmlParser"/></property>
+				<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+				<property name="siteService"><ref bean="siteService"/></property>
+				<property name="exchangeClient"><ref bean="exchangeClient"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="open*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 广告位处理器 -->
+	<bean id="advertSpaceProcessor" class="com.yuanluesoft.cms.advert.processor.AdvertSpaceProcessor">
+		<property name="advertService"><ref bean="advertService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+	</bean>
+</beans>

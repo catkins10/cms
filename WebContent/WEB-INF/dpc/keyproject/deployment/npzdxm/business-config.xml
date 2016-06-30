@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="项目" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProject" businessServiceName="keyProjectService">
+		<field name="name" title="项目名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="parentName" title="父项目名称" length="200" type="string" inputMode="text"/>
+		<field name="summary" title="项目简介" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="level" title="项目级别" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">keyProjectService</parameter>
+			<parameter name="itemsName">projectLevel</parameter>
+		</field>
+		<field name="industry" title="所属行业" length="20" required="true" type="string" inputMode="select">
+			<parameter name="execute">selectIndustry(500, 350, false, '', "var values = \"{fullName}\".split(\"/\");document.getElementsByName(\"industry\")[0].value = values[1];document.getElementsByName(\"childIndustry\")[0].value = (values[2] ? values[2] : \"\");", "", "", "", true)</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="js">/dpc/keyproject/js/keyproject.js</parameter>
+		</field>
+		<field name="childIndustry" title="所属子行业" length="20" type="string" inputMode="select">
+			<parameter name="execute">selectIndustry(500, 350, false, "", "var values = \"{fullName}\".split(\"/\");document.getElementsByName(\"industry\")[0].value = values[1];document.getElementsByName(\"childIndustry\")[0].value = (values[2] ? values[2] : \"\");", "", "", "", true)</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="js">/dpc/keyproject/js/keyproject.js</parameter>
+		</field>
+		<field name="status" title="项目状态" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">keyProjectService</parameter>
+			<parameter name="itemsName">projectStatus</parameter>
+		</field>
+		<field name="classify" title="项目类别" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">keyProjectService</parameter>
+			<parameter name="itemsName">projectClassify</parameter>
+		</field>
+		<field name="category" title="项目分类" length="40" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">keyProjectService</parameter>
+			<parameter name="itemsName">projectCategory</parameter>
+		</field>
+		<field name="leader" title="项目挂点领导" length="60" type="string" inputMode="text"/>
+		<field name="otherLeader" title="其他项目挂点领导" length="60" type="string" inputMode="text"/>
+		<field name="developmentArea" title="所属开发区" length="60" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">keyProjectService</parameter>
+			<parameter name="itemsName">developmentArea</parameter>
+		</field>
+		<field name="address" title="建设地点" length="200" required="true" type="string" inputMode="text"/>
+		<field name="investmentSubject" title="投资主体" length="50" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">keyProjectService</parameter>
+			<parameter name="itemsName">investmentSubject</parameter>
+		</field>
+		<field name="managementUnit" title="项目管理部门" length="200" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">keyProjectService</parameter>
+			<parameter name="itemsName">managementUnit</parameter>
+		</field>
+		<field name="managementUnitResponsible" title="管理部门责任人" length="50" required="true" type="string" inputMode="text"/>
+		<field name="managementUnitLinkman" title="管理部门联络人" length="50" required="true" type="string" inputMode="text"/>
+		<field name="managementUnitTel" title="管理部门电话" length="80" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="unit" title="法人机构或者筹建单位" length="200" required="true" type="string" inputMode="text"/>
+		<field name="lawPerson" title="法人代表或者负责人" length="50" required="true" type="string" inputMode="text"/>
+		<field name="linkman" title="联系人" length="50" required="true" type="string" inputMode="text"/>
+		<field name="unitTel" title="单位电话" length="80" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="unitFax" title="单位传真" length="80" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="unitAddress" title="单位地址" length="200" type="string" inputMode="text"/>
+		<field name="unitPostcode" title="邮政编码" length="20" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="constructionType" title="建设性质" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">keyProjectService</parameter>
+			<parameter name="itemsName">constructionType</parameter>
+		</field>
+		<field name="constructionBeginYear" title="建设开始年限" length="4" type="number" inputMode="text"/>
+		<field name="constructionEndYear" title="建设结束年限" length="4" type="number" inputMode="text"/>
+		<field name="estimateBeginDate" title="预计开工时间" type="date" inputMode="date"/>
+		<field name="estimateEndDate" title="预计竣工时间" type="date" inputMode="date"/>
+		<field name="beginDate" title="开工时间" type="date" inputMode="date"/>
+		<field name="endDate" title="竣工时间" type="date" inputMode="date"/>
+		<field name="accountableInvest" title="项目总投资（责任制）" length="15,4" type="number" inputMode="readonly"/>
+		<field name="invest" title="项目总投资" length="15,4" type="number" inputMode="readonly"/>
+		<field name="investmentRemark" title="总投资不一致备注" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="constructionScale" title="建设规模及主要建设内容" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="constructionEffect" title="建成投产后增生生产能力" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="plan" title="总体安排以及各年计划" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly"/>
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none"/>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly"/>
+		<field name="fiveYearPlan" title="是否五年计划项目" length="1" type="char" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="investPlan150" title="150天力争完成投资" length="15,4" type="number" inputMode="text"/>
+		<field name="areas" title="项目所属地区" type="components">
+			<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectArea</parameter>
+		</field>
+		<field name="declares" title="项目申报" type="components">
+			<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectDeclare</parameter>
+		</field>
+		<field name="accountableInvests" title="项目总投资资金（责任制）" type="components">
+			<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectAccountableInvest</parameter>
+		</field>
+		<field name="annualObjectives" title="年度目标" type="components">
+			<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectAnnualObjective</parameter>
+		</field>
+		<field name="invests" title="项目总投资资金" type="components">
+			<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvest</parameter>
+		</field>
+		<field name="investPaids" title="项目资金到位情况" type="components">
+			<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvestPaid</parameter>
+		</field>
+		<field name="investCompletes" title="项目投资完成情况" type="components">
+			<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvestComplete</parameter>
+		</field>
+		<field name="units" title="参建单位" type="components">
+			<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectUnit</parameter>
+		</field>
+		<field name="plans" title="工作安排" type="components">
+			<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectPlan</parameter>
+		</field>
+		<field name="progresses" title="形象进度" type="components">
+			<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectProgress</parameter>
+		</field>
+		<field name="stageProgresses" title="关键节点进度" type="components">
+			<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectStageProgress</parameter>
+		</field>
+		<field name="problems" title="问题反映及措施建议" type="components">
+			<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectProblem</parameter>
+		</field>
+		<field name="photos" title="项目进展实景" type="components">
+			<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectPhoto</parameter>
+		</field>
+		<field name="officialDocuments" title="项目审批文件" type="components">
+			<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectOfficialDocuments</parameter>
+		</field>
+		<field name="fiveYearPlans" title="五年计划" type="components">
+			<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectFiveYearPlan</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审核,会审</parameter>
+			<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectOpinion</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="所属区域" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectArea">
+		<field name="projectId" title="项目ID" type="number" inputMode="hidden"/>
+		<field name="area" title="所属区域" length="20" type="string" inputMode="select"/>
+	</businessObject>
+	<businessObject title="项目组成部分" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectComponent" businessServiceName="keyProjectService">
+		<field name="projectId" title="项目ID" type="number" inputMode="hidden"/>
+		<field name="needApproval" title="是否需要审核" type="string" inputMode="none"/>
+		<field name="approverId" title="审核人ID" type="number" inputMode="none"/>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="none"/>
+	</businessObject>
+	<businessObject title="重点项目申报" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectDeclare" businessServiceName="keyProjectService">
+		<field name="projectId" title="项目ID" type="number" inputMode="hidden"/>
+		<field name="declareYear" title="申报年度" length="4" type="number" inputMode="text"/>
+		<field name="declareTime" title="申报时间" type="timestamp" inputMode="readonly"/>
+		<field name="isKeyProject" title="是否列入重点项目" length="1" type="char" inputMode="none"/>
+		<field name="approvalTime" title="批准日期" type="timestamp" inputMode="readonly"/>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+		<field name="project" title="项目" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProject</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="项目总投资资金（责任制）" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectAccountableInvest" businessServiceName="keyProjectService">
+		<field name="needApproval" title="是否需要审核" length="1" type="char" inputMode="none"/>
+		<field name="approverId" title="审核人ID" type="number" inputMode="none"/>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="readonly"/>
+		<field name="source" title="资金来源" length="30" type="string" inputMode="hidden"/>
+		<field name="childSource" title="资金子来源" length="50" type="string" inputMode="hidden"/>
+		<field name="fullSource" title="资金来源" length="25" required="true" type="string" inputMode="select">
+			<parameter name="execute">selectProjectInvestSource()</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="amount" title="资金金额" length="15,4" required="true" type="number" inputMode="text"/>
+		<field name="remark" title="来源说明" length="1000" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="项目总投资资金" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvest" businessServiceName="keyProjectService">
+		<field name="needApproval" title="是否需要审核" length="1" type="char" inputMode="none"/>
+		<field name="approverId" title="审核人ID" type="number" inputMode="none"/>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="readonly"/>
+		<field name="source" title="资金来源" length="30" type="string" inputMode="hidden"/>
+		<field name="childSource" title="资金子来源" length="50" type="string" inputMode="hidden"/>
+		<field name="fullSource" title="资金来源" length="25" required="true" type="string" inputMode="select">
+			<parameter name="execute">selectProjectInvestSource()</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="amount" title="资金金额" length="15,4" required="true" type="number" inputMode="text"/>
+		<field name="remark" title="来源说明" length="1000" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="项目资金到位情况" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvestPaid" businessServiceName="keyProjectService">
+		<field name="needApproval" title="是否需要审核" length="1" type="char" inputMode="none"/>
+		<field name="approverId" title="审核人ID" type="number" inputMode="none"/>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="readonly"/>
+		<field name="paidYear" title="年份" length="4" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">2010\0 2011\0 2012\0 2013\0 2014\0 2015\0 2016\0 2017\0 2018\0 2019\0 2020\0 2021\0 2022\0 2023\0 2024\0 2025\0 2026\0 2027\0 2028\0 2029</parameter>
+		</field>
+		<field name="paidMonth" title="月份" length="2" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10\0 11\0 12</parameter>
+		</field>
+		<field name="paidInvest" title="当月到位资金金额" length="15,4" required="true" type="number" inputMode="text"/>
+		<field name="yearInvest" title="年初至报告期累计到位资金（万元）" length="15,4" required="true" type="number" inputMode="readonly"/>
+		<field name="percentage" title="占年计划（%）" length="9,2" type="number" inputMode="readonly"/>
+		<field name="source" title="资金来源" length="30" type="string" inputMode="hidden"/>
+		<field name="childSource" title="资金子来源" length="50" type="hidden" inputMode="hidden"/>
+		<field name="fullSource" title="资金来源" length="25" required="true" type="string" inputMode="select">
+			<parameter name="execute">selectProjectInvestSource()</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="remark" title="来源说明" length="1000" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="项目投资完成情况" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvestComplete" businessServiceName="keyProjectService">
+		<field name="needApproval" title="是否需要审核" length="1" type="char" inputMode="none"/>
+		<field name="approverId" title="审核人ID" type="number" inputMode="none"/>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="readonly"/>
+		<field name="completeYear" title="年份" length="4" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">2010\0 2011\0 2012\0 2013\0 2014\0 2015\0 2016\0 2017\0 2018\0 2019\0 2020\0 2021\0 2022\0 2023\0 2024\0 2025\0 2026\0 2027\0 2028\0 2029</parameter>
+		</field>
+		<field name="completeMonth" title="月份" length="2" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10\0 11\0 12</parameter>
+		</field>
+		<field name="completeTenDay" title="旬" length="1" required="true" type="char" inputMode="radio">
+			<parameter name="itemsText">上旬|1\0中旬|2\0下旬|3</parameter>
+		</field>
+		<field name="investPlan" title="计划完成投资（万元）" length="15,4" required="true" type="number" inputMode="text"/>
+		<field name="completed" title="是否已提交完成情况" length="1" type="char" inputMode="hidden"/>
+		<field name="completeInvest" title="当月完成投资（万元）" length="15,4" required="true" type="number" inputMode="text"/>
+		<field name="yearInvest" title="年初至报告期累计完成投资（万元）" length="15,4" type="number" inputMode="readonly"/>
+		<field name="percentage" title="占年计划（%）" length="9,2" type="number" inputMode="readonly"/>
+		<field name="totalComplete" title="开工至报告期累计完成投资（万元）" length="15,4" type="number" inputMode="readonly"/>
+		<field name="completePercentage" title="占总投资（%）" length="9,2" type="number" inputMode="readonly"/>
+	</businessObject>
+	<businessObject title="参建单位" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectUnit" businessServiceName="keyProjectService">
+		<field name="needApproval" title="是否需要审核" length="1" type="char" inputMode="none"/>
+		<field name="approverId" title="审核人ID" type="number" inputMode="none"/>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="readonly"/>
+		<field name="type" title="单位类型" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">施工单位\0监理单位\0设计单位</parameter>
+		</field>
+		<field name="name" title="参建单位名称" length="300" required="true" type="string" inputMode="text"/>
+		<field name="qualificationLevel" title="资质等级" length="200" required="true" type="string" inputMode="text"/>
+		<field name="partName" title="承担合同段名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="contractAmount" title="合同金额（万元）" length="15,4" required="true" type="number" inputMode="text"/>
+		<field name="contractBegin" title="合同开始时间" required="true" type="date" inputMode="date"/>
+		<field name="contractEnd" title="合同结束时间" required="true" type="date" inputMode="date"/>
+		<field name="projectManager" title="项目经理（总监/设总）" length="100" type="string" inputMode="text"/>
+		<field name="tel" title="联系电话" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="unitTel" title="单位总部电话" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="unitPostcode" title="参建单位总部邮编" length="10" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="unitAddress" title="参建单位总部地址" length="200" type="string" inputMode="text"/>
+		<field name="workingPostcode" title="参建单位现场邮编" length="10" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="workingAddress" title="参建单位现场地址" length="200" type="string" inputMode="text"/>
+		<field name="reporter" title="填报人" length="200" type="string" inputMode="text"/>
+		<field name="reportDate" title="填报时间" type="date" inputMode="date"/>
+	</businessObject>
+	<businessObject title="工作安排" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectPlan" businessServiceName="keyProjectService">
+		<field name="needApproval" title="是否需要审核" length="1" type="char" inputMode="none"/>
+		<field name="approverId" title="审核人ID" type="number" inputMode="none"/>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="readonly"/>
+		<field name="planYear" title="年份" length="4" required="true" type="number" inputMode="text"/>
+		<field name="planMonth" title="月份" length="2" required="true" type="number" inputMode="text"/>
+		<field name="enterUnit" title="项目参建单位新进场" length="200" required="true" type="string" inputMode="text"/>
+		<field name="plan" title="工作安排及需要调解决的意见" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">10</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="年度目标" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectAnnualObjective" businessServiceName="keyProjectService">
+		<field name="needApproval" title="是否需要审核" length="1" type="char" inputMode="none"/>
+		<field name="approverId" title="审核人ID" type="number" inputMode="none"/>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="readonly"/>
+		<field name="objectiveYear" title="年度" length="4" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">2010\0 2011\0 2012\0 2013\0 2014\0 2015\0 2016\0 2017\0 2018\0 2019\0 2020\0 2021\0 2022\0 2023\0 2024\0 2025\0 2026\0 2027\0 2028\0 2029</parameter>
+		</field>
+		<field name="investPlan" title="计划完成投资" length="15,4" required="true" type="number" inputMode="text"/>
+		<field name="investCompleted" title="已完成投资" length="15,4" type="number" inputMode="readonly"/>
+		<field name="objective" title="形象进度目标" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">10</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="进度" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectProgress" businessServiceName="keyProjectService">
+		<field name="needApproval" title="是否需要审核" length="1" type="char" inputMode="none"/>
+		<field name="approverId" title="审核人ID" type="number" inputMode="none"/>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="readonly"/>
+		<field name="progressYear" title="年份" length="4" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">2010\0 2011\0 2012\0 2013\0 2014\0 2015\0 2016\0 2017\0 2018\0 2019\0 2020\0 2021\0 2022\0 2023\0 2024\0 2025\0 2026\0 2027\0 2028\0 2029</parameter>
+		</field>
+		<field name="progressMonth" title="月份" length="2" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10\0 11\0 12</parameter>
+		</field>
+		<field name="progressTenDay" title="旬" length="1" required="true" type="char" inputMode="radio">
+			<parameter name="itemsText">上旬|1\0中旬|2\0下旬|3</parameter>
+		</field>
+		<field name="plan" title="安排" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+		<field name="completed" title="是否已汇报项目进度" length="1" type="char" inputMode="hidden"/>
+		<field name="progress" title="进度" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="关键节点进度" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectStageProgress" businessServiceName="keyProjectService">
+		<field name="stage" title="节点名称" length="300" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">项目申请报告书\0项目可研性研究\0项目初设预审、概算\0规划选址论证\0项目环境评价\0用地、用林、用海预审\0规划一书二证办理\0审图\0招投标\0开工许可证\0供地\0供水供电\0其它前期工作\0开工进场\0打桩或基础开挖\0主体工程基础浇注完成\0主体工程封顶\0装修或设备安装调试完成\0试投产、部分试投产或交付使用验收\0正式投产或交付使用</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="timeLimit" title="完成时限" required="true" type="date" inputMode="date"/>
+		<field name="responsibleUnit" title="责任单位" length="300" type="string" inputMode="text"/>
+		<field name="responsiblePerson" title="责任人" length="100" type="string" inputMode="text"/>
+		<field name="plan" title="安排" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+		<field name="completed" title="是否已提交完成情况" length="1" type="char" inputMode="hidden"/>
+		<field name="progress" title="完成进度" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="问题反映及措施建议" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectProblem" businessServiceName="keyProjectService">
+		<field name="needApproval" title="是否需要审核" length="1" type="char" inputMode="none"/>
+		<field name="approverId" title="审核人ID" type="number" inputMode="none"/>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="readonly"/>
+		<field name="problemYear" title="年份" length="4" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">2010\0 2011\0 2012\0 2013\0 2014\0 2015\0 2016\0 2017\0 2018\0 2019\0 2020\0 2021\0 2022\0 2023\0 2024\0 2025\0 2026\0 2027\0 2028\0 2029</parameter>
+		</field>
+		<field name="problemMonth" title="月份" length="2" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10\0 11\0 12</parameter>
+		</field>
+		<field name="problem" title="问题描述" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+		<field name="responsible" title="责任单位或责任人" length="300" required="true" type="string" inputMode="text"/>
+		<field name="completed" title="是否已提交解决情况" length="1" type="char" inputMode="hidden"/>
+		<field name="result" title="解决情况" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="项目进展实景" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectPhoto" businessServiceName="keyProjectService">
+		<field name="needApproval" title="是否需要审核" length="1" type="char" inputMode="none"/>
+		<field name="approverId" title="审核人ID" type="number" inputMode="none"/>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="readonly"/>
+		<field name="photoYear" title="年份" length="4" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">2010\0 2011\0 2012\0 2013\0 2014\0 2015\0 2016\0 2017\0 2018\0 2019\0 2020\0 2021\0 2022\0 2023\0 2024\0 2025\0 2026\0 2027\0 2028\0 2029</parameter>
+		</field>
+		<field name="photoMonth" title="月份" length="2" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10\0 11\0 12</parameter>
+		</field>
+		<field name="photoSubject" title="图片标题" length="200" required="true" type="string" inputMode="text"/>
+		<field name="shotTime" title="拍摄时间" required="true" type="date" inputMode="date"/>
+		<field name="images" title="照片" type="image" inputMode="attachment">
+			<parameter name="attachmentEditor">/dpc/keyproject/photoAttachmentEditor.shtml</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="项目审批文件" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectOfficialDocuments" businessServiceName="keyProjectService">
+		<field name="needApproval" title="是否需要审核" length="1" type="char" inputMode="none"/>
+		<field name="approverId" title="审核人ID" type="number" inputMode="none"/>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="readonly"/>
+		<field name="approvalDocuments" title="报批文件" length="4000" type="text" inputMode="text"/>
+		<field name="documentNumber" title="批准文号" length="100" required="true" type="string" inputMode="text"/>
+		<field name="subject" title="标题" length="200" required="true" type="string" inputMode="text"/>
+		<field name="body" title="文件正文" type="string" inputMode="textarea">
+			<parameter name="rows">16</parameter>
+		</field>
+		<field name="approvalDate" title="批准日期" required="true" type="date" inputMode="date"/>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="attachmentEditor">/dpc/keyproject/officialDocumentAttachmentEditor.shtml</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="五年计划项目" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectFiveYearPlan">
+		<field name="needApproval" title="是否需要审核" length="1" type="char" inputMode="none"/>
+		<field name="approverId" title="审核人ID" type="number" inputMode="none"/>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="readonly"/>
+		<field name="fiveYearPlanNumber" title="第几个五年计划项目" length="3" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">12\0 13\0 14\0 15\0 16\0 17\0 18\0 19\0 20</parameter>
+		</field>
+		<field name="previousFiveYearInvest" title="上个五年计划完成投资" length="15,4" required="true" type="number" inputMode="text"/>
+		<field name="currentFiveYearInvest" title="当前五年计划规划投资" length="15,4" required="true" type="number" inputMode="text"/>
+		<field name="currentFiveYearObjective" title="当前五年计划工作目标" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="参数配置" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectParameter">
+		<field name="projectStatus" title="项目状态" length="500" type="string" inputMode="text"/>
+		<field name="projectLevel" title="项目级别" length="500" type="string" inputMode="text"/>
+		<field name="projectClassify" title="项目类别" length="500" type="string" inputMode="text"/>
+		<field name="area" title="所属区域" length="500" type="string" inputMode="text"/>
+		<field name="projectCategory" title="项目分类" length="500" type="string" inputMode="text"/>
+		<field name="investmentSubject" title="投资主体" length="500" type="string" inputMode="text"/>
+		<field name="managementUnit" title="项目管理部门" length="500" type="string" inputMode="text"/>
+		<field name="constructionType" title="建设单位性质" length="500" type="string" inputMode="text"/>
+		<field name="developmentArea" title="开发区列表" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="开发区分类" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectDevelopmentAreaCategory">
+		<field name="category" title="分类名称" length="50" required="true" type="string" inputMode="text"/>
+		<field name="developmentAreas" title="开发区列表" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.openListDialog('选择开发区', 'allDevelopmentAreas', 600, 400, true, 'developmentAreaCategory.developmentAreas{value},developmentAreaCategory.developmentAreas{value|开发区|100%}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="行业配置" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectIndustry">
+		<field name="industry" title="行业" length="20" type="string" inputMode="text"/>
+		<field name="childIndustry" title="子行业列表" length="500" type="string" inputMode="text"/>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+	</businessObject>
+	<businessObject title="资金来源" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvestSource">
+		<field name="source" title="来源" length="30" type="string" inputMode="text"/>
+		<field name="childSource" title="子来源" length="500" type="string" inputMode="text"/>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+	</businessObject>
+</businessObjects>

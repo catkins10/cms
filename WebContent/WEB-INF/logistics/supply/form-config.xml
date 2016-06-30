@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="supply" action="/logistics/supply/saveSupply.shtml" class="com.yuanluesoft.logistics.supply.forms.Supply" title="货源登记" pojo="com.yuanluesoft.logistics.supply.pojo.LogisticsSupply">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteSupply')"/>
+		</actions>
+	</form>
+	
+	<form name="supplySearch" method="get" action="/logistics/supply/supplySearch.shtml" title="货源查询">
+		<formFields>
+			<field name="goodsName" title="货物名称" type="string" inputMode="text" length="25"/>
+			<field name="quantityMin" title="最小数量" type="number" inputMode="text" length="8,3"/>
+			<field name="quantityMax" title="最大数量" type="number" inputMode="text" length="8,3"/>
+			<field name="freightMin" title="最低运费单价" type="number" inputMode="text" length="8,2"/>
+			<field name="freightMax" title="最高运费单价" type="number" inputMode="text" length="8,2"/>
+			<field name="vehicleLongMin" title="需要的最小车长" type="number" inputMode="text" length="5,2"/>
+			<field name="vehicleLongMax" title="需要的最大车长" type="number" inputMode="text" length="5,2"/>
+			<field name="vehicleWidthMin" title="需要的最小车宽" type="number" inputMode="text" length="5,2"/>
+			<field name="vehicleWidthMax" title="需要的最大车宽" type="number" inputMode="text" length="5,2"/>
+			<field name="vehicleType" title="需要的车型" type="string" inputMode="text" length="25"/>
+			<field name="paymentMode" title="付款方式" type="string" inputMode="text" length="25"/>
+			<field name="departureAreaId" title="出发地点ID" type="string" inputMode="hidden"/>
+			<field name="departureArea" title="出发地点" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'departureAreaId{id},departureArea{name}', '', 'area')</parameter>
+			</field>
+			<field name="destinationAreaId" title="目的地点ID" type="string" inputMode="hidden"/>
+			<field name="destinationArea" title="目的地点" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'destinationAreaId{id},destinationArea{name}', '', 'area')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="查询" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="admin/supply" class="com.yuanluesoft.logistics.supply.forms.admin.Supply" title="货源" pojo="com.yuanluesoft.logistics.supply.pojo.LogisticsSupply">
+		<formFields>
+			<field name="departureAreaIds" title="出发地点ID" type="string" inputMode="hidden"/>
+			<field name="departureAreas" title="出发地点" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, true, 'departureAreaIds{id},departureAreas{name|出发地点|100%}', '', 'area')</parameter>
+			</field>
+			<field name="destinationAreaIds" title="目的地点ID" type="string" inputMode="hidden"/>
+			<field name="destinationAreas" title="目的地点" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, true, 'destinationAreaIds{id},destinationAreas{name|目的地点|100%}', '', 'area')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="发布" execute="FormUtils.doAction('issueSupply')"/>
+			<action title="撤销发布" execute="FormUtils.doAction('unissueSupply')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteSupply')"/>
+		</actions>
+	</form>
+</forms>

@@ -1,0 +1,1003 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.cms.templatemanage.forms.Template" title="模板" pojo="com.yuanluesoft.cms.templatemanage.pojo.Template">
+		<formFields>
+			<field name="pageHTML" title="模板HTML" type="html" inputMode="htmleditor" required="true">
+				<parameter name="attachmentSelector">/cms/templatemanage/selectTemplateAttachment.shtml</parameter>
+				<parameter name="fullPage">true</parameter>
+				<parameter name="centerImage">false</parameter>
+				<parameter name="plugins">/cms/inquiry/editorplugins/plugin.js</parameter>
+				<parameter name="commands">
+					cut,copy,paste|undo,redo,-,find,-,selectAll,removeFormat|insertOrderedList,insertUnorderedList,-,outdent,indent|
+					justifyLeft,justifyCenter,justifyRight,justifyFull|inquiry,link,unlink|image,flash,smiley,table,rule,specialChar,pageBreak|
+					fontName,fontSize,-,textColor,bgColor,-,bold,italic,underline,strikeThrough,-,subscript,superscript,-,source
+				</parameter>
+				<parameter name="height">100%</parameter>
+			</field>
+			<field name="themePageWidth" title="页面宽度" type="number" inputMode="hidden"/>
+			<field name="themeType" title="主题类型" type="number" inputMode="hidden"/>
+			<field name="searchPage" title="是否搜索结果页面" type="boolean" inputMode="hidden"/>
+			<field name="searchResultsName" title="搜索结果列表名称" type="string" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.UploadTemplate" title="模板上传" pojo="com.yuanluesoft.cms.templatemanage.pojo.Template">
+		<formFields>
+			<field name="templateName" title="模板名称" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.BatchCopyTemplate" title="批量复制">
+		<actions>
+			<action title="确定" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertLinkForm" title="插入链接表单">
+		<formFields>
+			<field name="linkOpenMode" title="链接方式" type="component">
+				<parameter name="class">com.yuanluesoft.cms.templatemanage.model.LinkOpenMode</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.EditElementHtml" title="编辑局部源代码">
+		<formFields>
+			<field name="key" title="搜索关键字" type="string" inputMode="text"/>
+			<field name="editInnerHTML" title="是否编辑内部HTML" type="string" inputMode="checkbox">
+				<parameter name="label">编辑内部HTML</parameter>
+				<parameter name="value">true</parameter>
+			</field>
+			<field name="elementHTML" title="局部源代码" type="string" inputMode="textarea">
+				<parameter name="rows">20</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertSubTemplate" title="插入子模板">
+		<formFields>
+			<field name="subTemplateId" title="子模板ID" type="number" inputMode="hidden"/>
+			<field name="subTemplateName" title="子模板名称" type="string" inputMode="select">
+				<parameter name="execute">selectSubTemplate()</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="inheritDisabled" title="子站/子栏目使用的子模板" type="string" inputMode="radio">
+				<parameter name="itemsText">使用当前子模板|true\0使用子站/子栏目的同名子模板|false</parameter>
+				<parameter name="defaultValue">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertRecordList" title="插入记录列表">
+		<formFields>
+			<field name="applicationName" title="应用名称" type="string" inputMode="hidden"/>
+			<field name="recordListName" title="记录列表名称" type="string" inputMode="hidden"/>
+			<field name="searchResults" title="是否搜索结果" type="boolean" inputMode="hidden"/>
+			<field name="embedRecordList" title="是否内嵌的记录列表" type="boolean" inputMode="hidden"/>
+			<field name="privateRecordList" title="是否页面私有的记录列表" type="boolean" inputMode="hidden"/>
+			<field name="recordClassName" title="记录类名称" type="string" inputMode="hidden"/>
+			<field name="redirectApplicationName" title="重定向后的应用名称" type="string" inputMode="hidden"/>
+			<field name="redirectRecordListName" title="重定向后的记录列表名称" type="string" inputMode="hidden"/>
+			<field name="viewTitle" title="记录列表标题" type="string" inputMode="hidden"/>
+			<field name="templateExtendURL" title="模板配置对话框扩展" type="string" inputMode="hidden"/>
+			<field name="emptyPrompt" title="无记录时的提示信息" type="string" inputMode="hidden"/>
+			<field name="recordCount" title="记录数量" type="number" inputMode="dropdown">
+				<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10\0 11\0 12\0 13\0 14\0 15\0 16\0 17\0 18\0 19\0 20\0 25\0 30\0 40\0 50\0 60\0 70\0 80\0 90\0 100\0 200\0 300\0 400\0 500</parameter>
+			</field>
+			<field name="width" title="区域宽度" type="string" inputMode="text">
+				<parameter name="defaultValue">自动</parameter>
+			</field>
+			<field name="height" title="区域高度" type="string" inputMode="text">
+				<parameter name="defaultValue">自动</parameter>
+			</field>
+			<field name="recordIndent" title="段落缩进" type="string" inputMode="text"/>
+			
+			<field name="recordWidth" title="记录宽度" type="string" inputMode="text">
+				<parameter name="defaultValue">自动</parameter>
+			</field>
+			<field name="recordHeight" title="记录高度" type="string" inputMode="text">
+				<parameter name="defaultValue">自动</parameter>
+			</field>
+			<field name="linkOpenMode" title="链接方式" type="component">
+				<parameter name="class">com.yuanluesoft.cms.templatemanage.model.LinkOpenMode</parameter>
+			</field>
+			<field name="recordLink" title="记录链接地址" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">templateService</parameter>
+				<parameter name="itemsName">viewRecordLinks</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="scrollMode" title="滚动显示" type="string" inputMode="dropdown">
+				<parameter name="itemsText">不滚动|none\0至上而下|down\0至下而上|up\0从左到右|right\0从右到左|left\0滚动切换|switch</parameter>
+				<parameter name="defaultValue">none</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="scrollJoin" title="头尾衔接" type="string" inputMode="checkbox">
+				<parameter name="label">头尾衔接</parameter>
+				<parameter name="value">true</parameter>
+			</field>
+			<field name="scrollSpeed" title="速度(毫秒)" type="number" inputMode="text">
+				<parameter name="defaultValue">100</parameter>
+			</field>
+			<field name="scrollAmount" title="滚动距离(像素)" type="number" inputMode="text">
+				<parameter name="defaultValue">1</parameter>
+			</field>
+			<field name="recordMode" title="记录显示方式" type="string" inputMode="dropdown">
+				<parameter name="itemsText">精简模式|simple\0普通模式|normal\0表格模式|table</parameter>
+				<parameter name="defaultValue">simple</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="embedViews" title="内嵌列表" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">templateService</parameter>
+				<parameter name="itemsName">embedViews</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="recordFormatSource" title="记录格式源代码" type="string" inputMode="textarea">
+				<parameter name="rows">6</parameter>
+			</field>
+			<field name="separatorMode" title="记录分隔" type="string" inputMode="dropdown">
+				<parameter name="itemsText">无|none\0换行|newLine\0空格|blank\0图片|image\0平铺|tile\0自定义|custom</parameter>
+				<parameter name="defaultValue">none</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="separatorImage" title="记录分隔图片" type="string" inputMode="select">
+				<parameter name="execute">selectImage('separatorImage')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="separatorImageOfLastRecord" title="记录分隔图片是否在末尾显示" type="string" inputMode="checkbox">
+				<parameter name="label">末尾显示</parameter>
+				<parameter name="value">true</parameter>
+				<parameter name="defaultValue">true</parameter>
+			</field>
+			<field name="separatorOfLastRecord" title="自定义记录分隔是否在末尾显示" type="string" inputMode="checkbox">
+				<parameter name="label">末尾显示</parameter>
+				<parameter name="value">true</parameter>
+				<parameter name="defaultValue">true</parameter>
+			</field>
+			<field name="separatorHeight" title="记录分隔间距" type="string" inputMode="text">
+				<parameter name="defaultValue">5</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertNewestImage" title="插入“new”图片">
+		<formFields>
+			<field name="imageURL" title="“new”图片" type="string" inputMode="select">
+				<parameter name="execute">selectImage()</parameter>
+				<parameter name="defaultValue">{CONTEXTPATH}/cms/templatemanage/images/new.gif</parameter>
+			</field>
+			<field name="timeLimit" title="有效期(小时)" type="number" inputMode="text">
+				<parameter name="defaultValue">24</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.RecordListControlBar" title="记录列表控制栏">
+		<formFields>
+			<field name="manualSwitch" title="手动切换" type="string" inputMode="checkbox">
+				<parameter name="label">手动切换</parameter>
+				<parameter name="value">true</parameter>
+			</field>
+			<field name="autoScaling" title="大小自适应" type="string" inputMode="checkbox">
+				<parameter name="label">大小自适应</parameter>
+				<parameter name="value">true</parameter>
+			</field>
+			<field name="position" title="显示位置" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">outerBottomCenter</parameter>
+				<parameter name="itemsText">左上(内部)|innerLeftTop\0左下(内部)|innerLeftBottom\0左侧居中(内部)|innerLeftMiddle\0右上(内部)|innerRightTop\0右下(内部)|innerRightBottom\0右侧居中(内部)|innerRightMiddle\0顶部居中(内部)|innerTopCenter\0底部居中(内部)|innerBottomCenter\0左上(外部)|outerLeftTop\0左下(外部)|outerLeftBottom\0左侧居中(外部)|outerLeftMiddle\0右上(外部)|outerRightTop\0右下(外部)|outerRightBottom\0右侧居中(外部)|outerRightMiddle\0顶部靠左(外部)|outerTopLeft\0顶部靠右(外部)|outerTopRight\0顶部居中(外部)|outerTopCenter\0底部靠左(外部)|outerBottomLeft\0底部靠右(外部)|outerBottomRight\0底部居中(外部)|outerBottomCenter</parameter>
+			</field>
+			<field name="xMargin" title="水平边距" type="number" inputMode="text"/>
+			<field name="yMargin" title="垂直边距" type="number" inputMode="text"/>
+			<field name="scrollDirection" title="滚动方向" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">horizontal</parameter>
+				<parameter name="itemsText">横向|horizontal\0纵向|vertical</parameter>
+			</field>
+			<field name="controlBarRecordSpacing" title="控制栏记录分隔距离" type="string" inputMode="text"/>
+			<field name="mouseOverControlBarRecord" title="鼠标经过控制记录时的动作" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">switch</parameter>
+				<parameter name="itemsText">不做任何动作|none\0翻阅|switch</parameter>
+			</field>
+			<field name="clickControlBarRecord" title="点击控制记录时的动作" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">openLink</parameter>
+				<parameter name="itemsText">不做任何动作|none\0切换图片|switch\0打开记录页面|openLink</parameter>
+			</field>
+			<field name="imageClickAction" title="点击选项" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">none</parameter>
+				<parameter name="itemsText">不翻阅|none\0向后翻阅|nextImage\0左侧向前翻阅、右侧向后翻阅|leftPreviousImageAndRightNextImage</parameter>
+			</field>
+			<field name="switchByKey" title="左右方向键翻阅" type="string" inputMode="checkbox">
+				<parameter name="label">左、右方向键翻阅</parameter>
+				<parameter name="value">true</parameter>
+			</field>
+			<field name="displayNextPreviousButton" title="“上一图片”“下一图片”按钮" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">none</parameter>
+				<parameter name="itemsText">不显示|none\0一直显示|always\0鼠标经过时显示|mouseOver</parameter>
+			</field>
+			<field name="controlBarFormatSource" title="控制栏格式源代码" type="string" inputMode="textarea">
+				<parameter name="rows">6</parameter>
+			</field>
+			<field name="nextPreviousButtonFormatSource" title="上一图片、下一图片按钮格式源代码" type="string" inputMode="textarea">
+				<parameter name="rows">6</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertField" title="插入字段">
+		<formFields>
+			<field name="field" title="字段名称" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">templateService</parameter>
+				<parameter name="itemsName">fields</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="fontName" title="字体" type="string" inputMode="text">
+				<parameter name="defaultValue">默认</parameter>
+			</field>
+			<field name="fontBold" title="字体加粗" type="string" inputMode="checkbox">
+				<parameter name="label">加粗</parameter>
+				<parameter name="value">true</parameter>
+			</field>
+			<field name="fontSize" title="字体大小" type="string" inputMode="text">
+				<parameter name="defaultValue">默认</parameter>
+			</field>
+			<field name="fontColor" title="字体颜色" type="string" inputMode="select">
+				<parameter name="defaultValue">默认</parameter>
+				<parameter name="execute">DialogUtils.openColorDialog('字体颜色', '', 'document.getElementsByName("fontColor")[0].value="{colorValue}";')</parameter>
+			</field>
+			<field name="link" title="显示链接" type="string" inputMode="radio">
+				<parameter name="itemsText">是|yes\0否|no</parameter>
+				<parameter name="defaultValue">yes</parameter>
+			</field>
+			<field name="maxLength" title="最大字节数" type="string" inputMode="text">
+				<parameter name="defaultValue">全部显示</parameter>
+			</field>
+			<field name="chineseNumber" title="中文数字" type="string" inputMode="radio">
+				<parameter name="itemsText">是|yes\0否|no</parameter>
+				<parameter name="defaultValue">no</parameter>
+			</field>
+			<field name="dateFieldFormat" title="格式" type="string" inputMode="dropdown">
+				<parameter name="itemsText">2005-07-18|yyyy-MM-dd\0 07-18|MM-dd\0 2005年7月18日 星期一|yyyy年M月d日 EEE\0 7月18日 星期一|M月d日 EEE\0 2005年7月18日|yyyy年M月d日\0 7月18日|M月d日\0 2005年7月18日 乙酉年六月十三 鸡|yyyy年M月d日 &lt;农历年&gt;&lt;农历月&gt;&lt;农历日&gt; &lt;生肖&gt;\0 自定义|custom</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">yyyy-MM-dd</parameter>
+			</field>
+			<field name="timestampFieldFormat" title="格式" type="string" inputMode="dropdown">
+				<parameter name="itemsText">2005-07-18|yyyy-MM-dd\0 07-18|MM-dd\0 2005年7月18日 星期一|yyyy年M月d日 EEE\0 7月18日 星期一|M月d日 EEE\0 2005年7月18日|yyyy年M月d日\0 7月18日|M月d日\0 2005-07-18 13:41|yyyy-MM-dd HH:mm\0 07-18 13:41|MM-dd HH:mm\0 13:41|HH:mm\0 2005年7月18日 星期一 13时41分|yyyy年M月d日 EEE HH时mm分\0 7月18日 星期一 13时41分|M月d日 EEE HH时mm分\0 2005年7月18日 13时41分|yyyy年M月d日 HH时mm分\07月18日 13时41分|M月d日 HH时mm分\0 2005年7月18日 13:41 乙酉年六月十三 鸡|yyyy年M月d日 HH:mm &lt;农历年&gt;&lt;农历月&gt;&lt;农历日&gt; &lt;生肖&gt;\0 自定义|custom</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">yyyy-MM-dd</parameter>
+			</field>
+			<field name="fieldFormat" title="自定义格式" type="string" inputMode="text">
+				<parameter name="defaultValue">默认</parameter>
+			</field>
+			<field name="imageInsteadValue" title="用图片替换的值" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="insteadImageURL" title="替换图片URL" type="string" inputMode="select">
+				<parameter name="execute">selectInsteadImage()</parameter>
+			</field>
+			<field name="insteadImageWidth" title="替换图片宽度" type="string" inputMode="text"/>
+			<field name="insteadImageHeight" title="替换图片高度" type="string" inputMode="text"/>
+			<field name="insteadImageAlign" title="替换图片对齐方式" type="string" inputMode="dropdown">
+				<parameter name="itemsText">绝对居中|absmiddle\0绝对底边|absbottom\0左对齐|left\0基线|baseline\0底部|bottom\0居中|middle\0右对齐|right\0文本上方|textTop\0顶端|top</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">absmiddle</parameter>
+			</field>
+			<field name="imageWidth" title="图片宽度" type="string" inputMode="text">
+				<parameter name="defaultValue">原始</parameter>
+			</field>
+			<field name="imageHeight" title="图片高度" type="string" inputMode="text">
+				<parameter name="defaultValue">原始</parameter>
+			</field>
+			<field name="clipEnabled" title="是否允许裁剪" type="string" inputMode="checkbox">
+				<parameter name="value">true</parameter>
+				<parameter name="label">允许裁剪</parameter>
+			</field>
+			<field name="imageLink" title="是否显示链接" type="string" inputMode="radio">
+				<parameter name="itemsText">是|yes\0否|no</parameter>
+				<parameter name="defaultValue">yes</parameter>
+			</field>
+			<field name="imageAlign" title="图片对齐方式" type="string" inputMode="dropdown">
+				<parameter name="itemsText">绝对居中|absmiddle\0绝对底边|absbottom\0左对齐|left\0基线|baseline\0底部|bottom\0居中|middle\0右对齐|right\0文本上方|textTop\0顶端|top</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">absmiddle</parameter>
+			</field>
+			<field name="captureImage" title="是否显示视频截图" type="string" inputMode="radio">
+				<parameter name="itemsText">是|yes\0否|no</parameter>
+				<parameter name="defaultValue">no</parameter>
+			</field>
+			<field name="showPlayIcon" title="显示播放图标" type="string" inputMode="radio">
+				<parameter name="defaultValue">default</parameter>
+				<parameter name="itemsText">不显示|none\0预置图标|default\0自定义|custom</parameter>
+			</field>
+			<field name="playIconURL" title="播放图标URL" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectPlayIcon()</parameter>
+			</field>
+			<field name="playIconWidth" title="播放图标宽度" type="string" inputMode="hidden"/>
+			<field name="playIconHeight" title="播放图标高度" type="string" inputMode="hidden"/>
+			<field name="playIconPosition" title="播放图标显示位置" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">innerCenter</parameter>
+				<parameter name="itemsText">居中|innerCenter\0左上|innerLeftTop\0左下|innerLeftBottom\0左侧居中|innerLeftMiddle\0右上|innerRightTop\0右下|innerRightBottom\0右侧居中|innerRightMiddle\0顶部居中|innerTopCenter\0底部居中|innerBottomCenter</parameter>
+			</field>
+			<field name="playIconXMargin" title="播放图标水平边距" type="number" inputMode="text"/>
+			<field name="playIconYMargin" title="播放图标垂直边距" type="number" inputMode="text"/>
+			<field name="videoLink" title="是否显示链接" type="string" inputMode="radio">
+				<parameter name="itemsText">是|yes\0否|no</parameter>
+				<parameter name="defaultValue">yes</parameter>
+			</field>
+			<field name="videoWidth" title="播放器宽度" type="string" inputMode="text">
+				<parameter name="defaultValue">原始</parameter>
+			</field>
+			<field name="videoHeight" title="播放器高度" type="string" inputMode="text">
+				<parameter name="defaultValue">原始</parameter>
+			</field>
+			<field name="autostart" title="自动播放" type="string" inputMode="radio">
+				<parameter name="itemsText">是|yes\0否|no</parameter>
+				<parameter name="defaultValue">no</parameter>
+			</field>
+			<field name="controlbar" title="播放控制条" type="string" inputMode="radio">
+				<parameter name="itemsText">显示|yes\0不显示|no</parameter>
+				<parameter name="defaultValue">yes</parameter>
+			</field>
+			<field name="videoAlign" title="对齐方式" type="string" inputMode="dropdown">
+				<parameter name="itemsText">绝对居中|absmiddle\0绝对底边|absbottom\0左对齐|left\0基线|baseline\0底部|bottom\0居中|middle\0右对齐|right\0文本上方|textTop\0顶端|top</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">absmiddle</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertRecordLink" title="插入记录链接">
+		<formFields>
+			<field name="linkTitle" title="链接标题" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">templateService</parameter>
+				<parameter name="itemsName">recordLinks</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">{FIRSTITEM}</parameter>
+			</field>
+			<field name="relationSite" title="隶属站点" type="string" inputMode="radio">
+				<parameter name="itemsText">当前站点|currentSite\0指定站点|specialSite</parameter>
+				<parameter name="defaultValue">currentSite</parameter>
+			</field>
+			<field name="relationSiteId" title="指定的站点ID" type="string" inputMode="hidden"/>
+			<field name="relationSiteName" title="指定的站点名称" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js"></parameter>
+				<parameter name="execute">selectSite(500, 300, false, 'relationSiteId{id},relationSiteName{name}', '', '', '', 'site')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="linkOpenMode" title="链接方式" type="component">
+				<parameter name="class">com.yuanluesoft.cms.templatemanage.model.LinkOpenMode</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertAccessTotals" title="插入访问统计列表">
+		<formFields>
+			<field name="sort" title="是否按点击数排序" type="string" inputMode="checkbox">
+				<parameter name="label">按点击数排序</parameter>
+				<parameter name="value">true</parameter>
+				<parameter name="defaultValue">true</parameter>
+			</field>
+			<field name="writeMode" title="输出方式" type="string" inputMode="dropdown">
+				<parameter name="itemsText">列表|text\0总点击数|totalAll\0柱形图|barChart\0折线图|lineChart\0饼图|pieChart</parameter>
+				<parameter name="defaultValue">text</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			
+			<field name="chartWidth" title="图形宽度" type="string" inputMode="text">
+				<parameter name="defaultValue">640</parameter>
+			</field>
+			<field name="chartHeight" title="图形高度" type="string" inputMode="text">
+				<parameter name="defaultValue">480</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertAccessTotalPage" title="插入访问统计页面">
+		<formFields>
+			<field name="pageName" title="页面名称" type="string" inputMode="hidden"/>
+			<field name="pageTitle" title="页面标题" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSitePage(500, 300, 'pageName{id},pageTitle{fullName}', 'afterPageSelected()')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="recordId" title="记录ID" type="string" inputMode="text"/>
+			<field name="totalTitle" title="显示名称" type="string" inputMode="text"/>
+			<field name="totalLink" title="链接地址" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertTotalColumn" title="插入统计栏目">
+		<formFields>
+			<field name="totalTitle" title="显示名称" type="string" inputMode="text"/>
+			<field name="totalLink" title="链接地址" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertIssueTotals" title="插入发布统计列表">
+		<formFields>
+			<field name="parentOrgIds" title="上级机构ID" type="string" inputMode="hidden"/>
+			<field name="parentOrgNames" title="链接标题" type="string" inputMode="select">
+				<parameter name="execute">DialogUtils.selectOrg(550, 390, true, 'parentOrgIds{id},parentOrgNames{name|上级机构|100%}', 'root,category,unit')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertTotals" title="插入统计列表">
+		<formFields>
+			<field name="sort" title="是否按记录数量排序" type="string" inputMode="checkbox">
+				<parameter name="label">按记录数量排序</parameter>
+				<parameter name="value">true</parameter>
+				<parameter name="defaultValue">true</parameter>
+			</field>
+		</formFields>
+	</form>
+		
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertNormalForm" title="插入预置表单">
+		<formFields>
+			<field name="applicationName" title="应用名称" type="string" inputMode="hidden"/>
+			<field name="themeType" title="模板主题类型" type="number" inputMode="hidden"/>
+			<field name="formName" title="表单名称" type="string" inputMode="hidden"/>
+			<field name="predefinedPage" title="预置的页面" type="string" inputMode="hidden"/>
+			<field name="cssUrl" title="CSS URL" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">templateService</parameter>
+				<parameter name="itemsName">cssFiles</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">{FIRSTITEM}</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertFormFields" title="插入表单全部字段">
+		<formFields>
+			<field name="field" title="字段" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">templateService</parameter>
+				<parameter name="itemsName">formFields</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="formTabelWidth" title="表格宽度" type="string" inputMode="text"/>
+			<field name="formTabelCols" title="显示列数" type="string" inputMode="dropdown">
+				<parameter name="itemsText">1\0 2\0 3\0 4\0 5</parameter>
+				<parameter name="defaultValue">1</parameter>
+			</field>
+			<field name="cssName" title="样式名称" type="string" inputMode="text">
+				<parameter name="defaultValue"></parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertFormField" title="插入表单字段">
+		<formFields>
+			<field name="field" title="字段" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">templateService</parameter>
+				<parameter name="itemsName">formFields</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="inputAlt" title="提示文本" type="string" inputMode="text"/>
+			<field name="cssName" title="样式名称" type="string" inputMode="text">
+				<parameter name="defaultValue"></parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertFormButton" title="插入表单按钮">
+		<formFields>
+			<field name="button" title="按钮" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">templateService</parameter>
+				<parameter name="itemsName">formButtons</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">{FIRSTITEM}</parameter>
+			</field>
+			<field name="formTarget" title="窗口打开方式" type="string" inputMode="radio">
+				<parameter name="itemsText">新窗口|newWindow\0当前窗口|currentWindow</parameter>
+				<parameter name="defaultValue">currentWindow</parameter>
+			</field>
+			<field name="cssName" title="样式名称" type="string" inputMode="text">
+				<parameter name="defaultValue"></parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertSystemPrompt" title="插入系统提示">
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertSmsValidateCode" title="插入短信验证码">
+		<formFields>
+			<field name="sendLimit" title="发送次数限制" type="string" inputMode="text">
+				<parameter name="defaultValue">3</parameter>
+			</field>
+			<field name="timeInterval" title="时间间隔" type="string" inputMode="text">
+				<parameter name="defaultValue">100</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+
+	<form name="customCssFile" class="com.yuanluesoft.cms.templatemanage.forms.CustomCssFile" title="自定义样式表" pojo="com.yuanluesoft.cms.templatemanage.pojo.CssFile">
+		<formFields>
+			<field name="cssText" title="样式表" type="string" inputMode="textarea" required="true">
+				<parameter name="rows">20</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="插入图片地址" execute="insertImage()"/>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="删除" execute="if(confirm('删除后不可恢复，是否确定删除？')){FormUtils.doAction('deleteCssFile');}"/>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.TemplateCssFile" title="模板CSS编辑">
+		<formFields>
+			<field name="cssContent" title="css内容" type="string" inputMode="textarea">
+				<parameter name="rows">30</parameter>
+			</field>
+			<field name="fileName" title="CSS文件名称" type="string" inputMode="hidden"/>
+			<field name="script" title="CSS保存后执行的脚本" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="插入图片地址" execute="insertImage()"/>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.TemplateView" title="模板视图">
+		<formFields>
+			<field name="siteId" title="站点/栏目ID" type="number" inputMode="hidden"/>
+			<field name="applicationName" title="应用名称" type="string" inputMode="hidden"/>
+			<field name="pageName" title="页面名称" type="string" inputMode="hidden"/>
+			<field name="themeId" title="主题ID" type="number" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertLink" title="插入自定义链接">
+		<formFields>
+			<field title="链接地址" name="url" type="string" inputMode="select">
+				<parameter name="execute">selectUrl()</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertSetHomePage" title="插入“设为主页”链接">
+		<formFields>
+			<field title="主页地址" name="url" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertAddFavorite" title="插入“加入收藏”链接">
+		<formFields>
+			<field title="地址" name="url" type="string" inputMode="text"/>
+			<field title="名称" name="name" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertChineseConvert" title="插入“简/繁体转换”链接">
+		<formFields>
+			<field title="转换" name="convertTo" type="string" inputMode="radio">
+				<parameter name="itemsText">简体中文\0繁体中文</parameter>
+				<parameter name="defaultValue">简体中文</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertApplicationLink" title="插入应用链接">
+		<formFields>
+			<field title="应用" name="applicationName" type="string" inputMode="hidden"/>
+			<field title="应用名称" name="applicationTitle" type="string" inputMode="select">
+				<parameter name="js">/eai/js/eai.js</parameter>
+				<parameter name="execute">EAISelect(500, 300, false, 'applicationName{id},applicationTitle{name}')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertPageLink" title="插入页面链接">
+		<formFields>
+			<field title="链接名称" name="linkTitle" type="string" inputMode="hidden"/>
+			<field name="relationSite" title="隶属站点选项" type="string" inputMode="radio">
+				<parameter name="itemsText">当前站点|current\0指定站点|other</parameter>
+				<parameter name="defaultValue">current</parameter>
+			</field>
+			<field title="站点ID" name="relationSiteId" type="string" inputMode="hidden"/>
+			<field title="站点名称" name="relationSiteName" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 300, false, 'relationSiteId{id},relationSiteName{name}', '', '', '', 'site')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertNavigatorLink" title="插入导航链接">
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertRecordPagingLink" title="插入上一篇、下一篇链接">
+		<formFields>
+			<field name="linkFormatSource" title="记录格式源代码" type="string" inputMode="textarea">
+				<parameter name="rows">6</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertSystemLink" title="插入系统预置链接">
+		<formFields>
+			<field name="relationSite" title="隶属站点选项" type="string" inputMode="radio">
+				<parameter name="itemsText">当前站点|current\0指定站点|other</parameter>
+				<parameter name="defaultValue">current</parameter>
+			</field>
+			<field title="站点ID" name="relationSiteId" type="string" inputMode="hidden"/>
+			<field title="站点名称" name="relationSiteName" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 300, false, 'relationSiteId{id},relationSiteName{name}', '', '', '', 'site')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertRssSubscribeLink" title="插入RSS订阅链接">
+		<formFields>
+			<field name="siteSelect" title="栏目选择" type="string" inputMode="radio">
+				<parameter name="itemsText">当前栏目|current\0父栏目|parent\0指定栏目|other</parameter>
+				<parameter name="defaultValue">other</parameter>
+			</field>
+			<field title="站点ID" name="siteId" type="string" inputMode="hidden"/>
+			<field title="站点名称" name="siteName" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 300, false, 'siteId{id},siteName{name}')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertRssChannel" title="插入RSS频道">
+		<formFields>
+			<field name="ttl" title="更新周期" type="string" inputMode="text">
+				<parameter name="defaultValue">60</parameter>
+			</field>
+			<field name="relationSite" title="隶属站点选项" type="string" inputMode="radio">
+				<parameter name="itemsText">当前站点|current\0指定站点|other</parameter>
+				<parameter name="defaultValue">current</parameter>
+			</field>
+			<field title="站点ID" name="relationSiteId" type="string" inputMode="hidden"/>
+			<field title="站点名称" name="relationSiteName" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 300, false, 'relationSiteId{id},relationSiteName{name}', '', '', '', 'site')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertViewAction" title="插入视图操作">
+		<formFields>
+			<field title="操作名称" name="actionTitle" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertTabstripBody" title="插入标签页">
+		<formFields>
+			<field title="选项卡名称" name="tabstripName" type="string" inputMode="text"/>
+			<field title="标签页宽度" name="width" type="string" inputMode="text">
+				<parameter name="defaultValue">自动</parameter>
+			</field>
+			<field title="标签页高度" name="height" type="string" inputMode="text">
+				<parameter name="defaultValue">自动</parameter>
+			</field>
+			<field title="切换方式" name="switchMode" type="string" inputMode="radio">
+				<parameter name="itemsText">鼠标经过选项时切换|mouseOver\0单击选项时切换|click</parameter>
+				<parameter name="defaultValue">mouseOver</parameter>
+			</field>
+			<field title="是否自动定时切换" name="timeSwitch" type="string" inputMode="checkbox">
+				<parameter name="label">自动定时切换</parameter>
+				<parameter name="value">true</parameter>
+			</field>
+			<field title="定时切换时间间隔(秒)" name="timeInterval" type="string" inputMode="text">
+				<parameter name="defaultValue">5</parameter>
+			</field>
+			<field title="单击选项时打开“更多”" name="clickOpenMore" type="string" inputMode="checkbox">
+				<parameter name="label">打开“更多”</parameter>
+				<parameter name="value">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertTabstripButton" title="设置为选项">
+		<formFields>
+			<field title="隶属选项卡" name="tabstripName" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertTabstripButtonList" title="插入选项列表">
+		<formFields>
+			<field title="隶属选项卡" name="tabstripName" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="buttonCount" title="选项数量" type="number" inputMode="dropdown">
+				<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10</parameter>
+			</field>
+			<field name="buttonSpacing" title="选项间隔(像素)" type="number" inputMode="text">
+				<parameter name="defaultValue">5</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertTabstripMoreLink" title="插入“更多”链接">
+		<formFields>
+			<field title="隶属选项卡" name="tabstripName" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertNavigator" title="插入导航栏">
+		<formFields>
+			<field title="导航栏名称" name="navigatorName" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertNavigatorLinkItem" title="设为导航栏链接">
+		<formFields>
+			<field title="导航栏名称" name="navigatorName" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertNavigatorItemList" title="插入导航项目列表">
+		<formFields>
+			<field title="导航栏名称" name="navigatorName" type="string" inputMode="text"/>
+			<field name="itemCount" title="显示项目数" type="number" inputMode="dropdown">
+				<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10</parameter>
+			</field>
+			<field name="itemSpacing" title="项目间隔(像素)" type="number" inputMode="text">
+				<parameter name="defaultValue">5</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertNavigatorMenuItem" title="设为导航栏菜单">
+		<formFields>
+			<field title="导航栏名称" name="navigatorName" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertPageNo" title="插入页码">
+		<formFields>
+			<field title="显示页码数" name="pageNumber" type="string" inputMode="text">
+				<parameter name="defaultValue">10</parameter>
+			</field>
+			<field title="当前页码字体" name="fontName" type="string" inputMode="text">
+				<parameter name="defaultValue">默认</parameter>
+			</field>
+			<field title="当前页码字体加粗" name="fontBold" type="string" inputMode="checkbox">
+				<parameter name="label">加粗</parameter>
+				<parameter name="value">true</parameter>
+			</field>
+			<field title="字体大小" name="fontSize" type="string" inputMode="text">
+				<parameter name="defaultValue">默认</parameter>
+			</field>
+			<field title="字体颜色" name="fontColor" type="string" inputMode="select">
+				<parameter name="defaultValue">默认</parameter>
+				<parameter name="execute">DialogUtils.openColorDialog('字体颜色', '', 'document.getElementsByName("fontColor")[0].value="{colorValue}";')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertDate" title="插入日期">
+		<formFields>
+			<field title="格式选择" name="selectFormat" type="string" inputMode="dropdown">
+				<parameter name="itemsText">2005年7月18日 星期一|yyyy年M月d日 EEE\0 7月18日 星期一|M月d日 EEE\0 2005年7月18日|yyyy年M月d日\0 7月18日|M月d日\0自定义|custom</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field title="自定义格式" name="format" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.InsertSubPage" title="插入预置页面">
+		<formFields>
+			<field name="applicationName" title="应用名称" type="string" inputMode="hidden"/>
+			<field name="pageName" title="页面名称" type="string" inputMode="hidden"/>
+			<field name="themeType" title="模板主题类型" type="number" inputMode="hidden"/>
+			<field name="predefinedPage" title="预置的页面" type="string" inputMode="hidden"/>
+			<field name="subPageName" title="子页面名称" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">templateService</parameter>
+				<parameter name="itemsName">subPages</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="cssUrl" title="CSS URL" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">templateService</parameter>
+				<parameter name="itemsName">cssFiles</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">{FIRSTITEM}</parameter>
+			</field>
+			<field name="widthMode" title="宽度选项" type="string" inputMode="dropdown">
+				<parameter name="itemsText">自动|auto\0按百分比|percentage\0固定宽度|absolute</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">auto</parameter>
+			</field>
+			<field name="width" title="宽度" type="string" inputMode="text"/>
+			<field name="horizontalScroll" title="是否显示水平滚动条" type="string" inputMode="checkbox">
+				<parameter name="label">显示滚动条</parameter>
+				<parameter name="value">true</parameter>
+			</field>
+			<field name="heightMode" title="高度选项" type="string" inputMode="dropdown">
+				<parameter name="itemsText">自动|auto\0按百分比|percentage\0固定高度|absolute</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">auto</parameter>
+			</field>
+			<field name="height" title="高度" type="string" inputMode="text"/>
+			<field name="verticalScroll" title="是否显示垂直滚动条" type="string" inputMode="checkbox">
+				<parameter name="label">显示滚动条</parameter>
+				<parameter name="value">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.templatemanage.forms.StyleDefine" title="样式配置">
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

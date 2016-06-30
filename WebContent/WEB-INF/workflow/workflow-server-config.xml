@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 工作流实例解析器 -->
+	<bean id="workflowInstanceParser" class="com.yuanluesoft.workflow.server.parser.dom4j.WorkflowInstanceParserImpl">
+		<property name="workflowDefinitionService"><ref local="workflowDefinitionService"/></property>
+		<property name="applicationParser"><ref bean="workflowApplicationParser"/></property>
+	</bean>
+	
+	<!-- 工作流引擎 -->
+	<bean id="workflowEngin" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean id="workflowEnginTarget" class="com.yuanluesoft.workflow.server.engin.spring.WorkflowEnginImpl">
+				<property name="workflowDefinitionService"><ref local="workflowDefinitionService"/></property>
+				<property name="workflowInstanceService"><ref local="workflowInstanceService"/></property>
+				<property name="processInstanceService"><ref local="processInstanceService"/></property>
+				<property name="activityInstanceService"><ref local="activityInstanceService"/></property>
+				<property name="workflowEntryService"><ref local="workflowEntryService"/></property>
+				<property name="workflowExitService"><ref local="workflowExitService"/></property>
+				<property name="workflowInterfaceService"><ref local="workflowInterfaceService"/></property>
+				<property name="workItemService"><ref local="workItemService"/></property>
+				<property name="workflowReverseService"><ref local="workflowReverseService"/></property>
+				<property name="visitorService"><ref bean="visitorService"/></property>
+				<property name="workflowMessageService"><ref local="workflowMessageService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="createWorkflowInstance*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="createTestWorkflowInstance*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="completeWorkItem">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="reverse">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="undo">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="transmitWorkItem">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="removeWorkflowInstance">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="completeAction">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="writeTransactLog">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="saveWorkflowDefinition">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="saveSubFlowDefinition">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="updateWorkflowDefinition">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="updateSubFlowDefinition">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="deleteWorkflowDefinition">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 工作流定义服务 -->	
+	<bean id="workflowDefinitionService" class="com.yuanluesoft.workflow.server.engin.spring.WorkflowDefinitionService">
+		<property name="cache"><ref bean="workflowCache"/></property>
+		<property name="workflowPassportCache"><ref bean="workflowPassportCache"/></property>
+		<property name="ticketCache"><ref bean="ticketCache"/></property>
+		<property name="workflowDefinitionParser"><ref bean="workflowDefinitionParser"/></property>
+		<property name="workflowResourceParser"><ref bean="workflowResourceParser"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="workflowInstanceService"><ref local="workflowInstanceService"/></property>
+		<property name="workflowDefinePassword"><value>yuanluesoft</value></property>
+	</bean>
+
+	<!-- 工作流锁定服务 -->	
+	<bean id="workflowLockService" class="com.yuanluesoft.workflow.server.engin.spring.WorkflowLockService">
+		<property name="lockService"><ref bean="lockService"/></property>
+	</bean>
+
+	<!-- 工作流用户界面服务 -->	
+	<bean id="workflowInterfaceService" class="com.yuanluesoft.workflow.server.engin.spring.WorkflowInterfaceService">
+		<property name="participantService"><ref local="participantService"/></property>
+		<property name="workflowReverseService"><ref local="workflowReverseService"/></property>
+		<property name="workflowLockService"><ref local="workflowLockService"/></property>
+		<property name="agentService"><ref bean="agentService"/></property>
+	</bean>
+	
+	<!-- 工作流入口服务 -->	
+	<bean id="workflowEntryService" class="com.yuanluesoft.workflow.server.engin.spring.WorkflowEntryService">
+		<property name="participantService"><ref local="participantService"/></property>
+		<property name="workflowDefinitionService"><ref local="workflowDefinitionService"/></property>
+	</bean>
+
+	<!-- 工作流出口服务 -->
+	<bean id="workflowExitService" class="com.yuanluesoft.workflow.server.engin.spring.WorkflowExitService">
+		<property name="participantService"><ref local="participantService"/></property>
+		<property name="workItemService"><ref local="workItemService"/></property>
+		<property name="workflowReverseService"><ref local="workflowReverseService"/></property>
+	</bean>
+	
+	<!-- 参与人服务 -->
+	<bean id="participantService" class="com.yuanluesoft.workflow.server.engin.spring.ParticipantService">
+		<property name="orgService"><ref bean="orgService"/></property>
+		<property name="roleService"><ref bean="roleService"/></property>
+		<property name="personService"><ref bean="personService"/></property>
+	</bean>
+
+	<!-- 工作流实例服务 -->
+	<bean id="workflowInstanceService" class="com.yuanluesoft.workflow.server.engin.spring.WorkflowInstanceService">
+		<property name="cache"><ref bean="workflowCache"/></property>
+		<property name="viewPassportCache"><ref bean="workflowPassportCache"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="workflowLockService"><ref local="workflowLockService"/></property>
+		<property name="workflowInstanceParser"><ref local="workflowInstanceParser"/></property>
+		<property name="visitorService"><ref bean="visitorService"/></property>
+	</bean>
+	
+	<!-- 工作流实例访问者服务 -->
+	<bean id="visitorService" class="com.yuanluesoft.workflow.server.engin.spring.VisitorService">
+		<property name="participantService"><ref local="participantService"/></property>
+		<property name="orgService"><ref bean="orgService"/></property>
+		<property name="roleService"><ref bean="roleService"/></property>
+	</bean>
+	
+	<!-- 流程进程实例服务 -->	
+	<bean id="processInstanceService" class="com.yuanluesoft.workflow.server.engin.spring.ProcessInstanceService">
+		<property name="workflowInstanceService"><ref local="workflowInstanceService"/></property>
+		<property name="activityInstanceService"><ref local="activityInstanceService"/></property>
+	</bean>
+	
+	<!-- 工作流退回服务 -->
+	<bean id="workflowReverseService" class="com.yuanluesoft.workflow.server.engin.spring.WorkflowReverseService">
+		<property name="processInstanceService"><ref local="processInstanceService"/></property>
+		<property name="activityInstanceService"><ref local="activityInstanceService"/></property>
+		<property name="workItemService"><ref local="workItemService"/></property>
+		<property name="subFlowService"><ref local="subFlowService"/></property>
+		<property name="participantService"><ref local="participantService"/></property>
+	</bean>
+	
+	<!-- 子流程服务 -->
+	<bean id="subFlowService" class="com.yuanluesoft.workflow.server.engin.spring.SubFlowService">
+		<property name="processInstanceService"><ref local="processInstanceService"/></property>
+		<property name="activityInstanceService"><ref local="activityInstanceService"/></property>
+		<property name="workItemService"><ref local="workItemService"/></property>
+		<property name="participantService"><ref local="participantService"/></property>
+	</bean>
+
+	<!-- 环节实例服务 -->	
+	<bean id="activityInstanceService" class="com.yuanluesoft.workflow.server.engin.spring.ActivityInstanceService">
+		<property name="processInstanceService"><ref local="processInstanceService"/></property>
+		<property name="workItemService"><ref local="workItemService"/></property>
+		<property name="workflowExitService"><ref local="workflowExitService"/></property>
+		<property name="subFlowService"><ref local="subFlowService"/></property>
+		<property name="visitorService"><ref local="visitorService"/></property>
+		<property name="workflowMessageService"><ref local="workflowMessageService"/></property>
+	</bean>
+
+	<!-- 工作项服务 -->
+	<bean id="workItemService" class="com.yuanluesoft.workflow.server.engin.spring.WorkItemService">
+		<property name="workflowMessageService"><ref local="workflowMessageService"/></property>
+		<property name="activityInstanceService"><ref local="activityInstanceService"/></property>
+		<property name="subFlowService"><ref local="subFlowService"/></property>
+		<property name="agentService"><ref bean="agentService"/></property>
+		<property name="visitorService"><ref bean="visitorService"/></property>
+	</bean>
+	
+	<!-- 工作流消息通知服务 -->
+	<bean id="workflowMessageService" class="com.yuanluesoft.workflow.server.engin.spring.WorkflowMessageService">
+		<property name="messageService"><ref bean="messageService"/></property>
+	</bean>
+		
+	<!-- 工作流服务器 -->
+	<bean id="workflowServer" class="com.yuanluesoft.workflow.server.local.WorkflowServerImpl" singleton="false">
+		<property name="workflowEngin"><ref local="workflowEngin"/></property>
+	</bean>
+	
+	<!-- 工作流定义解析器 -->
+	<bean id="workflowDefinitionParser" class="com.yuanluesoft.workflow.server.parser.dom4j.WorkflowDefinitionParserImpl">
+		<property name="userParser"><ref bean="userParser"/></property>
+		<property name="transitionParser"><ref bean="transitionParser"/></property>
+		<property name="actionParser"><ref bean="actionParser"/></property>
+		<property name="applicationParser"><ref bean="workflowApplicationParser"/></property>
+		<property name="enumerationParser"><ref bean="enumerationParser"/></property>
+		<property name="dataFieldParser"><ref bean="dataFieldParser"/></property>
+		<property name="subFormParser"><ref bean="subFormParser"/></property>
+		<property name="programmingParticipantParser"><ref bean="programmingParticipantParser"/></property>
+		<property name="configureExtendParser"><ref bean="configureExtendParser"/></property>
+	</bean>
+	
+	<!-- 工作流资源解析器 -->
+	<bean id="workflowResourceParser" class="com.yuanluesoft.workflow.server.parser.dom4j.WorkflowResourceParserImpl">
+		<property name="actionParser"><ref bean="actionParser"/></property>
+		<property name="applicationParser"><ref bean="workflowApplicationParser"/></property>
+		<property name="enumerationParser"><ref bean="enumerationParser"/></property>
+		<property name="dataFieldParser"><ref bean="dataFieldParser"/></property>
+		<property name="subFormParser"><ref bean="subFormParser"/></property>
+		<property name="programmingParticipantParser"><ref bean="programmingParticipantParser"/></property>
+	</bean>
+	
+	<!-- 操作解析器 -->
+	<bean id="actionParser" class="com.yuanluesoft.workflow.server.parser.dom4j.ActionParser"/>
+	
+	<!-- 资源application解析器 -->
+	<bean id="workflowApplicationParser" class="com.yuanluesoft.workflow.server.parser.dom4j.ApplicationParser"/>
+		
+	<!-- 子表单解析器 -->
+	<bean id="subFormParser" class="com.yuanluesoft.workflow.server.parser.dom4j.SubFormParser"/>
+	
+	<!-- 编程的办理人解析器 -->
+	<bean id="programmingParticipantParser" class="com.yuanluesoft.workflow.server.parser.dom4j.ProgrammingParticipantParser"/>
+		
+	<!--　字段解析器　-->
+	<bean id="dataFieldParser" class="com.yuanluesoft.workflow.server.parser.dom4j.DataFieldParser"/>
+	
+	<!-- 枚举解析器 -->
+	<bean id="enumerationParser" class="com.yuanluesoft.workflow.server.parser.dom4j.EnumerationParser"/>
+	
+	<!-- 工作流实例浏览服务 -->
+	<bean id="workflowInstanceViewerService" class="com.yuanluesoft.workflow.server.viewer.service.spring.WorkflowInstanceViewerServiceImpl">
+		<property name="workflowDefinitionService"><ref bean="workflowDefinitionService"/></property>
+		<property name="workflowInstanceService"><ref bean="workflowInstanceService"/></property>
+	</bean>
+</beans>

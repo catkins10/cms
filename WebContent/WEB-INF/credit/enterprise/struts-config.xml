@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminEnterprise" type="com.yuanluesoft.credit.enterprise.forms.Enterprise"/>
+  <form-bean name="adminEnterprisein" type="com.yuanluesoft.credit.enterprise.forms.EnterpriseIn"/>
+  <form-bean name="adminEnterpriseout" type="com.yuanluesoft.credit.enterprise.forms.EnterpriseOut"/>
+  <form-bean name="adminFinancing" type="com.yuanluesoft.credit.enterprise.financing.forms.Financing"/>
+  <form-bean name="adminApply" type="com.yuanluesoft.credit.enterprise.apply.forms.Apply"/>
+  <form-bean name="adminImportDate" type="com.yuanluesoft.credit.enterprise.forms.ImportDateExcel"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+ <!-- 个体企业 -->
+  <action name="adminEnterprise" path="/admin/enterprise" scope="request"
+   type="com.yuanluesoft.credit.enterprise.actions.Load" validate="false">
+   <forward name="load" path="/enterprise.jsp"/>
+  </action>
+  <action input="/enterprise.jsp" name="adminEnterprise" path="/admin/saveEnterprise" scope="request"
+   type="com.yuanluesoft.credit.enterprise.actions.Save" validate="false"/>
+  <action input="/enterprise.jsp" name="adminEnterprise" path="/admin/deleteEnterprise"
+   scope="request" type="com.yuanluesoft.credit.enterprise.actions.Delete" validate="false"/>
+   <!-- 内资企业 -->
+   <action name="adminEnterprisein" path="/admin/enterprisein" scope="request"
+   type="com.yuanluesoft.credit.enterprise.actions.in.Load" validate="false">
+   <forward name="load" path="/enterprisein.jsp"/>
+  </action>
+  <action input="/enterprisein.jsp" name="adminEnterprisein" path="/admin/saveEnterprisein" scope="request"
+   type="com.yuanluesoft.credit.enterprise.actions.in.Save" validate="false"/>
+  <action input="/enterprisein.jsp" name="adminEnterprisein" path="/admin/deleteEnterprisein"
+   scope="request" type="com.yuanluesoft.credit.enterprise.actions.in.Delete" validate="false"/>
+   
+   <!-- 外资企业 -->
+   <action name="adminEnterpriseout" path="/admin/enterpriseout" scope="request"
+   type="com.yuanluesoft.credit.enterprise.actions.out.Load" validate="false">
+   <forward name="load" path="/enterpriseout.jsp"/>
+  </action>
+  <action input="/enterpriseout.jsp" name="adminEnterpriseout" path="/admin/saveEnterpriseout" scope="request"
+   type="com.yuanluesoft.credit.enterprise.actions.out.Save" validate="false"/>
+  <action input="/enterpriseout.jsp" name="adminEnterpriseout" path="/admin/deleteEnterpriseout"
+   scope="request" type="com.yuanluesoft.credit.enterprise.actions.out.Delete" validate="false"/>
+   
+    <!--  -->
+   <action name="adminFinancing" path="/admin/financing" scope="request"
+   type="com.yuanluesoft.credit.enterprise.financing.actions.Load" validate="false">
+   <forward name="load" path="/financing.jsp"/>
+  </action>
+  <action input="/financing.jsp" name="adminFinancing" path="/admin/saveFinancing" scope="request"
+   type="com.yuanluesoft.credit.enterprise.financing.actions.Save" validate="false"/>
+  <action input="/financing.jsp" name="adminFinancing" path="/admin/deleteFinancing"
+   scope="request" type="com.yuanluesoft.credit.enterprise.financing.actions.Delete" validate="false"/>
+  <action name="adminFinancing" path="/admin/financingAttachment" scope="request"
+   type="com.yuanluesoft.credit.enterprise.financing.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  
+  <action name="adminApply" path="/admin/apply" scope="request"
+   type="com.yuanluesoft.credit.enterprise.apply.actions.admin.Load" validate="false">
+   <forward name="load" path="/apply.jsp"/>
+  </action>
+  
+  <!-- 附件选择处理。页面的data标签加载时跳转该path调用相应action处理附件页面 -->
+  <action name="adminImportDate" path="/admin/attachmentEditor" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.localtax.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <!--个体 excel数据导入页面加载 -->
+   <action name="adminImportDate" path="/admin/enterpriseImportData" scope="request" validate="false"
+   type="com.yuanluesoft.credit.enterprise.actions.excelimport.Load">
+   <forward name="load" path="/importData.jsp"/>
+   </action>
+   <action name="adminImportDate" path="/admin/doImportData" scope="request" validate="false" input="/importData.jsp"
+   type="com.yuanluesoft.credit.enterprise.actions.excelimport.DoImportData"/>
+   
+   <!--内资 excel数据导入页面加载 -->
+   <action name="adminImportDate" path="/admin/enterpriseInImportData" scope="request" validate="false"
+   type="com.yuanluesoft.credit.enterprise.actions.in.excelimport.Load">
+   <forward name="load" path="/importDataIn.jsp"/>
+   </action>
+   <action name="adminImportDate" path="/admin/doInImportData" scope="request" validate="false" input="/importDataIn.jsp"
+   type="com.yuanluesoft.credit.enterprise.actions.in.excelimport.DoImportData"/>
+   
+   <!--外资 excel数据导入页面加载 -->
+   <action name="adminImportDate" path="/admin/enterpriseOutImportData" scope="request" validate="false"
+   type="com.yuanluesoft.credit.enterprise.actions.out.excelimport.Load">
+   <forward name="load" path="/importDataOut.jsp"/>
+   </action>
+   <action name="adminImportDate" path="/admin/doOutImportData" scope="request" validate="false" input="/importDataOut.jsp"
+   type="com.yuanluesoft.credit.enterprise.actions.out.excelimport.DoImportData"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

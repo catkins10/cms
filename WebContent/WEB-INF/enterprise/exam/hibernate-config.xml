@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--考试:考试-->
+	<class name="com.yuanluesoft.enterprise.exam.pojo.Exam" table="exam_exam">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--名称,VARCHAR(100)-->
+		<property name="selfTest"/> <!--是否自助方式,用户答卷时自动组卷,NUMERIC(1)-->
+		<property name="monthQuestionNumber"/> <!--每月考试题数,自助方式时有效,NUMERIC(5)-->
+		<property name="yearQuestionNumber"/> <!--年度考试题数,自助方式时有效,NUMERIC(5)-->
+		<property name="examDayLimit"/> <!--日考试次数上限,自助方式时有效,NUMERIC(3)-->
+		<property name="score"/> <!--总分,NUMERIC(4,1)-->
+		<property name="examTime"/> <!--考试时长,以分钟为单位,NUMERIC(3)-->
+		<property name="knowledgeIds"/> <!--知识类别ID,VARCHAR(600)-->
+		<property name="knowledges"/> <!--知识类别,VARCHAR(600)-->
+		<property name="itemIds"/> <!--项目分类ID,VARCHAR(600)-->
+		<property name="items"/> <!--项目分类,VARCHAR(600)-->
+		<property name="isDeleted"/> <!--是否已删除,NUMERIC(1)-->
+		<property name="creator"/> <!--创建人,VARCHAR(60)-->
+		<property name="creatorId"/> <!--创建人ID,NUMERIC(20)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP null-->
+		<!-- 考试题型 -->
+		<set cascade="delete" inverse="true" lazy="true" name="examQuestionTypes" table="exam_exam_question_type" order-by="id">
+			<key column="examId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.pojo.ExamQuestionType" />
+		</set>
+		<!-- 考试难度等级 -->
+		<set cascade="delete" inverse="true" lazy="true" name="examDifficultyLevels" table="exam_exam_difficulty" order-by="id">
+			<key column="examId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.pojo.ExamDifficultyLevel" />
+		</set>
+		<!-- 批改人 -->
+		<set cascade="delete" inverse="true" lazy="true" name="examCorrectors" table="exam_exam_corrector" order-by="id">
+			<key column="examId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.pojo.ExamCorrector" />
+		</set>
+		<!-- 适用的岗位 -->
+		<set cascade="delete" inverse="true" lazy="true" name="examPosts" table="exam_exam_post" order-by="id">
+			<key column="examId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.pojo.ExamPost" />
+		</set>
+	</class>
+	
+	<!--考试:题型-->
+	<class name="com.yuanluesoft.enterprise.exam.pojo.ExamQuestionType" table="exam_exam_question_type">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="examId"/> <!--考试ID,NUMERIC(20)-->
+		<property name="questionType"/> <!--考试题型,VARCHAR(10)-->
+		<property name="questionNumber"/> <!--题目数,NUMERIC(3)-->
+		<property name="questionScore"/> <!--分数,NUMERIC(4,1)-->
+	</class>
+	
+	<!--考试:难度-->
+	<class name="com.yuanluesoft.enterprise.exam.pojo.ExamDifficultyLevel" table="exam_exam_difficulty">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="examId"/> <!--考试ID,NUMERIC(20)-->
+		<property name="difficulty"/> <!--难度,VARCHAR(10)-->
+		<property name="ratio"/> <!--比例,NUMERIC(4,1)-->
+	</class>
+	
+	<!--考试:批改人员-->
+	<class name="com.yuanluesoft.enterprise.exam.pojo.ExamCorrector" table="exam_exam_corrector">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="examId"/> <!--考试ID,NUMERIC(20)-->
+		<property name="correctorId"/> <!--批改人ID,NUMERIC(20)-->
+		<property name="corrector"/> <!--批改人姓名,VARCHAR(60)-->
+	</class>
+	
+	<!--考试:适用的岗位-->
+	<class name="com.yuanluesoft.enterprise.exam.pojo.ExamPost" table="exam_exam_post">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="examId"/> <!--考试ID,NUMERIC(20)-->
+		<property name="postId"/> <!--岗位ID,NUMERIC(20)-->
+		<property name="post"/> <!--岗位名称,VARCHAR(60)-->
+	</class>
+	
+	<!--考试:考卷-->
+	<class name="com.yuanluesoft.enterprise.exam.pojo.ExamPaper" table="exam_paper">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="examId"/> <!--考试ID,NUMERIC(20)-->
+		<property name="examPaperName"/> <!--考卷名称,VARCHAR(100)-->
+		<property name="resit"/> <!--是否补考,只出原来做错的题目,NUMERIC(1)-->
+		<property name="beginTime"/> <!--开始时间,TIMESTAMP null-->
+		<property name="endTime"/> <!--截止时间,如果有指定截止时间,则要求在截止时间前完成,否则,时间以用户开始答卷为准,TIMESTAMP null-->
+		<property name="onComputer"/> <!--计算机作答,NUMERIC(1)-->
+		<property name="score"/> <!--总分,NUMERIC(4,1)-->
+		<property name="status"/> <!--状态,0/未发布,1/发布,NUMERIC(1)-->
+		<property name="created"/> <!--出卷时间,TIMESTAMP null-->
+		<property name="creatorId"/> <!--出卷人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--出卷人,VARCHAR(60)-->
+		<property name="releaseTime"/> <!--发布时间,TIMESTAMP null-->
+		<property name="releasePersonId"/> <!--发布人ID,NUMERIC(20)-->
+		<property name="releasePerson"/> <!--发布人,VARCHAR(60)-->
+		<!-- 出题记录 -->
+		<set cascade="delete" inverse="true" lazy="true" name="paperQuestions" table="exam_paper_question" order-by="id">
+			<key column="paperId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.pojo.ExamPaperQuestion" />
+		</set>
+		<!-- 参加人员 -->
+		<set cascade="delete" inverse="true" lazy="true" name="visitors" table="exam_paper_privilege" order-by="id">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.pojo.ExamPaperPrivilege" />
+		</set>
+		<!-- 答卷列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="examTests" table="exam_test" order-by="id">
+			<key column="paperId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.pojo.ExamTest" />
+		</set>
+		<!-- 考试 -->
+		<many-to-one name="exam" class="com.yuanluesoft.enterprise.exam.pojo.Exam" column="examId" update="false" insert="false"/>
+	</class>
+
+	<!--考试:考卷题目-->
+	<class name="com.yuanluesoft.enterprise.exam.pojo.ExamPaperQuestion" table="exam_paper_question">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="paperId"/> <!--考卷ID,NUMERIC(20)-->
+		<property name="questionId"/> <!--题目ID,NUMERIC(20)-->
+		<property name="questionScore"/> <!--题目分值,NUMERIC(4,1)-->
+	</class>
+	
+	<!--考试:参加人员-->
+	<class name="com.yuanluesoft.enterprise.exam.pojo.ExamPaperPrivilege" table="exam_paper_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,numeric(20)-->
+		<property name="accessLevel"/> <!--访问级别,char(1)-->
+		<property name="recordId"/> <!--主记录ID,numeric(20)-->
+	</class>
+	
+	<!--考试:答卷-->
+	<class name="com.yuanluesoft.enterprise.exam.pojo.ExamTest" table="exam_test">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="paperId"/> <!--考卷ID,NUMERIC(20)-->
+		<property name="personId"/> <!--用户ID,NUMERIC(20)-->
+		<property name="personName"/> <!--用户名,VARCHAR(60)-->
+		<property name="score"/> <!--成绩,NUMERIC(4,1)-->
+		<property name="beginTime"/> <!--开始时间,TIMESTAMP null-->
+		<property name="endTime"/> <!--完成时间,TIMESTAMP null-->
+		<property name="status"/> <!--状态,0/在考,1/待批改,2/完成,3/放弃,NUMERIC(1)-->
+		<!-- 答案列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="testAnswers" table="exam_test_answer" order-by="id">
+			<key column="testId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.pojo.ExamTestAnswer" />
+		</set>
+		<!-- 考卷 -->
+		<many-to-one name="examPaper" class="com.yuanluesoft.enterprise.exam.pojo.ExamPaper" column="paperId" update="false" insert="false"/>
+	</class>
+	
+	<!--考试:答题-->
+	<class name="com.yuanluesoft.enterprise.exam.pojo.ExamTestAnswer" table="exam_test_answer">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="testId"/> <!--答卷ID,NUMERIC(20)-->
+		<property name="paperQuestionId"/> <!--出题记录ID,NUMERIC(20)-->
+		<property name="answer" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--答案,多选题、填空题答案用\r\n分隔,TEXT-->
+		<property name="score"/> <!--得分,NUMERIC(3)-->
+		<property name="correctorId"/> <!--批改人ID,NUMERIC(20)-->
+		<property name="corrector"/> <!--批改人姓名,VARCHAR(60)-->
+		<property name="remark"/> <!--批改说明,VARCHAR(1000)-->
+		<!-- 错题本 -->
+		<set cascade="delete" inverse="true" lazy="true" name="wrongQuestions" table="exam_wrong_question">
+			<key column="answerId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.pojo.ExamWrongQuestion" />
+		</set>
+	</class>
+	
+	<!--考试:错题本-->
+	<class name="com.yuanluesoft.enterprise.exam.pojo.ExamWrongQuestion" table="exam_wrong_question">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="personId"/> <!--用户ID,NUMERIC(20)-->
+		<property name="answerId"/> <!--答题记录ID,NUMERIC(20)-->
+		<property name="questionId"/> <!--题目ID,NUMERIC(20)-->
+		<property name="created"/> <!--加入时间,TIMESTAMP-->
+		<property name="reason"/> <!--答错原因,VARCHAR(100)-->
+		<!-- 答题记录 -->
+		<many-to-one name="testAnswer" class="com.yuanluesoft.enterprise.exam.pojo.ExamTestAnswer" column="answerId" update="false" insert="false"/>
+	</class>
+	
+	<!--知识类别-->
+	<class name="com.yuanluesoft.enterprise.exam.pojo.ExamKnowledge" table="exam_knowledge">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="knowledge"/> <!--知识类别,VARCHAR(100)-->
+	</class>
+	
+	<!--项目分类-->
+	<class name="com.yuanluesoft.enterprise.exam.pojo.ExamItem" table="exam_item">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="item"/> <!--项目分类,VARCHAR(100)-->
+	</class>
+</hibernate-mapping>

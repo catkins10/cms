@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="publicInfoQuickQuery" title="信息公开查询" method="get" action="/cms/infopublic/publicInfoQuery.shtml?quickQuery=true">
+		<formFields>
+			<field title="目录ID" name="directoryId" type="number" inputMode="hidden"/>
+			<field title="关键字" name="searchKey"/>
+			<field title="搜索方式" name="searchMode" inputMode="dropdown">
+				<parameter name="itemsText">标题\0正文\0文号\0发布机构\0索引号</parameter>
+				<parameter name="defaultValue">标题</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field title="时间范围" type="string" name="year" inputMode="dropdown">
+				<parameter name="defaultValue">全部时间</parameter>
+				<!-- parameter name="selectOnly">true</parameter -->
+				<parameter name="itemsHql">select distinct year(PublicInfo.generateDate) from PublicInfo PublicInfo order by year(PublicInfo.generateDate) DESC</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="搜索" execute="FormUtils.doAction('publicInfoQuery', 'quickQuery=true', false, 'cms/infopublic/publicInfoQuickQuery')"/>
+			<action title="高级搜索" execute="window.open('{CONTEXTPATH}/cms/infopublic/publicInfoQuery.shtml?siteId={PARAMETER:siteId}')"/>
+		</actions>
+	</form>
+
+	<form name="publicInfoQuery" title="信息公开查询(高级)" method="get" js="/cms/infopublic/js/infopublic.js" action="/cms/infopublic/publicInfoQuery.shtml">
+		<formFields>
+			<field title="主目录ID" name="rootDirectoryId" type="number" inputMode="hidden"/>
+			<field title="目录ID" name="directoryId" type="number" inputMode="hidden"/>
+			<field title="目录" name="directoryName" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="searchCondition"></parameter>
+				<parameter name="execute">selectDirectory(640, 480, false, 'directoryId{id},directoryName{name}', '', '', '', document.getElementsByName('rootDirectoryId')[0].value, '', true)</parameter>
+			</field>
+			<field title="名称" name="subject"/>
+			<field title="正文" name="lazyBody.body"/>
+			<field title="索引号" name="infoIndex"/>
+			<field title="开始时间" type="date" name="generateDateBegin"/>
+			<field title="结束时间" type="date" name="generateDateEnd"/>
+			<field title="发布机构" name="infoFrom"/>
+			<field title="文号" name="mark"/>
+			<field title="内容概述" name="summarize"/>
+		</formFields>
+		<actions>
+			<action title="搜索" execute="FormUtils.doAction('publicInfoQuery', '', false, 'cms/infopublic/publicInfoQuery')"/>
+			<action title="目录下载" execute="FormUtils.doAction('printInfoView', '', true, 'cms/infopublic/publicInfoQuery')"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+
+	<form name="admin/mainDirectory" class="com.yuanluesoft.cms.infopublic.forms.admin.MainDirectory" title="主目录" pojo="com.yuanluesoft.cms.infopublic.pojo.PublicMainDirectory">
+		<formFields>
+			<field name="parentDirectoryName" title="上级目录" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectDirectory(600, 400, false, 'parentDirectoryId{id},parentDirectoryName{name}', '', '', '', 0, 'main')</parameter>
+			</field>
+			<field name="synchSiteNames" title="同步到网站栏目" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectSite(700, 400, true, 'synchSiteIds{id},synchSiteNames{name|名称|100%}', '', '', '', 'column')</parameter>
+			</field>
+			<field name="guide" title="信息公开指南" type="html" inputMode="htmleditor" required="true">
+				<parameter name="attachmentSelector">/cms/infopublic/admin/selectGuideAttachment.shtml</parameter>
+				<parameter name="height">330</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="新建下一个主目录" hide="isOld()" execute="FormUtils.doAction('createNextMainDirectory')"/>
+			<action title="拷贝主目录" hide="isRead() or isNew()" execute="location.href='copyDirectory.shtml?fromDirectoryId={PARAMETER:id}'"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteMainDirectory')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/unitCode" title="机构代码" class="com.yuanluesoft.cms.infopublic.forms.admin.UnitCode" pojo="com.yuanluesoft.cms.infopublic.pojo.PublicMainDirectory">
+		<formFields>
+			<field title="机构代码" name="unitCode" type="component">
+				<parameter name="class">com.yuanluesoft.cms.infopublic.pojo.PublicUnitCode</parameter>
+			</field>
+			<field name="unitCode.unitName" title="机构名称" type="string" length="100" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'unitCode.unitId{id},unitCode.unitName{name}', '', 'root,unit,category')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteUnitCode')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/directoryCategory" class="com.yuanluesoft.cms.infopublic.forms.admin.DirectoryCategory" title="信息分组" pojo="com.yuanluesoft.cms.infopublic.pojo.PublicDirectoryCategory">
+		<formFields>
+			<field name="parentDirectoryName" title="上级目录" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectDirectory(600, 400, false, 'parentDirectoryId{id},parentDirectoryName{name}', '', '', '', 0, 'main,category')</parameter>
+			 </field>
+			 <field name="synchSiteNames" title="同步到网站栏目" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectSite(700, 400, true, 'synchSiteIds{id},synchSiteNames{name|名称|100%}', '', '', '', 'column')</parameter>
+			 </field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="新建下一个分组" hide="isOld()" execute="FormUtils.doAction('createNextDirectoryCategory')"/>
+			<action title="拷贝信息分组" hide="isRead() or isNew()" execute="location.href='copyDirectory.shtml?fromDirectoryId={PARAMETER:id}'"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteDirectoryCategory')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/infoDirectory" class="com.yuanluesoft.cms.infopublic.forms.admin.InfoDirectory" title="信息目录" pojo="com.yuanluesoft.cms.infopublic.pojo.PublicInfoDirectory">
+		<formFields>
+			<field name="parentDirectoryName" title="上级目录" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectDirectory(600, 400, false, 'parentDirectoryId{id},parentDirectoryName{name}', '', '', '')</parameter>
+			 </field>
+			 <field name="synchSiteNames" title="同步到网站栏目" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectSite(700, 400, true, 'synchSiteIds{id},synchSiteNames{name|名称|100%}', '', '', '', 'column')</parameter>
+			 </field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="新建下一个目录" hide="isOld()" execute="FormUtils.doAction('createNextInfoDirectory')"/>
+			<action title="拷贝信息目录" hide="isRead() or isNew()" execute="location.href='copyDirectory.shtml?fromDirectoryId={PARAMETER:id}'"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteInfoDirectory')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/articleDirectory" class="com.yuanluesoft.cms.infopublic.forms.admin.ArticleDirectory" title="文章目录" pojo="com.yuanluesoft.cms.infopublic.pojo.PublicArticleDirectory">
+		<formFields>
+			<field name="parentDirectoryName" title="上级目录" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectDirectory(600, 400, false, 'parentDirectoryId{id},parentDirectoryName{name}', '', '', '', 0, 'main')</parameter>
+			 </field>
+			 <field name="synchSiteNames" title="同步到网站栏目" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectSite(700, 400, true, 'synchSiteIds{id},synchSiteNames{name|名称|100%}', '', '', '', 'column')</parameter>
+			 </field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="新建下一个目录" hide="isOld()" execute="FormUtils.doAction('createNextArticleDirectory')"/>
+			<action title="拷贝信息目录" hide="isRead() or isNew()" execute="location.href='copyDirectory.shtml?fromDirectoryId={PARAMETER:id}'"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteArticleDirectory')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/publicInfo" class="com.yuanluesoft.cms.infopublic.forms.admin.PublicInfo" title="政府信息" pojo="com.yuanluesoft.cms.infopublic.pojo.PublicInfo">
+		<formFields>
+			 <field name="directoryId" title="所属目录ID" type="number" inputMode="hidden"/>
+			 <field name="directoryFullName" title="所属目录" required="true" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectDirectory(600, 400, false, 'directoryId{id},directoryFullName{name}', '', '', '', 0, (document.getElementsByName('type')[0].value=='0' ? 'info' : 'article'), false, false, true)</parameter>
+			 </field>
+			 <field name="otherDirectoryIds" title="所属的其他目录ID" type="number" inputMode="hidden"/>
+			 <field name="otherDirectoryFullNames" title="所属的其他目录" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectDirectory(640, 480, true, 'otherDirectoryIds{id},otherDirectoryFullNames{name|所属其它目录|100%}', '', '', '', 0, (document.getElementsByName('type')[0].value=='0' ? 'info' : 'article'))</parameter>
+			 </field>
+			<field name="issueSiteNames" title="同步的网站栏目" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectSite(640, 480, true, 'issueSiteIds{id},issueSiteNames{name|同步的网站栏目|100%}', '', '', '', 'column')</parameter>
+			 </field>
+			 <field title="访问者" name="readers" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead() or privilege(unissue)" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deletePublicInfo')"/>
+			<action title="永久删除" hide="isNew() or noPrivilege(application_manager)" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deletePublicInfo', 'physical=true')"/>
+			<action title="撤销删除" hide="isNew() or noPrivilege(application_manager)" execute="FormUtils.doAction('undeletePublicInfo')"/>
+			<action title="送审核" hide="workflow()" execute="FormUtils.doAction('sendApprovalPublicInfo', 'workflowAction=send')"/>
+			<action title="审核" hide="workflow()" execute="FormUtils.doAction('approvalPublicInfo', 'workflowAction=approval')"/>
+			<action title="完成审核" hide="workflow()" execute="FormUtils.doAction('runInfoApproval', 'workflowAction=send')"/>
+			<action title="发布" hide="workflow()" execute="if(confirm('是否要发布？'))FormUtils.doAction('issuePublicInfo')"/>
+			<action title="撤销发布" hide="noPrivilege(unissue)" execute="FormUtils.doAction('unissuePublicInfo')"/>
+			<action title="重新发布" hide="noPrivilege(reissue)" execute="FormUtils.doAction('reissuePublicInfo')"/>
+			<!-- action title="发送短信" execute="PageUtils.newrecord('cms/smssend', 'admin/message', 'mode=fullscreen', 'workflowId=&amp;activityId=&amp;content={PARAMETER:subjectEncoded},{PARAMETER:summarizeEncoded}')"/-->
+			<action title="预览" hide="isNew()" execute="preview()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.infopublic.forms.admin.PublicInfoView" title="政府信息视图">
+		<formFields>
+			<field name="directoryId" title="目录ID" type="number" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.infopublic.forms.admin.ModifyReaders" title="修改访问者">
+		<formFields>
+			<field name="directoryId" title="目录ID" type="number" inputMode="hidden"/>
+			<field name="mode" title="修改方式" type="string" inputMode="dropdown">
+				<parameter name="itemsText">同步目录访问者|synchDirectoryVisitor\0添加用户|addUser\0删除用户|deleteUser</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">synchDirectoryVisitor</parameter>
+				<parameter name="onchange">var value=document.getElementsByName('mode')[0].value;document.getElementById('trDeleteNotDirectoryVisitor').style.display=(value=='synchDirectoryVisitor' ? '' : 'none');document.getElementById('trUser').style.display=(value=='synchDirectoryVisitor' ? 'none' : '');</parameter>
+			</field>
+			<field name="deleteNotDirectoryVisitor" title="是否删除非目录访问者" type="string" inputMode="radio">
+				<parameter name="itemsText">删除|true\0不删除|false</parameter>
+			</field>
+			<field title="用户" name="readers" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field name="selectedOnly" title="只处理选中的信息" type="string" inputMode="radio">
+				<parameter name="itemsText">仅选中的信息|true\0全部|false</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/infoReport" title="信息公开统计报表(光泽)" class="com.yuanluesoft.cms.infopublic.forms.admin.InfoReport">
+		<formFields>
+			<field title="开始时间" name="beginDate" type="date"/>
+			<field title="结束时间" name="endDate" type="date"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/monitoringReport" title="监察报表" class="com.yuanluesoft.cms.infopublic.forms.admin.MonitoringReport">
+		<formFields>
+			<field title="开始时间" name="beginDate" type="date" required="true"/>
+			<field title="结束时间" name="endDate" type="date" required="true"/>
+			<field name="directoryId" title="目录ID" type="number" inputMode="hidden"/>
+			<field name="directoryName" title="目录" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/infopublic/js/infopublic.js</parameter>
+				<parameter name="execute">selectDirectory(600, 400, false, 'directoryId{id},directoryName{name}', '', '', '', '', 'main')</parameter>
+			</field>
+			<field title="政府信息公开指南访问次数" name="guideVisits" type="number" inputMode="readonly"/>
+			<field title="政府信息公开目录访问次数" name="publicDirectoryVisits" type="number" inputMode="readonly"/>
+			<field title="依申请公开访问次数" name="publicRequestVisits" type="number" inputMode="readonly"/>
+			<field title="政府信息公开年度报告访问次数" name="reportVisits" type="number" inputMode="readonly"/>
+			<field title="政府信息公开制度规定访问次数" name="lawsVisits" type="number" inputMode="readonly"/>
+			<field title="政府信息公开意见箱访问次数" name="publicOpinionVisits" type="number" inputMode="readonly"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.infopublic.forms.admin.InfoPublicStat" title="信息统计">
+		<formFields>
+			<field name="directoryId" title="目录ID" type="number" inputMode="hidden"/>
+			<field name="directoryName" title="目录" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/infopublic/js/infopublic.js</parameter>
+				<parameter name="execute">selectDirectory(600, 400, false, 'directoryId{id},directoryName{name}', '', '', '', '', 'main')</parameter>
+			</field>
+			<field name="beginDate" title="开始时间" type="date" inputMode="date" required="true"/>
+			<field name="endDate" title="结束时间" type="date" inputMode="date"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.infopublic.forms.admin.ExportPublicInfo" title="信息导出">
+		<formFields>
+			<field name="beginDate" title="开始时间" type="date" inputMode="date"/>
+			<field name="endDate" title="结束时间" type="date" inputMode="date"/>
+			<field name="directoryId" title="目录ID" type="number" inputMode="hidden"/>
+			<field name="directoryName" title="目录" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/infopublic/js/infopublic.js</parameter>
+				<parameter name="execute">selectDirectory(600, 400, false, 'directoryId{id},directoryName{name}', '', '', '', '', 'main')</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.infopublic.forms.admin.CopyDirectory" title="目录拷贝">
+		<formFields>
+			<field title="目标目录名称" name="toDirectoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/infopublic/js/infopublic.js</parameter>
+				<parameter name="execute">selectDirectory(600, 400, false, 'toDirectoryId{id},toDirectoryName{name}', '', '', ',', '0', '{PARAMETER:toDirectoryTypes}')</parameter>
+			</field>
+		</formFields>
+	  	<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="拷贝" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/regenerateIndex" title="重建索引号" class="com.yuanluesoft.cms.infopublic.forms.admin.RegenerateIndex">
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/portletEntity" class="com.yuanluesoft.cms.infopublic.forms.admin.PortletEntity" title="PORTLET" pojo="com.yuanluesoft.portal.container.pojo.PortletEntity">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deletePortletEntity')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.infopublic.forms.admin.InsertInfos" title="插入信息列表">
+		<formFields>
+			<field name="directorySelect" title="选项" type="string" inputMode="radio">
+				<parameter name="itemsText">当前目录|current\0指定目录|other</parameter>
+				<parameter name="defaultValue">current</parameter>
+			</field>
+			<field name="directoryIds" title="目录ID" type="string" inputMode="hidden"/>
+			<field name="directoryNames" title="目录" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/infopublic/js/infopublic.js</parameter>
+				<parameter name="execute">selectDirectory(640, 400, true, 'directoryIds{id},directoryNames{name|名称|100%}', '', '', ',', '', ('publicArticles'=='{PARAMETER:recordListName}' ? 'article' : 'main,category,info'));</parameter>
+			</field>
+			<field name="containChildren" title="是否含子目录信息" type="string" inputMode="checkbox">
+				<parameter name="label">含子目录信息</parameter>
+				<parameter name="value">true</parameter>
+				<parameter name="defaultValue">true</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.infopublic.forms.admin.InsertInfoDirectoryLink" title="信息公开目录链接">
+		<formFields>
+			<field title="目录ID" name="directoryId" type="string" inputMode="hidden"/>
+			<field title="目录名称" name="directoryName" type="string" inputMode="select">
+				<parameter name="js">/cms/infopublic/js/infopublic.js</parameter>
+				<parameter name="execute">selectDirectory(500, 300, false, 'directoryId{id},directoryName{name}')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field title="目录ID" name="linkByName" type="string" inputMode="checkbox">
+				<parameter name="label">按名称</parameter>
+				<parameter name="value">true</parameter>
+			</field>
+			<field title="隶属站点" name="relationSite" type="string" inputMode="radio">
+				<parameter name="itemsText">当前站点|currentSite\0指定站点|specialSite</parameter>
+				<parameter name="defaultValue">currentSite</parameter>
+			</field>		
+			<field title="隶属站点ID" name="siteId" type="string" inputMode="hidden"/>
+			<field title="隶属站点名称" name="siteName" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 300, false, 'siteId{id},siteName{name}', '', '', '', 'site')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.infopublic.forms.admin.InsertDirectoryLocation" title="插入信息公开目录位置">
+		<formFields>
+			<field name="selfOnly" title="是否只显示本目录" type="string" inputMode="radio">
+				<parameter name="itemsText">是|yes\0否|no</parameter>
+				<parameter name="defaultValue">no</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

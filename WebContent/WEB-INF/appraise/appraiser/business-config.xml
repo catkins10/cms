@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="评议员" class="com.yuanluesoft.appraise.appraiser.pojo.Appraiser" businessServiceName="appraiserService">
+		<field name="importId" title="导入日志ID" length="20" type="number" inputMode="none"/>
+		<field name="type" title="类型" length="1" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">基础库评议员|0\0管理服务对象|1\0评议|2</parameter>
+		</field>
+		<field name="orgId" title="隶属机构ID" length="20" type="number" inputMode="hidden"/>
+		<field name="orgName" title="隶属机关名称" length="200" type="string" inputMode="readonly"/>
+		<field name="name" title="姓名" length="60" required="true" type="string" inputMode="text"/>
+		<field name="unit" title="单位或居住地" length="200" type="string" inputMode="text"/>
+		<field name="address" title="通讯地址" length="200" type="string" inputMode="text"/>
+		<field name="area" title="区域" length="20" type="string" inputMode="text"/>
+		<field name="street" title="乡镇或街道" length="50" type="string" inputMode="text"/>
+		<field name="areaType" title="居住地类别(报省纠风办)" length="50" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsText">城市地区（不含县级）\0县城地区\0乡镇政府所在地（不含县城）\0农村</parameter>
+		</field>
+		<field name="mobileNumber" title="手机号码" length="20" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="job" title="身份" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsText">人大代表\0政协委员\0党代表\0民评代表\0特邀监察员\0党风、效能监督员\0党政领导\0企业主\0其它</parameter> <!-- 公务员\0人大代表\0政协委员\0企业主\0城市居民\0农民 -->
+		</field>
+		<field name="npcLevel" title="哪级人大代表政协委员" length="20" type="string" inputMode="text"/>
+		<field name="level" title="级别" length="20" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsText">地厅级\0县处级\0乡科级\0其它</parameter>
+		</field>
+		<field name="education" title="文化程度,暂不适用" length="50" type="string" inputMode="text"/>
+		<field name="serviceUnit" title="提供服务或管理单位" length="200" type="string" inputMode="text"/>
+		<field name="serviceContent" title="服务或管理项目、内容" length="200" type="string" inputMode="text"/>
+		<field name="creatorId" title="登记人ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="登记人" length="60" type="string" inputMode="readonly"/>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly"/>
+		<field name="expire" title="有效期" type="timestamp" inputMode="datetime"/>
+		<field name="status" title="状态" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">待审核|0\0已启用|1\0已过期|2</parameter>
+		</field>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="管理服务对象导入" class="com.yuanluesoft.appraise.appraiser.pojo.AppraiserImport" businessServiceName="appraiserService">
+		<field name="areaId" title="地区ID" length="20" type="number" inputMode="hidden"/>
+		<field name="areaName" title="地区名称" length="200" type="string" inputMode="hidden"/>
+		<field name="unitId" title="单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="unitName" title="单位名称" length="200" type="string" inputMode="hidden"/>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="创建人" length="60" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="导入时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="timeout" title="是否超时" length="1" type="number" inputMode="readonly">
+			<parameter name="itemsText">超时|1\0未超时|0</parameter>
+		</field>
+		<field name="approverCount" title="导入人数" length="4" type="number" inputMode="readonly"/>
+		<field name="approverId" title="审核人ID" length="20" type="number" inputMode="none"/>
+		<field name="approver" title="审核人" length="60" type="string" inputMode="readonly"/>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="readonly"/>
+		<field name="data" title="数据文件" length="1" type="attachment" inputMode="attachment">
+			<parameter name="fileExtension">Excel表格|*.xls|</parameter>
+			<parameter name="simpleMode">true</parameter>
+			<parameter name="attachmentEditor">importRecipientAttachmentEditor.shtml</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审核</parameter>
+			<parameter name="class">com.yuanluesoft.appraise.appraiser.pojo.AppraiserImportOpinion</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="管理服务对象导入任务" class="com.yuanluesoft.appraise.appraiser.pojo.AppraiserImportTask">
+		<field name="unitId" title="单位ID" length="20" type="number" inputMode="none"/>
+		<field name="unitName" title="单位名称" length="200" type="string" inputMode="readonly"/>
+		<field name="taskYear" title="年度" length="4" type="number" inputMode="readonly"/>
+		<field name="taskMonth" title="月份" length="2" type="number" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

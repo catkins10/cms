@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminSmsService" type="com.yuanluesoft.cms.smssubscription.forms.admin.SmsService"/>
+  <form-bean name="subscribe" type="com.yuanluesoft.cms.smssubscription.forms.Subscribe"/>
+  <form-bean name="unsubscribe" type="com.yuanluesoft.cms.smssubscription.forms.Unsubscribe"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminSmsService" path="/admin/smsService"
+   scope="request"
+   type="com.yuanluesoft.cms.smssubscription.actions.smsservice.admin.Load" validate="false">
+   <forward name="load" path="/admin/smsService.jsp"/>
+  </action>
+  <action input="/admin/smsService.jsp" name="adminSmsService"
+   path="/admin/saveSmsService" scope="request"
+   type="com.yuanluesoft.cms.smssubscription.actions.smsservice.admin.Save" validate="false"/>
+  <action input="/admin/smsService.jsp" name="adminSmsService"
+   path="/admin/deleteSmsService" scope="request"
+   type="com.yuanluesoft.cms.smssubscription.actions.smsservice.admin.Delete" validate="false"/>
+  <action name="subscribe" path="/subscribe" scope="request"
+   type="com.yuanluesoft.cms.smssubscription.actions.subscribe.Load" validate="false">
+   <forward name="load" path="/subscribe.jsp"/>
+  </action>
+  <action input="/subscribe.jsp" name="subscribe"
+   path="/completeSubscribe" scope="request"
+   type="com.yuanluesoft.cms.smssubscription.actions.subscribe.Complete" validate="false">
+   <forward name="result" path="/subscribeSuccess.jsp"/>
+  </action>
+  <action name="unsubscribe" path="/unsubscribe" scope="request"
+   type="com.yuanluesoft.cms.smssubscription.actions.unsubscribe.Load" validate="false">
+   <forward name="load" path="/unsubscribe.jsp"/>
+  </action>
+  <action input="/unsubscribe.jsp" name="unsubscribe"
+   path="/completeUnsubscribe" scope="request"
+   type="com.yuanluesoft.cms.smssubscription.actions.unsubscribe.Complete" validate="false">
+   <forward name="result" path="/unsubscribeSuccess.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

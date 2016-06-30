@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 支付 -->
+<application>
+	<pages>
+		<page name="selectPaymentMerchant" title="选择银行"/>
+		
+		<page name="selectAccountType" title="选择帐户类型"/>
+		
+		<page name="paidPrompt" title="已支付过提示">
+			<link title="继续" url="/jeaf/payment/completePayment.shtml?paymentId={PARAMETER:id}"/>
+		</page>
+	</pages>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="paymentMerchants" processor="paymentsProcessor"/> <!-- 支付方式 -->
+		<pageElement name="accountTypes" processor="paymentsProcessor"/> <!-- 账户类型 -->
+	</pageElements>
+</application>

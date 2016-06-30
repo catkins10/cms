@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminEnterprise" type="com.yuanluesoft.bidding.enterprise.forms.admin.Enterprise"/>
+  <form-bean name="selectEnterprise" type="com.yuanluesoft.bidding.enterprise.forms.SelectEnterprise"/>
+  <form-bean name="loginForm" type="com.yuanluesoft.jeaf.sso.forms.LoginForm"/>
+  <form-bean name="adminEnterpriseCert" type="com.yuanluesoft.bidding.enterprise.forms.admin.EnterpriseCert"/>
+  <form-bean name="adminJobholder" type="com.yuanluesoft.bidding.enterprise.forms.admin.Jobholder"/>
+  <form-bean name="adminEnterpriseCertSurvey" type="com.yuanluesoft.bidding.enterprise.forms.admin.EnterpriseCertSurvey"/>
+  <form-bean name="adminEmployee" type="com.yuanluesoft.bidding.enterprise.forms.admin.Employee"/>
+  <form-bean name="insertAgentLibLink" type="com.yuanluesoft.bidding.enterprise.forms.InsertAgentLibLink"/>
+  <form-bean name="adminEKeyReport" type="com.yuanluesoft.bidding.enterprise.forms.admin.EKeyReport"/>
+  <form-bean name="adminAgentLib" type="com.yuanluesoft.bidding.enterprise.forms.admin.AgentLib"/>
+  <form-bean name="insertEnterprises" type="com.yuanluesoft.bidding.enterprise.forms.InsertEnterprises"/>
+  <form-bean name="adminImportBidEnterprise" type="com.yuanluesoft.bidding.enterprise.forms.admin.ImportBidEnterprise"/>
+  <form-bean name="adminBidEnterprise" type="com.yuanluesoft.bidding.enterprise.forms.admin.BidEnterprise"/>
+  <form-bean name="enterprise" type="com.yuanluesoft.bidding.enterprise.forms.Enterprise"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminEnterprise" path="/admin/enterprise"
+   scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.admin.Load" validate="false">
+   <forward name="load" path="/admin/enterprise.jsp"/>
+  </action>
+  <action input="/admin/enterprise.jsp" name="adminEnterprise"
+   path="/admin/saveEnterprise" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.admin.Save" validate="false"/>
+  <action input="/admin/enterprise.jsp" name="adminEnterprise"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.admin.WriteOpinion" validate="false"/>
+  <action input="/admin/enterprise.jsp" name="adminEnterprise"
+   path="/admin/runRegistApproval" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.admin.Run" validate="false"/>
+  <action input="/admin/enterprise.jsp" name="adminEnterprise"
+   path="/admin/deleteEnterprise" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.admin.Delete" validate="false"/>
+  <action input="/admin/enterprise.jsp" name="adminEnterprise"
+   path="/admin/completeRegist" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.admin.CompleteRegist" validate="false"/>
+  <action name="selectEnterprise" path="/selectEnterprise"
+   scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.selectenterprise.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="selectEnterprise" path="/listChildren" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.selectenterprise.ListChildren" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action path="/index" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.index.Load" validate="false"/>
+  <action name="enterprise" path="/enterprise" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.Load" validate="false">
+   <forward name="load" path="/enterprise.jsp"/>
+  </action>
+  <action name="loginForm" path="/login" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.login.Load" validate="false">
+   <forward name="load" path="/openLoginPage.shtml"/>
+  </action>
+  <action path="/employee" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.employee.Load" validate="false"/>
+  <action name="adminEnterpriseCert" path="/admin/enterpriseCert"
+   scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprisecert.admin.Load" validate="false">
+   <forward name="load" path="/admin/enterpriseCert.jsp"/>
+  </action>
+  <action input="/admin/enterpriseCert.jsp" name="adminEnterpriseCert"
+   path="/admin/saveEnterpriseCert" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprisecert.admin.Save" validate="false"/>
+  <action input="/admin/enterpriseCert.jsp" name="adminEnterpriseCert"
+   path="/admin/deleteEnterpriseCert" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprisecert.admin.Delete" validate="false"/>
+  <action input="/admin/enterprise.jsp" name="adminEnterprise"
+   path="/admin/refreshEnterprise" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.admin.Refresh" validate="false"/>
+  <action name="adminJobholder" path="/admin/jobholder" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.jobholder.admin.Load" validate="false">
+   <forward name="load" path="/admin/jobholder.jsp"/>
+  </action>
+  <action input="/admin/jobholder.jsp" name="adminJobholder"
+   path="/admin/saveJobholder" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.jobholder.admin.Save" validate="false"/>
+  <action input="/admin/jobholder.jsp" name="adminJobholder"
+   path="/admin/deleteJobholder" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.jobholder.admin.Delete" validate="false"/>
+  <action name="adminEnterpriseCertSurvey"
+   path="/admin/enterpriseCertSurvey" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprisecertsurvey.admin.Load" validate="false">
+   <forward name="load" path="/admin/enterpriseCertSurvey.jsp"/>
+  </action>
+  <action input="/admin/enterpriseCertSurvey.jsp"
+   name="adminEnterpriseCertSurvey"
+   path="/admin/saveEnterpriseCertSurvey" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprisecertsurvey.admin.Save" validate="false"/>
+  <action input="/admin/enterpriseCertSurvey.jsp"
+   name="adminEnterpriseCertSurvey"
+   path="/admin/deleteEnterpriseCertSurvey" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprisecertsurvey.admin.Delete" validate="false"/>
+  <action name="adminEmployee" path="/admin/employee" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.employee.admin.Load" validate="false">
+   <forward name="load" path="/admin/employee.jsp"/>
+  </action>
+  <action input="/admin/employee.jsp" name="adminEmployee"
+   path="/admin/saveEmployee" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.employee.admin.Save" validate="false"/>
+  <action input="/admin/employee.jsp" name="adminEmployee"
+   path="/admin/deleteEmployee" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.employee.admin.Delete" validate="false"/>
+  <action input="/admin/employee.jsp" name="adminEmployee"
+   path="/admin/writeKey" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.employee.admin.WriteKey" validate="false"/>
+  <action input="/admin/enterprise.jsp" name="adminEnterprise"
+   path="/admin/alterEnterprise" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.admin.Alter" validate="false">
+   <forward name="load" path="/admin/enterprise.jsp"/>
+  </action>
+  <action input="/admin/enterprise.jsp" name="adminEnterprise"
+   path="/admin/nullifyEnterprise" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.admin.Nullify" validate="false">
+   <forward name="load" path="/admin/enterprise.jsp"/>
+  </action>
+  <action input="/admin/enterprise.jsp" name="adminEnterprise"
+   path="/admin/completeAlter" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.admin.CompleteAlter" validate="false"/>
+  <action input="/admin/enterprise.jsp" name="adminEnterprise"
+   path="/admin/completeNullify" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.admin.CompleteNullify" validate="false"/>
+  <action path="/listAgents" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.listagents.Load" validate="false"/>
+  <action name="insertAgentLibLink"
+   path="/templatemanage/insertAgentLibLink" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertAgentLibLink.jsp"/>
+  </action>
+  <action path="/admin/importData" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.importdata.ImportData" validate="false"/>
+  <action name="adminEKeyReport" path="/admin/ekeyReport"
+   scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.ekeyreport.admin.Load" validate="false">
+   <forward name="load" path="/admin/ekeyReport.jsp"/>
+  </action>
+  <action input="/admin/ekeyReport.jsp" name="adminEKeyReport"
+   path="/admin/writeEKeyReport" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.ekeyreport.admin.Write" validate="false"/>
+  <action name="adminAgentLib" path="/admin/agentLib" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.agentlib.admin.Load" validate="false">
+   <forward name="load" path="/admin/agentLib.jsp"/>
+  </action>
+  <action input="/admin/agentLib.jsp" name="adminAgentLib"
+   path="/admin/saveAgentLib" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.agentlib.admin.Save" validate="false"/>
+  <action input="/admin/agentLib.jsp" name="adminAgentLib"
+   path="/admin/deleteAgentLib" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.agentlib.admin.Delete" validate="false"/>
+  <action name="insertEnterprises"
+   path="/templatemanage/insertEnterprises" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertEnterprises.jsp"/>
+  </action>
+  <action name="adminImportBidEnterprise"
+   path="/admin/importBidEnterprise" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.importbidenterprise.admin.Load" validate="false">
+   <forward name="load" path="/admin/importBidEnterprise.jsp"/>
+  </action>
+  <action input="/admin/importBidEnterprise.jsp"
+   name="adminImportBidEnterprise" path="/admin/doImportBidEnterprise"
+   scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.importbidenterprise.admin.DoImport" validate="false"/>
+  <action name="adminImportBidEnterprise"
+   path="/admin/importBidEnterpriseAttachmentEditor" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.importbidenterprise.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="adminBidEnterprise" path="/admin/bidEnterprise"
+   scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.bidenterprise.admin.Load" validate="false">
+   <forward name="load" path="/admin/bidEnterprise.jsp"/>
+  </action>
+  <action input="/admin/bidEnterprise.jsp" name="adminBidEnterprise"
+   path="/admin/saveBidEnterprise" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.bidenterprise.admin.Save" validate="false"/>
+  <action input="/admin/bidEnterprise.jsp" name="adminBidEnterprise"
+   path="/admin/deleteBidEnterprise" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.bidenterprise.admin.Delete" validate="false"/>
+  <action input="/admin/enterprise.jsp" name="enterprise"
+   path="/alterEnterprise" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.Alter" validate="false">
+   <forward name="load" path="/enterprise.jsp"/>
+  </action>
+  <action input="/enterprise.jsp" name="enterprise"
+   path="/saveEnterprise" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.Save" validate="false">
+   <forward name="submitted" path="/submitted.jsp"/>
+  </action>
+  <action input="/enterprise.jsp" name="enterprise"
+   path="/submitEnterprise" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.Submit" validate="false">
+   <forward name="submitted" path="/submitted.jsp"/>
+  </action>
+  <action input="/enterprise.jsp" name="enterprise"
+   path="/refreshEnterprise" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.Refresh" validate="false"/>
+  <action name="enterprise" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="adminEnterprise" path="/admin/attachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprise.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="adminEnterpriseCert"
+   path="/admin/enterpriseCertAttachment" scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.enterprisecert.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="adminJobholder" path="/admin/jobholderAttachment"
+   scope="request"
+   type="com.yuanluesoft.bidding.enterprise.actions.jobholder.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="20M"/>
+</struts-config>

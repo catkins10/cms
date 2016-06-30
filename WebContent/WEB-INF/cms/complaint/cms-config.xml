@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 网上投诉 -->
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/complaint"/>
+		
+		<page name="complaint" title="投诉填写" url="/cms/complaint/complaint.shtml"/>
+		
+		<page name="complaintSubmitted" title="投诉提交完成"/>
+		
+		<page name="complaintFailed" title="投诉查询失败"/>
+		
+		<page name="poorComplaint" title="投诉查看(公开主题)">
+			<subPage title="投诉查看(公开主题)" name="poorComplaint" type="template"/>
+			<field title="主题" name="subject"/>
+			<field title="编号" name="sn"/>
+			<field title="投诉时间" name="created" type="timestamp"/>
+		</page>
+		
+		<page name="originalComplaint" title="投诉查看(公开正文)" url="/cms/complaint/complaint.shtml" systemLink="false">
+			<subPage title="投诉查看(公开主题)" name="originalComplaint" type="template"/>
+			<field title="主题" name="subject"/>
+			<field title="正文" name="htmlContent" type="html"/>
+			<field title="编号" name="sn"/>
+			<field title="投诉人" name="creator"/>
+			<field title="投诉时间" name="created" type="timestamp"/>
+			<field title="投诉人邮箱" name="creatorMail"/>
+			<field title="投诉人证件号码" name="creatorIdentityCard"/>
+			<field title="事件辖区" name="popedom"/>
+			<field title="事件地点" name="area"/>
+			<field title="事件时间" name="happenTime" type="timestamp"/>
+			<field title="诉求类型" name="type"/>
+			<field title="是否公开" name="publicEnabled"/>
+			<field title="联系电话" name="creatorTel"/>
+			<field title="投诉人手机" name="creatorMobile"/>
+			<field title="传真" name="creatorFax"/>
+			<field title="所在单位" name="creatorJob"/>
+			<field title="职业" name="creatorFax"/>
+			<field title="办理时限" name="workingDay"/>
+			<field title="办理截止时间" name="workingDate" type="date"/>
+			<recordList title="附件列表" name="attachments">
+				<field title="名称" name="name"/>
+				<field title="大小" name="fileSize"/>
+			</recordList>
+		</page>
+		
+		<page name="fullyComplaint" title="投诉查看(完全公开)">
+			<subPage title="投诉查看(完全公开)" name="fullyComplaint" type="template"/>
+			<field title="主题" name="subject"/>
+			<field title="正文" name="htmlContent" type="html"/>
+			<field title="编号" name="sn"/>
+			<field title="投诉人" name="creator"/>
+			<field title="投诉时间" name="created" type="timestamp"/>
+			<field title="投诉人邮箱" name="creatorMail"/>
+			<field title="投诉人证件号码" name="creatorIdentityCard"/>
+			<field title="事件辖区" name="popedom"/>
+			<field title="事件地点" name="area"/>
+			<field title="事件时间" name="happenTime" type="timestamp"/>
+			<field title="诉求类型" name="type"/>
+			<field title="是否公开" name="publicEnabled"/>
+			<field title="联系电话" name="creatorTel"/>
+			<field title="投诉人手机" name="creatorMobile"/>
+			<field title="传真" name="creatorFax"/>
+			<field title="所在单位" name="creatorJob"/>
+			<field title="职业" name="creatorFax"/>
+			<field title="办理时限" name="workingDay"/>
+			<field title="办理截止时间" name="workingDate" type="date"/>
+			<field title="办公室意见" name="办公室意见" type="html"/>
+			<field title="领导批示意见" name="领导批示意见" type="html"/>
+			<field title="效能催办意见" name="效能催办意见" type="html"/>
+			<field title="批转意见" name="批转意见" type="html"/>
+			<field title="部门办理意见" name="部门办理意见" type="html"/>
+			<field title="部门审核意见" name="部门审核意见" type="html"/>
+			<field title="回复审核意见" name="回复审核意见" type="html"/>
+			<field title="回复意见" name="回复意见" type="html"/>
+			<recordList title="附件列表" name="attachments">
+				<field title="名称" name="name"/>
+				<field title="大小" name="fileSize"/>
+			</recordList>
+		</page>
+		
+		<page name="complaintSearch" title="搜索" searchPage="true" searchResults="complaints" url="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/complaint&amp;pageName=complaintSearch"/>
+		
+		<page name="complaintPrint" title="办理单">
+			<field title="主题" name="subject"/>
+			<field title="正文" name="htmlContent" type="html"/>
+			<field title="编号" name="sn"/>
+			<field title="投诉人" name="creator"/>
+			<field title="投诉时间" name="created" type="timestamp"/>
+			<field title="投诉人邮箱" name="creatorMail"/>
+			<field title="投诉人证件号码" name="creatorIdentityCard"/>
+			<field title="事件辖区" name="popedom"/>
+			<field title="事件地点" name="area"/>
+			<field title="事件时间" name="happenTime" type="timestamp"/>
+			<field title="诉求类型" name="type"/>
+			<field title="是否公开" name="publicEnabled"/>
+			<field title="联系电话" name="creatorTel"/>
+			<field title="传真" name="creatorFax"/>
+			<field title="所在单位" name="creatorJob"/>
+			<field title="职业" name="creatorFax"/>
+			<field title="办理时限" name="workingDay"/>
+			<field title="办理截止时间" name="workingDate" type="date"/>
+			<field title="办公室意见" name="办公室意见" type="html"/>
+			<field title="领导批示意见" name="领导批示意见" type="html"/>
+			<field title="效能催办意见" name="效能催办意见" type="html"/>
+			<field title="批转意见" name="批转意见" type="html"/>
+			<field title="部门办理意见" name="部门办理意见" type="html"/>
+			<field title="部门审核意见" name="部门审核意见" type="html"/>
+			<field title="回复审核意见" name="回复审核意见" type="html"/>
+			<field title="回复意见" name="回复意见" type="html"/>
+			<recordList title="附件列表" name="attachments">
+				<field title="名称" name="name"/>
+				<field title="大小" name="fileSize"/>
+			</recordList>
+		</page>
+	</pages>
+	
+	<recordLists>
+		<recordList title="投诉列表" name="complaints" recordPage="originalComplaint" hostPage="index"/>
+	</recordLists>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="complaints" processor="publicServicesProcessor"/> <!-- 投诉列表列表处理器 -->
+	</pageElements>
+</application>

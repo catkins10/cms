@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="photoCollect" type="com.yuanluesoft.cms.photocollect.forms.PhotoCollect"/>
+  <form-bean name="adminPhotoCollect" type="com.yuanluesoft.cms.photocollect.forms.admin.PhotoCollect"/>
+  <form-bean name="photoCollectCategory" type="com.yuanluesoft.cms.photocollect.forms.admin.PhotoCollectCategory"/>
+  <form-bean name="insertPhotoCollects" type="com.yuanluesoft.cms.photocollect.forms.admin.InsertPhotoCollects"/>
+  <form-bean name="insertPhotoCollectsLink" type="com.yuanluesoft.cms.photocollect.forms.admin.InsertPhotoCollectsLink"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="photoCollect" path="/photoCollect" scope="request"
+   type="com.yuanluesoft.cms.photocollect.actions.photocollect.Load" validate="false">
+   <forward name="load" path="/photoCollect.jsp"/>
+  </action>
+  <action name="adminPhotoCollect" path="/admin/photoCollect"
+   scope="request"
+   type="com.yuanluesoft.cms.photocollect.actions.photocollect.admin.Load" validate="false">
+   <forward name="load" path="/admin/photoCollect.jsp"/>
+  </action>
+  <action input="/photoCollect.jsp" name="photoCollect"
+   path="/savePhotoCollect" scope="request"
+   type="com.yuanluesoft.cms.photocollect.actions.photocollect.Save" validate="false">
+   <forward name="result" path="/photoCollectSubmited.jsp"/>
+  </action>
+  <action input="/admin/photoCollect.jsp" name="adminPhotoCollect"
+   path="/admin/savePhotoCollect" scope="request"
+   type="com.yuanluesoft.cms.photocollect.actions.photocollect.admin.Save" validate="false"/>
+  <action input="/admin/photoCollect.jsp" name="adminPhotoCollect"
+   path="/admin/runPhotoCollect" scope="request"
+   type="com.yuanluesoft.cms.photocollect.actions.photocollect.admin.Run" validate="false"/>
+  <action input="/admin/photoCollect.jsp" name="adminPhotoCollect"
+   path="/admin/deletePhotoCollect" scope="request"
+   type="com.yuanluesoft.cms.photocollect.actions.photocollect.admin.Delete" validate="false"/>
+  <action input="/admin/photoCollect.jsp" name="adminPhotoCollect"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.cms.photocollect.actions.photocollect.admin.WriteOpinion" validate="false"/>
+  <action name="photoCollectCategory" path="/admin/photoCollectCategory"
+   scope="request"
+   type="com.yuanluesoft.cms.photocollect.actions.photocollectcategory.admin.Load" validate="false">
+   <forward name="load" path="/admin/photoCollectCategory.jsp"/>
+  </action>
+  <action input="/admin/photoCollectCategory.jsp"
+   name="photoCollectCategory" path="/admin/savePhotoCollectCategory"
+   scope="request"
+   type="com.yuanluesoft.cms.photocollect.actions.photocollectcategory.admin.Save" validate="false"/>
+  <action input="/admin/photoCollectCategory.jsp"
+   name="photoCollectCategory" path="/admin/deletePhotoCollectCategory"
+   scope="request"
+   type="com.yuanluesoft.cms.photocollect.actions.photocollectcategory.admin.Delete" validate="false"/>
+  <action input="/admin/photoCollect.jsp" name="adminPhotoCollect"
+   path="/admin/publish" scope="request"
+   type="com.yuanluesoft.cms.photocollect.actions.photocollect.admin.Publish" validate="false"/>
+  <action input="/admin/photoCollect.jsp" name="adminPhotoCollect"
+   path="/admin/setPublishOption" scope="request"
+   type="com.yuanluesoft.cms.photocollect.actions.photocollect.admin.SetPublishOption" validate="false"/>
+  <action name="photoCollect" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.cms.photocollect.actions.photocollect.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action input="/admin/photoCollect.jsp" name="adminPhotoCollect"
+   path="/admin/undeletePhotoCollect" scope="request"
+   type="com.yuanluesoft.cms.photocollect.actions.photocollect.admin.Undelete" validate="false"/>
+  <action name="insertPhotoCollects"
+   path="/templatemanage/insertPhotoCollects" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertPhotoCollects.jsp"/>
+  </action>
+  <action name="insertPhotoCollectsLink"
+   path="/templatemanage/insertPhotoCollectsLink" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertPhotoCollectsLink.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

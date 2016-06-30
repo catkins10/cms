@@ -1,0 +1,88 @@
+<html>
+	<head>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+		<style type="text/css">
+			html, body {
+				height: 100%;
+			}
+			body {
+				font-family: 宋体;
+				font-size: 12px;
+				background-color: #e4edff;
+				overflow: auto;
+				margin: 0px;
+			}
+			td {
+				font-family: 宋体;
+				font-size: 12px
+			}
+			.actionBar {
+				background-image: url({CONTEXTPATH}/jeaf/usermanage/template/internalform/images/bar_bg.jpg);
+				background-repeat: repeat-x;
+				padding: 3px 10px 0px 10px;
+				width: 100%;
+				height: 28px;
+				position: fixed;
+			}
+			.actionBar .button {
+				background-image: url({CONTEXTPATH}/jeaf/usermanage/template/internalform/images/button_bg.jpg);
+				background-repeat: repeat-x;
+				border: #5d80c7 1px solid;
+				padding: 0px 5px 0px 5px !important;
+				margin-right: 5px;
+				display: inline-block;
+				float: left;
+				height: 20px;
+				line-height: 20px;
+				cursor: pointer;
+			}
+			.actionBar .over {
+				background-image: url({CONTEXTPATH}/jeaf/usermanage/template/internalform/images/button_bg_over.jpg) !important;
+			}
+			.actionBar .button A {
+				color: #000000;
+				text-decoration: none;
+			}
+			.formBody {
+				padding: 36px 10px 5px 10px !important;
+				padding: 10px 10px 5px 10px;
+				width: 100%;
+			}
+		</style>
+		<script language="javascript">
+			function clickActionButton(button, event) {
+				if(!event) {
+					event = window.event;
+				}
+				var a = button.getElementsByTagName("a")[0];
+				if(event.srcElement==a) {
+					return;
+				}
+				if(document.all) { 
+					a.click(); 
+				} 
+				else  { 
+					var evt = document.createEvent("MouseEvents");
+					evt.initEvent("click", true, true);
+					a.dispatchEvent(evt);
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<table border="0" width="100%" cellpadding="0" cellspacing="0">
+			<tr>
+				<td class="actionBar">
+					<a id="recordList" urn="recordListName=formActions&amp;privateRecordList=true&amp;recordClassName=com.yuanluesoft.jeaf.form.ActionForm&amp;applicationName=jeaf/usermanage&amp;recordCount=100&amp;recordFormat=&lt;SPAN class%3Dbutton onmouseover%3D&quot;className%3D'button over';&quot; onmouseout%3D&quot;className%3D'button';&quot; onclick%3D&quot;clickActionButton(this, event);&quot;&gt;&lt;A id%3Dfield urn%3Dname%3Dtitle%26amp;link%3Dtrue&gt;%26lt;标题%26gt;&lt;/A&gt;&lt;/SPAN&gt;&amp;separatorMode=blank&amp;separatorHeight=0&amp;linkOpenMode=_blank&amp;emptyPrompt=&amp;extendProperties=">&lt;操作&gt;</a>
+				</td>
+			</tr>
+			<tr>
+				<td class="formBody">
+					<A id="subPage" urn="pageName=base&amp;widthMode=auto&amp;width=&amp;heightMode=auto&amp;height=&amp;cssName=默认CSS&amp;cssUrl={CONTEXTPATH}/jeaf/form/css/form.css">&lt;系统预置页面:	表单主体&gt;</A>
+					<br>
+					<A id="subPage" urn="pageName=/jeaf/form/warn&amp;widthMode=auto&amp;width=&amp;heightMode=auto&amp;height=&amp;cssName=默认CSS&amp;cssUrl={CONTEXTPATH}/jeaf/form/css/prompt.css">&lt;系统预置页面:系统提示&gt;</A>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

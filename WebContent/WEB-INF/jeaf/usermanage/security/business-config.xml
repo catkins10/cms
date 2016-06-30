@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="用户策略" class="com.yuanluesoft.jeaf.usermanage.security.pojo.UserLoginPolicy" businessServiceName="userSecurityService">
+		<field name="name" title="策略名称" length="50" required="true" type="string" inputMode="text"/>
+		<field name="ips" title="IP地址列表" length="200" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="mac" title="MAC地址" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="密码策略" class="com.yuanluesoft.jeaf.usermanage.security.pojo.UserPasswordPolicy" businessServiceName="userSecurityService">
+		<field name="orgId" title="单位ID" type="number" length="20" inputMode="hidden"/>
+		<field name="orgName" title="单位名称" type="string" length="100" inputMode="readonly"/>
+		<field name="internalPasswordStrength" title="内部用户密码强度" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">低|1\0中|2\0高|3</parameter>
+		</field>
+		<field name="externalPasswordStrength" title="外部用户密码强度" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">低|1\0中|2\0高|3</parameter>
+		</field>
+		<field name="internalPasswordDays" title="内部用户密码修改周期" length="3" type="number" inputMode="dropdown">
+			<parameter name="itemsText">不限|0\0 10|10\0 20|20\0 30|30\0 40|40\0 50|50\0 60|60</parameter>
+		</field>
+		<field name="externalPasswordDays" title="外部用户密码修改周期" length="3" type="number" inputMode="dropdown">
+			<parameter name="itemsText">不限|0\0 10|10\0 20|20\0 30|30\0 40|40\0 50|50\0 60|60</parameter>
+		</field>
+		<field name="passwordWrong" title="密码输错次数控制" length="3" type="number" inputMode="dropdown">
+			<parameter name="itemsText">不限|0\0 3|3\0 5|5\0 10|10</parameter>
+		</field>
+		<field name="resetPasswordMailSubject" title="密码重置邮件标题" length="200" type="string" inputMode="text"/>
+		<field name="resetPasswordMailContent" title="密码重置邮件内容" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="resetPasswordCodeExpire" title="密码重置验证码有效期" length="4" type="number" inputMode="text"/>
+	</businessObject>
+</businessObjects>

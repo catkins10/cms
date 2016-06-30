@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/onlineservice/consult"/>
+		<page name="onlineServiceConsult" title="网上办事咨询" url="/cms/onlineservice/consult/consult.shtml" systemLink="false">
+			<subPage name="base" title="咨询"/>
+			<field title="办理事项名称" name="itemName"/>
+			<field title="编号" name="sn"/>
+			<field title="咨询主题" name="subject"/>
+			<field title="咨询人" name="creator"/>
+			<field title="咨询时间" name="created" type="timestamp"/>
+			<field title="当前状态" name="consultStatus"/>
+		</page>
+		<page name="onlineServiceConsultResult" title="咨询完成提示" systemLink="false"/>
+		
+		<page name="onlineServiceConsults" title="已受理咨询列表" url="/cms/onlineservice/listInteractives.shtml?applicationName=cms/onlineservice/consult&amp;type=onlineServiceConsults"/>
+		<page name="onlineServiceMyConsults" rssSupport="false" title="我的咨询列表" url="/cms/onlineservice/listInteractives.shtml?applicationName=cms/onlineservice/consult&amp;type=onlineServiceMyConsults"/>
+	</pages>
+	
+	<recordLists>
+		<recordList title="网上办事已受理咨询列表" name="onlineServiceConsults" recordPage="onlineServiceConsult" hostPage="index"/>
+		<recordList title="我的网上办事咨询列表" totalSupport="false" rssSupport="false" name="onlineServiceMyConsults" recordPage="onlineServiceConsult" hostPage="index"/>
+	</recordLists>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="onlineServiceConsults" processor="publicServicesProcessor"/> <!-- 网上办事已受理咨询列表 -->
+		<pageElement name="onlineServiceMyConsults" processor="onlineServiceMyInteractivesProcessor"/> <!-- 我的网上办事咨询列表 -->
+	</pageElements>
+</application>

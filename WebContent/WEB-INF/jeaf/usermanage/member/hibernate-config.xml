@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--用户管理:网上用户注册-->
+	<class name="com.yuanluesoft.jeaf.usermanage.member.pojo.Member" table="user_member">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="loginName"/> <!--登录用户名,VARCHAR(32)-->
+		<property name="password"/> <!--密码,VARCHAR(100)-->
+		<property name="email"/> <!--邮箱,VARCHAR(100)-->
+		<property name="question"/> <!--密码问题,VARCHAR(200)-->
+		<property name="answer"/> <!--问题答案,VARCHAR(200)-->
+		<property name="registTime"/> <!--注册时间,timestamp null-->
+		<property name="name"/> <!--真实姓名,VARCHAR(30)-->
+		<property name="sex"/> <!--性别,CHAR(1)-->
+		<property name="area"/> <!--所属省份,VARCHAR(30)-->
+		<property name="company"/> <!--工作单位/所在院校,VARCHAR(100)-->
+		<property name="organization"/> <!--单位所属行业,VARCHAR(50)-->
+		<property name="address"/> <!--地址,VARCHAR(200)-->
+		<property name="postalcode"/> <!--邮编,VARCHAR(20)-->
+		<property name="fax"/> <!--传真,VARCHAR(100)-->
+		<property name="telephone"/> <!--联系电话,VARCHAR(16)-->
+		<property name="cell"/> <!--手机,VARCHAR(16)-->
+		<property name="department"/> <!--部门,VARCHAR(50)-->
+		<property name="duty"/> <!--职务,VARCHAR(50)-->
+		<property name="identityCardName"/> <!--证件名称,VARCHAR(30)-->
+		<property name="identityCard"/> <!--证件号码,VARCHAR(100)-->
+		<property name="hideDetail"/> <!--公开用户资料,CHAR(1)-->
+		<property name="halt"/> <!--是否禁用,CHAR(1)-->
+		<property name="portraitName"/> <!--使用的系统头像名称,如果有自定义,则以自定义的头像为准,VARCHAR(30)-->
+	</class>
+	
+	<!--用户管理:网上用户注册配置-->
+	<class name="com.yuanluesoft.jeaf.usermanage.member.pojo.MemberRegistSetting" table="user_member_regist_setting">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="registDisabled"/> <!--是否禁止注册-->
+		<property name="registDisabledReason"/> <!--禁止注册的原因-->
+	</class>
+</hibernate-mapping>

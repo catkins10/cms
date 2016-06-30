@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminParameter" type="com.yuanluesoft.appraise.forms.admin.Parameter"/>
+  <form-bean name="adminTask" type="com.yuanluesoft.appraise.forms.admin.Task"/>
+  <form-bean name="adminOption" type="com.yuanluesoft.appraise.forms.admin.Option"/>
+  <form-bean name="adminParticipateUnit" type="com.yuanluesoft.appraise.forms.admin.ParticipateUnit"/>
+  <form-bean name="adminAppraise" type="com.yuanluesoft.appraise.forms.admin.Appraise"/>
+  <form-bean name="internetAppraise" type="com.yuanluesoft.appraise.forms.InternetAppraise"/>
+  <form-bean name="adminUnitAppraise" type="com.yuanluesoft.appraise.forms.admin.UnitAppraise"/>
+  <form-bean name="adminAppraiseUnitSms" type="com.yuanluesoft.appraise.forms.admin.AppraiseUnitSms"/>
+  <form-bean name="wapAppraise" type="com.yuanluesoft.appraise.forms.WapAppraise"/>
+  <form-bean name="adminAppraiseUnitArticleTotalView" type="com.yuanluesoft.appraise.forms.admin.AppraiseUnitArticleTotalView"/>
+  <form-bean name="adminMarkStandard" type="com.yuanluesoft.appraise.forms.admin.MarkStandard"/>
+  <form-bean name="adminDeduct" type="com.yuanluesoft.appraise.forms.admin.Deduct"/>
+  <form-bean name="adminAppraiseResultView" type="com.yuanluesoft.appraise.forms.admin.AppraiseResultView"/>
+  <form-bean name="insertParticipateUnits" type="com.yuanluesoft.appraise.forms.admin.InsertParticipateUnits"/>
+  <form-bean name="insertAppraises" type="com.yuanluesoft.appraise.forms.admin.InsertAppraises"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminParameter" path="/admin/parameter" scope="request"
+   type="com.yuanluesoft.appraise.actions.parameter.admin.Load" validate="false">
+   <forward name="load" path="/admin/parameter.jsp"/>
+  </action>
+  <action input="/admin/parameter.jsp" name="adminParameter"
+   path="/admin/saveParameter" scope="request"
+   type="com.yuanluesoft.appraise.actions.parameter.admin.Save" validate="false"/>
+  <action name="adminTask" path="/admin/task" scope="request"
+   type="com.yuanluesoft.appraise.actions.task.admin.Load" validate="false">
+   <forward name="load" path="/admin/task.jsp"/>
+  </action>
+  <action input="/admin/task.jsp" name="adminTask"
+   path="/admin/saveTask" scope="request"
+   type="com.yuanluesoft.appraise.actions.task.admin.Save" validate="false"/>
+  <action input="/admin/task.jsp" name="adminTask"
+   path="/admin/deleteTask" scope="request"
+   type="com.yuanluesoft.appraise.actions.task.admin.Delete" validate="false"/>
+  <action name="adminOption" path="/admin/option" scope="request"
+   type="com.yuanluesoft.appraise.actions.task.admin.option.Load" validate="false">
+   <forward name="load" path="/admin/option.jsp"/>
+  </action>
+  <action input="/admin/option.jsp" name="adminOption"
+   path="/admin/saveOption" scope="request"
+   type="com.yuanluesoft.appraise.actions.task.admin.option.Save" validate="false"/>
+  <action input="/admin/option.jsp" name="adminOption"
+   path="/admin/deleteOption" scope="request"
+   type="com.yuanluesoft.appraise.actions.task.admin.option.Delete" validate="false"/>
+  <action name="adminParticipateUnit" path="/admin/participateUnit"
+   scope="request"
+   type="com.yuanluesoft.appraise.actions.participateunit.admin.Load" validate="false">
+   <forward name="load" path="/admin/participateUnit.jsp"/>
+  </action>
+  <action input="/admin/participateUnit.jsp" name="adminParticipateUnit"
+   path="/admin/saveParticipateUnit" scope="request"
+   type="com.yuanluesoft.appraise.actions.participateunit.admin.Save" validate="false"/>
+  <action input="/admin/participateUnit.jsp" name="adminParticipateUnit"
+   path="/admin/deleteParticipateUnit" scope="request"
+   type="com.yuanluesoft.appraise.actions.participateunit.admin.Delete" validate="false"/>
+  <action input="/admin/task.jsp" name="adminTask"
+   path="/admin/refreshTask" scope="request"
+   type="com.yuanluesoft.appraise.actions.task.admin.Refresh" validate="false"/>
+  <action name="adminAppraise" path="/admin/appraise" scope="request"
+   type="com.yuanluesoft.appraise.actions.appraise.admin.Load" validate="false">
+   <forward name="load" path="/admin/appraise.jsp"/>
+  </action>
+  <action input="/admin/appraise.jsp" name="adminAppraise"
+   path="/admin/startupAppraise" scope="request"
+   type="com.yuanluesoft.appraise.actions.appraise.admin.Startup" validate="false"/>
+  <action name="internetAppraise" path="/internetAppraise"
+   scope="request"
+   type="com.yuanluesoft.appraise.actions.internetappraise.Load" validate="false">
+   <forward name="load" path="/internetAppraise.jsp"/>
+  </action>
+  <action input="/internetAppraise.jsp" name="internetAppraise"
+   path="/submitInternetAppraise" scope="request"
+   type="com.yuanluesoft.appraise.actions.internetappraise.Submit" validate="false">
+   <forward name="result" path="/internetAppraiseSubmitted.jsp"/>
+  </action>
+  <action path="/appraise" scope="request"
+   type="com.yuanluesoft.appraise.actions.appraise.Load" validate="false"/>
+  <action name="adminUnitAppraise" path="/admin/unitAppraise"
+   scope="request"
+   type="com.yuanluesoft.appraise.actions.unitappraise.admin.Load" validate="false">
+   <forward name="load" path="/admin/unitAppraise.jsp"/>
+  </action>
+  <action name="adminAppraiseUnitSms" path="/admin/appraiseUnitSms"
+   scope="request"
+   type="com.yuanluesoft.appraise.actions.appraiseunitsms.admin.Load" validate="false">
+   <forward name="load" path="/admin/appraiseUnitSms.jsp"/>
+  </action>
+  <action input="/admin/appraiseUnitSms.jsp" name="adminAppraiseUnitSms"
+   path="/admin/saveAppraiseUnitSms" scope="request"
+   type="com.yuanluesoft.appraise.actions.appraiseunitsms.admin.Save" validate="false"/>
+  <action input="/admin/appraiseUnitSms.jsp" name="adminAppraiseUnitSms"
+   path="/admin/deleteAppraiseUnitSms" scope="request"
+   type="com.yuanluesoft.appraise.actions.appraiseunitsms.admin.Delete" validate="false"/>
+  <action input="/admin/appraiseUnitSms.jsp" name="adminAppraiseUnitSms"
+   path="/admin/sendAppraiseUnitSms" scope="request"
+   type="com.yuanluesoft.appraise.actions.appraiseunitsms.admin.Send" validate="false"/>
+  <action input="/admin/appraise.jsp" name="adminAppraise"
+   path="/admin/supplySendSms" scope="request"
+   type="com.yuanluesoft.appraise.actions.appraise.admin.SupplySendSms" validate="false"/>
+  <action name="wapAppraise" path="/wapAppraise" scope="request"
+   type="com.yuanluesoft.appraise.actions.wapappraise.Load" validate="false">
+   <forward name="load" path="/wapAppraise.jsp"/>
+  </action>
+  <action input="/wapAppraise.jsp" name="wapAppraise"
+   path="/submitWapAppraise" scope="request"
+   type="com.yuanluesoft.appraise.actions.wapappraise.Submit" validate="false">
+   <forward name="result" path="/wapAppraiseSubmitted.jsp"/>
+  </action>
+  <action name="adminAppraiseUnitArticleTotalView"
+   path="/admin/appraiseUnitArticleTotalView" scope="request"
+   type="com.yuanluesoft.appraise.actions.appraiseunitarticletotalview.admin.ViewAction" validate="false">
+   <forward name="load" path="/../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action name="adminMarkStandard" path="/admin/markStandard"
+   scope="request"
+   type="com.yuanluesoft.appraise.actions.markstandard.admin.Load" validate="false">
+   <forward name="load" path="/admin/markStandard.jsp"/>
+  </action>
+  <action input="/admin/markStandard.jsp" name="adminMarkStandard"
+   path="/admin/saveMarkStandard" scope="request"
+   type="com.yuanluesoft.appraise.actions.markstandard.admin.Save" validate="false"/>
+  <action input="/admin/markStandard.jsp" name="adminMarkStandard"
+   path="/admin/deleteMarkStandard" scope="request"
+   type="com.yuanluesoft.appraise.actions.markstandard.admin.Delete" validate="false"/>
+  <action name="adminDeduct" path="/admin/deduct" scope="request"
+   type="com.yuanluesoft.appraise.actions.deduct.admin.Load" validate="false">
+   <forward name="load" path="/admin/deduct.jsp"/>
+  </action>
+  <action input="/admin/deduct.jsp" name="adminDeduct"
+   path="/admin/saveDeduct" scope="request"
+   type="com.yuanluesoft.appraise.actions.deduct.admin.Save" validate="false"/>
+  <action input="/admin/deduct.jsp" name="adminDeduct"
+   path="/admin/deleteDeduct" scope="request"
+   type="com.yuanluesoft.appraise.actions.deduct.admin.Delete" validate="false"/>
+  <action name="adminAppraiseResultView"
+   path="/admin/appraiseResultView" scope="request"
+   type="com.yuanluesoft.appraise.actions.appraiseresultview.admin.ViewAction" validate="false">
+   <forward name="load" path="/../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action name="insertAppraises" path="/templatemanage/insertAppraises"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertAppraises.jsp"/>
+  </action>
+  <action name="insertParticipateUnits"
+   path="/templatemanage/insertParticipateUnits" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertParticipateUnits.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

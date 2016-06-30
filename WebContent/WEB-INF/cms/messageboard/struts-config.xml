@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminMessage" type="com.yuanluesoft.cms.messageboard.forms.admin.Message"/>
+  <form-bean name="message" type="com.yuanluesoft.cms.messageboard.forms.Message"/>
+  <form-bean name="adminFaq" type="com.yuanluesoft.cms.messageboard.forms.admin.Faq"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="message" path="/message" scope="request"
+   type="com.yuanluesoft.cms.messageboard.actions.message.Load" validate="false">
+   <forward name="load" path="/message.jsp"/>
+  </action>
+  <action input="/message.jsp" name="message" path="/saveMessage"
+   scope="request"
+   type="com.yuanluesoft.cms.messageboard.actions.message.Save" validate="false">
+   <forward name="result" path="/messageSubmitted.jsp"/>
+   <forward name="faq" path="/messageFaq.jsp"/>
+  </action>
+  <action name="adminMessage" path="/admin/message" scope="request"
+   type="com.yuanluesoft.cms.messageboard.actions.message.admin.Load" validate="false">
+   <forward name="load" path="/admin/message.jsp"/>
+  </action>
+  <action input="/admin/message.jsp" name="adminMessage"
+   path="/admin/saveMessage" scope="request"
+   type="com.yuanluesoft.cms.messageboard.actions.message.admin.Save" validate="false"/>
+  <action input="/admin/message.jsp" name="adminMessage"
+   path="/admin/runMessage" scope="request"
+   type="com.yuanluesoft.cms.messageboard.actions.message.admin.Run" validate="false"/>
+  <action input="/admin/message.jsp" name="adminMessage"
+   path="/admin/deleteMessage" scope="request"
+   type="com.yuanluesoft.cms.messageboard.actions.message.admin.Delete" validate="false"/>
+  <action input="/admin/message.jsp" name="adminMessage"
+   path="/admin/setPublishOption" scope="request"
+   type="com.yuanluesoft.cms.messageboard.actions.message.admin.SetPublishOption" validate="false"/>
+  <action input="/admin/message.jsp" name="adminMessage"
+   path="/admin/publish" scope="request"
+   type="com.yuanluesoft.cms.messageboard.actions.message.admin.Publish" validate="false"/>
+  <action input="/admin/message.jsp" name="adminMessage"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.cms.messageboard.actions.message.admin.WriteOpinion" validate="false"/>
+  <action input="/admin/message.jsp" name="adminMessage"
+   path="/admin/undeleteMessage" scope="request"
+   type="com.yuanluesoft.cms.messageboard.actions.message.admin.Undelete" validate="false"/>
+  <action name="adminMessage" path="/admin/printMessage" scope="request"
+   type="com.yuanluesoft.cms.messageboard.actions.message.admin.Print" validate="false">
+   <forward name="load" path="/admin/message.jsp"/>
+  </action>
+  <action name="adminFaq" path="/admin/faq" scope="request"
+   type="com.yuanluesoft.cms.messageboard.actions.faq.admin.Load" validate="false">
+   <forward name="load" path="/admin/faq.jsp"/>
+  </action>
+  <action input="/admin/faq.jsp" name="adminFaq" path="/admin/saveFaq"
+   scope="request"
+   type="com.yuanluesoft.cms.messageboard.actions.faq.admin.Save" validate="false"/>
+  <action input="/admin/faq.jsp" name="adminFaq" path="/admin/deleteFaq"
+   scope="request"
+   type="com.yuanluesoft.cms.messageboard.actions.faq.admin.Delete" validate="false"/>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="20M"/>
+</struts-config>

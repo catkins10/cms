@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="complaint" type="com.yuanluesoft.asc.complaint.forms.Complaint"/>
+  <form-bean name="adminComplaint" type="com.yuanluesoft.asc.complaint.forms.admin.Complaint"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="complaint" path="/complaint" scope="request"
+   type="com.yuanluesoft.asc.complaint.actions.complaint.Load" validate="false">
+   <forward name="load" path="/complaint.jsp"/>
+  </action>
+  <action name="adminComplaint" path="/admin/complaint" scope="request"
+   type="com.yuanluesoft.asc.complaint.actions.complaint.admin.Load" validate="false">
+   <forward name="load" path="/admin/complaint.jsp"/>
+  </action>
+  <action input="/complaint.jsp" name="complaint" path="/saveComplaint"
+   scope="request"
+   type="com.yuanluesoft.asc.complaint.actions.complaint.Save" validate="false">
+   <forward name="result" path="/complaintSubmited.jsp"/>
+  </action>
+  <action input="/admin/complaint.jsp" name="adminComplaint"
+   path="/admin/saveComplaint" scope="request"
+   type="com.yuanluesoft.asc.complaint.actions.complaint.admin.Save" validate="false"/>
+  <action input="/admin/complaint.jsp" name="adminComplaint"
+   path="/admin/runComplaint" scope="request"
+   type="com.yuanluesoft.asc.complaint.actions.complaint.admin.Run" validate="false"/>
+  <action input="/admin/complaint.jsp" name="adminComplaint"
+   path="/admin/deleteComplaint" scope="request"
+   type="com.yuanluesoft.asc.complaint.actions.complaint.admin.Delete" validate="false"/>
+  <action input="/admin/complaint.jsp" name="adminComplaint"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.asc.complaint.actions.complaint.admin.WriteOpinion" validate="false"/>
+  <action input="/admin/complaint.jsp" name="adminComplaint"
+   path="/admin/publish" scope="request"
+   type="com.yuanluesoft.asc.complaint.actions.complaint.admin.Publish" validate="false"/>
+  <action input="/admin/complaint.jsp" name="adminComplaint"
+   path="/admin/setPublishOption" scope="request"
+   type="com.yuanluesoft.asc.complaint.actions.complaint.admin.SetPublishOption" validate="false"/>
+  <action name="adminComplaint" path="/admin/printComplaint"
+   scope="request"
+   type="com.yuanluesoft.asc.complaint.actions.complaint.admin.Print" validate="false">
+   <forward name="load" path="/admin/complaint.jsp"/>
+  </action>
+  <action name="complaint" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.asc.complaint.actions.complaint.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action input="/admin/complaint.jsp" name="adminComplaint"
+   path="/admin/undeleteComplaint" scope="request"
+   type="com.yuanluesoft.asc.complaint.actions.complaint.admin.Undelete" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

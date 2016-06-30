@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="todoQualification" form="qualification" title="待处理证书" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.qualification.pojo.Qualification</pojo>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="新增证书" type="workflow" module="qualification"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column name="name" title="证书名称"/>
+			<column name="level" title="等级" width="60" align="center"/>
+			<column name="obtainTime" title="获得时间" width="90" align="center"/>
+			<column name="stuName" title="所属人" width="80" aligin="center"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="80" display="normal,print,portlet" format="yyyy-MM-dd"/>
+			<column title="发送人" name="workflowSender" align="center" width="70" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="120" display="normal,print"/>
+		</columns>
+	</view>
+	<view name="inProcessQualification" form="qualification" title="在办证书" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.qualification.pojo.Qualification</pojo>
+			<orderBy>Qualification.created</orderBy>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="新增证书" type="workflow" module="qualification"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column name="name" title="证书名称"/>
+			<column name="level" title="等级" width="60" align="center"/>
+			<column name="obtainTime" title="获得时间" width="90" align="center"/>
+			<column name="stuName" title="所属人" width="80" aligin="center"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="80" display="normal,print,portlet" format="yyyy-MM-dd"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="70" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="120" display="normal,print"/>
+		</columns>
+	</view>
+	<view name="allQualification" form="qualification" title="我的证书" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.qualification.pojo.Qualification</pojo>
+			<where>Qualification.stuId={USERID}</where>
+			<orderBy>Qualification.created</orderBy>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="新增证书" type="workflow" module="qualification"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column name="name" title="证书名称"/>
+			<column name="level" title="等级" width="60" align="center"/>
+			<column name="obtainTime" title="获得时间" width="90" align="center"/>
+			<column title="登记时间" name="created" align="center" width="90"/>
+			<column title="状态" name="workflowStatus" align="center" width="120" display="normal,print"/>
+			<column title="是否通过" name="approvalPass" align="center" width="80"/>
+		</columns>
+	</view>
+</views>

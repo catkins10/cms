@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.j2oa.meeting.forms.Meeting" title="会议安排" pojo="com.yuanluesoft.j2oa.meeting.pojo.Meeting">
+		<formFields>
+			<field title="与会人员" name="attendees" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteMeeting')"/>
+			<action title="送审核" hide="workflow()" execute="FormUtils.doAction('runMeeting', 'workflowAction=send')"/>
+			<action title="发布" hide="workflow()" execute="if(confirm('是否确定要发布？'))FormUtils.doAction('issueMeeting')"/>
+			<action title="撤销发布" hide="noPrivilege(undoIssue)" execute="if(confirm('是否确定要撤销发布？'))FormUtils.doAction('undoIssueMeeting')"/>
+			<action title="重新发布" hide="noPrivilege(redoIssue)" execute="if(confirm('是否确定要重新发布？'))FormUtils.doAction('redoIssueMeeting')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.meeting.forms.MeetingRoom" title="会议室" pojo="com.yuanluesoft.j2oa.meeting.pojo.MeetingRoom">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="登记下一个" hide="isOld()" execute="FormUtils.doAction('createNextMeetingRoom')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteMeetingRoom')"/>
+		</actions>
+	</form>
+</forms>

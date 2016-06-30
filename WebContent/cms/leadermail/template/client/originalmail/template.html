@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<SCRIPT>window.onerror=function(){return true;}</SCRIPT>
+</head>
+<body>
+	<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td>
+				<form class="form" id="approvalQuery" title="办理情况查询" action="applicationName=cms/leadermail">
+					<div class="titleBar" id="titleBar">
+						<button title="关闭" class="returnButton" onclick="window.closeWindow();">&nbsp;</button>
+						<div class="button" id="button" title="查询" tabindex="0">查询</div>
+						<input class="field" id="field" title="查询密码" alt="查询密码" name="approvalQueryPassword" type="text" style="width:120px; float:right; margin-right:3px"/>
+					</div>
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" style="height: 100%; background-color: rgb(255, 255, 255); padding: 8px 8px 8px 8px;">
+				<div title="内容区域" id="contentArea">
+					<table class="readonlyTable" style="margin-top: 5px;">
+						<colgroup>
+							<col align="right"/>
+							<col width="100%"/>
+						</colgroup>
+						<tr>
+							<td class="label">主题</td>
+							<td class="content"><a id="field" urn="name=subject">&lt;主题&gt;</a></td>
+						</tr>
+						<tr>
+							<td class="label">编号</td>
+							<td class="content"><a id="field" urn="name=sn">&lt;编号&gt;</a></td>
+						</tr>
+						<tr>
+							<td class="label" nowrap="nowrap">写信时间</td>
+							<td class="content"><a id="field" urn="name=created&amp;fieldFormat=yyyy-MM-dd HH:mm">&lt;写信时间&gt;</a></td>
+						</tr>
+						<tr>
+							<td class="label" valign="top">内容</td>
+							<td class="content"><a id="field" urn="name=content">&lt;正文&gt;</a></td>
+						</tr>
+						<tr>
+							<td class="label" nowrap="nowrap">事件辖区</td>
+							<td class="content"><a id="field" urn="name=popedom">&lt;事件辖区&gt;</a></td>
+						</tr>
+						<tr>
+							<td class="label" nowrap="nowrap">事件地点</td>
+							<td class="content"><a id="field" urn="name=area">&lt;事件地点&gt;</a></td>
+						</tr>
+						<tr>
+							<td class="label">事件时间</td>
+							<td class="content"><a id="field" urn="name=happenTime&amp;fieldFormat=yyyy-MM-dd HH:mm">&lt;事件时间&gt;</a></td>
+						</tr>
+						<tr>
+							<td class="label" nowrap="nowrap">诉求类型</td>
+							<td class="content"><a id="field" urn="name=type">&lt;诉求类型&gt;</a></td>
+						</tr>
+						<tr>
+							<td class="label" nowrap="nowrap">写信人姓名</td>
+							<td class="content"><a id="field" urn="name=creator">&lt;写信人&gt;</a></td>
+						</tr>
+						<tr>
+							<td class="label" nowrap="nowrap">附件</td>
+							<td class="content"><a id="recordList" urn="recordListName=attachment&amp;privateRecordList=true&amp;recordClassName=com.yuanluesoft.cms.leadermail.pojo.LeaderMail&amp;applicationName=cms/leadermail&amp;linkTitle=打开&amp;recordCount=100&amp;recordFormat=&lt;A id%3Dfield urn%3Dname%3Dname%26amp;link%3Dtrue&gt;%26lt;名称%26gt;&lt;/A&gt;(&lt;A id%3Dfield urn%3Dname%3DfileSize&gt;%26lt;文件大小%26gt;&lt;/A&gt;)&amp;separatorMode=custom&amp;separatorCustom=、&amp;separatorOfLastRecord=false&amp;separatorHeight=5&amp;linkOpenMode=_blank&amp;emptyPrompt=&amp;extendProperties=">&lt;附件&gt;</a></td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

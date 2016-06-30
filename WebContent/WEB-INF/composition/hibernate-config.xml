@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!-- 作文 -->
+	<class name="com.yuanluesoft.composition.pojo.Composition" table="composition_composition">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="title"/>
+		<property name="writer"/>
+		<property name="comType"/>
+		<property name="correctName"/>
+		<property name="content" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/>
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<set name="opinions" table="composition_composition_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.composition.pojo.CompositionOpinion" />
+		</set>
+		<set name="visitors" table="composition_composition_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.composition.pojo.CompositionPrivilege"/>
+		</set>
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+	</class>
+	
+	<!--作文权限控制-->
+	<class name="com.yuanluesoft.composition.pojo.CompositionPrivilege" table="composition_composition_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--作文办理意见-->
+	<class name="com.yuanluesoft.composition.pojo.CompositionOpinion" table="composition_composition_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="created"/> <!--填写时间-->
+	</class>
+</hibernate-mapping>

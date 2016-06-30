@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.j2oa.personnel.forms.Employee" title="人员资料" pojo="com.yuanluesoft.j2oa.personnel.pojo.PersonnelEmployee">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteEmployee')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.personnel.forms.Certificate" title="持有证书和资质情况" pojo="com.yuanluesoft.j2oa.personnel.pojo.PersonnelEmployee">
+		<formFields>
+			<field name="certificate" title="持有证书和资质情况" type="component">
+				<parameter name="class">com.yuanluesoft.j2oa.personnel.pojo.PersonnelCertificate</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteCertificate')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.personnel.forms.DutyChange" title="岗位变动情况" pojo="com.yuanluesoft.j2oa.personnel.pojo.PersonnelEmployee">
+		<formFields>
+			<field name="dutyChange" title="岗位变动情况" type="component">
+				<parameter name="class">com.yuanluesoft.j2oa.personnel.pojo.PersonnelDutyChange</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteDutyChange')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.personnel.forms.Education" title="学习经历" pojo="com.yuanluesoft.j2oa.personnel.pojo.PersonnelEmployee">
+		<formFields>
+			<field name="personnelEducation" title="学习经历" type="component">
+				<parameter name="class">com.yuanluesoft.j2oa.personnel.pojo.PersonnelEducation</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteEducation')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.personnel.forms.Employment" title="工作经历" pojo="com.yuanluesoft.j2oa.personnel.pojo.PersonnelEmployee">
+		<formFields>
+			<field name="employment" title="工作经历" type="component">
+				<parameter name="class">com.yuanluesoft.j2oa.personnel.pojo.PersonnelEmployment</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteEmployment')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.personnel.forms.RewardsPunishment" title="奖惩情况" pojo="com.yuanluesoft.j2oa.personnel.pojo.PersonnelEmployee">
+		<formFields>
+			<field name="rewardsPunishment" title="奖惩情况" type="component">
+				<parameter name="class">com.yuanluesoft.j2oa.personnel.pojo.PersonnelRewardsPunishment</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteRewardsPunishment')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.personnel.forms.Training" title="培训经历" pojo="com.yuanluesoft.j2oa.personnel.pojo.PersonnelEmployee">
+		<formFields>
+			<field name="training" title="培训经历" type="component">
+				<parameter name="class">com.yuanluesoft.j2oa.personnel.pojo.PersonnelTraining</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteTraining')"/>
+		</actions>
+	</form>
+</forms>

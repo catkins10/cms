@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,161,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="336,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,161,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="336,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#supply" NAME="action0"
+  PATH="/supply" SHAPE="32,480,161,41" TITLE="supply" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/supply.jsp" TARGET="page5" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveSupply"
+  NAME="action1" PATH="/saveSupply" SHAPE="528,512,161,41"
+  TITLE="supply" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/supplySubmitted.jsp" TARGET="page2"
+   TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteSupply"
+  NAME="action2" PATH="/deleteSupply" SHAPE="528,584,161,41"
+  TITLE="supply" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/supplyDeleted.jsp" TARGET="page3"
+   TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#index" NAME="action3"
+  PATH="/index" SHAPE="32,656,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#supplies" NAME="action4"
+  PATH="/supplies" SHAPE="32,720,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#mySupplies"
+  NAME="action5" PATH="/mySupplies" SHAPE="32,784,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/supply.jsp" SHAPE="336,496,50,55" SUBTYPE="jsp"
+  TITLE="supply.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveSupply" TARGET="action1"
+   TITLE="saveVehicleSupply" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteSupply" TARGET="action2"
+   TITLE="deleteVehicleSupply" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/supplySubmitted.jsp" SHAPE="768,528,50,25" SUBTYPE="jsp"
+  TITLE="supplySubmitted.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/supplyDeleted.jsp" SHAPE="768,600,50,25" SUBTYPE="jsp"
+  TITLE="supplyDeleted.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#supply"
+  NAME="action6" PATH="/admin/supply" SHAPE="32,208,161,41"
+  TITLE="adminSupply" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/supply.jsp" TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/admin/supply.jsp" SHAPE="336,224,50,55" SUBTYPE="jsp"
+  TITLE="supply.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveSupply" TARGET="action7"
+   TITLE="saveSupply" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteSupply" TARGET="action8"
+   TITLE="deleteSupply" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/issueSupply" TARGET="action10"
+   TITLE="issueSupply" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/admin/unissueSupply" TARGET="action11"
+   TITLE="unissueSupply" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveSupply"
+  NAME="action7" PATH="/admin/saveSupply" SHAPE="528,240,161,25"
+  TITLE="adminSupply" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteSupply"
+  NAME="action8" PATH="/admin/deleteSupply" SHAPE="528,304,161,25"
+  TITLE="adminSupply" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#supplySearch"
+  NAME="action9" PATH="/supplySearch" SHAPE="32,848,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#issueSupply"
+  NAME="action10" PATH="/admin/issueSupply" SHAPE="528,368,161,25"
+  TITLE="adminSupply" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#unissueSupply"
+  NAME="action11" PATH="/admin/unissueSupply" SHAPE="528,432,161,25"
+  TITLE="adminSupply" TYPE="action"/>
+</PROCESS>

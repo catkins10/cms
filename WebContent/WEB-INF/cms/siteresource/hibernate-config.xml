@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!-- 站点资源 -->
+	<class name="com.yuanluesoft.cms.siteresource.pojo.SiteResource" table="cms_resource">
+		<id name="id">
+			<generator class="assigned" />
+		</id>
+		<property name="type"/> <!--类型-->
+		<property name="subject"/> <!--标题-->
+		<property name="subhead"/> <!--副标题-->
+		<property name="source"/> <!--来源-->
+		<property name="otherColumnIds"/> <!--所属的其他栏目ID,varchar(4000)-->
+		<property name="otherColumnNames"/> <!--所属的其他栏目名称,varchar(4000)-->
+		<property name="author"/> <!--作者-->
+		<property name="translator"/> <!--译者-->
+		<property name="review"/> <!--校对-->
+		<property name="keyword"/> <!--关键字-->
+		<property name="link"/> <!--链接,类型为链接时使用-->
+		<property name="created"/> <!--创建时间-->
+		<property name="issueTime"/> <!--发布时间-->
+		<property name="issueEndTime"/> <!--发布截止时间-->
+		<property name="imageCount"/> <!--图片数量-->
+		<property name="uploadImageCount"/> <!--实际上传图片数量-->
+		<property name="firstImageName"/> <!--第一个图片文件名称-->
+		<property name="videoCount"/> <!--视频数量-->
+		<property name="uploadVideoCount"/> <!--实际上传视频数量-->
+		<property name="firstVideoName"/> <!--第一个视频文件名称-->
+		<property name="attachmentCount"/> <!--附件数量-->
+		<property name="uploadAttachmentCount"/> <!--实际上传附件数量-->
+		<property name="subjectColor"/> <!--标题颜色-->
+		<property name="priority"/> <!--重要等级-->
+		<property name="lastModified"/> <!--最后修改时间-->
+		<property name="editorId"/> <!--创建者ID-->
+		<property name="editor"/> <!--创建者-->
+		<property name="orgId"/> <!--创建者所在部门ID-->
+		<property name="orgName"/> <!--创建者所在部门名称-->
+		<property name="unitId"/> <!--创建者所在单位ID-->
+		<property name="unitName"/> <!--创建者所在单位名称-->
+		<property name="issuePersonId"/> <!--发布人ID-->
+		<property name="mark"/> <!--文号-->
+		<property name="anonymousLevel"/> <!--匿名用户访问级别,0/不能访问,1/仅标题,2/完全访问-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<property name="sourceRecordId"/> <!--源记录ID-->
+		<property name="sourceRecordClassName"/> <!--源记录类名称-->
+		<property name="sourceRecordUrl"/> <!--源记录URL-->
+		<property name="columnName"/> <!--所在栏目名称-->
+		<property name="status"/> <!--状态,0/撤销发布,1/待处理,2/退回、取回修改,3/已发布,4/办结未发布,5/已删除	-->
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+		<set name="opinions" table="cms_resource_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.cms.siteresource.pojo.SiteResourceOpinion" />
+		</set>
+		<set name="visitors" table="cms_resource_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.cms.siteresource.pojo.SiteResourcePrivilege" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="subjections" table="cms_resource_subjection" order-by="id">
+			<key column="resourceId" />
+			<one-to-many class="com.yuanluesoft.cms.siteresource.pojo.SiteResourceSubjection" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="lazyBody" table="cms_resource_body">
+			<key column="id" />
+			<one-to-many class="com.yuanluesoft.cms.siteresource.pojo.SiteResourceBody" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="accessStats" table="stat_access" where="pageName='article' and applicationName='cms/sitemanage'">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.stat.pojo.AccessStat" />
+		</set>
+		<set name="relationLinks" table="cms_resource_relation_link" lazy="true" inverse="true" cascade="delete" order-by="priority desc, id">
+			<key column="resourceId" />
+			<one-to-many class="com.yuanluesoft.cms.siteresource.pojo.SiteResourceRelationLink" />
+		</set>
+		<set name="relatedLinks" table="cms_resource_relation_link" lazy="true" inverse="true" cascade="delete">
+			<key column="relationResourceId" />
+			<one-to-many class="com.yuanluesoft.cms.siteresource.pojo.SiteResourceRelationLink" />
+		</set>
+		<set name="resourcePhotos" table="cms_resource_photo" lazy="true" inverse="true" cascade="delete" order-by="priority desc, id">
+			<key column="resourceId" />
+			<one-to-many class="com.yuanluesoft.cms.siteresource.pojo.SiteResourcePhoto" />
+		</set>
+		<set name="resourceVideos" table="cms_resource_video" lazy="true" inverse="true" cascade="delete" order-by="priority desc, id">
+			<key column="resourceId" />
+			<one-to-many class="com.yuanluesoft.cms.siteresource.pojo.SiteResourceVideo" />
+		</set>
+		<set name="resourceTops" table="cms_resource_top" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="resourceId" />
+			<one-to-many class="com.yuanluesoft.cms.siteresource.pojo.SiteResourceTop" />
+		</set>
+	</class>
+
+	<class name="com.yuanluesoft.cms.siteresource.pojo.SiteResourceBody" table="cms_resource_body">
+		<id name="id">
+			<generator class="assigned" />
+		</id>
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/>
+	</class>
+
+	<class name="com.yuanluesoft.cms.siteresource.pojo.SiteResourcePrivilege" table="cms_resource_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="visitorId" />
+		<property name="recordId" />
+		<property name="accessLevel" />
+	</class>
+
+	<class name="com.yuanluesoft.cms.siteresource.pojo.SiteResourceOpinion" table="cms_resource_opinion">
+	 	<id name="id" column="id" type="long">
+	 		<generator class="assigned" />
+	 	</id>
+	 	<property name="opinion" />
+	 	<property name="created" />
+	 	<property name="mainRecordId" />
+	 	<property name="opinionType" />
+	 	<property name="personId" />
+	 	<property name="activityId" />
+	 	<property name="workItemId" />
+	 	<property name="activityName" />
+	 	<property name="personName" />
+	 	<property name="agentName" />
+	 	<property name="agentId" />
+	</class>
+	
+	<class name="com.yuanluesoft.cms.siteresource.pojo.SiteResourceSubjection" table="cms_resource_subjection">
+	 	<id name="id">
+	 		<generator class="assigned" />
+	 	</id>
+	 	<property name="siteId" />
+	 	<property name="resourceId" />
+	</class>
+	
+	<!--站点资源:相关链接-->
+	<class name="com.yuanluesoft.cms.siteresource.pojo.SiteResourceRelationLink" table="cms_resource_relation_link">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="resourceId"/> <!--资源ID,NUMERIC(20,0)-->
+		<property name="relationResourceId"/> <!--关联资源ID,NUMERIC(20,0)-->
+		<property name="linkName"/> <!--链接名称,VARCHAR(300)-->
+		<property name="linkUrl"/> <!--链接地址,VARCHAR(300)-->
+		<property name="linkTime"/> <!--发布时间,TIMESTAMP null-->
+		<property name="priority"/> <!--优先级,NUMERIC(7,4)-->
+		<property name="halt"/> <!--是否停用,NUMERIC(1)-->
+	</class>
+	
+	<!--站点资源:图集-->
+	<class name="com.yuanluesoft.cms.siteresource.pojo.SiteResourcePhoto" table="cms_resource_photo">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="resourceId"/> <!--资源ID,NUMERIC(20,0)-->
+		<property name="name"/> <!--图片,VARCHAR(250)-->
+		<property name="subject"/> <!--标题,VARCHAR(300)-->
+		<property name="description"/> <!--描述,TEXT-->
+		<property name="priority"/> <!--优先级,NUMERIC(7,4)-->
+	</class>
+	
+	<!--站点资源:视频集-->
+	<class name="com.yuanluesoft.cms.siteresource.pojo.SiteResourceVideo" table="cms_resource_video">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="resourceId"/> <!--资源ID,NUMERIC(20,0)-->
+		<property name="name"/> <!--视频,VARCHAR(250)-->
+		<property name="subject"/> <!--标题,VARCHAR(300)-->
+		<property name="description"/> <!--描述,TEXT-->
+		<property name="priority"/> <!--优先级,NUMERIC(7,4)-->
+	</class>
+	
+	<!--站点资源:置顶-->
+	<class name="com.yuanluesoft.cms.siteresource.pojo.SiteResourceTop" table="cms_resource_top">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="resourceId"/> <!--资源ID,NUMERIC(20,0)-->
+		<property name="siteId"/> <!--站点/栏目ID,NUMERIC(20,0)-->
+		<property name="expire"/> <!--有效期,DATE-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+	</class>
+	 
+	<!-- 发布统计(包括站点资源和信息公开) -->
+	<class name="com.yuanluesoft.cms.siteresource.pojo.CmsStat" table="cms_stat">
+		<id name="id">
+			<generator class="assigned"/>
+		</id>
+		<property name="created"/>
+		<property name="issueTime"/>
+		<property name="status"/>
+		<property name="orgId"/> <!-- 发布人机构ID -->
+		<property name="orgName"/> <!-- 发布人机构名称 -->
+		<property name="unitId"/> <!-- 发布人单位ID -->
+		<property name="unitName"/> <!-- 发布人单位名称 -->
+		<!--  formula="(select max(user_org.name) from user_org where user_org.type=2 and user_org.name!='下属单位' and (user_org.id=orgId or user_org.id in (select user_org_subjection.parentOrgId from user_org_subjection where user_org_subjection.orgId=orgId)))" -->
+	</class>
+	
+	<!--静态页面处理:模板引用到的站点资源列表-->
+	<class name="com.yuanluesoft.cms.siteresource.pojo.TemplateResourceList" table="cms_template_resource_list">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="templateId"/> <!--模板ID-->
+		<property name="siteId"/> <!--资源隶属栏目ID-->
+	</class>
+	
+	<!--信息保障报表:单位分类-->
+	<class name="com.yuanluesoft.cms.siteresource.report.pojo.EnsureUnitCategory" table="cms_ensure_unit_category">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="siteId"/> <!--站点ID,NUMERIC(20,0)-->
+		<property name="category"/> <!--分类名称,如：第一系列、第二系列、第三系列,VARCHAR(30)-->
+		<property name="unitIds"/> <!--单位ID,VARCHAR(4000)-->
+		<property name="unitNames"/> <!--单位名称,VARCHAR(4000)-->
+		<property name="priority"/> <!--优先级,NUMERIC(7,4)-->
+	</class>
+	
+	<!--信息保障报表:栏目配置-->
+	<class name="com.yuanluesoft.cms.siteresource.report.pojo.EnsureColumnConfig" table="cms_ensure_column_config">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="siteId"/> <!--站点ID,NUMERIC(20,0)-->
+		<property name="columnIds"/> <!--栏目ID,0/全部栏目,1/其他应保障栏目,2/政府信息公开,VARCHAR(4000)-->
+		<property name="columnNames"/> <!--栏目名称,VARCHAR(4000)-->
+		<property name="mode"/> <!--计分方式,0/按信息量,1/按维护栏目数,NUMERIC(1)-->
+		<property name="score"/> <!--分数,NUMERIC(3)-->
+		<property name="captureScore"/> <!--信息抓取分数,非集群单位时有效,NUMERIC(3)-->
+	</class>
+</hibernate-mapping>

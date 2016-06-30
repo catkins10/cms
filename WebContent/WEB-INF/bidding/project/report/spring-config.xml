@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 报表服务 -->
+	<bean id="biddingProjectReportService" class="com.yuanluesoft.bidding.project.report.service.spring.BiddingProjectReportServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="excelReportService"><ref bean="excelReportService"/></property>
+		<property name="biddingProjectService"><ref bean="biddingProjectService"/></property>
+		<property name="biddingProjectParameterService"><ref bean="biddingProjectParameterService"/></property>
+		<property name="agentSettleDate"><value>2012-09-01</value></property>
+	</bean>
+</beans>

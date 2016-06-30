@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--人员基本信息-->
+	<class name="com.yuanluesoft.j2oa.personnel.pojo.PersonnelEmployee" table="personnel_employee">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="serialNumber"/> <!--编号,varchar(50)-->
+		<property name="name"/> <!--姓名,varchar(30)-->
+		<property name="sex"/> <!--性别,M/F,char(1)-->
+		<property name="birthday"/> <!--出生日期,date null-->
+		<property name="nativePlace"/> <!--籍贯,varchar(50)-->
+		<property name="nation"/> <!--民族,varchar(20)-->
+		<property name="bloodType"/> <!--血型,varchar(20)-->
+		<property name="identityCard"/> <!--身份证号,varchar(30)-->
+		<property name="maritalStatus"/> <!--婚姻状况,已婚、未婚,varchar(4)-->
+		<property name="health"/> <!--健康状况,varchar(30)-->
+		<property name="politicalStatus"/> <!--政治面貌,varchar(30)-->
+		<property name="joinedDate"/> <!--入司时间,date null-->
+		<property name="employedDate"/> <!--参加工作时间,date null-->
+		<property name="address"/> <!--家庭住址,varchar(200)-->
+		<property name="tel"/> <!--联系电话,varchar(100)-->
+		<property name="email"/> <!--E-mail地址,varchar(100)-->
+		<property name="level"/> <!--技术职称或等级,varchar(30)-->
+		<property name="department"/> <!--所在部门,varchar(50)-->
+		<property name="duty"/> <!--职务,varchar(50)-->
+		<property name="school"/> <!--毕业院校,varchar(100)-->
+		<property name="graduationDate"/> <!--毕业时间,date null-->
+		<property name="education"/> <!--学历,varchar(20)-->
+		<property name="specialty"/> <!--学习专业,varchar(100)-->
+		<property name="dutyStatus"/> <!--工作状态,试用、在岗、退休、离职,varchar(20)-->
+		<property name="creatorId"/> <!--登记人ID,bigint unsigned-->
+		<property name="creator"/> <!--登记人,varchar(30)-->
+		<property name="created"/> <!--登记时间,timestamp null-->
+		<!--岗位变动情况-->
+		<set name="dutyChanges" table="personnel_duty_change" lazy="true" inverse="true" cascade="delete" order-by="changeDate">
+			<key column="employeeId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.personnel.pojo.PersonnelDutyChange"/>
+		</set>
+		<!--奖惩情况-->
+		<set name="rewardsPunishments" table="personnel_rewards_punishment" lazy="true" inverse="true" cascade="delete" order-by="happenDate">
+			<key column="employeeId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.personnel.pojo.PersonnelRewardsPunishment"/>
+		</set>
+		<!--学习经历-->
+		<set name="educations" table="personnel_education" lazy="true" inverse="true" cascade="delete" order-by="beginDate">
+			<key column="employeeId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.personnel.pojo.PersonnelEducation"/>
+		</set>
+		<!--工作经历-->
+		<set name="employments" table="personnel_employment" lazy="true" inverse="true" cascade="delete" order-by="beginDate">
+			<key column="employeeId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.personnel.pojo.PersonnelEmployment"/>
+		</set>
+		<!--培训经历-->
+		<set name="trainings" table="personnel_training" lazy="true" inverse="true" cascade="delete" order-by="beginDate">
+			<key column="employeeId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.personnel.pojo.PersonnelTraining"/>
+		</set>
+		<!--持有证书和资质情况-->
+		<set name="certificates" table="personnel_certificate" lazy="true" inverse="true" cascade="delete" order-by="issueDate">
+			<key column="employeeId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.personnel.pojo.PersonnelCertificate"/>
+		</set>
+	</class>
+	
+	<!--岗位变动情况-->
+	<class name="com.yuanluesoft.j2oa.personnel.pojo.PersonnelDutyChange" table="personnel_duty_change">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="employeeId"/> <!--人员ID,bigint unsigned-->
+		<property name="changeDate"/> <!--时间,date null-->
+		<property name="previousDuty"/> <!--历史岗位,varchar(50)-->
+		<property name="newDuty"/> <!--现在岗位,varchar(50)-->
+		<property name="changeReason"/> <!--岗位变动原因,varchar(2000)-->
+		<property name="remark"/> <!--备注,varchar(5000)-->
+	</class>
+	
+	<!--奖惩情况-->
+	<class name="com.yuanluesoft.j2oa.personnel.pojo.PersonnelRewardsPunishment" table="personnel_rewards_punishment">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="employeeId"/> <!--人员ID,bigint unsigned-->
+		<property name="happenDate"/> <!--时间,date null-->
+		<property name="content"/> <!--奖惩内容,varchar(300)-->
+		<property name="reason"/> <!--奖惩原因,varchar(2000)-->
+		<property name="remark"/> <!--备注,varchar(500)-->
+	</class>
+	
+	<!--学习经历-->
+	<class name="com.yuanluesoft.j2oa.personnel.pojo.PersonnelEducation" table="personnel_education">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="employeeId"/> <!--人员ID,bigint unsigned-->
+		<property name="beginDate"/> <!--开始时间,date null-->
+		<property name="endDate"/> <!--结束时间,date null-->
+		<property name="school"/> <!--所在学校,varchar(100)-->
+		<property name="description"/> <!--学习内容,varchar(2000)-->
+		<property name="remark"/> <!--备注,varchar(500)-->
+	</class>
+	
+	<!--工作经历-->
+	<class name="com.yuanluesoft.j2oa.personnel.pojo.PersonnelEmployment" table="personnel_employment">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="employeeId"/> <!--人员ID,bigint unsigned-->
+		<property name="beginDate"/> <!--开始时间,date null-->
+		<property name="endDate"/> <!--结束时间,date null-->
+		<property name="company"/> <!--所在单位,varchar(200)-->
+		<property name="duty"/> <!--职务,varchar(50)-->
+		<property name="description"/> <!--工作情况概述,varchar(2000)-->
+		<property name="remark"/> <!--备注,varchar(500)-->
+	</class>
+	
+	<!--培训经历-->
+	<class name="com.yuanluesoft.j2oa.personnel.pojo.PersonnelTraining" table="personnel_training">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="employeeId"/> <!--人员ID,bigint unsigned-->
+		<property name="beginDate"/> <!--开始时间,date null-->
+		<property name="endDate"/> <!--结束时间,date null-->
+		<property name="description"/> <!--培训内容,varchar(2000)-->
+		<property name="remark"/> <!--备注,varchar(500)-->
+	</class>
+	
+	<!--持有证书和资质情况-->
+	<class name="com.yuanluesoft.j2oa.personnel.pojo.PersonnelCertificate" table="personnel_certificate">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="employeeId"/> <!--人员ID,bigint unsigned-->
+		<property name="issueDate"/> <!--时间,date null-->
+		<property name="name"/> <!--证书或者资质名称,varchar(100)-->
+		<property name="remark"/> <!--备注,varchar(500)-->
+	</class>
+</hibernate-mapping>

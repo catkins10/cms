@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- SOAP连接池 -->
+	<bean id="soapConnectionPool" class="com.yuanluesoft.jeaf.soap.SoapConnectionPool"/>
+
+	<!-- 配置扩展解析器 -->
+	<bean id="configureExtendParser" class="com.yuanluesoft.jeaf.graphicseditor.parser.dom4j.ConfigureExtendParser">
+		<property name="lineParser"><ref local="lineParser"/></property>
+		<property name="modifyHistoryParser"><ref local="modifyHistoryParser"/></property>
+	</bean>
+	
+	<!-- 线条解析器 -->
+	<bean id="lineParser" class="com.yuanluesoft.jeaf.graphicseditor.parser.dom4j.LineParser"/>
+
+	<!-- 修改历史解析器 -->
+	<bean id="modifyHistoryParser" class="com.yuanluesoft.jeaf.graphicseditor.parser.dom4j.ModifyHistoryParser"/>
+	
+	<!-- 链接解析器 -->
+	<bean id="transitionParser" class="com.yuanluesoft.jeaf.graphicseditor.parser.dom4j.TransitionParser"/>
+	
+	<!-- 用户解析器 -->
+	<bean id="userParser" class="com.yuanluesoft.jeaf.base.parser.dom4j.UserParser"/>
+	
+	<!-- 优先级服务 -->
+	<bean id="priorityService" class="com.yuanluesoft.jeaf.adjustpriority.service.spring.PriorityServiceImpl">
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="viewService"><ref bean="viewService"/></property>
+		<property name="viewDefineService"><ref bean="viewDefineService"/></property>
+	</bean>
+</beans>

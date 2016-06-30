@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<statisticView name="stat" title="信息公开发布统计" pageRows="100" width="100%" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.pojo.PublicInfo</pojo>
+			<where>not PublicInfo.unitName is null</where>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.sitemanage.pojo.PublicInfo</pojo>
+			</data>
+			<category value="year(PublicInfo.issueTime)"> <!--value必须有-->
+				<where>PublicInfo.status='3'</where> <!--  and PublicInfo.orgId>0 -->
+				<data>year(PublicInfo.issueTime)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(PublicInfo.issueTime)"> <!--value必须有-->
+				<where>PublicInfo.status='3' and year(PublicInfo.issueTime)={CATEGORY1VALUE}</where> <!--  and PublicInfo.orgId>0 -->
+				<data>year(PublicInfo.issueTime)={CATEGORY1VALUE} and month(PublicInfo.issueTime)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<statistics hideDetail="true">
+			<statistic title="　{PARAMETER:rowIndex}) {PARAMETER:orgName}">
+				<groupFields>
+					<groupField name="unitName"/>
+					<groupField name="orgId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="createCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status&lt;'5'"/> <!-- 上报数 -->
+					<statisticColumn name="issueCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status='3'"/> <!-- 采用数量 -->
+					<statisticColumn name="nopassCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status='4'"/> <!-- 未采用数量 -->
+					<statisticColumn name="unissueCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status='0'"/> <!-- 撤销发布数量 -->
+					<statisticColumn name="todoCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status='2'"/> <!-- 待发布数量 -->
+					<statisticColumn name="undoCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status='1'"/> <!-- 退回修改数量 -->
+					<statisticColumn name="deletedCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status>'4'"/> <!-- 删除数量 -->
+				</statisticColumns>
+			</statistic>
+			<statistic title="{PARAMETER:rowIndex}.{PARAMETER:unitName}">
+				<groupFields>
+					<groupField name="unitName"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="createCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status&lt;'5'"/> <!-- 上报数 -->
+					<statisticColumn name="issueCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status='3'"/> <!-- 采用数量 -->
+					<statisticColumn name="nopassCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status='4'"/> <!-- 未采用数量 -->
+					<statisticColumn name="unissueCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status='0'"/> <!-- 撤销发布数量 -->
+					<statisticColumn name="todoCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status='2'"/> <!-- 待发布数量 -->
+					<statisticColumn name="undoCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status='1'"/> <!-- 退回修改数量 -->
+					<statisticColumn name="deletedCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status>'4'"/> <!-- 删除数量 -->
+				</statisticColumns>
+			</statistic>
+			<statistic statisticAll="true" title="合计">
+				<statisticColumns>
+					<statisticColumn name="createCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status&lt;'5'"/> <!-- 上报数 -->
+					<statisticColumn name="issueCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status='3'"/> <!-- 采用数量 -->
+					<statisticColumn name="nopassCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status='4'"/> <!-- 未采用数量 -->
+					<statisticColumn name="unissueCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status='0'"/> <!-- 撤销发布数量 -->
+					<statisticColumn name="todoCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status='2'"/> <!-- 待发布数量 -->
+					<statisticColumn name="undoCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status='1'"/> <!-- 退回修改数量 -->
+					<statisticColumn name="deletedCount" function="count(distinct PublicInfo.id)" whereExtend="PublicInfo.status>'4'"/> <!-- 删除数量 -->
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<scripts>
+			<script>/cms/infopublic/js/infopublic.js</script>
+		</scripts>
+		<actions>
+			<action title="统计报表" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/cms/infopublic/admin/infoReport.shtml', 360, 280);"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位名称" name="orgName"/>
+			<column title="上报数量" name="createCount" type="statistic" align="center" width="80"/>
+			<column title="采用数量" name="issueCount" type="statistic" align="center" width="80"/>
+			<column title="未采用数量" name="nopassCount" type="statistic" align="center" width="80"/>
+			<column title="撤销发布数量" name="unissueCount" type="statistic" align="center" width="80"/>
+			<column title="待发布数量" name="todoCount" type="statistic" align="center" width="80"/>
+			<column title="退回修改数量" name="undoCount" type="statistic" align="center" width="80"/>
+			<column title="删除数量" name="deletedCount" type="statistic" align="center" width="80"/>
+		</columns>
+	</statisticView>
+</views>

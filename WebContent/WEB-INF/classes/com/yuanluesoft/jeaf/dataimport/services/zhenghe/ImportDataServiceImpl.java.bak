@@ -1,0 +1,751 @@
+package com.yuanluesoft.cms.importdata.zhenghe;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.yuanluesoft.cms.articlemanage.pojo.Article;
+import com.yuanluesoft.cms.articlemanage.service.ArticleService;
+import com.yuanluesoft.cms.importdata.ImportDataService;
+import com.yuanluesoft.cms.infopublic.pojo.PublicDirectory;
+import com.yuanluesoft.cms.infopublic.pojo.PublicInfo;
+import com.yuanluesoft.cms.infopublic.pojo.PublicInfoDirectory;
+import com.yuanluesoft.cms.infopublic.pojo.PublicInfoPrivilege;
+import com.yuanluesoft.cms.infopublic.service.PublicDirectoryService;
+import com.yuanluesoft.cms.infopublic.service.PublicInfoService;
+import com.yuanluesoft.cms.leadermail.pojo.LeaderMail;
+import com.yuanluesoft.cms.publicservice.pojo.PublicServiceOpinion;
+import com.yuanluesoft.cms.publicservice.pojo.PublicServicePrivilege;
+import com.yuanluesoft.cms.sitemanage.pojo.SiteResourcePrivilege;
+import com.yuanluesoft.cms.sitemanage.pojo.WebDirectory;
+import com.yuanluesoft.jeaf.base.exception.ServiceException;
+import com.yuanluesoft.jeaf.dao.BaseDAO;
+import com.yuanluesoft.jeaf.logger.Logger;
+import com.yuanluesoft.jeaf.security.service.RecordControlService;
+import com.yuanluesoft.jeaf.util.DateTimeUtils;
+import com.yuanluesoft.jeaf.util.StringUtils;
+import com.yuanluesoft.jeaf.util.UUIDLongGenerator;
+
+/**
+ * 
+ * @author yuanluesoft
+ *
+ */
+public class ImportDataServiceImpl implements ImportDataService {
+	private BaseDAO baseDAO;
+	private String dbFileName = "C:/Documents and Settings/linchuan.KDSOFT-HP/桌面/#goback2006056.mdb";
+	private String imageUrl = "http://www.zhenghe.gov.cn/";
+	private ArticleService articleService; //文章服务
+	private PublicInfoService publicInfoService; //信息公开服务
+	private PublicDirectoryService publicDirectoryService; //信息公开目录服务
+	private int maxImport = 100;
+	
+	/**
+	 * 创建连接
+	 * @return
+	 * @throws ServiceException
+	 */
+	private Connection createConnection() throws ServiceException {
+		String connectionUrl = "jdbc:odbc:Driver={MicroSoft Access Driver (*.mdb)};DBQ=C:/Documents and Settings/linchuan.KDSOFT-HP/桌面/#goback2006056.mdb";
+		try {
+			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+			return DriverManager.getConnection(connectionUrl, "", "");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#listColumnsNotInNewCms()
+	 */
+	public List listColumnsNotInNewCms() throws ServiceException {
+		Connection con = createConnection();
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select distinct columnName from (" +
+						 "SELECT distinct class_name as columnName FROM fg_class" +
+						 " UNION SELECT distinct class_lm as columnName FROM fg_class" +
+						 ")";
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			List columnsNotInNewCms = new ArrayList();
+			columnsNotInNewCms.add("公告"); //为导入公告增加的栏目
+			while(rs.next()) {
+				String column = rs.getString("columnName");
+				if(baseDAO.findObjectByHql("select WebDirectory.id from WebDirectory WebDirectory where WebDirectory.directoryName='" + column + "'")==null) {
+					columnsNotInNewCms.add(column);
+				}
+			}
+			return columnsNotInNewCms;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+		finally {
+			try { 
+				rs.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try { 
+				stmt.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try {
+				con.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#importData(java.lang.String, boolean)
+	 */
+	public void importArticles(String columnMappings, boolean autoCreateColumn) throws ServiceException {
+		Connection con = createConnection();
+		Statement stmt = null;
+		ResultSet rs = null;
+		String[] mapping = columnMappings.replaceAll(" ", "").split(",");
+		try {
+			//导入文章
+			String sql = "SELECT news_title as subject," +
+						 " news_text as body," +
+						 " news_writer as creator," +
+						 " news_time as issueTime," +
+						 " news_from as unitName," +
+						 " news_mainclass as columnLevel1," +
+						 " news_secclass as columnLevel2" +
+						 " FROM fg_dj";
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			// Iterate through the data in the result set and display it.
+			importArticle(rs, mapping);
+			rs.close();
+			
+			//导入公告
+			sql = "SELECT news_title as subject," +
+				  " news_text as body," +
+				  " '管理员' as creator," +
+				  " news_time as issueTime," +
+				  " '政和县人民政府' as unitName," +
+				  " '公告' as columnLevel1," +
+				  " '公告' as columnLevel2" +
+				  " FROM fg_gg";
+			rs = stmt.executeQuery(sql);
+			importArticle(rs, mapping);
+			rs.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try { 
+				rs.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try { 
+				stmt.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try {
+				con.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+		}
+	}
+
+	/**
+	 * 从RS导入数据
+	 * @param rs
+	 * @throws ServiceException
+	 */
+	private void importArticle(ResultSet rs, String[] mapping) throws ServiceException {
+		try {
+			for(int l=0; rs.next() && l<maxImport; l++) {
+				try {
+					String[] columnName = new String[2];
+					columnName[0] = rs.getString("columnLevel1");
+					if(columnName[0]==null || columnName[0].equals("")) {
+						continue;
+					}
+					columnName[1] = rs.getString("columnLevel2");
+					WebDirectory directory = null;
+					for(int i=1; i>=0 && directory==null; i--) {
+						if(columnName[i]==null || columnName[i].equals("")) {
+							continue;
+						}
+						//查找栏目映射表,找到匹配的栏目
+						for(int j=0; j<mapping.length; j++) {
+							if(mapping[j].startsWith(columnName[i] + ">>")) {
+								directory = (WebDirectory)baseDAO.findObjectByHql("from WebDirectory WebDirectory where WebDirectory.directoryName='" + mapping[j].substring((columnName[i] + ">>").length()) + "'");
+								break;
+							}
+						}
+						if(directory==null) { //直接按栏目名称对应
+							//查找对应的栏目
+							directory = (WebDirectory)baseDAO.findObjectByHql("from WebDirectory WebDirectory where WebDirectory.directoryName='" + columnName[i] + "'");
+						}
+					}
+					String subject = rs.getString("subject");
+					Timestamp issueTime = rs.getTimestamp("issueTime");
+					System.out.println("ImportData: read a article, subject is " + subject + ".");
+					if(directory==null) {
+						continue;
+					}
+					//检查相同标题和发布时间的记录是否已经存在
+					String hql = "from Article Article" + 
+								 " where Article.subject='" + subject + "'" +
+								 " and Article.issueTime=TIMESTAMP(" + DateTimeUtils.formatTimestamp(issueTime, null) + ")";
+					if(baseDAO.findObjectByHql(hql)!=null) {
+						continue;
+					}
+					Article article = new Article();
+					article.setId(UUIDLongGenerator.generateId()); //ID
+					article.setSubject(subject);
+					//article.setSource(rs.getString("source"));
+					article.setEditor(rs.getString("creator"));
+					article.setIssueTime(issueTime);
+					article.setCreated(issueTime);
+					article.setIssue('1');
+					article.setIssuePersonId(100);
+					String body = resetBody(rs.getString("body"));
+					article.setBody(body==null ? " " : body);
+					article.setUnitName(rs.getString("unitName"));
+					article.setOrgName(article.getUnitName());
+					articleService.save(article); //保存
+					
+					//设置所在站点
+					articleService.updateSiteResourceSubjections(article, true, "" + directory.getId());
+
+					//创建权限记录
+					SiteResourcePrivilege privilege = new SiteResourcePrivilege();
+					privilege.setId(UUIDLongGenerator.generateId());
+					privilege.setRecordId(article.getId());
+					privilege.setVisitorId(0);
+					privilege.setVisitorType(RecordControlService.VISITOR_TYPE_DEPARTMENT);
+					privilege.setAccessLevel(RecordControlService.ACCESS_LEVEL_READONLY);
+					baseDAO.saveObject(privilege);
+					System.out.println("ImportData: importted.");
+				}
+				catch(Exception e) {
+					Logger.exception(e);
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 更新正文
+	 * @param content
+	 * @return
+	 * @throws ServiceException
+	 */
+	private String resetBody(String content) throws ServiceException {
+		if(content==null) {
+			return content;
+		}
+		//替换<?xml.../>和图片路径
+		content = content.replaceAll("<\\x3Fxml[^>]+>", "").replaceAll("src=\"/", "src=\"" + imageUrl).replaceAll("href=\"/", "href=\"" + imageUrl);
+		return content;// 更新图片路径后的试题内容
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#listPublicInfoDirectoriesNotInNewCms()
+	 */
+	public List listPublicInfoDirectoriesNotInNewCms() throws ServiceException {
+		Connection con = createConnection();
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select distinct columnName from (" +
+						 "SELECT distinct main_class as columnName FROM gbclass" +
+						 " UNION SELECT distinct class_name as columnName FROM gxclass" +
+						 ")";
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			List columnsNotInNewCms = new ArrayList();
+			while(rs.next()) {
+				String column = rs.getString("columnName");
+				if(baseDAO.findObjectByHql("select PublicDirectory.id from PublicDirectory PublicDirectory where PublicDirectory.remark is null and PublicDirectory.directoryName='" + column + "'")==null) {
+					columnsNotInNewCms.add(column);
+				}
+			}
+			return columnsNotInNewCms;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+		finally {
+			try { 
+				rs.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try { 
+				stmt.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try {
+				con.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#importPublicInfos(java.lang.String, boolean)
+	 */
+	public void importPublicInfos(String directoryMappings, boolean autoCreateDirectory) throws ServiceException {
+		Connection con = createConnection();
+		Statement stmt = null;
+		ResultSet rs = null;
+		String[] mapping = directoryMappings.replaceAll(" ", "").split(",");
+		try {
+			String sql = "SELECT news_title as subject," +
+						 " news_picurl as body," + //正文下载路径
+						 " news_writer as creator," +
+						 " news_time as issueTime," +
+						 " news_from as unitName," +
+						 " news_hw as mark," +
+						 " news_sy as generateDate," +
+						 " news_lsh as infoIndex," +
+						 " news_zt as indexYear," +
+						 " (select ju_bm from ju where ju_class=info.news_from) as unitCode," +
+						 " (select main_px from gbclass where main_class=info.news_mainclass) as dirIndex1," +
+						 " (select class_px from gxclass where class_name=info.news_secclass) as dirIndex2," +
+						 " news_mainclass as columnLevel1," +
+						 " news_secclass as columnLevel2" +
+						 " FROM info";
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			importInfo(rs, mapping);
+			rs.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try { 
+				rs.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try { 
+				stmt.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try {
+				con.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+		}
+	}
+	
+	/**
+	 * 从RS导入数据
+	 * @param rs
+	 * @throws ServiceException
+	 */
+	private void importInfo(ResultSet rs, String[] mapping) throws ServiceException {
+		try {
+			for(int l=0; rs.next() && l<maxImport; l++) {
+				try {
+					String[] columnName = new String[2];
+					columnName[0] = rs.getString("columnLevel1");
+					if(columnName[0]==null || columnName[0].equals("")) {
+						continue;
+					}
+					columnName[1] = rs.getString("columnLevel2");
+					PublicDirectory directory = null;
+					for(int i=1; i>=0 && directory==null; i--) {
+						if(columnName[i]==null || columnName[i].equals("")) {
+							continue;
+						}
+						//查找目录映射表,找到匹配的目录
+						for(int j=0; j<mapping.length; j++) {
+							if(mapping[j].startsWith(columnName[i] + ">>")) {
+								directory = (PublicDirectory)baseDAO.findObjectByHql("from PublicDirectory PublicDirectory where PublicDirectory.remark is null and PublicDirectory.directoryName='" + mapping[j].substring((columnName[i] + ">>").length()) + "'");
+								break;
+							}
+						}
+						if(directory==null) { //直接按目录名称对应
+							//查找对应的目录
+							directory = (PublicDirectory)baseDAO.findObjectByHql("from PublicDirectory PublicDirectory where PublicDirectory.remark is null and PublicDirectory.directoryName='" + columnName[i] + "'");
+						}
+					}
+					String subject = rs.getString("subject");
+					System.out.println("ImportData: read a info, subject is " + subject + ".");
+					if(directory==null) {
+						continue;
+					}
+					Date generateDate = rs.getDate("generateDate"); //生成日期
+					//检查相同标题和生成时间的记录是否已经存在
+					String hql = "from PublicInfo PublicInfo" + 
+								 " where PublicInfo.subject='" + subject + "'" +
+								 (generateDate==null ? "" : " and PublicInfo.generateDate=DATE(" + DateTimeUtils.formatDate(generateDate, null) + ")");
+					if(baseDAO.findObjectByHql(hql)!=null) {
+						continue;
+					}
+					
+					//索引号
+					String infoIndex = rs.getString("infoIndex");
+					String indexYear = rs.getString("indexYear");
+					String unitCode = rs.getString("unitCode");
+					String dirIndex1 = rs.getString("dirIndex1");
+					String dirIndex2 = rs.getString("dirIndex2");
+					infoIndex = "NP10" + unitCode + "-" + dirIndex1 + (dirIndex2==null || dirIndex2.equals("") ? "00" : dirIndex2) + "-" + indexYear + "-" + infoIndex;
+					
+					PublicInfo info = new PublicInfo();
+					info.setId(UUIDLongGenerator.generateId()); //ID
+					info.setSubject(subject); //标题
+					info.setInfoIndex(infoIndex); //索引号
+					info.setInfoFrom(rs.getString("unitName")); //发布机构
+					info.setMark(rs.getString("mark")); //文号
+					info.setGenerateDate(generateDate); //生成日期
+					info.setCreator(rs.getString("creator")); //创建人
+					info.setCreatorId(0); //创建人ID
+					info.setCreated(rs.getTimestamp("issueTime")); //创建时间
+					info.setIssueTime(info.getCreated()); //发布时间
+					info.setWorkflowInstanceId(null);
+					info.setSummarize(null); //内容概述
+					info.setCategory(null); //主题分类
+					info.setKeywords(null); //主题词
+					info.setIssuePersonId(100);
+					info.setIssue('1');
+					info.setIssueSite('1');
+					info.setIssueSiteIds(null); //同步的网站ID列表
+					String body = rs.getString("body"); 
+					if(body!=null && !body.equals("") && !body.equals("UploadFiles/")) {
+						body = "<a href=\"" + (body.startsWith("UploadFiles") ? imageUrl + body : body) + "\">点击此处下载原文件</a>";
+					}
+					else {
+						body = " ";
+					}
+					info.setBody(body);
+					info.setOrgId(0); //创建者所在部门ID
+					info.setOrgName(info.getInfoFrom()); //创建者所在部门名称
+					info.setUnitId(0); //创建者所在单位ID
+					info.setUnitName(info.getOrgName()); //创建者所在单位名称
+					publicInfoService.save(info); //保存
+					
+					//创建权限记录
+					PublicInfoPrivilege privilege = new PublicInfoPrivilege();
+					privilege.setId(UUIDLongGenerator.generateId());
+					privilege.setRecordId(info.getId());
+					privilege.setVisitorId(0);
+					privilege.setVisitorType(RecordControlService.VISITOR_TYPE_DEPARTMENT);
+					privilege.setAccessLevel(RecordControlService.ACCESS_LEVEL_READONLY);
+					baseDAO.saveObject(privilege);
+					
+					//给各部门创建目录
+					PublicDirectory deptDirectory = (PublicDirectory)baseDAO.findObjectByHql("from PublicDirectory PublicDirectory where PublicDirectory.directoryName='" + info.getInfoFrom() + "'");
+					if(deptDirectory!=null) {
+						for(int i=0; i<2; i++) {
+							if(columnName[i]==null || columnName[i].equals("")) {
+								break;
+							}
+							long parentDirectoryId = deptDirectory.getId();
+							deptDirectory = (PublicDirectory)baseDAO.findObjectByHql("from PublicDirectory PublicDirectory where PublicDirectory.parentDirectoryId=" + parentDirectoryId + " and PublicDirectory.directoryName='" + columnName[i] + "'");
+							if(deptDirectory==null) {
+								deptDirectory = (PublicInfoDirectory)publicDirectoryService.createDirectory(parentDirectoryId, columnName[i], "info", null, 0, "");
+								deptDirectory.setRemark("从原网站导入"); //备注
+								baseDAO.updateObject(deptDirectory);
+							}
+						}
+					}
+					
+					//设置所在目录
+					publicInfoService.updateInfoSubjections(info, true, "" + directory.getId() + (deptDirectory==null ? "" : "," + deptDirectory.getId()));
+					
+					System.out.println("ImportData: importted.");
+				}
+				catch(Exception e) {
+					Logger.exception(e);
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#importOtherData()
+	 */
+	public void importOtherData() throws ServiceException {
+		Connection con = createConnection();
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			//导入领导信箱
+			String sql = "select news_password as queryPassword," + //查询密码
+						 " news_title as subject," + //主题
+						 " news_writer as creator," + //创建人姓名
+						 " news_time as created," + //创建时间
+						 " news_phone as creatorTel," + //联系电话
+						 " '身份证' as creatorCertificateName," + //创建人证件名称
+						 " news_idcard as creatorIdentityCard," + //创建人身份证/证件号码
+						 " news_ip as creatorIP," + //创建人IP
+						 " news_address as creatorAddress," + //创建人地址
+						 " news_text as body," + //正文
+						 " news_mainclass as type," + //类型
+						 " id as remark" + //附注
+						 " from question";
+			
+						 //news_ as workingDay," + //指定工作日
+						 //news_ as creatorMail," + //邮箱
+						 //news_ as creatorSex," + //性别
+						 //news_ as creatorMobile," + //创建人手机
+						 //news_ as creatorFax," + //创建人传真
+						 //news_ as creatorUnit," + //创建人所在单位
+						 //news_ as creatorJob," + //创建人职业
+						 //news_ as creatorPostalcode," + //创建人邮编
+						 //news_ as isPublic," + //是否允许公开
+						 //news_ as remark," + //附注
+						 //news_ as publicPass," + //同意公开
+						 //news_ as publicBody," + //公开正文
+						 //news_ as publicWorkflow," + //公开办理流程
+						 //news_ as publicSubject," + //公开的主题
+						 //news_ as popedom," + //事件辖区
+						 //news_ as area," + //事件地点
+						 //news_mainclass as category," + //信件类别
+						 //news_ as workingDay," + //指定工作日
+						 //news_ as happenTime," + //事件时间
+			
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			for(int l=0; rs.next() && l<maxImport; l++) {
+				try {
+					String subject = rs.getString("subject");
+					Timestamp created = rs.getTimestamp("created");
+					//检查相同标题和生成时间的记录是否已经存在
+					String hql = "from LeaderMail LeaderMail" + 
+								 " where LeaderMail.subject='" + subject + "'" +
+								 " and LeaderMail.created=TIMESTAMP(" + DateTimeUtils.formatTimestamp(created, null) + ")";
+					if(baseDAO.findObjectByHql(hql)!=null) {
+						continue;
+					}
+					LeaderMail mail = new LeaderMail();
+					mail.setId(UUIDLongGenerator.generateId()); //ID
+					mail.setSn((mail.getId() + "").substring(0, 14));
+					mail.setQueryPassword(rs.getString("queryPassword")); //查询密码
+					mail.setSubject(subject); //主题
+					mail.setCreator(rs.getString("creator")); //创建人姓名
+					mail.setCreated(created); //创建时间
+					mail.setCreatorTel(rs.getString("creatorTel")); //联系电话
+					mail.setCreatorCertificateName(rs.getString("creatorCertificateName")); //创建人证件名称
+					mail.setCreatorIdentityCard(rs.getString("creatorIdentityCard")); //创建人身份证/证件号码
+					mail.setCreatorIP(rs.getString("creatorIP")); //创建人IP
+					mail.setCreatorAddress(rs.getString("creatorAddress")); //创建人地址
+					mail.setContent(StringUtils.filterHtmlElement(rs.getString("body"))); //正文
+					mail.setType(rs.getString("type")); //类型
+					mail.setRemark(rs.getString("remark")); //附注
+					baseDAO.saveObject(mail);
+					
+					//创建权限记录
+					PublicServicePrivilege privilege = new PublicServicePrivilege();
+					privilege.setId(UUIDLongGenerator.generateId());
+					privilege.setRecordId(mail.getId());
+					privilege.setVisitorId(0);
+					privilege.setVisitorType(RecordControlService.VISITOR_TYPE_DEPARTMENT);
+					privilege.setAccessLevel(RecordControlService.ACCESS_LEVEL_READONLY);
+					baseDAO.saveObject(privilege);
+				}
+				catch(Exception e) {
+					Logger.exception(e);
+				}
+			}
+			rs.close();
+			
+			//导入领导信箱办理意见
+			sql = "select news_text as opinion," + //办理意见
+				  " news_name as personName," + //意见填写人
+				  " news_time as created," + //创建时间
+				  " news_id as mailId" + //信件ID
+				  " from qhf";
+			rs = stmt.executeQuery(sql);
+			for(int l=0; rs.next() && l<maxImport; l++) {
+				try {
+					String personName = rs.getString("personName");
+					Timestamp created = rs.getTimestamp("created");
+					//检查相同填写人和填写时间的记录是否已经存在
+					String hql = "from PublicServiceOpinion PublicServiceOpinion" + 
+								 " where PublicServiceOpinion.personName='" + personName + "'" +
+								 " and PublicServiceOpinion.created=TIMESTAMP(" + DateTimeUtils.formatTimestamp(created, null) + ")";
+					if(baseDAO.findObjectByHql(hql)!=null) {
+						continue;
+					}
+					PublicServiceOpinion opinion = new PublicServiceOpinion();
+					opinion.setId(UUIDLongGenerator.generateId()); //ID
+					opinion.setOpinion(StringUtils.filterHtmlElement(rs.getString("opinion")));
+					opinion.setCreated(created);
+					Number mailId = (Number)baseDAO.findObjectByHql("select LeaderMail.id from LeaderMail LeaderMail where LeaderMail.remark='" + rs.getString("mailId") + "'");
+					opinion.setMainRecordId(mailId==null ? 0 : mailId.longValue());
+					opinion.setOpinionType("部门办理");
+					opinion.setPersonName(personName);
+					baseDAO.saveObject(opinion);
+				}
+				catch(Exception e) {
+					Logger.exception(e);
+				}
+			}
+			rs.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try { 
+				rs.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try { 
+				stmt.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try {
+				con.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+		}
+	}
+
+	/**
+	 * @return the baseDAO
+	 */
+	public BaseDAO getBaseDAO() {
+		return baseDAO;
+	}
+
+	/**
+	 * @param baseDAO the baseDAO to set
+	 */
+	public void setBaseDAO(BaseDAO baseDAO) {
+		this.baseDAO = baseDAO;
+	}
+
+	/**
+	 * @return the dbFileName
+	 */
+	public String getDbFileName() {
+		return dbFileName;
+	}
+
+	/**
+	 * @param dbFileName the dbFileName to set
+	 */
+	public void setDbFileName(String dbFileName) {
+		this.dbFileName = dbFileName;
+	}
+	/**
+	 * @return the imageUrl
+	 */
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	/**
+	 * @param imageUrl the imageUrl to set
+	 */
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	/**
+	 * @return the publicInfoService
+	 */
+	public PublicInfoService getPublicInfoService() {
+		return publicInfoService;
+	}
+
+	/**
+	 * @param publicInfoService the publicInfoService to set
+	 */
+	public void setPublicInfoService(PublicInfoService publicInfoService) {
+		this.publicInfoService = publicInfoService;
+	}
+
+	/**
+	 * @return the articleService
+	 */
+	public ArticleService getArticleService() {
+		return articleService;
+	}
+
+	/**
+	 * @param articleService the articleService to set
+	 */
+	public void setArticleService(ArticleService articleService) {
+		this.articleService = articleService;
+	}
+
+	/**
+	 * @return the publicDirectoryService
+	 */
+	public PublicDirectoryService getPublicDirectoryService() {
+		return publicDirectoryService;
+	}
+
+	/**
+	 * @param publicDirectoryService the publicDirectoryService to set
+	 */
+	public void setPublicDirectoryService(
+			PublicDirectoryService publicDirectoryService) {
+		this.publicDirectoryService = publicDirectoryService;
+	}
+
+	/**
+	 * @return the maxImport
+	 */
+	public int getMaxImport() {
+		return maxImport;
+	}
+
+	/**
+	 * @param maxImport the maxImport to set
+	 */
+	public void setMaxImport(int maxImport) {
+		this.maxImport = maxImport;
+	}
+}

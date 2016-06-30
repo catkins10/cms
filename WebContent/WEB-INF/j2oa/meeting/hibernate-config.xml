@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--会议信息-->
+	<class name="com.yuanluesoft.j2oa.meeting.pojo.Meeting" table="meeting_meeting">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="subject"/> <!--名称-->
+		<property name="content" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--议题-->
+		<property name="address"/> <!--会议地点-->
+		<property name="beginTime"/> <!--开始时间-->
+		<property name="endTime"/> <!--结束时间-->
+		<property name="issued"/> <!--是否发布-->
+		<property name="issueTime"/> <!--发布时间-->
+		<property name="handlerId"/> <!--经办人ID-->
+		<property name="handlerName"/> <!--经办人-->
+		<property name="created"/> <!--创建时间-->
+		<property name="reamrk"/> <!--备注-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<set name="visitors" table="meeting_meeting_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.meeting.pojo.MeetingPrivilege"/>
+		</set>
+		<set name="opinions" table="meeting_meeting_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.meeting.pojo.MeetingOpinion"/>
+		</set>
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+	</class>
+	
+	<!--会议权限控制/与会人员-->
+	<class name="com.yuanluesoft.j2oa.meeting.pojo.MeetingPrivilege" table="meeting_meeting_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--会议:办理意见-->
+	<class name="com.yuanluesoft.j2oa.meeting.pojo.MeetingOpinion" table="meeting_meeting_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="created"/> <!--填写时间-->
+	</class>
+	
+	<!--会议室-->
+	<class name="com.yuanluesoft.j2oa.meeting.pojo.MeetingRoom" table="meeting_meeting_room">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="name"/> <!--会议室名称-->
+		<property name="seating"/> <!--座位容量数-->
+		<property name="tableAndChair"/> <!--桌椅配备情况-->
+		<property name="fixture"/> <!--设备情况-->
+		<property name="remark"/> <!--备注-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="info" type="com.yuanluesoft.j2oa.infocontribute.forms.Info"/>
+  <form-bean name="reviseInfo" type="com.yuanluesoft.j2oa.infocontribute.forms.ReviseInfo"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="info" path="/info" scope="request"
+   type="com.yuanluesoft.j2oa.infocontribute.actions.info.Load" validate="false">
+   <forward name="load" path="/info.jsp"/>
+  </action>
+  <action input="/info.jsp" name="info" path="/saveInfo" scope="request"
+   type="com.yuanluesoft.j2oa.infocontribute.actions.info.Save" validate="false"/>
+  <action input="/info.jsp" name="info" path="/deleteInfo"
+   scope="request"
+   type="com.yuanluesoft.j2oa.infocontribute.actions.info.Delete" validate="false"/>
+  <action input="/info.jsp" name="info" path="/contributeInfo"
+   scope="request"
+   type="com.yuanluesoft.j2oa.infocontribute.actions.info.Contribute" validate="false"/>
+  <action name="info" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.j2oa.infocontribute.actions.info.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="reviseInfo" path="/reviseInfo" scope="request"
+   type="com.yuanluesoft.j2oa.infocontribute.actions.reviseinfo.Load" validate="false">
+   <forward name="load" path="/reviseInfo.jsp"/>
+  </action>
+  <action input="/reviseInfo.jsp" name="reviseInfo"
+   path="/submitReviseInfo" scope="request"
+   type="com.yuanluesoft.j2oa.infocontribute.actions.reviseinfo.Submit" validate="false"/>
+  <action path="/magazine" scope="request"
+   type="com.yuanluesoft.j2oa.infocontribute.actions.magazine.Load" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

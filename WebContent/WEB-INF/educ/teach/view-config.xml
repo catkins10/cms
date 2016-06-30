@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views>
+	<view name="admin/teach" form="teach" title="教师信息" pageRows="25" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.educ.teach.pojo.Teach</pojo>
+			<orderBy>Teach.loginId</orderBy>
+		</data>
+		<actions>
+			<action title="导入Excel文件" execute="PageUtils.newrecord('educ/teach', 'teachImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增"  execute="PageUtils.newrecord('educ/teach','teach','mode=fullscreen')"/>
+			<action title="批量删除" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/educ/teach/batchOperate.shtml?pojoName=Teach')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="工号" name="loginId" align="center" width="100"/>
+			<column title="姓名" name="name"/>
+			<column title="性别" name="sex" align="center" width="50"/>
+			<column title="创建时间" name="created" align="center" width="80"/>
+		</columns>
+	</view>
+	
+	<view name="teach" form="teach" title="我的信息" pageRows="25" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.educ.teach.pojo.Teach</pojo>
+			<where>Teach.id={USERID}</where>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="工号" name="loginId" align="center" width="100"/>
+			<column title="姓名" name="name"/>
+			<column title="性别" name="sex" align="center" width="50"/>
+			<column title="创建时间" name="created" align="center" width="80"/>
+		</columns>
+	</view>
+</views>

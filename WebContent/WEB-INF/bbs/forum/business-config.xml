@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="论坛目录" class="com.yuanluesoft.bbs.forum.pojo.BbsDirectory" businessServiceName="forumService">
+		<field name="directoryName" title="目录名称" length="50" required="true" type="string" inputMode="text"/>
+		<field name="parentDirectoryId" title="上级目录ID" type="number" inputMode="hidden"/>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+		<field name="directoryType" title="目录类型" length="20" type="string" inputMode="none">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="创建人ID" type="number" inputMode="none"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+		<field name="description" title="描述" length="100" required="true" type="string" inputMode="text"/>
+		<field name="directoryPopedoms" title="目录权限" type="components">
+			<parameter name="class">com.yuanluesoft.bbs.forum.pojo.BbsDirectoryPopedom</parameter>
+		</field>
+		<field name="subjections" title="隶属目录" type="components">
+			<parameter name="class">com.yuanluesoft.bbs.forum.pojo.BbsDirectorySubjection</parameter>
+		</field>
+		<field name="childSubjections" title="子目录" type="components">
+			<parameter name="class">com.yuanluesoft.bbs.forum.pojo.BbsDirectorySubjection</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="论坛" class="com.yuanluesoft.bbs.forum.pojo.Bbs" businessServiceName="forumService">
+		<field name="directoryName" title="论坛名称" length="25" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="版块分类" class="com.yuanluesoft.bbs.forum.pojo.ForumCategory" businessServiceName="forumService">
+		<field name="directoryName" title="分类名称" length="25" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="版块" class="com.yuanluesoft.bbs.forum.pojo.Forum" businessServiceName="forumService">
+		<field name="directoryName" title="版块名称" length="25" required="true" type="string" inputMode="text"/>
+		<field name="pageArticles" title="论坛每页显示主题数" length="2" type="number" inputMode="text"/>
+		<field name="pageReplies" title="每贴显示的回复数" length="2" type="number" inputMode="text"/>
+		<field name="anonymousEnabled" title="是否允许匿名访问" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">允许|1\0禁止|0</parameter>
+		</field>
+		<field name="anonymousReply" title="是否允许匿名回复" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">允许|1\0禁止|0</parameter>
+		</field>
+		<field name="anonymousCreate" title="是否允许匿名发帖" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">允许|1\0禁止|0</parameter>
+		</field>
+		<field name="vipOnly" title="是否只允许VIP访问" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+		<field name="anonymousDownload" title="是否允许匿名用户下载附件" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">允许|1\0禁止|0</parameter>
+		</field>
+		<field name="managerCreateOnly" title="仅允许版主发帖" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

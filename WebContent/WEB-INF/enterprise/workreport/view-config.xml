@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="todo" form="workReport" title="待办汇报" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="workReportViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.workreport.pojo.WorkReport</pojo>
+			<orderBy>WorkReport.reportTime DESC</orderBy>
+			<quickFilter>WorkReport.reporterName like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="新建汇报" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="汇报人" name="reporterName" width="80" align="center"/>
+			<column title="前一阶段完成情况" name="workDescription" width="40%"/>
+			<column title="存在的问题" name="problem" width="30%"/>
+			<column title="下一阶段计划" name="plan" width="40%"/>
+			<column title="汇报时间" name="reportTime" width="110" align="center"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="100" display="normal,print,portlet"/>
+		</columns>
+	</view>
+	
+	<view name="processing" form="workReport" title="在办汇报" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="workReportViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.workreport.pojo.WorkReport</pojo>
+			<orderBy>WorkReport.reportTime DESC</orderBy>
+			<quickFilter>WorkReport.reporterName like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="新建汇报" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="汇报人" name="reporterName" width="80" align="center"/>
+			<column title="前一阶段完成情况" name="workDescription" width="40%"/>
+			<column title="存在的问题" name="problem" width="30%"/>
+			<column title="下一阶段计划" name="plan" width="40%"/>
+			<column title="汇报时间" name="reportTime" width="110" align="center"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="100" display="normal,print,portlet"/>
+		</columns>
+	</view>
+	
+	<view name="completed" form="workReport" title="办结汇报" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="workReportViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.workreport.pojo.WorkReport</pojo>
+			<orderBy>WorkReport.reportTime DESC</orderBy>
+			<quickFilter>WorkReport.reporterName like '%{KEY}%'</quickFilter>
+			<filter>COMPLETED</filter>
+		</data>
+		<actions>
+			<action title="新建汇报" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="汇报人" name="reporterName" width="80" align="center"/>
+			<column title="前一阶段完成情况" name="workDescription" width="40%"/>
+			<column title="存在的问题" name="problem" width="30%"/>
+			<column title="下一阶段计划" name="plan" width="40%"/>
+			<column title="汇报时间" name="reportTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="workReport" form="workReport" title="所有汇报" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="workReportViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.workreport.pojo.WorkReport</pojo>
+			<orderBy>WorkReport.reportTime DESC</orderBy>
+			<quickFilter>WorkReport.reporterName like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="新建汇报" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="汇报人" name="reporterName" width="80" align="center"/>
+			<column title="前一阶段完成情况" name="workDescription" width="40%"/>
+			<column title="存在的问题" name="problem" width="30%"/>
+			<column title="下一阶段计划" name="plan" width="40%"/>
+			<column title="汇报时间" name="reportTime" width="110" align="center"/>
+		</columns>
+	</view>
+</views>

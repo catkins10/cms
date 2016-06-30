@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="assessClassify" type="com.yuanluesoft.enterprise.assess.forms.AssessClassify"/>
+  <form-bean name="assessActivity" type="com.yuanluesoft.enterprise.assess.forms.AssessActivity"/>
+  <form-bean name="assessStandard" type="com.yuanluesoft.enterprise.assess.forms.AssessStandard"/>
+  <form-bean name="assess" type="com.yuanluesoft.enterprise.assess.forms.Assess"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="assessClassify" path="/assessClassify" scope="request"
+   type="com.yuanluesoft.enterprise.assess.actions.assessclassify.Load" validate="false">
+   <forward name="load" path="/assessClassify.jsp"/>
+  </action>
+  <action input="/assessClassify.jsp" name="assessClassify"
+   path="/saveAssessClassify" scope="request"
+   type="com.yuanluesoft.enterprise.assess.actions.assessclassify.Save" validate="false"/>
+  <action input="/assessClassify.jsp" name="assessClassify"
+   path="/deleteAssessClassify" scope="request"
+   type="com.yuanluesoft.enterprise.assess.actions.assessclassify.Delete" validate="false"/>
+  <action name="assessStandard" path="/assessStandard" scope="request"
+   type="com.yuanluesoft.enterprise.assess.actions.assessclassify.assessstandard.Load" validate="false">
+   <forward name="load" path="/assessStandard.jsp"/>
+  </action>
+  <action input="/assessStandard.jsp" name="assessStandard"
+   path="/saveAssessStandard" scope="request"
+   type="com.yuanluesoft.enterprise.assess.actions.assessclassify.assessstandard.Save" validate="false"/>
+  <action input="/assessStandard.jsp" name="assessStandard"
+   path="/deleteAssessStandard" scope="request"
+   type="com.yuanluesoft.enterprise.assess.actions.assessclassify.assessstandard.Delete" validate="false"/>
+  <action name="assessActivity" path="/assessActivity" scope="request"
+   type="com.yuanluesoft.enterprise.assess.actions.assessclassify.assessactivity.Load" validate="false">
+   <forward name="load" path="/assessActivity.jsp"/>
+  </action>
+  <action input="/assessActivity.jsp" name="assessActivity"
+   path="/saveAssessActivity" scope="request"
+   type="com.yuanluesoft.enterprise.assess.actions.assessclassify.assessactivity.Save" validate="false"/>
+  <action input="/assessActivity.jsp" name="assessActivity"
+   path="/deleteAssessActivity" scope="request"
+   type="com.yuanluesoft.enterprise.assess.actions.assessclassify.assessactivity.Delete" validate="false"/>
+  <action input="/assessClassify.jsp" name="assessClassify"
+   path="/refreshAssessClassify" scope="request"
+   type="com.yuanluesoft.enterprise.assess.actions.assessclassify.Refresh" validate="false"/>
+  <action name="assess" path="/assess" scope="request"
+   type="com.yuanluesoft.enterprise.assess.actions.assess.Load" validate="false">
+   <forward name="load" path="/assess.jsp"/>
+  </action>
+  <action input="/assess.jsp" name="assess" path="/saveAssess"
+   scope="request"
+   type="com.yuanluesoft.enterprise.assess.actions.assess.Save" validate="false"/>
+  <action input="/assess.jsp" name="assess" path="/deleteAssess"
+   scope="request"
+   type="com.yuanluesoft.enterprise.assess.actions.assess.Delete" validate="false"/>
+  <action input="/assess.jsp" name="assess" path="/runAssess"
+   scope="request"
+   type="com.yuanluesoft.enterprise.assess.actions.assess.Run" validate="false"/>
+  <action input="/assess.jsp" name="assess" path="/writeOpinion"
+   scope="request"
+   type="com.yuanluesoft.enterprise.assess.actions.assess.WriteOpinion" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

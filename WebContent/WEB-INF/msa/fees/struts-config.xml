@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="fees" type="com.yuanluesoft.msa.fees.forms.Fees"/>
+  <form-bean name="feesItem" type="com.yuanluesoft.msa.fees.forms.FeesItem"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="fees" path="/fees" scope="request"
+   type="com.yuanluesoft.msa.fees.actions.fees.Load" validate="false">
+   <forward name="load" path="/fees.jsp"/>
+  </action>
+  <action input="/fees.jsp" name="fees" path="/saveFees" scope="request"
+   type="com.yuanluesoft.msa.fees.actions.fees.Save" validate="false"/>
+  <action input="/fees.jsp" name="fees" path="/deleteFees"
+   scope="request" type="com.yuanluesoft.msa.fees.actions.fees.Delete" validate="false"/>
+  <action input="/fees.jsp" name="fees" path="/runFees" scope="request"
+   type="com.yuanluesoft.msa.fees.actions.fees.Run" validate="false"/>
+  <action input="/fees.jsp" name="fees" path="/writeOpinion"
+   scope="request"
+   type="com.yuanluesoft.msa.fees.actions.fees.WriteOpinion" validate="false"/>
+  <action name="feesItem" path="/feesItem" scope="request"
+   type="com.yuanluesoft.msa.fees.actions.fees.item.Load" validate="false">
+   <forward name="load" path="/feesItem.jsp"/>
+  </action>
+  <action input="/feesItem.jsp" name="feesItem" path="/saveFeesItem"
+   scope="request"
+   type="com.yuanluesoft.msa.fees.actions.fees.item.Save" validate="false"/>
+  <action input="/feesItem.jsp" name="feesItem" path="/deleteFeesItem"
+   scope="request"
+   type="com.yuanluesoft.msa.fees.actions.fees.item.Delete" validate="false"/>
+  <action input="/feesItem.jsp" name="feesItem" path="/completeFeesItem"
+   scope="request"
+   type="com.yuanluesoft.msa.fees.actions.fees.item.Complete" validate="false"/>
+  <action input="/fees.jsp" name="fees" path="/refreshFees"
+   scope="request" type="com.yuanluesoft.msa.fees.actions.fees.Refresh" validate="false"/>
+  <action input="/fees.jsp" name="fees" path="/sendToUnits"
+   scope="request"
+   type="com.yuanluesoft.msa.fees.actions.fees.SendToUnits" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

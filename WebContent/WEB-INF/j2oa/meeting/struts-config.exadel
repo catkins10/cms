@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="24,48,169,21" TARGET="page1" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="24,112,169,21"
+  TARGET="page3" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#meeting" NAME="action1"
+  PATH="/meeting" SHAPE="32,432,169,41" TITLE="meeting" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/meeting.jsp" TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#meetingRoom"
+  NAME="action2" PATH="/meetingRoom" SHAPE="32,208,177,41"
+  TITLE="meetingRoom" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/meetingRoom.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveMeeting"
+  NAME="action3" PATH="/saveMeeting" SHAPE="528,464,177,25"
+  TITLE="meeting" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteMeeting"
+  NAME="action4" PATH="/deleteMeeting" SHAPE="528,512,177,25"
+  TITLE="meeting" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#issueMeeting"
+  NAME="action5" PATH="/issueMeeting" SHAPE="528,656,177,25"
+  TITLE="meeting" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#undoIssueMeeting"
+  NAME="action6" PATH="/undoIssueMeeting" SHAPE="528,704,177,25"
+  TITLE="meeting" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveMeetingRoom"
+  NAME="action7" PATH="/saveMeetingRoom" SHAPE="528,240,177,25"
+  TITLE="meetingRoom" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteMeetingRoom"
+  NAME="action8" PATH="/deleteMeetingRoom" SHAPE="528,288,177,25"
+  TITLE="meetingRoom" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#createNextMeetingRoom"
+  NAME="action9" PATH="/createNextMeetingRoom" SHAPE="528,336,177,25"
+  TITLE="meetingRoom" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/meeting.jsp" SHAPE="328,448,56,85" SUBTYPE="jsp"
+  TITLE="meeting.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveMeeting" TARGET="action3" TITLE="saveMeeting" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteMeeting" TARGET="action4" TITLE="deleteMeeting" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/runMeeting.shtml" TARGET="action0" TITLE="issueMeeting" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link4"
+   PATH="/writeOpinion.shtml" TARGET="action11"
+   TITLE="writeOpinion.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link5"
+   PATH="/issueMeeting.shtml" TARGET="action5"
+   TITLE="issueMeeting.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link6"
+   PATH="/undoIssueMeeting.shtml" TARGET="action6"
+   TITLE="undoIssueMeeting.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link7"
+   PATH="/redoIssueMeeting.shtml" TARGET="action12"
+   TITLE="redoIssueMeeting.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/meetingRoom.jsp" SHAPE="328,224,56,70" SUBTYPE="jsp"
+  TITLE="meetingRoom.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveMeetingRoom" TARGET="action7" TITLE="saveMeetingRoom" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteMeetingRoom" TARGET="action8" TITLE="deleteMeetingRoom" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/createNextMeetingRoom" TARGET="action9"
+   TITLE="createNextMeetingRoom" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="320,112,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="320,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#runMeeting"
+  NAME="action0" PATH="/runMeeting" SHAPE="528,560,177,25"
+  TITLE="meeting" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#writeOpinion"
+  NAME="action11" PATH="/writeOpinion" SHAPE="528,608,177,25"
+  TITLE="meeting" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#redoIssueMeeting"
+  NAME="action12" PATH="/redoIssueMeeting" SHAPE="528,752,177,25"
+  TITLE="meeting" TYPE="action"/>
+</PROCESS>

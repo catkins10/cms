@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="login" type="com.yuanluesoft.jeaf.sso.forms.LoginForm"/>
+  <form-bean name="loginDialog" type="com.yuanluesoft.jeaf.sso.forms.LoginDialog"/>
+  <form-bean name="changePassword" type="com.yuanluesoft.jeaf.sso.forms.ChangePassword"/>
+  <form-bean name="forgetPassword" type="com.yuanluesoft.jeaf.sso.forms.ForgetPassword"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action input="/login.jsp" name="login" path="/login" scope="request"
+   type="com.yuanluesoft.jeaf.sso.actions.login.Load" validate="false">
+   <forward name="load" path="/login.jsp"/>
+  </action>
+  <action input="/login.jsp" name="login" path="/logout" scope="request"
+   type="com.yuanluesoft.jeaf.sso.actions.login.Logout" validate="false"/>
+  <action input="/login.jsp" name="login" path="/submitlogin"
+   scope="request" type="com.yuanluesoft.jeaf.sso.actions.login.Login" validate="false"/>
+  <action name="changePassword" path="/changePassword" scope="request"
+   type="com.yuanluesoft.jeaf.sso.actions.changepassword.Load" validate="false">
+   <forward name="load" path="/changePassword.jsp"/>
+  </action>
+  <action input="/changePassword.jsp" name="changePassword"
+   path="/submitNewPassword" scope="request"
+   type="com.yuanluesoft.jeaf.sso.actions.changepassword.Save" validate="false"/>
+  <action name="forgetPassword" path="/forgetPassword" scope="request"
+   type="com.yuanluesoft.jeaf.sso.actions.forgetpassword.Load" validate="false">
+   <forward name="load" path="/forgetPassword.jsp"/>
+  </action>
+  <action input="/forgetPassword.jsp" name="forgetPassword"
+   path="/resetPassword" scope="request"
+   type="com.yuanluesoft.jeaf.sso.actions.forgetpassword.Reset" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<statisticView name="siteResourceStat" title="网站信息发布统计" pageRows="100" width="100%" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.siteresource.pojo.SiteResource</pojo>
+			<where>not SiteResource.unitName is null</where>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.sitemanage.pojo.SiteResource</pojo>
+			</data>
+			<category value="year(SiteResource.created)"> <!--value必须有-->
+				<data>year(SiteResource.created)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(SiteResource.created)"> <!--value必须有-->
+				<where>year(SiteResource.created)={CATEGORY1VALUE}</where> <!--  and SiteResource.orgId>0 -->
+				<data>year(SiteResource.created)={CATEGORY1VALUE} and month(SiteResource.created)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<statistics hideDetail="true"> <!--  detailTitle="　　{PARAMETER:rowIndex}、{orgName}", hideDetail=false时有效 -->
+			<statistic title="{PARAMETER:rowIndex}.{PARAMETER:unitName}"> <!-- 单位合计 -->
+				<groupFields>
+					<groupField name="unitId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="createCount" function="count(distinct SiteResource.id)" whereExtend="SiteResource.status&lt;'5'"/> <!-- 上报数 -->
+					<statisticColumn name="issueCount" function="count(distinct SiteResource.id)" whereExtend="SiteResource.status='3'"/> <!-- 采用数量 -->
+					<statisticColumn name="nopassCount" function="count(distinct SiteResource.id)" whereExtend="SiteResource.status='4'"/> <!-- 未采用数量 -->
+					<statisticColumn name="unissueCount" function="count(distinct SiteResource.id)" whereExtend="SiteResource.status='0'"/> <!-- 撤销发布数量 -->
+					<statisticColumn name="todoCount" function="count(distinct SiteResource.id)" whereExtend="SiteResource.status='2'"/> <!-- 待发布数量 -->
+					<statisticColumn name="undoCount" function="count(distinct SiteResource.id)" whereExtend="SiteResource.status='1'"/> <!-- 退回修改数量 -->
+					<statisticColumn name="deletedCount" function="count(distinct SiteResource.id)" whereExtend="SiteResource.status>'4'"/> <!-- 删除数量 -->
+				</statisticColumns>
+			</statistic>
+			<statistic statisticAll="true" title="合计">
+				<statisticColumns>
+					<statisticColumn name="createCount" function="count(distinct SiteResource.id)" whereExtend="SiteResource.status&lt;'5'"/> <!-- 上报数 -->
+					<statisticColumn name="issueCount" function="count(distinct SiteResource.id)" whereExtend="SiteResource.status='3'"/> <!-- 采用数量 -->
+					<statisticColumn name="nopassCount" function="count(distinct SiteResource.id)" whereExtend="SiteResource.status='4'"/> <!-- 未采用数量 -->
+					<statisticColumn name="unissueCount" function="count(distinct SiteResource.id)" whereExtend="SiteResource.status='0'"/> <!-- 撤销发布数量 -->
+					<statisticColumn name="todoCount" function="count(distinct SiteResource.id)" whereExtend="SiteResource.status='2'"/> <!-- 待发布数量 -->
+					<statisticColumn name="undoCount" function="count(distinct SiteResource.id)" whereExtend="SiteResource.status='1'"/> <!-- 退回修改数量 -->
+					<statisticColumn name="deletedCount" function="count(distinct SiteResource.id)" whereExtend="SiteResource.status>'4'"/> <!-- 删除数量 -->
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<scripts>
+			<script>/cms/sitemanage/js/site.js</script>
+		</scripts>
+		<actions>
+			<action title="按指定栏目统计" execute="selectSite(600, 400, true, 'siteIds{id},siteNames{name|统计范围|100%}', 'refreshView()');"/>
+		</actions>
+		<columns>
+			<column title="单位名称" name="unitName"/>
+			<column title="上报数量" name="createCount" type="statistic" align="center" width="100">
+				<link>javascript:listResources('', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}', '{PARAMETER:siteIds}', '{PARAMETER:orgId}', '{PARAMETER:unitName}', '{PARAMETER:statisticFieldNames}')</link>
+			</column>
+			<column title="采用数量" name="issueCount" type="statistic" align="center" width="100">
+				<link>javascript:listResources('3', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}', '{PARAMETER:siteIds}', '{PARAMETER:orgId}', '{PARAMETER:unitName}', '{PARAMETER:statisticFieldNames}')</link>
+			</column>
+			<column title="未采用数量" name="nopassCount" type="statistic" align="center" width="80">
+				<link>javascript:listResources('4', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}', '{PARAMETER:siteIds}', '{PARAMETER:orgId}', '{PARAMETER:unitName}', '{PARAMETER:statisticFieldNames}')</link>
+			</column>
+			<column title="撤销发布数量" name="unissueCount" type="statistic" align="center" width="80">
+				<link>javascript:listResources('0', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}', '{PARAMETER:siteIds}', '{PARAMETER:orgId}', '{PARAMETER:unitName}', '{PARAMETER:statisticFieldNames}')</link>
+			</column>
+			<column title="待发布数量" name="todoCount" type="statistic" align="center" width="80">
+				<link>javascript:listResources('2', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}', '{PARAMETER:siteIds}', '{PARAMETER:orgId}', '{PARAMETER:unitName}', '{PARAMETER:statisticFieldNames}')</link>
+			</column>
+			<column title="退回修改数量" name="undoCount" type="statistic" align="center" width="80">
+				<link>javascript:listResources('1', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}', '{PARAMETER:siteIds}', '{PARAMETER:orgId}', '{PARAMETER:unitName}', '{PARAMETER:statisticFieldNames}')</link>
+			</column>
+			<column title="删除数量" name="deletedCount" type="statistic" align="center" width="80">
+				<link>javascript:listResources('5', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}', '{PARAMETER:siteIds}', '{PARAMETER:orgId}', '{PARAMETER:unitName}', '{PARAMETER:statisticFieldNames}')</link>
+			</column>
+		</columns>
+	</statisticView>
+	
+	<statisticView name="cmsStat" title="发布统计" pageRows="100" width="100%" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.siteresource.pojo.CmsStat</pojo>
+			<where>not CmsStat.unitName is null</where>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.sitemanage.pojo.CmsStat</pojo>
+			</data>
+			<category value="year(CmsStat.created)"> <!--value必须有-->
+				<data>year(CmsStat.created)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(CmsStat.created)"> <!--value必须有-->
+				<where>year(CmsStat.created)={CATEGORY1VALUE}</where> <!--  and CmsStat.orgId>0 -->
+				<data>year(CmsStat.created)={CATEGORY1VALUE} and month(CmsStat.created)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<statistics hideDetail="true">
+			<statistic title="{PARAMETER:rowIndex}.{PARAMETER:unitName}"> <!-- 单位合计 -->
+				<groupFields>
+					<groupField name="unitId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="createCount" function="count(distinct CmsStat.id)" whereExtend="CmsStat.status&lt;'5'"/> <!-- 上报数 -->
+					<statisticColumn name="issueCount" function="count(distinct CmsStat.id)" whereExtend="CmsStat.status='3'"/> <!-- 采用数量 -->
+					<statisticColumn name="nopassCount" function="count(distinct CmsStat.id)" whereExtend="CmsStat.status='4'"/> <!-- 未采用数量 -->
+					<statisticColumn name="unissueCount" function="count(distinct CmsStat.id)" whereExtend="CmsStat.status='0'"/> <!-- 撤销发布数量 -->
+					<statisticColumn name="todoCount" function="count(distinct CmsStat.id)" whereExtend="CmsStat.status='2'"/> <!-- 待发布数量 -->
+					<statisticColumn name="undoCount" function="count(distinct CmsStat.id)" whereExtend="CmsStat.status='1'"/> <!-- 退回修改数量 -->
+					<statisticColumn name="deletedCount" function="count(distinct CmsStat.id)" whereExtend="CmsStat.status>'4'"/> <!-- 删除数量 -->
+				</statisticColumns>
+			</statistic>
+			<statistic statisticAll="true" title="合计">
+				<statisticColumns>
+					<statisticColumn name="createCount" function="count(distinct CmsStat.id)" whereExtend="CmsStat.status&lt;'5'"/> <!-- 上报数 -->
+					<statisticColumn name="issueCount" function="count(distinct CmsStat.id)" whereExtend="CmsStat.status='3'"/> <!-- 采用数量 -->
+					<statisticColumn name="nopassCount" function="count(distinct CmsStat.id)" whereExtend="CmsStat.status='4'"/> <!-- 未采用数量 -->
+					<statisticColumn name="unissueCount" function="count(distinct CmsStat.id)" whereExtend="CmsStat.status='0'"/> <!-- 撤销发布数量 -->
+					<statisticColumn name="todoCount" function="count(distinct CmsStat.id)" whereExtend="CmsStat.status='2'"/> <!-- 待发布数量 -->
+					<statisticColumn name="undoCount" function="count(distinct CmsStat.id)" whereExtend="CmsStat.status='1'"/> <!-- 退回修改数量 -->
+					<statisticColumn name="deletedCount" function="count(distinct CmsStat.id)" whereExtend="CmsStat.status>'4'"/> <!-- 删除数量 -->
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<columns>
+			<column title="单位名称" name="orgName"/>
+			<column title="上报数量" name="createCount" type="statistic" align="center" width="80"/>
+			<column title="采用数量" name="issueCount" type="statistic" align="center" width="80"/>
+			<column title="未采用数量" name="nopassCount" type="statistic" align="center" width="80"/>
+			<column title="撤销发布数量" name="unissueCount" type="statistic" align="center" width="80"/>
+			<column title="待发布数量" name="todoCount" type="statistic" align="center" width="80"/>
+			<column title="退回修改数量" name="undoCount" type="statistic" align="center" width="80"/>
+			<column title="删除数量" name="deletedCount" type="statistic" align="center" width="80"/>
+		</columns>
+	</statisticView>
+	
+	<view name="siteResource" title="文章列表" pageRows="20" hide="noPrivilege(application_visitor)" viewServiceName="siteResourceViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.siteresource.pojo.SiteResource</pojo>
+			<orderBy>SiteResource.status, SiteResource.issueTime DESC, SiteResource.created DESC</orderBy>
+			<quickFilter>SiteResource.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.sitemanage.pojo.SiteResource</pojo>
+			</data>
+			<category value="year(SiteResource.issueTime)"> <!--value必须有-->
+				<data>year(SiteResource.created)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(SiteResource.created)"> <!--value必须有-->
+				<where>year(SiteResource.created)={CATEGORY1VALUE}</where> <!--  and SiteResource.orgId>0 -->
+				<data>year(SiteResource.created)={CATEGORY1VALUE} and month(SiteResource.created)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="主题" name="subject"/>
+			<column title="所在栏目" name="columnName" width="100"/>
+			<column title="创建时间" name="created" width="110" align="center"/>
+			<column title="发布时间" name="issueTime" width="110" align="center"/>
+			<column title="部门" name="orgName" width="100" align="center"/>
+			<column title="单位" name="unitName" width="100" align="center"/>
+			<column title="状态" name="statusDescription" width="80" align="center"/>
+			<column title="类型" name="resourceType" width="0"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+</views>

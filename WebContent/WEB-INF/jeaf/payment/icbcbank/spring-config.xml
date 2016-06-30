@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 支付服务 -->
+	<bean id="icbcbankPaymentMethodService" class="com.yuanluesoft.jeaf.payment.paymentmethod.icbcbank.service.spring.IcbcbankPaymentMethodService">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="paymentNotifyUrl"><value>http://www.npzfcg.gov.cn/paymentNotify.asp</value></property>
+	</bean>
+</beans>

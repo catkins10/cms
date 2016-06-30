@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="bidding" type="com.yuanluesoft.enterprise.bidding.forms.Bidding"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="bidding" path="/bidding" scope="request"
+   type="com.yuanluesoft.enterprise.bidding.actions.bidding.Load" validate="false">
+   <forward name="load" path="/bidding.jsp"/>
+  </action>
+  <action input="/bidding.jsp" name="bidding" path="/saveBidding"
+   scope="request"
+   type="com.yuanluesoft.enterprise.bidding.actions.bidding.Save" validate="false"/>
+  <action input="/bidding.jsp" name="bidding" path="/deleteBidding"
+   scope="request"
+   type="com.yuanluesoft.enterprise.bidding.actions.bidding.Delete" validate="false"/>
+  <action name="bidding" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.enterprise.bidding.actions.bidding.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

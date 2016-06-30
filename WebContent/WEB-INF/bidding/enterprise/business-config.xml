@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="企业基本信息" class="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprise" businessServiceName="enterpriseService">
+		<field name="area" title="所在地区" length="50" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">enterpriseService</parameter>
+			<parameter name="itemsName">area</parameter>
+		</field>
+		<field name="name" title="企业名称" length="100" required="true" type="string" inputMode="text">
+			<parameter name="rssTitleField">true</parameter>
+		</field>
+		<field name="businessLicence" title="营业执照号码" length="100" type="string" inputMode="text"/>
+		<field name="statisticsLicence" title="单位统计证" length="100" type="string" inputMode="text"/>
+		<field name="safeLicence" title="安全许可证" length="100" type="string" inputMode="text"/>
+		<field name="registDate" title="注册时间" type="date" inputMode="date"/>
+		<field name="registeredCapital" title="注册资金" length="8" type="number" inputMode="text"/>
+		<field name="kind" title="企业性质" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">enterpriseService</parameter>
+			<parameter name="itemsName">enterpriseKind</parameter>
+		</field>
+		<field name="legalRepresentative" title="法定代表人" length="32" type="string" inputMode="text"/>
+		<field name="representativeIdNumber" title="法定代表人身份证号码" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="representativeTel" title="法定代表人联系电话" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="manager" title="企业经理" length="32" type="string" inputMode="text"/>
+		<field name="managerIdNumber" title="企业经理身份证号码" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="managerTel" title="企业经理联系电话" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="technicalLeader" title="技术负责人" length="32" type="string" inputMode="text"/>
+		<field name="technicalLeaderIdNumner" title="技术负责人身份证号码" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="technicalLeaderTel" title="技术负责人电话" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="address" title="通讯地址" length="200" type="string" inputMode="text"/>
+		<field name="postalcode" title="邮政编码" length="10" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="linkman" title="联系人" length="20" type="string" inputMode="text"/>
+		<field name="linkmanIdNumber" title="联系人身份证号码" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="tel" title="联系电话" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="mobile" title="手机" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="fax" title="传真" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="email" title="电子邮件" length="60" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="website" title="企业主页" length="60" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="bank" title="开户银行" length="50" type="string" inputMode="text"/>
+		<field name="account" title="开户帐号" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="introduction" title="经营范围" type="string" inputMode="text"/>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="rssPubDateField">true</parameter>
+		</field>
+		<field name="isValid" title="企业信息是否生效" length="1" type="char" inputMode="none"/>
+		<field name="isNullify" title="是否注销审批记录" length="1" type="char" inputMode="none"/>
+		<field name="isAlter" title="是否变更审批记录" length="1" type="char" inputMode="none"/>
+		<field name="alterEnterpriseId" title="变更企业ID" type="number" inputMode="none"/>
+		<field name="alterDescription" title="变更内容描述" length="500" type="string" inputMode="readonly"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+		<field name="certTitles" title="资质" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">certs</parameter>
+		</field>
+		<field name="statusText" title="状态" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">isAlter,isNullify,isValid</parameter>
+		</field>
+		<field name="certs" title="资质" type="components">
+			<parameter name="class">com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterpriseCert</parameter>
+		</field>
+		<field name="jobholders" title="从业人员" type="components">
+			<parameter name="class">com.yuanluesoft.bidding.enterprise.pojo.BiddingJobholder</parameter>
+		</field>
+		<field name="employees" title="用户" type="components">
+			<parameter name="class">com.yuanluesoft.bidding.enterprise.pojo.BiddingEmployee</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审批</parameter>
+			<parameter name="class">com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterpriseOpinion</parameter>
+		</field>
+		<field name="businessLicencePicture" title="营业执照图片" length="1" type="image" inputMode="attachment">
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+		<field name="legalRepresentativePicture" title="法定代表人身份证照片" length="1" type="image" inputMode="attachment">
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="企业资质" class="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterpriseCert" businessServiceName="enterpriseService">
+		<field name="enterpriseId" title="企业ID" type="number" inputMode="hidden"/>
+		<field name="type" title="资质类型" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">enterpriseService</parameter>
+			<parameter name="itemsName">enterpriseCategory</parameter>
+		</field>
+		<field name="certificateNumber" title="资质证书编号" length="80" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="level" title="资质等级" length="50" required="true" type="string" inputMode="text"/>
+		<field name="approvalDate" title="取得资质时间" required="true" type="date" inputMode="date"/>
+		<field name="approvalNumber" title="批准文号" length="100" type="string" inputMode="text"/>
+		<field name="lib" title="代理名录库" length="300" type="string" inputMode="text"/>
+		<field name="libArray" title="代理名录库" type="string[]" inputMode="multibox">
+			<parameter name="itemsServiceName">enterpriseService</parameter>
+			<parameter name="itemsName">agentLib</parameter>
+		</field>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+		<field name="alterId" title="变更记录ID" type="number" inputMode="none"/>
+		<field name="surveies" title="资质年检" type="components">
+			<parameter name="class">com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterpriseCertSurvey</parameter>
+		</field>
+		<field name="enterprise" title="企业" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprise</parameter>
+		</field>
+		<field name="certPicture" title="企业资质图片" length="1" type="image" inputMode="attachment">
+			<parameter name="dynamicUrl">true</parameter>
+			<parameter name="attachmentEditor">enterpriseCertAttachment.shtml</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="代理名录库配置" class="com.yuanluesoft.bidding.enterprise.pojo.BiddingAgentLib">
+		<field name="lib" title="代理名录库" length="100" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="资质年检" class="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterpriseCertSurvey" businessServiceName="enterpriseService">
+		<field name="certId" title="资质ID" type="number" inputMode="hidden"/>
+		<field name="surveyDate" title="年检时间" required="true" type="date" inputMode="date"/>
+		<field name="surveyResult" title="年检情况" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">通过\0不通过</parameter>
+		</field>
+		<field name="surveyYear" title="年份" length="4" required="true" type="number" inputMode="text"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+		<field name="alterId" title="变更记录ID" type="number" inputMode="none"/>
+	</businessObject>
+	
+	<businessObject title="从业人员" class="com.yuanluesoft.bidding.enterprise.pojo.BiddingJobholder" businessServiceName="enterpriseService">
+		<field name="enterpriseId" title="工作单位ID" type="number" inputMode="hidden"/>
+		<field name="enterpriseName" title="工作单位" length="100" type="string" inputMode="hidden"/>
+		<field name="name" title="姓名" length="30" required="true" type="string" inputMode="text"/>
+		<field name="category" title="类别" length="30" required="true" type="string" inputMode="text"/>
+		<field name="sex" title="性别" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">男|M\0女|F</parameter>
+		</field>
+		<field name="identityCard" title="身份证号码" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="school" title="毕业（培训）院校" length="100" type="string" inputMode="text"/>
+		<field name="education" title="学历" length="20" type="string" inputMode="text"/>
+		<field name="schoolProfessional" title="毕业专业" length="50" type="string" inputMode="text"/>
+		<field name="professional" title="专业" length="30" type="string" inputMode="text"/>
+		<field name="secondProfessional" title="第二专业" length="30" type="string" inputMode="text"/>
+		<field name="otherProfessional" title="其它专业" length="30" type="string" inputMode="text"/>
+		<field name="duty" title="职务" length="30" type="string" inputMode="text"/>
+		<field name="job" title="职称" length="30" type="string" inputMode="text"/>
+		<field name="qualification" title="资质等级/人员类别" length="80" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">enterpriseService</parameter>
+			<parameter name="itemsName">qualification</parameter>
+		</field>
+		<field name="certificateNumber" title="证书号码/培训证号" length="80" required="true" type="string" inputMode="text"/>
+		<field name="certificateCreated" title="发证时间" required="true" type="date" inputMode="date"/>
+		<field name="certificateLimit" title="有效期" type="date" inputMode="date"/>
+		<field name="tel" title="电话" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="mobile" title="手机" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="address" title="通讯地址" length="200" type="string" inputMode="text"/>
+		<field name="postalCode" title="邮编" length="20" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+		<field name="alterId" title="变更记录ID" type="number" inputMode="none"/>
+		<field name="jobholderPicture" title="从业人员证书图片" length="1" type="image" inputMode="attachment">
+			<parameter name="dynamicUrl">true</parameter>
+			<parameter name="attachmentEditor">jobholderAttachment.shtml</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="企业用户" class="com.yuanluesoft.bidding.enterprise.pojo.BiddingEmployee" businessServiceName="employeeService">
+		<field name="enterpriseId" title="企业ID" type="number" inputMode="hidden"/>
+		<field name="enterpriseName" title="企业名称" length="100" type="string" inputMode="hidden"/>
+		<field name="name" title="用户姓名" length="100" required="true" type="string" inputMode="text"/>
+		<field name="loginName" title="登录用户名" length="30" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="password" title="登录密码" length="50" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="halt" title="是否停用" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">停用|1\0启用|0</parameter>
+		</field>
+		<field name="isPermanent" title="是否永久性用户" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">永久|1\0临时|0</parameter>
+		</field>
+		<field name="tryDays" title="试用有效期(天)" length="4" type="number" inputMode="hidden"/>
+		<field name="tryEnd" title="试用截止时间(文本方式)" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">isPermanent,tryEndDate</parameter>
+		</field>
+		<field name="tryEndDate" title="试用截止时间(日期格式)" type="date" inputMode="date"/>
+		<field name="ekeyId" title="EKeyID" length="10" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="ekeyNO" title="EKey编号" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="lastTransactor" title="最后经办人" length="30" type="string" inputMode="readonly"/>
+		<field name="lastTransactorId" title="最后经办人ID" type="number" inputMode="none"/>
+		<field name="lastTransactTime" title="最后办理时间" type="timestamp" inputMode="readonly"/>
+		<field name="contractNo" title="合同编号" length="100" type="string" inputMode="text"/>
+		<field name="enterpriseTransactor" title="企业经办人" length="30" type="string" inputMode="text"/>
+		<field name="tel" title="联系电话" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="deposit" title="已收押金" length="6,2" type="number" inputMode="text"/>
+		<field name="depositBill" title="押金收据号码" length="100" type="string" inputMode="text"/>
+		<field name="drawTime" title="领取软件" type="timestamp" inputMode="datetime"/>
+		<field name="damage" title="损坏内容" length="100" type="string" inputMode="text"/>
+		<field name="damageMoney" title="已收赔偿金额" length="6,2" type="number" inputMode="text"/>
+		<field name="saleMoney" title="已收销售款" length="6,2" type="number" inputMode="text"/>
+		<field name="saleBill" title="发票号码" length="100" type="string" inputMode="text"/>
+		<field name="receiptNo" title="收据号码" length="100" type="string" inputMode="text"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="EKey操作记录" class="com.yuanluesoft.bidding.enterprise.pojo.BiddingEKeyLog">
+		<field name="employeeId" title="企业用户ID" type="number" inputMode="none"/>
+		<field name="ekeyNO" title="EKey编号" length="30" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="enterpriseName" title="企业名称" length="100" type="string" inputMode="readonly"/>
+		<field name="name" title="用户姓名" length="30" type="string" inputMode="readonly"/>
+		<field name="loginName" title="登录用户名" length="30" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="isPermanent" title="是否永久性用户" length="1" type="char" inputMode="radio"/>
+		<field name="tryDays" title="试用有效期(天)" type="number" inputMode="readonly"/>
+		<field name="tryEndDate" title="试用截止时间" type="date" inputMode="readonly"/>
+		<field name="tryEnd" title="试用截止时间" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">isPermanent,tryEndDate</parameter>
+		</field>
+		<field name="actionType" title="操作类型" length="30" type="string" inputMode="readonly"/>
+		<field name="actionTime" title="操作时间" type="timestamp" inputMode="readonly"/>
+		<field name="transactor" title="经办人" length="120" type="string" inputMode="readonly"/>
+		<field name="transactorId" title="经办人ID" type="number" inputMode="readonly"/>
+		<field name="contractNo" title="合同编号" length="100" type="string" inputMode="readonly"/>
+		<field name="enterpriseTransactor" title="企业经办人" length="30" type="string" inputMode="readonly"/>
+		<field name="tel" title="联系电话" length="100" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="deposit" title="已收押金" length="6,2" type="number" inputMode="readonly"/>
+		<field name="depositBill" title="押金收据号码" length="100" type="string" inputMode="readonly"/>
+		<field name="drawTime" title="领取软件" type="timestamp" inputMode="readonly"/>
+		<field name="damage" title="损坏内容" length="100" type="string" inputMode="readonly"/>
+		<field name="damageMoney" title="已收赔偿金额" length="6,2" type="number" inputMode="readonly"/>
+		<field name="saleMoney" title="已收销售款" length="6,2" type="number" inputMode="readonly"/>
+		<field name="saleBill" title="发票号码" length="100" type="string" inputMode="readonly"/>
+		<field name="enterpriseCert" title="企业资质" length="100" type="string" inputMode="readonly"/>
+		<field name="receiptNo" title="收据号码" length="100" type="string" inputMode="readonly"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="投标企业" class="com.yuanluesoft.bidding.enterprise.pojo.BiddingBidEnterprise" businessServiceName="enterpriseService">
+		<field name="name" title="企业名称" length="200" type="string" inputMode="text"/>
+		<field name="bank" title="开户行" length="200" type="string" inputMode="text"/>
+		<field name="account" title="帐号" length="200" type="string" inputMode="text"/>
+	</businessObject>
+</businessObjects>

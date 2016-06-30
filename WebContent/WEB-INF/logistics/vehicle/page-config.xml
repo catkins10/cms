@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="indexAnonymous" title="车源首页(未登录)" url="/logistics/vehicle/index.shtml"/>
+		<page name="vehicleSuppliesAnonymous" title="车源列表(未登录)" url="/logistics/vehicle/vehicleSupplies.shtml"/>
+		<page name="vehiclesAnonymous" title="车辆列表(未登录)" url="/logistics/vehicle/vehicles.shtml"/>
+		<page name="vehicleLocationAnonymous" title="车辆定位(未登录)" url="/logistics/vehicle/vehicleLocation.shtml"/>
+	
+		<page name="index" title="车源首页(已登录)" url="/logistics/vehicle/index.shtml"/>
+		<page name="vehicleSupplies" title="车源列表(已登录)" url="/logistics/vehicle/vehicleSupplies.shtml"/>
+		<page name="vehicles" title="车辆列表(已登录)" url="/logistics/vehicle/vehicles.shtml"/>
+		<page name="vehicleLocation" title="车辆定位(已登录)" url="/logistics/vehicle/vehicleLocation.shtml"/>
+
+		<page name="vehicleSearch" title="车辆查询(已登录)" searchPage="true" searchResults="vehicles" url="/logistics/vehicle/vehicleSearch.shtml"/>
+		<page name="vehicleLocationSearch" title="车辆定位查询(已登录)" searchPage="true" searchResults="locatableVehicles" url="/logistics/vehicle/vehicleLocationSearch.shtml"/>
+		<page name="vehicleSupplySearch" title="车源查询(已登录)" searchPage="true" searchResults="vehicleSupplies" url="/logistics/vehicle/vehicleSupplySearch.shtml"/>
+
+		<page name="myVehicles" title="我的车辆列表" url="/logistics/vehicle/myVehicles.shtml"/>
+		<page name="myVehicleSupplies" title="我的车源列表" url="/logistics/vehicle/myVehicleSupplies.shtml"/>
+		
+		<page name="vehicle" title="车辆登记" url="/logistics/vehicle/vehicle.shtml" recordClass="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicle"/>
+		<page name="vehicleModify" title="车辆信息修改" systemLink="false" url="/logistics/vehicle/vehicle.shtml" js="/jeaf/gps/js/gps.js" recordClass="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicle">
+			<subPage name="map" title="地图" type="iframe" iframeUrl="/jeaf/gps/map.shtml"/> <!-- 子表单,显示在系统预置页面中,采用iframe模式显示-->
+			<link title="在地图中显示" url="javascript:openMap('{PARAMETER:id}', '80%', '80%')"/>
+		</page>
+		<page name="vehicleSubmitted" title="车辆登记完成"/>
+		<page name="vehicleDeleted" title="车辆删除完成"/>
+		<page name="vehicleUnregist" title="车辆未登记"/>
+		<page name="vehicleInfoAnonymous" title="车辆信息(未登录)" js="/jeaf/gps/js/gps.js" recordClass="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicle" url="/logistics/vehicle/vehicle.shtml" systemLink="false">
+			<subPage name="map" title="地图" type="iframe" iframeUrl="/jeaf/gps/map.shtml"/> <!-- 子表单,显示在系统预置页面中,采用iframe模式显示-->
+			<link title="在地图中显示" url="javascript:openMap('{PARAMETER:id}', '80%', '80%')"/>
+			<link title="登录获取详情" url="{WEBAPPLICATIONSAFEURL}/jeaf/sso/login.shtml?external=true&amp;redirect={CURRENTURL}"/>
+		</page>
+		<page name="vehicleInfo" title="车辆信息(已登录)" js="/jeaf/gps/js/gps.js" recordClass="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicle" url="/logistics/vehicle/vehicle.shtml" systemLink="false">
+			<subPage name="map" title="地图" type="iframe" iframeUrl="/jeaf/gps/map.shtml"/> <!-- 子表单,显示在系统预置页面中,采用iframe模式显示-->
+			<link title="在地图中显示" url="javascript:openMap('{PARAMETER:id}', '80%', '80%')"/>
+		</page>
+		
+		<page name="vehicleSupply" title="车源登记" url="/logistics/vehicle/vehicleSupply.shtml"/>
+		<page name="vehicleSupplySubmitted" title="车源登记完成"/>
+		<page name="vehicleSupplyDeleted" title="车源删除完成"/>
+		<page name="vehicleSupplyInfoAnonymous" title="车源信息(未登录)" recordClass="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicleSupply" url="/logistics/vehicle/vehicleSupply.shtml" systemLink="false">
+			<link title="登录获取详情" url="{WEBAPPLICATIONSAFEURL}/jeaf/sso/login.shtml?external=true&amp;redirect={CURRENTURL}"/>
+			<link title="投诉" url="/logistics/complaint/complaint.shtml?vehicleSupplyId={PARAMETER:id}"/>
+		</page>
+		<page name="vehicleSupplyInfo" title="车源信息(已登录)" recordClass="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicleSupply" url="/logistics/vehicle/vehicleSupply.shtml" systemLink="false">
+			<link title="投诉" url="/logistics/complaint/complaint.shtml?vehicleSupplyId={PARAMETER:id}"/>
+		</page>
+	</pages>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="vehicleField" processor="vehicleFieldProcessor"/> <!-- 车辆字段处理器 -->
+		<pageElement name="logisticsVehicleField" processor="vehicleFieldProcessor"/> <!-- 车辆字段处理器 -->
+		<pageElement name="logisticsVehicleFreeField" processor="vehicleFieldProcessor"/> <!-- 车源:载货车辆字段处理器 -->
+		<pageElement name="vehicleSupplies" processor="vehicleSuppliesProcessor"/> <!-- 车源列表处理器 -->
+	</pageElements>
+</application>

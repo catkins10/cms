@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="短信发送" class="com.yuanluesoft.cms.smssend.pojo.SmsSendMessage">
+		<field name="content" title="短信内容" length="1000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+		<field name="sourceRecordId" title="源记录ID" length="80" type="string" inputMode="none"/>
+		<field name="sourceRecordClassName" title="源记录类名称" length="300" type="string" inputMode="none"/>
+		<field name="sourceRecordUrl" title="源记录URL" length="300" type="string" inputMode="none"/>
+		<field name="smsBusinessName" title="短信业务分类" length="60" type="string" inputMode="dropdown" required="true">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">smsService</parameter>
+			<parameter name="itemsName">sendableSmsBusinessName</parameter>
+		</field>
+		<field name="creatorId" title="创建者ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="创建者" length="50" type="string" inputMode="readonly"/>
+		<field name="unitId" title="创建者所在单位ID" length="20" type="number" inputMode="none"/>
+		<field name="unitName" title="创建者所在单位名称" length="200" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="sendCount" title="发送条数" type="number" length="8" inputMode="readonly"/>
+		<field name="sendTime" title="发送时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="短信发送流程配置" class="com.yuanluesoft.cms.smssend.pojo.SmsSendWorkflow">
+		<field name="orgId" title="机构ID" length="20" type="number" inputMode="hidden"/>
+		<field name="orgName" title="机构名称" length="200" required="true" type="string" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectOrg(500, 350, false, 'orgId{id},orgName{name}', '', 'root,category,area,unit', '', '', '', false, false, true)</parameter>
+		</field>
+		<field name="workflowId" title="流程ID" length="30" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="workflowName" title="流程名称" length="100" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('doWorkflowConfig', '', false, null, '_self')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

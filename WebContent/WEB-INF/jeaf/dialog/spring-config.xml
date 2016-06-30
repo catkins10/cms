@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 对话框页面服务 -->
+	<bean id="dialogPageService" class="com.yuanluesoft.jeaf.dialog.pages.DialogPageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="userPageTemplateService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+	</bean>
+</beans>

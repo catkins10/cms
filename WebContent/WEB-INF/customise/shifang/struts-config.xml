@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<data-sources/>
+	<form-beans>
+		<form-bean name="adminNews" type="com.yuanluesoft.customise.shifang.forms.admin.News"/>
+		<form-bean name="news" type="com.yuanluesoft.customise.shifang.forms.News"/>
+		<form-bean name="type" type="com.yuanluesoft.customise.shifang.forms.Type"/>
+	</form-beans>
+	<global-exceptions>
+		<exception key="exception" path="/../../jeaf/form/error.jsp" scope="request" type="java.lang.Exception"/>
+	</global-exceptions>
+	<global-forwards>
+		<forward name="result" path="/../../jeaf/form/result.jsp"/>
+	</global-forwards>
+	<action-mappings>
+		<action name="news" path="/news" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.publicservice.Load" validate="false">
+			<forward name="load" path="/news.jsp"/>
+		</action>
+		<action input="/news.jsp" name="news" path="/saveNews" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.publicservice.Save" validate="false">
+			<forward name="result" path="/newsSubmitted.jsp"/>
+		</action>
+		<action name="news" path="/newsAttachmentEditor" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.publicservice.SelectAttachment" validate="false">
+			<forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+		</action>
+		<action name="news" path="/selectNewsAttachment" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.publicservice.SelectAttachment" validate="false">
+			<forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+		</action>
+		<action name="adminNews" path="/admin/news" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.publicservice.admin.Load" validate="false">
+			<forward name="load" path="/admin/news.jsp"/>
+		</action>
+		<action input="/admin/news.jsp" name="adminNews" path="/admin/saveNews" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.publicservice.admin.Save" validate="false"/>
+		<action input="/admin/news.jsp" name="adminNews" path="/admin/deleteNews" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.publicservice.admin.Delete" validate="false"/>
+		<action input="/admin/news.jsp" name="adminNews" path="/admin/runNews" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.publicservice.admin.Run" validate="false"/>
+		<action input="/admin/news.jsp" name="adminNews" path="/admin/writeOpinion" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.publicservice.admin. WriteOpinion" validate="false"/>
+		<action input="/admin/news.jsp" name="adminNews" path="/admin/setPublishOption" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.publicservice.admin.SetPublishOption" validate="false"/>
+		<action input="/admin/news.jsp" name="adminNews" path="/admin/publish" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.publicservice.admin.Publish" validate="false"/>
+		<action input="/admin/news.jsp" name="adminNews" path="/admin/undeleteNews" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.publicservice.admin.Undelete" validate="false"/>
+		<action name="adminNews" path="/admin/printNews" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.publicservice.admin.Print" validate="false">
+			<forward name="load" path="/admin/news.jsp"/>
+		</action>
+		<action name="type" path="/type" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.site.Load" validate="false">
+			<forward name="load" path="/type.jsp"/>
+		</action>
+		<action input="/type.jsp" name="type" path="/saveType" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.site.Save" validate="false"/>
+		<action input="/type.jsp" name="type" path="/deleteType" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.site.Delete" validate="false"/>
+		<action name="type" path="/typeAttachmentEditor" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.site.SelectAttachment" validate="false">
+			<forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+		</action>
+		<action name="type" path="/selectTypeAttachment" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.site.SelectAttachment" validate="false">
+			<forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+		</action>
+	</action-mappings>
+</struts-config>

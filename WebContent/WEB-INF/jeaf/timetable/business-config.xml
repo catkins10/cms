@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="作息时间" class="com.yuanluesoft.jeaf.timetable.pojo.Timetable" businessServiceName="timetableService">
+		<field name="description" title="描述" length="50" required="true" type="string" inputMode="text"/>
+		<field name="effectiveDate" title="生效时间" required="true" type="date" inputMode="date"/>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+		<field name="visitors" title="适用的用户列表" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.timetable.pojo.TimetablePrivilege</parameter>
+		</field>
+		<field name="commuteTimes" title="上下班时间列表" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.timetable.pojo.TimetableCommuteTime</parameter>
+		</field>
+		<field name="offDays" title="休息日列表" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.timetable.pojo.TimetableOffDay</parameter>
+		</field>
+		<field name="festivals" title="节日列表" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.timetable.pojo.TimetableFestival</parameter>
+		</field>
+		<field name="overtimes" title="加班时长配置列表" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.timetable.pojo.TimetableOvertime</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="日常休息时间" class="com.yuanluesoft.jeaf.timetable.pojo.TimetableOffDay" businessServiceName="timetableService">
+		<field name="timetableId" title="作息时间配置ID" type="number" inputMode="hidden"/>
+		<field name="offDayOfWeek" title="星期" length="1" required="true" type="number" inputMode="hidden"/>
+		<field name="offDayNameOfWeek" title="星期" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">星期一|2\0 星期二|3\0 星期三|4\0 星期四|5\0 星期五|6\0 星期六|7\0 星期日|1</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="valueField">offDay.offDayOfWeek</parameter>
+		</field>
+		<field name="beginTime" title="开始时间" length="5" required="true" type="string" inputMode="time">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="endTime" title="结束时间" length="5" required="true" type="string" inputMode="time">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="上下班时间" class="com.yuanluesoft.jeaf.timetable.pojo.TimetableCommuteTime" businessServiceName="timetableService">
+		<field name="timetableId" title="作息时间配置ID" type="number" inputMode="hidden"/>
+		<field name="shiftNumber" title="班次" type="number" inputMode="dropdown">
+			<parameter name="itemsText">1\0 2\0 3</parameter>
+		</field>
+		<field name="description" title="描述" length="50" required="true" type="string" inputMode="text"/>
+		<field name="isOvertime" title="是否属于加班" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">加班|1\0正常班|0</parameter>
+		</field>
+		<field name="onDutyTime" title="上班时间" length="5" required="true" type="string" inputMode="time">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="offDutyTime" title="下班时间" length="5" required="true" type="string" inputMode="time">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="clockInBegin" title="上班打卡开始时间" length="5" required="true" type="string" inputMode="time">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="clockInEnd" title="上班打卡结束时间" length="5" required="true" type="string" inputMode="time">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="clockOutBegin" title="下班打卡开始时间" length="5" required="true" type="string" inputMode="time">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="clockOutEnd" title="下班打卡结束时间" length="5" required="true" type="string" inputMode="time">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="lateMiniutes" title="迟到多长时间算缺勤" length="3" type="number" inputMode="text"/>
+		<field name="earlyMiniutes" title="早退多长时间算缺勤" length="3" type="number" inputMode="text"/>
+		<field name="absentDay" title="缺勤天数" length="2,1" type="number" inputMode="text"/>
+		<field name="effectiveBegin" title="启用时间" length="5" type="string" inputMode="day">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="effectiveEnd" title="停用时间" length="5" type="string" inputMode="day">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="加班时长设置" class="com.yuanluesoft.jeaf.timetable.pojo.TimetableOvertime" businessServiceName="timetableService">
+		<field name="timetableId" title="作息时间配置ID" type="number" inputMode="hidden"/>
+		<field name="onDutyTime" title="加班小时数" length="3,1" type="number" inputMode="text"/>
+		<field name="absentDay" title="换算的加班天数" length="2,1" type="number" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="节假日" class="com.yuanluesoft.jeaf.timetable.pojo.TimetableFestival" businessServiceName="timetableService">
+		<field name="timetableId" title="作息时间配置ID" type="number" inputMode="hidden"/>
+		<field name="name" title="节日名称" length="50" required="true" type="string" inputMode="text"/>
+		<field name="beginTime" title="放假开始日期" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="endTime" title="放假结束日期" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="legalBeginTime" title="法定开始时间" type="timestamp" inputMode="datetime"/>
+		<field name="legalEndTime" title="法定结束时间" type="timestamp" inputMode="datetime"/>
+		<field name="adjusts" title="调休列表" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.timetable.pojo.TimetableFestivalAdjust</parameter>
+			<parameter name="lazyLoad">false</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="节假日调休" class="com.yuanluesoft.jeaf.timetable.pojo.TimetableFestivalAdjust" businessServiceName="timetableService">
+		<field name="festivalId" title="节假日ID" type="number" inputMode="hidden"/>
+		<field name="beginTime" title="调休开始日期" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="endTime" title="调休结束日期" required="true" type="timestamp" inputMode="datetime"/>
+	</businessObject>
+</businessObjects>

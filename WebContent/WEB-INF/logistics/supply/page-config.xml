@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="indexAnonymous" title="货源首页(未登录)" url="/logistics/supply/index.shtml"/>
+		<page name="index" title="货源首页(已登录)" url="/logistics/supply/index.shtml"/>
+		<page name="suppliesAnonymous" title="货源列表(未登录)" url="/logistics/supply/supplies.shtml"/>
+		<page name="supplies" title="货源列表(已登录)" url="/logistics/supply/supplies.shtml"/>
+		<page name="mySupplies" title="我的货源列表" url="/logistics/supply/mySupplies.shtml"/>
+		
+		<page name="supplySearch" title="货源查询(已登录)" searchPage="true" searchResults="supplies" url="/logistics/supply/supplySearch.shtml"/>
+		
+		<page name="supply" title="货源登记" url="/logistics/supply/supply.shtml"/>
+		<page name="supplySubmitted" title="货源登记完成"/>
+		<page name="supplyDeleted" title="货源删除完成"/>
+		
+		<page name="supplyInfoAnonymous" title="货源信息(未登录)" recordClass="com.yuanluesoft.logistics.supply.pojo.LogisticsSupply" url="/logistics/supply/supply.shtml" systemLink="false">
+			<link title="登录获取详情" url="javascript:login('', true, false)"/>
+			<link title="投诉" url="/logistics/complaint/complaint.shtml?supplyId={PARAMETER:id}"/>
+		</page>
+		
+		<page name="supplyInfo" title="货源信息(已登录)" recordClass="com.yuanluesoft.logistics.supply.pojo.LogisticsSupply" url="/logistics/supply/supply.shtml" systemLink="false">
+			<link title="投诉" url="/logistics/complaint/complaint.shtml?supplyId={PARAMETER:id}"/>
+		</page>
+	</pages>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="supplies" processor="suppliesProcessor"/> <!-- 货源列表处理器 -->
+	</pageElements>
+</application>

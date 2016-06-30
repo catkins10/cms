@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="效能监督" class="com.yuanluesoft.cms.supervision.pojo.Supervision" businessServiceName="publicService">
+		<field name="content" title="正文" persistence="false" type="string" inputMode="textarea">
+			<parameter name="rssDescriptionField">true</parameter>
+			<parameter name="referenceFields">lazyBody</parameter>
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="unit" title="被监督机构" length="30" required="true" type="string" inputMode="text"/>
+		<field name="creator" title="监督人姓名" length="10" required="true" type="string" inputMode="text"/>
+		<field name="attachment" title="附件" type="attachment" inputMode="attachment"/>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">批转,部门办理|required,部门审核,回复审核,领导批示</parameter>
+			<parameter name="class">com.yuanluesoft.cms.publicservice.pojo.PublicServiceOpinion</parameter>
+		</field>
+		<!--漳州检察院-->
+		<field name="source" title="来源" type="string" length="20" inputMode="dropdown">
+			<parameter name="itemsText">单位举报\0个人举报\0案犯揭发\0自首\0其他</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="otherSupervision" title="其他举报人" length="200" type="string" inputMode="text"/>
+		<field name="unitCategory" title="被举报人主体类别" type="string" length="20" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsText">自然人\0单位\0法人\0国有\0集体\0私营\0中外合资\0中外合作\0独资\0联营\0机关\0事业单位\0社团</parameter>
+		</field>
+		<field name="mainSuspected" title="主要涉嫌性质" type="string" length="200" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsText">--政治类错误--\0发表违背四项基本原则、有损国家声誉的言论\0组织反对国家的集会等活动、参加邪教等组织\0拒不执行国家宪法、法律和党的重大方针、政策\0投敌叛变、叛逃\0出版、刊登、传播有严重政治问题的文章\0违反党的民族、宗教政策\0涉外活动中在政治上造成恶劣影响\0--组织人事类错误--\0违规招录不符合条件人员\0拒不执行上级的决议、命令\0违反民主集中制原则\0违反干部选拔任用规定\0考试、招聘、录用、考核等弄虚作假\0拒不执行组织的分配、调动、交流决定\0不正当出国（境）、擅自变更出国期限、路线\0--违反办案纪律类错误--\0报复、陷害举报人、控告人、申诉人、批评人\0通风报信、泄露国家或者检察秘密\0私自改变案情及案件性质\0非法拘禁\0非法提讯\0非法搜查\0非法手段收集证据\0刑讯逼供\0私放在押人员\0非法查封、扣押、冻结、没收公私财产\0干预或者私自办理案件\0私自会见案件当事人等或接受其宴请、娱乐活动\0拖延办案\0超期羁押\0打骂、侮辱案件当事人等\0滥用枪支、警具、械具\0违规立案或者插手经济纠纷\0虐待、私自会见被监管人员\0不依法回避\0故意违背事实勘验、鉴定\0--经济类错误--\0贪污\0受贿\0行贿\0挪用公款\0挪用、私分或者压价处理扣押、冻结款物\0外交礼品不交公或违规接受现金、礼金等\0报销应由个人支付的费用\0占用发案单位或案件当事人交通、通讯工具\0组织或参加用公款支付的高消费娱乐活动\0私设“小金库”、乱收费、乱摊派、拉赞助\0违反规定经商办企业\0违反规定兼职\0为他人谋取利益家庭成员接受对方财物\0--失职渎职类错误--\0玩忽职守致使犯罪嫌疑人脱逃、自杀、自残\0玩忽职守造成错案或给当事人造成严重损失\0玩忽职守致使犯罪嫌疑人超期羁押\0丢失案卷、案件材料或者机密文件\0擅离职守造成严重影响或者重大损失\0--违反警械警具车辆管理类错误--\0违规携带枪支或造成枪支丢失、被盗等事故\0乱用枪支或者枪走火致人伤亡\0违规使用警车、警械、警具\0交通肇事或丢失、损坏车辆\0--违反社会主义道德类错误--\0骗取荣誉、职务、职称或其他利益\0临危退缩能救而不救\0猥亵、侮辱妇女或者进行淫乱活动\0通奸、重婚、包养情妇等不正当两性关系\0不尽赡养、抚养义务或虐待、遗弃家庭成员\0侮辱、诽谤、诬告陷害他人或毁坏他人名誉\0利用职权大办婚丧喜庆事宜\0--违反社会管理秩序类错误--\0参与赌博或为赌博提供场所\0嫖娼、卖淫等\0接受色情、异性按摩等色情服务\0观看淫秽影视书画、淫秽网站、淫秽表演\0制作、复制、贩卖、传播淫秽物品\0吸毒\0寻衅滋事\0伪造、变造、盗窃、毁灭公文、证件、印章\0违反计划生育政策\0--违反党风廉政建设责任制类错误--\0对下属违法违纪行为失职、失教、失察、失管、失究\0--其他违纪错误--</parameter>
+		</field>
+		<field name="secondarySuspected" title="次要涉嫌性质" type="string" length="200" inputMode="text"/>
+	</businessObject>
+</businessObjects>

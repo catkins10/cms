@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="职位申请(个人)" name="talentApplies">
+		<data>
+			<pojo>com.yuanluesoft.job.apply.pojo.JobApply</pojo>
+			<where>JobApply.talentId={USERID}</where>
+			<orderBy>JobApply.created DESC</orderBy>
+		</data>
+		<links>
+			<link>/job/apply/apply.shtml</link>
+		</links>
+	</view>
+	
+	<view title="面试邀请(个人)" name="talentInvitations">
+		<data>
+			<pojo>com.yuanluesoft.job.apply.pojo.JobApplyInvitation</pojo>
+			<where>apply.talentId={USERID}</where>
+			<orderBy>JobApplyInvitation.sent DESC</orderBy>
+		</data>
+		<links>
+			<link>/job/apply/apply.shtml?id={PARAMETER:applyId}</link>
+		</links>
+	</view>
+	
+	<view title="录用通知(个人)" name="talentOffers">
+		<data>
+			<pojo>com.yuanluesoft.job.apply.pojo.JobApplyOffer</pojo>
+			<where>apply.talentId={USERID}</where>
+			<orderBy>JobApplyOffer.sent DESC</orderBy>
+		</data>
+		<links>
+			<link>/job/apply/apply.shtml?id={PARAMETER:applyId}</link>
+		</links>
+	</view>
+	
+	<view title="职位申请(企业)" name="companyApplies">
+		<data>
+			<pojo>com.yuanluesoft.job.apply.pojo.JobApply</pojo>
+			<where>JobApply.companyId={UNITID} and JobApply.status=0</where>
+			<orderBy>JobApply.created DESC</orderBy>
+		</data>
+		<links>
+			<link>/job/apply/apply.shtml</link>
+		</links>
+	</view>
+	
+	<view title="拟面试(企业)" name="companyInvitedApplies">
+		<data>
+			<pojo>com.yuanluesoft.job.apply.pojo.JobApply</pojo>
+			<where>JobApply.companyId={UNITID} and JobApply.status=2</where>
+			<orderBy>JobApply.created DESC</orderBy>
+		</data>
+		<links>
+			<link>/job/apply/apply.shtml</link>
+		</links>
+	</view>
+	
+	<view title="已面试(企业)" name="companyInterviewApplies">
+		<data>
+			<pojo>com.yuanluesoft.job.apply.pojo.JobApply</pojo>
+			<where>JobApply.companyId={UNITID} and JobApply.status=3</where>
+			<orderBy>JobApply.created DESC</orderBy>
+		</data>
+		<links>
+			<link>/job/apply/apply.shtml</link>
+		</links>
+	</view>
+	
+	<view title="已录用(企业)" name="companyOfferedApplies">
+		<data>
+			<pojo>com.yuanluesoft.job.apply.pojo.JobApply</pojo>
+			<where>JobApply.companyId={UNITID} and JobApply.status=5</where>
+			<orderBy>JobApply.created DESC</orderBy>
+		</data>
+		<links>
+			<link>/job/apply/apply.shtml</link>
+		</links>
+	</view>
+	
+	<view title="回收站(企业)" name="companyOfferedApplies">
+		<data>
+			<pojo>com.yuanluesoft.job.apply.pojo.JobApply</pojo>
+			<where>JobApply.companyId={UNITID} and (JobApply.status=1 or JobApply.status=4)</where>
+			<orderBy>JobApply.created DESC</orderBy>
+		</data>
+		<links>
+			<link>/job/apply/apply.shtml</link>
+		</links>
+	</view>
+	
+	<view title="面试邀请(企业)" name="companyInvitations">
+		<data>
+			<pojo>com.yuanluesoft.job.apply.pojo.JobApplyInvitation</pojo>
+			<where>apply.companyId={UNITID}</where>
+			<orderBy>JobApplyInvitation.sent DESC</orderBy>
+		</data>
+		<links>
+			<link>/job/apply/apply.shtml?id={PARAMETER:applyId}</link>
+		</links>
+	</view>
+	
+	<view title="录用通知(企业)" name="companyOffers">
+		<data>
+			<pojo>com.yuanluesoft.job.apply.pojo.JobApplyOffer</pojo>
+			<where>apply.companyId={UNITID}</where>
+			<orderBy>JobApplyOffer.sent DESC</orderBy>
+		</data>
+		<links>
+			<link>/job/apply/apply.shtml?id={PARAMETER:applyId}</link>
+		</links>
+	</view>
+	
+	<view title="职位收藏(个人)" name="favorites">
+		<data>
+			<pojo>com.yuanluesoft.job.apply.pojo.JobFavorite</pojo>
+			<where>JobFavorite.talentId={USERID}</where>
+			<orderBy>JobFavorite.created DESC</orderBy>
+		</data>
+		<links>
+			<link>/job/company/job.shtml?id={PARAMETER:jobId}</link>
+		</links>
+	</view>
+</views>

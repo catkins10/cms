@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,56,177,21" TARGET="page1" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,177,21"
+  TARGET="page6" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#payment" NAME="action0"
+  PATH="/payment" SHAPE="32,224,177,41" TITLE="payment" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/payment.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/payment.jsp" SHAPE="320,240,50,25" SUBTYPE="jsp"
+  TITLE="payment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#submitPayment"
+  NAME="action1" PATH="/submitPayment" SHAPE="512,256,177,25"
+  TITLE="payment" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#example" NAME="action2"
+  PATH="/example" SHAPE="32,432,177,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#paymentTransaction"
+  NAME="action3" PATH="/paymentTransaction" SHAPE="32,328,177,25"
+  TITLE="paymentTransaction" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/paymentTransaction.jsp" TARGET="page3"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/paymentTransaction.jsp" SHAPE="320,344,50,25" SUBTYPE="jsp"
+  TITLE="paymentTransaction.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#displayPaymentTransaction" NAME="action4"
+  PATH="/displayPaymentTransaction" SHAPE="512,360,177,25"
+  TITLE="paymentTransaction" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#changePaymentPassword"
+  NAME="action5" PATH="/changePaymentPassword" SHAPE="32,512,177,41"
+  TITLE="changePaymentPassword" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/changePaymentPassword.jsp" TARGET="page4"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/changePaymentPassword.jsp" SHAPE="328,528,50,25" SUBTYPE="jsp"
+  TITLE="changePaymentPassword.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/actionResultSimple.jsp" SHAPE="816,560,50,25" SUBTYPE="jsp"
+  TITLE="actionResultSimple.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#submitNewPaymentPassword"
+  NAME="action6" PATH="/submitNewPaymentPassword" SHAPE="512,544,177,41"
+  TITLE="changePaymentPassword" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/actionResultSimple.jsp" TARGET="page5"
+   TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="320,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="320,56,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+</PROCESS>

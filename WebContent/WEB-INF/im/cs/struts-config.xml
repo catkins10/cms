@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminSpecialist" type="com.yuanluesoft.im.cs.forms.admin.Specialist"/>
+  <form-bean name="adminParameter" type="com.yuanluesoft.im.cs.forms.admin.Parameter"/>
+  <form-bean name="adminReply" type="com.yuanluesoft.im.cs.forms.admin.Reply"/>
+  <form-bean name="evaluation" type="com.yuanluesoft.im.cs.forms.Evaluation"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminSpecialist" path="/admin/specialist"
+   scope="request"
+   type="com.yuanluesoft.im.cs.actions.specialist.admin.Load" validate="false">
+   <forward name="load" path="/admin/specialist.jsp"/>
+  </action>
+  <action name="adminParameter" path="/admin/parameter" scope="request"
+   type="com.yuanluesoft.im.cs.actions.parameter.admin.Load" validate="false">
+   <forward name="load" path="/admin/parameter.jsp"/>
+  </action>
+  <action name="adminReply" path="/admin/reply" scope="request"
+   type="com.yuanluesoft.im.cs.actions.reply.admin.Load" validate="false">
+   <forward name="load" path="/admin/reply.jsp"/>
+  </action>
+  <action input="/admin/specialist.jsp" name="adminSpecialist"
+   path="/admin/saveSpecialist" scope="request"
+   type="com.yuanluesoft.im.cs.actions.specialist.admin.Save" validate="false"/>
+  <action input="/admin/specialist.jsp" name="adminSpecialist"
+   path="/admin/deleteSpecialist" scope="request"
+   type="com.yuanluesoft.im.cs.actions.specialist.admin.Delete" validate="false"/>
+  <action input="/admin/parameter.jsp" name="adminParameter"
+   path="/admin/saveParameter" scope="request"
+   type="com.yuanluesoft.im.cs.actions.parameter.admin.Save" validate="false"/>
+  <action input="/admin/reply.jsp" name="adminReply"
+   path="/admin/saveReply" scope="request"
+   type="com.yuanluesoft.im.cs.actions.reply.admin.Save" validate="false"/>
+  <action input="/admin/reply.jsp" name="adminReply"
+   path="/admin/deleteReply" scope="request"
+   type="com.yuanluesoft.im.cs.actions.reply.admin.Delete" validate="false"/>
+  <action name="evaluation" path="/evaluation" scope="request"
+   type="com.yuanluesoft.im.cs.actions.evaluation.Load" validate="false">
+   <forward name="load" path="/evaluation.jsp"/>
+  </action>
+  <action input="/evaluation.jsp" name="evaluation"
+   path="/submitEvaluation" scope="request"
+   type="com.yuanluesoft.im.cs.actions.evaluation.Submit" validate="false">
+   <forward name="result" path="/evaluationSubmitted.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

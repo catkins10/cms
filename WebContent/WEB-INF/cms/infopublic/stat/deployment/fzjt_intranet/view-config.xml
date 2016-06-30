@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views>
+	<statisticView name="stat" form="stat" title="信息公开发布统计" pageRows="100" width="100%" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.pojo.PublicInfo</pojo>
+			<where>PublicInfo.status='3' and not PublicInfo.unitName is null</where> <!--  and PublicInfo.orgId>0 -->
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.sitemanage.pojo.PublicInfo</pojo>
+			</data>
+			<category value="to_char(PublicInfo.issueTime, 'yyyy')"> <!--value必须有-->
+				<where>PublicInfo.status='3'</where> <!--  and PublicInfo.orgId>0 -->
+				<data>to_char(PublicInfo.issueTime, 'yyyy')={CATEGORYVALUE}</data>
+			</category>
+			<category value="to_char(PublicInfo.issueTime, 'mm')"> <!--value必须有-->
+				<where>PublicInfo.status='3' and to_char(PublicInfo.issueTime, 'yyyy')={CATEGORY1VALUE}</where> <!--  and PublicInfo.orgId>0 -->
+				<data>to_char(PublicInfo.issueTime, 'yyyy')={CATEGORY1VALUE} and to_char(PublicInfo.issueTime, 'mm')={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<statistics hideDetail="true">
+			<statistic title="　{PARAMETER:rowIndex}) {PARAMETER:orgName}">
+				<groupFields>
+					<groupField name="unitName"/>
+					<groupField name="orgId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="id" function="count(distinct PublicInfo.id)"/>
+				</statisticColumns>
+			</statistic>
+			<statistic title="{PARAMETER:rowIndex}.{PARAMETER:unitName}">
+				<groupFields>
+					<groupField name="unitName"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="id" function="count(distinct PublicInfo.id)"/>
+				</statisticColumns>
+			</statistic>
+			<statistic statisticAll="true" title="合计">
+				<statisticColumns>
+					<statisticColumn name="id" function="count(distinct PublicInfo.id)"/>
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位名称" name="orgName" width="200"/>
+			<column title="发布数量" name="id" type="statistic" align="center"/>
+		</columns>
+	</statisticView>
+</views>

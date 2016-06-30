@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="toContribute" form="info" title="待投稿件" hide="noMyUnitPopedom(infoContribute)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.infocontribute.pojo.InfoContribute</pojo>
+			<where>InfoContribute.contributeTime is null and InfoContribute.fromUnitId={UNITID}</where>
+			<orderBy>InfoContribute.created DESC</orderBy>
+			<quickFilter>InfoContribute.subject like '%{KEY}%' or lazyBody.body like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="投稿" execute="PageUtils.newrecord('j2oa/infocontribute','info','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="主题" name="subject"/>
+			<column title="创建时间" name="created" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="contributed" form="info" title="已投稿件" hide="noMyUnitPopedom(infoContribute)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.infocontribute.pojo.InfoContribute</pojo>
+			<where>InfoContribute.contributeTime is not null and InfoContribute.fromUnitId={UNITID}</where>
+			<orderBy>InfoContribute.created DESC</orderBy>
+			<quickFilter>InfoContribute.subject like '%{KEY}%' or lazyBody.body like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="投稿" execute="PageUtils.newrecord('j2oa/infocontribute','info','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="主题" name="subject"/>
+			<column title="创建时间" name="created" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="reviseInfo" form="reviseInfo" title="退改稿" hide="noMyUnitPopedom(infoContribute)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeRevise</pojo>
+			<where>info.fromUnitId={UNITID} and InfoContributeRevise.editTime is null</where>
+			<orderBy>InfoContributeRevise.reviseTime DESC</orderBy>
+			<quickFilter>InfoContributeRevise.subject like '%{KEY}%' or InfoContributeRevise.reviseOpinion like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="标题" name="subject"/>
+			<column title="退改稿意见" name="reviseOpinion"/>
+			<column title="退改稿人" name="revisePerson" width="80" align="center"/>
+			<column title="退改稿时间" name="reviseTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="use" title="采用情况" hide="noMyUnitPopedom(infoContribute)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeUse</pojo>
+			<where>info.fromUnitId={UNITID}</where>
+			<orderBy>InfoContributeUse.sendTime DESC</orderBy>
+			<quickFilter>info.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>javascript:PageUtils.editrecord('j2oa/infocontribute', 'info', '{PARAMETER:infoId}', 'mode=fullscreen', '', 'tabSelected=uses')</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="标题" name="info.subject"/>
+			<column title="报送级别" name="level" width="80"/>
+			<column title="报送时间" name="sendTime" width="110" align="center"/>
+			<column title="采用时间" name="useTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="instruct" title="领导批示" hide="noMyUnitPopedom(infoContribute)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeInstruct</pojo>
+			<where>info.fromUnitId={UNITID}</where>
+			<orderBy>InfoContributeInstruct.created DESC</orderBy>
+			<quickFilter>InfoContributeInstruct.leader like '%{KEY}%' or InfoContributeInstruct.instruct like '%{KEY}%' or info.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>javascript:PageUtils.editrecord('j2oa/infocontribute', 'info', '{PARAMETER:infoId}', 'mode=fullscreen', '', 'tabSelected=instructs')</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="稿件" name="info.subject" width="40%"/>
+			<column title="批示" name="instruct" width="60%"/>
+			<column title="领导" name="leader" width="80" align="center"/>
+			<column title="批示时间" name="instructTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="magazine" form="magazine" title="刊物" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeMagazine</pojo>
+			<orderBy>InfoContributeMagazine.issueTime DESC</orderBy>
+			<filter>READABLE</filter>
+			<quickFilter>InfoContributeMagazine.name like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+			<column title="发布时间" name="issueTime" width="110" align="center"/>
+		</columns>
+	</view>
+</views>

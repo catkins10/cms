@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="biddingProjectInfoSearch" title="项目搜索" dialogHeight="200" method="get" action="/bidding/project/search.shtml?type=biddingProjectInfoSearch">
+		<formFields>
+			<field title="招标编号" name="projectNumber"/>
+			<field title="项目名称" name="projectName"/>
+			<field title="项目类别" name="projectCategory" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsServiceName">biddingProjectParameterService</parameter>
+				<parameter name="itemsName">category</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="biddingProjectProgressQuery" title="项目进度查询" dialogHeight="200" method="get" action="/bidding/project/search.shtml?type=biddingProjectProgressQuery">
+		<formFields>
+			<field title="招标编号" name="projectNumber"/>
+			<field title="项目名称" name="projectName"/>
+			<field title="项目类别" name="projectCategory" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsServiceName">biddingProjectParameterService</parameter>
+				<parameter name="itemsName">category</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="查询" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="admin/project" class="com.yuanluesoft.bidding.project.forms.admin.Project" title="工程项目" pojo="com.yuanluesoft.bidding.project.pojo.BiddingProject">
+		<formFields>
+			<field title="候选企业报名ID列表" name="rankingSignUpIds" type="string" inputMode="hidden"/>
+			<field title="候选企业列表" name="rankingEnterpriseNames" type="string" inputMode="select">
+				<parameter name="selectOnly">false</parameter>
+				<parameter name="execute">DialogUtils.openSelectDialog('bidding/project/signup', 'selectBiddingEnterprise', 720, 430, true, 'rankingSignUpIds{id},rankingEnterpriseNames{enterpriseName|企业名称|100%}', '', '', '', ',', false, 'projectId={PARAMETER:id}')</parameter>
+			</field>
+			<field title="转账密码" name="transferPassword" type="string" inputMode="hidden"/>
+			<field title="保证金开户行" name="pledgeBankChoose" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">中国建设银行延平支行|中国建设银行延平支行,南平市招标投标服务中心,35001676107052505220\0中国农业银行南平市延平支行|中国农业银行南平市延平支行,南平市招标投标服务中心,13910101040020542\0其它|other</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="作废" hide="isNew() or workflow() and noPrivilege(application_manager)" execute="if(confirm('是否确定要作废？'))FormUtils.doAction('deleteProject')"/>
+			<action title="永久删除" hide="isNew() or noPrivilege(application_manager)" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteProject', 'physical=true')"/>
+			<action title="撤销删除" hide="isNew() or noPrivilege(application_manager)" execute="FormUtils.doAction('undeleteProject')"/>
+			<action title="完成登记" execute="FormUtils.doAction('switchPage', 'pageName=completeCreate')"/>
+			<action title="完成前期资料备案" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=completeProphase')"/>
+			<action title="发布中选代理公示" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=publicAgent')"/>
+			
+			<action title="发布预审公示" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=publicPreapproval')"/>
+			
+			<action title="上传招标文件" hide="workflow()" execute="alert('请到企业界面操作')"/>
+			<action title="完成招标文件备案" hide="workflow()" execute="FormUtils.doAction('runProject', 'workflowAction=send')"/>
+			<action title="发布招标文件" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=publicTender')"/>
+			
+			<action title="完成场地费缴纳" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=completeUseFee')"/>
+			<action title="完成开标室分配" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=arrangeBidopeningRoom')"/>
+			<action title="完成开标室分配并发布招标文件" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=arrangeBidopeningRoomAndPublicTender')"/>
+			
+			<action title="提交答疑会议纪要" hide="workflow()" execute="alert('请到企业界面操作')"/>
+			<action title="发布答疑会议纪要" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=publicAnswer')"/>
+			<action title="提交补充通知" hide="workflow()" execute="alert('请到企业界面操作')"/>
+			<action title="发布补充通知" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=publicSupplement')"/>
+			<action title="调整开标室" hide="workflow() and noPrivilege(changeBidopeningRoom)" execute="FormUtils.doAction('switchPage', 'pageName=changeBidopeningRoom')"/>
+			
+			<action title="提交开标公示" hide="workflow()" execute="alert('请到企业界面操作')"/>
+			<action title="发布开标公示" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=publicBidopening')"/>
+			<action title="招标失败" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=biddingFailed')"/>
+			<action title="完成评标室分配" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=arrangeEvaluatingRoom')"/>
+			<action title="提交中标结果公示" hide="workflow()" execute="alert('请到企业界面操作')"/>
+			<action title="发布中标结果公示" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=publicPitchon')"/>
+			<action title="提交中标通知书" hide="workflow()" execute="alert('请到企业界面操作')"/>
+			<action title="审核中标通知书" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=approvalNotice')"/>
+			<action title="打印中标通知书" hide="workflow()" execute="window.open('../printNotice.shtml?projectId={PARAMETER:id}')"/>
+			<action title="发放中标通知书" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=publicNotice')"/>
+			
+			<action title="完成缴费" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=complatePay')"/>
+			<action title="完成书面报告备案" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=archive')"/>
+			
+			<action title="完成报建受理" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=declareReceive')"/>
+			<action title="完成报建" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=completeDeclare')"/>
+			<action title="发放施工许可证" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=licence')"/>
+			
+			<action title="完成保证金确认" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=completePledgeConfirm')"/>
+			<action title="完成保证金返还名单确认" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=completePledgeReturnChoose')"/>
+			<action title="完成保证金返还" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=completePledgeReturn')"/>
+			
+			<action title="竣工" hide="workflow()" execute="FormUtils.doAction('switchPage', 'pageName=publicCompletion')"/>
+		</actions>
+	</form>
+	
+	<form name="project" class="com.yuanluesoft.bidding.project.forms.Project" title="工程项目" pojo="com.yuanluesoft.bidding.project.pojo.BiddingProject">
+		<actions>
+			<action title="上传招标文件" hide="workflow()" execute="alert('请到企业界面操作')"/>
+			<action title="提交答疑会议纪要" hide="workflow()" execute="alert('请到企业界面操作')"/>
+			<action title="提交补充通知" hide="workflow()" execute="alert('请到企业界面操作')"/>
+			<action title="提交开标公示" hide="workflow()" execute="alert('请到企业界面操作')"/>
+			<action title="提交中标结果公示" hide="workflow()" execute="alert('请到企业界面操作')"/>
+			<action title="提交中标通知书" hide="workflow()" execute="alert('请到企业界面操作')"/>
+			<action title="招标失败" hide="workflow()" execute="biddingFailed()"/>
+			<action title="发放中标通知书" hide="workflow()" execute="publicNotice()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/parameterConfig" class="com.yuanluesoft.bidding.project.forms.admin.ParameterConfig" title="参数配置" pojo="com.yuanluesoft.bidding.project.pojo.BiddingProjectParameter">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteParameterConfig')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/fileConfig" class="com.yuanluesoft.bidding.project.forms.admin.FileConfig" title="资料配置" pojo="com.yuanluesoft.bidding.project.pojo.BiddingProjectFile">
+		<formFields>
+			<field name="needFull" title="是否要求全部齐全才能继续" type="string" inputMode="radio">
+				<parameter name="itemsText">要求|1\0不要求|0</parameter>
+			</field>
+			<field name="prophaseFileId" title="前期资料ID" type="number" inputMode="hidden"/>
+			<field name="prophaseFileSn" title="前期资料序号" type="number" inputMode="text" length="5,2"/>
+			<field name="prophaseFileName" title="前期资料名称" type="string" inputMode="text"/>
+			<field name="archiveFileId" title="归档资料Id" type="number" inputMode="hidden"/>
+			<field name="archiveFileSn" title="归档资料序号" type="number" inputMode="text" length="5,2"/>
+			<field name="archiveFileName" title="归档资料名称" type="string" inputMode="text"/>
+			<field name="archiveFileCategory" title="归档资料分类" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">biddingProjectParameterService</parameter>
+				<parameter name="itemsName">archiveFileCategory</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteFileConfig')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/workflowConfig" class="com.yuanluesoft.bidding.project.forms.admin.WorkflowConfig" title="流程配置" pojo="com.yuanluesoft.bidding.project.pojo.BiddingProjectWorkflow">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteWorkflowConfig')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/cityConfig" class="com.yuanluesoft.bidding.project.forms.admin.CityConfig" title="地区配置" pojo="com.yuanluesoft.bidding.project.pojo.BiddingProjectCity">
+		<formFields>
+			<field title="管理员" name="managers" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field title="报表查询人员" name="reportVisitors" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field title="项目登记人员" name="projectCreators" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field title="项目审核人员" name="projectApprovers" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteCityConfig')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/template" class="com.yuanluesoft.bidding.project.forms.admin.Template" title="模板配置" pojo="com.yuanluesoft.bidding.project.pojo.BiddingProjectTemplate"/>
+	
+	<form class="com.yuanluesoft.bidding.project.forms.admin.SetTemplateRange" title="设置模板作用范围">
+		<formFields>
+			<field name="categoryArray" title="适用的项目分类" type="string[]" inputMode="multibox" required="true" persistence="false">
+				<parameter name="itemsServiceName">biddingProjectParameterService</parameter>
+				<parameter name="itemsName">category</parameter>
+			</field>
+			<field name="procedureArray" title="适用的招标内容" type="string[]" inputMode="multibox" required="true" persistence="false">
+				<parameter name="itemsServiceName">biddingProjectParameterService</parameter>
+				<parameter name="itemsName">procedure</parameter>
+			</field>
+			<field name="cityArray" title="适用的地区列表" type="string[]" inputMode="multibox" required="true" persistence="false">
+				<parameter name="itemsServiceName">biddingProjectParameterService</parameter>
+				<parameter name="itemsName">city</parameter>
+			</field>
+			<field name="biddingModeArray" title="适用的招标方式" type="string[]" inputMode="multibox" required="true" persistence="false">
+				<parameter name="itemsText">公开招标\0邀请招标</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.bidding.project.forms.admin.InsertRecordList" title="插入记录列表">
+		<formFields>
+			<field name="categories" title="项目分类" type="string[]" inputMode="multibox">
+				<parameter name="itemsServiceName">biddingProjectParameterService</parameter>
+				<parameter name="itemsName">category</parameter>
+			</field>
+			<field name="procedures" title="招标内容" type="string[]" inputMode="multibox">
+				<parameter name="itemsServiceName">biddingProjectParameterService</parameter>
+				<parameter name="itemsName">procedure</parameter>
+			</field>
+			<field name="cities" title="地区" type="string[]" inputMode="multibox">
+				<parameter name="itemsServiceName">biddingProjectParameterService</parameter>
+				<parameter name="itemsName">city</parameter>
+			</field>
+			<field name="biddingModes" title="招标方式" type="string[]" inputMode="multibox">
+				<parameter name="itemsText">公开招标\0邀请招标</parameter>
+			</field>
+		</formFields>
+	</form>
+</forms>

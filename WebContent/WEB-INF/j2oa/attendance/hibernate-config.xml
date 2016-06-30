@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--考勤:打卡记录-->
+	<class name="com.yuanluesoft.j2oa.attendance.pojo.AttendanceRecord" table="attendance_record">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="personId"/> <!--用户ID-->
+		<property name="punchTime"/> <!--打卡时间-->
+	</class>
+	
+	<!--考勤:补卡-->
+	<class name="com.yuanluesoft.j2oa.attendance.pojo.AttendanceMend" table="attendance_mend">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="personId"/> <!--补卡人ID-->
+		<property name="personName"/> <!--补卡人-->
+		<property name="reason"/> <!--补卡原因-->
+		<property name="mendType"/> <!--补卡类型-->
+		<property name="mendTime"/> <!--补卡的时间-->
+		<property name="pass"/> <!--是否审核通过-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<set name="opinions" table="attendance_mend_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.attendance.pojo.AttendanceMendOpinion"/>
+		</set>
+		<set name="visitors" table="attendance_mend_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.attendance.pojo.AttendanceMendPrivilege"/>
+		</set>
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+	</class>
+	
+	<!--考勤:补卡权限控制-->
+	<class name="com.yuanluesoft.j2oa.attendance.pojo.AttendanceMendPrivilege" table="attendance_mend_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--考勤:补卡审核意见-->
+	<class name="com.yuanluesoft.j2oa.attendance.pojo.AttendanceMendOpinion" table="attendance_mend_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="created"/> <!--填写时间-->
+	</class>
+</hibernate-mapping>

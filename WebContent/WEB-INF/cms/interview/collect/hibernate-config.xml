@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--在线访谈:主题征集说明-->
+	<class name="com.yuanluesoft.cms.interview.collect.pojo.InterviewCollectPrologue" table="interview_collect_prologue">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="prologue" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--征集说明,TEXT-->
+		<property name="creatorId"/> <!--创建者ID,NUMERIC(20,0)-->
+		<property name="creator"/> <!--创建者,VARCHAR(30)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="siteId"/> <!--站点ID,NUMERIC(20,0)-->
+	</class>
+</hibernate-mapping>

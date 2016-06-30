@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="信息公开申请" class="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest" businessServiceName="publicService">
+		<field name="proposerType" title="申请人类型" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">个人|1\0企业|2</parameter>
+			<parameter name="onclick">location.href = (document.getElementsByName('proposerType')[1].checked ? '{CONTEXTPATH}/cms/infopublic/request/companyRequest.shtml' : '{CONTEXTPATH}/cms/infopublic/request/personalRequest.shtml') + '?siteId={PARAMETER:siteId}'</parameter>
+		</field>
+		<field name="from" title="申请人" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">proposerType,creator,creatorUnit</parameter>
+		</field>
+		<field name="code" title="机构代码" length="100" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="legalRepresentative" title="法人代表" length="30" required="true" type="string" inputMode="text"/>
+		<field name="unitId" title="涉及单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="unit" title="涉及单位" length="50" type="string" inputMode="text">
+			<!-- parameter name="execute">DialogUtils.selectOrg(500, 380, false, 'unitId{id},unit{name}', '', 'unit,unitDepartment')</parameter -->
+		</field>
+		<field name="subject" title="信息名称" length="1000" required="true" type="string" inputMode="textarea">
+			<parameter name="rssTitleField">true</parameter>
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="remark" title="信息内容描述" length="1000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="purpose" title="用途" length="250" required="true" type="string" inputMode="textarea">
+			<parameter name="rssDescriptionField">true</parameter>
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="medium" title="提供方式(只读)" length="100" type="string" inputMode="hidden"/>
+		<field name="receiveMode" title="获取信息的方式(只读)" length="100" type="string" inputMode="hidden"/>
+		<field name="approvalResult" title="审批结果" length="50" type="string" inputMode="dropdown">
+			<parameter name="itemsText">同意公开\0同意部分公开\0不公开</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="notPublicType" title="不公开类别" length="50" type="string" inputMode="dropdown">
+			<parameter name="itemsText">信息不存在\0非本部门掌握\0申请内容不明确\0免予公开\0其他原因</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="notPublicReason" title="其他未能提供信息的原因" length="500" type="string" inputMode="text"/>
+		<field name="doneMedium" title="实际提供方式" length="100" type="string" inputMode="dropdown">
+			<parameter name="itemsText">纸质\0电子邮件\0光盘\0磁盘</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="doneReceiveMode" title="实际获取信息的方式" length="100" type="string" inputMode="dropdown">
+			<parameter name="itemsText">邮寄\0快递\0电子邮件\0传真\0自行领取/当场阅读、抄录</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="approvalTime" title="审批时间" type="timestamp" inputMode="datetime"/>
+		<field name="creator" title="申请人姓名" length="10" required="true" type="string" inputMode="text"/>
+		<field name="registrantId" title="登记人ID" length="20" type="number" inputMode="hidden"/>
+		<field name="registrant" title="登记人姓名" length="50" type="string" inputMode="readonly"/>
+		<field name="applyMode" title="申请方式" length="50" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">信函\0当面\0网络\0传真\0电子邮件</parameter>
+		</field>
+		<field name="siteId" title="站点ID" type="number" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">批转,部门办理,部门审核,回复审核,领导批示</parameter>
+			<parameter name="class">com.yuanluesoft.cms.publicservice.pojo.PublicServiceOpinion</parameter>
+		</field>
+		<field name="notify" title="告知书" type="components">
+			<parameter name="class">com.yuanluesoft.cms.infopublic.request.pojo.PublicRequestNotify</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="申请告知书" class="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequestNotify">
+		<field name="requestId" title="申请ID" length="20" type="number" inputMode="hidden"/>
+		<field name="notify" title="申请告知书" required="true" type="html" inputMode="htmleditor">
+			<parameter name="commandSet">simplify</parameter>
+			<parameter name="height">320</parameter>
+		</field>
+		<field name="created" title="告知时间" type="timestamp" inputMode="readonly"/>
+		<field name="creatorId" title="告知人ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="告知人" length="30" type="string" inputMode="readonly"/>
+		<field name="creatorUnit" title="告知人所在单位" length="100" type="string" inputMode="readonly"/>
+		<field name="publicRequest" title="信息公开申请" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

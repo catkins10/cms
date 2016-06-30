@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Application>
+	<Actions>
+		<Action Name="审批申请单" Send="true" Reverse="true"/>
+		<Action Name="作废" DeleteAction="true"/>
+	</Actions>
+	<SubForms>
+		<SubForm Id="Draft" Name="新建"/>
+		<SubForm Id="Approval" Name="审批"/>
+		<SubForm Id="Read" Name="只读"/>
+	</SubForms>
+	<TypeDeclarations>
+		<TypeDeclaration Id="result" Name="审批结果">
+			<SchemaType>
+				<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+					elementFormDefault="qualified" 
+					attributeFormDefault="unqualified">
+					<xsd:element name="result">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="同意"/>
+								<xsd:enumeration value="不同意"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+	</TypeDeclarations>
+	<DataFields>
+		<DataField Id="approvalResult" Name="审批结果">
+			<DataType>
+				<DeclaredType Id="result"/>
+			</DataType>
+		</DataField>
+		<DataField Id="address" Name="出差地点">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="reason" Name="出差目的">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="vehicle" Name="使用的交通工具">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+	</DataFields>
+	<Applications/>
+</Application>

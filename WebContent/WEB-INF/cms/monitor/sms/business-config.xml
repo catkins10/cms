@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="短信开通" class="com.yuanluesoft.cms.monitor.sms.pojo.MonitorSmsActivate" businessServiceName="monitorService">
+		<field name="activate" title="是否开通" length="1" type="number" inputMode="dropdown">
+			<parameter name="itemsText">已开通|1\0未开通|0</parameter> <!-- 创建时间 -->
+		</field>
+		<field name="activateTime" title="开通时间" type="timestamp" inputMode="readonly">
+			<parameter name="createTime">true</parameter> <!-- 创建时间 -->
+		</field>
+	</businessObject>
+	
+	<businessObject title="短信发送" class="com.yuanluesoft.cms.monitor.sms.pojo.MonitorSmsSend" businessServiceName="monitorService">
+		<field name="content" title="短信内容" length="1000" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+		<field name="category" title="分类" length="60" type="string" inputMode="text"/>
+		<field name="creator" title="创建者" length="50" type="string" inputMode="text"/>
+		<field name="created" title="创建时间" type="timestamp"/>
+		<field name="sendCount" title="发送条数" type="number" length="8" inputMode="readonly"/>
+		<field name="sendTime" title="发送时间" type="timestamp">
+			<parameter name="createTime">true</parameter> <!-- 创建时间 -->
+		</field>
+	</businessObject>
+	
+	<businessObject title="短信接收" class="com.yuanluesoft.cms.monitor.sms.pojo.MonitorSmsReceive" businessServiceName="monitorService">
+		<field name="content" title="短信内容" length="1000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="senderNumber" title="发送人号码" length="30" type="string" inputMode="text"/>
+		<field name="receiverNumber" title="接收号码" length="30" type="string" inputMode="text"/>
+		<field name="receiveTime" title="接收时间" type="timestamp">
+			<parameter name="createTime">true</parameter> <!-- 创建时间 -->
+			<parameter name="monitorBegin">true</parameter> <!-- 监察开始时间 -->
+		</field>
+		<field name="replyContent" title="答复内容" length="1000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="replyTime" title="答复时间" type="timestamp">
+			<parameter name="monitorEnd">true</parameter> <!-- 监察结束时间 -->
+		</field>
+	</businessObject>
+</businessObjects>

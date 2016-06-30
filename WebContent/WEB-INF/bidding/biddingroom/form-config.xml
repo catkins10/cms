@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="ccheduleCalendar" class="com.yuanluesoft.bidding.biddingroom.forms.ScheduleCalendar" title="开标室安排日历">
+		<formFields>
+			<field name="city" title="地区" type="string" inputMode="hidden"/>	
+		</formFields>
+	</form>
+
+	<form name="admin/biddingroom" class="com.yuanluesoft.bidding.biddingroom.forms.admin.BiddingRoom" title="开标室" pojo="com.yuanluesoft.bidding.biddingroom.pojo.BiddingRoom">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteBiddingroom')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/schedule" class="com.yuanluesoft.bidding.biddingroom.forms.admin.Schedule" title="开标室安排" pojo="com.yuanluesoft.bidding.biddingroom.pojo.BiddingRoomSchedule">
+		<formFields>
+			<field name="projectName" title="项目名称" type="string" inputMode="text" length="125" required="true"/>	
+			<field name="roomType" title="开标/评标" type="string" inputMode="radio" length="10" required="true">
+				<parameter name="itemsText">开标\0评标</parameter>
+			</field>
+			<field name="beginTime" title="使用开始时间" type="timestamp" inputMode="datetime" required="true"/>
+			<field name="endTime" title="使用结束时间" type="timestamp" inputMode="datetime" required="true"/>
+			<field name="roomName" title="开标室名称" type="string" inputMode="select" length="15" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/bidding/biddingroom/js/biddingroom.js</parameter>
+				<parameter name="execute">if(document.getElementsByName('roomType')[0].checked){selectRoom('开标', '{PARAMETER:city}', true, '{PARAMETER:id}', document.getElementsByName('beginTime')[0].value, document.getElementsByName('endTime')[0].value, 500, 360, false, 'roomId{id},roomName{name}');}else if(document.getElementsByName('roomType')[1].checked){selectRoom('评标', '{PARAMETER:city}', true, '{PARAMETER:id}', document.getElementsByName('beginTime')[0].value, document.getElementsByName('endTime')[0].value, 500, 360, false, 'roomId{id},roomName{name}')}</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteSchedule')"/>
+		</actions>
+	</form>
+</forms>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="文书档案" class="com.yuanluesoft.archives.administrative.pojo.AdministrativeArchives">
+		<field name="subject" title="文件题名" length="100" required="true" type="string" inputMode="text"/>
+		<field name="docCategory" title="公文种类" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">documentService</parameter>
+			<parameter name="itemsName">docType</parameter>
+		</field>
+		<field name="docWord" title="文件字号" length="20" type="string" inputMode="text"/>
+		<field name="keyword" title="主题词" length="60" type="string" inputMode="text"/>
+		<field name="responsibilityPerson" title="责任者" length="50" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(500,300,false,'responsibilityPerson{name}');</parameter>
+		</field>
+		<field name="secureLevelCode" title="文件密级编号" length="10" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="secureLevel" title="文件密级" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">archivesConfigService</parameter>
+			<parameter name="valueField">secureLevelCode</parameter>
+		</field>
+		<field name="signDate" title="成文日期" type="date" inputMode="date"/>
+		<field name="count" title="份数" length="5" type="number" inputMode="text"/>
+		<field name="pageCount" title="文件页数" length="5" type="number" inputMode="text"/>
+		<field name="unitCode" title="机构或问题编号" length="10" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="unit" title="机构或问题" length="50" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">archivesConfigService</parameter>
+			<parameter name="valueField">unitCode</parameter>
+		</field>
+		<field name="filingDate" title="归档日期" type="date" inputMode="date"/>
+		<field name="fondsName" title="全宗名称" length="32" type="string" inputMode="hidden"/>
+		<field name="fondsCode" title="全宗号" length="10" required="true" type="string" inputMode="dropdown">
+			<parameter name="singleByteCharacters">true</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="titleField">fondsName</parameter>
+			<parameter name="itemsServiceName">archivesConfigService</parameter>
+			<parameter name="valueField">fondsCode</parameter>
+			<parameter name="itemsName">fonds</parameter>
+		</field>
+		<field name="filingYear" title="归档年度" length="4" type="number" inputMode="text"/>
+		<field name="rotentionPeriodCode" title="保管期限编号" length="10" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="rotentionPeriod" title="保管期限" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">archivesConfigService</parameter>
+			<parameter name="valueField">rotentionPeriodCode</parameter>
+		</field>
+		<field name="serialNumber" title="顺序号" length="4" type="number" inputMode="text"/>
+		<field name="archivesCode" title="档号" length="50" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="categoryId" title="分类ID" type="number" inputMode="hidden"/>
+		<field name="archivesType" title="文件类型" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsText">收文\0发文</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="remark" title="备注" length="255" type="string" inputMode="text"/>
+		<field name="visitors" title="访问者" type="components">
+			<parameter name="class">com.yuanluesoft.archives.administrative.pojo.AdministrativeArchivesPrivilege</parameter>
+		</field>
+		<field name="bodies" title="HTML正文" type="components">
+			<parameter name="class">com.yuanluesoft.archives.administrative.pojo.AdministrativeArchivesBody</parameter>
+		</field>
+		<field name="body" title="正文" type="attachment" inputMode="attachment">
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+		<field name="attachment" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="文书档案HTML正文" class="com.yuanluesoft.archives.administrative.pojo.AdministrativeArchivesBody">
+		<field name="archivesId" title="文件ID" type="number" inputMode="hidden"/>
+		<field name="htmlBody" title="HTML正文" length="100" type="html" inputMode="htmleditor">
+			<parameter name="height">280</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="归档选项" class="com.yuanluesoft.archives.administrative.model.FilingOption">
+		<field name="fondsName" title="全宗名称" type="string" inputMode="dropdown" required="true">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">archivesConfigService</parameter>
+			<parameter name="itemsName">fonds</parameter>
+			<parameter name="titleField">filingOption.fondsName</parameter>
+			<parameter name="valueField"></parameter>
+		</field>
+		<field name="unit" title="机构或问题" type="string" inputMode="dropdown" required="true">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">archivesConfigService</parameter>
+			<parameter name="itemsName">unit</parameter>
+			<parameter name="titleField">filingOption.unit</parameter>
+			<parameter name="valueField"></parameter>
+		</field>
+		<field name="rotentionPeriod" title="保管期限" type="string" inputMode="dropdown" required="true">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">archivesConfigService</parameter>
+			<parameter name="itemsName">rotentionPeriod</parameter>
+			<parameter name="titleField">filingOption.rotentionPeriod</parameter>
+			<parameter name="valueField"></parameter>
+		</field>
+		<field name="secureLevel" title="密级" type="string" inputMode="dropdown" required="true">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">archivesConfigService</parameter>
+			<parameter name="itemsName">secureLevel</parameter>
+			<parameter name="titleField">filingOption.secureLevel</parameter>
+			<parameter name="valueField"></parameter>
+		</field>
+		<field name="docCategory" title="公文种类" type="string" inputMode="dropdown" required="true">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">documentService</parameter>
+			<parameter name="itemsName">filingOption.docType</parameter>
+			<parameter name="valueField"></parameter>
+		</field>
+		<field name="filingYear" title="归档年度" type="number" inputMode="text" required="true"/>
+		<field name="responsibilityPerson" title="责任者" type="string" inputMode="select" required="true">
+			<parameter name="execute">DialogUtils.selectPerson(500,300,false,'filingOption.responsibilityPerson{name}');</parameter>
+		</field>
+	</businessObject>	
+</businessObjects>

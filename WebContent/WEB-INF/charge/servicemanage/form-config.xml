@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/servicePolicy" class="com.yuanluesoft.charge.servicemanage.forms.admin.ServicePolicy" title="服务策略" pojo="com.yuanluesoft.charge.servicemanage.pojo.ServicePolicy">
+		<formFields>
+			<field property="serviceItem" depends="required">
+				<arg0 key="服务项目" resource="false" />
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('是否确定删除?')FormUtils.doAction('deleteServicePolicy')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/serviceTry" class="com.yuanluesoft.charge.servicemanage.forms.admin.ServiceTry" title="服务试用记录" pojo="com.yuanluesoft.charge.servicemanage.pojo.ServiceTry">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+
+	<form name="admin/service" class="com.yuanluesoft.charge.servicemanage.forms.admin.Service" title="付费服务" pojo="com.yuanluesoft.charge.servicemanage.pojo.Service">
+		<service>serviceManage</service>
+		<formFields>
+			<field property="serviceName" depends="required">
+				<arg0 key="服务名称" resource="false" />
+			</field>
+			<field property="textServiceItems" depends="required">
+				<arg0 key="服务内容" resource="false" />
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('是否确定删除?')FormUtils.doAction('deleteService')"/>
+			<action title="添加报价" hide="isNew()" execute="PageUtils.newrecord('charge/servicemanage','admin/servicePrice','width=720,height=480', 'serviceId=' + document.getElementsByName('id')[0].value)"/>
+		</actions>
+	</form>
+	
+	<form name="admin/servicePrice" class="com.yuanluesoft.charge.servicemanage.forms.admin.ServicePrice" title="服务报价" pojo="com.yuanluesoft.charge.servicemanage.pojo.ServicePrice">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('是否确定删除?')FormUtils.doAction('deleteServicePrice')"/>
+		</actions>
+	</form>
+	
+	<form name="serviceDeductTransaction" class="com.yuanluesoft.charge.servicemanage.forms.ServiceDeductTransaction" title="服务扣款记录" pojo="com.yuanluesoft.charge.servicemanage.pojo.ServiceDeduction">
+		<actions/>
+	</form>
+</forms>

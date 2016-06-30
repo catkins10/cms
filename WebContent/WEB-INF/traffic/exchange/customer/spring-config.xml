@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 数据交换服务:消费者 -->
+	<bean id="exchangeCustomer" class="com.yuanluesoft.traffic.exchange.customer.service.spring.ExchangeCustomerImpl" init-method="startup">
+		<property name="exchangeRequestListenPort"><value>5718</value></property>
+	</bean>
+</beans>

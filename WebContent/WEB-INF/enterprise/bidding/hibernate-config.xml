@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--招投标项目-->
+	<class name="com.yuanluesoft.enterprise.bidding.pojo.EnterpriseBidding" table="enterprise_bidding">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectName"/> <!--项目名称-->
+		<property name="biddingNumber"/> <!--招标编号-->
+		<property name="content"/> <!--招标内容-->
+		<property name="bidTarget"/> <!--标的-->
+		<property name="technicalRequirement"/> <!--技术要求-->
+		<property name="timeRequirement"/> <!--时间要求-->
+		<property name="tenderDate"/> <!--招标时间-->
+		<property name="owner"/> <!--业主单位-->
+		<property name="qualificationExamination"/> <!--资格审查-->
+		<property name="tenderingPractice"/> <!--招标方式-->
+		<property name="agency"/> <!--招标代理单位名称-->
+		<property name="agencyTel"/> <!--招标代理联系电话-->
+		<property name="agencyFax"/> <!--招标代理传真号码-->
+		<property name="agencyAddress"/> <!--招标代理联系地址-->
+		<property name="agencyLinkman"/> <!--招标代理联系人-->
+		<property name="depositBank"/> <!--保证金开户银行-->
+		<property name="depositAccountName"/> <!--保证金帐户名称-->
+		<property name="depositAccount"/> <!--保证金帐号-->
+		<property name="tradingCenter"/> <!--交易中心名称-->
+		<property name="tradingCenterAddress"/> <!--交易中心地址-->
+		<property name="depositAmount"/> <!--投标保证金额-->
+		<property name="depositPaid"/> <!--是否已缴纳-->
+		<property name="creatorId"/> <!--登记人ID-->
+		<property name="creator"/> <!--登记人-->
+		<property name="created"/> <!--登记时间-->
+		<property name="remark"/> <!--备注-->
+	</class>
+	
+	<!--招投标项目:权限控制-->
+	<class name="com.yuanluesoft.enterprise.bidding.pojo.EnterpriseBiddingPrivilege" table="enterprise_bidding_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+</hibernate-mapping>

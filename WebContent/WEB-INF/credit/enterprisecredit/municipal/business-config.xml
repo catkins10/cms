@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="龙海市行政处罚案件统计报表" class="com.yuanluesoft.credit.enterprisecredit.municipal.pojo.Municipal" >
+		
+		<field name="name" title="企业名称" required="true" length="100" type="string" inputMode="text"/>
+		<field name="filingTime" title="立案时间" required="true" length="100" type="string" inputMode="text"/>
+		<field name="breakLaw" title="违法行为" required="true" length="200" type="string" inputMode="text"/>
+		<field name="basics" title="处罚法律依据" required="true" length="200" type="string" inputMode="text"/>
+		<field name="bookNum" title="决定书文号" required="true" length="100" type="string" inputMode="text"/>
+		
+		<field name="bookTime" title="下达决定书时间" required="true" length="100" type="string" inputMode="text"/>
+		<field name="money" title="处罚金额" required="true" length="100" type="string" inputMode="text"/>
+		<field name="deparment" title="办理机关" required="true" length="100" type="string" inputMode="text"/>
+		<field name="endTime" title="结案时间" required="true" length="100" type="string" inputMode="text"/>
+		<field name="remark" title="备注" required="true" length="100" type="string" inputMode="text"/>
+
+
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	
+</businessObjects>

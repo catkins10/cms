@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--监察:短信开通-->
+	<class name="com.yuanluesoft.cms.monitor.sms.pojo.MonitorSmsActivate" table="monitor_sms_activate">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(200)-->
+		<property name="recordId"/> <!--记录ID,VARCHAR(200)-->
+		<property name="captureTime"/> <!--采集时间,TIMESTAMP null-->
+		<property name="lastCaptureTime"/> <!--最后采集时间,TIMESTAMP null-->
+		<property name="timeoutCheckDisabled"/> <!--禁止超时检查,NUMERIC(1)-->
+		<property name="processDays"/> <!--办理用时,NUMERIC(5,1)-->
+		<property name="timeoutLevel"/> <!--超时等级,NUMERIC(1)-->
+		<property name="timeoutDays"/> <!--超时天数,NUMERIC(5,1)-->
+		<property name="activate"/> <!--是否开通,NUMERIC(1)-->
+		<property name="activateTime"/> <!--开通时间,TIMESTAMP null-->
+	</class>
+	
+	<!--监察:短信发送-->
+	<class name="com.yuanluesoft.cms.monitor.sms.pojo.MonitorSmsSend" table="monitor_sms_send" polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(200)-->
+		<property name="recordId"/> <!--记录ID,VARCHAR(200)-->
+		<property name="captureTime"/> <!--采集时间,TIMESTAMP null-->
+		<property name="lastCaptureTime"/> <!--最后采集时间,TIMESTAMP null-->
+		<property name="timeoutCheckDisabled"/> <!--禁止超时检查,NUMERIC(1)-->
+		<property name="processDays"/> <!--办理用时,NUMERIC(5,1)-->
+		<property name="timeoutLevel"/> <!--超时等级,NUMERIC(1)-->
+		<property name="timeoutDays"/> <!--超时天数,NUMERIC(5,1)-->
+		<property name="content"/> <!--短信内容,VARCHAR(1000)-->
+		<property name="category"/> <!--分类,VARCHAR(60)-->
+		<property name="creator"/> <!--创建者,VARCHAR(50)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="sendCount"/> <!--发送条数,NUMERIC(8)-->
+		<property name="sendTime"/> <!--发送时间,timestamp null-->
+	</class>
+	
+	<!--监察:短信接收-->
+	<class name="com.yuanluesoft.cms.monitor.sms.pojo.MonitorSmsReceive" table="monitor_sms_receive" polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(200)-->
+		<property name="recordId"/> <!--记录ID,VARCHAR(200)-->
+		<property name="captureTime"/> <!--采集时间,TIMESTAMP null-->
+		<property name="lastCaptureTime"/> <!--最后采集时间,TIMESTAMP null-->
+		<property name="timeoutCheckDisabled"/> <!--禁止超时检查,NUMERIC(1)-->
+		<property name="processDays"/> <!--办理用时,NUMERIC(5,1)-->
+		<property name="timeoutLevel"/> <!--超时等级,NUMERIC(1)-->
+		<property name="timeoutDays"/> <!--超时天数,NUMERIC(5,1)-->
+		<property name="content"/> <!--短信内容,VARCHAR(1000)-->
+		<property name="senderNumber"/> <!--发送人号码,VARCHAR(30)-->
+		<property name="receiverNumber"/> <!--接收号码,VARCHAR(30)-->
+		<property name="receiveTime"/> <!--接收时间,timestamp null-->
+		<property name="replyContent"/> <!--答复内容,VARCHAR(1000)-->
+		<property name="replyTime"/> <!--答复时间,timestamp null-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,296 @@
+package com.yuanluesoft.cms.importdata.services.faas;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.yuanluesoft.cms.articlemanage.pojo.Article;
+import com.yuanluesoft.cms.articlemanage.service.ArticleService;
+import com.yuanluesoft.cms.importdata.ImportDataService;
+import com.yuanluesoft.cms.sitemanage.pojo.SiteResourcePrivilege;
+import com.yuanluesoft.cms.sitemanage.pojo.WebDirectory;
+import com.yuanluesoft.jeaf.base.exception.ServiceException;
+import com.yuanluesoft.jeaf.dao.BaseDAO;
+import com.yuanluesoft.jeaf.logger.Logger;
+import com.yuanluesoft.jeaf.security.service.RecordControlService;
+import com.yuanluesoft.jeaf.util.DateTimeUtils;
+import com.yuanluesoft.jeaf.util.UUIDLongGenerator;
+
+/**
+ * 
+ * @author yuanluesoft
+ *
+ */
+public class ImportDataServiceImpl {
+	private BaseDAO baseDAO;
+	private String imageUrl = "http://www.fjktp.cn/";
+	private ArticleService articleService; //文章服务
+
+	/**
+	 * 创建连接
+	 * @return
+	 * @throws ServiceException
+	 */
+	private Connection createConnection() throws ServiceException {
+		String connectionUrl = "jdbc:mysql://localhost/cms?useUnicode=true&amp;characterEncoding=utf-8";
+		try {
+			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+			return DriverManager.getConnection(connectionUrl, "root", "root");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#listColumnsNotInNewCms()
+	 */
+	public List listColumnsNotInNewCms() throws ServiceException {
+		Connection con = createConnection();
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select name as columnName from cms_ar_category where parentid=611"; //科技特派员网
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			List columnsNotInNewCms = new ArrayList();
+			while(rs.next()) {
+				String column = rs.getString("columnName");
+				if(baseDAO.findObjectByHql("select WebDirectory.id from WebDirectory WebDirectory where WebDirectory.directoryName='" + column + "'")==null) {
+					columnsNotInNewCms.add(column);
+				}
+			}
+			return columnsNotInNewCms;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+		finally {
+			try { 
+				rs.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try { 
+				stmt.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try {
+				con.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#importData(java.lang.String, boolean)
+	 */
+	public void importArticles(String columnMappings, boolean autoCreateColumn) throws ServiceException {
+		Connection con = createConnection();
+		Statement stmt = null;
+		ResultSet rs = null;
+		String[] mapping = columnMappings.replaceAll(" ", "").split(",");
+		try {
+			//导入文章
+			String sql = "select cms_ar_article.title as subject," +
+						 " cms_ar_article.content as body," +
+						 " cms_ar_article.editor as creator," +
+						 " cms_ar_article.newstime as issueTime," +
+						 " cms_ar_article.fromsite as source," +
+						 " cms_ar_article.cname columnName" +
+						 " from cms_ar_article,cms_ar_category" +
+						 " where cms_ar_article.cid=cms_ar_category.id" +
+						 " and cms_ar_category.id in (" +
+						 "   select id from cms_ar_category where parentid=611" +
+						 ")";
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			// Iterate through the data in the result set and display it.
+			importArticle(rs, mapping);
+			rs.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try { 
+				rs.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try { 
+				stmt.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try {
+				con.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+		}
+	}
+
+	/**
+	 * 从RS导入数据
+	 * @param rs
+	 * @throws ServiceException
+	 */
+	private void importArticle(ResultSet rs, String[] mapping) throws ServiceException {
+		try {
+			while(rs.next()) {
+				try {
+					String columnName = rs.getString("columnName");
+					WebDirectory directory = null;
+					//查找栏目映射表,找到匹配的栏目
+					for(int j=0; j<mapping.length; j++) {
+						if(mapping[j].startsWith(columnName + ">>")) {
+							directory = (WebDirectory)baseDAO.findObjectByHql("from WebDirectory WebDirectory where WebDirectory.directoryName='" + mapping[j].substring((columnName + ">>").length()) + "'");
+							break;
+						}
+					}
+					if(directory==null) { //直接按栏目名称对应
+						//查找对应的栏目
+						directory = (WebDirectory)baseDAO.findObjectByHql("from WebDirectory WebDirectory where WebDirectory.directoryName='" + columnName + "'");
+					}
+					if(directory==null) {
+						continue;
+					}
+					String subject = rs.getString("subject");
+					Timestamp issueTime = rs.getTimestamp("issueTime");
+					System.out.println("ImportData: read a article, subject is " + subject + ".");
+					//检查相同标题和发布时间的记录是否已经存在
+					String hql = "from Article Article" + 
+								 " where Article.subject='" + subject + "'" +
+								 " and Article.issueTime=TIMESTAMP(" + DateTimeUtils.formatTimestamp(issueTime, null) + ")";
+					if(baseDAO.findObjectByHql(hql)!=null) {
+						continue;
+					}
+					Article article = new Article();
+					article.setId(UUIDLongGenerator.generateId()); //ID
+					article.setSubject(subject);
+					article.setEditor(rs.getString("creator"));
+					article.setIssueTime(issueTime);
+					article.setCreated(issueTime);
+					article.setIssue('1');
+					article.setIssuePersonId(100);
+					article.setBody(resetBody(rs.getString("body")));
+					article.setOrgName("福建省农科院");
+					article.setUnitName("福建省农科院");
+					articleService.save(article); //保存
+					
+					//设置所在站点
+					articleService.updateSiteResourceSubjections(article, true, "" + directory.getId());
+					
+					//创建权限记录
+					SiteResourcePrivilege privilege = new SiteResourcePrivilege();
+					privilege.setId(UUIDLongGenerator.generateId());
+					privilege.setRecordId(article.getId());
+					privilege.setVisitorId(0);
+					privilege.setVisitorType(RecordControlService.VISITOR_TYPE_DEPARTMENT);
+					privilege.setAccessLevel(RecordControlService.ACCESS_LEVEL_READONLY);
+					baseDAO.saveObject(privilege);
+					System.out.println("ImportData: importted.");
+				}
+				catch(Exception e) {
+					Logger.exception(e);
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 更新正文
+	 * @param content
+	 * @return
+	 * @throws ServiceException
+	 */
+	private String resetBody(String content) throws ServiceException {
+		if(content==null) {
+			return content;
+		}
+		//替换<?xml.../>和图片路径
+		content = content.replaceAll("<\\x3Fxml[^>]+>", "").replaceAll("src=\"../../../", "src=\"" + imageUrl).replaceAll("href=\"../../../", "href=\"" + imageUrl);
+		return content;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#listPublicInfoDirectoriesNotInNewCms()
+	 */
+	public List listPublicInfoDirectoriesNotInNewCms() throws ServiceException {
+		return null;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#importPublicInfos(java.lang.String, boolean)
+	 */
+	public void importPublicInfos(String directoryMappings, boolean autoCreateDirectory) throws ServiceException {
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#importOtherData()
+	 */
+	public void importOtherData() throws ServiceException {
+		
+	}
+
+	/**
+	 * @return the baseDAO
+	 */
+	public BaseDAO getBaseDAO() {
+		return baseDAO;
+	}
+
+	/**
+	 * @param baseDAO the baseDAO to set
+	 */
+	public void setBaseDAO(BaseDAO baseDAO) {
+		this.baseDAO = baseDAO;
+	}
+
+	/**
+	 * @return the imageUrl
+	 */
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	/**
+	 * @param imageUrl the imageUrl to set
+	 */
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	/**
+	 * @return the articleService
+	 */
+	public ArticleService getArticleService() {
+		return articleService;
+	}
+
+	/**
+	 * @param articleService the articleService to set
+	 */
+	public void setArticleService(ArticleService articleService) {
+		this.articleService = articleService;
+	}
+}

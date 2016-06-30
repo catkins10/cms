@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../form/error.jsp" SHAPE="32,32,161,21"
+  TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../form/error.jsp" SHAPE="320,32,56,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../form/result.jsp" SHAPE="32,104,161,21" TARGET="page1"
+  TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../form/result.jsp" SHAPE="320,104,56,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#clearCache"
+  NAME="action1" PATH="/clearCache" SHAPE="32,168,161,41" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#remoteServiceStart"
+  NAME="action0" PATH="/remoteServiceStart" SHAPE="32,248,161,41"
+  TITLE="tools" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#remoteServiceStop"
+  NAME="action2" PATH="/remoteServiceStop" SHAPE="32,312,161,41"
+  TITLE="tools" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#cachetest#get"
+  NAME="action3" PATH="/cachetest/get" SHAPE="32,472,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#cachetest#put"
+  NAME="action4" PATH="/cachetest/put" SHAPE="32,536,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#cachetest#remove"
+  NAME="action5" PATH="/cachetest/remove" SHAPE="32,600,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#fileBrowse"
+  NAME="action6" PATH="/fileBrowse" SHAPE="32,680,161,41"
+  TITLE="fileBrowse" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/filebrowse/fileBrowse.jsp" TARGET="page2"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/filebrowse/fileBrowse.jsp" SHAPE="304,696,50,55" SUBTYPE="jsp"
+  TITLE="fileBrowse.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/processUploadedFiles.shtml" TARGET="action8"
+   TITLE="uploadFile" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/runOnServer" TARGET="action10" TITLE="runOnServer" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#processUploadedFiles"
+  NAME="action8" PATH="/processUploadedFiles" SHAPE="504,712,161,25"
+  TITLE="fileBrowse" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#restartTomcatService"
+  NAME="action9" PATH="/restartTomcatService" SHAPE="32,384,161,41"
+  TITLE="tools" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#runOnServer"
+  NAME="action10" PATH="/runOnServer" SHAPE="504,760,161,25"
+  TITLE="fileBrowse" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#blob2text"
+  NAME="action11" PATH="/blob2text" SHAPE="32,1248,161,41"
+  TITLE="blob2Text" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/blob2text/blob2Text.jsp" TARGET="page3"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#convert" NAME="action12"
+  PATH="/convert" SHAPE="496,1280,161,25" TITLE="blob2Text" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/blob2text/blob2Text.jsp" SHAPE="304,1264,50,40" SUBTYPE="jsp"
+  TITLE="blob2Text.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/convert" TARGET="action12" TITLE="convert" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#fileTransferTest"
+  NAME="action13" PATH="/fileTransferTest" SHAPE="32,1352,161,41"
+  TITLE="fileTransferTest" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/filetransfertest/fileTransferTest.jsp"
+   TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/filetransfertest/fileTransferTest.jsp" SHAPE="304,1368,50,25"
+  SUBTYPE="jsp" TITLE="fileTransferTest.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#regenerateStaticPages"
+  NAME="action15" PATH="/regenerateStaticPages" SHAPE="32,1520,161,41"
+  TITLE="regenerateStaticPages" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/staticpages/regenerateStaticPages.jsp"
+   TARGET="page5" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#upgradetemplate"
+  NAME="action16" PATH="/upgradetemplate" SHAPE="32,1920,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#upgradeeai"
+  NAME="action17" PATH="/upgradeeai" SHAPE="32,1440,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#doRegenerateStaticPages"
+  NAME="action18" PATH="/doRegenerateStaticPages"
+  SHAPE="496,1552,161,25" TITLE="regenerateStaticPages" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/staticpages/regenerateStaticPages.jsp" SHAPE="304,1536,50,40"
+  SUBTYPE="jsp" TITLE="regenerateStaticPages.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/doRegenerateStaticPages" TARGET="action18"
+   TITLE="doRegenerateStaticPages" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#updatePassword"
+  NAME="action19" PATH="/updatePassword" SHAPE="32,1632,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteEmptyInfoDirectory"
+  NAME="action20" PATH="/deleteEmptyInfoDirectory"
+  SHAPE="32,1704,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#updateHostPageMapping"
+  NAME="action21" PATH="/updateHostPageMapping" SHAPE="32,1776,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#databaseBrowse"
+  NAME="action7" PATH="/databaseBrowse" SHAPE="32,1008,161,41"
+  TITLE="databaseBrowse" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/databasebrowse/databaseBrowse.jsp"
+   TARGET="page6" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/databasebrowse/databaseBrowse.jsp" SHAPE="304,1024,50,25"
+  SUBTYPE="jsp" TITLE="databaseBrowse.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#executeSql"
+  NAME="action22" PATH="/executeSql" SHAPE="32,1128,161,41"
+  TITLE="executeSql" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/databasebrowse/executeSql.jsp" TARGET="page7"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page7"
+  PATH="/databasebrowse/executeSql.jsp" SHAPE="304,1144,50,25"
+  SUBTYPE="jsp" TITLE="executeSql.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page8"
+  PATH="/databasebrowse/databaseLogin.jsp" SHAPE="304,928,50,40"
+  SUBTYPE="jsp" TITLE="databaseLogin.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#upgradeVideoPlayer"
+  NAME="action24" PATH="/upgradeVideoPlayer" SHAPE="32,1848,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#attachmentEditor"
+  NAME="action25" PATH="/attachmentEditor" SHAPE="32,824,161,41"
+  TITLE="fileBrowse" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../attachment/attachment.jsp" TARGET="page10"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page10"
+  PATH="/../attachment/attachment.jsp" SHAPE="304,840,50,25"
+  SUBTYPE="jsp" TITLE="attachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#databaseBrowseLogin"
+  NAME="action14" PATH="/databaseBrowseLogin" SHAPE="32,912,161,41"
+  TITLE="databaseBrowse" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/databasebrowse/databaseLogin.jsp"
+   TARGET="page8" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+</PROCESS>

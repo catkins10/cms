@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/landResources" form="admin/landResources" title="龙海市国土资源局违法案件结果公开信息" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.landresources.pojo.LandResources</pojo>
+			<orderBy>LandResources.created</orderBy>
+			<quickFilter>LandResources.person like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_landresources)" execute="PageUtils.newrecord('credit/enterprisecredit/landresources', 'admin/landresourcesImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_landresources)" execute="PageUtils.newrecord('credit/enterprisecredit/landresources','admin/landResources','mode=fullscreen')"/>
+			<action title="批量删除" hide="noPrivilege(manageUnit_landresources)"  execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/landresources/batchOperate.shtml?pojoName=LandResources')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="person" title="违法当事人"/>
+			<column name="reason" title="案由"  align="center"/>
+			<column name="addr" title="违法地点" align="center"/>
+			<column name="result" title="处罚情况" align="center"/>
+		</columns>
+	</view>
+	
+	
+</views>

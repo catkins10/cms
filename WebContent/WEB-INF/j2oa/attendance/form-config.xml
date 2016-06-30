@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.j2oa.attendance.forms.Mend" title="补卡" pojo="com.yuanluesoft.j2oa.attendance.pojo.AttendanceMend">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="作废" hide="deleteDisable()" execute="if(confirm('是否确定要作废？'))FormUtils.doAction('deleteMend')"/>
+			<action title="补卡审核" hide="workflow()" execute="FormUtils.doAction('approvalMend', 'workflowAction=approval')"/>
+		</actions>
+	</form>
+	
+	<form name="punchCard" class="com.yuanluesoft.j2oa.attendance.forms.PunchCard" title="考勤">
+		<actions>
+			<action title="上班" execute="FormUtils.submitForm()"/>
+			<action title="下班" execute="FormUtils.submitForm()"/>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="attendanceReport" class="com.yuanluesoft.j2oa.attendance.forms.AttendanceReport" title="考勤报表">
+		<formFields>
+			<field name="beginDate" title="开始时间" type="date" inputMode="date" required="true"/>
+			<field name="endDate" title="结束时间" type="date" inputMode="date" required="true"/>
+			<field name="orgId" title="部门ID" type="number" inputMode="hidden"/>
+			<field name="orgName" title="部门" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(550, 400, false, 'orgId{id},orgName{name}')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

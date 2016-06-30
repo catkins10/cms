@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="account" type="com.yuanluesoft.wechat.forms.Account"/>
+  <form-bean name="menuItem" type="com.yuanluesoft.wechat.forms.MenuItem"/>
+  <form-bean name="sendMessage" type="com.yuanluesoft.wechat.forms.SendMessage"/>
+  <form-bean name="receivedMessage" type="com.yuanluesoft.wechat.forms.ReceivedMessage"/>
+  <form-bean name="user" type="com.yuanluesoft.wechat.forms.User"/>
+  <form-bean name="userGroup" type="com.yuanluesoft.wechat.forms.UserGroup"/>
+  <form-bean name="responseMessage" type="com.yuanluesoft.wechat.forms.ResponseMessage"/>
+  <form-bean name="responseMessageNews" type="com.yuanluesoft.wechat.forms.ResponseMessageNews"/>
+  <form-bean name="sendMessageNews" type="com.yuanluesoft.wechat.forms.SendMessageNews"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action path="/receiveMessage" scope="request"
+   type="com.yuanluesoft.wechat.actions.receivemessage.Load" validate="false"/>
+  <action name="account" path="/account" scope="request"
+   type="com.yuanluesoft.wechat.actions.account.Load" validate="false">
+   <forward name="load" path="/account.jsp"/>
+  </action>
+  <action input="/account.jsp" name="account" path="/saveAccount"
+   scope="request" type="com.yuanluesoft.wechat.actions.account.Save" validate="false"/>
+  <action name="menuItem" path="/menuItem" scope="request"
+   type="com.yuanluesoft.wechat.actions.account.menuitem.Load" validate="false">
+   <forward name="load" path="/menuItem.jsp"/>
+  </action>
+  <action input="/menuItem.jsp" name="menuItem" path="/saveMenuItem"
+   scope="request"
+   type="com.yuanluesoft.wechat.actions.account.menuitem.Save" validate="false"/>
+  <action input="/menuItem.jsp" name="menuItem" path="/deleteMenuItem"
+   scope="request"
+   type="com.yuanluesoft.wechat.actions.account.menuitem.Delete" validate="false"/>
+  <action input="/account.jsp" name="account" path="/refreshAccount"
+   scope="request" type="com.yuanluesoft.wechat.actions.account.Refresh" validate="false"/>
+  <action path="/workflowConfig" scope="request"
+   type="com.yuanluesoft.wechat.actions.workflow.Load" validate="false"/>
+  <action name="sendMessage" path="/sendMessage" scope="request"
+   type="com.yuanluesoft.wechat.actions.sendmessage.Load" validate="false">
+   <forward name="load" path="/sendMessage.jsp"/>
+  </action>
+  <action input="/sendMessage.jsp" name="sendMessage"
+   path="/saveSendMessage" scope="request"
+   type="com.yuanluesoft.wechat.actions.sendmessage.Save" validate="false"/>
+  <action input="/sendMessage.jsp" name="sendMessage"
+   path="/deleteSendMessage" scope="request"
+   type="com.yuanluesoft.wechat.actions.sendmessage.Delete" validate="false"/>
+  <action input="/sendMessage.jsp" name="sendMessage"
+   path="/runSendMessage" scope="request"
+   type="com.yuanluesoft.wechat.actions.sendmessage.Run" validate="false"/>
+  <action input="/sendMessage.jsp" name="sendMessage"
+   path="/refreshSendMessage" scope="request"
+   type="com.yuanluesoft.wechat.actions.sendmessage.Refresh" validate="false"/>
+  <action input="/sendMessage.jsp" name="sendMessage"
+   path="/writeOpinion" scope="request"
+   type="com.yuanluesoft.wechat.actions.sendmessage.WriteOpinion" validate="false"/>
+  <action input="/sendMessage.jsp" name="sendMessage"
+   path="/approvalSendMessage" scope="request"
+   type="com.yuanluesoft.wechat.actions.sendmessage.Approval" validate="false"/>
+  <action input="/sendMessage.jsp" name="sendMessage"
+   path="/doSendMessage" scope="request"
+   type="com.yuanluesoft.wechat.actions.sendmessage.DoSend" validate="false"/>
+  <action name="user" path="/user" scope="request"
+   type="com.yuanluesoft.wechat.actions.user.Load" validate="false">
+   <forward name="load" path="/user.jsp"/>
+  </action>
+  <action input="/user.jsp" name="user" path="/saveUser" scope="request"
+   type="com.yuanluesoft.wechat.actions.user.Save" validate="false"/>
+  <action input="/user.jsp" name="user" path="/deleteUser"
+   scope="request" type="com.yuanluesoft.wechat.actions.user.Delete" validate="false"/>
+  <action name="userGroup" path="/userGroup" scope="request"
+   type="com.yuanluesoft.wechat.actions.usergroup.Load" validate="false">
+   <forward name="load" path="/userGroup.jsp"/>
+  </action>
+  <action input="/userGroup.jsp" name="userGroup" path="/saveUserGroup"
+   scope="request" type="com.yuanluesoft.wechat.actions.usergroup.Save" validate="false"/>
+  <action input="/userGroup.jsp" name="userGroup"
+   path="/deleteUserGroup" scope="request"
+   type="com.yuanluesoft.wechat.actions.usergroup.Delete" validate="false"/>
+  <action name="receivedMessage" path="/receivedMessage" scope="request"
+   type="com.yuanluesoft.wechat.actions.receivedmessage.Load" validate="false">
+   <forward name="load" path="/receivedMessage.jsp"/>
+  </action>
+  <action input="/receivedMessage.jsp" name="receivedMessage"
+   path="/saveReceivedMessage" scope="request"
+   type="com.yuanluesoft.wechat.actions.receivedmessage.Save" validate="false"/>
+  <action input="/receivedMessage.jsp" name="receivedMessage"
+   path="/deleteReceivedMessage" scope="request"
+   type="com.yuanluesoft.wechat.actions.receivedmessage.Delete" validate="false"/>
+  <action name="responseMessage" path="/responseMessage" scope="request"
+   type="com.yuanluesoft.wechat.actions.responsemessage.Load" validate="false">
+   <forward name="load" path="/responseMessage.jsp"/>
+  </action>
+  <action input="/responseMessage.jsp" name="responseMessage"
+   path="/saveResponseMessage" scope="request"
+   type="com.yuanluesoft.wechat.actions.responsemessage.Save" validate="false"/>
+  <action input="/responseMessage.jsp" name="responseMessage"
+   path="/deleteResponseMessage" scope="request"
+   type="com.yuanluesoft.wechat.actions.responsemessage.Delete" validate="false"/>
+  <action name="responseMessage" path="/responseMessageAttachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.wechat.actions.responsemessage.SelectAttachment" validate="false">
+   <forward name="load" path="/../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="sendMessage" path="/sendMessageAttachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.wechat.actions.sendmessage.SelectAttachment" validate="false">
+   <forward name="load" path="/../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="responseMessageNews" path="/responseMessageNews"
+   scope="request"
+   type="com.yuanluesoft.wechat.actions.responsemessage.news.Load" validate="false">
+   <forward name="load" path="/responseMessageNews.jsp"/>
+  </action>
+  <action input="/responseMessageNews.jsp" name="responseMessageNews"
+   path="/saveResponseMessageNews" scope="request"
+   type="com.yuanluesoft.wechat.actions.responsemessage.news.Save" validate="false"/>
+  <action input="/responseMessageNews.jsp" name="responseMessageNews"
+   path="/deleteResponseMessageNews" scope="request"
+   type="com.yuanluesoft.wechat.actions.responsemessage.news.Delete" validate="false"/>
+  <action input="/responseMessage.jsp" name="responseMessage"
+   path="/refreshResponseMessage" scope="request"
+   type="com.yuanluesoft.wechat.actions.responsemessage.Refresh" validate="false"/>
+  <action name="responseMessageNews"
+   path="/responseMessageNewsAttachmentEditor" scope="request"
+   type="com.yuanluesoft.wechat.actions.responsemessage.news.SelectAttachment" validate="false">
+   <forward name="load" path="/../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action input="/responseMessageNews.jsp" name="responseMessageNews"
+   path="/retrieveResponseMessageNews" scope="request"
+   type="com.yuanluesoft.wechat.actions.responsemessage.news.Retrieve" validate="false"/>
+  <action name="sendMessageNews" path="/sendMessageNews" scope="request"
+   type="com.yuanluesoft.wechat.actions.sendmessage.news.Load" validate="false">
+   <forward name="load" path="/sendMessageNews.jsp"/>
+  </action>
+  <action input="/sendMessageNews.jsp" name="sendMessageNews"
+   path="/saveSendMessageNews" scope="request"
+   type="com.yuanluesoft.wechat.actions.sendmessage.news.Save" validate="false"/>
+  <action input="/sendMessageNews.jsp" name="sendMessageNews"
+   path="/deleteSendMessageNews" scope="request"
+   type="com.yuanluesoft.wechat.actions.sendmessage.news.Delete" validate="false"/>
+  <action input="/sendMessageNews.jsp" name="sendMessageNews"
+   path="/retrieveSendMessageNews" scope="request"
+   type="com.yuanluesoft.wechat.actions.sendmessage.news.Retrieve" validate="false"/>
+  <action name="sendMessageNews" path="/sendMessageNewsAttachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.wechat.actions.sendmessage.news.SelectAttachment" validate="false">
+   <forward name="load" path="/../jeaf/attachment/attachment.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

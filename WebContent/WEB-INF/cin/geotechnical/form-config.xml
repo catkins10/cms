@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="geotechnical" title="岩土工程勘察" method="post" action="/cin/geotechnical/saveGeotechnical.shtml" class="com.yuanluesoft.cin.geotechnical.forms.Geotechnical" pojo="com.yuanluesoft.cin.geotechnical.pojo.Geotechnical">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="admin/geotechnical" class="com.yuanluesoft.cin.geotechnical.forms.admin.Geotechnical" title="岩土工程勘察" pojo="com.yuanluesoft.cin.geotechnical.pojo.Geotechnical">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteGeotechnical')"/>
+			<action title="公布到网站" hide="workflow() and noPrivilege(application_manager) and noPrivilege(site_manager)  and noPrivilege(publish)" execute="FormUtils.doAction('setPublishOption')"/>
+		</actions>
+	</form>
+</forms>

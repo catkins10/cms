@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="sensitiveWord" type="com.yuanluesoft.jeaf.sensitive.forms.SensitiveWord"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="sensitiveWord" path="/sensitiveWord" scope="request"
+   type="com.yuanluesoft.jeaf.sensitive.actions.sensitiveword.Load" validate="false">
+   <forward name="load" path="/sensitiveWord.jsp"/>
+  </action>
+  <action input="/sensitiveWord.jsp" name="sensitiveWord"
+   path="/saveSensitiveWord" scope="request"
+   type="com.yuanluesoft.jeaf.sensitive.actions.sensitiveword.Save" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

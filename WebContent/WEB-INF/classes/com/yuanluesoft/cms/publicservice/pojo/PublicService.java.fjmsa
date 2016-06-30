@@ -1,0 +1,475 @@
+package com.yuanluesoft.cms.publicservice.pojo;
+
+import com.yuanluesoft.jeaf.business.model.Field;
+import com.yuanluesoft.jeaf.business.util.FieldUtils;
+import com.yuanluesoft.jeaf.util.DateTimeUtils;
+import com.yuanluesoft.jeaf.util.LazyBodyUtils;
+import com.yuanluesoft.jeaf.util.ListUtils;
+import com.yuanluesoft.jeaf.util.UUIDLongGenerator;
+import com.yuanluesoft.jeaf.workflow.pojo.WorkflowData;
+import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class PublicService extends WorkflowData
+{
+  private String sn;
+  private String queryPassword;
+  private String subject;
+  private int workingDay;
+  private String creator;
+  private Timestamp created;
+  private String creatorTel;
+  private String creatorMail;
+  private char creatorSex = 'M';
+  private String creatorCertificateName;
+  private String creatorIdentityCard;
+  private String creatorIP;
+  private String creatorMobile;
+  private String creatorFax;
+  private String creatorUnit;
+  private String creatorJob;
+  private String creatorAddress;
+  private String creatorPostalcode;
+  private char isPublic = '0';
+  private String remark;
+  private long siteId;
+  private Set lazyBody;
+  private char publicPass = '0';
+  private char publicBody = '0';
+  private char publicWorkflow = '0';
+  private String publicSubject;
+	private Timestamp publicEnd; //公开截止时间
+	private String publicPersonName; //公开经办人
+	private long publicPersonId; //公开经办人ID
+
+  private int isDeleted = 0;
+
+  public String getPublicOpinion()
+  {
+    if (this.publicWorkflow != '1')
+      return null;
+    try
+    {
+      return ListUtils.join(getOpinions(), "opinion", "\r\n\r\n");
+    }
+    catch (Exception localException)
+    {
+    }
+    return null;
+  }
+
+  public String getPublicContent()
+  {
+    return this.publicBody == '1' ? getContent() : null;
+  }
+
+  public String getContent()
+  {
+    return LazyBodyUtils.getBody(this);
+  }
+
+  public String getHtmlContent()
+  {
+    String content = getContent();
+    return content == null ? null : content.replaceAll(" ", "&nbsp;").replaceAll("\\r", "").replaceAll("\\n", "<br/>");
+  }
+
+  public void setContent(String content)
+  {
+    LazyBodyUtils.setBody(this, content);
+  }
+
+  public Timestamp getWorkingDate()
+  {
+    if (this.created == null) {
+      return null;
+    }
+    return DateTimeUtils.add(this.created, 5, this.workingDay);
+  }
+
+  public String getReplier()
+  {
+    PublicServiceOpinion replyOpinon = getReplyOpinion(false);
+    return replyOpinon.getPersonName() + (replyOpinon.getAgentName() == null ? "" : new StringBuffer("(").append(replyOpinon.getAgentName()).append(")").toString());
+  }
+
+  public void setReplier(String replier)
+  {
+    getReplyOpinion(true).setPersonName(replier);
+  }
+
+  public String getReplyContent()
+  {
+    PublicServiceOpinion replyOpinon = getReplyOpinion(false);
+    return replyOpinon == null ? null : replyOpinon.getOpinion();
+  }
+
+  public void setReplyContent(String replyContent)
+  {
+    getReplyOpinion(true).setOpinion(replyContent);
+  }
+
+  public Timestamp getReplyTime()
+  {
+    PublicServiceOpinion replyOpinon = getReplyOpinion(false);
+    return replyOpinon == null ? null : replyOpinon.getCreated();
+  }
+
+  public void setReplyTime(Timestamp replyTime)
+  {
+    getReplyOpinion(true).setCreated(replyTime);
+  }
+
+  private PublicServiceOpinion getReplyOpinion(boolean createIfNotExists)
+  {
+    Set opinions = null;
+    try {
+      opinions = getOpinions();
+    }
+    catch (Exception localException)
+    {
+    }
+    if ((opinions == null) || (opinions.isEmpty())) {
+      return null;
+    }
+
+    List fields = FieldUtils.listRecordFields(getClass().getName(), "opinion", null, null, null, true, true, false, false, 0);
+    Field replyOpinionField = (Field)ListUtils.findObjectByProperty(fields, "required", new Boolean(true));
+    if (replyOpinionField == null) {
+      replyOpinionField = (Field)ListUtils.findObjectByProperty(fields, "name", "办理");
+      if (replyOpinionField == null) {
+        replyOpinionField = (Field)fields.get(0);
+      }
+    }
+    PublicServiceOpinion replyOpinion = null;
+    replyOpinion = (PublicServiceOpinion)ListUtils.findObjectByProperty(opinions, "opinionType", replyOpinionField.getName());
+    if ((replyOpinion != null) || (!createIfNotExists)) {
+      return replyOpinion;
+    }
+
+    replyOpinion = new PublicServiceOpinion();
+    replyOpinion.setId(UUIDLongGenerator.generateId());
+    replyOpinion.setMainRecordId(getId());
+    replyOpinion.setOpinionType(replyOpinionField.getName());
+    if (opinions == null) {
+      opinions = new HashSet();
+      setOpinions(opinions);
+    }
+    opinions.add(replyOpinion);
+    return replyOpinion;
+  }
+
+  public String getPublicSubject()
+  {
+    return (this.publicSubject == null) || (this.publicSubject.equals("")) ? this.subject : this.publicSubject;
+  }
+
+  public void setPublicSubject(String publicSubject)
+  {
+    this.publicSubject = publicSubject;
+  }
+
+  public Timestamp getCreated()
+  {
+    return this.created;
+  }
+
+  public void setCreated(Timestamp created)
+  {
+    this.created = created;
+  }
+
+  public String getCreator()
+  {
+    return this.creator;
+  }
+
+  public void setCreator(String creator)
+  {
+    this.creator = creator;
+  }
+
+  public String getCreatorFax()
+  {
+    return this.creatorFax;
+  }
+
+  public void setCreatorFax(String creatorFax)
+  {
+    this.creatorFax = creatorFax;
+  }
+
+  public String getCreatorIdentityCard()
+  {
+    return this.creatorIdentityCard;
+  }
+
+  public void setCreatorIdentityCard(String creatorIdentityCard)
+  {
+    this.creatorIdentityCard = creatorIdentityCard;
+  }
+
+  public String getCreatorIP()
+  {
+    return this.creatorIP;
+  }
+
+  public void setCreatorIP(String creatorIP)
+  {
+    this.creatorIP = creatorIP;
+  }
+
+  public String getCreatorJob()
+  {
+    return this.creatorJob;
+  }
+
+  public void setCreatorJob(String creatorJob)
+  {
+    this.creatorJob = creatorJob;
+  }
+
+  public String getCreatorMail()
+  {
+    return this.creatorMail;
+  }
+
+  public void setCreatorMail(String creatorMail)
+  {
+    this.creatorMail = creatorMail;
+  }
+
+  public String getCreatorMobile()
+  {
+    return this.creatorMobile;
+  }
+
+  public void setCreatorMobile(String creatorMobile)
+  {
+    this.creatorMobile = creatorMobile;
+  }
+
+  public String getCreatorTel()
+  {
+    return this.creatorTel;
+  }
+
+  public void setCreatorTel(String creatorTel)
+  {
+    this.creatorTel = creatorTel;
+  }
+
+  public String getCreatorUnit()
+  {
+    return this.creatorUnit;
+  }
+
+  public void setCreatorUnit(String creatorUnit)
+  {
+    this.creatorUnit = creatorUnit;
+  }
+
+  public char getIsPublic()
+  {
+    return this.isPublic;
+  }
+
+  public void setIsPublic(char isPublic)
+  {
+    this.isPublic = isPublic;
+  }
+
+  public String getQueryPassword()
+  {
+    return this.queryPassword;
+  }
+
+  public void setQueryPassword(String queryPassword)
+  {
+    this.queryPassword = queryPassword;
+  }
+
+  public String getRemark()
+  {
+    return this.remark;
+  }
+
+  public void setRemark(String remark)
+  {
+    this.remark = remark;
+  }
+
+  public String getSn()
+  {
+    return this.sn;
+  }
+
+  public void setSn(String sn)
+  {
+    this.sn = sn;
+  }
+
+  public String getSubject()
+  {
+    return this.subject;
+  }
+
+  public void setSubject(String subject)
+  {
+    this.subject = subject;
+  }
+
+  public int getWorkingDay()
+  {
+    return this.workingDay;
+  }
+
+  public void setWorkingDay(int workingDay)
+  {
+    this.workingDay = workingDay;
+  }
+
+  public Set getLazyBody()
+  {
+    return this.lazyBody;
+  }
+
+  public void setLazyBody(Set lazyBody)
+  {
+    this.lazyBody = lazyBody;
+  }
+
+  public char getCreatorSex()
+  {
+    return this.creatorSex;
+  }
+
+  public void setCreatorSex(char creatorSex)
+  {
+    this.creatorSex = creatorSex;
+  }
+
+  public String getCreatorAddress()
+  {
+    return this.creatorAddress;
+  }
+
+  public void setCreatorAddress(String creatorAddress)
+  {
+    this.creatorAddress = creatorAddress;
+  }
+
+  public String getCreatorPostalcode()
+  {
+    return this.creatorPostalcode;
+  }
+
+  public void setCreatorPostalcode(String creatorPostalcode)
+  {
+    this.creatorPostalcode = creatorPostalcode;
+  }
+
+  public String getCreatorCertificateName()
+  {
+    return this.creatorCertificateName;
+  }
+
+  public void setCreatorCertificateName(String creatorCertificateName)
+  {
+    this.creatorCertificateName = creatorCertificateName;
+  }
+
+  public long getSiteId()
+  {
+    return this.siteId;
+  }
+
+  public void setSiteId(long siteId)
+  {
+    this.siteId = siteId;
+  }
+
+  public char getPublicBody()
+  {
+    return this.publicBody;
+  }
+
+  public void setPublicBody(char publicBody)
+  {
+    this.publicBody = publicBody;
+  }
+
+  public char getPublicPass()
+  {
+    return this.publicPass;
+  }
+
+  public void setPublicPass(char publicPass)
+  {
+    this.publicPass = publicPass;
+  }
+
+  public char getPublicWorkflow()
+  {
+    return this.publicWorkflow;
+  }
+
+  public void setPublicWorkflow(char publicWorkflow)
+  {
+    this.publicWorkflow = publicWorkflow;
+  }
+
+  public int getIsDeleted()
+  {
+    return this.isDeleted;
+  }
+
+  public void setIsDeleted(int isDeleted)
+  {
+    this.isDeleted = isDeleted;
+  }
+
+/**
+ * @return the publicEnd
+ */
+public Timestamp getPublicEnd() {
+	return publicEnd;
+}
+
+/**
+ * @param publicEnd the publicEnd to set
+ */
+public void setPublicEnd(Timestamp publicEnd) {
+	this.publicEnd = publicEnd;
+}
+
+/**
+ * @return the publicPersonId
+ */
+public long getPublicPersonId() {
+	return publicPersonId;
+}
+
+/**
+ * @param publicPersonId the publicPersonId to set
+ */
+public void setPublicPersonId(long publicPersonId) {
+	this.publicPersonId = publicPersonId;
+}
+
+/**
+ * @return the publicPersonName
+ */
+public String getPublicPersonName() {
+	return publicPersonName;
+}
+
+/**
+ * @param publicPersonName the publicPersonName to set
+ */
+public void setPublicPersonName(String publicPersonName) {
+	this.publicPersonName = publicPersonName;
+}
+}

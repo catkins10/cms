@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="案件" class="com.yuanluesoft.municipal.facilities.pojo.FacilitiesEvent" businessServiceName="facilitiesService">
+		<field name="eventNumber" title="案件编号" length="50" type="string" inputMode="text"/>
+		<field name="source" title="案件来源" length="30" required="true" type="string" inputMode="text"/>
+		<field name="zone" title="区域" length="50" required="true" type="string" inputMode="text"/>
+		<field name="observer" title="上报人" length="50" type="string" inputMode="text"/>
+		<field name="observerNumber" title="上报号码" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="reporter" title="举报人" length="50" type="string" inputMode="text"/>
+		<field name="contect" title="联系方式" length="100" type="string" inputMode="text"/>
+		<field name="isReceipt" title="是否需回复" length="1" type="char" inputMode="radio"/>
+		<field name="receiptMode" title="回复方式" length="20" type="string" inputMode="text"/>
+		<field name="receiptTo" title="回复对象" length="50" type="string" inputMode="text"/>
+		<field name="recorder" title="接线员" length="50" type="string" inputMode="text"/>
+		<field name="partCode" title="部件编号" length="20" type="string" inputMode="text"/>
+		<field name="timeLimit" title="处理时限" length="4" type="number" inputMode="text"/>
+		<field name="level" title="案件等级" length="20" required="true" type="string" inputMode="dropdown"/>
+		<field name="category" title="案件分类" length="30" required="true" type="string" inputMode="text"/>
+		<field name="childCategory" title="案件子分类" length="30" type="string" inputMode="text"/>
+		<field name="duplicate" title="重复案件" length="20" type="string" inputMode="dropdown"/>
+		<field name="XPos" title="定位结果X" length="20,10" type="number" inputMode="text"/>
+		<field name="YPos" title="定位结果Y" length="20,10" type="number" inputMode="text"/>
+		<field name="position" title="事发位置" length="4000" type="string" inputMode="text"/>
+		<field name="description" title="案件描述" length="4000" required="true" type="string" inputMode="text"/>
+		<field name="remark" title="备注" length="4000" type="string" inputMode="text"/>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none"/>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly"/>
+		<field name="isTruly" title="事件是否真实" length="1" type="char" inputMode="radio"/>
+		<field name="truthDescription" title="真实性检查情况" length="4000" type="string" inputMode="text"/>
+		<field name="fixed" title="是否处理完毕" length="1" type="char" inputMode="text"/>
+		<field name="fixDescription" title="处理情况说明" length="4000" type="string" inputMode="text"/>
+		<field name="images" title="图片" type="image" inputMode="attachment"/>
+		<field name="processImages" title="处理后图片" type="image" inputMode="attachment"/>
+		<field name="levelImage" title="等级图片" type="imageName" inputMode="text"/>
+		<field name="limitImage" title="时限图片" type="imageName" inputMode="text"/>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">办理,审核,回复,批转</parameter>
+			<parameter name="class">com.yuanluesoft.municipal.facilities.pojo.FacilitiesEventOpinion</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="PDA使用者" class="com.yuanluesoft.municipal.facilities.pojo.PdaUser">
+		<field name="name" title="使用者姓名" length="30" required="true" type="string" inputMode="text"/>
+		<field name="code" title="工号" length="30" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="pdaNumber" title="PDA号码" length="20" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="orgId" title="所在组织机构ID" type="number" inputMode="hidden"/>
+		<field name="orgName" title="所在组织机构名称" length="500" required="true" type="string" inputMode="select"/>
+		<field name="login" title="是否已经登录" persistence="false" type="string" inputMode="readonly"/>
+		<field name="gpsLogin" title="是否已经登录GPS" persistence="false" type="string" inputMode="readonly"/>
+		<field name="loginTitle" title="是否已经登录" persistence="false" type="string" inputMode="readonly"/>
+		<field name="GPSLoginTitle" title="是否已经登录GPS" persistence="false" type="string" inputMode="readonly"/>
+		<field name="loginImage" title="登录图标" persistence="false" type="imageName" inputMode="readonly"/>
+		<field name="GPSLoginImage" title="GPS登录图标" persistence="false" type="imageName" inputMode="readonly"/>
+		<field name="actions" title="操作" persistence="false" type="html" inputMode="readonly"/>
+	</businessObject>
+	<businessObject title="参数配置" class="com.yuanluesoft.municipal.facilities.pojo.FacilitiesEventParameter">
+		<field name="eventNumberFormat" title="编号规则" length="100" required="true" type="string" inputMode="text"/>
+	</businessObject>
+</businessObjects>

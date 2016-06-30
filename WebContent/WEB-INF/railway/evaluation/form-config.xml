@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/evaluationParameter" class="com.yuanluesoft.railway.evaluation.forms.admin.EvaluationParameter" title="参数配置" pojo="com.yuanluesoft.railway.evaluation.pojo.RailwayEvaluationParameter">
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="evaluation" class="com.yuanluesoft.railway.evaluation.forms.Evaluation" title="综合评价" pojo="com.yuanluesoft.railway.evaluation.model.RailwayEvaluation">
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.railway.evaluation.forms.admin.EvaluationView" title="综合评价视图">
+		<formFields>
+			<field title="部门ID" name="orgIds" type="string" inputMode="hidden"/>
+			<field title="部门名称" name="orgNames" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(550, 360, true, 'orgIds{id},orgNames{name|上级机构|100%}')</parameter>
+			</field>
+			<field title="岗位ID" name="postIds" type="string" inputMode="hidden"/>
+			<field title="岗位名称" name="postNames" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectRole(550, 360, true, 'postIds{id},postNames{name|岗位|100%|}', '', '', ',', '', false, true)</parameter>
+			</field>
+			<field title="年度" name="year" type="number" inputMode="dropdown">
+				<parameter name="itemsText">2012\0 2013\0 2014\0 2015\0 2016\0 2017\0 2018\0 2019\0 2020</parameter>
+			</field>
+			<field title="月份" name="month" type="number" inputMode="dropdown">
+				<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10\0 11\0 12</parameter>
+			</field>
+		</formFields>
+	</form>
+</forms>

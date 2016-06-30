@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="CASEINFO_WAYQUERY" title="公路路政行政处罚案件查询" pojo="CASEINFO" method="get" action="/cms/sitemanage/applicationIndex.shtml?applicationName=traffic/enforcement&amp;pageName=CASEINFO_WAYQUERY">
+		<formFields>
+			<field name="BRANUM_SHIPNAME" type="string" columnType="VARCHAR2(20)" title="车（船）牌号码" inputMode="hidden">
+				<parameter name="defaultValue">闽A-</parameter>
+			</field>
+			<field name="WAY_PREFIX" type="dropdown" columnType="VARCHAR2(20)" title="车牌类别" inputMode="dropdown">
+				<parameter name="itemsText">闽A\0闽B\0闽C\0闽D\0闽E\0闽F\0闽G\0闽H\0闽J\0闽K\0闽O</parameter>
+				<parameter name="defaultValue">闽A</parameter>
+				<parameter name="onchange">document.getElementsByName('BRANUM_SHIPNAME')[0].value=(document.getElementsByName('WAY_PREFIX')[0].value + '-' + document.getElementsByName('WAY_NUMBER')[0].value).toUpperCase();</parameter>
+			</field>
+			<field name="WAY_NUMBER" type="string" columnType="VARCHAR2(20)" title="号码">
+				<parameter name="onchange">document.getElementsByName('BRANUM_SHIPNAME')[0].value=(document.getElementsByName('WAY_PREFIX')[0].value + '-' + document.getElementsByName('WAY_NUMBER')[0].value).toUpperCase();</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="CASEINFO_ROADQUERY" title="道路运输违章案件处罚情况查询" pojo="CASEINFO" method="get" action="/cms/sitemanage/applicationIndex.shtml?applicationName=traffic/enforcement&amp;pageName=CASEINFO_ROADQUERY">
+		<formFields>
+			<field name="BRANUM_SHIPNAME" type="string" columnType="VARCHAR2(20)" title="车（船）牌号码" inputMode="hidden">
+				<parameter name="defaultValue">闽A-</parameter>
+			</field>
+		
+			<field name="ROAD_PREFIX" type="string" columnType="VARCHAR2(20)" title="车牌类别" inputMode="dropdown">
+				<parameter name="itemsText">闽A\0闽B\0闽C\0闽D\0闽E\0闽F\0闽G\0闽H\0闽J\0闽K\0闽O</parameter>
+				<parameter name="defaultValue">闽A</parameter>
+				<parameter name="onchange">document.getElementsByName('BRANUM_SHIPNAME')[0].value=(document.getElementsByName('ROAD_PREFIX')[0].value + '-' + document.getElementsByName('ROAD_NUMBER')[0].value).toUpperCase();</parameter>
+			</field>
+			<field name="ROAD_NUMBER" type="text" columnType="VARCHAR2(20)" title="号码">
+				<parameter name="onchange">document.getElementsByName('BRANUM_SHIPNAME')[0].value=(document.getElementsByName('ROAD_PREFIX')[0].value + '-' + document.getElementsByName('ROAD_NUMBER')[0].value).toUpperCase();</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="CASEINFO_WATERQUERY" title="福州市地方海事局行政处罚案件查询" pojo="CASEINFO" method="get" action="/cms/sitemanage/applicationIndex.shtml?applicationName=traffic/enforcement&amp;pageName=CASEINFO_WATERQUERY">
+		<formFields>
+			<field name="BRANUM_SHIPNAME" type="string" columnType="VARCHAR2(20)" title="船牌号码" inputMode="hidden">
+				<parameter name="defaultValue">闽福州货</parameter>
+			</field>
+		
+			<field name="WATER_PREFIX" type="dropdown" columnType="VARCHAR2(20)" title="船舶类别" inputMode="dropdown">
+				<parameter name="itemsText">闽福州货\0闽福州客\0闽福州油\0闽福州工作船\0闽福州采\0闽福州车渡\0闽福州拖\0闽福州趸\0闽福州驳\0闽福州浚\0闽捞潜\0闽稽查\0闽洋油\0闽海巡\0金水湖游</parameter>
+				<parameter name="defaultValue">闽福州货</parameter>
+				<parameter name="onchange">document.getElementsByName('BRANUM_SHIPNAME')[0].value=(document.getElementsByName('WATER_PREFIX')[0].value + document.getElementsByName('WATER_NUMBER')[0].value).toUpperCase();</parameter>
+			</field>
+			<field name="WATER_NUMBER" type="text" columnType="VARCHAR2(20)" title="号码">
+				<parameter name="onchange">document.getElementsByName('BRANUM_SHIPNAME')[0].value=(document.getElementsByName('WATER_PREFIX')[0].value + document.getElementsByName('WATER_NUMBER')[0].value).toUpperCase();</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="CASEINFOQUERY" title="综合执法查询" method="get" action="/cms/sitemanage/applicationIndex.shtml?applicationName=traffic/enforcement">
+		<formFields>
+			<field name="pageName" title="页面名称" inputMode="hidden">
+				<parameter name="defaultValue">CASEINFO_WAYQUERY</parameter>
+			</field>
+			<field name="CASEINFO_IETYPE" title="执法门类" inputMode="dropdown">
+				<parameter name="itemsText">普通公路路政管理|CASEINFO_WAYQUERY\0道路运输管理|CASEINFO_ROADQUERY\0地方海事管理|CASEINFO_WATERQUERY</parameter>
+				<parameter name="valueField">pageName</parameter>
+				<parameter name="defaultValue">普通公路路政管理</parameter>
+				<parameter name="onchange">var queryType=(value=='普通公路路政管理' ? 'WAY' : (value=='道路运输管理' ? 'ROAD' : 'WATER'));document.getElementsByName(queryType + '_PREFIX')[0].onchange();document.getElementById('SPAN_CASEINFO_WAY_QUERY').style.display = (queryType=='WAY' ? '' : 'none');document.getElementById('SPAN_CASEINFO_ROAD_QUERY').style.display = (queryType=='ROAD' ? '' : 'none');document.getElementById('SPAN_CASEINFO_WATER_QUERY').style.display = (queryType=='WATER' ? '' : 'none');</parameter>
+			</field>
+			<!-- field name="BRANUM_SHIPNAME" type="string" columnType="VARCHAR2(20)" title="车（船）牌号码"/-->
+			<field name="BRANUM_SHIPNAME" type="string" columnType="VARCHAR2(20)" title="车（船）牌号码" inputMode="hidden">
+				<parameter name="defaultValue">闽A-</parameter>
+			</field>
+		
+			<field name="WAY_PREFIX" type="dropdown" columnType="VARCHAR2(20)" title="车牌类别(普通公路路政)" inputMode="dropdown">
+				<parameter name="itemsText">闽A\0闽B\0闽C\0闽D\0闽E\0闽F\0闽G\0闽H\0闽J\0闽K\0闽O</parameter>
+				<parameter name="defaultValue">闽A</parameter>
+				<parameter name="onchange">document.getElementsByName('BRANUM_SHIPNAME')[0].value=(document.getElementsByName('WAY_PREFIX')[0].value + '-' + document.getElementsByName('WAY_NUMBER')[0].value).toUpperCase();</parameter>
+			</field>
+			<field name="WAY_NUMBER" type="string" columnType="VARCHAR2(20)" title="车牌号码(普通公路路政)">
+				<parameter name="onchange">document.getElementsByName('BRANUM_SHIPNAME')[0].value=(document.getElementsByName('WAY_PREFIX')[0].value + '-' + document.getElementsByName('WAY_NUMBER')[0].value).toUpperCase();</parameter>
+			</field>
+			
+			<field name="ROAD_PREFIX" type="string" columnType="VARCHAR2(20)" title="车牌类别(道路运输)" inputMode="dropdown">
+				<parameter name="itemsText">闽A\0闽B\0闽C\0闽D\0闽E\0闽F\0闽G\0闽H\0闽J\0闽K\0闽O</parameter>
+				<parameter name="defaultValue">闽A</parameter>
+				<parameter name="onchange">document.getElementsByName('BRANUM_SHIPNAME')[0].value=(document.getElementsByName('ROAD_PREFIX')[0].value + '-' + document.getElementsByName('ROAD_NUMBER')[0].value).toUpperCase();</parameter>
+			</field>
+			<field name="ROAD_NUMBER" type="text" columnType="VARCHAR2(20)" title="车牌号码(道路运输)">
+				<parameter name="onchange">document.getElementsByName('BRANUM_SHIPNAME')[0].value=(document.getElementsByName('ROAD_PREFIX')[0].value + '-' + document.getElementsByName('ROAD_NUMBER')[0].value).toUpperCase();</parameter>
+			</field>
+			
+			<field name="WATER_PREFIX" type="dropdown" columnType="VARCHAR2(20)" title="船舶类别" inputMode="dropdown">
+				<parameter name="itemsText">闽福州货\0闽福州客\0闽福州油\0闽福州工作船\0闽福州采\0闽福州车渡\0闽福州拖\0闽福州趸\0闽福州驳\0闽福州浚\0闽捞潜\0闽稽查\0闽洋油\0闽海巡\0金水湖游</parameter>
+				<parameter name="defaultValue">闽福州货</parameter>
+				<parameter name="onchange">document.getElementsByName('BRANUM_SHIPNAME')[0].value=(document.getElementsByName('WATER_PREFIX')[0].value + document.getElementsByName('WATER_NUMBER')[0].value).toUpperCase();</parameter>
+			</field>
+			<field name="WATER_NUMBER" type="text" columnType="VARCHAR2(20)" title="船舶号码">
+				<parameter name="onchange">document.getElementsByName('BRANUM_SHIPNAME')[0].value=(document.getElementsByName('WATER_PREFIX')[0].value + document.getElementsByName('WATER_NUMBER')[0].value).toUpperCase();</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+</forms>

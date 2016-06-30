@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--电报:收报登记-->
+	<class name="com.yuanluesoft.telex.receive.base.pojo.ReceiveTelegram" table="telex_receive_telegram">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="subject"/> <!--标题-->
+		<property name="summary"/> <!--内容摘要-->
+		<property name="isCryptic"/> <!--明/密-->
+		<property name="sn"/> <!--原电号-->
+		<property name="sequence"/> <!--流水号-->
+		<property name="unitCode"/> <!--部委号-->
+		<property name="category"/> <!--发电类型-->
+		<property name="securityLevel"/> <!--密级-->
+		<property name="telegramLevel"/> <!--等级-->
+		<property name="pages"/> <!--页数-->
+		<property name="telegramNumber"/> <!--份数-->
+		<property name="totalPages"/> <!--总页数-->
+		<property name="sendTime"/> <!--发电时间-->
+		<property name="fromUnitIds"/> <!--发电单位ID列表-->
+		<property name="fromUnitNames"/> <!--发电单位名称列表-->
+		<property name="station"/> <!--来电台家-->
+		<property name="toUnitIds"/> <!--受电单位ID列表-->
+		<property name="toUnitNames"/> <!--受电单位名称列表-->
+		<property name="receiveTime"/> <!--接收时间-->
+		<property name="receiverId"/> <!--接受人ID-->
+		<property name="receiverName"/> <!--接受人姓名-->
+		<property name="needReturn"/> <!--是否需要退报-->
+		<property name="creatorId"/> <!--登记人ID-->
+		<property name="creator"/> <!--登记人-->
+		<property name="created"/> <!--登记时间-->
+		<property name="archiveTime"/> <!--归档时间-->
+		<property name="archivePersonId"/> <!--归档人ID-->
+		<property name="archivePersonName"/> <!--归档人姓名-->
+		<property name="remark"/> <!--备注-->
+		<!-- 签收人列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="signs" table="telex_sign" order-by="created, id">
+            <key column="telegramId" />
+            <one-to-many class="com.yuanluesoft.telex.receive.base.pojo.TelegramSign" />
+        </set>
+		<!-- 办理意见列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="opinions" table="telex_sign_opinion" order-by="created desc">
+            <key column="mainRecordId" />
+            <one-to-many class="com.yuanluesoft.telex.receive.base.pojo.TelegramSignOpinion" />
+        </set>
+	</class>
+
+	<!--电报:签收清退-->
+	<class name="com.yuanluesoft.telex.receive.base.pojo.TelegramSign" table="telex_sign">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="telegramId"/> <!--电报ID-->
+		<property name="receiverId"/> <!--签收单位/个人ID-->
+		<property name="receiverName"/> <!--签收单位/个人-->
+		<property name="created"/> <!--设置时间-->
+		<property name="creatorId"/> <!--设置人ID-->
+		<property name="creator"/> <!--设置人姓名-->
+		<property name="signTime"/> <!--签收时间-->
+		<property name="signPersonId"/> <!--签收人ID-->
+		<property name="signPersonName"/> <!--签收人姓名-->
+		<property name="isAgentSign"/> <!--是否代签收-->
+		<property name="signOperatorId"/> <!--签收时经办人ID-->
+		<property name="signOperatorName"/> <!--签收时经办人姓名-->
+		<property name="returnTime"/> <!--清退时间-->
+		<property name="returnPersonId"/> <!--清退人ID-->
+		<property name="returnPersonName"/> <!--清退人姓名-->
+		<property name="isAgentReturn"/> <!--是否代清退-->
+		<property name="returnOperatorId"/> <!--清退时经办人ID-->
+		<property name="returnOperatorName"/> <!--清退时经办人姓名-->
+		<property name="needReturn"/> <!--是否需要清退-->
+        <!-- 电报 -->
+		<many-to-one name="telegram" class="com.yuanluesoft.telex.receive.base.pojo.ReceiveTelegram" column="telegramId" update="false" insert="false"/>
+	</class>
+	
+	<!--电报:代签收人-->
+	<class name="com.yuanluesoft.telex.receive.base.pojo.TelegramSignAgent" table="telex_sign_agent">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--姓名-->
+		<property name="orgId"/> <!--所属组织机构ID-->
+		<property name="orgName"/> <!--所属组织机构-->
+		<property name="certificateName"/> <!--证件名称-->
+		<property name="certificateCode"/> <!--证件号码-->
+		<property name="sex"/> <!--性别-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="creator"/> <!--创建人-->
+		<property name="created"/> <!--创建时间-->
+	</class>
+	
+	<!--电报:办理意见-->
+	<class name="com.yuanluesoft.telex.receive.base.pojo.TelegramSignOpinion" table="telex_sign_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="created"/> <!--填写时间-->
+	</class>
+</hibernate-mapping>

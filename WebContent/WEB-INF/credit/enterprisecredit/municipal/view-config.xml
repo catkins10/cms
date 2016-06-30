@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/municipal" form="admin/municipal" title="龙海市行政处罚案件统计报表" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.municipal.pojo.Municipal</pojo>
+			<orderBy>Municipal.created</orderBy>
+			<quickFilter>Municipal.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_municipal)" execute="PageUtils.newrecord('credit/enterprisecredit/municipal', 'admin/municipalImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_municipal)" execute="PageUtils.newrecord('credit/enterprisecredit/municipal','admin/municipal','mode=fullscreen')"/>
+			<action title="批量删除" hide="noPrivilege(manageUnit_municipal)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/municipal/batchOperate.shtml?pojoName=Municipal')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="filingTime" title="立案时间"  align="center"/>
+			<column name="breakLaw" title="违法行为" align="center"/>
+			<column name="endTime" title="结案时间" align="center"/>
+		</columns>
+	</view>
+	
+	
+</views>

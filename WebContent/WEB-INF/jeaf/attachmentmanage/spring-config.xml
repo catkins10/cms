@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 附件管理服务 -->
+	<bean id="attachmentService" class="com.yuanluesoft.jeaf.attachmentmanage.service.spring.AttachmentServiceImpl">
+		<property name="fileDownloadCache"><ref bean="fileDownloadCache"/></property>
+		<property name="fileUploadService"><ref bean="fileUploadService"/></property>
+		<property name="baseDirectory"><ref bean="attachmentDirectory"/></property>
+		<property name="renameUploadedFile"><value>false</value></property>
+	</bean>
+	
+	<!-- 临时文件管理服务 -->
+	<bean id="temporaryFileManageService" class="com.yuanluesoft.jeaf.attachmentmanage.service.spring.TemporaryFileManageServiceImpl">
+		<property name="temporaryDirectory"><ref bean="temporaryDirectory"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+	</bean>
+</beans>

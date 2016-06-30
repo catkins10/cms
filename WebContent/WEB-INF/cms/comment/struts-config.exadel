@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,145,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="320,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,145,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="320,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#comment"
+  NAME="action0" PATH="/admin/comment" SHAPE="32,544,145,41"
+  TITLE="adminComment" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/comment.jsp" TARGET="page3" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveComment"
+  NAME="action1" PATH="/admin/saveComment" SHAPE="496,576,161,25"
+  TITLE="adminComment" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#comment" NAME="action2"
+  PATH="/comment" SHAPE="32,208,145,41" TITLE="comment" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/comment.jsp" TARGET="page5" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteComment"
+  NAME="action3" PATH="/admin/deleteComment" SHAPE="496,640,161,25"
+  TITLE="adminComment" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#runComment"
+  NAME="action4" PATH="/admin/runComment" SHAPE="496,704,161,25"
+  TITLE="adminComment" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#submitComment"
+  NAME="action5" PATH="/submitComment" SHAPE="496,240,161,41"
+  TITLE="comment" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/commentSubmited.jsp" TARGET="page4"
+   TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#writeOpinion"
+  NAME="action6" PATH="/admin/writeOpinion" SHAPE="496,768,161,25"
+  TITLE="adminComment" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#publish"
+  NAME="action10" PATH="/admin/publish" SHAPE="496,880,161,25"
+  TITLE="adminComment" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/comment.jsp" SHAPE="320,224,50,25" SUBTYPE="jsp"
+  TITLE="comment.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/submitComment" TARGET="action5" TITLE="saveComment" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/commentSubmited.jsp" SHAPE="784,256,50,25" SUBTYPE="jsp"
+  TITLE="commentSubmited.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/admin/comment.jsp" SHAPE="320,560,50,145" SUBTYPE="jsp"
+  TITLE="comment.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteComment" TARGET="action3" TITLE="deleteComment" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/runComment" SHAPE="369,600,472,600,472,712,495,712"
+   TARGET="action4" TITLE="runComment" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/admin/writeOpinion" SHAPE="369,616,464,616,464,776,495,776"
+   TARGET="action6" TITLE="saveOpinion" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link6"
+   PATH="/admin/setPublishOption"
+   SHAPE="369,632,456,632,456,832,495,832" TARGET="action11"
+   TITLE="publish" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link7"
+   PATH="/admin/publish" SHAPE="369,648,448,648,448,888,495,888"
+   TARGET="action10" TITLE="publish" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectAttachment"
+  NAME="action9" PATH="/selectAttachment" SHAPE="32,320,144,41"
+  TITLE="comment" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/selectAttachment.jsp"
+   TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/../../jeaf/attachment/selectAttachment.jsp"
+  SHAPE="320,336,50,25" SUBTYPE="jsp" TITLE="selectAttachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#setPublishOption"
+  NAME="action11" PATH="/admin/setPublishOption" SHAPE="496,824,161,25"
+  TITLE="adminComment" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#citationComment"
+  NAME="action12" PATH="/citationComment" SHAPE="32,416,145,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#templatemanage#insertComments" NAME="action7"
+  PATH="/templatemanage/insertComments" SHAPE="32,944,145,25"
+  TITLE="insertComments" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templatemanage/insertComments.jsp"
+   TARGET="page6" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/templatemanage/insertComments.jsp" SHAPE="320,960,50,25"
+  SUBTYPE="jsp" TITLE="insertComments.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#templatemanage#insertCommentLink" NAME="action8"
+  PATH="/templatemanage/insertCommentLink" SHAPE="32,1040,145,25"
+  TITLE="insertCommentLink" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templatemanage/insertCommentLink.jsp"
+   TARGET="page7" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page7"
+  PATH="/templatemanage/insertCommentLink.jsp" SHAPE="320,1056,50,25"
+  SUBTYPE="jsp" TITLE="insertCommentLink.jsp" TYPE="page"/>
+</PROCESS>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view title="开标室安排" name="biddingroomSchedules">
+		<data>
+			<pojo>com.yuanluesoft.bidding.biddingroom.pojo.BiddingRoomSchedule</pojo>
+			<where>BiddingRoomSchedule.roomId!=0 and BiddingRoomSchedule.roomType='开标' and BiddingRoomSchedule.endTime>TIMESTAMP({NOW})</where>
+			<orderBy>BiddingRoomSchedule.beginTime DESC</orderBy>
+			<quickFilter>BiddingRoomSchedule.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>publicBeginTime</newestCheckBy>
+		</data>
+		<links>
+			<link title="开标室安排">/bidding/biddingroom/schedule.shtml</link>
+			<link type="hostLink">/bidding/biddingroom/biddingroomSchedules.shtml</link>
+		</links>
+	</view>
+	
+	<calendarView name="scheduleCalendar" form="schedule" title="开标室安排(日历)" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.bidding.biddingroom.pojo.BiddingRoomSchedule</pojo>
+			<orderBy>BiddingRoomSchedule.beginTime</orderBy>
+			<where>BiddingRoomSchedule.roomId!=0 and BiddingRoomSchedule.roomType='开标'</where>
+			<quickFilter>BiddingRoomSchedule.projectName like '%{KEY}%'</quickFilter>
+			<calendarColumn>BiddingRoomSchedule.beginTime</calendarColumn>
+		</data>
+		<links>
+			<link target="_blank">schedule.shtml?id={PARAMETER:id}</link>
+		</links>
+		<columns>
+			<column title="开始时间" name="beginTime" width="50" format="HH:mm"/>
+			<column title="开标室名称" name="roomName"/>
+			<column title="项目名称" name="projectName"/>
+		</columns>
+	</calendarView>
+
+	<view name="admin/biddingroom" form="admin/biddingroom" title="开评标室" pageRows="20" openFeatures="width=640,height=480">
+		<data>
+			<pojo>com.yuanluesoft.bidding.biddingroom.pojo.BiddingRoom</pojo>
+			<orderBy>BiddingRoom.name</orderBy>
+			<quickFilter>BiddingRoom.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="登记开评标室" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create)" execute="PageUtils.newrecord('bidding/biddingroom', 'admin/biddingroom', 'width=640,height=480')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+			<column title="类型" name="type" align="center" width="80"/>
+			<column title="地区" name="city" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/schedule" form="admin/schedule" title="开标室安排" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.bidding.biddingroom.pojo.BiddingRoomSchedule</pojo>
+			<orderBy>BiddingRoomSchedule.beginTime DESC</orderBy>
+			<where>BiddingRoomSchedule.roomId!=0 and BiddingRoomSchedule.roomType='开标'</where>
+			<quickFilter>BiddingRoomSchedule.projectName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="安排" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create)" execute="PageUtils.newrecord('bidding/biddingroom', 'admin/schedule', 'width=640,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="开始时间" name="beginTime" width="110"/>
+			<column title="开标室名称" name="roomName" width="120"/>
+			<column title="项目名称" name="projectName"/>
+		</columns>
+	</view>
+	
+	<calendarView name="admin/scheduleCalendar" form="admin/schedule" title="开标室安排" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.bidding.biddingroom.pojo.BiddingRoomSchedule</pojo>
+			<orderBy>BiddingRoomSchedule.beginTime</orderBy>
+			<where>BiddingRoomSchedule.roomId!=0 and BiddingRoomSchedule.roomType='开标'</where>
+			<quickFilter>BiddingRoomSchedule.projectName like '%{KEY}%'</quickFilter>
+			<calendarColumn>BiddingRoomSchedule.beginTime</calendarColumn>
+		</data>
+		<calendarAction hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create)" execute="PageUtils.newrecord('bidding/biddingroom','admin/schedule','width=720,height=480', 'beginTime={CALENDAR_TIMESTAMP}')"/>
+		<actions>
+			<action title="安排" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create)" execute="PageUtils.newrecord('bidding/biddingroom', 'admin/schedule', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="开始时间" name="beginTime" width="50px" format="HH:mm"/>
+			<column title="开标室名称" name="roomName"/>
+			<column title="项目名称" name="projectName"/>
+		</columns>
+	</calendarView>
+</views>

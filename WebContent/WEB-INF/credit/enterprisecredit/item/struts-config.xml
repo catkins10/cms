@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+ <form-bean name="applicationView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/>
+  <form-bean name="itemImportData" type="com.yuanluesoft.credit.enterprisecredit.item.forms.ImportDateExcel"/>
+  <form-bean name="adminBigstandard" type="com.yuanluesoft.credit.enterprisecredit.item.forms.BigStandard"/>
+  <form-bean name="adminHandle" type="com.yuanluesoft.credit.enterprisecredit.item.forms.Handle"/>
+  <form-bean name="adminPermit" type="com.yuanluesoft.credit.enterprisecredit.item.forms.Permit"/>
+  <form-bean name="adminPunish" type="com.yuanluesoft.credit.enterprisecredit.item.forms.Punish"/>
+  <form-bean name="adminSmallstandard" type="com.yuanluesoft.credit.enterprisecredit.item.forms.SmallStandard"/>
+  <form-bean name="adminLinkperson" type="com.yuanluesoft.credit.enterprisecredit.item.forms.LinkPerson"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminBigstandard" path="/admin/bigstandard" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.item.actions.bigstandard.Load" validate="false">
+   <forward name="load" path="/bigstandard.jsp"/>
+  </action>
+  <action input="/bigstandard.jsp" name="adminBigstandard" path="/admin/saveBigstandard" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.item.actions.bigstandard.Save" validate="false"/>
+  <action input="/bigstandard.jsp" name="adminBigstandard" path="/admin/deleteBigstandard"
+   scope="request" type="com.yuanluesoft.credit.enterprisecredit.item.actions.bigstandard.Delete" validate="false"/>
+  
+  
+    <action name="adminHandle" path="/admin/handle" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.item.actions.handle.Load" validate="false">
+   <forward name="load" path="/handle.jsp"/>
+  </action>
+  <action input="/handle.jsp" name="adminHandle" path="/admin/saveHandle" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.item.actions.handle.Save" validate="false"/>
+  <action input="/handle.jsp" name="adminHandle" path="/admin/deleteHandle"
+   scope="request" type="com.yuanluesoft.credit.enterprisecredit.item.actions.handle.Delete" validate="false"/>
+   
+   <action name="adminPermit" path="/admin/permit" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.item.actions.permit.Load" validate="false">
+   <forward name="load" path="/permit.jsp"/>
+  </action>
+  <action input="/permit.jsp" name="adminPermit" path="/admin/savePermit" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.item.actions.permit.Save" validate="false"/>
+  <action input="/permit.jsp" name="adminPermit" path="/admin/deletePermit"
+   scope="request" type="com.yuanluesoft.credit.enterprisecredit.item.actions.permit.Delete" validate="false"/>
+   
+    <action name="adminPunish" path="/admin/punish" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.item.actions.punish.Load" validate="false">
+   <forward name="load" path="/punish.jsp"/>
+  </action>
+  <action input="/punish.jsp" name="adminPunish" path="/admin/savePunish" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.item.actions.punish.Save" validate="false"/>
+  <action input="/punish.jsp" name="adminPunish" path="/admin/deletePunish"
+   scope="request" type="com.yuanluesoft.credit.enterprisecredit.item.actions.punish.Delete" validate="false"/>
+   
+   <action name="adminSmallstandard" path="/admin/smallstandard" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.item.actions.smallstandard.Load" validate="false">
+   <forward name="load" path="/smallstandard.jsp"/>
+  </action>
+  <action input="/smallstandard.jsp" name="adminSmallstandard" path="/admin/saveSmallstandard" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.item.actions.smallstandard.Save" validate="false"/>
+  <action input="/smallstandard.jsp" name="adminSmallstandard" path="/admin/deleteSmallstandard"
+   scope="request" type="com.yuanluesoft.credit.enterprisecredit.item.actions.smallstandard.Delete" validate="false"/>
+   
+   <action name="adminLinkperson" path="/admin/linkperson" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.item.actions.linkperson.Load" validate="false">
+   <forward name="load" path="/linkperson.jsp"/>
+  </action>
+  <action input="/linkperson.jsp" name="adminLinkperson" path="/admin/saveLinkperson" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.item.actions.linkperson.Save" validate="false"/>
+  <action input="/linkperson.jsp" name="adminLinkperson" path="/admin/deleteLinkperson"
+   scope="request" type="com.yuanluesoft.credit.enterprisecredit.item.actions.linkperson.Delete" validate="false"/>
+  
+  <!-- 附件选择处理。页面的data标签加载时跳转该path调用相应action处理附件页面 -->
+  <action name="itemImportData" path="/admin/attachmentEditor" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.localtax.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <!-- excel数据导入页面加载 -->
+   <action name="itemImportData" path="/admin/importData" scope="request" validate="false"
+   type="com.yuanluesoft.credit.enterprisecredit.item.actions.excelimport.Load">
+   <forward name="load" path="/importData.jsp"/>
+   </action>
+   
+   <action name="itemImportData" path="/admin/doImportData" scope="request" validate="false" input="/importData.jsp"
+   type="com.yuanluesoft.credit.enterprisecredit.item.actions.excelimport.DoImportData"/>
+   <!-- 批量删除操作 -->
+   <action input="/../../../jeaf/application/applicationView.jsp" name="applicationView" 
+   path="/batchOperate" scope="request" 
+   type="com.yuanluesoft.credit.enterprisecredit.batchoperate.BatchOperate" validate="false" />
+ </action-mappings>
+ <controller/>
+</struts-config>

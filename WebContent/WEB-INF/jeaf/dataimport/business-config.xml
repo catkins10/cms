@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="导入参数" class="com.yuanluesoft.jeaf.dataimport.model.DataImportParameter">
+		<field name="jdbcDriver" title="JDBC驱动" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="valueField">parameter.jdbcURL</parameter>
+			<parameter name="titleField">parameter.jdbcDriver</parameter>
+			<parameter name="itemsText">sun.jdbc.odbc.JdbcOdbcDriver|jdbc:odbc:Driver={MicroSoft Access Driver (*.mdb)};DBQ=[文件路径]\0 com.sybase.jdbc2.jdbc.SybDriver|jdbc:sybase:Tds:[IP]:5000/[数据库名称]?CharSet=cp936\0net.sourceforge.jtds.jdbc.Driver|jdbc:jtds:sqlserver://[IP]:1433;DatabaseName=[数据库名称]\0 org.gjt.mm.mysql.Driver|jdbc:mysql://[服务器IP]/[数据库名称]?useUnicode=true&amp;characterEncoding=gbk\0 org.postgresql.Driver|jdbc:postgresql://[服务器IP]:5432/[数据库名称]\0 oracle.jdbc.driver.OracleDriver|jdbc:oracle:thin:@[服务器IP]:1521:[数据库名称]</parameter>
+		</field>
+		<field name="jdbcURL" title="JDBC URL" type="string" inputMode="text"/>
+		<field name="jdbcUserName" title="数据库用户名" type="string" inputMode="text"/>
+		<field name="jdbcPassword" title="数据库密码" type="string" inputMode="text"/>
+		<field name="sourceSiteURL" title="源站点URL" type="string" inputMode="text"/>
+		<field name="templatePath" title="模板路径" type="string" inputMode="text"/>
+		<field name="templateUrl" title="模板在旧网站中的URL" type="string" inputMode="text"/>
+		<field name="maxImport" title="最大导入的记录数" type="number" inputMode="text"/>
+	</businessObject>
+</businessObjects>

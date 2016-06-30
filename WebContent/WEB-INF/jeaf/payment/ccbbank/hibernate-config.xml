@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--建设银行:支付记录-->
+	<class name="com.yuanluesoft.jeaf.payment.paymentmethod.ccbbank.pojo.CcbbankOrder" table="payment_ccbbank_order">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="paymentId"/> <!--支付单ID-->
+		<property name="orderId"/> <!--订单号-->
+		<property name="orderStatus"/> <!--支付状态-->
+		<property name="accountType"/> <!--支付账户类型-->
+		<property name="orderAmount"/> <!--支付金额-->
+		<property name="refundAmount"/> <!--退款金额-->
+		<property name="orderDate"/> <!--订单日期-->
+		<property name="remark1"/> <!--备注1-->
+		<property name="remark2"/> <!--备注2-->
+	</class>
+</hibernate-mapping>

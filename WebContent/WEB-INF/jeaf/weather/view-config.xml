@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="weatherLive" title="天气实况" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.weather.pojo.WeatherLive</pojo>
+			<where>WeatherLive.updateTime>=DATE({TODAY})</where>
+			<orderBy>WeatherLive.updateTime DESC</orderBy>
+			<quickFilter>WeatherLive.erea like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="地区" name="area" width="50"/>
+			<column title="更新时间" name="updateTime" align="center" width="110"/>
+			<column title="天气" name="describe"/>
+			<column title="气温" name="temperature" align="center" width="36"/>
+			<column title="体感温度" name="feelst" align="center" width="60"/>
+			<column title="气压" name="airpressure" align="center" width="36"/>
+			<column title="风向" name="windDirection" align="center" width="60"/>
+			<column title="风力" name="windPower" align="center" width="60"/>
+			<column title="降水" name="rain" align="center" width="50"/>
+			<column title="湿度" name="humidity" align="center" width="50"/>
+			<column title="舒适度" name="comfortTip" align="center"/>
+			<column title="空气质量" name="airQuality" align="center" width="60"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="weatherForecast" title="天气预报" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.weather.pojo.WeatherForecast</pojo>
+			<where>WeatherForecast.forecastDate>=DATE({TODAY})</where>
+			<orderBy>WeatherForecast.forecastDate</orderBy>
+			<quickFilter>WeatherForecast.erea like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="地区" name="area" width="50"/>
+			<column title="日期" name="forecastDate" align="center" width="70"/>
+			<column title="天气" name="describe"/>
+			<column title="白天气温" name="dayTemperature" align="center" width="60"/>
+			<column title="夜晚气温" name="nightTemperature" align="center" width="60"/>
+			<column title="风向" name="windDirection"/>
+			<column title="风力" name="windPower"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="weathers" title="天气">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.weather.model.Weather</pojo>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/jeaf/weather/templatemanage/insertWeathers.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+</views>

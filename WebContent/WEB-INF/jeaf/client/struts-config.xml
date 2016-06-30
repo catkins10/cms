@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="channel" type="com.yuanluesoft.jeaf.client.forms.Channel"/>
+  <form-bean name="columnBar" type="com.yuanluesoft.jeaf.client.forms.ColumnBar"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action path="/main" scope="request"
+   type="com.yuanluesoft.jeaf.client.actions.main.Load" validate="false"/>
+  <action path="/startup" scope="request"
+   type="com.yuanluesoft.jeaf.client.actions.startup.Load" validate="false"/>
+  <action path="/pilot" scope="request"
+   type="com.yuanluesoft.jeaf.client.actions.pilot.Load" validate="false"/>
+  <action path="/hint" scope="request"
+   type="com.yuanluesoft.jeaf.client.actions.hint.Load" validate="false"/>
+  <action path="/selectFile" scope="request"
+   type="com.yuanluesoft.jeaf.client.actions.selectfile.Load" validate="false"/>
+  <action path="/saveFile" scope="request"
+   type="com.yuanluesoft.jeaf.client.actions.savefile.Load" validate="false"/>
+  <action name="columnBar" path="/templatemanage/columnBar"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/columnBar.jsp"/>
+  </action>
+  <action name="channel" path="/templatemanage/channel" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/channel.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

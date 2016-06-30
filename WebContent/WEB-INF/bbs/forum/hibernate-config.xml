@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--论坛:论坛目录-->
+	<class name="com.yuanluesoft.bbs.forum.pojo.BbsDirectory" table="bbs_directory">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryName"/> <!--目录名称-->
+		<property name="parentDirectoryId"/> <!--上级目录ID-->
+		<property name="priority"/> <!--优先级-->
+		<property name="directoryType"/> <!--目录类型-->
+		<property name="creator"/> <!--创建人-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="created"/> <!--创建时间-->
+		<property name="remark"/> <!--备注-->
+        <property name="description"/> <!--描述-->
+		<set cascade="delete" inverse="true" lazy="true" name="directoryPopedoms" table="bbs_directory_popedom" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.bbs.forum.pojo.BbsDirectoryPopedom" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="subjections" table="bbs_directory_subjection" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.bbs.forum.pojo.BbsDirectorySubjection" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="childSubjections" table="bbs_directory_subjection">
+			<key column="parentDirectoryId" />
+			<one-to-many class="com.yuanluesoft.bbs.forum.pojo.BbsDirectorySubjection" />
+		</set>
+		
+		<!-- 论坛 -->
+		<joined-subclass name="com.yuanluesoft.bbs.forum.pojo.Bbs" table="bbs_bbs">
+            <key>
+                <column name="id" />
+            </key>
+        </joined-subclass>
+        
+        <!-- 版块分类 -->
+        <joined-subclass name="com.yuanluesoft.bbs.forum.pojo.ForumCategory" table="bbs_forum_category">
+            <key>
+                <column name="id" />
+            </key>
+        </joined-subclass>
+        
+        <!-- 版块 -->
+        <joined-subclass name="com.yuanluesoft.bbs.forum.pojo.Forum" table="bbs_forum">
+            <key>
+                <column name="id" />
+            </key>
+            <property name="pageArticles"/> <!--论坛每页显示主题数-->
+			<property name="pageReplies"/> <!--每贴显示的回复数-->
+			<property name="anonymousEnabled"/> <!--是否允许匿名访问-->
+			<property name="anonymousReply"/> <!--是否允许匿名回复-->
+			<property name="anonymousCreate"/> <!--是否允许匿名发帖-->
+			<property name="vipOnly"/> <!--是否只允许VIP访问-->
+			<property name="anonymousDownload"/> <!--是否允许匿名用户下载附件-->
+			<property name="managerCreateOnly"/> <!--仅允许版主发帖-->
+        </joined-subclass>
+	</class>
+
+	<!--论坛:目录隶属关系-->
+	<class name="com.yuanluesoft.bbs.forum.pojo.BbsDirectorySubjection" table="bbs_directory_subjection">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID-->
+		<property name="parentDirectoryId"/> <!--上级目录ID-->
+	</class>
+	
+	<!--论坛:目录权限-->
+	<class name="com.yuanluesoft.bbs.forum.pojo.BbsDirectoryPopedom" table="bbs_directory_popedom">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID-->
+		<property name="userId"/> <!--用户ID-->
+		<property name="userName"/> <!--用户名-->
+		<property name="popedomName"/> <!--权限-->
+		<property name="isInherit"/> <!--是否从上级目录继承-->
+	</class>
+</hibernate-mapping>

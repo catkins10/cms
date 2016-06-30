@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--计费系统:服务策略-->
+	<class name="com.yuanluesoft.charge.servicemanage.pojo.ServicePolicy" table="charge_service_policy">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="serviceItem"/> <!--服务项目名称-->
+		<property name="policy"/> <!--策略-->
+		<property name="studentEnabled"/> <!--是否面向学生-->
+		<property name="teacherEnabled"/> <!--是否面向教师-->
+		<property name="genearchEnabled"/> <!--是否面向家长-->
+		<property name="employeeEnabled"/> <!--是否面向普通用户-->
+		<property name="anonymousEnabled"/> <!--是否面向匿名用户-->
+		<property name="beginDate"/> <!--使用开始时间-->
+		<property name="endDate"/> <!--使用截止时间-->
+		<property name="days"/> <!--试用天数-->
+		<property name="creator"/> <!--创建人-->
+		<property name="created"/> <!--创建时间-->
+		<property name="remark"/> <!--备注-->
+	</class>
+	
+	<!--计费系统:服务试用记录-->
+	<class name="com.yuanluesoft.charge.servicemanage.pojo.ServiceTry" table="charge_service_try">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="serviceItem"/> <!--服务项目名称-->
+		<property name="personId"/> <!--用户ID-->
+		<property name="personName"/> <!--用户名-->
+		<property name="beginTime"/> <!--第一次使用时间-->
+	</class>
+
+	<!--计费:付费服务-->
+	<class name="com.yuanluesoft.charge.servicemanage.pojo.Service" table="charge_service">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="serviceName"/> <!--名称-->
+		<property name="studentEnabled"/> <!--是否面向学生-->
+		<property name="teacherEnabled"/> <!--是否面向教师-->
+		<property name="genearchEnabled"/> <!--是否面向家长-->
+		<property name="employeeEnabled"/> <!--是否面向普通用户-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="creator"/> <!--创建人-->
+		<property name="created"/> <!--创建时间-->
+		<property name="deleted"/> <!--是否删除-->
+		<property name="halt"/> <!--是否停用-->
+		<property name="remark"/> <!--备注-->
+		<set cascade="delete" inverse="true" lazy="false" name="serviceItems" table="charge_service_item" order-by="id">
+            <key column="serviceId" />
+            <one-to-many class="com.yuanluesoft.charge.servicemanage.pojo.ServiceItem" />
+        </set>
+        <set cascade="delete" inverse="true" lazy="true" name="servicePrices" table="charge_service_price" order-by="id">
+            <key column="serviceId" />
+            <one-to-many class="com.yuanluesoft.charge.servicemanage.pojo.ServicePrice" />
+        </set>
+	</class>
+	<class name="com.yuanluesoft.charge.servicemanage.pojo.ServicePrice" table="charge_service_price">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--名称-->
+		<property name="serviceId"/> <!--服务ID-->
+		<property name="servicePrice"/> <!--价格-->
+		<property name="orderModes"/> <!--订购方式列表-->
+		<property name="paymentMode"/> <!--计费方式-->
+		<property name="paymentPeriod"/> <!--计费周期-->
+		<property name="reiteration"/> <!--是否自动重复-->
+		<property name="deductDay"/> <!--扣款周期开始时间-->
+		<property name="deductPolicy"/> <!--扣款策略-->
+		<property name="minPeriods"/> <!--最小的订购周期数-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="creator"/> <!--创建人-->
+		<property name="created"/> <!--创建时间-->
+		<property name="deleted"/> <!--是否删除-->
+		<property name="halt"/> <!--是否停用-->
+		<property name="remark"/> <!--备注-->
+		<set cascade="delete" inverse="true" lazy="true" name="serviceDeductPolicies" table="charge_service_deduct_policy" order-by="id">
+            <key column="servicePriceId" />
+            <one-to-many class="com.yuanluesoft.charge.servicemanage.pojo.ServiceDeductPolicy" />
+        </set>
+        <!-- 服务 -->
+		<many-to-one name="service" class="com.yuanluesoft.charge.servicemanage.pojo.Service" column="serviceId" update="false" insert="false"/>
+	</class>
+	
+	<!--计费:服务包条目-->
+	<class name="com.yuanluesoft.charge.servicemanage.pojo.ServiceItem" table="charge_service_item">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="serviceId"/> <!--服务包ID-->
+		<property name="item"/> <!--条目名称-->
+	</class>
+	
+	<!--计费:服务扣款策略-->
+	<class name="com.yuanluesoft.charge.servicemanage.pojo.ServiceDeductPolicy" table="charge_service_deduct_policy">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="servicePriceId"/> <!--服务ID-->
+		<property name="dayMin"/> <!--区间最小值-->
+		<property name="dayMax"/> <!--区间最大值-->
+		<property name="percentage"/> <!--扣除百分百-->
+		<property name="description"/> <!--描述-->
+	</class>
+</hibernate-mapping>

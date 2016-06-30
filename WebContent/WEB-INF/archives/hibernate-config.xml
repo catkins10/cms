@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+
+	<!--全宗设置-->
+	<class name="com.yuanluesoft.archives.pojo.ArchivesFonds" table="archives_fonds">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="fondsName"/> <!--全宗名称-->
+		<property name="fondsCode"/> <!--全宗号-->
+	</class>
+	
+	<!--文件密级配置-->
+	<class name="com.yuanluesoft.archives.pojo.ArchivesSecureLevel" table="archives_secure_level">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="secureLevelCode"/> <!--密级编号-->
+		<property name="secureLevel"/> <!--密级-->
+	</class>
+	
+	<!--文件密级对应的访问者-->
+	<class name="com.yuanluesoft.archives.pojo.ArchivesSecureLevelPrivilege" table="archives_sec_level_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--保管期限-->
+	<class name="com.yuanluesoft.archives.pojo.ArchivesRotentionPeriod" table="archives_rotention_period">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="rotentionPeriodCode"/> <!--期限编号-->
+		<property name="rotentionPeriod"/> <!--保管期限-->
+	</class>
+	
+	<!--分类配置-->
+	<class name="com.yuanluesoft.archives.pojo.ArchivesCategory" table="archives_category">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="categoryCode"/> <!--分类号-->
+		<property name="category"/> <!--分类-->
+		<property name="parentCategoryId"/> <!--父类ID-->
+	</class>
+	
+	<!--机构或问题配置-->
+	<class name="com.yuanluesoft.archives.pojo.ArchivesUnit" table="archive_unit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="unitCode"/> <!--编号-->
+		<property name="unit"/> <!--机构或问题-->
+	</class>
+	
+	<!--档号配置-->
+	<class name="com.yuanluesoft.archives.pojo.ArchivesCode" table="archives_code">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="archivesType"/> <!--档案类别-->
+		<property name="codeConfig"/> <!--档号规则-->
+	</class>
+</hibernate-mapping>

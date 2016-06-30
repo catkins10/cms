@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--网上办事目录服务-->
+	<bean id="onlineServiceFaqDirectoryService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref bean="onlineServiceFaqDirectoryServiceImpl"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="init*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="create*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="authorize">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="copy*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="process*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="onlineServiceFaqDirectoryServiceImpl" class="com.yuanluesoft.cms.onlineservice.faq.service.spring.OnlineServiceDirectoryServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="onlineServiceItemService"><ref bean="onlineServiceItemServiceImpl"/></property>
+		<property name="exchangeClient"><ref bean="exchangeClient"/></property>
+		<property name="pageService"><ref bean="pageService"/></property>
+		<property name="templateService"><ref bean="onlineServiceTemplateServiceImpl"/></property>
+	</bean>
+	
+	<!--常见问题解答服务-->
+	<bean id="onlineServiceFaqService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.cms.onlineservice.faq.service.spring.OnlineServiceFaqServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="pageService"><ref bean="pageService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="issue">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="unissue">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="remove*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 智能互动页面服务 -->
+	<bean id="onlineServiceFaqRobotPageService" class="com.yuanluesoft.cms.onlineservice.faq.pages.OnlineServiceFaqRobotPageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="onlineServiceFaqService"><ref bean="onlineServiceFaqService"/></property>
+		<property name="onlineServiceDirectoryService"><ref bean="onlineServiceDirectoryService"/></property>
+		<property name="viewDefineService"><ref bean="viewDefineService"/></property>
+		<property name="viewService"><ref bean="viewService"/></property>
+	</bean>
+</beans>

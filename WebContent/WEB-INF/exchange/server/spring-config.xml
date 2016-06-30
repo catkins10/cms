@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 数据交换服务器 -->
+	<bean id="exchangeServer" class="com.yuanluesoft.exchange.server.spring.ExchangeServerImpl"  destroy-method="shutdown">
+		<property name="exchangeDataReceivers">
+			<list>
+				<bean class="com.yuanluesoft.exchange.server.receiver.tcp.ExchangeDataReceiverImpl">
+					<property name="listenPort"><value>10086</value></property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

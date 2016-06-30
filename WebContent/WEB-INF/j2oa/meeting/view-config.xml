@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="meetingPlan" form="meeting" title="会议安排" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.meeting.pojo.Meeting</pojo>
+			<filter>READABLE</filter>
+			<orderBy>Meeting.beginTime</orderBy>
+			<where>Meeting.issued='1' and Meeting.endTime>=TIMESTAMP({NOW})</where>
+			<quickFilter>Meeting.subject like '%{KEY}%' or Meeting.content like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="安排会议" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="主题" name="subject"/>
+			<column title="会议开始时间" name="beginTime" width="110" format='yyyy-MM-dd HH:mm' align="center"/>
+			<column title="会议地点" name="address" width="80"/>
+			<column title="经办人" name="handlerName" width="60" displayExcept="portlet"/>
+		</columns>
+	</view>
+	
+	<calendarView name="meetingPlanCalendar" form="meeting" title="会议安排(日历)" pageRows="20" openFeatures="mode=fullscreen">
+		<!-- calendarAction execute="PageUtils.newrecord('j2oa/meeting','meeting','mode=fullscreen', 'beginTime={CALENDAR_TIMESTAMP}')"/-->
+		<data>
+			<pojo>com.yuanluesoft.j2oa.meeting.pojo.Meeting</pojo>
+			<filter>READABLE</filter>
+			<where>Meeting.issued='1'</where>
+			<orderBy>Meeting.beginTime</orderBy>
+			<quickFilter>Meeting.subject like '%{KEY}%' or Meeting.content like '%{KEY}%'</quickFilter>
+			<calendarColumn>Meeting.beginTime</calendarColumn>
+		</data>
+		<actions>
+			<action title="安排会议" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="主题" name="subject"/>
+		</columns>
+	</calendarView>
+	
+	<view name="todoMeeting" form="meeting" title="待发布会议" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.meeting.pojo.Meeting</pojo>
+			<filter>TODO</filter>
+			<orderBy>Meeting.beginTime</orderBy>
+			<quickFilter>Meeting.subject like '%{KEY}%' or Meeting.content like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="安排会议" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="主题" name="subject"/>
+			<column title="会议开始时间" name="beginTime" width="110" format='yyyy-MM-dd HH:mm' align="center"/>
+			<column title="发送人" name="workflowSender" align="center" width="70" displayExcept="condition"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="105" displayExcept="condition"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="allMeeting" form="meeting" title="所有会议" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.meeting.pojo.Meeting</pojo>
+			<filter>READABLE</filter>
+			<orderBy>Meeting.beginTime DESC</orderBy>
+			<quickFilter>Meeting.subject like '%{KEY}%' or Meeting.content like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="安排会议" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="主题" name="subject"/>
+			<column title="会议开始时间" name="beginTime" width="110" format='yyyy-MM-dd HH:mm' align="center"/>
+			<column title="会议地点" name="address" width="80"/>
+			<column title="经办人" name="handlerName" width="60"/>
+		</columns>
+	</view>
+	
+	<view name="meetingRoom" hide="noPrivilege(manageUnit_meetingRoomManage)" form="meetingRoom" title="会议室情况" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="meetingRoomViewService">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.meeting.pojo.MeetingRoom</pojo>
+			<orderBy>MeetingRoom.name</orderBy>
+			<quickFilter>Meeting.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="登记会议室" execute="PageUtils.newrecord('j2oa/meeting','meetingRoom','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="会议室名称" name="name" width="100"/>
+			<column title="座位数" name="seating" width="50" align="center"/>
+			<column title="使用情况" name="meetingsInfo"/>
+		</columns>
+	</view>
+</views>

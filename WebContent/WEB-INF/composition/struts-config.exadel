@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../jeaf/form/result.jsp" SHAPE="32,17,0,0" TARGET="page4"
+  TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../jeaf/form/error.jsp" SHAPE="32,129,0,0"
+  TARGET="page2" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#composition"
+  NAME="action1" PATH="/composition" SHAPE="32,353,0,0"
+  TITLE="composition" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/composition.jsp" TARGET="page0" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#delete" NAME="action4"
+  PATH="/delete" SHAPE="448,465,0,0" TITLE="composition" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#save" NAME="action5"
+  PATH="/save" SHAPE="656,481,0,0" TITLE="composition" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/../jeaf/form/result.jsp" SHAPE="448,17,0,0" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/composition.jsp" SHAPE="448,353,0,0" SUBTYPE="jsp"
+  TITLE="composition.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#run" NAME="action0"
+  PATH="/run" SHAPE="32,465,0,0" TITLE="composition" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/../jeaf/form/error.jsp" SHAPE="240,241,0,0" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#attachmentEditor"
+  NAME="action2" PATH="/attachmentEditor" SHAPE="32,465,0,0"
+  TITLE="composition" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../jeaf/attachment/attachment.jsp"
+   TARGET="page1" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../jeaf/attachment/attachment.jsp" SHAPE="240,482,0,0"
+  SUBTYPE="jsp" TITLE="attachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectAttachment"
+  NAME="action3" PATH="/selectAttachment" SHAPE="32,577,0,0"
+  TITLE="composition" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../jeaf/attachment/selectAttachment.jsp"
+   TARGET="page3" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/../jeaf/attachment/selectAttachment.jsp" SHAPE="240,594,0,0"
+  SUBTYPE="jsp" TITLE="selectAttachment.jsp" TYPE="page"/>
+</PROCESS>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--邮科GPS:手机定位类型-->
+	<class name="com.yuanluesoft.jeaf.gps.provider.fsti.pojo.GpsFstiMobileType" table="gps_fsti_mobile_type">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mobile"/> <!--手机号码,varchar(20)-->
+		<property name="type"/> <!--定位类型,BTS/基站定位, GPS/卫星定位, AGPS|辅助卫星定位, GPSONE/CDMA辅助卫星定位,varchar(20)-->
+	</class>
+</hibernate-mapping>

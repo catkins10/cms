@@ -1,0 +1,264 @@
+* {
+	outline-style: none;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	font-size: 14px;
+}
+html {
+	margin: 0px;
+	height: 100%;
+	overflow: hidden;
+}
+body {
+	margin: 0px;
+	height: 100%;
+	overflow: hidden;
+	background-color: #000000;
+}
+input[type="button"] {
+	-webkit-appearance: none;
+}
+input[type="radio"], input[type="checkbox"] {
+	-webkit-appearance: none;
+	display: inline-block;
+	background-repeat: no-repeat;
+	background-image: url(../images/radio_and_checkbox.png);
+	height: 18px;
+	width: 16px;
+	vertical-align:	middle;
+	border-style: none;
+	background-color: transparent;
+}
+input[type="radio"] {
+	background-position: 0px 0px;
+}
+input[type="radio"]:checked {
+	background-position: 0px -16px;
+}
+input[type="checkbox"] {
+	background-position: 0px -32px;
+}
+input[type="checkbox"]:checked {
+	background-position: 0px -48px;
+}
+input[type="text"] {
+	border: #a0a0a0 1px solid;
+	line-height: 18px;
+	width: 100%;
+	color: #000000;
+	padding: 2px 2px 2px 2px !important;
+	background-color: #FFFFE0;
+	height: 22px;
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+}
+.logoBar {
+	background-color: rgb(59, 89, 152);
+	height: 37px;
+	border-bottom: 1px solid #1d4088;
+}
+.showColumnBarButton {
+	float: left;
+	height: 36px;
+	width: 36px;
+	background-image: url(../images/column_dropdown.png);
+	background-repeat: no-repeat;
+	background-position: 0px 20px;
+}
+.columnName, .channelName {
+	float: left;
+	height: 36px;
+	line-height: 36px;
+	display: inline-block;
+	font-family: 黑体;
+	color: #ffffff;
+	font-size: 18px;
+	font-weight: bold;
+}
+.columnName *, .channelName * {
+	font-size: 18px;
+}
+.channelName {
+	padding-right: 6px;
+}
+.columnBar {
+	filter: alpha(opacity=95);  opacity: 0.95; -moz-opacity: 0.95;
+	background-color: #f8f8f8;
+	width: 100%;
+	height: 36px;
+	position: relative;
+	margin-top: -100%;
+}
+.column {
+	font-size: 14px;
+	border-bottom: 1px solid rgb(59, 89, 152);
+	padding: 0px 6px 0px 6px;
+	height: 33px;
+	line-height: 26px;
+	font-weight: bold;
+	color: #555555;
+}
+.currentColumn {
+	line-height: 33px;
+	border-bottom: 3px solid rgb(59, 89, 152);
+	color: #000000;
+}
+.moreColumnsOnLeft, .moreColumnsOnRight {
+	border-bottom: 1px solid rgb(59, 89, 152);
+	width: 15px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	height: 33px;
+}
+.moreColumnsOnLeft {
+	background-image: url(../images/btn_prev.png);
+}
+.moreColumnsOnRight {
+	background-image: url(../images/btn_next.png);
+}
+.channelBar {
+	background-color: rgb(58, 58, 58);
+	width: 50px;
+	border-right: 1px solid rgb(73, 73, 73);
+}
+.channel {
+	width: 100%;
+	color: #ffffff;
+	height: 50px;
+   	line-height: 50px;
+	text-align: center;
+}
+.channel_current {
+	background-color: rgb(73, 73, 73);
+}
+.preferenceBar {
+	background-image: url(../images/preference_bar_bg.png);
+	background-repeat: repeat-y;
+	background-position: left left;
+}
+.columnContainer {
+	background-color: #ffffff;
+	height: 100%;
+	width: 100%;
+}
+.clientToast {
+	display: inline-block;
+	border: 1px solid #222222;
+	background-color: #333333;
+	color: #ffffff;
+	padding: 8px 8px 8px 8px;
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	filter: Alpha(Opacity=90);
+	-moz-opacity: 0.9;
+	opacity: 0.9;
+}
+.clientDialog {
+	position: absolute;
+	width: 308px; 
+	top: 200px;
+	left: 200px;
+	border: 1px solid #f8f8f8;
+	background-color: #ffffff;
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	color: #000000;
+}
+.clientDialog .clientDialogTitle {
+	height: 30px;
+	line-height: 30px;
+	padding-left: 6px;
+	border-bottom: 1px solid #33afdd;
+}
+.clientDialog .clientDialogBody {
+ 	line-height: 18px;
+}
+.clientDialog .clientDialogOkButton, .clientDialog .clientDialogCancelButton, .clientDialog .clientDialogOtherButton {
+	 height: 32px;
+	 line-height: 32px;
+	 text-align: center;
+	 border-top: 1px solid #f0f0f0;
+}
+.clientDialog .clientDialogOkButtonFocus, .clientDialog .clientDialogCancelButtonFocus, .clientDialog .clientDialogOtherButtonFocus {
+	background-color: #f0f0f0;
+}
+.clientDialog .clientDialogCancelButton, .clientDialog .clientDialogOtherButton {
+ 	border-right: 1px solid #f0f0f0;
+}
+/*以下是系统预置样式*/
+.clientDialog .listItem { /*列表条目*/
+	border-bottom: 1px solid #f0f0f0;
+	height: 30px;
+	padding: 3px 5px 3px 5px;
+}
+.clientDialog .hourPicker, .clientDialog .minutePicker, .clientDialog .secondPicker { /*时间选择器*/
+	width: 50px;
+	height: 105px;
+	margin-top: 16px;
+	margin-bottom: 16px;
+	background-image: url(../images/number_picker.png);
+	background-repeat: repeat-x;
+	border: 1px solid #f0f0f0;
+}
+.clientDialog .timeSeparator { /*时间间隔(冒号)*/
+	font-size: 24px;
+	padding-left: 6px;
+	padding-right: 6px;
+}
+.clientDialog .yearPicker, .clientDialog .monthPicker { /*年月选择器*/
+	width: 108px;
+	height: 30px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	border: 1px solid #f0f0f0;
+}
+.clientDialog .yearPicker {  /*日期选择器:年选择器*/
+	width: 168px;
+	margin-right: 6px;
+}
+.clientDialog .pickerItem { /*日期选择器:选择器条目*/
+	font-size: 12px;
+	line-height: 30px;
+	text-align: center;
+	width: 36px;
+	color: #cccccc;
+}
+.clientDialog .selectedPickerItem { /*选中的选择器条目*/
+	font-size: 14px;
+	color: #000000;
+}
+.clientDialog .yearPicker .pickerItem { /*日期选择器:年选择器条目*/
+	width: 56px;
+}
+.clientDialog .hourPicker .pickerItem, .clientDialog .minutePicker .pickerItem, .clientDialog .secondPicker .pickerItem { /*时间选择器条目*/
+	font-size: 24px;
+	width: 50px;
+	height: 35px;
+	line-height: 35px;
+}
+.clientDialog .hourPicker .selectedPickerItem, .clientDialog .minutePicker .selectedPickerItem, .clientDialog .secondPicker .selectedPickerItem { /*选中的时间选择器条目*/
+	font-size: 24px;
+}
+.clientDialog .dayTable { /*日期选择器:“天”表格*/
+	border: 1px solid #f0f0f0;
+	border-collapse: collapse;
+}
+.clientDialog .week { /*日期选择器:星期*/
+	height: 30px;
+	font-size: 14px;
+	background-color: #f8f8f8;
+}
+.clientDialog .day { /*日期选择器:天*/
+	height: 30px;
+}
+.clientDialog .selectedDay { /*日期选择器:选中的天*/
+	background-color: #33afdd;
+}
+.clientDialog .today { /*日期选择器:今天*/
+	color: red !important;
+}
+.clientDialog .weekend { /*日期选择器:周末*/
+	color: orange; 
+}

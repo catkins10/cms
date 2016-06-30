@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminLearnFile" type="com.yuanluesoft.enterprise.exam.learn.forms.admin.LearnFile"/>
+  <form-bean name="adminLearnMission" type="com.yuanluesoft.enterprise.exam.learn.forms.admin.LearnMission"/>
+  <form-bean name="adminLearnMissionReport" type="com.yuanluesoft.enterprise.exam.learn.forms.admin.LearnMissionReport"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminLearnFile" path="/admin/learnFile" scope="request"
+   type="com.yuanluesoft.enterprise.exam.learn.actions.learnfile.admin.Load" validate="false">
+   <forward name="load" path="/admin/learnFile.jsp"/>
+  </action>
+  <action input="/admin/learnFile.jsp" name="adminLearnFile"
+   path="/admin/saveLearnFile" scope="request"
+   type="com.yuanluesoft.enterprise.exam.learn.actions.learnfile.admin.Save" validate="false"/>
+  <action input="/admin/learnFile.jsp" name="adminLearnFile"
+   path="/admin/deleteLearnFile" scope="request"
+   type="com.yuanluesoft.enterprise.exam.learn.actions.learnfile.admin.Delete" validate="false"/>
+  <action name="adminLearnFile" path="/admin/selectAttachment"
+   scope="request"
+   type="com.yuanluesoft.enterprise.exam.learn.actions.learnfile.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="adminLearnMission" path="/admin/learnMission"
+   scope="request"
+   type="com.yuanluesoft.enterprise.exam.learn.actions.learnmission.admin.Load" validate="false">
+   <forward name="load" path="/admin/learnMission.jsp"/>
+  </action>
+  <action input="/admin/learnMission.jsp" name="adminLearnMission"
+   path="/admin/saveLearnMission" scope="request"
+   type="com.yuanluesoft.enterprise.exam.learn.actions.learnmission.admin.Save" validate="false"/>
+  <action input="/admin/learnMission.jsp" name="adminLearnMission"
+   path="/admin/deleteLearnMission" scope="request"
+   type="com.yuanluesoft.enterprise.exam.learn.actions.learnmission.admin.Delete" validate="false"/>
+  <action path="/learnMission" scope="request"
+   type="com.yuanluesoft.enterprise.exam.learn.actions.learnmission.Load" validate="false"/>
+  <action path="/updateLearnTime" scope="request"
+   type="com.yuanluesoft.enterprise.exam.learn.actions.learnmission.UpdateLearnTime" validate="false"/>
+  <action name="adminLearnMissionReport"
+   path="/admin/learnMissionReport" scope="request"
+   type="com.yuanluesoft.enterprise.exam.learn.actions.learnmissionreport.admin.Load" validate="false">
+   <forward name="load" path="/admin/learnMissionReport.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

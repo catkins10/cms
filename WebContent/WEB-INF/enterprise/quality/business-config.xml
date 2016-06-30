@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="文档审批" class="com.yuanluesoft.enterprise.quality.pojo.QualityDocument" businessServiceName="qualityDocumentService">
+		<field name="projectId" title="项目ID" type="number" inputMode="hidden"/>
+		<field name="projectName" title="项目名称" length="300" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.openSelectDialog('enterprise/project', 'projectSelect', 600, 400, false, 'projectId{id},projectName{name},scale{scale},projectLeader{projectLeader},scale{overview}', '', '', '', ',', true);</parameter>
+		</field>
+		<field name="stage" title="勘察、设计阶段" length="60" type="string" inputMode="text"/>
+		<field name="scale" title="项目规模" length="60" type="string" inputMode="text"/>
+		<field name="projectLeader" title="项目负责人" length="200" type="string" inputMode="text"/>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="创建人ID" type="string" inputMode="none"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+		<field name="bodies" title="正文" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.quality.pojo.QualityDocumentBody</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment"/>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审核,批示</parameter>
+			<parameter name="class">com.yuanluesoft.enterprise.quality.pojo.QualityDocumentOpinion</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="文档正文" class="com.yuanluesoft.enterprise.quality.pojo.QualityDocumentBody">
+		<field name="documentId" title="文档审批ID" type="number" inputMode="hidden"/>
+		<field name="templateId" title="文档模板ID" type="number" inputMode="hidden"/>
+		<field name="name" title="名称" length="30" type="string" inputMode="readonly"/>
+		<field name="body" title="文档正文" required="true" type="string" inputMode="htmleditor">
+			<parameter name="height">500</parameter>
+		</field>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="创建人ID" type="number" inputMode="none"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="文档模板" class="com.yuanluesoft.enterprise.quality.pojo.QualityDocumentTemplate" businessServiceName="templateService"/>
+</businessObjects>

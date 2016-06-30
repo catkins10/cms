@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	
+
+	<pages>
+		<page name="signUpSubmitted" title="报名信息提交完成">
+			<subPage title="报名信息" name="submitted" type="template"/>
+		</page>
+		<page name="signUp" title="提交报名信息" url="/onlinesignup/signUp.shtml">
+			<subPage title="提交报名信息" name="signup" type="template"/>
+		</page>
+		<page name="onlineSignupQueryResult" title="报名查询" searchPage="true" searchResults="onlineSignupQueryResults" 
+		url="/cms/sitemanage/applicationSearch.shtml?applicationName=onlinesignup&amp;pageName=onlineSignupQueryResult"/>
+		
+		
+	</pages>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="onlineSignupQueryResults" processor="onlineSignupQueryProcessor"/>  <!--查询 -->
+	</pageElements>
+</application>

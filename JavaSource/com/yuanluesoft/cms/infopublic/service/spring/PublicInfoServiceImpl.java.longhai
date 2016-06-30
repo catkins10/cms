@@ -1,0 +1,1722 @@
+package com.yuanluesoft.cms.infopublic.service.spring;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+
+import org.apache.commons.beanutils.PropertyUtils;
+import org.w3c.dom.html.HTMLDocument;
+
+import com.lowagie.text.Document;
+import com.lowagie.text.Font;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.PdfAnnotation;
+import com.lowagie.text.pdf.PdfFileSpecification;
+import com.lowagie.text.pdf.PdfWriter;
+import com.yuanluesoft.cms.capture.model.RecordPage;
+import com.yuanluesoft.cms.capture.pojo.CmsCaptureTask;
+import com.yuanluesoft.cms.infopublic.model.Info;
+import com.yuanluesoft.cms.infopublic.model.InfoCategoryStat;
+import com.yuanluesoft.cms.infopublic.model.InfoStat;
+import com.yuanluesoft.cms.infopublic.model.MonitoringReport;
+import com.yuanluesoft.cms.infopublic.pojo.PublicDirectory;
+import com.yuanluesoft.cms.infopublic.pojo.PublicDirectoryPopedom;
+import com.yuanluesoft.cms.infopublic.pojo.PublicInfo;
+import com.yuanluesoft.cms.infopublic.pojo.PublicInfoPrivilege;
+import com.yuanluesoft.cms.infopublic.pojo.PublicInfoSequence;
+import com.yuanluesoft.cms.infopublic.pojo.PublicInfoSubjection;
+import com.yuanluesoft.cms.infopublic.pojo.PublicMainDirectory;
+import com.yuanluesoft.cms.infopublic.pojo.PublicUnitCode;
+import com.yuanluesoft.cms.infopublic.service.PublicDirectoryService;
+import com.yuanluesoft.cms.infopublic.service.PublicInfoService;
+import com.yuanluesoft.cms.pagebuilder.PageService;
+import com.yuanluesoft.cms.siteresource.service.SiteResourceService;
+import com.yuanluesoft.cms.smssubscription.model.SmsContentDefinition;
+import com.yuanluesoft.cms.smssubscription.service.SmsSubscriptionService;
+import com.yuanluesoft.exchange.client.ExchangeClient;
+import com.yuanluesoft.jeaf.attachmentmanage.model.Attachment;
+import com.yuanluesoft.jeaf.attachmentmanage.service.AttachmentService;
+import com.yuanluesoft.jeaf.attachmentmanage.service.TemporaryFileManageService;
+import com.yuanluesoft.jeaf.base.model.Element;
+import com.yuanluesoft.jeaf.business.service.spring.BusinessServiceImpl;
+import com.yuanluesoft.jeaf.business.util.FieldUtils;
+import com.yuanluesoft.jeaf.database.Record;
+import com.yuanluesoft.jeaf.exception.PrivilegeException;
+import com.yuanluesoft.jeaf.exception.ServiceException;
+import com.yuanluesoft.jeaf.filetransfer.services.FileDownloadService;
+import com.yuanluesoft.jeaf.htmlparser.HTMLParser;
+import com.yuanluesoft.jeaf.htmlparser.model.HTMLBodyInfo;
+import com.yuanluesoft.jeaf.htmlparser.util.HTMLBodyUtils;
+import com.yuanluesoft.jeaf.logger.Logger;
+import com.yuanluesoft.jeaf.security.service.RecordControlService;
+import com.yuanluesoft.jeaf.sessionmanage.exception.SessionException;
+import com.yuanluesoft.jeaf.sessionmanage.model.SessionInfo;
+import com.yuanluesoft.jeaf.sessionmanage.service.SessionService;
+import com.yuanluesoft.jeaf.system.services.SystemService;
+import com.yuanluesoft.jeaf.usermanage.pojo.Person;
+import com.yuanluesoft.jeaf.usermanage.pojo.Unit;
+import com.yuanluesoft.jeaf.usermanage.service.OrgService;
+import com.yuanluesoft.jeaf.util.DateTimeUtils;
+import com.yuanluesoft.jeaf.util.Environment;
+import com.yuanluesoft.jeaf.util.FileUtils;
+import com.yuanluesoft.jeaf.util.JdbcUtils;
+import com.yuanluesoft.jeaf.util.ListUtils;
+import com.yuanluesoft.jeaf.util.StringUtils;
+import com.yuanluesoft.jeaf.util.UUIDLongGenerator;
+import com.yuanluesoft.jeaf.util.ZipUtils;
+import com.yuanluesoft.jeaf.view.model.View;
+import com.yuanluesoft.jeaf.view.model.ViewPackage;
+import com.yuanluesoft.jeaf.view.service.ViewService;
+import com.yuanluesoft.jeaf.view.util.ViewUtils;
+import com.yuanluesoft.jeaf.workflow.callback.WorkflowParticipantCallback;
+import com.yuanluesoft.jeaf.workflow.pojo.WorkflowData;
+import com.yuanluesoft.jeaf.workflow.service.WorkflowExploitService;
+import com.yuanluesoft.workflow.client.model.instance.ActivityInstance;
+import com.yuanluesoft.workflow.client.model.instance.ProcessInstance;
+import com.yuanluesoft.workflow.client.model.instance.WorkItem;
+import com.yuanluesoft.workflow.client.model.instance.WorkflowInstance;
+import com.yuanluesoft.workflow.client.model.runtime.WorkflowEntry;
+
+public class PublicInfoServiceImpl extends BusinessServiceImpl
+  implements PublicInfoService
+{
+  private HTMLParser htmlParser;
+  private FileDownloadService fileDownloadService;
+  private AttachmentService attachmentService;
+  private PublicDirectoryService publicDirectoryService;
+  private OrgService orgService;
+  private SiteResourceService siteResourceService;
+  private String temporaryDirectory;
+  private SmsSubscriptionService smsSubscriptionService;
+  private SystemService systemService;
+  private TemporaryFileManageService temporaryFileManageService;
+  private ExchangeClient exchangeClient;
+  private PageService pageService;
+  private SessionService sessionService;
+  private WorkflowExploitService workflowExploitService;
+  private RecordControlService recordControlService;
+  private boolean logicalDelete = false;
+
+  public void synchUpdate(Object object, String senderName)
+    throws ServiceException
+  {
+    if ((object instanceof Info)) {
+      Info remoteInfo = (Info)object;
+      if ((remoteInfo.getSubject() == null) || (remoteInfo.getSubject().isEmpty())) {
+        throw new ServiceException("subject is null");
+      }
+      if ((remoteInfo.getBody() == null) || (remoteInfo.getBody().isEmpty())) {
+        throw new ServiceException("body is null");
+      }
+      if (remoteInfo.getDirectoryId() <= 0L) {
+        throw new ServiceException("directory id is null");
+      }
+
+      PublicInfo deletedInfo = deleteInfoBySourceRecordId(remoteInfo.getInfoId());
+
+      PublicInfo info = new PublicInfo();
+      try {
+        PropertyUtils.copyProperties(info, remoteInfo);
+      }
+      catch (Exception e) {
+        Logger.exception(e);
+        throw new ServiceException();
+      }
+      info.setId(UUIDLongGenerator.generateId());
+      info.setCreator(remoteInfo.getCreatorName());
+      info.setOrgName(remoteInfo.getCreatorDepartmentName());
+      info.setUnitName(remoteInfo.getCreatorUnitName());
+      info.setSourceRecordId(remoteInfo.getInfoId());
+      info.setSourceRecordUrl(remoteInfo.getInfoUrl());
+      if (deletedInfo != null) {
+        info.setInfoIndex(deletedInfo.getInfoIndex());
+      }
+
+      this.attachmentService.upload("cms/siteresource", "attachments", info.getId(), remoteInfo.getAttachmentFilePaths());
+      this.attachmentService.upload("cms/siteresource", "images", info.getId(), remoteInfo.getImageFilePaths());
+      this.attachmentService.upload("cms/siteresource", "videos", info.getId(), remoteInfo.getVideoFilePaths());
+
+      info.setBody(HTMLBodyUtils.resetExchangeHtmlBody(remoteInfo.getBody(), remoteInfo.getCharset(), info));
+
+      saveInfo(info, remoteInfo.getDirectoryId(), remoteInfo.isDirectIssue());
+      return;
+    }
+    super.synchUpdate(object, senderName);
+  }
+
+  public void synchDelete(Object object, String senderName)
+    throws ServiceException
+  {
+    if ((object instanceof Info)) {
+      Info info = (Info)object;
+      deleteInfoBySourceRecordId(info.getInfoId());
+      return;
+    }
+    super.synchDelete(object, senderName);
+  }
+
+  public PublicInfo deleteInfoBySourceRecordId(String sourceRecordId)
+    throws ServiceException
+  {
+    if ((sourceRecordId == null) || (sourceRecordId.isEmpty())) {
+      return null;
+    }
+    java.lang.Number publicInfoId = (java.lang.Number)getDatabaseService().findRecordByHql("select PublicInfo.id from PublicInfo PublicInfo where PublicInfo.sourceRecordId='" + JdbcUtils.resetQuot(sourceRecordId) + "' order by PublicInfo.id DESC");
+    if ((publicInfoId != null) && (publicInfoId.longValue() > 0L)) {
+      PublicInfo publicInfo = (PublicInfo)load(PublicInfo.class, publicInfoId.longValue());
+      delete(publicInfo);
+      return publicInfo;
+    }
+    return null;
+  }
+
+  public Record save(Record record)
+    throws ServiceException
+  {
+    if ((record instanceof PublicInfo)) {
+      PublicInfo info = (PublicInfo)record;
+      try {
+        updateAttachmentInfo(info);
+      }
+      catch (Exception e) {
+        Logger.exception(e);
+      }
+      generateIndexIfNecessary(info);
+
+      if ((info.getStatus() == '3') && (info.getSubjections() != null) && (!info.getSubjections().isEmpty())) {
+        this.pageService.rebuildStaticPageForModifiedObject(info, "update");
+      }
+
+      if (info.getStatus() == '3') {
+        this.exchangeClient.synchUpdate(info, null, 2000);
+      }
+    }
+    return super.save(record);
+  }
+
+  public Record update(Record record)
+    throws ServiceException
+  {
+    if ((record instanceof PublicInfo)) {
+      PublicInfo info = (PublicInfo)record;
+      try {
+        updateAttachmentInfo(info);
+      }
+      catch (Exception e) {
+        Logger.exception(e);
+      }
+      generateIndexIfNecessary(info);
+
+      if (info.getStatus() == '3')
+      {
+        if ((info.getSubjections() != null) && (!info.getSubjections().isEmpty())) {
+          this.pageService.rebuildStaticPageForModifiedObject(info, "update");
+        }
+
+        this.exchangeClient.synchUpdate(info, null, 2000);
+      }
+      else if (info.getStatus() == '8') {
+        if ((info.getSubjections() != null) && (!info.getSubjections().isEmpty())) {
+          this.pageService.rebuildStaticPageForModifiedObject(info, "logicalDelete");
+        }
+
+        this.exchangeClient.synchDelete(info, null, 2000);
+      }
+      if (info.getStatus() >= '5')
+      {
+        regenerateIndexIfNecessary(info);
+      }
+    }
+    return super.update(record);
+  }
+
+  public void delete(Record record)
+    throws ServiceException
+  {
+    PublicInfo info = (PublicInfo)record;
+
+    this.siteResourceService.deleteResourceBySourceRecordId("" + info.getId());
+    super.delete(record);
+    if (info.getStatus() == '3') {
+      this.exchangeClient.synchDelete(info, null, 2000);
+      this.pageService.rebuildStaticPageForModifiedObject(info, "delete");
+    }
+
+    regenerateIndexIfNecessary(info);
+  }
+
+  private void regenerateIndexIfNecessary(final PublicInfo info)
+    throws ServiceException
+  {
+    if ((info.getType() != 0) || (info.getInfoIndex() == null) || (info.getInfoIndex().isEmpty())) {
+      return;
+    }
+
+    final PublicMainDirectory mianDirectory = this.publicDirectoryService.getMainDirectory(((PublicInfoSubjection)info.getSubjections().iterator().next()).getDirectoryId());
+    if (mianDirectory.getRecodeEnabled() == 0) {
+      return;
+    }
+    final String infoIndex = info.getInfoIndex();
+    info.setInfoIndex(null);
+    final Timer timer = new Timer();
+    timer.schedule(new TimerTask() {
+		public void run() { try {
+			String[] values = infoIndex.split("-");
+		List lazyLoadProperties = PublicInfoServiceImpl.this.listLazyLoadProperties(PublicInfo.class);
+        DecimalFormat formatter = new DecimalFormat("00000");
+        int sn = Integer.parseInt(values[3]) - 1;
+        for (int i = 0; ; i += 2) {
+          String hql = "from PublicInfo PublicInfo where PublicInfo.id!=" + 
+            info.getId() + 
+            " and PublicInfo.status<'" + '5' + "'" + 
+            " and PublicInfo.infoIndex like '" + values[0] + "-" + (mianDirectory.getSequenceByDirectory() == 1 ? values[1] : "%") + "-" + values[2] + "-%'" + 
+            " and substr(PublicInfo.infoIndex, length(PublicInfo.infoIndex)-4)>'" + formatter.format(sn) + "'" + 
+            " order by substr(PublicInfo.infoIndex, length(PublicInfo.infoIndex)-4)";
+          List infos = PublicInfoServiceImpl.this.getDatabaseService().findRecordsByHql(hql, lazyLoadProperties, 0, 2);
+          for (Iterator iterator = infos == null ? null : infos.iterator(); (iterator != null) && (iterator.hasNext()); ) {
+            PublicInfo otherInfo = (PublicInfo)iterator.next();
+
+            sn++;
+            otherInfo.setInfoIndex(otherInfo.getInfoIndex().substring(0, otherInfo.getInfoIndex().lastIndexOf('-') + 1) + formatter.format(sn));
+            PublicInfoServiceImpl.this.getDatabaseService().updateRecord(otherInfo);
+            PublicInfoServiceImpl.this.pageService.rebuildStaticPageForModifiedObject(otherInfo, "update");
+            PublicInfoServiceImpl.this.exchangeClient.synchUpdate(otherInfo, null, 2000);
+          }
+          if ((infos == null) || (infos.size() < 2))
+          {
+            break;
+          }
+        }
+        String hql = "from PublicInfoSequence PublicInfoSequence where PublicInfoSequence.year=" + 
+          values[2] + 
+          " and PublicInfoSequence.category='" + values[0] + (mianDirectory.getSequenceByDirectory() == 1 ? "-" + values[1] : "") + "'";
+        PublicInfoSequence publicInfoSequence = (PublicInfoSequence)PublicInfoServiceImpl.this.getDatabaseService().findRecordByHql(hql);
+        if (publicInfoSequence != null) {
+          publicInfoSequence.setSequence(sn);
+          PublicInfoServiceImpl.this.getDatabaseService().updateRecord(publicInfoSequence);
+        }
+      } catch (Exception e)
+      {
+        Logger.exception(e);
+      }
+      timer.cancel();
+    }
+		
+		
+	}, 3000); //等待3s
+  }
+
+  private void updateAttachmentInfo(PublicInfo info)
+    throws Exception
+  {
+    HTMLBodyInfo htmlBodyInfo = HTMLBodyUtils.analysisHTMLBody(info, info.getBody(), null);
+    if (htmlBodyInfo.isBodyChanged())
+      info.setBody(htmlBodyInfo.getNewBody());
+  }
+
+  private boolean generateIndexIfNecessary(PublicInfo info)
+    throws ServiceException
+  {
+    try
+    {
+      if ((info.getStatus() == '3') && 
+        ((info.getInfoIndex() == null) || (info.getInfoIndex().trim().isEmpty())) && 
+        (info.getSubjections() != null) && (!info.getSubjections().isEmpty()))
+      {
+        long directoryId = ((PublicInfoSubjection)info.getSubjections().iterator().next()).getDirectoryId();
+        info.setInfoIndex(generateInfoIndex(info, directoryId, info.getInfoIndex()));
+        return true;
+      }
+    }
+    catch (Exception e) {
+      Logger.exception(e);
+    }
+    return false;
+  }
+
+  public PublicInfo getPublicInfo(long id)
+    throws ServiceException
+  {
+    return (PublicInfo)load(PublicInfo.class, id);
+  }
+
+  public void issue(PublicInfo info, SessionInfo sessionInfo)
+    throws ServiceException
+  {
+   
+
+    final long directoryId = ((PublicInfoSubjection)info.getSubjections().iterator().next()).getDirectoryId();
+    info.setInfoIndex(generateInfoIndex(info, directoryId, info.getInfoIndex()));
+    if (info.getIssueTime() == null) {
+      info.setIssueTime(DateTimeUtils.now());
+    }
+    info.setStatus('3');
+    info.setIssuePersonId(sessionInfo == null ? 100L : sessionInfo.getUserId());
+    getDatabaseService().updateRecord(info);
+    addArticle(info);
+
+    this.pageService.rebuildStaticPageForModifiedObject(info, "update");
+
+    this.exchangeClient.synchUpdate(info, null, 2000);
+  }
+
+  public void unissue(PublicInfo info)
+    throws ServiceException
+  {
+    info.setStatus('0');
+    getDatabaseService().updateRecord(info);
+
+    this.siteResourceService.deleteResourceBySourceRecordId("" + info.getId());
+
+    this.exchangeClient.synchDelete(info, null, 2000);
+
+    this.pageService.rebuildStaticPageForModifiedObject(info, "logicalDelete");
+  }
+
+  public void resynchAllInfos(boolean forceDirectorySynchSiteIds)
+    throws ServiceException
+  {
+    String hql = "from PublicInfo PublicInfo";
+    for (int i = 0; ; i += 100) {
+      List infos = getDatabaseService().findRecordsByHql(hql, ListUtils.generateList("subjections,opinions,lazyBody", ","), i, 100);
+      if ((infos == null) || (infos.isEmpty())) {
+        break;
+      }
+      for (Iterator iterator = infos.iterator(); iterator.hasNext(); ) {
+        PublicInfo info = (PublicInfo)iterator.next();
+        try
+        {
+          long directoryId = ((PublicInfoSubjection)info.getSubjections().iterator().next()).getDirectoryId();
+
+          String synchSiteIds = this.publicDirectoryService.getDirectorySynchSiteIds(directoryId, true);
+          if (forceDirectorySynchSiteIds) {
+            info.setIssueSiteIds(synchSiteIds);
+            getDatabaseService().updateRecord(info);
+          }
+          else if ((synchSiteIds != null) && (!"".equals(synchSiteIds))) {
+            boolean changed = false;
+            String[] siteIds = synchSiteIds.split(",");
+
+            String issueIds = info.getIssueSiteIds() == null ? "" : info.getIssueSiteIds();
+            for (int j = 0; j < siteIds.length; j++) {
+              if (issueIds.indexOf(siteIds[j]) == -1) {
+                issueIds = issueIds + (issueIds.equals("") ? "" : ",") + siteIds[j];
+                changed = true;
+              }
+            }
+            if (changed) {
+              info.setIssueSiteIds(issueIds);
+              getDatabaseService().updateRecord(info);
+            }
+          }
+          if (info.getStatus() == '3')
+            addArticle(info);
+        }
+        catch (Exception e)
+        {
+          Logger.exception(e);
+        }
+      }
+    }
+  }
+
+  public void resynchPublicInfos(long directoryId, String oldSynchSiteIds, String newSynchSiteIds)
+    throws ServiceException
+  {
+    List oldIds = ListUtils.generateList(oldSynchSiteIds, ",");
+    List newIds = ListUtils.generateList(newSynchSiteIds, ",");
+    List addedSynchSiteIds = ListUtils.getNotInsideSubList(oldIds, null, newIds, null);
+    List deletedSynchSiteIds = ListUtils.getNotInsideSubList(newIds, null, oldIds, null);
+    if ((addedSynchSiteIds == null) && (deletedSynchSiteIds == null)) {
+      return;
+    }
+
+    String hql = "select distinct PublicInfo from PublicInfo PublicInfo";
+    if (directoryId > 0L) {
+      hql = hql + " left join PublicInfo.subjections PublicInfoSubjection, PublicDirectorySubjection PublicDirectorySubjection where PublicInfoSubjection.directoryId=PublicDirectorySubjection.directoryId and PublicDirectorySubjection.parentDirectoryId=" + 
+        directoryId;
+    }
+    for (int i = 0; ; i += 100) {
+      List infos = getDatabaseService().findRecordsByHql(hql, ListUtils.generateList("subjections,opinions,lazyBody", ","), i, 100);
+      if ((infos == null) || (infos.isEmpty())) {
+        break;
+      }
+      for (Iterator iterator = infos.iterator(); iterator.hasNext(); ) {
+        PublicInfo info = (PublicInfo)iterator.next();
+        try {
+          resynchPublicInfo(info, ListUtils.join(addedSynchSiteIds, ","), ListUtils.join(deletedSynchSiteIds, ","));
+        }
+        catch (Exception e) {
+          Logger.exception(e);
+        }
+      }
+    }
+  }
+
+  public void resynchPublicInfo(PublicInfo info, String addedSynchSiteIds, String deletedSynchSiteIds)
+    throws ServiceException
+  {
+    if (info.getIssueSite() != '1') {
+      return;
+    }
+    List addedSiteIds = ListUtils.generateList(addedSynchSiteIds, ",");
+    List deletedSiteIds = ListUtils.generateList(deletedSynchSiteIds, ",");
+    boolean changed = false;
+    List issueSiteIds = null;
+    if (info.getStatus() == '3') {
+      info.setIssueSiteIds(ListUtils.join(this.siteResourceService.listColumnIdsBySourceRecordId("" + info.getId()), ","));
+    }
+    issueSiteIds = ListUtils.generateList(info.getIssueSiteIds(), ",");
+    if (issueSiteIds == null) {
+      issueSiteIds = new ArrayList();
+    }
+
+    List toAdd = ListUtils.getNotInsideSubList(issueSiteIds, null, addedSiteIds, null);
+    if (toAdd != null) {
+      changed = true;
+      issueSiteIds.addAll(toAdd);
+    }
+
+    if ((deletedSiteIds != null) && (!deletedSiteIds.isEmpty()) && (!issueSiteIds.isEmpty()))
+    {
+      for (Iterator iteratorId = deletedSiteIds.iterator(); iteratorId.hasNext(); ) {
+        String deletedId = (String)iteratorId.next();
+        int index;
+        if ((index = issueSiteIds.indexOf(deletedId)) != -1) {
+          issueSiteIds.remove(index);
+          changed = true;
+        }
+      }
+    }
+    if (changed) {
+      info.setIssueSiteIds(ListUtils.join(issueSiteIds, ","));
+      getDatabaseService().updateRecord(info);
+      if (info.getStatus() == '3')
+        addArticle(info);
+    }
+  }
+
+  public void resynchPublicInfo(PublicInfo info)
+    throws ServiceException
+  {
+    getDatabaseService().updateRecord(info);
+    addArticle(info);
+  }
+
+  public List listInfosByIds(String ids, boolean loadBody)
+    throws ServiceException
+  {
+    if ((ids == null) || (ids.equals(""))) {
+      return null;
+    }
+    String hql = "from PublicInfo PublicInfo where PublicInfo.id in (" + 
+      ids + ")" + 
+      " order by PublicInfo.generateDate";
+    return getDatabaseService().findRecordsByHql(hql, loadBody ? ListUtils.generateList("lazyBody", ",") : null);
+  }
+
+  public void exportPublicInfo(long rootDirectoryId, String ids, HttpServletRequest request, HttpServletResponse response)
+    throws ServiceException
+  {
+    if ((ids == null) || (ids.equals(""))) {
+      return;
+    }
+    String path = FileUtils.createDirectory(getTemporaryDirectory() + "信息公开");
+    FileUtils.copyFile(Environment.getWebinfPath() + "cms/infopublic/template/信息公开目录.dbf", path + "/信息公开目录.dbf", true, true);
+    String url = "jdbc:odbc:DRIVER={Microsoft dBase Driver (*.dbf)};DBQ=" + new File(path).getAbsolutePath() + ";";
+    Connection connection = null;
+    Statement statement = null;
+    try {
+      Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+      connection = DriverManager.getConnection(url, "", "");
+      statement = connection.createStatement();
+    }
+    catch (Exception e) {
+      Logger.exception(e);
+      try {
+        statement.close();
+      }
+      catch (Exception localException1)
+      {
+      }
+      try {
+        connection.close();
+      }
+      catch (Exception localException2)
+      {
+      }
+      throw new ServiceException();
+    }
+
+    String hql = "from PublicInfo PublicInfo where PublicInfo.id in (" + 
+      ids + ")" + 
+      " order by PublicInfo.generateDate";
+    for (int i = 0; ; i += 100) {
+      List infos = getDatabaseService().findRecordsByHql(hql, ListUtils.generateList("lazyBody,subjections", ","), i, 100);
+      if ((infos == null) || (infos.isEmpty())) {
+        break;
+      }
+      for (Iterator iterator = infos.iterator(); iterator.hasNext(); ) {
+        PublicInfo info = (PublicInfo)iterator.next();
+        try
+        {
+          String sql = "insert into 信息公开目录 values('" + 
+            info.getInfoIndex() + "'," + 
+            "'" + info.getSubject().replaceAll("[\\x0d\\x0a\\x27\\x22\\x3a]", "") + "'," + 
+            "'" + info.getInfoFrom() + "'," + 
+            "'" + info.getSummarize().replaceAll("[\\x0d\\x0a\\x27\\x22\\x3a]", "") + "'," + 
+            "'" + DateTimeUtils.formatDate(info.getGenerateDate(), null) + "'," + 
+            "'" + info.getMark() + "'," + 
+            "'" + this.publicDirectoryService.getDirectoryFullName(((PublicInfoSubjection)info.getSubjections().iterator().next()).getDirectoryId(), "/", "main") + "')";
+          statement.executeUpdate(sql);
+        }
+        catch (Exception e) {
+          Logger.exception(e);
+        }
+
+        writeInfoToPdfFile(info, path + "/" + info.getInfoIndex() + "_" + info.getSubject().replaceAll("[\\x0d\\x0a\\x27\\x22\\x3a\\x09]", "") + ".pdf");
+      }
+
+    }
+
+    try
+    {
+      statement.close();
+    }
+    catch (Exception localException3)
+    {
+    }
+    try {
+      connection.close();
+    }
+    catch (Exception localException4)
+    {
+    }
+    String zipFileName = getTemporaryDirectory() + "/信息公开.zip";
+    try {
+      ZipUtils.zip(zipFileName, path);
+      this.fileDownloadService.httpDownload(request, response, zipFileName, null, true, null);
+    }
+    catch (Exception e) {
+      Logger.exception(e);
+    }
+    finally {
+      FileUtils.deleteFile(zipFileName);
+      FileUtils.deleteDirectory(path);
+    }
+  }
+
+  private void writeInfoToPdfFile(PublicInfo info, String filePath)
+    throws ServiceException
+  {
+    try
+    {
+      BaseFont bf = BaseFont.createFont(Environment.getWebinfPath() + "fonts/simsun.ttc,0", "Identity-H", false);
+      Font font = new Font(bf, 12.0F, 0);
+
+      Document document = new Document();
+      PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(filePath));
+
+      document.open();
+
+      Paragraph paragraph = new Paragraph(info.getSubject(), new Font(bf, 18.0F, 1));
+      paragraph.setAlignment(1);
+      paragraph.setLeading(30.0F);
+      document.add(paragraph);
+
+      paragraph = new Paragraph("索引号:" + info.getInfoIndex() + "  发布机构:" + info.getInfoFrom(), font);
+      paragraph.setAlignment(1);
+      paragraph.setLeading(20.0F);
+      document.add(paragraph);
+
+      paragraph = new Paragraph("生成日期:" + DateTimeUtils.formatDate(info.getGenerateDate(), null) + "   备注/文号:" + info.getMark(), font);
+      paragraph.setAlignment(1);
+      paragraph.setLeading(20.0F);
+      document.add(paragraph);
+
+      HTMLDocument bodyDocument = this.htmlParser.parseHTMLString(info.getBody(), "utf-8");
+      paragraph = new Paragraph(this.htmlParser.getTextContent(bodyDocument), font);
+      paragraph.setAlignment(0);
+      paragraph.setLeading(20.0F);
+      document.add(paragraph);
+
+      List attachments = this.attachmentService.list("cms/infopublic", "attachments", info.getId(), 0, null);
+      if ((attachments != null) && (!attachments.isEmpty())) {
+        int left = 10;
+        for (Iterator iteratorAttachment = attachments.iterator(); iteratorAttachment.hasNext(); ) {
+          Attachment attachment = (Attachment)iteratorAttachment.next();
+          PdfFileSpecification pf = PdfFileSpecification.fileEmbedded(pdfWriter, attachment.getFilePath(), attachment.getName(), null);
+          PdfAnnotation annotation = PdfAnnotation.createFileAttachment(pdfWriter, new Rectangle(left, 10.0F, left + 10, 20.0F), attachment.getName(), pf);
+          pdfWriter.addAnnotation(annotation);
+          left += 30;
+        }
+      }
+      document.close();
+    }
+    catch (Exception e) {
+      Logger.exception(e);
+    }
+  }
+
+  private void addArticle(PublicInfo info)
+    throws ServiceException
+  {
+    if ((info.getIssueSite() != '1') || (info.getStatus() != '3')) {
+      return;
+    }
+
+    String issueSiteIds = info.getIssueSiteIds();
+    if ((issueSiteIds == null) || ("".equals(issueSiteIds))) {
+      this.siteResourceService.deleteResourceBySourceRecordId("" + info.getId());
+      return;
+    }
+    this.siteResourceService.addResource(issueSiteIds, 
+      0, 
+      info.getSubject(), 
+      info.getMark(), 
+      info.getInfoFrom(), 
+      null, 
+      null, 
+      info.getMark(), 
+      '3', 
+      null, 
+      info.getCreated(), 
+      info.getIssueTime(), 
+      true, 
+      info.getBody(), 
+      "" + info.getId(), 
+      info.getClass().getName(), 
+      Environment.getContextPath() + "/cms/infopublic/admin/publicInfo.shtml?id=" + info.getId(), 
+      info.getCreatorId(), 
+      info.getCreator(), 
+      info.getOrgId(), 
+      info.getOrgName(), 
+      info.getUnitId(), 
+      info.getUnitName());
+    }
+
+  public void updateInfoSubjections(PublicInfo info, boolean isNew, String subjectionDirectoryIds)
+    throws ServiceException
+  {
+    if ((subjectionDirectoryIds == null) || (subjectionDirectoryIds.equals(""))) {
+      return;
+    }
+    String[] ids = subjectionDirectoryIds.split(",");
+    long firstDirectoryId = Long.parseLong(ids[0]);
+    boolean firstDirectoryChanged = true;
+    String oldSubjectionDirectoryIds = null;
+    if (!isNew) {
+      oldSubjectionDirectoryIds = ListUtils.join(info.getSubjections(), "directoryId", ",");
+
+      if (subjectionDirectoryIds.equals(oldSubjectionDirectoryIds)) {
+        return;
+      }
+      firstDirectoryChanged = (info.getSubjections() == null) || (info.getSubjections().isEmpty()) || (firstDirectoryId != ((PublicInfoSubjection)info.getSubjections().iterator().next()).getDirectoryId());
+
+      for (Iterator iterator = info.getSubjections() == null ? null : info.getSubjections().iterator(); (iterator != null) && (iterator.hasNext()); ) {
+        PublicInfoSubjection subjection = (PublicInfoSubjection)iterator.next();
+        getDatabaseService().deleteRecord(subjection);
+
+        if ((info.getStatus() != '3') || 
+          (("," + subjectionDirectoryIds + ",").indexOf("," + subjection.getDirectoryId() + ",") != -1)) continue;
+        this.pageService.rebuildStaticPageForModifiedObject(subjection, "delete");
+      }
+
+    }
+
+    info.setSubjections(new HashSet());
+    for (int i = 0; i < ids.length; i++) {
+      if (ListUtils.findObjectByProperty(info.getSubjections(), "directoryId", new Long(ids[i])) != null) {
+        continue;
+      }
+      PublicInfoSubjection subjection = new PublicInfoSubjection();
+      subjection.setId(UUIDLongGenerator.generateId());
+      subjection.setInfoId(info.getId());
+      subjection.setDirectoryId(Long.parseLong(ids[i]));
+      getDatabaseService().saveRecord(subjection);
+      info.getSubjections().add(subjection);
+
+      if ((firstDirectoryChanged) || (info.getStatus() != '3') || 
+        (("," + oldSubjectionDirectoryIds + ",").indexOf("," + subjection.getDirectoryId() + ",") != -1)) continue;
+      this.pageService.rebuildStaticPageForModifiedObject(subjection, "update");
+    }
+
+    generateIndexIfNecessary(info);
+    if (firstDirectoryChanged) {
+      try {
+        info.setDirectoryName(this.publicDirectoryService.getDirectory(firstDirectoryId).getDirectoryName());
+        update(info);
+      }
+      catch (Exception localException)
+      {
+      }
+    }
+    else
+    {
+      this.exchangeClient.synchUpdate(info, null, 2000);
+    }
+  }
+
+  private synchronized String generateInfoIndex(PublicInfo info, long directoryId, String currentIndex)
+    throws ServiceException
+  {
+    if (info.getType() != 0) {
+      return null;
+    }
+    List parentDirectories = this.publicDirectoryService.listParentDirectories(directoryId, "main");
+    parentDirectories.add(this.publicDirectoryService.getDirectory(directoryId));
+    String prefix = null;
+    String unitCode = null;
+    PublicMainDirectory mainDirectory = null;
+    for (int i = parentDirectories.size() - 1; i >= 0; i--) {
+      PublicDirectory publicDirectory = (PublicDirectory)parentDirectories.get(i);
+      if (publicDirectory.getDirectoryType().equals("main")) {
+        if ((((PublicMainDirectory)publicDirectory).getManualCodeEnabled() == '1') && (info.getInfoIndex() != null) && (!info.getInfoIndex().trim().equals("")))
+        {
+          return info.getInfoIndex();
+        }
+
+        mainDirectory = (PublicMainDirectory)this.publicDirectoryService.getDirectory(publicDirectory.getId());
+        PublicUnitCode publicUnitCode = (PublicUnitCode)ListUtils.findObjectByProperty(mainDirectory.getUnitCodes(), "unitId", new Long(info.getInfoFromUnitId()));
+        if (publicUnitCode != null) {
+          unitCode = publicUnitCode.getCode();
+        }
+        else
+        {
+          String parentOrgIds = this.orgService.listParentOrgIds(info.getInfoFromUnitId());
+          if ((parentOrgIds != null) && (!parentOrgIds.isEmpty())) {
+            String[] ids = parentOrgIds.split(",");
+            for (int j = 0; j < ids.length; j++) {
+              publicUnitCode = (PublicUnitCode)ListUtils.findObjectByProperty(mainDirectory.getUnitCodes(), "unitId", new Long(ids[j]));
+              if (publicUnitCode != null) {
+                unitCode = publicUnitCode.getCode();
+                break;
+              }
+            }
+          }
+        }
+        prefix = unitCode + "-";
+        String directoryCode = null;
+        for (i++; i < parentDirectories.size(); i++) {
+          publicDirectory = (PublicDirectory)parentDirectories.get(i);
+          directoryCode = (directoryCode == null ? "" : directoryCode) + publicDirectory.getCode();
+        }
+        if (directoryCode == null) {
+          directoryCode = "0000";
+        }
+        else if (directoryCode.length() < 4) {
+          directoryCode = directoryCode + "0000".substring(0, 4 - directoryCode.length());
+        }
+        else {
+          directoryCode = directoryCode.substring(directoryCode.length() - 4);
+        }
+        prefix = prefix + directoryCode;
+        break;
+      }
+    }
+    int year = DateTimeUtils.getYear(info.getIssueTime() == null ? DateTimeUtils.now() : info.getIssueTime());
+    if ((currentIndex != null) && (!currentIndex.equals("")))
+    {
+      if (currentIndex.startsWith(prefix + "-" + year)) {
+        return currentIndex;
+      }
+    }
+    String hql = "from PublicInfoSequence PublicInfoSequence where PublicInfoSequence.category='" + 
+      JdbcUtils.resetQuot(mainDirectory.getSequenceByDirectory() == 1 ? prefix : unitCode) + "'" + 
+      " and PublicInfoSequence.year=" + year;
+    PublicInfoSequence sequence = (PublicInfoSequence)getDatabaseService().findRecordByHql(hql);
+    int sn = 1;
+    if (sequence == null) {
+      sequence = new PublicInfoSequence();
+      sequence.setId(UUIDLongGenerator.generateId());
+      sequence.setYear(year);
+      sequence.setCategory(mainDirectory.getSequenceByDirectory() == 1 ? prefix : unitCode);
+      sequence.setSequence(sn);
+      getDatabaseService().saveRecord(sequence);
+    }
+    else {
+      if (year == sequence.getYear()) {
+        sn = sequence.getSequence() + 1;
+      }
+      sequence.setSequence(sn);
+      getDatabaseService().updateRecord(sequence);
+    }
+    DecimalFormat formatter = new DecimalFormat("00000");
+    return prefix + "-" + year + "-" + formatter.format(sn);
+  }
+
+  public List stat(Date beginDate, Date endDate, long directoryId)
+    throws ServiceException
+  {
+    List stats = new ArrayList();
+    String childDirectoryIds = this.publicDirectoryService.getChildDirectoryIds("" + directoryId, "category,info");
+    InfoStat stat = new InfoStat();
+    stats.add(stat);
+    stat.setName("公开信息数");
+    int total = infoTotal(childDirectoryIds, beginDate, endDate, null);
+    stat.setCount(total);
+    stat.setPercent(-1.0D);
+    if (total == 0) {
+      return stats;
+    }
+
+    List directories = this.publicDirectoryService.listChildDirectories(directoryId, "category,info", null, null, null, 0, 0);
+    if (directories == null) {
+      return stats;
+    }
+    for (Iterator iterator = directories.iterator(); iterator.hasNext(); ) {
+      PublicDirectory directory = (PublicDirectory)iterator.next();
+      stat = new InfoStat();
+      stats.add(stat);
+      stat.setName(directory.getDirectoryName());
+      stat.setCount(infoTotal("" + directory.getId(), beginDate, endDate, null));
+      stat.setPercent((stat.getCount() + 0.0F) / total);
+    }
+    return stats;
+  }
+
+  public List statByCategory(Date beginDate, Date endDate, long directoryId)
+    throws ServiceException
+  {
+    List stats = new ArrayList();
+    Date seasonBegin = DateTimeUtils.set(endDate == null ? DateTimeUtils.date() : endDate, 5, 1);
+    int month = DateTimeUtils.getMonth(seasonBegin);
+    seasonBegin = DateTimeUtils.set(seasonBegin, 2, month - month % 3);
+    Date seasonEnd = DateTimeUtils.add(DateTimeUtils.add(seasonBegin, 2, 3), 5, -1);
+    Date previousSeasonBegin = DateTimeUtils.add(seasonBegin, 2, -3);
+    Date previousSeasonEnd = DateTimeUtils.add(seasonBegin, 5, -1);
+    String childDirectoryIds = this.publicDirectoryService.getChildDirectoryIds("" + directoryId, "category,info");
+    InfoCategoryStat stat = new InfoCategoryStat();
+    stats.add(stat);
+    stat.setName("全部电子化的主动公开信息数");
+    int total = infoTotal(childDirectoryIds, beginDate, endDate, null);
+    stat.setYearTotal(total);
+    if (total == 0) {
+      return null;
+    }
+    stat.setCurrentSeasonTotal(infoTotal(childDirectoryIds, seasonBegin, seasonEnd, null));
+    stat.setPreviousSeasonTotal(infoTotal(childDirectoryIds, previousSeasonBegin, previousSeasonEnd, null));
+
+    boolean categorySupport = false;
+    List categories = FieldUtils.listSelectItems(FieldUtils.getRecordField(PublicInfo.class.getName(), "category", null), null, null);
+    for (Iterator iterator = categories.iterator(); iterator.hasNext(); ) {
+      String[] values = (String[])iterator.next();
+      stat = new InfoCategoryStat();
+      stats.add(stat);
+      stat.setName(values[1]);
+      total = infoTotal(childDirectoryIds, beginDate, endDate, values[1]);
+      stat.setYearTotal(total);
+      if (total > 0) {
+        stat.setCurrentSeasonTotal(infoTotal(childDirectoryIds, seasonBegin, seasonEnd, values[1]));
+        stat.setPreviousSeasonTotal(infoTotal(childDirectoryIds, previousSeasonBegin, previousSeasonEnd, values[1]));
+        categorySupport = true;
+      }
+    }
+    return categorySupport ? stats : null;
+  }
+
+  private int infoTotal(String parentDirectoryIds, Date beginDate, Date endDate, String category)
+    throws ServiceException
+  {
+    String hql = "select count(PublicInfo.id) from PublicInfo PublicInfo left join PublicInfo.subjections PublicInfoSubjection, PublicDirectorySubjection PublicDirectorySubjection where PublicInfo.status='3'" + (
+      beginDate == null ? "" : new StringBuffer(" and PublicInfo.issueTime>=DATE(").append(DateTimeUtils.formatDate(beginDate, null)).append(")").toString()) + (
+      endDate == null ? "" : new StringBuffer(" and PublicInfo.issueTime<DATE(").append(DateTimeUtils.formatDate(DateTimeUtils.add(endDate, 5, 1), null)).append(")").toString()) + 
+      " and PublicInfoSubjection.directoryId=PublicDirectorySubjection.directoryId" + 
+      " and PublicDirectorySubjection.parentDirectoryId in (" + parentDirectoryIds + ")" + (
+      category != null ? " and PublicInfo.category='" + JdbcUtils.resetQuot(category) + "'" : "");
+    java.lang.Number count = (java.lang.Number)getDatabaseService().findRecordByHql(hql);
+    return count == null ? 0 : count.intValue();
+  }
+
+  public List listSmsContentDefinitions()
+    throws ServiceException
+  {
+    List contentDefinitions = new ArrayList();
+    contentDefinitions.add(new SmsContentDefinition("信息公开", null, "news", null));
+    return contentDefinitions;
+  }
+
+  public String getSmsReplyContent(String contentName, Map fieldValueMap, String message, String senderNumber, long siteId)
+    throws ServiceException
+  {
+    return null;
+  }
+
+  public String getContentDescription(String contentName, String subscribeParameter, long siteId)
+    throws ServiceException
+  {
+    String directoryId = StringUtils.getPropertyValue(subscribeParameter, "directoryId");
+    if ((directoryId == null) || (directoryId.isEmpty())) {
+      return contentName;
+    }
+
+    String directryName = this.publicDirectoryService.getDirectoryFullName(Long.parseLong(directoryId), "/", "main");
+    return contentName + "(" + directryName + ")";
+  }
+
+  public int getInfosCount(String directoryIds, boolean issuedOnly)
+    throws ServiceException
+  {
+    directoryIds = this.publicDirectoryService.getChildDirectoryIds(directoryIds, "category,info");
+    if ((directoryIds == null) || (directoryIds.isEmpty())) {
+      return 0;
+    }
+    String hql = "select count(distinct PublicInfo.id) from PublicInfo PublicInfo left join PublicInfo.subjections PublicInfoSubjection, PublicDirectorySubjection PublicDirectorySubjection where PublicInfoSubjection.directoryId=PublicDirectorySubjection.directoryId and PublicDirectorySubjection.parentDirectoryId in (" + 
+      directoryIds + ")" + (
+      issuedOnly ? " and  PublicInfo.status='3'" : "");
+    Object count = getDatabaseService().findRecordByHql(hql);
+    return count == null ? 0 : ((java.lang.Number)count).intValue();
+  }
+
+  public List listInfos(String directoryIds, boolean issuedOnly, boolean containsChildDirectory, boolean sortByGenerateDate, int offset, int max)
+    throws ServiceException
+  {
+    if (!containsChildDirectory) {
+      String hql = "select distinct PublicInfo from PublicInfo PublicInfo left join PublicInfo.subjections PublicInfoSubjection where PublicInfoSubjection.directoryId in (" + 
+        JdbcUtils.resetQuot(directoryIds) + ")" + (
+        issuedOnly ? " and  PublicInfo.status='3'" : "") + 
+        " order by " + (sortByGenerateDate ? "PublicInfo.generateDate" : "PublicInfo.subject");
+      return getDatabaseService().findRecordsByHql(hql, ListUtils.generateList("subjections,lazyBody", ","), offset, max);
+    }
+    directoryIds = this.publicDirectoryService.getChildDirectoryIds(directoryIds, "category,info");
+    if ((directoryIds == null) || (directoryIds.isEmpty())) {
+      return null;
+    }
+    String hql = "select distinct PublicInfo from PublicInfo PublicInfo left join PublicInfo.subjections PublicInfoSubjection, PublicDirectorySubjection PublicDirectorySubjection where PublicInfoSubjection.directoryId=PublicDirectorySubjection.directoryId and PublicDirectorySubjection.parentDirectoryId in (" + 
+      directoryIds + ")" + (
+      issuedOnly ? " and  PublicInfo.status='3'" : "") + 
+      " order by " + (sortByGenerateDate ? "PublicInfo.generateDate" : "PublicInfo.subject");
+    return getDatabaseService().findRecordsByHql(hql, ListUtils.generateList("subjections,lazyBody", ","), offset, max);
+  }
+
+  public void writeInfoReport(Date beginDate, Date endDate, HttpServletRequest request, HttpServletResponse response)
+    throws ServiceException
+  {
+    String temporaryDirectory = this.temporaryFileManageService.createTemporaryDirectory(null);
+
+    long mainSiteId = ((java.lang.Number)getDatabaseService().findRecordByHql("select WebDirectory.id from WebDirectory WebDirectory where WebDirectory.directoryType='site' and WebDirectory.directoryName like '%县政府%'")).longValue();
+
+    WritableWorkbook wwb = null;
+    Workbook rw = null;
+    try
+    {
+      rw = Workbook.getWorkbook(new File(Environment.getWebinfPath() + "cms/infopublic/template/光泽网站栏目保障考评表(乡镇).xls"));
+
+      wwb = Workbook.createWorkbook(new File(temporaryDirectory + "光泽网站栏目保障考评表(乡镇).xls"), rw);
+      WritableSheet ws = wwb.getSheet(0);
+      for (int row = 5; row < 200; row += 2) {
+        String unitName = ws.getCell(0, row).getContents();
+        if ((unitName == null) || (unitName.equals("")))
+          break;
+        try
+        {
+          writeGemeindeInfoReport(unitName, mainSiteId, beginDate, endDate, ws, row);
+        }
+        catch (Exception e) {
+          Logger.exception(e);
+        }
+      }
+      wwb.write();
+    }
+    catch (Exception e) {
+      Logger.exception(e);
+      throw new ServiceException();
+    }
+    finally
+    {
+      try {
+        wwb.close();
+      }
+      catch (Exception localException1)
+      {
+      }
+
+      rw.close();
+    }
+
+    List units = getDatabaseService().findRecordsByHql("from Unit Unit");
+    for (Iterator iterator = units.iterator(); iterator.hasNext(); ) {
+      Unit unit = (Unit)iterator.next();
+      try
+      {
+        rw = Workbook.getWorkbook(new File(Environment.getWebinfPath() + "cms/infopublic/template/光泽部门网站保障考评.xls"));
+
+        wwb = Workbook.createWorkbook(new File(temporaryDirectory + unit.getDirectoryName() + ".xls"), rw);
+        WritableSheet ws = wwb.getSheet(0);
+
+        writeUnitReport(unit, mainSiteId, beginDate, endDate, ws);
+        wwb.write();
+      }
+      catch (Exception e) {
+        Logger.exception(e);
+        throw new ServiceException();
+      }
+      finally
+      {
+        try {
+          wwb.close();
+        }
+        catch (Exception localException3)
+        {
+        }
+
+        rw.close();
+      }
+
+    }
+
+    String zipFileName = this.temporaryFileManageService.createTemporaryDirectory(null) + "光泽网站栏目保障考评表.zip";
+    try {
+      ZipUtils.zip(zipFileName, temporaryDirectory);
+      this.fileDownloadService.httpDownload(request, response, zipFileName, null, true, null);
+    }
+    catch (Exception e) {
+      Logger.exception(e);
+      throw new ServiceException(e.getMessage());
+    }
+  }
+
+  private void writeGemeindeInfoReport(String unitName, long mainSiteId, Date beginDate, Date endDate, WritableSheet ws, int row)
+    throws Exception
+  {
+    
+    long unitDirectoryId = ((java.lang.Number)getDatabaseService().findRecordByHql("select PublicDirectory.id from PublicDirectory PublicDirectory where PublicDirectory.directoryType='main' and PublicDirectory.directoryName like '%" + JdbcUtils.resetQuot(unitName) + "%'")).longValue();
+
+    long unitId = ((java.lang.Number)getDatabaseService().findRecordByHql("select Org.id from Org Org where Org.directoryType='unit' and Org.directoryName like '%" + JdbcUtils.resetQuot(unitName) + "%'")).longValue();
+    boolean unitInfo = true;
+    for (int col = 2; col < 200; col++)
+    {
+      if ("合计".equals(ws.getCell(col, 1).getContents())) {
+        break;
+      }
+      String value = ws.getCell(col, 2).getContents();
+      if ((value != null) && (value.indexOf("县政府") != -1)) {
+        unitInfo = false;
+      }
+      value = ws.getCell(col, 4).getContents();
+      if ((value == null) || (value.equals(""))) {
+        value = ws.getCell(col, 3).getContents();
+      }
+
+      String[] values = value.split("\\x28");
+      String directoryName = values[0];
+      values = values[1].split("分，每条");
+      double totalScore = Double.parseDouble(values[0]);
+      double score = Double.parseDouble(values[1].substring(0, values[1].indexOf("分")));
+
+      java.lang.Number count = null;
+      if (unitInfo)
+      {
+        String hql = "select PublicDirectory.id from PublicDirectory PublicDirectory, PublicDirectorySubjection PublicDirectorySubjection where PublicDirectorySubjection.directoryId=PublicDirectory.id and PublicDirectorySubjection.parentDirectoryId=" + (
+          unitInfo ? unitDirectoryId : mainSiteId) + 
+          " and PublicDirectorySubjection.directoryId!=" + (unitInfo ? unitDirectoryId : mainSiteId) + 
+          " and PublicDirectory.directoryName='" + JdbcUtils.resetQuot(directoryName) + "'";
+        java.lang.Number directoryId = (java.lang.Number)getDatabaseService().findRecordByHql(hql);
+        if (directoryId != null)
+        {
+          hql = "select count(PublicInfo.id) from PublicInfo PublicInfo, PublicInfoSubjection PublicInfoSubjection, PublicDirectorySubjection PublicDirectorySubjection where PublicInfoSubjection.infoId=PublicInfo.id and PublicInfoSubjection.directoryId=PublicDirectorySubjection.directoryId and PublicDirectorySubjection.parentDirectoryId=" + 
+            directoryId + (
+            unitInfo ? "" : new StringBuffer(" and PublicInfo.unitId=").append(unitId).toString()) + (
+            beginDate == null ? "" : new StringBuffer(" and PublicInfo.generateDate>=DATE(").append(DateTimeUtils.formatDate(beginDate, null)).append(")").toString()) + (
+            endDate == null ? "" : new StringBuffer(" and PublicInfo.generateDate<=DATE(").append(DateTimeUtils.formatDate(endDate, null)).append(")").toString());
+          count = (java.lang.Number)getDatabaseService().findRecordByHql(hql);
+        }
+      }
+      else
+      {
+        String hql = "select WebDirectory.id from WebDirectory WebDirectory, WebDirectorySubjection WebDirectorySubjection where WebDirectorySubjection.directoryId=WebDirectory.id and WebDirectorySubjection.parentDirectoryId=" + (
+          unitInfo ? unitDirectoryId : mainSiteId) + 
+          " and WebDirectorySubjection.directoryId!=" + (unitInfo ? unitDirectoryId : mainSiteId) + 
+          " and WebDirectory.directoryName='" + JdbcUtils.resetQuot(directoryName) + "'";
+        java.lang.Number directoryId = (java.lang.Number)getDatabaseService().findRecordByHql(hql);
+        if (directoryId != null)
+        {
+          hql = "select count(SiteResource.id) from SiteResource SiteResource, SiteResourceSubjection SiteResourceSubjection, WebDirectorySubjection WebDirectorySubjection where SiteResourceSubjection.resourceId=SiteResource.id and SiteResourceSubjection.siteId=WebDirectorySubjection.directoryId and WebDirectorySubjection.parentDirectoryId=" + 
+            directoryId + (
+            unitInfo ? "" : new StringBuffer(" and SiteResource.unitId=").append(unitId).toString()) + (
+            beginDate == null ? "" : new StringBuffer(" and SiteResource.issueTime>=DATE(").append(DateTimeUtils.formatDate(beginDate, null)).append(")").toString()) + (
+            endDate == null ? "" : new StringBuffer(" and SiteResource.issueTime<=DATE(").append(DateTimeUtils.formatDate(endDate, null)).append(")").toString());
+          count = (java.lang.Number)getDatabaseService().findRecordByHql(hql);
+        }
+      }
+
+      jxl.write.Number labelNumber = new jxl.write.Number(col, row, count == null ? 0 : count.intValue(), ws.getCell(col, row).getCellFormat());
+      ws.addCell(labelNumber);
+
+      labelNumber = new jxl.write.Number(col, row + 1, count == null ? 0.0D : Math.min(score * count.intValue(), totalScore), ws.getCell(col, row + 1).getCellFormat());
+      ws.addCell(labelNumber);
+    }
+  }
+
+  private void writeUnitReport(Unit unit, long mainSiteId, Date beginDate, Date endDate, WritableSheet ws)
+    throws Exception
+  {
+    Label label = new Label(0, 0, unit.getDirectoryName(), ws.getCell(0, 0).getCellFormat());
+    ws.addCell(label);
+
+    java.lang.Number unitDirectoryId = (java.lang.Number)getDatabaseService().findRecordByHql("select PublicDirectory.id from PublicDirectory PublicDirectory where PublicDirectory.directoryType='main' and PublicDirectory.directoryName like '%" + JdbcUtils.resetQuot(unit.getDirectoryName()) + "%'");
+    int rowIndex = 3;
+    if (unitDirectoryId != null)
+    {
+      rowIndex = writeUnitInfoReport(beginDate, endDate, ws, unitDirectoryId.longValue(), null, 3);
+      ws.removeRow(2);
+      rowIndex--;
+    }
+
+    for (; rowIndex < 2000; rowIndex++) {
+      String columnName = ws.getCell(0, rowIndex).getContents();
+      if ("公众留言".equals(columnName))
+      {
+        break;
+      }
+      String hql = "select WebDirectory.id from WebDirectory WebDirectory, WebDirectorySubjection WebDirectorySubjection where WebDirectorySubjection.directoryId=WebDirectory.id and WebDirectorySubjection.parentDirectoryId=" + 
+        mainSiteId + 
+        " and WebDirectory.directoryName='" + JdbcUtils.resetQuot(columnName) + "'";
+      java.lang.Number directoryId = (java.lang.Number)getDatabaseService().findRecordByHql(hql);
+      java.lang.Number count = null;
+      if (directoryId != null)
+      {
+        hql = "select count(SiteResource.id) from SiteResource SiteResource, SiteResourceSubjection SiteResourceSubjection where SiteResourceSubjection.resourceId=SiteResource.id and (SiteResourceSubjection.siteId=" + 
+          directoryId + 
+          " or SiteResourceSubjection.siteId in (" + 
+          "   select WebDirectorySubjection.directoryId" + 
+          "    from WebDirectorySubjection WebDirectorySubjection" + 
+          "    where WebDirectorySubjection.parentDirectoryId=" + directoryId + "))" + 
+          " and SiteResource.unitId=" + unit.getId() + (
+          beginDate == null ? "" : new StringBuffer(" and SiteResource.issueTime>=DATE(").append(DateTimeUtils.formatDate(beginDate, null)).append(")").toString()) + (
+          endDate == null ? "" : new StringBuffer(" and SiteResource.issueTime<=DATE(").append(DateTimeUtils.formatDate(endDate, null)).append(")").toString());
+        count = (java.lang.Number)getDatabaseService().findRecordByHql(hql);
+      }
+
+      jxl.write.Number labelNumber = new jxl.write.Number(1, rowIndex, count == null ? 0 : count.intValue(), ws.getCell(1, rowIndex).getCellFormat());
+      ws.addCell(labelNumber);
+    }
+  }
+
+  private int writeUnitInfoReport(Date beginDate, Date endDate, WritableSheet ws, long parentInfoDirectoryId, String parentInfoDirectoryName, int rowIndex)
+    throws Exception
+  {
+    List childDirectories = getDatabaseService().findRecordsByHql("from PublicDirectory PublicDirectory where PublicDirectory.parentDirectoryId=" + parentInfoDirectoryId + " order by PublicDirectory.priority DESC, PublicDirectory.directoryName");
+    if ((childDirectories == null) || (childDirectories.isEmpty())) {
+      return rowIndex;
+    }
+    for (Iterator iterator = childDirectories.iterator(); iterator.hasNext(); ) {
+      PublicDirectory publicDirectory = (PublicDirectory)iterator.next();
+
+      String hql = "select count(PublicInfo.id) from PublicInfo PublicInfo, PublicInfoSubjection PublicInfoSubjection where PublicInfoSubjection.infoId=PublicInfo.id and PublicInfoSubjection.directoryId=" + 
+        publicDirectory.getId() + (
+        beginDate == null ? "" : new StringBuffer(" and PublicInfo.generateDate>=DATE(").append(DateTimeUtils.formatDate(beginDate, null)).append(")").toString()) + (
+        endDate == null ? "" : new StringBuffer(" and PublicInfo.generateDate<=DATE(").append(DateTimeUtils.formatDate(endDate, null)).append(")").toString());
+      java.lang.Number count = (java.lang.Number)getDatabaseService().findRecordByHql(hql);
+
+      ws.insertRow(rowIndex);
+
+      String infoDirectoryName = (parentInfoDirectoryName == null ? "" : new StringBuffer(String.valueOf(parentInfoDirectoryName)).append("/").toString()) + publicDirectory.getDirectoryName();
+      Label label = new Label(0, rowIndex, infoDirectoryName, ws.getCell(0, 2).getCellFormat());
+      ws.addCell(label);
+      jxl.write.Number labelNumber = new jxl.write.Number(1, rowIndex, count == null ? 0 : count.intValue(), ws.getCell(1, 2).getCellFormat());
+      ws.addCell(labelNumber);
+      rowIndex++;
+
+      rowIndex = writeUnitInfoReport(beginDate, endDate, ws, publicDirectory.getId(), infoDirectoryName, rowIndex);
+    }
+    return rowIndex;
+  }
+
+  public void processCapturedRecord(CmsCaptureTask captureTask, RecordPage recordPage)
+    throws ServiceException
+  {
+    long directoryId = StringUtils.getPropertyLongValue(captureTask.getExtendedParameters(), "directoryId", 0L);
+    boolean issue = "true".equals(StringUtils.getPropertyValue(captureTask.getExtendedParameters(), "issue"));
+    PublicInfo info = (PublicInfo)recordPage.getRecord();
+    info.setSourceRecordUrl(recordPage.getUrl());
+    info.setIssueSite('1');
+    saveInfo(info, directoryId, issue);
+  }
+
+  private void saveInfo(PublicInfo info, final long directoryId, boolean issue)
+    throws ServiceException
+  {
+    if (directoryId <= 0L) {
+      return;
+    }
+    if ((info.getSubject() == null) || (info.getSubject().isEmpty())) {
+      throw new ServiceException("subject is null");
+    }
+    if ((info.getBody() == null) || (info.getBody().isEmpty())) {
+      throw new ServiceException("body is null");
+    }
+    if (info.getCreated() == null) {
+      info.setCreated(DateTimeUtils.now());
+    }
+    info.setStatus('2');
+    SessionInfo sessionInfo = null;
+    if (issue) {
+      info.setIssuePersonId(100L);
+      save(info);
+      updateInfoSubjections(info, true, "" + directoryId);
+
+      PublicInfoPrivilege privilege = new PublicInfoPrivilege();
+      privilege.setId(UUIDLongGenerator.generateId());
+      privilege.setAccessLevel('2');
+      privilege.setRecordId(info.getId());
+      privilege.setVisitorId(0L);
+      getDatabaseService().saveRecord(privilege);
+
+      issue(info, sessionInfo);
+    }
+    else {
+      List editors = this.publicDirectoryService.listDirectoryEditors(directoryId, true, true, 10);
+      Person person = (Person)editors.get(0);
+      try {
+        sessionInfo = this.sessionService.getSessionInfo(person.getLoginName());
+      }
+      catch (SessionException e) {
+        Logger.exception(e);
+        throw new ServiceException(e.getMessage());
+      }
+      info.setIssuePersonId(0L);
+      info.setCreatorId(sessionInfo.getUserId());
+      info.setCreator(sessionInfo.getUserName());
+      info.setOrgId(sessionInfo.getDepartmentId());
+      info.setOrgName(sessionInfo.getDepartmentName());
+      info.setUnitId(sessionInfo.getUnitId());
+      info.setUnitName(sessionInfo.getUnitName());
+
+      long workflowId = this.publicDirectoryService.getApprovalWorkflowId(directoryId);
+      if (workflowId <= 0L) {
+        throw new ServiceException("流程未定义");
+      }
+      WorkflowEntry workflowEntry = this.workflowExploitService.getWorkflowEntry("" + workflowId, null, info, sessionInfo);
+      if (workflowEntry == null) {
+        throw new ServiceException("流程未定义");
+      }
+
+      Element activity = (Element)workflowEntry.getActivityEntries().get(0);
+      WorkflowParticipantCallback participantCallback = new WorkflowParticipantCallback() { 
+        public List listProgrammingParticipants(String programmingParticipantId, String programmingParticipantName, WorkflowData workflowData, SessionInfo sessionInfo) throws ServiceException { return "directoryEditor".equals(programmingParticipantId) ? PublicInfoServiceImpl.this.publicDirectoryService.listDirectoryEditors(directoryId, false, false, 0) : PublicInfoServiceImpl.this.publicDirectoryService.listDirectoryManagers(directoryId, false, false, 0); }
+
+        public List resetParticipants(List participants, boolean anyoneParticipate, WorkflowData workflowData, SessionInfo sessionInfo) throws ServiceException {
+          return participants;
+        }
+        public boolean isMemberOfProgrammingParticipants(String programmingParticipantId, String programmingParticipantName, WorkflowData workflowData, SessionInfo sessionInfo) throws ServiceException {
+          return false;
+        } } ;
+      try {
+        WorkflowInstance workflowInstance = this.workflowExploitService.createWorkflowInstance("" + workflowEntry.getWorkflowId(), "" + activity.getId(), false, info, participantCallback, sessionInfo);
+        info.setWorkflowInstanceId(workflowInstance.getId());
+
+        if (editors.size() > 1) {
+          editors = editors.subList(1, editors.size());
+          ProcessInstance processInstance = (ProcessInstance)workflowInstance.getProcessInstanceList().get(0);
+          WorkItem workItem = (WorkItem)((ActivityInstance)processInstance.getActivityInstanceList().get(0)).getWorkItemList().get(0);
+          this.workflowExploitService.lockWorkflowInstance(workflowInstance.getId(), sessionInfo);
+          this.workflowExploitService.addParticipants(workflowInstance.getId(), workItem.getId(), false, ListUtils.join(editors, "id", ","), ListUtils.join(editors, "name", ","), null, info, sessionInfo);
+          this.workflowExploitService.unlockWorkflowInstance(workflowInstance.getId(), sessionInfo);
+        }
+
+        save(info);
+
+        updateInfoSubjections(info, true, "" + directoryId);
+      }
+      catch (Exception e) {
+        Logger.exception(e);
+        if (info.getWorkflowInstanceId() != null) {
+          this.workflowExploitService.removeWorkflowInstance("" + info.getWorkflowInstanceId(), sessionInfo);
+        }
+        throw new ServiceException(e.getMessage());
+      }
+    }
+  }
+
+  public MonitoringReport writeMonitoringReport(long directoryId, Date beginDate, Date endDate)
+    throws ServiceException
+  {
+    MonitoringReport monitoringReport = new MonitoringReport();
+    String hqlPrefix = "select sum(DayAccessStat.times) from DayAccessStat DayAccessStat";
+
+    String hqlDate = "DayAccessStat.accessDate>=DATE(" + DateTimeUtils.formatDate(beginDate, null) + ")" + 
+      " and DayAccessStat.accessDate<=DATE(" + DateTimeUtils.formatDate(endDate, null) + ")";
+
+    String hql = "select PublicGuide.id from PublicGuide PublicGuide where PublicGuide.directoryId=" + directoryId;
+    java.lang.Number guideId = (java.lang.Number)getDatabaseService().findRecordByHql(hql);
+    if (guideId != null) {
+      hql = hqlPrefix + 
+        " where DayAccessStat.applicationName='cms/infopublic'" + 
+        " and DayAccessStat.pageName='guide'" + 
+        " and DayAccessStat.recordId=" + guideId.longValue() + 
+        " and " + hqlDate;
+      java.lang.Number visits = (java.lang.Number)getDatabaseService().findRecordByHql(hql);
+      monitoringReport.setGuideVisits(visits == null ? 0 : visits.intValue());
+    }
+
+    String directoryIds = this.publicDirectoryService.getChildDirectoryIds("" + directoryId, "category,info");
+    hql = hqlPrefix + 
+      " where DayAccessStat.applicationName='cms/infopublic'" + 
+      " and DayAccessStat.pageName='info'" + 
+      " and DayAccessStat.recordId in (" + 
+      "  select PublicInfoSubjection.infoId" + 
+      "   from PublicInfoSubjection PublicInfoSubjection, PublicDirectorySubjection PublicDirectorySubjection" + 
+      "   where PublicInfoSubjection.directoryId=PublicDirectorySubjection.directoryId" + 
+      "   and PublicDirectorySubjection.parentDirectoryId in (" + directoryIds + ")" + 
+      " )" + 
+      " and " + hqlDate;
+    java.lang.Number visits = (java.lang.Number)getDatabaseService().findRecordByHql(hql);
+    monitoringReport.setPublicDirectoryVisits(visits == null ? 0 : visits.intValue());
+
+    hql = hqlPrefix + 
+      " where DayAccessStat.applicationName='cms/infopublic/request'" + 
+      " and " + hqlDate;
+    visits = (java.lang.Number)getDatabaseService().findRecordByHql(hql);
+    monitoringReport.setPublicRequestVisits(visits == null ? 0 : visits.intValue());
+
+    PublicDirectory articleDirectory = (PublicDirectory)this.publicDirectoryService.getDirectoryByName(directoryId, "信息公开年度报告");
+    if (articleDirectory == null) {
+      monitoringReport.setReportVisits(0);
+    }
+    else {
+      hql = hqlPrefix + 
+        " where DayAccessStat.applicationName='cms/infopublic'" + 
+        " and DayAccessStat.pageName='article'" + 
+        " and DayAccessStat.recordId in (" + 
+        "  select PublicInfoSubjection.infoId from PublicInfoSubjection PublicInfoSubjection where directoryId=" + articleDirectory.getId() + 
+        " )" + 
+        " and " + hqlDate;
+      visits = (java.lang.Number)getDatabaseService().findRecordByHql(hql);
+      monitoringReport.setReportVisits(visits == null ? 0 : visits.intValue());
+    }
+
+    articleDirectory = (PublicDirectory)this.publicDirectoryService.getDirectoryByName(directoryId, "信息公开制度");
+    if (articleDirectory == null) {
+      monitoringReport.setLawsVisits(0);
+    }
+    else {
+      hql = hqlPrefix + 
+        " where DayAccessStat.applicationName='cms/infopublic'" + 
+        " and DayAccessStat.pageName='article'" + 
+        " and DayAccessStat.recordId in (" + 
+        "  select PublicInfoSubjection.infoId from PublicInfoSubjection PublicInfoSubjection where directoryId=" + articleDirectory.getId() + 
+        " )" + 
+        " and " + hqlDate;
+      visits = (java.lang.Number)getDatabaseService().findRecordByHql(hql);
+      monitoringReport.setLawsVisits(visits == null ? 0 : visits.intValue());
+    }
+
+    hql = hqlPrefix + 
+      " where DayAccessStat.applicationName='cms/infopublic/opinion'" + 
+      " and " + hqlDate;
+    visits = (java.lang.Number)getDatabaseService().findRecordByHql(hql);
+    monitoringReport.setPublicOpinionVisits(visits == null ? 0 : visits.intValue());
+    return monitoringReport;
+  }
+
+  public void modifyReaders(View view, String currentCategories, String searchConditions, String selectedIds, String modifyMode, boolean selectedOnly, boolean deleteNotDirectoryVisitor, String readerIds, HttpServletRequest request, SessionInfo sessionInfo)
+    throws ServiceException
+  {
+    String[] userIds = (String[])null;
+    if (!"synchDirectoryVisitor".equals(modifyMode)) {
+      if ((readerIds == null) || (readerIds.isEmpty())) {
+        return;
+      }
+      userIds = readerIds.split(",");
+    }
+    if (selectedOnly) {
+      if ((selectedIds == null) || (selectedIds.isEmpty())) {
+        return;
+      }
+      List ids = ListUtils.generateList(selectedIds, ",");
+      for (int i = 0; i < ids.size(); i += 100) {
+        String hql = "from PublicInfo PublicInfo where PublicInfo.id in (" + 
+          ListUtils.join(ids.subList(i, Math.min(i + 100, ids.size())), ",") + ")";
+        List resources = getDatabaseService().findRecordsByHql(hql, i, 100);
+        doModifyReaders(resources, modifyMode, deleteNotDirectoryVisitor, userIds);
+      }
+      return;
+    }
+    try {
+      view = (View)view.clone();
+    }
+    catch (CloneNotSupportedException localCloneNotSupportedException)
+    {
+    }
+    view.setFilter(null);
+    view.setPageRows(100);
+    ViewService viewService = ViewUtils.getViewService(view);
+
+    ViewPackage viewPackage = new ViewPackage();
+    viewPackage.setView(view);
+    viewPackage.setSearchConditions(searchConditions);
+    viewPackage.setSearchMode(searchConditions != null);
+    viewPackage.setCategories(currentCategories);
+    for (int page = 1; ; page++)
+    {
+      viewPackage.setCurPage(page);
+      try {
+        viewService.retrieveViewPackage(viewPackage, view, request, sessionInfo);
+      }
+      catch (PrivilegeException localPrivilegeException)
+      {
+      }
+
+      if ((viewPackage.getRecords() == null) || (viewPackage.getRecords().isEmpty()))
+      {
+        break;
+      }
+      doModifyReaders(viewPackage.getRecords(), modifyMode, deleteNotDirectoryVisitor, userIds);
+      if (page >= viewPackage.getPageCount())
+        break;
+    }
+  }
+
+  private void doModifyReaders(List resources, String modifyMode, boolean deleteNotDirectoryVisitor, String[] readerIds)
+    throws ServiceException
+  {
+    for (Iterator iterator = resources.iterator(); iterator.hasNext(); ) {
+      PublicInfo info = (PublicInfo)iterator.next();
+      if ("addUser".equals(modifyMode)) {
+        for (int i = 0; i < readerIds.length; i++) {
+          this.recordControlService.appendVisitor(info.getId(), PublicInfo.class.getName(), Long.parseLong(readerIds[i]), '2');
+        }
+      }
+      else if ("deleteUser".equals(modifyMode)) {
+        for (int i = 0; i < readerIds.length; i++)
+          this.recordControlService.removeVisitor(info.getId(), PublicInfo.class.getName(), Long.parseLong(readerIds[i]), '2');
+      }
+      else {
+        if (!"synchDirectoryVisitor".equals(modifyMode))
+          continue;
+        String hql = "select PublicInfoSubjection.directoryId from PublicInfoSubjection PublicInfoSubjection where PublicInfoSubjection.infoId=" + 
+          info.getId() + 
+          " order by PublicInfoSubjection.id";
+        long directoryId = ((java.lang.Number)getDatabaseService().findRecordByHql(hql)).longValue();
+
+        hql = "from PublicDirectoryPopedom PublicDirectoryPopedom where PublicDirectoryPopedom.directoryId=" + directoryId;
+        List popedoms = getDatabaseService().findRecordsByHql(hql);
+        if ((popedoms == null) || (popedoms.isEmpty())) {
+          continue;
+        }
+        if (deleteNotDirectoryVisitor) {
+          this.recordControlService.removeVisitors(info.getId(), info.getClass().getName(), '2');
+        }
+        for (Iterator iteratorPopedom = popedoms.iterator(); iteratorPopedom.hasNext(); ) {
+          PublicDirectoryPopedom popedom = (PublicDirectoryPopedom)iteratorPopedom.next();
+          this.recordControlService.appendVisitor(info.getId(), PublicInfo.class.getName(), popedom.getUserId(), '2');
+          }
+        }
+      }
+    } 
+ 
+  /* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.infopublic.service.PublicInfoService#regenerateIndex(long)
+	 */
+	public void regenerateIndex(long mainDirectoryId) throws ServiceException {
+		//获取单位编码
+  	String hql = "from PublicUnitCode PublicUnitCode" +
+  				 " where PublicUnitCode.directoryId=" + mainDirectoryId;
+  	List unitCodes = getDatabaseService().findRecordsByHql(hql);
+  	for(Iterator iterator = unitCodes.iterator(); iterator.hasNext();) {
+  		PublicUnitCode unitCode = (PublicUnitCode)iterator.next();
+  		//清空编号
+  		hql = "from PublicInfoSequence PublicInfoSequence" +
+  			  " where PublicInfoSequence.category='" + unitCode.getCode() + "'" +
+  			  " or PublicInfoSequence.category like '" + unitCode.getCode() + "-%'";
+  		getDatabaseService().deleteRecordsByHql(hql);
+  	}
+  	//获取信息列表
+  	for(int i=0; ; i+=200) {
+	    	List infos = listInfos("" + mainDirectoryId, true, true, true, i, 200);
+	    	for(Iterator iterator = infos==null ? null : infos.iterator(); iterator!=null && iterator.hasNext();) {
+	    		PublicInfo info = (PublicInfo)iterator.next();
+	    		String infoIndex = info.getInfoIndex();
+	    		info.setInfoIndex(null); //清空索引号
+	    		update(info); //更新记录
+	    		Logger.info("PublicInfoService: regenerate info that subject is " + info.getSubject() + " from index " + infoIndex + " to " + info.getInfoIndex() + ".");
+	    	}
+	    	if(infos==null || infos.size()<200) {
+	    		break;
+	    	}
+  	}
+	}
+  
+  public PublicDirectoryService getPublicDirectoryService() { return this.publicDirectoryService;
+  }
+
+  public void setPublicDirectoryService(PublicDirectoryService publicDirectoryService)
+  {
+    this.publicDirectoryService = publicDirectoryService;
+  }
+
+  public HTMLParser getHtmlParser()
+  {
+    return this.htmlParser;
+  }
+
+  public void setHtmlParser(HTMLParser htmlParser)
+  {
+    this.htmlParser = htmlParser;
+  }
+
+  public String getTemporaryDirectory()
+  {
+    if (this.temporaryDirectory == null) {
+      this.temporaryDirectory = Environment.getWebinfPath();
+    }
+    return this.temporaryDirectory;
+  }
+
+  public void setTemporaryDirectory(String temporaryDirectory)
+  {
+    this.temporaryDirectory = temporaryDirectory;
+  }
+
+  public FileDownloadService getFileDownloadService()
+  {
+    return this.fileDownloadService;
+  }
+
+  public void setFileDownloadService(FileDownloadService fileDownloadService)
+  {
+    this.fileDownloadService = fileDownloadService;
+  }
+
+  public SiteResourceService getSiteResourceService()
+  {
+    return this.siteResourceService;
+  }
+
+  public void setSiteResourceService(SiteResourceService siteResourceService)
+  {
+    this.siteResourceService = siteResourceService;
+  }
+
+  public SmsSubscriptionService getSmsSubscriptionService()
+  {
+    return this.smsSubscriptionService;
+  }
+
+  public void setSmsSubscriptionService(SmsSubscriptionService smsSubscriptionService)
+  {
+    this.smsSubscriptionService = smsSubscriptionService;
+  }
+
+  public SystemService getSystemService()
+  {
+    return this.systemService;
+  }
+
+  public void setSystemService(SystemService systemService)
+  {
+    this.systemService = systemService;
+  }
+
+  public TemporaryFileManageService getTemporaryFileManageService()
+  {
+    return this.temporaryFileManageService;
+  }
+
+  public void setTemporaryFileManageService(TemporaryFileManageService temporaryFileManageService)
+  {
+    this.temporaryFileManageService = temporaryFileManageService;
+  }
+
+  public AttachmentService getAttachmentService()
+  {
+    return this.attachmentService;
+  }
+
+  public void setAttachmentService(AttachmentService attachmentService)
+  {
+    this.attachmentService = attachmentService;
+  }
+
+  public ExchangeClient getExchangeClient()
+  {
+    return this.exchangeClient;
+  }
+
+  public void setExchangeClient(ExchangeClient exchangeClient)
+  {
+    this.exchangeClient = exchangeClient;
+  }
+
+  public PageService getPageService()
+  {
+    return this.pageService;
+  }
+
+  public void setPageService(PageService pageService)
+  {
+    this.pageService = pageService;
+  }
+
+  public SessionService getSessionService()
+  {
+    return this.sessionService;
+  }
+
+  public void setSessionService(SessionService sessionService)
+  {
+    this.sessionService = sessionService;
+  }
+
+  public WorkflowExploitService getWorkflowExploitService()
+  {
+    return this.workflowExploitService;
+  }
+
+  public void setWorkflowExploitService(WorkflowExploitService workflowExploitService)
+  {
+    this.workflowExploitService = workflowExploitService;
+  }
+
+  public boolean isLogicalDelete()
+  {
+    return this.logicalDelete;
+  }
+
+  public void setLogicalDelete(boolean logicalDelete)
+  {
+    this.logicalDelete = logicalDelete;
+  }
+
+  public OrgService getOrgService()
+  {
+    return this.orgService;
+  }
+
+  public void setOrgService(OrgService orgService)
+  {
+    this.orgService = orgService;
+  }
+
+  public RecordControlService getRecordControlService()
+  {
+    return this.recordControlService;
+  }
+
+  public void setRecordControlService(RecordControlService recordControlService)
+  {
+    this.recordControlService = recordControlService;
+  }
+}

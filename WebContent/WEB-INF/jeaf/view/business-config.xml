@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="视图包" class="com.yuanluesoft.jeaf.view.model.ViewPackage">
+		<field name="view" title="视图定义" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.jeaf.view.model.View</parameter>
+		</field>
+		<field name="rowNum" title="记录行号" type="number" inputMode="readonly"/>
+		<field name="sortColumn" title="当前排序列" type="string" inputMode="readonly"/>
+		<field name="descendingSort" title="是否降序排列" type="string" inputMode="readonly"/>
+		<field name="currentViewAction" title="当前执行的视图操作" type="string" inputMode="hidden"/>
+		<field name="recordCount" title="记录总数" type="number" inputMode="readonly"/>
+		<field name="curPage" title="当前页" type="number" inputMode="readonly"/>
+		<field name="pageCount" title="总页数" type="number" inputMode="readonly"/>
+		<field name="page" title="页跳转" type="string" inputMode="hidden"/>
+		<field name="categoryCount" title="分类级数,0:无限级,其他:级数" type="number" inputMode="hidden"/>
+		<field name="categories" title="当前分类" type="string" inputMode="hidden"/>
+		<field name="categoryTitles" title="分类标题,包括所有层次" type="string" inputMode="readonly"/>
+		<field name="categoryTitle" title="当前分类标题" type="string" inputMode="readonly"/>
+		<field name="viewMode" title="视图显示模式" type="string" inputMode="hidden"/>
+		<field name="selectedIds" title="选中的ID列表" type="string" inputMode="hidden"/>
+		<field name="searchConditions" title="搜索条件" type="string" inputMode="hidden"/>
+		<field name="searchConditionsDescribe" title="搜索条件描述" type="string" inputMode="hidden"/>
+		<field name="quickFilter" title="快速过虑关键字" type="string" inputMode="hidden"/>
+		<field name="searchMode" title="是否搜索模式" type="string" inputMode="hidden"/>
+		<field name="viewCustom" title="视图定制信息" type="string" inputMode="hidden"/>
+		<field name="calendarMode" title="日历类型:month/week/day" type="string" inputMode="hidden"/>
+		<field name="beginCalendarDate" title="日历开始时间" type="date" inputMode="date"/>
+		<field name="records" title="记录集" type="components" inputMode="readonly"/>
+		<field name="location" title="当前视图在整个系统中的位置描述,如名师在线/名师资料" type="components" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="视图定制" class="com.yuanluesoft.jeaf.view.viewcustomize.model.ViewCustom">
+		<field title="每页记录数" name="pageRows" type="number" inputMode="text"/>
+		<field title="列" name="columns" type="components"/>
+		<field title="排序列" name="sortColumns" type="components"/>
+	</businessObject>
+</businessObjects>

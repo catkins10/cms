@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="岩土工程勘察" class="com.yuanluesoft.cin.geotechnical.pojo.Geotechnical" businessServiceName="publicService">
+		<field name="projectName" title="项目名称" length="300" required="true" type="string" inputMode="text">
+			<parameter name="rssTitleField">true</parameter>
+		</field>
+		<field name="constructionUnit" title="建设单位" length="300" required="true" type="string" inputMode="text">
+			<parameter name="rssDescriptionField">true</parameter>
+		</field>
+		<field name="constructionPlace" title="建设地点" length="300" required="true" type="string" inputMode="text"/>
+		<field name="surveyUnit" title="勘察单位" length="300" required="true" type="string" inputMode="text"/>
+		<field name="approachTime" title="拟进场时间" required="true" type="date" inputMode="date"/>
+		<field name="attachment" title="附件" type="attachment" inputMode="attachment"/>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">办理</parameter>
+			<parameter name="class">com.yuanluesoft.cin.geotechnical.pojo.GeotechnicalOpinion</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

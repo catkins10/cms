@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="短信接收" class="com.yuanluesoft.jeaf.sms.pojo.SmsReceive">
+		<field name="smsClientName" title="短信客户端名称" length="50" type="string" inputMode="readonly"/>
+		<field name="senderNumber" title="发送人号码" length="30" type="string" inputMode="readonly"/>
+		<field name="receiverNumber" title="短信接收号码" length="30" type="string" inputMode="readonly"/>
+		<field name="message" title="短信内容" length="4000" type="string" inputMode="readonly"/>
+		<field name="receiveTime" title="接收时间" type="timestamp" inputMode="readonly"/>
+		<field name="businessName" title="短信业务名称" length="30" type="string" inputMode="readonly"/>
+		<field name="businessId" title="短信业务ID" length="20" type="number" inputMode="hidden"/>
+		<field name="receiverUnit" title="单位名称" length="200" type="string" inputMode="readonly"/>
+		<field name="receiverUnitId" title="单位ID" length="20" type="number" inputMode="hidden"/>
+	</businessObject>
+	
+	<businessObject title="短信发送" class="com.yuanluesoft.jeaf.sms.pojo.SmsSend">
+		<field name="smsClientName" title="短信客户端名称" length="50" type="string" inputMode="readonly"/>
+		<field name="taskId" title="任务ID" length="20" type="number" inputMode="hidden"/>
+		<field name="sourceRecordId" title="源记录ID" length="20" type="number" inputMode="hidden"/>
+		<field name="senderId" title="发送人ID" length="20" type="number" inputMode="hidden"/>
+		<field name="senderName" title="发送人姓名" length="100" type="string" inputMode="readonly"/>
+		<field name="senderUnitId" title="单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="senderUnit" title="单位名称" length="200" type="string" inputMode="readonly"/>
+		<field name="businessId" title="短信业务ID" length="20" type="number" inputMode="hidden"/>
+		<field name="businessName" title="短信业务名称" length="30" type="string" inputMode="readonly"/>
+		<field name="receiverId" title="接收人ID" length="20" type="number" inputMode="hidden"/>
+		<field name="receiverName" title="接收人姓名" length="100" type="string" inputMode="readonly"/>
+		<field name="receiverNumber" title="接收人号码" length="30" type="string" inputMode="readonly"/>
+		<field name="message" title="短信内容" length="4000" type="string" inputMode="readonly"/>
+		<field name="splitCount" title="分拆条数" length="2" type="number" inputMode="readonly"/>
+		<field name="senderNumber" title="短信发送号码" length="100" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="sendTime" title="发送时间" type="timestamp" inputMode="readonly"/>
+		<field name="messageId" title="短信ID" length="60" type="string" inputMode="readonly"/>
+		<field name="arriveTime" title="短信到达时间" type="timestamp" inputMode="readonly"/>
+		<field name="arriveCheck" title="是否需要到达检查" length="1" type="char" inputMode="readonly"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="短信业务配置" class="com.yuanluesoft.jeaf.sms.pojo.SmsBusiness" businessServiceName="smsService">
+		<field name="name" title="业务名称" length="30" type="string" inputMode="dropdown" required="true">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">smsService</parameter>
+			<parameter name="itemsName">smsBusinessDefine</parameter>
+		</field>
+		<field name="chargeMode" title="默认的计费方式" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">固定费用|1\0按条计费|0</parameter>
+		</field>
+		<field name="price" title="默认的价格" length="8,2" required="true" type="number" inputMode="text"/>
+		<field name="discount" title="默认的折扣" length="4,2" type="number" inputMode="text"/>
+		<field name="postfix" title="附加信息格式" length="50" type="string" inputMode="text">
+			<parameter name="defaultValue">【&lt;单位名称&gt;&lt;业务名称&gt;】</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="单位配置" class="com.yuanluesoft.jeaf.sms.pojo.SmsUnitConfig" businessServiceName="smsService">
+		<field name="unitId" title="单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="unitName" title="单位名称" length="200" required="true" type="string" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectOrg(500, 350, false, 'unitId{id},unitName{fullName}', '', 'unit', '', '', '', false, false, false)</parameter>
+		</field>
+		<field name="enabled" title="是否启用" length="1" type="number" inputMode="radio" required="true">
+			<parameter name="itemsText">启用|1\0禁用|0</parameter>
+		</field>
+		<field name="smsClientName" title="短信客户端名称" length="50" type="string" inputMode="dropdown" required="true">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">smsService</parameter>
+			<parameter name="itemsName">smsClientName</parameter>
+		</field>
+		<field name="lastModified" title="最后修改时间" type="timestamp" inputMode="readonly"/>
+		<field name="lastModifierId" title="最后修改人ID" length="20" type="number" inputMode="hidden"/>
+		<field name="lastModifier" title="最后修改人" length="50" type="string" inputMode="readonly"/>
+		<field name="businessConfigs" title="业务配置" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.sms.pojo.SmsUnitBusiness</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="单位业务配置" class="com.yuanluesoft.jeaf.sms.pojo.SmsUnitBusiness" businessServiceName="smsService">
+		<field name="unitConfigId" title="单位配置ID" length="20" type="number" inputMode="hidden"/>
+		<field name="businessId" title="业务ID" length="20" type="number" inputMode="hidden"/>
+		<field name="businessName" title="业务名称" length="30" type="string" inputMode="text" required="true"/>
+		<field name="chargeMode" title="计费方式" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">固定费用|1\0按条计费|0</parameter>
+		</field>
+		<field name="price" title="价格" length="8,2" required="true" type="number" inputMode="text"/>
+		<field name="discount" title="折扣" length="4,2" type="number" inputMode="text"/>
+		<field name="smsNumber" title="短信号码" length="20" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="enabled" title="是否启用" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">启用|1\0禁用|0</parameter>
+		</field>
+		<field name="postfix" title="附加信息格式" length="50" type="string" inputMode="text"/>
+		<field name="lastModified" title="最后修改时间" type="timestamp" inputMode="readonly"/>
+		<field name="lastModifierId" title="最后修改人ID" length="20" type="number" inputMode="hidden"/>
+		<field name="lastModifier" title="最后修改人" length="50" type="string" inputMode="readonly"/>
+		<field name="transactors" title="办理人" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.sms.pojo.SmsUnitBusinessPrivilege</parameter>
+		</field>
+		<field name="unitConfig" title="单位配置" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.jeaf.sms.pojo.SmsUnitConfig</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

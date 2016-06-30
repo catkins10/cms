@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--质量管理:文档审批-->
+	<class name="com.yuanluesoft.enterprise.quality.pojo.QualityDocument" table="quality_document">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID,bigint unsigned-->
+		<property name="projectName"/> <!--项目名称,varchar(300)-->
+		<property name="stage"/> <!--勘察、设计阶段,varchar(10)-->
+		<property name="scale"/> <!--项目规模,varchar(10)-->
+		<property name="projectLeader"/> <!--项目负责人,varchar(200)-->
+		<property name="creator"/> <!--创建人,varchar(30)-->
+		<property name="creatorId"/> <!--创建人ID,bigint unsigned-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<property name="remark"/> <!--备注-->
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem"/>
+		</set>
+		<set name="opinions" table="quality_document_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.quality.pojo.QualityDocumentOpinion"/>
+		</set>
+		<set name="visitors" table="quality_document_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.quality.pojo.QualityDocumentPrivilege"/>
+		</set>
+		<set name="bodies" table="quality_document_body" lazy="true" inverse="true" cascade="delete" order-by="created">
+			<key column="documentId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.quality.pojo.QualityDocumentBody"/>
+		</set>
+	</class>
+	
+	<!--质量管理:文档正文-->
+	<class name="com.yuanluesoft.enterprise.quality.pojo.QualityDocumentBody" table="quality_document_body">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="documentId"/> <!--文档审批ID,bigint unsigned-->
+		<property name="templateId"/> <!--文档模板ID,bigint unsigned-->
+		<property name="name"/> <!--名称-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--文档正文,mediumtext-->
+		<property name="creator"/> <!--创建人,varchar(30)-->
+		<property name="creatorId"/> <!--创建人ID,bigint unsigned-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+	</class>
+	
+	<!--质量管理:文档审批权限控制-->
+	<class name="com.yuanluesoft.enterprise.quality.pojo.QualityDocumentPrivilege" table="quality_document_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,bigint unsigned-->
+		<property name="accessLevel"/> <!--访问级别,CHAR(1)-->
+		<property name="recordId"/> <!--主记录ID,bigint unsigned-->
+	</class>
+	
+	<!--质量管理:文档审批审核意见-->
+	<class name="com.yuanluesoft.enterprise.quality.pojo.QualityDocumentOpinion" table="quality_document_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID,bigint unsigned-->
+		<property name="workItemId"/> <!--工作项ID,VARCHAR(32)-->
+		<property name="activityName"/> <!--环节名称,VARCHAR(50)-->
+		<property name="activityId"/> <!--环节ID,VARCHAR(32)-->
+		<property name="personId"/> <!--填写人ID,bigint unsigned-->
+		<property name="personName"/> <!--填写人姓名,VARCHAR(32)-->
+		<property name="agentId"/> <!--代理人ID,bigint unsigned-->
+		<property name="agentName"/> <!--代理人姓名,VARCHAR(32)-->
+		<property name="opinion"/> <!--意见内容,VARCHAR(2000)-->
+		<property name="opinionType"/> <!--意见类型,VARCHAR(20)-->
+		<property name="created"/> <!--填写时间,timestamp null-->
+	</class>
+</hibernate-mapping>

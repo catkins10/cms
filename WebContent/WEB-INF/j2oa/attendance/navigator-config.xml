@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<application name="j2oa/attendance" title="考勤">
+	<viewLink local="attendanceRecord" title="打卡记录"/>
+	<viewLink local="todoMend" title="待办补卡"/>
+	<viewLink local="processingMend" title="在办补卡"/>
+	<viewLink local="completedMend" title="办结补卡"/>
+	<viewLink local="allMend" title="所有补卡"/>
+	<viewLink view="timetable" application="jeaf/timetable" title="作息时间"/>
+	<link name="attendanceReport" title="考勤统计" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_attendance)">
+		javascript:DialogUtils.openDialog('{WEBAPPLICATIONURL}/j2oa/attendance/attendanceReport.shtml', 460, 280);
+	</link>
+</application>

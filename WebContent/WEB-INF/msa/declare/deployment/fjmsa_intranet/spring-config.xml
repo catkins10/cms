@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 福建海事业务申报服务 -->
+	<bean id="msaDeclareService" class="com.yuanluesoft.msa.declare.service.spring.MsaDeclareServiceImpl">	
+		<!-- 申报抓取页面的URL -->
+		<!-- property name="declareCaptureUrl"><value>http://61.154.10.90:86/cbxtSbcx.do?method=toQuery&amp;pageCondition.rows=50</value></property-->
+		<!-- 通知公告抓取页面的URL -->
+		<!-- property name="bulletinCaptureUrl"><value>http://61.154.10.90:86/gglList.do?method=queryNotice&amp;pageCondition.rows=50</value></property-->
+		<property name="declareCaptureIntervalMinutes"><value>20</value></property>
+		<property name="bulletinCaptureIntervalMinutes"><value>60</value></property>
+		<property name="captureService"><ref bean="captureService"/></property>
+	</bean>
+	
+	<!-- 电子申报记录列表处理器 -->
+	<bean id="msaDeclaresProcessor" class="com.yuanluesoft.msa.declare.processor.MsaDeclaresProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="msaDeclareService"><ref bean="msaDeclareService"/></property>
+	</bean>
+</beans>

@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,40,145,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="288,40,56,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,96,145,21" TARGET="page1"
+  TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="288,96,56,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listChildSites"
+  NAME="action2" PATH="/listChildSites" SHAPE="32,1960,145,41"
+  TITLE="select" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/tree/listChildNodes.jsp"
+   TARGET="page7" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#site" NAME="action8"
+  PATH="/site" SHAPE="32,672,145,41" TITLE="site" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/site.jsp" TARGET="page8" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page8" PATH="/site.jsp"
+  SHAPE="288,688,56,85" SUBTYPE="jsp" TITLE="site.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveSite" TARGET="action10" TITLE="saveSite" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteSite" TARGET="action11" TITLE="deleteSite" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/createNextSite" TARGET="action7" TITLE="createNextSite" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/siteWorkflowConfig" TARGET="action9"
+   TITLE="siteWorkflowConfig" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveSite" NAME="action10"
+  PATH="/saveSite" SHAPE="480,704,160,25" TITLE="site" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteSite"
+  NAME="action11" PATH="/deleteSite" SHAPE="480,752,160,25" TITLE="site" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#index" NAME="action19"
+  PATH="/index" SHAPE="32,160,145,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectSite"
+  NAME="action6" PATH="/selectSite" SHAPE="32,1568,145,41"
+  TITLE="select" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/dialog/treedialog/treeDialog.jsp"
+   TARGET="page16" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#adjustSitePriority"
+  NAME="action15" PATH="/adjustSitePriority" SHAPE="32,2064,145,41"
+  TITLE="adjustPriority" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0"
+   PATH="/../../jeaf/dialog/adjustpriority/adjustPriority.jsp"
+   TARGET="page10" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page10"
+  PATH="/../../jeaf/dialog/adjustpriority/adjustPriority.jsp"
+  SHAPE="288,2080,50,25" SUBTYPE="jsp" TITLE="adjustPriority.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#applicationIndex"
+  NAME="action16" PATH="/applicationIndex" SHAPE="32,216,145,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#siteApplicationConfigView" NAME="action17"
+  PATH="/siteApplicationConfigView" SHAPE="32,2176,145,41"
+  TITLE="siteApplicationConfigView" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/siteApplicationConfigView.jsp" TARGET="page11"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page11"
+  PATH="/siteApplicationConfigView.jsp" SHAPE="288,2192,50,25"
+  SUBTYPE="jsp" TITLE="siteApplicationConfigView.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#applicationSearch"
+  NAME="action22" PATH="/applicationSearch" SHAPE="32,272,145,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectPage"
+  NAME="action23" PATH="/selectPage" SHAPE="32,1640,145,41"
+  TITLE="selectPage" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/dialog/treedialog/treeDialog.jsp"
+   SHAPE="176,1664,272,1664,272,1592,287,1592" TARGET="page16"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#copy" NAME="action25"
+  PATH="/copy" SHAPE="32,2408,145,41" TITLE="copy" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/copy.jsp"
+   SHAPE="176,2432,272,2432,272,2432,287,2432" TARGET="page14"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#doCopy" NAME="action26"
+  PATH="/doCopy" SHAPE="480,2440,164,25" TITLE="copy" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page14" PATH="/copy.jsp"
+  SHAPE="288,2424,50,40" SUBTYPE="jsp" TITLE="copySite.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/doCopy" TARGET="action26" TITLE="doCopy" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#column" NAME="action0"
+  PATH="/column" SHAPE="32,896,145,41" TITLE="column" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/column.jsp" TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/column.jsp" SHAPE="288,912,50,115" SUBTYPE="jsp"
+  TITLE="column.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/saveColumn" TARGET="action1" TITLE="deleteColumn" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/deleteColumn" TARGET="action27" TITLE="createNextColumn" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/createNextColumn" TARGET="action3"
+   TITLE="columnWorkflowConfig" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/columnWorkflowConfig" TARGET="action12"
+   TITLE="columnWorkflowConfig" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link4"
+   PATH="/addRelationLinks" TARGET="action47" TITLE="addRelationLinks" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link5"
+   PATH="/refreshColumn" TARGET="action46" TITLE="refreshArticle" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveColumn"
+  NAME="action1" PATH="/saveColumn" SHAPE="480,928,161,25"
+  TITLE="column" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteColumn"
+  NAME="action27" PATH="/deleteColumn" SHAPE="480,976,161,25"
+  TITLE="column" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page16"
+  PATH="/../../jeaf/dialog/treedialog/treeDialog.jsp"
+  SHAPE="288,1584,50,25" SUBTYPE="jsp" TITLE="treeDialog.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page7"
+  PATH="/../../jeaf/tree/listChildNodes.jsp" SHAPE="288,1976,50,25"
+  SUBTYPE="jsp" TITLE="listChildNodes.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#createNextColumn"
+  NAME="action3" PATH="/createNextColumn" SHAPE="480,1024,161,25"
+  TITLE="column" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#createNextSite"
+  NAME="action7" PATH="/createNextSite" SHAPE="480,800,161,25"
+  TITLE="site" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#siteWorkflowConfig"
+  NAME="action9" PATH="/siteWorkflowConfig" SHAPE="480,848,161,25"
+  TITLE="site" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#columnWorkflowConfig"
+  NAME="action12" PATH="/columnWorkflowConfig" SHAPE="480,1072,161,25"
+  TITLE="column" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#attachmentEditor"
+  NAME="action29" PATH="/attachmentEditor" SHAPE="32,576,145,41"
+  TITLE="site" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/attachment.jsp"
+   TARGET="page5" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/../../jeaf/attachment/attachment.jsp" SHAPE="288,592,50,25"
+  SUBTYPE="jsp" TITLE="attachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#headline" NAME="action13"
+  PATH="/headline" SHAPE="32,2272,145,41" TITLE="headline" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/headline.jsp" TARGET="page9" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page9"
+  PATH="/headline.jsp" SHAPE="288,2288,50,40" SUBTYPE="jsp"
+  TITLE="headline.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveHeadline" TARGET="action14" TITLE="saveHeadline" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveHeadline"
+  NAME="action14" PATH="/saveHeadline" SHAPE="480,2304,161,25"
+  TITLE="headline" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectSiteLink"
+  NAME="action5" PATH="/selectSiteLink" SHAPE="32,1856,145,41"
+  TITLE="selectSiteLink" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/dialog/treedialog/treeDialog.jsp"
+   TARGET="page16" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectView"
+  NAME="action18" PATH="/selectView" SHAPE="32,1712,145,41"
+  TITLE="selectView" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/dialog/treedialog/treeDialog.jsp"
+   TARGET="page16" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectForm"
+  NAME="action20" PATH="/selectForm" SHAPE="32,1784,145,41"
+  TITLE="selectForm" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/dialog/treedialog/treeDialog.jsp"
+   TARGET="page16" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#template" NAME="action24"
+  PATH="/template" SHAPE="32,2520,145,41" TITLE="template" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../templatemanage/template.jsp" TARGET="page6"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveTemplate"
+  NAME="action28" PATH="/saveTemplate" SHAPE="480,2552,161,25"
+  TITLE="template" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteTemplate"
+  NAME="action30" PATH="/deleteTemplate" SHAPE="480,2608,161,25"
+  TITLE="template" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/../templatemanage/template.jsp" SHAPE="288,2536,50,55"
+  SUBTYPE="jsp" TITLE="template.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveTemplate" TARGET="action28" TITLE="saveTemplate" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteTemplate" TARGET="action30" TITLE="template.jsp" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#pageNotFound"
+  NAME="action31" PATH="/pageNotFound" SHAPE="32,376,145,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#reference"
+  NAME="action32" PATH="/reference" SHAPE="32,1360,145,41"
+  TITLE="reference" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/reference.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/reference.jsp" SHAPE="288,1376,50,70" SUBTYPE="jsp"
+  TITLE="reference.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveReference" TARGET="action33" TITLE="saveReference" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteReference" TARGET="action34" TITLE="deleteReference" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/createNextReference" TARGET="action35"
+   TITLE="createNextReference" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveReference"
+  NAME="action33" PATH="/saveReference" SHAPE="480,1392,161,25"
+  TITLE="reference" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteReference"
+  NAME="action34" PATH="/deleteReference" SHAPE="480,1448,161,25"
+  TITLE="reference" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#createNextReference"
+  NAME="action35" PATH="/createNextReference" SHAPE="480,1504,161,25"
+  TITLE="reference" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectSiteTemplateTheme"
+  NAME="action4" PATH="/selectSiteTemplateTheme" SHAPE="32,2672,145,41"
+  TITLE="selectSiteTemplateTheme" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0"
+   PATH="/../../jeaf/dialog/viewselectdialog/viewSelectDialog.jsp"
+   TARGET="page13" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#siteTemplateTheme"
+  NAME="action36" PATH="/siteTemplateTheme" SHAPE="32,2784,145,41"
+  TITLE="siteTemplateTheme" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/siteTemplateTheme.jsp" TARGET="page3"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/siteTemplateTheme.jsp" SHAPE="288,2800,50,25" SUBTYPE="jsp"
+  TITLE="templateTheme.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveSiteTemplateTheme" TARGET="action37"
+   TITLE="saveSiteTemplateTheme" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteSiteTemplateTheme" TARGET="action38"
+   TITLE="deleteSiteTemplateTheme" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/setDefaultSiteTemplateTheme" TARGET="action39"
+   TITLE="setDefaultSiteTemplateTheme" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveSiteTemplateTheme"
+  NAME="action37" PATH="/saveSiteTemplateTheme" SHAPE="480,2816,161,25"
+  TITLE="siteTemplateTheme" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteSiteTemplateTheme"
+  NAME="action38" PATH="/deleteSiteTemplateTheme"
+  SHAPE="480,2880,161,25" TITLE="siteTemplateTheme" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page13"
+  PATH="/../../jeaf/dialog/viewselectdialog/viewSelectDialog.jsp"
+  SHAPE="288,2688,50,25" SUBTYPE="jsp" TITLE="viewSelectDialog.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#setDefaultSiteTemplateTheme" NAME="action39"
+  PATH="/setDefaultSiteTemplateTheme" SHAPE="480,2944,161,25"
+  TITLE="siteTemplateTheme" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectPhonePage"
+  NAME="action40" PATH="/selectPhonePage" SHAPE="32,432,145,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#savePhonePage"
+  NAME="action41" PATH="/savePhonePage" SHAPE="32,488,145,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#videoPlayerLogo"
+  NAME="action42" PATH="/videoPlayerLogo" SHAPE="32,2984,145,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#accessTotalChart"
+  NAME="action43" PATH="/accessTotalChart" SHAPE="32,3056,145,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#relationLink"
+  NAME="action21" PATH="/relationLink" SHAPE="32,1216,145,41"
+  TITLE="relationLink" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/relationLink.jsp" TARGET="page12" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page12"
+  PATH="/relationLink.jsp" SHAPE="288,1232,50,55" SUBTYPE="jsp"
+  TITLE="relationLink.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/deleteRelationLink" TARGET="action45"
+   TITLE="deleteRelationLink" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/saveRelationLink" TARGET="action44"
+   TITLE="saveRelationLink" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveRelationLink"
+  NAME="action44" PATH="/admin/saveRelationLink" SHAPE="480,1304,161,25"
+  TITLE="relationLink" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteRelationLink"
+  NAME="action45" PATH="/admin/deleteRelationLink"
+  SHAPE="480,1248,161,25" TITLE="relationLink" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#refreshColumn"
+  NAME="action46" PATH="/refreshColumn" SHAPE="480,1168,161,25"
+  TITLE="column" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#addRelationLinks"
+  NAME="action47" PATH="/addRelationLinks" SHAPE="480,1120,161,25"
+  TITLE="column" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#applicationPage"
+  NAME="action48" PATH="/applicationPage" SHAPE="32,320,145,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#templatemanage#insertSites" NAME="action49"
+  PATH="/templatemanage/insertSites" SHAPE="32,3136,145,25"
+  TITLE="insertSites" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templatemanage/insertSites.jsp"
+   TARGET="page15" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page15"
+  PATH="/templatemanage/insertSites.jsp" SHAPE="288,3152,50,25"
+  SUBTYPE="jsp" TITLE="insertSites.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#templatemanage#insertColumns" NAME="action50"
+  PATH="/templatemanage/insertColumns" SHAPE="32,3232,145,25"
+  TITLE="insertColumns" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templatemanage/insertColumns.jsp"
+   TARGET="page17" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page17"
+  PATH="/templatemanage/insertColumns.jsp" SHAPE="288,3248,50,25"
+  SUBTYPE="jsp" TITLE="insertColumns.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#templatemanage#insertSiteLink" NAME="action51"
+  PATH="/templatemanage/insertSiteLink" SHAPE="32,3320,145,25"
+  TITLE="insertSiteLink" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templatemanage/insertSiteLink.jsp"
+   TARGET="page18" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page18"
+  PATH="/templatemanage/insertSiteLink.jsp" SHAPE="288,3336,50,25"
+  SUBTYPE="jsp" TITLE="insertSiteLink.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#templatemanage#insertHeadline" NAME="action52"
+  PATH="/templatemanage/insertHeadline" SHAPE="32,3408,145,25"
+  TITLE="insertHeadline" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templatemanage/insertHeadline.jsp"
+   TARGET="page19" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page19"
+  PATH="/templatemanage/insertHeadline.jsp" SHAPE="288,3424,50,25"
+  SUBTYPE="jsp" TITLE="insertHeadline.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#templatemanage#insertHeadlineImage" NAME="action53"
+  PATH="/templatemanage/insertHeadlineImage" SHAPE="32,3488,145,41"
+  TITLE="insertHeadlineImage" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templatemanage/insertHeadlineImage.jsp"
+   TARGET="page20" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page20"
+  PATH="/templatemanage/insertHeadlineImage.jsp" SHAPE="288,3504,50,25"
+  SUBTYPE="jsp" TITLE="insertHeadlineImage.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#templatemanage#insertSiteLocation" NAME="action54"
+  PATH="/templatemanage/insertSiteLocation" SHAPE="32,3568,145,41"
+  TITLE="insertSiteLocation" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templatemanage/insertSiteLocation.jsp"
+   TARGET="page21" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page21"
+  PATH="/templatemanage/insertSiteLocation.jsp" SHAPE="288,3584,50,25"
+  SUBTYPE="jsp" TITLE="insertSiteLocation.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#templatemanage#insertSiteRecordList" NAME="action55"
+  PATH="/templatemanage/insertSiteRecordList" SHAPE="32,3648,145,41"
+  TITLE="insertSiteRecordList" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templatemanage/insertSiteRecordList.jsp"
+   TARGET="page23" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page23"
+  PATH="/templatemanage/insertSiteRecordList.jsp" SHAPE="288,3664,50,25"
+  SUBTYPE="jsp" TITLE="insertSiteRecordList.jsp" TYPE="page"/>
+</PROCESS>

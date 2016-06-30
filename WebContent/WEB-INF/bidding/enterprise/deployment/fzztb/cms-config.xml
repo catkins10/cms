@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 招投标企业管理 -->
+<application>
+	<pages>
+		<page name="index" title="企业首页" url="/bidding/enterprise/index.shtml">
+			<field title="EKey试用截止时间" name="tryEnd"/>
+		</page>
+	
+		<page name="enterprise" title="企业信息" url="/bidding/enterprise/enterprise.shtml">
+			<field name="certTitles" title="企业资质"/>
+			<field name="businessLicence" title="营业执照号码"/>
+			<field name="statisticsLicence" title="单位统计证"/>
+			<field name="safeLicence" title="安全许可证"/>
+			<field name="registDate" title="注册时间" type="date"/>
+			<field name="registeredCapital" title="注册资金（万元）"/>
+			<field name="kind" title="企业性质"/>
+			<field name="legalRepresentative" title="法定代表人"/>
+			<field name="representativeIdNumber" title="法定代表人身份证号码"/>
+			<field name="representativeTel" title="法定代表人联系电话"/>
+			<field name="manager" title="企业经理"/>
+			<field name="managerIdNumber" title="企业经理身份证号码"/>
+			<field name="managerTel" title="企业经理联系电话"/>
+			<field name="technicalLeader" title="技术负责人"/>
+			<field name="technicalLeaderIdNumner" title="技术负责人身份证号码"/>
+			<field name="technicalLeaderTel" title="技术负责人电话"/>
+			<field name="address" title="通讯地址"/>
+			<field name="postalcode" title="邮政编码"/>
+			<field name="linkman" title="联系人"/>
+			<field name="tel" title="联系电话"/>
+			<field name="mobile" title="手机"/>
+			<field name="fax" title="传真"/>
+			<field name="email" title="电子邮件"/>
+			<field name="website" title="企业主页"/>
+			<field name="bank" title="开户银行"/>
+			<field name="account" title="开户帐号"/>
+			<field name="introduction" title="经营范围"/>
+			<field name="created" title="登记时间" type="timestamp"/>
+			<field name="remark" title="备注"/>
+		</page>
+		
+		<page name="login" title="企业用户登录"/>
+		<page name="employee" title="企业用户信息" url="/bidding/enterprise/employee.shtml">
+			<field title="企业名称" name="enterpriseName"/>
+			<field title="用户姓名" name="name"/>
+			<field title="试用有效期(天)" name="tryDays"/>
+			<field title="试用截止时间" name="tryEnd"/>
+		</page>
+		
+		<page name="agentLib" title="招标代理名录库" url="/bidding/enterprise/listAgents.shtml" systemLink="false">
+			<field title="名录库名称" name="lib"/>
+			
+			<recordList title="招标代理列表" name="libAgents">
+				<field name="name" title="企业名称"/>
+				<field name="businessLicence" title="营业执照号码"/>
+				<field name="statisticsLicence" title="单位统计证"/>
+				<field name="safeLicence" title="安全许可证"/>
+				<field name="registDate" title="注册时间" type="date"/>
+				<field name="registeredCapital" title="注册资金（万元）"/>
+				<field name="kind" title="企业性质"/>
+				<field name="legalRepresentative" title="法定代表人"/>
+				<field name="representativeIdNumber" title="法定代表人身份证号码"/>
+				<field name="representativeTel" title="法定代表人联系电话"/>
+				<field name="manager" title="企业经理"/>
+				<field name="managerIdNumber" title="企业经理身份证号码"/>
+				<field name="managerTel" title="企业经理联系电话"/>
+				<field name="technicalLeader" title="技术负责人"/>
+				<field name="technicalLeaderIdNumner" title="技术负责人身份证号码"/>
+				<field name="technicalLeaderTel" title="技术负责人电话"/>
+				<field name="address" title="通讯地址"/>
+				<field name="postalcode" title="邮政编码"/>
+				<field name="linkman" title="联系人"/>
+				<field name="linkmanIdNumber" title="联系人身份证号码"/>
+				<field name="tel" title="联系电话"/>
+				<field name="mobile" title="手机"/>
+				<field name="fax" title="传真"/>
+				<field name="email" title="电子邮件"/>
+				<field name="website" title="企业主页"/>
+				<field name="bank" title="开户银行"/>
+				<field name="account" title="开户帐号"/>
+				<field name="introduction" title="经营范围"/>
+				<field name="remark" title="备注"/>
+				
+				<field name="cert.certificateNumber" title="资质证书编号"/>
+				<field name="cert.level" column="certLevel" title="资质等级"/>
+				<field name="cert.approvalDate" title="取得资质时间" type="timestamp"/>
+				<field name="cert.approvalNumber" title="批准文号"/>
+			</recordList>
+		</page>
+	</pages>
+	
+	<links>
+		<link title="招标代理名录库" dialogURL="/bidding/enterprise/templatemanage/insertAgentLibLink.shtml"/>
+	</links>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="libAgents" processor="libAgentsProcessor"/> <!-- 招标代理列表处理器 -->
+		<pageElement name="employeeLogin" processor="employeeLoginFormProcessor"/> <!-- 登录表单处理器 -->
+	</pageElements>
+</application>

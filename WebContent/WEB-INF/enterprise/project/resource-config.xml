@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Application>
+	<Actions>
+		<Action Name="完成登记" Send="true"/>
+		<Action Name="完成合同盖章" Send="true"/>
+		<Action Name="完成合同签订" Send="true"/>
+		<Action Name="完成合同归档" Send="true"/>
+		<Action Name="项目安排" Send="true"/>
+		<Action Name="完成设计" Send="true"/>
+		<Action Name="审核设计" Send="true"/>
+		<Action Name="作废" DeleteAction="true"/>
+	</Actions>
+	<ProgrammingParticipants>
+		<ProgrammingParticipant Id="projectTeamManager" Name="项目组负责人"/>
+		<ProgrammingParticipant Id="projectTeamMember" Name="项目组全体成员"/>
+		<ProgrammingParticipant Id="projectTeamNormalMember" Name="项目组成员（不含负责人）"/>
+	</ProgrammingParticipants>
+	<SubForms>
+		<SubForm Id="Create" Name="项目登记"/>
+		<SubForm Id="ContractCreate" Name="合同起草"/>
+		<SubForm Id="ContractApproval" Name="合同审核"/>
+		<SubForm Id="Design" Name="项目设计"/>
+		<SubForm Id="Read" Name="只读"/>
+	</SubForms>
+	<TypeDeclarations>
+		<TypeDeclaration Id="yesOrNo" Name="是/否">
+			<SchemaType>
+				<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"  attributeFormDefault="unqualified">
+					<xsd:element name="yesOrNo">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="是"/>
+								<xsd:enumeration value="否"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+	</TypeDeclarations>
+	<DataFields>
+		<DataField Id="isoUsed" Name="是否进行ISO贯标"> <!-- 是/否 -->
+			<DataType><DeclaredType Id="yesOrNo"/></DataType>
+		</DataField>
+		<DataField Id="designQuality" Name="设计质量">
+			<DataType><BasicType Type="STRING"/></DataType>
+		</DataField>
+		<DataField Id="designCompleted" Name="已完成全部设计">
+			<DataType><DeclaredType Id="yesOrNo"/></DataType>
+		</DataField>
+	</DataFields>
+	<Applications/>
+</Application>

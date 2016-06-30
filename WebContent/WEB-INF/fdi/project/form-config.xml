@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/project" class="com.yuanluesoft.fdi.project.forms.admin.Project" title="意向项目" pojo="com.yuanluesoft.fdi.project.pojo.FdiProject">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteProject')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/projectPush" class="com.yuanluesoft.fdi.project.forms.admin.ProjectPush" title="推进情况" pojo="com.yuanluesoft.fdi.project.pojo.FdiProject">
+		<formFields>
+			<field title="推进情况" name="push" type="component">
+				<parameter name="class">com.yuanluesoft.fdi.project.pojo.FdiProjectPush</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteProjectPush')"/>
+		</actions>
+	</form>
+</forms>

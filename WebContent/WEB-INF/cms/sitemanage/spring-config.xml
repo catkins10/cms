@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 站点服务 -->
+	<bean id="siteService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref local="siteServiceImpl"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="init*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="create*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="authorize*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="copy*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="setHeadline">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="after*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="process*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="siteServiceImpl" class="com.yuanluesoft.cms.sitemanage.service.spring.SiteServiceImpl" init-method="startup">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="attachmentService"><ref bean="attachmentService"/></property>
+		<property name="fileDownloadService"><ref bean="fileDownloadService"/></property>
+		<property name="siteResourceService"><ref bean="siteResourceServiceImpl"/></property>
+		<property name="webApplicationLocalUrl"><ref bean="webApplicationLocalUrl"/></property>
+		<property name="staticPageUrl"><ref bean="staticPageUrl"/></property>
+		<property name="exchangeClient"><ref bean="exchangeClient"/></property>
+		<property name="pageService"><ref bean="siteIndexPageService"/></property>
+		<property name="templateService"><ref bean="siteTemplateServiceImpl"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="recordCache"><ref bean="recordCache"/></property>
+	</bean>
+	
+	<!-- 站点模板主题服务 -->
+	<bean id="siteTemplateThemeService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<ref bean="siteTemplateThemeServiceImpl"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="init*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="setAd*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="copy*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="setAs*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="siteTemplateThemeServiceImpl" class="com.yuanluesoft.cms.sitemanage.service.spring.SiteTemplateThemeServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="exchangeClient"><ref bean="exchangeClient"/></property>
+		<property name="templateService"><ref bean="templateServiceImpl"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+	</bean>
+	
+	<!-- 站点模板服务 -->
+	<bean id="siteTemplateService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref local="siteTemplateServiceImpl"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="setDefaultTemplate">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="restore*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="loadNormalTemplate">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="copy*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="upload*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="siteTemplateServiceImpl" class="com.yuanluesoft.cms.sitemanage.service.spring.SiteTemplateServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="siteTemplateThemeService"><ref bean="siteTemplateThemeServiceImpl"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templatePath"><ref bean="tempatePath"/></property>
+		<property name="templateUrl"><ref bean="tempateUrl"/></property>
+		<property name="fileDownloadService"><ref bean="fileDownloadService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="cache"><ref bean="templateCache"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="templateAttachmentService"><ref bean="templateAttachmentService"/></property>
+		<property name="exchangeClient"><ref bean="exchangeClient"/></property>
+		<property name="siteService"><ref bean="siteServiceImpl"/></property>
+	</bean>
+	
+	<!-- 模板主题视图服务 -->
+	<bean id="siteTemplateThemeViewService" class="com.yuanluesoft.cms.sitemanage.service.spring.SiteTemplateThemeViewServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="siteTemplateThemeService"><ref bean="siteTemplateThemeService"/></property>
+	</bean>
+	
+	<!-- 网站附件管理服务 -->
+	<bean id="siteAttachmentService" class="com.yuanluesoft.cms.attachmentmanage.spring.AttachmentServiceImpl">
+		<property name="fileDownloadCache"><ref bean="fileDownloadCache"/></property>
+		<property name="fileUploadService"><ref bean="fileUploadService"/></property>
+		<property name="baseDirectory"><ref bean="sitePagePath"/></property>
+		<property name="webUrl"><ref bean="sitePageUrl"/></property>
+	</bean>
+	
+	<!-- 网站页面图片服务 -->
+	<bean id="siteImageService" class="com.yuanluesoft.jeaf.image.service.spring.ImageServiceImpl">
+		<property name="attachmentService"><ref bean="siteAttachmentService"/></property>
+		<property name="imageGenerator"><ref bean="imageGenerator"/></property>
+		<property name="exchangeClient"><ref bean="exchangeClient"/></property>
+	</bean>
+	
+	<!-- 网站页面视频服务 -->
+	<bean id="siteVideoService" class="com.yuanluesoft.jeaf.video.service.spring.VideoServiceImpl">
+		<property name="attachmentService"><ref bean="siteAttachmentService"/></property>
+		<property name="imageService"><ref bean="siteImageService"/></property>
+		<property name="videoConvertor"><ref bean="videoConvertor"/></property>
+		<property name="exchangeClient"><ref bean="exchangeClient"/></property>
+	</bean>
+	
+	<!-- 页面服务 -->
+	<!-- 站点/栏目首页服务 -->
+	<bean id="siteIndexPageService" class="com.yuanluesoft.cms.sitemanage.pages.SiteIndexPageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="siteTemplateServiceImpl"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+	</bean>
+	
+	<!-- 页面元素处理器 -->
+	<!-- 站点链接处理器 -->
+	<bean id="siteLinkProcessor" class="com.yuanluesoft.cms.sitemanage.processor.SiteLinkProcessor">
+		<property name="siteService"><ref bean="siteService"/></property>
+	</bean>
+	
+	<!-- 站点位置处理器 -->
+	<bean id="siteLocationProcessor" class="com.yuanluesoft.cms.sitemanage.processor.SiteLocationProcessor">
+		<property name="siteService"><ref bean="siteService"/></property>
+	</bean>
+	
+	<!-- 栏目列表处理器 -->
+	<bean id="siteColumnsProcessor" class="com.yuanluesoft.cms.sitemanage.processor.SiteColumnsProcessor">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="siteService"><ref bean="siteService"/></property>
+		<property name="imageService"><ref bean="imageService"/></property>
+	</bean>
+	
+	<!-- 栏目关联链接列表处理器 -->
+	<bean id="columnRelationLinksProcessor" class="com.yuanluesoft.cms.sitemanage.processor.ColumnRelationLinksProcessor">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+	</bean>
+	
+	<!-- 站点相关记录列表处理器 -->
+	<bean id="siteRecordListProcessor" class="com.yuanluesoft.cms.sitemanage.processor.SiteRecordListProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="siteService"><ref bean="siteService"/></property>
+	</bean>
+	
+	<!-- 统计列表处理器 -->
+	<bean id="totalsProcessor" class="com.yuanluesoft.cms.sitemanage.processor.TotalsProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="statService"><ref bean="statService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="graphReportService"><ref bean="graphReportService"/></property>
+	</bean>
+	
+	<!-- 头版头条处理器 -->
+	<bean id="headlineProcessor" class="com.yuanluesoft.cms.sitemanage.processor.HeadlineProcessor">
+		<property name="siteService"><ref bean="siteService"/></property>
+		<property name="imageGenerator"><ref bean="imageGenerator"/></property>
+		<property name="sitePagePath"><ref bean="sitePagePath"/></property>
+		<property name="sitePageUrl"><ref bean="sitePageUrl"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="exchangeClient"><ref bean="exchangeClient"/></property>
+	</bean>
+</beans>

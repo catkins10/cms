@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="monitorStat" title="监察统计" viewServiceName="monitorStatViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.model.MonitorStat</pojo>
+		</data>
+	</view>
+	
+	<view name="unitConfig" form="unitConfig" title="单位配置" hide="isNotOrgManager()" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="monitorViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.pojo.MonitorUnitConfig</pojo>
+			<orderBy>MonitorUnitConfig.unitName</orderBy>
+			<quickFilter>MonitorUnitConfig.unitName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建配置" execute="PageUtils.newrecord('cms/monitor', 'unitConfig', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="单位名称" name="unitName"/>
+			<column title="IP" name="ip" width="200"/>
+		</columns>
+	</view>
+	
+	<view name="monitorParameter" form="monitorParameter" title="参数配置" hide="noPrivilege(application_manager)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.pojo.MonitorParameter</pojo>
+			<orderBy>MonitorParameter.orgName</orderBy>
+			<quickFilter>MonitorParameter.orgName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加配置" execute="PageUtils.newrecord('cms/monitor', 'monitorParameter', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="机构名称" name="orgName"/>
+		</columns>
+	</view>
+	
+	<view name="captureLog" form="captureLog" title="采集日志" hide="noPrivilege(application_manager)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.pojo.MonitorCaptureLog</pojo>
+			<orderBy>MonitorCaptureLog.captureTime DESC</orderBy>
+			<quickFilter>MonitorCaptureLog.unitName like '%{KEY}%' or MonitorCaptureLog.captureSql like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="单位名称" name="unitName" width="120"/>
+			<column title="SQL" name="captureSql" maxCharCount="150" ellipsis="..."/>
+			<column title="采集时间" name="captureTime" width="110"/>
+			<column title="是否成功" name="isSuccess" width="50" align="center"/>
+		</columns>
+	</view>
+</views>

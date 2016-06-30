@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="评价体系目录" class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationDirectory" businessServiceName="chdEvaluationDirectoryService">
+		<field name="directoryName" title="名称" length="1000" required="true" type="string" inputMode="text"/>
+		<field name="sourceDirectoryId" title="源目录ID" length="20" type="number" inputMode="none"/>
+		<field name="dataWorkflowId" title="资料上传流程ID" length="20" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="dataWorkflowName" title="资料上传流程名称" length="100" type="string" inputMode="hidden"/>
+		<field name="selfEvalWorkflowId" title="自评流程ID" length="20" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="selfEvalWorkflowName" title="自评流程名称,varchar(100)" length="100" type="string" inputMode="hidden"/>
+		<field name="dataCycle" title="资料提交频率" length="1" required="true" type="char" inputMode="radio">
+			<parameter name="itemsText">不定期|0\0按周|1\0按月|2\0按年|3</parameter>
+		</field>
+		<field name="dataCycleEnd" title="资料提交时间点" length="10" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="dataUrgency" title="资料提交催办时间点" length="10" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="selfEvalCurrentMonth" title="当月自查" length="1" required="true" type="char" inputMode="radio">
+			<parameter name="itemsText">当月自查|1\0次月自查|0</parameter>
+		</field>
+		<field name="selfEvalEnd" title="自查时间点" length="10" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="selfEvalUrgency" title="自查催办时间点" length="10" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="评价体系目录:公司" class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationCompany" businessServiceName="chdEvaluationDirectoryService">
+		<field name="directoryName" title="公司名称" length="500" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'directoryName{name}', '', 'unit')</parameter>
+		</field>
+		<field name="levels" title="评价等级" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationLevel</parameter>
+		</field>
+		<field name="dataWorkflowName" title="资料上传流程名称" length="50" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('companyWorkflowConfig', 'workflowType=dataWorkflow', false, null, '_self')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+		<field name="selfEvalWorkflowName" title="自查流程名称,varchar(100)" length="50" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('companyWorkflowConfig', 'workflowType=selfEvalWorkflow', false, null, '_self')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="评价体系目录:发电企业类型" class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlantType" businessServiceName="chdEvaluationDirectoryService">
+		<field name="directoryName" title="类型" length="500" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">火电\0水电\0风电</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="indicators" title="主要指标" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationIndicator</parameter>
+		</field>
+		<field name="prerequisites" title="必备条件" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPrerequisites</parameter>
+		</field>
+		<field name="generators" title="机组综合数据表模板" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationGenerator</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="评价体系目录:发电企业" class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlant" businessServiceName="chdEvaluationDirectoryService">
+		<field name="orgId" title="组织机构ID" length="20" type="number" inputMode="hidden"/>
+		<field name="directoryName" title="发电企业名称" length="500" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'orgId{id},directoryName{name}', '', 'unit')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="address" title="地址" length="200" type="string" inputMode="text"/>
+		<field name="postalCode" title="邮政编码" length="10" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="installedCapacity" title="全厂总装机容量构成(MW)" length="1000" type="string" inputMode="text"/>
+		<field name="constructionDate" title="建厂时间" type="date" inputMode="date"/>
+		<field name="type" title="企业类型" length="10" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">火电\0水电\0风电</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="maxLevel" title="获得最高星级档次" length="30" type="string" inputMode="text"/>
+		<field name="maxLevelDate" title="获得最高星级时间" type="date" inputMode="date"/>
+		<field name="saleProceeds" title="企业年销售收入(万元)" length="12,4" type="number" inputMode="text"/>
+		<field name="employeeNumber" title="年末在册职工人数" length="8" type="number" inputMode="text"/>
+		<field name="contactDepartment" title="联系部门" length="50" type="string" inputMode="text"/>
+		<field name="contactPerson" title="联系人" length="50" type="string" inputMode="text"/>
+		<field name="tel" title="电话" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="mobile" title="手机" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="honors" title="发电企业主要荣誉" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlantHonor</parameter>
+		</field>
+		<field name="dataWorkflowName" title="资料上传流程名称" length="50" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('plantWorkflowConfig', 'workflowType=dataWorkflow')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+		<field name="selfEvalWorkflowName" title="自查流程名称,varchar(100)" length="50" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('plantWorkflowConfig', 'workflowType=selfEvalWorkflow')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+		<field name="objectives" title="年度目标" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationObjective</parameter>
+		</field>
+		<field name="currentYearObjective" title="本年度目标" persistence="false" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationObjective</parameter>
+			<parameter name="referenceFields">objectives</parameter>
+		</field>
+		<field name="objectiveResults" title="创星历程" persistence="false" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationObjective</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="评价体系目录:评价项目" class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationRule" businessServiceName="chdEvaluationDirectoryService">
+		<field name="score" title="标准分" length="5" required="true" type="numbre" inputMode="text"/>
+		<field name="provision" title="评分规定" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="isIndicator" title="管理评价/指标评价" length="1" required="true" type="char" inputMode="radio">
+			<parameter name="itemsText">管理评价|0\0指标评价|1</parameter>
+		</field>
+		<field name="scores" title="评价等级对应的分数" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationRuleScore</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="评价体系目录:评价细则" class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationDetail" businessServiceName="chdEvaluationDirectoryService">
+		<field name="objective" title="目标要求" length="2000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="method" title="评价方法" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="deduct" title="扣分条款" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="points" title="评价要点" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPoint</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="评价体系目录:发电企业评价项目" class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlantRule" businessServiceName="chdEvaluationDirectoryService">
+		<field name="isIndicator" title="管理评价/指标评价" length="1" required="true" type="char" inputMode="radio">
+			<parameter name="itemsText">管理评价|0\0指标评价|1</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="评价体系目录:发电企业评价细则" class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlantDetail" businessServiceName="chdEvaluationDirectoryService">
+		<field name="points" title="评价要点" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPoint</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="评价等级" class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationLevel" businessServiceName="chdEvaluationDirectoryService">
+		<field name="companyId" title="公司ID" type="number" inputMode="hidden"/>
+		<field name="level" title="等级" length="15" required="true" type="string" inputMode="text"/>
+		<field name="description" title="描述" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">4</parameter>
+		</field>
+		<field name="award" title="奖励" length="4000" type="string" inputMode="text">
+			<parameter name="rows">4</parameter>
+		</field>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="备注" length="4000" type="string" inputMode="text">
+			<parameter name="rows">4</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="评价项目:评价等级对应的分数" class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationRuleScore" businessServiceName="chdEvaluationDirectoryService">
+		<field name="ruleId" title="评价项目ID" length="20" type="number" inputMode="hidden"/>
+		<field name="levelId" title="评价等级ID" length="20" type="number" inputMode="hidden"/>
+		<field name="level" title="评价等级" length="10" required="true" type="string" inputMode="select">
+			<parameter name="execute">selectEvaluationDirectory(600, 400, false, 'levelId{id},level{name}', '', 'level')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="js">/chd/evaluation/js/evaluation.js</parameter>
+		</field>
+		<field name="minScore" title="最低分数" length="5" required="true" type="number" inputMode="text"/>
+		<field name="maxScore" title="最高分数" length="5" required="true" type="number" inputMode="text"/>
+	</businessObject>
+	<businessObject title="发电企业主要荣誉" class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlantHonor" businessServiceName="chdEvaluationDirectoryService">
+		<field name="plantId" title="发电企业ID" length="20" type="number" inputMode="hidden"/>
+		<field name="honorYear" title="年度" length="4" required="true" type="number" inputMode="text"/>
+		<field name="honor" title="荣誉名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="honorAwarding" title="授予单位" length="100" required="true" type="string" inputMode="text"/>
+		<field name="honorDate" title="授予时间" required="true" type="date" inputMode="date"/>
+	</businessObject>
+	<businessObject title="年度目标" class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationObjective" businessServiceName="chdEvaluationDirectoryService">
+		<field name="plantId" title="发电企业ID" type="number" inputMode="hidden"/>
+		<field name="objectiveYear" title="年度" length="4" type="number" inputMode="text"/>
+		<field name="objective" title="年度目标" length="200" required="true" type="string" inputMode="text"/>
+		<field name="result" title="完成情况" length="200" type="string" inputMode="text"/>
+		<field name="created" title="提交时间" type="timestamp" inputMode="readonly"/>
+		<field name="creatorId" title="提交人ID" type="number" inputMode="none"/>
+		<field name="creator" title="提交人姓名" length="30" type="string" inputMode="readonly"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="主要指标" class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationIndicator" businessServiceName="chdEvaluationDirectoryService">
+		<field name="plantTypeId" title="发电企业类型ID" length="20" type="number" inputMode="hidden"/>
+		<field name="name" title="指标名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="unit" title="单位" length="20" type="string" inputMode="text"/>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="sourceRecordId" title="源记录ID" length="20" type="number" inputMode="none"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="必备条件" class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPrerequisites" businessServiceName="chdEvaluationDirectoryService">
+		<field name="plantTypeId" title="发电企业类型ID" length="20" type="number" inputMode="hidden"/>
+		<field name="prerequisites" title="条件" length="1000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">4</parameter>
+		</field>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="sourceRecordId" title="源记录ID" length="20" type="number" inputMode="none"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+		<field name="scores" title="评价等级对应的结果" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPrerequisitesScore</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="必备条件:评价等级对应的结果" class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPrerequisitesScore" businessServiceName="chdEvaluationDirectoryService">
+		<field name="prerequisitesId" title="必备条件ID" length="20" type="number" inputMode="hidden"/>
+		<field name="levelId" title="评价等级ID" length="20" type="number" inputMode="hidden"/>
+		<field name="level" title="评价等级" length="10" required="true" type="string" inputMode="select">
+			<parameter name="execute">selectEvaluationDirectory(600, 400, false, 'levelId{id},level{name}', '', 'level')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="js">/chd/evaluation/js/evaluation.js</parameter>
+		</field>
+		<field name="score" title="对应的结果" length="100" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="机组综合数据表模板" class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationGenerator" businessServiceName="chdEvaluationDirectoryService">
+		<field name="plantTypeId" title="发电企业类型ID" length="20" type="number" inputMode="hidden"/>
+		<field name="body" title="机组综合数据" required="true" type="html" inputMode="htmleditor">
+			<parameter name="height">280</parameter>
+		</field>
+		<field name="sourceRecordId" title="源记录ID" length="20" type="number" inputMode="none"/>
+	</businessObject>
+	<businessObject title="评价细则:评价要点" class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPoint" businessServiceName="chdEvaluationDirectoryService">
+		<field name="detailId" title="评价细则ID" length="20" type="number" inputMode="hidden"/>
+		<field name="point" title="评价要点" length="2000" required="true" type="string" inputMode="text"/>
+		<field name="priority" title="优先级" length="7,3" type="number" inputMode="none"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="sourceRecordId" title="源记录ID" length="20" type="number" inputMode="none"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+	</businessObject>
+</businessObjects>

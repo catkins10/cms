@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="短信接收" class="com.yuanluesoft.cms.smsreceive.pojo.SmsReceiveMessage">
+		<field name="content" title="短信内容" length="1000" type="string" inputMode="readonly"/>
+		<field name="senderNumber" title="发送人号码" length="30" type="string" inputMode="readonly"/>
+		<field name="receiverNumber" title="接收号码" length="30" type="string" inputMode="readonly"/>
+		<field name="receiveTime" title="接收时间" type="timestamp" inputMode="readonly"/>
+		<field name="unitId" title="受理单位ID" length="20" type="number" inputMode="none"/>
+		<field name="unitName" title="受理单位名称" length="200" type="string" inputMode="readonly"/>
+		<field name="smsBusinessName" title="短信业务分类" length="60" type="string" inputMode="readonly"/>
+		<field name="replyContent" title="答复内容" length="1000" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+		<field name="replyTime" title="答复时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="短信接收流程配置" class="com.yuanluesoft.cms.smsreceive.pojo.SmsReceiveWorkflow">
+		<field name="orgId" title="机构ID" length="20" type="number" inputMode="hidden"/>
+		<field name="orgName" title="机构名称" length="200" required="true" type="string" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectOrg(500, 350, false, 'orgId{id},orgName{name}', '', 'root,category,area,unit', '', '', '', false, false, true)</parameter>
+		</field>
+		<field name="workflowId" title="流程ID" length="30" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="workflowName" title="流程名称" length="100" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('doWorkflowConfig', '', false, null, '_self')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

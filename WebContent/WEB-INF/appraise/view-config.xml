@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="appraises" title="评议(全部)">
+		<data>
+			<pojo>com.yuanluesoft.appraise.pojo.Appraise</pojo>
+			<where>Appraise.appraiserType={PARAMETER:appraiserType|0} and Appraise.isSpecial!=1 and (0={PARAMETER:appraiserType|0} or Appraise.appraiseYear>2013)</where>
+			<orderBy>Appraise.created DESC</orderBy>
+			<quickFilter>Appraise.taskName like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link title="评议">/appraise/appraise.shtml</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/appraise/templatemanage/insertAppraises.shtml?viewTitle=评议(全部)</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view name="appraisesCompleted" title="评议(已结束)">
+		<data>
+			<pojo>com.yuanluesoft.appraise.pojo.Appraise</pojo>
+			<where>Appraise.appraiserType={PARAMETER:appraiserType|0} and Appraise.isSpecial!=1 and Appraise.endTime&lt;TIMESTAMP({NOW}) and (0={PARAMETER:appraiserType|0} or Appraise.appraiseYear>2013)</where>
+			<orderBy>Appraise.created DESC</orderBy>
+			<quickFilter>Appraise.taskName like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link title="评议">/appraise/appraise.shtml</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/appraise/templatemanage/insertAppraises.shtml?viewTitle=评议(已结束)</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view name="appraiseParticipateUnits" title="参评单位">
+		<data>
+			<pojo>com.yuanluesoft.cms.sitemanage.pojo.WebDirectory</pojo>
+			<orderBy>WebDirectory.directoryName</orderBy>
+		</data>
+		<links>
+			<link title="栏目首页">/cms/sitemanage/index.shtml?siteId={PARAMETER:id}</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/appraise/templatemanage/insertParticipateUnits.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view name="appraiseVoteTotal" title="投票统计">
+		<data>
+			<pojo>com.yuanluesoft.appraise.model.AppraiseVoteTotal</pojo>
+		</data>
+	</view>
+	
+	<view name="yearAppraiseVoteTotal" title="本年度投票统计">
+		<data>
+			<pojo>com.yuanluesoft.appraise.model.AppraiseVoteTotal</pojo>
+		</data>
+	</view>
+	
+	<view name="admin/unitAppraise" form="admin/unitAppraise" title="单位评议" pageRows="20" hide="noOrgPopedom(appraiseTransactor)" openFeatures="mode=dialog,width=500,height=300">
+		<data>
+			<pojo>com.yuanluesoft.appraise.pojo.UnitAppraise</pojo>
+			<where>UnitAppraise.unitId={UNITID}</where>
+			<orderBy>UnitAppraise.created DESC</orderBy>
+			<quickFilter>UnitAppraise.unitName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位名称" name="unitName" align="left"/>
+			<column title="总投票" name="voteTotal" width="70" align="center"/>
+			<column title="短信投票" name="smsVoteTotal" width="70" align="center"/>
+			<column title="网络投票" name="internetVoteTotal" width="70" align="center"/>
+			<column title="满意度" name="scoreComprehensive" width="70" align="center"/>
+			<column title="累计满意度" name="yearScoreComprehensive" width="70" align="center"/>
+			<column title="发起时间" name="created" width="110" align="center"/>
+		</columns>
+	</view>
+
+	<view name="admin/appraise" form="admin/appraise" title="评议" pageRows="20" hide="noPrivilege(application_manager) and noOrgPopedom(appraiseManager)" openFeatures="mode=fullscreen" viewServiceName="appraiseViewService">
+		<data>
+			<pojo>com.yuanluesoft.appraise.pojo.Appraise</pojo>
+			<where>Appraise.isSpecial!=1</where>
+			<orderBy>Appraise.created DESC</orderBy>
+			<quickFilter>Appraise.taskName like '%{KEY}%' or Appraise.area like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="地区" name="area" width="60" align="center"/>
+			<column title="名称" name="name"/>
+			<column title="评议年度" name="appraiseYear" width="60" align="center"/>
+			<column title="评议月份" name="appraiseMonth" width="60" align="center"/>
+			<column title="发起时间" name="created" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/specialAppraise" form="admin/appraise" title="专题评议" pageRows="20" hide="noPrivilege(application_manager) and noOrgPopedom(appraiseManager)" openFeatures="mode=fullscreen" viewServiceName="appraiseViewService">
+		<data>
+			<pojo>com.yuanluesoft.appraise.pojo.Appraise</pojo>
+			<where>Appraise.isSpecial=1</where>
+			<orderBy>Appraise.created DESC</orderBy>
+			<quickFilter>Appraise.taskName like '%{KEY}%' or Appraise.area like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="地区" name="area" width="60" align="center"/>
+			<column title="名称" name="name"/>
+			<column title="评议年度" name="appraiseYear" width="60" align="center"/>
+			<column title="评议月份" name="appraiseMonth" width="60" align="center"/>
+			<column title="发起时间" name="created" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/vote" title="评议结果" pageRows="20" viewServiceName="appraiseViewService">
+		<data>
+			<pojo>com.yuanluesoft.appraise.pojo.AppraiseVote</pojo>
+			<where>AppraiseVote.unitAppraiseId={PARAMETER:unitAppraiseId|0}</where>
+			<orderBy>AppraiseVote.created DESC</orderBy>
+			<quickFilter>AppraiseVote.appraiser like '%{KEY}%' or AppraiseVote.appraiserNumber like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="评议员姓名" name="appraiser" width="80"/>
+			<column title="评议员手机号码" name="appraiserNumber" width="100" align="center"/>
+			<column title="选项名称" name="option" width="100"/>
+			<column title="投票时间" name="created" width="110" align="center"/>
+			<column title="投票方式" name="voteMode" width="110" align="center"/>
+			<column title="意见或建议" name="propose"/>
+		</columns>
+	</view>
+	
+	<view name="admin/propose" title="意见或建议(指定单位)" pageRows="20" viewServiceName="appraiseViewService">
+		<data>
+			<pojo>com.yuanluesoft.appraise.pojo.AppraiseVote</pojo>
+			<where>AppraiseVote.unitAppraiseId={PARAMETER:unitAppraiseId|0} and not AppraiseVote.propose is null</where>
+			<orderBy>AppraiseVote.created DESC</orderBy>
+			<quickFilter>AppraiseVote.appraiser like '%{KEY}%' or AppraiseVote.appraiserNumber like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<!-- column title="评议员姓名" name="appraiser" width="80"/ -->
+			<!-- column title="评议员手机号码" name="appraiserNumber" width="100" align="center"/-->
+			<column title="选项名称" name="option" width="100"/>
+			<!-- column title="投票时间" name="created" width="110" align="center"/-->
+			<!-- column title="投票方式" name="voteMode" width="110" align="center"/-->
+			<column title="意见或建议" name="propose"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allPropose" title="意见或建议(所有单位)" pageRows="1000" viewServiceName="appraiseViewService">
+		<data>
+			<pojo>com.yuanluesoft.appraise.pojo.AppraiseVote</pojo>
+			<where>unitAppraise.appraiseId={PARAMETER:appraiseId|0} and not AppraiseVote.propose is null</where>
+			<orderBy>unitAppraise.unitName,AppraiseVote.created DESC</orderBy>
+			<quickFilter>AppraiseVote.appraiser like '%{KEY}%' or AppraiseVote.appraiserNumber like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位名称" name="unitAppraise.unitName" width="150"/>
+			<!-- column title="评议员姓名" name="appraiser" width="80"/ -->
+			<!-- column title="评议员手机号码" name="appraiserNumber" width="100" align="center"/-->
+			<column title="选项名称" name="option" width="100"/>
+			<!-- column title="投票时间" name="created" width="110" align="center"/-->
+			<!-- column title="投票方式" name="voteMode" width="110" align="center"/-->
+			<column title="意见或建议" name="propose"/>
+		</columns>
+	</view>
+	
+	<view name="admin/task" form="admin/task" title="评议任务" pageRows="20" hide="noPrivilege(application_manager) and noOrgPopedom(appraiseManager)" openFeatures="mode=fullscreen" viewServiceName="appraiseViewService">
+		<data>
+			<pojo>com.yuanluesoft.appraise.pojo.AppraiseTask</pojo>
+			<orderBy>AppraiseTask.area, AppraiseTask.name</orderBy>
+			<quickFilter>AppraiseTask.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加评议任务" execute="PageUtils.newrecord('appraise', 'admin/task', 'mode=fullscreen')"/>
+			<action title="添加专题评议任务" execute="PageUtils.newrecord('appraise', 'admin/task', 'mode=fullscreen', 'isSpecial=1')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="地区" name="area" width="60" align="center"/>
+			<column title="任务名称" name="name"/>
+			<column title="最后修改时间" name="lastModified" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/participateUnit" form="admin/participateUnit" title="参评单位" pageRows="20" hide="noPrivilege(application_manager) and noOrgPopedom(appraiseManager)" openFeatures="mode=dialog,width=430,height=200" viewServiceName="appraiseViewService">
+		<data>
+			<pojo>com.yuanluesoft.appraise.pojo.AppraiseParticipateUnit</pojo>
+			<orderBy>AppraiseParticipateUnit.year DESC, AppraiseParticipateUnit.area</orderBy>
+			<quickFilter>AppraiseParticipateUnit.unitNames like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加参评单位" hide="noOrgPopedom(appraiseManager)" execute="PageUtils.newrecord('appraise', 'admin/participateUnit', 'mode=dialog,width=430,height=200')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="地区" name="area" width="60" align="center"/>
+			<column title="年度" name="year" width="60" align="center"/>
+			<column title="单位分类" name="category" width="120"/>
+			<column title="参评单位" name="unitNames"/>
+		</columns>
+	</view>
+	
+	<view name="admin/appraiseUnitSms" form="admin/appraiseUnitSms" title="短信通知" pageRows="20" hide="noPrivilege(application_manager) and noOrgPopedom(appraiseManager)" openFeatures="mode=dialog,width=500,height=300" viewServiceName="appraiseViewService">
+		<data>
+			<pojo>com.yuanluesoft.appraise.pojo.AppraiseUnitSms</pojo>
+			<orderBy>AppraiseUnitSms.created DESC</orderBy>
+			<quickFilter>AppraiseUnitSms.unitNames like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="发送短信通知" hide="noOrgPopedom(appraiseManager)" execute="PageUtils.newrecord('appraise', 'admin/appraiseUnitSms', 'mode=dialog,width=500,height=300')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="接收单位列表" name="unitNames"/>
+			<column title="短信内容" name="smsContent"/>
+			<column title="创建时间" name="created" width="110"/>
+			<column title="发送时间" name="sendTime" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="admin/deduct" form="admin/deduct" title="扣分" pageRows="20" hide="noPrivilege(application_manager) and noOrgPopedom(appraiseManager)" openFeatures="mode=dialog,width=500,height=300" viewServiceName="appraiseViewService">
+		<data>
+			<pojo>com.yuanluesoft.appraise.pojo.AppraiseDeduct</pojo>
+			<orderBy>AppraiseDeduct.created DESC</orderBy>
+			<quickFilter>AppraiseDeduct.unitName like '%{KEY}%' or AppraiseDeduct.reason like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="扣分登记" hide="noOrgPopedom(appraiseManager)" execute="PageUtils.newrecord('appraise', 'admin/deduct', 'mode=dialog,width=500,height=300')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位" name="unitName"/>
+			<column title="扣分" name="deduct" width="36" align="center"/>
+			<column title="扣分原因" name="reason"/>
+			<column title="登记时间" name="created" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="admin/markStandard" form="admin/markStandard" title="评分标准" pageRows="20" hide="noPrivilege(application_manager)" openFeatures="mode=dialog,width=500,height=300">
+		<data>
+			<pojo>com.yuanluesoft.appraise.pojo.AppraiseMarkStandard</pojo>
+			<orderBy>AppraiseMarkStandard.areaNames</orderBy>
+			<quickFilter>AppraiseMarkStandard.areaNames like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加评分标准" execute="PageUtils.newrecord('appraise', 'admin/markStandard', 'mode=dialog,width=500,height=300')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="适用的地区" name="areaNames"/>
+			<column title="适用的单位类别" name="categories"/>
+			<column title="服务对象" name="recipientRatio" width="60" align="center"/>
+			<column title="专家评议" name="expertRatio" width="60" align="center"/>
+			<column title="二级单位" name="secondaryRatio" width="60" align="center"/>
+			<column title="下级单位" name="subordinateRatio" width="60" align="center"/>
+			<column title="扣分上限" name="deductLimit" width="60" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/appraiseUnitArticleTotal" title="信息统计" pageRows="300" hide="noOrgPopedom(appraiseManager)" url="/appraise/admin/appraiseUnitArticleTotalView.shtml" viewServiceName="appraiseUnitArticleTotalViewService">
+		<data>
+			<pojo>com.yuanluesoft.appraise.model.AppraiseUnitArticleTotal</pojo>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位名称" name="unitName"/>
+			<column title="分类" name="category"/>
+			<column title="上报数量" name="createTotal" width="60" align="center" hideZero="true"/>
+			<column title="采用数量" name="issueTotal" width="60" align="center" hideZero="true"/>
+			<column title="信息动态" name="issueTotal_信息动态" width="60" align="center" hideZero="true"/>
+			<column title="惠企便民" name="issueTotal_惠企便民措施" width="60" align="center" hideZero="true"/>
+			<column title="问题整改" name="issueTotal_问题整改情况" width="60" align="center" hideZero="true"/>
+			<column title="建章立制" name="issueTotal_建章立制" width="60" align="center" hideZero="true"/>
+		</columns>
+		<extendParameters>
+			<parameter name="extendPage">/appraise/admin/appraiseUnitArticleTotal.jsp</parameter> <!-- 扩展页面 -->
+		</extendParameters>
+	</view>
+	
+	<view name="admin/appraiseResult" title="评议汇总" pageRows="300" hide="noOrgPopedom(appraiseManager)" url="/appraise/admin/appraiseResultView.shtml" viewServiceName="appraiseResultViewService">
+		<data>
+			<pojo>com.yuanluesoft.appraise.model.AppraiseResult</pojo>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位名称" name="unitName"/>
+			<column title="分类" name="category"/>
+			<column title="服务对象评议得分" name="recipientScore" width="60" align="center" hideZero="true"/>
+			<column title="专家评议得分" name="expertScore" width="60" align="center" hideZero="true"/>
+			<column title="二级单位得分" name="secondaryScore" width="60" align="center" hideZero="true"/>
+			<column title="下级单位得分" name="subordinateScore" width="60" align="center" hideZero="true"/>
+			<column title="扣分" name="deduct" width="60" align="center" hideZero="true"/>
+			<column title="汇总得分" name="score" width="60" align="center" hideZero="true"/>
+		</columns>
+		<extendParameters>
+			<parameter name="extendPage">/appraise/admin/appraiseResult.jsp</parameter> <!-- 扩展页面 -->
+		</extendParameters>
+	</view>
+</views>

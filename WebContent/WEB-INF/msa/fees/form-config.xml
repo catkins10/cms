@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="fees" class="com.yuanluesoft.msa.fees.forms.Fees" title="规费征缴" pojo="com.yuanluesoft.msa.fees.pojo.MsaFees">		
+	    <actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('deleteFees')"/>
+			<action title="发送到分支局" hide="workflow()" execute="FormUtils.doAction('sendToUnits')"/>
+			<action title="送部门负责人审核" hide="workflow()" execute="FormUtils.doAction('sendToUnits')"/>
+		</actions>
+	</form>
+	
+	<form name="feesItem" class="com.yuanluesoft.msa.fees.forms.FeesItem" title="收费细项" pojo="com.yuanluesoft.msa.fees.pojo.MsaFees">		
+	    <formFields>
+			<field name="item" title="收费细项" type="component">
+				<parameter name="class">com.yuanluesoft.msa.fees.pojo.MsaFeesItem</parameter>
+			</field>
+			<field name="item.unitName" title="负责单位" type="string" inputMode="select" length="15" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'item.unitId{id},item.unitName{name}', '', 'unit')</parameter>
+			</field>
+		</formFields>
+	    <actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="办结" execute="if(confirm('是否确定完成规费征收？'))FormUtils.doAction('completeFeesItem')"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm(('删除后不可恢复，是否确定删除？'))FormUtils.doAction('deleteFeesItem')"/>
+		</actions>
+	</form>
+</forms>

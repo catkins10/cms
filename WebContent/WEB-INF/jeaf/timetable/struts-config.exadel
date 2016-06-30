@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,177,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="352,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,177,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="352,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#timetable" NAME="action0"
+  PATH="/timetable" SHAPE="32,224,177,25" TITLE="timetable" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/timetable.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/timetable.jsp" SHAPE="352,240,50,25" SUBTYPE="jsp"
+  TITLE="commute.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveTimetable" TARGET="action1" TITLE="saveCommute" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteTimetable" TARGET="action2" TITLE="deleteTimetable" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/refreshTimetable" TARGET="action15" TITLE="refreshTimetable" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveTimetable"
+  NAME="action1" PATH="/saveTimetable" SHAPE="560,256,177,25"
+  TITLE="timetable" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteTimetable"
+  NAME="action2" PATH="/deleteTimetable" SHAPE="560,312,177,25"
+  TITLE="timetable" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/commuteTime.jsp" SHAPE="352,576,50,55" SUBTYPE="jsp"
+  TITLE="commuteTime.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveCommuteTime.shtml" TARGET="action4"
+   TITLE="saveCommuteTime.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteCommuteTime" TARGET="action5" TITLE="deleteCommuteTime" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#commuteTime"
+  NAME="action3" PATH="/commuteTime" SHAPE="32,560,177,41"
+  TITLE="commuteTime" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/commuteTime.jsp" TARGET="page3" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveCommuteTime"
+  NAME="action4" PATH="/saveCommuteTime" SHAPE="560,592,177,25"
+  TITLE="commuteTime" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteCommuteTime"
+  NAME="action5" PATH="/deleteCommuteTime" SHAPE="560,648,177,25"
+  TITLE="commuteTime" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/overtime.jsp" SHAPE="352,728,50,55" SUBTYPE="jsp"
+  TITLE="commuteOvertime.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveOvertime.shtml" TARGET="action7"
+   TITLE="saveOvertime.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteOvertime" TARGET="action8" TITLE="deleteCommuteOvertime" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#overtime" NAME="action6"
+  PATH="/overtime" SHAPE="32,712,177,41" TITLE="overtime" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/overtime.jsp" TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveOvertime"
+  NAME="action7" PATH="/saveOvertime" SHAPE="560,744,177,25"
+  TITLE="overtime" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteOvertime"
+  NAME="action8" PATH="/deleteOvertime" SHAPE="560,800,177,25"
+  TITLE="overtime" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#offDay" NAME="action9"
+  PATH="/offDay" SHAPE="32,408,177,41" TITLE="offDay" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/offDay.jsp" TARGET="page5" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/offDay.jsp" SHAPE="352,424,50,55" SUBTYPE="jsp"
+  TITLE="offDay.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveOffDay.shtml" TARGET="action10" TITLE="saveOffDay.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteOffDay" TARGET="action11" TITLE="deleteOffDay" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveOffDay"
+  NAME="action10" PATH="/saveOffDay" SHAPE="560,440,177,25"
+  TITLE="offDay" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteOffDay"
+  NAME="action11" PATH="/deleteOffDay" SHAPE="560,496,177,25"
+  TITLE="offDay" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#festival" NAME="action12"
+  PATH="/festival" SHAPE="32,848,177,41" TITLE="festival" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/festival.jsp" TARGET="page6" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/festival.jsp" SHAPE="352,864,50,55" SUBTYPE="jsp"
+  TITLE="festival.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveFestival.shtml" TARGET="action13"
+   TITLE="saveFestival.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteFestival" TARGET="action14" TITLE="deleteFestival" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/refreshFestival.shtml" TARGET="action19"
+   TITLE="refreshFestival.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveFestival"
+  NAME="action13" PATH="/saveFestival" SHAPE="560,880,177,25"
+  TITLE="festival" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteFestival"
+  NAME="action14" PATH="/deleteFestival" SHAPE="560,936,177,25"
+  TITLE="festival" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#refreshTimetable"
+  NAME="action15" PATH="/refreshTimetable" SHAPE="560,368,177,25"
+  TITLE="timetable" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#festivalAdjust"
+  NAME="action16" PATH="/festivalAdjust" SHAPE="32,1056,177,41"
+  TITLE="festivalAdjust" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/festivalAdjust.jsp" TARGET="page7"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page7"
+  PATH="/festivalAdjust.jsp" SHAPE="352,1072,50,55" SUBTYPE="jsp"
+  TITLE="festivalAdjust.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveFestivalAdjust.shtml" TARGET="action17"
+   TITLE="saveFestivalAdjust.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteFestivalAdjust.shtml" TARGET="action18"
+   TITLE="deleteFestivalAdjust.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveFestivalAdjust"
+  NAME="action17" PATH="/saveFestivalAdjust" SHAPE="560,1088,177,25"
+  TITLE="festivalAdjust" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteFestivalAdjust"
+  NAME="action18" PATH="/deleteFestivalAdjust" SHAPE="560,1144,177,25"
+  TITLE="festivalAdjust" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#refreshFestival"
+  NAME="action19" PATH="/refreshFestival" SHAPE="560,992,177,25"
+  TITLE="festival" TYPE="action"/>
+</PROCESS>

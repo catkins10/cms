@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- EAI客户端 -->
+	<bean id="eaiClient" class="com.yuanluesoft.eai.client.local.EAIClientImpl" init-method="init">
+		<property name="applicationSetName"><value>cms</value></property>
+		<property name="eaiServer"><ref bean="eaiServer"/></property>
+		<property name="webApplicationUrl"><ref bean="webApplicationUrl"/></property>
+		<property name="webApplicationSafeUrl"><ref bean="webApplicationSafeUrl"/></property>
+	</bean>
+	
+	<!-- EAI处理器 -->
+	<bean id="eaiProcessor" class="com.yuanluesoft.eai.client.processor.EAIProcessor">
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+	</bean>
+</beans>

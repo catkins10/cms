@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/bbs" class="com.yuanluesoft.bbs.forum.forms.admin.Bbs" title="论坛" pojo="com.yuanluesoft.bbs.forum.pojo.Bbs">
+		<formFields>
+			<field name="parentDirectoryName" title="上级" type="string" inputMode="readonly"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('deleteBbs')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/category" class="com.yuanluesoft.bbs.forum.forms.admin.Category" title="版块分类" pojo="com.yuanluesoft.bbs.forum.pojo.ForumCategory">
+		<formFields>
+			<field name="parentDirectoryName" title="上级" type="string" inputMode="readonly"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('deleteCategory')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/forum" class="com.yuanluesoft.bbs.forum.forms.admin.Forum" title="版块" pojo="com.yuanluesoft.bbs.forum.pojo.Forum">
+		<formFields>
+			<field name="parentDirectoryName" title="上级" type="string" inputMode="readonly"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('deleteForum')"/>
+		</actions>
+	</form>
+</forms>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="留言" class="com.yuanluesoft.cms.messageboard.pojo.MessageBoard" businessServiceName="messageBoardService">
+		<field name="content" title="内容" type="string" inputMode="textarea" persistence="false">
+			<parameter name="referenceFields">lazyBody</parameter>
+			<parameter name="rows">8</parameter>
+			<parameter name="rssDescriptionField">true</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="class">com.yuanluesoft.cms.publicservice.pojo.PublicServiceOpinion</parameter>
+			<parameter name="presettingOpinionTypes">批转,办理,部门办理|required,部门审核,回复审核,领导批示</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="常见问题" class="com.yuanluesoft.cms.messageboard.pojo.MessageBoardFaq" businessServiceName="messageBoardService">
+		<field name="question" title="问题" length="300" type="string" inputMode="text" required="true"/>
+		<field name="answer" title="答案" type="string" inputMode="textarea" required="true">
+			<parameter name="rows">8</parameter>
+		</field>
+		<field name="firstKeyword" title="第一个关键词" length="30" type="string" inputMode="text"/>
+		<field name="otherKeywords" title="其它关键词" length="200" type="string" inputMode="text"/>
+		<field name="siteId" title="绑定的站点ID" length="20" type="number" inputMode="hidden"/>
+	</businessObject>
+</businessObjects>

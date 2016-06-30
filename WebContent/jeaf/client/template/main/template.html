@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>客户端</title>
+	<SCRIPT>window.onerror=function(){return true;}</SCRIPT>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<style>
+		html, body {
+			height:100%;
+			margin: 0px;
+		}
+	</style>
+	<meta name="styleDefineMeta" content="日间########{CONTEXTPATH}/jeaf/client/css/day.css##{CONTEXTPATH}/jeaf/client/css/day.css">
+	<meta name="deviceMeta" content="database=false&amp;databaseApplicationNames=&amp;databaseApplicationTitles=&amp;fileSystem=true&amp;camera=false">
+</head>
+<body>
+<table style="width: 100%; height: 100%;" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td valign="top">
+			<div class="titleBar" id="titleBar" style="height: auto;">
+				<div title="显示频道栏" class="showChannelBarButton" id="showChannelBarButton" style="float: left;"><span class="showChannelBarButtonImage"></span></div>
+				<div class="channelName">
+					<a id="channelName">&lt;频道名称&gt;</a>
+				</div>
+				<a id="systemLink" style="width: 36px; text-align: center; line-height: 30px; float: right; display: block;" href="/cms/siteresource/search.shtml?pageName=quickSiteSearch" target="_blank" urn="siteId=-1&amp;applicationName=cms/sitemanage&amp;pageName=quickSiteSearch">
+					<img width="16" align="absMiddle" src="{CONTEXTPATH}/jeaf/client/template/main/images/search.png">
+				</a>
+				<div style="padding-top: 3px; padding-right: 5px; float: right; display: inline-block;">
+					<a id="systemLink" href="/jeaf/client/personalSetting.shtml" target="_self" urn="siteId=-1&amp;applicationName=jeaf/client&amp;pageName=custom"></a>
+				</div>
+				<div class="columnBar">
+					<div title="栏目栏" id="columnBar" urn="displayMode=alwaysDisplay&amp;currentColumnStyle=column currentColumn&amp;columnStyle=column&amp;moreColumnsOnLeftStyle=moreColumnsOnLeft&amp;moreColumnsOnRightStyle=moreColumnsOnRight">栏目栏</div>
+				</div>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td height="100%" valign="top">
+			<div title="栏目容器" class="columnContainer" id="columnContainer"></div>
+		</td>
+	</tr>
+</table>
+
+<div title="频道栏" class="channelBar" id="channelBar" style="left: 800px; top: 80px; height: 100%; position: absolute; box-shadow: 0px 1px 6px rgba(0,0,0,0.2);" urn="displayMode=left2right&amp;overflowX=false&amp;overflowY=true&amp;currentChannelStyle=channel channel_current&amp;marginTop=0&amp;marginBottom=0" name="channelBar" cellspacing="0" cellpadding="0" border="0">
+	<div title="频道:新闻" class="channel" id="channel" urn="name=新闻&amp;columnCount=10&amp;column0=name%3D要闻%26link%3D<A id%253DsiteLink urn%253D&quot;siteName%253DI'm%2526amp;siteId%253D0%2526amp;openMode%253D_blank&quot;>要闻</A>&amp;column1=name%3D工作动态%26link%3D<A id%253DsiteLink urn%253DsiteName%253D工作动态%2526amp;siteId%253D9115974834000%2526amp;openMode%253D_blank>工作动态</A>&amp;column2=name%3D公示公告%26link%3D<A id%253DsiteLink urn%253DsiteName%253D公示公告%2526amp;siteId%253D9115976177000%2526amp;openMode%253D_blank>公示公告</A>&amp;column3=name%3D政府信息%26link%3D<A id%253DsystemLink href%253D&quot;/cms/infopublic/index.shtml&quot; urn%253DsiteId%253D-1%2526amp;applicationName%253Dcms/infopublic%2526amp;pageName%253Dindex target%253D_blank _fcksavedurl%253D&quot;/cms/infopublic/index.shtml&quot;>信息公开目录</A>" name="channel"><img width="20" align="absMiddle" src="{CONTEXTPATH}/jeaf/client/template/main/images/news.png">&nbsp;&nbsp;新闻 </div>
+	<div title="频道:互动" class="channel" id="channel" urn='name=互动&amp;columnCount=6&amp;column0=name%3D市长信箱%26link%3D<A id%253DsystemLink href%253D"/cms/sitemanage/applicationIndex.shtml?applicationName%253Dcms/leadermail%2526amp;pageName%253Dmails" urn%253DsiteId%253D-1%2526amp;siteName%253D%2526amp;leaderMailType%253D target%253D_blank _fcksavedurl%253D"/cms/sitemanage/applicationIndex.shtml?applicationName%253Dcms/leadermail%2526amp;pageName%253Dmails">更多</A>%2526nbsp;&amp;column1=name%3D留言板%26link%3D<A id%253DsystemLink href%253D"/cms/sitemanage/applicationIndex.shtml?applicationName%253Dcms/messageboard%2526amp;pageName%253Dmessages" urn%253DsiteId%253D-1%2526amp;applicationName%253Dcms/messageboard%2526amp;pageName%253Dmessages target%253D_blank _fcksavedurl%253D"/cms/sitemanage/applicationIndex.shtml?applicationName%253Dcms/messageboard%2526amp;pageName%253Dmessages">留言列表</A>&amp;column2=name%3D投诉建议%26link%3D<A id%253DsystemLink href%253D"/cms/sitemanage/applicationIndex.shtml?applicationName%253Dcms/complaint%2526amp;amp;pageName%253Dcomplaints" urn%253DsiteId%253D-1%2526amp;siteName%253D%2526amp;complaintType%253D target%253D_blank _fcksavedurl%253D"/cms/sitemanage/applicationIndex.shtml?applicationName%253Dcms/complaint%2526amp;amp;pageName%253Dcomplaints">更多</A>&amp;column3=name%3D民意征集%26link%3D<A id%253DsystemLink href%253D"/cms/sitemanage/applicationIndex.shtml?applicationName%253Dcms/advice" urn%253DsiteId%253D-1%2526amp;applicationName%253Dcms/advice%2526amp;pageName%253Dindex target%253D_blank _fcksavedurl%253D"/cms/sitemanage/applicationIndex.shtml?applicationName%253Dcms/advice">首页</A>&amp;column4=name%3D在线调查%26link%3D<A id%253DsystemLink href%253D"/cms/sitemanage/applicationIndex.shtml?applicationName%253Dcms/inquiry" urn%253DsiteId%253D-1%2526amp;applicationName%253Dcms/inquiry%2526amp;pageName%253Dindex target%253D_blank _fcksavedurl%253D"/cms/sitemanage/applicationIndex.shtml?applicationName%253Dcms/inquiry">首页</A>' name="channel"><img width="20" align="absMiddle" src="{CONTEXTPATH}/jeaf/client/template/main/images/interactive.png">&nbsp;&nbsp;互动</div>
+	<div title="频道:网上办事" class="channel" id="channel" urn='name=网上办事&amp;columnCount=&amp;column0=name%3D网上办事目录%26link%3D<A id%253DsystemLink href%253D"/cms/sitemanage/applicationIndex.shtml?applicationName%253Dcms/onlineservice" urn%253DsiteId%253D-1%2526amp;applicationName%253Dcms/onlineservice%2526amp;pageName%253Dindex target%253D_blank _fcksavedurl%253D"/cms/sitemanage/applicationIndex.shtml?applicationName%253Dcms/onlineservice">首页</A>' name="channel"><img width="20" align="absMiddle" src="{CONTEXTPATH}/jeaf/client/template/main/images/service.png">&nbsp;&nbsp;办事</div>
+</div>
+
+<div title="参数设置栏" class="channelBar" style="left: 1050px; top: 80px; height: 100%; display: none; position: absolute;" urn="displayMode=right2left&amp;overflowX=false&amp;overflowY=false&amp;marginTop=50&amp;marginBottom=30">个人设置</div>
+
+<div title="对话框" class="clientDialog" id="clientDialog" style="z-index: 100000;">
+	<div class="clientDialogTitle"><a id="clientDialogTitle">&lt;对话框标题&gt;</a></div>
+	<div title="对话框主体" class="clientDialogBody" id="clientDialogBody">内容</div>
+	<div>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td title="对话框取消按钮" class="clientDialogCancelButton" id="clientDialogCancelButton">取消</td>
+				<td title="对话框“其它”按钮" class="clientDialogOtherButton" id="clientDialogOtherButton">其它</td>
+				<td title="对话框确定按钮" class="clientDialogOkButton" id="clientDialogOkButton">确定</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<div style="left: 0px; width: 100%; height: 0px; text-align: center; bottom: 120px; position: absolute; z-index: 100001;">
+	<div title="少量信息提示框" class="clientToast" id="clientToast">提示信息</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--档案管理:文书档案-->
+	<class name="com.yuanluesoft.archives.administrative.pojo.AdministrativeArchives" table="archives_administrative">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="subject"/> <!--文件题名-->
+		<property name="docCategory"/> <!--公文种类-->
+		<property name="docWord"/> <!--文件字号-->
+		<property name="keyword"/> <!--主题词-->
+		<property name="responsibilityPerson"/> <!--责任者-->
+		<property name="secureLevel"/> <!--文件密级-->
+		<property name="secureLevelCode"/> <!--文件密级编号-->
+		<property name="signDate"/> <!--成文日期-->
+		<property name="count"/> <!--份数-->
+		<property name="pageCount"/> <!--文件页数-->
+		<property name="unit"/> <!--机构或问题-->
+		<property name="unitCode"/> <!--机构或问题编号-->
+		<property name="filingDate"/> <!--归档日期-->
+		<property name="fondsCode"/> <!--全宗号-->
+		<property name="fondsName"/> <!--全宗名称-->
+		<property name="filingYear"/> <!--归档年度-->
+		<property name="rotentionPeriod"/> <!--保管期限-->
+		<property name="rotentionPeriodCode"/> <!--保管期限编号-->
+		<property name="serialNumber"/> <!--顺序号-->
+		<property name="archivesCode"/> <!--档号-->
+		<property name="categoryId"/> <!--分类ID-->
+		<property name="archivesType"/> <!--文件类型-->
+		<property name="remark"/> <!--备注-->
+		<set name="visitors" table="cms_resource_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.archives.administrative.pojo.AdministrativeArchivesPrivilege" />
+		</set>
+		<set name="bodies" table="archives_administrative_body" lazy="true" inverse="true" cascade="delete">
+			<key column="archivesId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.archives.administrative.pojo.AdministrativeArchivesBody" />
+		</set>
+	</class>
+	
+	<!--档案管理:文书档案权限控制-->
+	<class name="com.yuanluesoft.archives.administrative.pojo.AdministrativeArchivesPrivilege" table="archives_admin_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--档案管理:文书档案HTML正文-->
+	<class name="com.yuanluesoft.archives.administrative.pojo.AdministrativeArchivesBody" table="archives_administrative_body">
+		<id name="id" column="id" type="long">
+			<generator class="native" />
+		</id>
+		<property name="archivesId"/> <!--文件ID-->
+		<property name="htmlBody"/> <!--HTML正文-->
+	</class>
+</hibernate-mapping>

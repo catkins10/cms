@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminUser" type="com.yuanluesoft.logistics.usermanage.forms.admin.User"/>
+  <form-bean name="user" type="com.yuanluesoft.logistics.usermanage.forms.User"/>
+  <form-bean name="adminBlacklist" type="com.yuanluesoft.logistics.usermanage.forms.admin.Blacklist"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminUser" path="/admin/user" scope="request"
+   type="com.yuanluesoft.logistics.usermanage.actions.user.admin.Load" validate="false">
+   <forward name="load" path="/admin/user.jsp"/>
+  </action>
+  <action input="/admin/user.jsp" name="adminUser"
+   path="/admin/saveUser" scope="request"
+   type="com.yuanluesoft.logistics.usermanage.actions.user.admin.Save" validate="false"/>
+  <action input="/admin/user.jsp" name="adminUser"
+   path="/admin/deleteUser" scope="request"
+   type="com.yuanluesoft.logistics.usermanage.actions.user.admin.Delete" validate="false"/>
+  <action name="user" path="/regist" scope="request"
+   type="com.yuanluesoft.logistics.usermanage.actions.user.Load" validate="false">
+   <forward name="load" path="/regist.jsp"/>
+  </action>
+  <action input="/regist.jsp" name="user" path="/doRegist"
+   scope="request"
+   type="com.yuanluesoft.logistics.usermanage.actions.user.Submit" validate="false">
+   <forward name="result" path="/registed.jsp"/>
+  </action>
+  <action path="/selectRegistType" scope="request"
+   type="com.yuanluesoft.logistics.usermanage.actions.user.SelectRegistType" validate="false"/>
+  <action input="/admin/user.jsp" name="adminUser"
+   path="/admin/approvalUser" scope="request"
+   type="com.yuanluesoft.logistics.usermanage.actions.user.admin.Approval" validate="false"/>
+  <action name="adminBlacklist" path="/admin/blacklist" scope="request"
+   type="com.yuanluesoft.logistics.usermanage.actions.blacklist.admin.Load" validate="false">
+   <forward name="load" path="/admin/blacklist.jsp"/>
+  </action>
+  <action input="/admin/blacklist.jsp" name="adminBlacklist"
+   path="/admin/removeFromBlacklist" scope="request"
+   type="com.yuanluesoft.logistics.usermanage.actions.blacklist.admin.Remove" validate="false"/>
+  <action input="/admin/blacklist.jsp" name="adminBlacklist"
+   path="/admin/saveBlacklist" scope="request"
+   type="com.yuanluesoft.logistics.usermanage.actions.blacklist.admin.Save" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

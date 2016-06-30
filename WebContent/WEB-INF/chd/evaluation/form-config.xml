@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.chd.evaluation.forms.admin.DataView" title="资料视图">
+		<formFields>
+			<field name="directoryId" title="目录ID" type="number" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form name="admin/company" class="com.yuanluesoft.chd.evaluation.forms.admin.Company" title="公司" pojo="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationCompany">
+		<formFields>
+			<field title="上级" name="parentDirectoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/chd/evaluation/js/evaluation.js</parameter>
+				<parameter name="execute">selectDirectory(500, 350, false, 'parentDirectoryId{id},parentDirectoryName{name}', '', '', '', 'company')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="添加下一个" hide="isOld()" execute="FormUtils.doAction('createNextCompany')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteCompany')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/plantType" class="com.yuanluesoft.chd.evaluation.forms.admin.PlantType" title="发电企业类型" pojo="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlantType">
+		<formFields>
+			<field title="上级" name="parentDirectoryName" type="string" inputMode="readonly" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/chd/evaluation/js/evaluation.js</parameter>
+				<parameter name="execute">selectDirectory(500, 350, false, 'parentDirectoryId{id},parentDirectoryName{name}', '', '', '', 'company')</parameter>
+			</field>
+			<field title="机组资料模板" name="generatorTemplate" type="html" inputMode="htmleditor">
+				<parameter name="height">280</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="添加下一个" hide="isOld()" execute="FormUtils.doAction('createNextPlantType')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deletePlantType')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/plant" class="com.yuanluesoft.chd.evaluation.forms.admin.Plant" title="发电企业" pojo="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlant">
+		<formFields>
+			<field title="上级" name="parentDirectoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/chd/evaluation/js/evaluation.js</parameter>
+				<parameter name="execute">selectDirectory(500, 350, false, 'parentDirectoryId{id},parentDirectoryName{name}', '', '', '', 'company')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="添加下一个" hide="isOld()" execute="FormUtils.doAction('createNextPlant')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deletePlant')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/rule" class="com.yuanluesoft.chd.evaluation.forms.admin.Rule" title="评价项目" pojo="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationRule">
+		<formFields>
+			<field title="上级" name="parentDirectoryName" type="string" inputMode="readonly" required="true"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="添加下一个" hide="isOld()" execute="FormUtils.doAction('createNextRule')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteRule')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/plantRule" class="com.yuanluesoft.chd.evaluation.forms.admin.PlantRule" title="评价项目" pojo="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlantRule">
+		<formFields>
+			<field title="上级" name="parentDirectoryName" type="string" inputMode="readonly" required="true"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/level" class="com.yuanluesoft.chd.evaluation.forms.admin.Level" title="评价等级" pojo="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationCompany">
+		<formFields>
+			<field name="level" title="评价等级" type="component">
+				<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationLevel</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteLevel')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/indicator" class="com.yuanluesoft.chd.evaluation.forms.admin.Indicator" title="主要指标" pojo="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlantType">
+		<formFields>
+			<field name="indicator" title="主要指标" type="component">
+				<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationIndicator</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteIndicator')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/prerequisites" class="com.yuanluesoft.chd.evaluation.forms.admin.Prerequisites" title="必备条件" pojo="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlantType">
+		<formFields>
+			<field name="evaluationPrerequisites" title="必备条件" type="component">
+				<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPrerequisites</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deletePrerequisites')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/honor" class="com.yuanluesoft.chd.evaluation.forms.admin.Honor" title="荣誉" pojo="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlant">
+		<formFields>
+			<field name="honor" title="荣誉" type="component">
+				<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlantHonor</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteHonor')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/objective" class="com.yuanluesoft.chd.evaluation.forms.admin.Objective" title="年度目标" pojo="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlant">
+		<formFields>
+			<field name="objective" title="年度目标" type="component">
+				<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationObjective</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteObjective')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/detail" class="com.yuanluesoft.chd.evaluation.forms.admin.Detail" title="评价细则" pojo="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationDetail">
+		<formFields>
+			<field title="上级" name="parentDirectoryName" type="string" inputMode="readonly" required="true"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteDetail')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/point" class="com.yuanluesoft.chd.evaluation.forms.admin.Point" title="评价要点" pojo="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationDetail">
+		<formFields>
+			<field name="point" title="评价要点" type="component">
+				<parameter name="class">com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPoint</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deletePoint')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/plantDetail" class="com.yuanluesoft.chd.evaluation.forms.admin.PlantDetail" title="评价细则" pojo="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlantDetail">
+		<formFields>
+			<field title="上级" name="parentDirectoryName" type="string" inputMode="readonly" required="true"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="plant" class="com.yuanluesoft.chd.evaluation.forms.Plant" title="发电企业" pojo="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlant">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="添加下一个" hide="isOld()" execute="FormUtils.doAction('createNextPlant')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deletePlant')"/>
+		</actions>
+	</form>
+</forms>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="fingerprintTemplate" title="指纹采集" pageRows="25">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.fingerprint.pojo.FingerprintTemplate</pojo>
+			<orderBy>FingerprintTemplate.personName, FingerprintTemplate.finger</orderBy>
+			<quickFilter>FingerprintTemplate.personName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="指纹采集" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_enroll)" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/jeaf/fingerprint/admin/enroll.shtml', 580, 360)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="用户名" name="personName"/>
+			<column title="手指" name="finger" align="center" width="120"/>
+			<column title="采集时间" name="created" align="center" width="120"/>
+		</columns>
+	</view>
+</views>

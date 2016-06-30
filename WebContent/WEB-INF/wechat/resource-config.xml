@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Application>
+	<Actions>
+		<Action Name="发布" Send="true"/>
+		<Action Name="送审核" Send="true"/>
+		<Action Name="审核" Send="true"/>
+		<Action Name="完成审核" Send="true"/>
+		<Action Name="删除" DeleteAction="true"/>
+	</Actions>
+	<ProgrammingParticipants>
+		<ProgrammingParticipant Id="wechatMessageManager" Name="微信消息管理人员"/>
+	</ProgrammingParticipants>
+	<SubForms>
+		<SubForm Id="Edit" Name="编辑"/>
+		<SubForm Id="Read" Name="只读"/>
+	</SubForms>
+	<TypeDeclarations>
+		<TypeDeclaration Id="result" Name="审核结果">
+			<SchemaType>
+				<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+					elementFormDefault="qualified" 
+					attributeFormDefault="unqualified">
+					<xsd:element name="result">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="同意发布"/>
+								<xsd:enumeration value="不同意发布"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+	</TypeDeclarations>
+	<DataFields>
+		<DataField Id="approvalResult" Name="审核结果">
+			<DataType>
+				<DeclaredType Id="result"/>
+			</DataType>
+		</DataField>
+	</DataFields>
+	<Applications>
+		<Application Id="issue" Name="发布">
+			<FormalParameters>
+				<FormalParameter Id="sessionInfo" Index="1" Mode="IN">
+					<DataType>
+						<DeclaredType Type="SessionInfo"/>
+					</DataType>
+					<Description>用户会话</Description>
+				</FormalParameter>
+			</FormalParameters>
+			<ExtendedAttributes>
+				<!--类型:procedure/内部过程,application/外部应用,decision/判断-->
+				<ExtendedAttribute Name="type">procedure</ExtendedAttribute>
+				<!--结束方式:Automatic/自动,Manual/人工-->
+				<ExtendedAttribute Name="finishMode">Automatic</ExtendedAttribute>
+				<ExtendedAttribute Name="service">wechatService</ExtendedAttribute>
+				<ExtendedAttribute Name="function">issue</ExtendedAttribute>
+			</ExtendedAttributes>
+		</Application>
+	</Applications>
+</Application>

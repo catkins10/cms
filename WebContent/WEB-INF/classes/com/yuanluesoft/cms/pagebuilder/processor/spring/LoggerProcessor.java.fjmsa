@@ -1,0 +1,101 @@
+package com.yuanluesoft.cms.pagebuilder.processor.spring;
+
+import com.yuanluesoft.cms.pagebuilder.model.page.SitePage;
+import com.yuanluesoft.cms.pagebuilder.processor.PageElementProcessor;
+import com.yuanluesoft.cms.sitemanage.pojo.WebDirectory;
+import com.yuanluesoft.cms.sitemanage.pojo.WebSite;
+import com.yuanluesoft.jeaf.database.DatabaseService;
+import com.yuanluesoft.jeaf.exception.ServiceException;
+import com.yuanluesoft.jeaf.form.ActionForm;
+import com.yuanluesoft.jeaf.htmlparser.HTMLParser;
+import com.yuanluesoft.jeaf.util.Environment;
+import java.sql.Timestamp;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.w3c.dom.html.HTMLElement;
+import org.w3c.dom.html.HTMLScriptElement;
+
+public class LoggerProcessor
+  implements PageElementProcessor
+{
+  /* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.pagebuilder.processor.PageElementProcessor#writePageElement(org.w3c.dom.html.HTMLElement, com.yuanluesoft.cms.sitemanage.pojo.WebDirectory, com.yuanluesoft.cms.sitemanage.pojo.WebSite, com.yuanluesoft.jeaf.htmlparser.HTMLParser, com.yuanluesoft.cms.pagebuilder.model.page.SitePage, javax.servlet.http.HttpServletRequest, int)
+	 */
+	public void writePageElement(HTMLElement pageElement, WebDirectory webDirectory, WebSite parentSite, HTMLParser htmlParser, SitePage sitePage, HttpServletRequest request, int pageMode) throws ServiceException {
+		
+	}
+
+public void writePageElement(HTMLElement pageElement, WebDirectory webDirectory, WebSite parentSite, HTMLParser htmlParser, SitePage sitePage, HttpServletRequest request, boolean editMode, boolean isGenerateStaticPage)
+    throws ServiceException
+  {
+    boolean counter = false;
+    if ("counter".equals(pageElement.getId())) {
+      counter = true;
+    }
+    else if ("true".equals(sitePage.getAttribute("loggerOnce"))) {
+      return;
+    }
+    String recordId = null;
+    Object record = sitePage.getAttribute("record");
+    if ((record != null) && (
+      (!(record instanceof ActionForm)) || ((((ActionForm)record).getAct() != null) && (!"create".equals(((ActionForm)record).getAct()))))) {
+      try {
+        recordId = "" + PropertyUtils.getProperty(record, "id");
+      }
+      catch (Exception localException)
+      {
+      }
+    }
+
+    if ((recordId == null)) {
+    	recordId = request.getParameter("directoryId");
+    	if(recordId==null) {
+    		recordId = request.getParameter("siteId");
+    	}
+    	if(recordId!=null) {
+    		recordId = Long.parseLong(recordId) + "";
+    	}
+    }
+    sitePage.setAttribute("loggerOnce", "true");
+    HTMLScriptElement scriptElement = (HTMLScriptElement)pageElement.getOwnerDocument().createElement("script");
+    scriptElement.setLang("JavaScript");
+    scriptElement.setCharset("utf-8");
+    String script = "var screenWidth, screenHeight, colorDepth, javaEnabled, language;var n = navigator;if(self.screen) {\tscreenWidth = screen.width;\tscreenHeight = screen.height;\tcolorDepth = screen.colorDepth;}else if(self.java) {\tvar j = java.awt.Toolkit.getDefaultToolkit();\tvar s = j.getScreenSize();\tscreenWidth = s.width;\tscreenHeight = s.height;\tcolorDepth = 0;}if(n.language) {\tlanguage = n.language.toLowerCase();}else if(n.browserLanguage) {\tlanguage = n.browserLanguage.toLowerCase();}javaEnabled = n.javaEnabled() ? 'true' : 'false';var src = '" + 
+      Environment.getContextPath() + "/jeaf/stat/track.shtml' +" + 
+      "\t\t   '?applicationName=" + sitePage.getApplicationName() + "' +" + 
+      "\t\t   '&pageName=" + sitePage.getName() + "' +" + 
+      "\t\t   '&siteId=" + webDirectory.getId() + "' +" + (
+      recordId == null ? "" : new StringBuffer("\t\t   '&recordId=").append(recordId).append("' +").toString()) + 
+      "\t\t   '&screenWidth=' + screenWidth +" + 
+      "\t\t   '&screenHeight=' + screenHeight +" + 
+      "\t\t   '&colorDepth=' + colorDepth +" + 
+      "\t\t   '&javaEnabled=' + javaEnabled +" + 
+      "\t\t   '&language=' + language +" + 
+      "\t\t   '&writeAccessCount=" + counter + "';" + 
+      "document.write('<script src=\"' + src + '\" language=\"JavaScript\" charset=\"utf-8\" type=\"text/javascript\"></scr' + 'ipt>');";
+    scriptElement.setText(script);
+    if (counter) {
+      pageElement.getParentNode().replaceChild(scriptElement, pageElement);
+    }
+    else
+      pageElement.appendChild(scriptElement);
+  }
+
+  public String writePageElementAsJs(HTMLElement pageElement, WebDirectory webDirectory, WebSite parentSite, HTMLParser htmlParser, SitePage sitePage, HttpServletRequest request)
+    throws ServiceException
+  {
+    return null;
+  }
+
+  public void createStaticPageRebuildBasis(long staticPageId, HTMLElement pageElement, SitePage sitePage, WebDirectory webDirectory, WebSite parentSite, HTMLParser htmlParser, DatabaseService databaseService, HttpServletRequest request)
+    throws ServiceException
+  {
+  }
+
+  public List listStaticPageForModifiedObject(Object object, String modifyAction, Timestamp baseTime, DatabaseService databaseService, int max)
+    throws ServiceException
+  {
+    return null;
+  }
+}

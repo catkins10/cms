@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/sendMessageByTel" class="com.yuanluesoft.jeaf.sms.forms.admin.SendMessageByTel" title="短信发送">
+		<formFields>
+			<field name="receiverNumbers" title="手机号码" type="string"/>
+			<field name="sendTime" title="发送时间" type="timestamp" inputMode="datetime"/>
+			<field name="message" title="内容" type="string" inputMode="textarea" required="true">
+				<parameter name="rows">12</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="发送" execute="FormUtils.submitForm()"/>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/smsBusiness" class="com.yuanluesoft.jeaf.sms.forms.admin.SmsBusiness" title="业务配置" pojo="com.yuanluesoft.jeaf.sms.pojo.SmsBusiness">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteSmsBusiness')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/smsUnitConfig" class="com.yuanluesoft.jeaf.sms.forms.admin.SmsUnitConfig" title="单位配置" pojo="com.yuanluesoft.jeaf.sms.pojo.SmsUnitConfig">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteSmsUnitConfig')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/smsUnitBusiness" class="com.yuanluesoft.jeaf.sms.forms.admin.SmsUnitBusiness" title="单位业务配置" pojo="com.yuanluesoft.jeaf.sms.pojo.SmsUnitConfig">
+		<formFields>
+			<field title="单位业务配置" name="unitBusiness" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.sms.pojo.SmsUnitBusiness</parameter>
+			</field>
+			<field title="短信发送编辑" name="smsSendEditors" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field title="短信发送审核" name="smsSendAuditors" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field title="短信接收受理" name="smsReceiveAccepters" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field title="短信接收审核" name="smsReceiveAuditors" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field name="smsSendEditors.visitorNames" title="短信发送编辑" type="string" inputMode="select">
+				<parameter name="execute">DialogUtils.selectVisitors('', '', this, document.getElementsByName('unitId')[0].value);</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="smsSendAuditors.visitorNames" title="短信发送审核" type="string" inputMode="select">
+				<parameter name="execute">DialogUtils.selectVisitors('', '', this, document.getElementsByName('unitId')[0].value);</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="smsReceiveAccepters.visitorNames" title="短信接收受理" type="string" inputMode="select">
+				<parameter name="execute">DialogUtils.selectVisitors('', '', this, document.getElementsByName('unitId')[0].value);</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="smsReceiveAuditors.visitorNames" title="短信接收审核" type="string" inputMode="select">
+				<parameter name="execute">DialogUtils.selectVisitors('', '', this, document.getElementsByName('unitId')[0].value);</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteSmsUnitBusiness')"/>
+		</actions>
+	</form>
+</forms>

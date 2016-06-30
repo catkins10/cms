@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="supervise" type="com.yuanluesoft.j2oa.supervise.forms.Supervise"/>
+  <form-bean name="superviseTimeLimit" type="com.yuanluesoft.j2oa.supervise.forms.SuperviseTimeLimit"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="supervise" path="/supervise" scope="request"
+   type="com.yuanluesoft.j2oa.supervise.actions.supervise.Load" validate="false">
+   <forward name="load" path="/supervise.jsp"/>
+  </action>
+  <action input="/supervise.jsp" name="supervise" path="/saveSupervise"
+   scope="request"
+   type="com.yuanluesoft.j2oa.supervise.actions.supervise.Save" validate="false"/>
+  <action input="/supervise.jsp" name="supervise" path="/runSupervise"
+   scope="request"
+   type="com.yuanluesoft.j2oa.supervise.actions.supervise.Run" validate="false"/>
+  <action input="/supervise.jsp" name="supervise"
+   path="/deleteSupervise" scope="request"
+   type="com.yuanluesoft.j2oa.supervise.actions.supervise.Delete" validate="false"/>
+  <action input="/supervise.jsp" name="supervise"
+   path="/refreshSupervise" scope="request"
+   type="com.yuanluesoft.j2oa.supervise.actions.supervise.Refresh" validate="false"/>
+  <action name="superviseTimeLimit" path="/superviseTimeLimit"
+   scope="request"
+   type="com.yuanluesoft.j2oa.supervise.actions.supervise.timelimit.Load" validate="false">
+   <forward name="load" path="/superviseTimeLimit.jsp"/>
+  </action>
+  <action input="/superviseTimeLimit.jsp" name="superviseTimeLimit"
+   path="/saveSuperviseTimeLimit" scope="request"
+   type="com.yuanluesoft.j2oa.supervise.actions.supervise.timelimit.Save" validate="false"/>
+  <action input="/supervise.jsp" name="supervise"
+   path="/cancelSupervise" scope="request"
+   type="com.yuanluesoft.j2oa.supervise.actions.supervise.Cancel" validate="false"/>
+  <action input="/supervise.jsp" name="supervise"
+   path="/assignSupervise" scope="request"
+   type="com.yuanluesoft.j2oa.supervise.actions.supervise.Assign" validate="false"/>
+  <action input="/supervise.jsp" name="supervise"
+   path="/implementSupervise" scope="request"
+   type="com.yuanluesoft.j2oa.supervise.actions.supervise.Implement" validate="false"/>
+  <action input="/supervise.jsp" name="supervise" path="/writeOpinion"
+   scope="request"
+   type="com.yuanluesoft.j2oa.supervise.actions.supervise.WriteOpinion" validate="false"/>
+  <action name="supervise" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.j2oa.supervise.actions.supervise.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

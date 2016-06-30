@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="操作日志" class="com.yuanluesoft.jeaf.logger.pojo.ActionLog">
+		<field name="applicationName" title="应用名称" type="string" inputMode="readonly"/>
+		<field name="recordType" title="记录类型" type="string" inputMode="readonly"/>
+		<field name="recordId" title="记录ID" type="string" inputMode="readonly"/>
+		<field name="content" title="记录描述" type="string" inputMode="readonly"/>
+		<field name="personId" title="操作人ID" type="string" inputMode="readonly"/>
+		<field name="personName" title="操作人" type="string" inputMode="readonly"/>
+		<field name="actionTime" title="操作时间" type="string" inputMode="readonly"/>
+		<field name="actionName" title="操作名称" type="string" inputMode="readonly"/>
+		<field name="actionType" title="操作类型" type="string" inputMode="radio">
+			<parameter name="itemsText">新建|save\0更新|update\0删除|delete</parameter>
+		</field>
+		<field name="ip" title="IP" type="string" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminProject" type="com.yuanluesoft.fdi.project.forms.admin.Project"/>
+  <form-bean name="adminProjectPush" type="com.yuanluesoft.fdi.project.forms.admin.ProjectPush"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminProject" path="/admin/project" scope="request"
+   type="com.yuanluesoft.fdi.project.actions.project.admin.Load" validate="false">
+   <forward name="load" path="/admin/project.jsp"/>
+  </action>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/saveProject" scope="request"
+   type="com.yuanluesoft.fdi.project.actions.project.admin.Save" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/deleteProject" scope="request"
+   type="com.yuanluesoft.fdi.project.actions.project.admin.Delete" validate="false"/>
+  <action name="adminProjectPush" path="/admin/projectPush"
+   scope="request"
+   type="com.yuanluesoft.fdi.project.actions.project.admin.push.Load" validate="false">
+   <forward name="load" path="/admin/projectPush.jsp"/>
+  </action>
+  <action input="/admin/projectPush.jsp" name="adminProjectPush"
+   path="/admin/saveProjectPush" scope="request"
+   type="com.yuanluesoft.fdi.project.actions.project.admin.push.Save" validate="false"/>
+  <action input="/admin/projectPush.jsp" name="adminProjectPush"
+   path="/admin/deleteProjectPush" scope="request"
+   type="com.yuanluesoft.fdi.project.actions.project.admin.push.Delete" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/refreshProject" scope="request"
+   type="com.yuanluesoft.fdi.project.actions.project.admin.Refresh" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

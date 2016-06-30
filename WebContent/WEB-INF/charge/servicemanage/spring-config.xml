@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>	
+	<!-- 服务管理 -->
+	<bean id="serviceManage" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.charge.servicemanage.service.spring.ServiceManageImpl">
+				<!-- 9191edu的服务列表,主要收录免费的和包月的服务 -->
+				<property name="serviceItems">
+					<value>教育资讯,名师在线,校长风采,网站公告,课堂实录,
+						   教育即时通,在线课堂,远程培训,在线备课,资源库,
+						   学习评测
+					</value>
+				</property>
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="personService"><ref bean="personService"/></property>
+				<property name="serviceSoapPassport"><ref bean="chargeSoapPassport"/></property>
+				<property name="deductionService"><ref bean="deductionServiceImpl"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="useServiceItem">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="serviceManageImpl" class="com.yuanluesoft.charge.servicemanage.service.spring.ServiceManageImpl">
+		<!-- 9191edu的服务列表,主要收录免费的和包月的服务 -->
+		<property name="serviceItems">
+			<value>教育资讯,名师在线,校长风采,网站公告,课堂实录,
+				   教育即时通,在线课堂,远程培训,在线备课,资源库,
+				   学习评测
+			</value>
+		</property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="personService"><ref bean="personService"/></property>
+		<property name="serviceSoapPassport"><ref bean="chargeSoapPassport"/></property>
+		<property name="deductionService"><ref bean="deductionService"/></property>
+	</bean>
+	
+	<!-- 服务扣费管理 -->
+	<bean id="deductionService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<ref bean="deductionServiceImpl"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="personalServiceDeduction">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="serviceDeduction">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="doPersonalServiceDeduction">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="deductionServiceImpl" class="com.yuanluesoft.charge.servicemanage.service.spring.DeductionServiceImpl" init-method="init">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="distributionService"><ref bean="distributionService"/></property>
+		<property name="personalFinanceService"><ref bean="personalFinanceServiceImpl"/></property>
+		<property name="serviceManage"><ref bean="serviceManage"/></property>
+		<property name="serviceSoapPassport"><ref bean="chargeSoapPassport"/></property>
+	</bean>
+</beans>

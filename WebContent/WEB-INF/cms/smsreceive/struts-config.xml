@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminWorkflowConfig" type="com.yuanluesoft.cms.smsreceive.forms.admin.SmsReceiveWorkflow"/>
+  <form-bean name="adminMessage" type="com.yuanluesoft.cms.smsreceive.forms.admin.SmsReceiveMessage"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminMessage" path="/admin/message" scope="request"
+   type="com.yuanluesoft.cms.smsreceive.actions.message.admin.Load" validate="false">
+   <forward name="load" path="/admin/message.jsp"/>
+  </action>
+  <action name="adminWorkflowConfig" path="/admin/workflowConfig"
+   scope="request"
+   type="com.yuanluesoft.cms.smsreceive.actions.workflowconfig.admin.Load" validate="false">
+   <forward name="load" path="/admin/workflowConfig.jsp"/>
+  </action>
+  <action input="/admin/workflowConfig.jsp" name="adminWorkflowConfig"
+   path="/admin/saveWorkflowConfig" scope="request"
+   type="com.yuanluesoft.cms.smsreceive.actions.workflowconfig.admin.Save" validate="false"/>
+  <action input="/admin/workflowConfig.jsp" name="adminWorkflowConfig"
+   path="/admin/deleteWorkflowConfig" scope="request"
+   type="com.yuanluesoft.cms.smsreceive.actions.workflowconfig.admin.Delete" validate="false"/>
+  <action input="/admin/workflowConfig.jsp" name="adminWorkflowConfig"
+   path="/admin/doWorkflowConfig" scope="request"
+   type="com.yuanluesoft.cms.smsreceive.actions.workflowconfig.admin.DoWorkflowConfig" validate="false"/>
+  <action input="/admin/message.jsp" name="adminMessage"
+   path="/admin/saveMessage" scope="request"
+   type="com.yuanluesoft.cms.smsreceive.actions.message.admin.Save" validate="false"/>
+  <action input="/admin/message.jsp" name="adminMessage"
+   path="/admin/deleteMessage" scope="request"
+   type="com.yuanluesoft.cms.smsreceive.actions.message.admin.Delete" validate="false"/>
+  <action input="/admin/message.jsp" name="adminMessage"
+   path="/admin/runMessage" scope="request"
+   type="com.yuanluesoft.cms.smsreceive.actions.message.admin.Run" validate="false"/>
+  <action input="/admin/message.jsp" name="adminMessage"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.cms.smsreceive.actions.message.admin.WriteOpinion" validate="false"/>
+  <action input="/admin/message.jsp" name="adminMessage"
+   path="/admin/replyMessage" scope="request"
+   type="com.yuanluesoft.cms.smsreceive.actions.message.admin.Reply" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 评议员服务 -->
+	<bean id="appraiserService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<ref local="appraiserServiceImpl"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="import*">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="deleteImported*">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="complete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="setAppraisersDisabled">PROPAGATION_NEVER,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="appraiserServiceImpl" class="com.yuanluesoft.appraise.appraiser.service.spring.AppraiserServiceImpl" init-method="init">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="orgService"><ref bean="orgService"/></property>
+		<property name="attachmentService"><ref bean="attachmentService"/></property>
+		<property name="appraiseService"><ref bean="appraiseServiceImpl"/></property>
+	</bean>
+</beans>

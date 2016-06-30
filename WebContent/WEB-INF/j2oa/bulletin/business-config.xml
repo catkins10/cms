@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="电子公告" class="com.yuanluesoft.j2oa.bulletin.pojo.Bulletin">
+		<field name="subject" title="主题" length="100" required="true" type="string" inputMode="text"/>
+		<field name="category" title="类别" length="16" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">通知\0公告\0新闻\0文件\0其他</parameter>
+		</field>
+		<field name="beginDate" title="有效时间(开始)" type="date" inputMode="date"/>
+		<field name="endDate" title="有效时间(结束)" type="date" inputMode="date"/>
+		<field name="issued" title="是否发布" type="char" inputMode="radio">
+			<parameter name="itemsText">已发布|1\0未发布|0</parameter>
+		</field>
+		<field name="issueTime" title="发布时间" type="timestamp" inputMode="readonly"/>
+		<field name="content" title="正文" type="html" inputMode="htmleditor">
+			<parameter name="height">260</parameter>
+		</field>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="创建人" length="50" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">500000000</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment"/>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">1000000</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment"/>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审核</parameter>
+			<parameter name="class">com.yuanluesoft.j2oa.bulletin.pojo.BulletinOpinion</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="loginForm" title="IM用户登录" action="{WEBAPPLICATIONSAFEURL}/jeaf/sso/submitlogin.shtml" method="post" js="/jeaf/common/js/common.js,/jeaf/common/js/md5.js,/jeaf/sso/js/login.js">
+		<formFields>
+			<field title="用户名" name="userName"/>
+			<field title="密码" name="password" inputMode="password"/>
+			<field title="记住密码" name="rememberPassword" inputMode="checkbox">
+				<parameter name="itemsText">记住密码|1</parameter>
+			</field>
+			<field title="自动登录" name="autoLogin" inputMode="checkbox">
+				<parameter name="itemsText">自动登录|1</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="登录" execute="doLogin('im/loginForm')"/>
+		</actions>
+	</form>
+	
+	<form name="chat" title="IM对话" method="get" action="/im/chat.shtml">
+		<formFields>
+			<field title="发言内容" name="content" type="string" inputMode="text"/>
+			<field title="字体名称" name="fontName" type="string" inputMode="dropdown">
+				<parameter name="itemsText">宋体\0黑体\0楷体\0仿宋\0新宋体\0微软雅黑</parameter>
+				<parameter name="onchange">window.webimChat.setChatFontName(value);</parameter>
+			</field>
+			<field title="字体大小" name="fontSize" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">特大|63\0特号|54\0初号|42\0小初|36\0大一|31.5\0一号|28\0二号|21\0小二|18\0三号|16\0四号|14\0小四|12\0五号|10.5\0小五|9\0六号|8\0小六|6.875\0七号|5.25\0八号|4.5</parameter>
+				<parameter name="onchange">window.webimChat.setChatFontSize(value)</parameter>
+			</field>
+			<field title="字体颜色" name="fontColor" type="string" inputMode="dropdown">
+				<parameter name="itemsText">&lt;font color="#000000"&gt;黑色&lt;/font&gt;|#000000\0 &lt;font color="#ff0000"&gt;红色&lt;/font&gt;|#ff0000\0 &lt;font color="#0000ff"&gt;蓝色&lt;/font&gt;|#0000ff\0 &lt;font color="#00ff00"&gt;绿色&lt;/font&gt;|#00ff00\0 &lt;font color="#808080"&gt;灰色&lt;/font&gt;|#808080\0 &lt;font color="#696969"&gt;深灰&lt;/font&gt;|#696969\0 &lt;font color="#00008b"&gt;深蓝&lt;/font&gt;|#00008b\0 &lt;font color="#ffff00"&gt;黄色&lt;/font&gt;|#ffff00\0 &lt;font color="#ffa500"&gt;橙色&lt;/font&gt;|#ffa500\0 &lt;font color="#8b0000"&gt;暗红&lt;/font&gt;|#8b0000</parameter>
+				<parameter name="valueField">fontColor</parameter>
+				<parameter name="titleField"></parameter>
+				<parameter name="onchange">window.webimChat.setChatFontColor(value)</parameter>
+			</field>
+			<field name="oftenUsedReply" title="常用答复(客服)" type="string" inputMode="dropdown">
+				<parameter name="itemsName">oftenUsedReply</parameter>
+				<parameter name="itemsServiceName">csService</parameter>
+				<parameter name="listPickerWidth">150</parameter>
+				<parameter name="onchange">window.webimChat.setTalkContent(value)</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="提交发言" execute="window.chat.submitTalk()"/>
+		</actions>
+	</form>
+
+	<form class="com.yuanluesoft.im.forms.admin.ChatHistory" title="对话历史">
+		<formFields>
+			<field name="chatId" title="对话ID" type="number" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form name="chat" class="com.yuanluesoft.im.forms.Chat" title="对话" pojo="com.yuanluesoft.im.pojo.IMChat"/>
+	
+	<form name="admin/chat" class="com.yuanluesoft.im.forms.admin.Chat" title="对话" pojo="com.yuanluesoft.im.pojo.IMChat">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteChat')"/>
+		</actions>
+	</form>
+</forms>

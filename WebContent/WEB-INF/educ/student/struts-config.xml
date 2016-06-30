@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminStudent" type="com.yuanluesoft.educ.student.forms.admin.StudentForm"/>
+  <form-bean name="student" type="com.yuanluesoft.educ.student.forms.StudentForm"/>
+  <form-bean name="studentImportData" type="com.yuanluesoft.educ.student.forms.admin.ImportDateExcel"/>
+  <form-bean name="applicationView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminStudent" path="/admin/student" scope="request"
+   type="com.yuanluesoft.educ.student.actions.admin.Load" validate="false">
+   <forward name="load" path="/admin/student.jsp"/>
+  </action>
+  <action input="/admin/student.jsp" name="adminStudent" path="/save" scope="request"
+   type="com.yuanluesoft.educ.student.actions.admin.Save" validate="false"/>
+  <action input="/admin/student.jsp" name="adminStudent" path="/delete" scope="request"
+   type="com.yuanluesoft.educ.student.actions.admin.Delete" validate="false"/>
+   
+   <action input="/admin/student.jsp" name="adminStudent" path="/runStudent" scope="request"
+   type="com.yuanluesoft.educ.student.actions.admin.Run" validate="false"/>
+   
+   <action input="/admin/student.jsp" name="adminStudent"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.educ.student.actions.admin.WriteOpinion" validate="false"/>
+   
+   <action input="/admin/student.jsp" name="adminStudent"
+   path="/admin/completeRegist" scope="request"
+   type="com.yuanluesoft.educ.student.actions.admin.CompleteRegist" validate="false"/>
+   <action input="/admin/student.jsp" name="adminStudent"
+   path="/admin/alterStudent" scope="request"
+   type="com.yuanluesoft.educ.student.actions.admin.Alter" validate="false">
+   <forward name="load" path="/admin/student.jsp"/>
+  </action>
+  <action input="/admin/student.jsp" name="adminStudent"
+   path="/admin/completeAlter" scope="request"
+   type="com.yuanluesoft.educ.student.actions.admin.CompleteAlter" validate="false"/>
+   
+   <action name="student" path="/student" scope="request"
+   type="com.yuanluesoft.educ.student.actions.Load" validate="false">
+   <forward name="load" path="/student.jsp"/>
+  </action>
+  
+  <action input="/student.jsp" name="student"
+   path="/saveStudent" scope="request"
+   type="com.yuanluesoft.educ.student.actions.Save" validate="false">
+   		<forward name="load" path="/student.jsp"/>
+   		<forward name="result" path="/studentSubmitted.jsp"/>
+   </action>
+   
+   <!-- 附件选择处理。页面的data标签加载时跳转该path调用相应action处理附件页面 -->
+  <action name="studentImportData" path="/admin/attachmentEditor" scope="request"
+   type="com.yuanluesoft.educ.student.actions.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="studentImportData" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.educ.student.actions.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <!-- excel数据导入页面加载 -->
+   <action name="studentImportData" path="/admin/studentImportData" scope="request" validate="false"
+   type="com.yuanluesoft.educ.student.actions.admin.excelimport.Load">
+   <forward name="load" path="/admin/importData.jsp"/>
+   </action>
+   <action name="studentImportData" path="/admin/doImportData" scope="request" validate="false" input="/admin/importData.jsp"
+   type="com.yuanluesoft.educ.student.actions.admin.excelimport.DoImportData"/>
+   
+   <!-- 批量删除操作 -->
+   <action input="/../../jeaf/application/applicationView.jsp" name="applicationView" 
+   path="/batchOperate" scope="request" 
+   type="com.yuanluesoft.educ.batchoperate.BatchOperate" validate="false" />
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="200M"/>
+</struts-config>

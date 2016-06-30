@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--门户:个性定制-->
+	<class name="com.yuanluesoft.portal.server.pojo.PortalCustomise" table="portal_customise">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="userId"/> <!--用户/组织机构ID,NUMERIC(20)-->
+		<property name="siteId"/> <!--站点ID,NUMERIC(20)-->
+		<property name="applicationName"/> <!--应用名称,VARCHAR(100)-->
+		<property name="pageName"/> <!--页面名称,VARCHAR(100)-->
+		<property name="portalXml" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--PORTAL配置XML,TEXT-->
+	</class>
+	
+	<!--PORTLET实体-->
+	<class name="com.yuanluesoft.portal.container.pojo.PortletEntity" table="portlet_entity">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="orgId"/> <!--组织机构ID,NUMERIC(20)-->
+		<property name="siteId"/> <!--站点ID,NUMERIC(20)-->
+		<property name="category"/> <!--分类,VARCHAR(30)-->
+		<property name="entityName"/> <!--实体名称,VARCHAR(30)-->
+		<property name="description"/> <!--描述,VARCHAR(1000)-->
+		<property name="portletApplication"/> <!--PORTLET应用名称,非远程PORTLET时有效,VARCHAR(100)-->
+		<property name="portletName"/> <!--PORTLET名称,VARCHAR(100)-->
+		<set name="preferences" table="portlet_entity_preference" lazy="true" inverse="true" cascade="delete">
+			<key column="entityId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.portal.container.pojo.PortletEntityPreference" />
+		</set>
+		<set name="visitors" table="portlet_entity_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.portal.container.pojo.PortletEntityPrivilege" />
+		</set>
+		<set name="templates" table="portlet_entity_template" lazy="true" inverse="true" cascade="delete">
+			<key column="entityId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.portal.container.pojo.PortletEntityTemplate" />
+		</set>
+	</class>
+	
+	<!--PORTLET实体:个性设置-->
+	<class name="com.yuanluesoft.portal.container.pojo.PortletEntityPreference" table="portlet_entity_preference">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="entityId"/> <!--PORTLET实体ID,NUMERIC(20)-->
+		<property name="name"/> <!--参数名称,VARCHAR(100)-->
+		<property name="value"/> <!--参数值,VARCHAR(4000)-->
+	</class>
+	
+	<!--PORTLET实体:权限控制信息-->
+	<class name="com.yuanluesoft.portal.container.pojo.PortletEntityPrivilege" table="portlet_entity_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,numeric(20)-->
+		<property name="accessLevel"/> <!--访问级别,CHAR(1)-->
+		<property name="recordId"/> <!--主记录ID,numeric(20)-->
+	</class>
+	
+	<!--PORTLET个性设置-->
+	<class name="com.yuanluesoft.portal.container.pojo.PortletPreference" table="portlet_preference">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="userId"/> <!--用户ID,NUMERIC(20)-->
+		<property name="siteId"/> <!--站点ID,NUMERIC(20)-->
+		<property name="entityId"/> <!--PORTLET实体ID,NUMERIC(20)-->
+		<property name="instanceId"/> <!--PORTLET实例ID,VARCHAR(200)-->
+		<set name="values" table="portlet_preference_value" lazy="true" inverse="true" cascade="delete">
+			<key column="preferenceId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.portal.container.pojo.PortletPreferenceValue" />
+		</set>
+	</class>
+	
+	<!--PORTLET个性设置:参数-->
+	<class name="com.yuanluesoft.portal.container.pojo.PortletPreferenceValue" table="portlet_preference_value">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="preferenceId"/> <!--个性设置ID,NUMERIC(20)-->
+		<property name="name"/> <!--参数名称,VARCHAR(100)-->
+		<property name="value"/> <!--参数值,VARCHAR(4000)-->
+	</class>
+</hibernate-mapping>

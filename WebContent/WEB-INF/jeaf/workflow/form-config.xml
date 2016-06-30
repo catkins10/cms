@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.jeaf.workflow.form.WorkflowForm" title="表单(支持工作流)">
+		<formFields>
+			<field name="workflowInstanceId" title="流程实例ID" type="string" inputMode="hidden"/>
+			<field name="workflowAction" title="流程操作" type="string" inputMode="hidden"/>
+			<field name="workflowId" title="流程定义ID" type="string" inputMode="hidden"/>
+			<field name="activityId" title="流程环节ID" type="string" inputMode="hidden"/>
+			<field name="activityName" title="流程环节名称" type="string" inputMode="hidden"/>
+			<field name="workItemId" title="工作项ID" type="string" inputMode="hidden"/>
+			<field name="participant" title="办理人" type="string" inputMode="hidden"/>
+			<field name="participantId" title="办理人ID" type="string" inputMode="hidden"/>
+			<field name="agent" title="是否代理人" type="string" inputMode="hidden"/>
+			<field name="workflowTest" title="是否流程测试" type="string" inputMode="hidden"/>
+			<field name="testUserId" title="测试用户ID" type="string" inputMode="hidden"/>
+			<field name="testUserName" title="测试用户" type="string" inputMode="hidden"/>
+			<field name="workflowParticipantNames" title="工作流办理人姓名列表(用于增加办理人)" type="string" inputMode="hidden"/>
+			<field name="workflowParticipantIds" title="工作流办理人ID列表(用于增加办理人)" type="string" inputMode="hidden"/>
+			<field name="batchIds" title="批量处理的记录ID列表" type="string" inputMode="hidden"/>
+			<field name="workflowApprovalResult" title="流程审批结果" type="string" inputMode="hidden"/>
+			<field name="workflowExitText" title="流程出口（文本）" type="string" inputMode="hidden"/>
+			<field name="opinionPackage" title="办理意见" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.opinionmanage.model.OpinionPackage</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.workflow.form.WorkItemTimeoutStatistics" title="超时统计">
+		<formFields>
+			<field name="statisticsApplicationName" title="需要统计的应用名称" type="string" inputMode="hidden"/>
+			<field name="detailViewName" title="明细视图名称" type="string" inputMode="hidden"/>
+		</formFields>
+	</form>
+</forms>

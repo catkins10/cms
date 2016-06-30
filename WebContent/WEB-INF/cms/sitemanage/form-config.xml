@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="quickSiteSearch" title="搜索" method="get" action="/cms/siteresource/search.shtml?pageName=quickSiteSearch">
+		<formFields>
+			<field title="关键字" name="key"/>
+			<field title="栏目ID" name="searchSiteId" type="number" inputMode="hidden"/>
+			<field title="栏目" name="searchSite" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="valueField">searchSiteId</parameter>
+				<parameter name="itemsServiceName">siteResourceService</parameter>
+				<parameter name="itemsName">searchColumns</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+			<action title="高级搜索" execute="location='{CONTEXTPATH}/cms/siteresource/search.shtml?pageName=siteSearch&amp;siteId={PARAMETER:columnId}&amp;subject=' + StringUtils.utf8Encode(document.getElementsByName('key')[0].value==document.getElementsByName('key')[0].alt ? '' : document.getElementsByName('key')[0].value)"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="dialogURL">/cms/siteresource/templatemanage/insertSiteSearchForm.shtml</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="siteSearch" title="高级搜索" method="get" js="/cms/sitemanage/js/site.js" action="/cms/siteresource/search.shtml?pageName=siteSearch">
+		<formFields>
+			<field title="栏目列表" name="searchSiteIds" type="number[]" inputMode="multibox">
+				<parameter name="itemsServiceName">siteService</parameter>
+				<parameter name="itemsName">childColumns</parameter>
+				<parameter name="itemsCacheable">false</parameter>
+				<parameter name="templateExtendURL">/cms/siteresource/templatemanage/insertSearchSiteField.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			</field>
+			<field title="标题" name="subject"/>
+			<field title="正文" name="lazyBody.body"/>
+			<field title="来源" name="source"/>
+			<field title="开始时间" type="date" name="issueTimeBegin"/>
+			<field title="结束时间" type="date" name="issueTimeEnd"/>
+			<field title="作者" name="author" type="string" inputMode="text"/>
+			<field title="发布单位" name="unitName"/>
+			<field title="文号" name="mark"/>
+			<field title="是否有图片" name="hasImage" inputMode="checkbox">
+				<parameter name="label">图片</parameter>
+				<parameter name="value">1</parameter>
+			</field>
+			<field title="是否有视频" name="hasVideo" inputMode="checkbox">
+				<parameter name="label">视频</parameter>
+				<parameter name="value">1</parameter>
+			</field>
+			<field title="栏目ID" name="searchSiteId" type="number" inputMode="hidden"/>
+			<field title="栏目" name="searchSite" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectSite(500, 320, false, 'searchSiteId{id},searchSite{name}', '', '', ',', '', '{PARAMETER:siteId}', true)</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+			<parameter name="dialogURL">/cms/siteresource/templatemanage/insertSiteSearchForm.shtml?advanceSearch=true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form title="站点" class="com.yuanluesoft.cms.sitemanage.forms.Site" pojo="com.yuanluesoft.cms.sitemanage.pojo.WebSite">
+		<formFields>
+			<field title="上级站点" name="parentDirectoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 350, false, 'parentDirectoryId{id},parentDirectoryName{name}', '', '', '', 'site')</parameter>
+			</field>
+			<field title="同步到其他栏目ID" name="synchToDirectoryIds" type="string" inputMode="hidden"/>
+			<field title="同步到其他栏目" name="synchToDirectoryNames" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 350, true, 'synchToDirectoryIds{id},synchToDirectoryNames{name|被同步到的栏目|100%}', '', '', '', 'column')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="新建下一个站点" hide="isOld()" execute="FormUtils.doAction('createNextSite')"/>
+			<action title="拷贝站点" hide="isRead() or isNew()" execute="location.href='copy.shtml?fromDirectoryId={PARAMETER:id}'"/>
+			<action title="删除" hide="deleteDisable()" execute="javascript:if(confirm('删除后不可恢复，所有的下级站点/栏目及其内容都将被删除，是否确定要删除？'))FormUtils.doAction('deleteSite')"/>
+		</actions>
+	</form>
+	
+	<form title="栏目" class="com.yuanluesoft.cms.sitemanage.forms.Column" pojo="com.yuanluesoft.cms.sitemanage.pojo.WebColumn">
+		<formFields>
+			<field title="上级站点/栏目" name="parentDirectoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 350, false, 'parentDirectoryId{id},parentDirectoryName{name}', '', '', '', 'site,column')</parameter>
+			</field>
+			<field title="同步到其他栏目ID" name="synchToDirectoryIds" type="string" inputMode="hidden"/>
+			<field title="同步到其他栏目" name="synchToDirectoryNames" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 350, true, 'synchToDirectoryIds{id},synchToDirectoryNames{name|被同步到的栏目|100%}', '', '', '', 'column')</parameter>
+			</field>
+			<field title="同步到本栏目的其他栏目ID" name="synchFromDirectoryIds" type="string" inputMode="hidden"/>
+			<field title="同步到本栏目的其他栏目" name="synchFromDirectoryNames" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 350, true, 'synchFromDirectoryIds{id},synchFromDirectoryNames{name|被同步到的栏目|100%}', '', '', '', 'site,column')</parameter>
+			</field>
+			<field name="relationColumnIds" title="相关的栏目ID" type="string" inputMode="hidden"/>
+			<field name="relationColumnNames" title="相关的栏目名称" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="新建下一个栏目" hide="isOld()" execute="FormUtils.doAction('createNextColumn')"/>
+			<action title="拷贝栏目" hide="isRead() or isNew()" execute="location.href='copy.shtml?fromDirectoryId={PARAMETER:id}'"/>
+			<action title="删除" hide="deleteDisable()" execute="javascript:if(confirm('删除后不可恢复，所有的下级栏目及其内容都将被删除，是否确定要删除？'))FormUtils.doAction('deleteColumn')"/>
+		</actions>
+	</form>
+	
+	<form name="relationLink" class="com.yuanluesoft.cms.sitemanage.forms.RelationLink" title="相关链接" pojo="com.yuanluesoft.cms.sitemanage.pojo.WebColumn">
+		<formFields>
+			<field title="相关链接" name="relationLink" type="component">
+				<parameter name="class">com.yuanluesoft.cms.sitemanage.pojo.WebColumnRelationLink</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead() or privilege(unissue)" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="deleteRelationLink()"/>
+		</actions>
+	</form>
+	
+	<form title="引用" class="com.yuanluesoft.cms.sitemanage.forms.Reference" pojo="com.yuanluesoft.cms.sitemanage.pojo.WebViewReference">
+		<formFields>
+			<field title="上级站点/栏目" name="parentDirectoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 350, false, 'parentDirectoryId{id},parentDirectoryName{name}', '', '', '', 'site,column')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="新建下一个引用" hide="isOld()" execute="FormUtils.doAction('createNextReference')"/>
+			<action title="删除" hide="deleteDisable()" execute="javascript:if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteReference')"/>
+		</actions>
+	</form>
+	
+	<form name="headline" class="com.yuanluesoft.cms.sitemanage.forms.Headline" title="头版头条" pojo="com.yuanluesoft.cms.sitemanage.pojo.Headline">
+		<formFields>
+			<field title="站点ID列表" name="directoryIds" type="string" inputMode="hidden"/>
+			<field title="站点" name="selectedDirectoryIds" type="string[]" inputMode="multibox" required="true">
+				<parameter name="itemsHql">select WebDirectory.directoryName, WebDirectory.id from WebDirectory WebDirectory where WebDirectory.id in ({PARAMETER:directoryIds}) order by WebDirectory.priority DESC, WebDirectory.directoryName</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.sitemanage.forms.SiteApplicationConfigView" title="站点应用配置视图">
+		<formFields>
+			<field name="applicationName" title="应用名称" type="string" inputMode="hidden"/>
+			<field name="viewApplicationName" title="视图所在应用名称" type="string" inputMode="hidden"/>
+			<field name="viewName" title="视图名称" type="string" inputMode="hidden"/>
+			<field name="siteId" title="站点ID" type="number" inputMode="hidden"/>
+			<field name="showChildSiteData" title="是否显示子站数据" type="boolean" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form name="siteTemplateTheme" class="com.yuanluesoft.cms.sitemanage.forms.SiteTemplateTheme" title="主题" pojo="com.yuanluesoft.cms.sitemanage.pojo.SiteTemplateTheme">
+		<formFields>
+			<field title="页面所属站点ID" name="pageSiteId" type="number" inputMode="hidden"/>
+			<field title="页面所属站点名称" name="pageSiteName" type="string" inputMode="readonly"/>
+			<field title="站点名称" name="siteName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 350, false, 'siteId{id},siteName{name}', '', '', '', 'site')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="设为默认主题" execute="FormUtils.doAction('setDefaultSiteTemplateTheme')"/>
+			<action title="临时启用"  execute="FormUtils.doAction('setDefaultSiteTemplateTheme', 'temporary=1')"/>
+			<action title="取消临时启用" execute="FormUtils.doAction('setDefaultSiteTemplateTheme', 'temporary=-1')"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="javascript:if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteSiteTemplateTheme')"/>
+		</actions>
+	</form>
+	
+	<form name="template" class="com.yuanluesoft.cms.sitemanage.forms.Template" title="模板配置" pojo="com.yuanluesoft.cms.sitemanage.pojo.SiteTemplate"/>
+	
+	<form class="com.yuanluesoft.cms.sitemanage.forms.CopyWebDirectory" title="站点/栏目拷贝">
+		<formFields>
+			<field name="copyTemplate" title="是否拷贝模板" type="string" inputMode="radio">
+				<parameter name="itemsText">拷贝|1\0不拷贝|0</parameter>
+			</field>
+			<field title="目标目录名称" name="toDirectoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 350, false, 'toDirectoryId{id},toDirectoryName{name}', '', '', '', '{PARAMETER:toDirectoryTypes}')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="拷贝" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.sitemanage.forms.InsertColumns" title="插入栏目列表">
+		<formFields>
+			<field name="siteSelect" title="站点/栏目选项" type="string" inputMode="radio">
+				<parameter name="itemsText">当前站点|current\0自定义|other</parameter>
+				<parameter name="defaultValue">current</parameter>
+			</field>
+			<field name="siteId" title="站点/栏目ID" type="number" inputMode="hidden"/>
+			<field name="siteName" title="站点/栏目名称" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 300, false, 'siteId{id},siteName{name}')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="columnType" title="栏目类别" type="string" inputMode="radio">
+				<parameter name="itemsText">子栏目|child\0父栏目|parentOnly\0父栏目及其兄弟栏目|parent\0兄弟栏目|sibling</parameter>
+				<parameter name="defaultValue">child</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.sitemanage.forms.InsertSites" title="插入站点列表">
+		<formFields>
+			<field name="siteId" title="父站点ID" type="number" inputMode="hidden"/>
+			<field name="siteName" title="父站点名称" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 300, false, 'siteId{id},siteName{name}', '', '', '', 'site')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.sitemanage.forms.InsertSiteLink" title="插入站点/栏目链接">
+		<formFields>
+			<field name="siteSelect" title="站点/栏目选项" type="string" inputMode="radio">
+				<parameter name="itemsText">站点|site\0父栏目|parent\0指定栏目|column\0指定栏目(按名称)|columnByName</parameter>
+				<parameter name="defaultValue">column</parameter>
+			</field>
+			<field title="站点/栏目ID" name="siteId" type="string" inputMode="hidden"/>
+			<field title="站点/栏目名称" name="siteName" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectLinkSite()</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.sitemanage.forms.InsertHeadline" title="插入头版头条">
+		<formFields>
+			<field name="siteSelect" title="站点/栏目选项" type="string" inputMode="radio">
+				<parameter name="itemsText">当前站点/栏目|current\0自定义|other</parameter>
+				<parameter name="defaultValue">current</parameter>
+			</field>
+			<field title="站点/栏目ID" name="siteId" type="string" inputMode="hidden"/>
+			<field title="站点/栏目名称" name="siteName" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 300, false, 'siteId{id},siteName{name}')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.sitemanage.forms.InsertHeadlineImage" title="插入头版头条图片">
+		<formFields>
+			<field title="宽度" name="width" type="string" inputMode="text"/>
+			<field title="高度" name="height" type="string" inputMode="text"/>
+			<field name="font" title="字体" type="string" inputMode="dropdown">
+				<parameter name="itemsText">长城特粗黑\0长城新艺体\0方正超粗黑简体\0方正准圆简体\0方正大标宋简体\0方正大黑简体\0方正瘦金体简\0方正细珊瑚体\0仿宋体\0汉仪超粗黑简\0汉仪赵楷繁\0黑体\0华康海报体\0华康黑体简\0华康少女体\0楷体\0宋体\0微软雅黑\0微软雅黑粗体</parameter>
+				<parameter name="defaultValue">长城特粗黑</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="bold" title="粗体" type="string" inputMode="checkbox">
+				<parameter name="label">粗体</parameter>
+				<parameter name="value">true</parameter>
+			</field>
+			<field name="italic" title="斜体" type="string" inputMode="checkbox">
+				<parameter name="label">斜体</parameter>
+				<parameter name="value">true</parameter>
+			</field>
+			<field name="minCharCount" title="最少字节数" type="string" inputMode="text"/>
+			<field name="maxCharCount" title="最大字节数" type="string" inputMode="text"/>
+			<field name="ellipsis" title="超出时末尾添加" type="string" inputMode="text">
+				<parameter name="defaultValue">...</parameter>
+			</field>
+			<field name="textColor" title="文本颜色" type="string" inputMode="select">
+				<parameter name="defaultValue">#0040C0</parameter>
+				<parameter name="execute">DialogUtils.openColorDialog('文本颜色', document.getElementsByName('textColor')[0].value, "document.getElementsByName('textColor')[0].value='{colorValue}'")</parameter>
+			</field>
+			<field name="backgroundTransparent" title="透明背景" type="string" inputMode="checkbox">
+				<parameter name="label">透明</parameter>
+				<parameter name="value">true</parameter>
+				<parameter name="defaultValue">true</parameter>
+			</field>
+			<field name="backgroundColor" title="背景颜色" type="string" inputMode="select">
+				<parameter name="defaultValue">#ffffff</parameter>
+				<parameter name="execute">DialogUtils.openColorDialog('文本颜色', document.getElementsByName('backgroundColor')[0].value, "document.getElementsByName('backgroundColor')[0].value='{colorValue}'")</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.sitemanage.forms.InsertSiteLocation" title="插入栏目位置">
+		<formFields>
+			<field name="selfOnly" title="是否只显示本栏目" type="string" inputMode="radio">
+				<parameter name="itemsText">是|yes\0否|no</parameter>
+				<parameter name="defaultValue">no</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="插入站点记录列表" class="com.yuanluesoft.cms.sitemanage.forms.InsertSiteRecordList">
+		<formFields>
+			<field name="siteSelect" title="站点选择" type="string" inputMode="radio">
+				<parameter name="itemsText">当前站点|current\0指定站点|other</parameter>
+				<parameter name="defaultValue">current</parameter>
+			</field>
+			<field name="siteIds" title="站点ID" type="string" inputMode="hidden"/>
+			<field name="siteNames" title="站点名称" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(600, 400, true, 'siteIds{id},siteNames{name|站点|100%}', '', '', ',', 'site')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="containChildren" title="是否含子站点" type="string" inputMode="checkbox">
+				<parameter name="label">含子站点</parameter>
+				<parameter name="value">true</parameter>
+				<parameter name="defaultValue">false</parameter>
+			</field>
+		</formFields>
+	</form>
+</forms>

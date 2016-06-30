@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="模板主题" class="com.yuanluesoft.cms.templatemanage.pojo.TemplateTheme">
+		<field name="name" title="名称" length="50" required="true" type="string" inputMode="text"/>
+		<field name="type" title="浏览器类型" length="1" required="true" type="number" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsText">电脑|0\0智能手机或平板电脑|1\0WAP|2\0客户端|3\0微信|4</parameter>
+		</field>
+		<field name="typeAsText" title="浏览器类型描述" persistence="false" type="string" inputMode="readonly">
+			<parameter name="reference">type</parameter>
+		</field>
+		<field name="pageWidth" title="页面宽度" length="4" type="number" inputMode="dropdown">
+			<parameter name="itemsText">320\0 640\0 800\0 1024</parameter>
+		</field>
+		<field name="flashSupport" title="是否含Flash" length="1" type="number" inputMode="checkbox">
+			<parameter name="value">1</parameter>
+			<parameter name="label">FLASH</parameter>
+		</field>
+		<field name="defaultTheme" title="是否默认主题" persistence="false" type="string" inputMode="readonly"/>
+		<field name="temporaryOpening" title="是否临时启用" persistence="false" type="string" inputMode="readonly"/>
+		<field name="lastModified" title="最后修改时间" type="timestamp" inputMode="readonly"/>
+		<field name="lastModifierId" title="最后修改人ID" type="number" inputMode="none"/>
+		<field name="lastModifier" title="最后修改人姓名" length="30" type="string" inputMode="readonly"/>
+		<field name="usages" title="使用情况" type="components">
+			<parameter name="class">com.yuanluesoft.cms.templatemanage.pojo.TemplateThemeUsage</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="使用情况" class="com.yuanluesoft.cms.templatemanage.pojo.TemplateThemeUsage">
+		<field name="siteId" title="站点/用户ID" length="20" type="number" inputMode="hidden"/>
+		<field name="themeId" title="主题ID" length="20" type="number" inputMode="hidden"/>
+		<field name="isDefault" title="是否默认主题" length="1" type="number" inputMode="hidden"/>
+		<field name="temporaryOpening" title="是否临时启用" length="1" type="number" inputMode="hidden"/>
+	</businessObject>
+	
+	<businessObject title="模板" class="com.yuanluesoft.cms.templatemanage.pojo.Template" businessServiceName="templateService">
+		<field name="themeId" title="主题ID" length="20" type="number" inputMode="hidden"/>
+		<field name="templateName" title="模板名称" length="30" required="true" type="string" inputMode="hidden"/>
+		<field name="applicationName" title="应用名称" length="50" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="pageName" title="页面名称" length="80" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="siteId" title="站点/栏目ID" type="number" inputMode="hidden"/>
+		<field name="isSelected" title="是否选中" length="1" type="char" inputMode="hidden"/>
+		<field name="isDefault" title="是否默认模板" persistence="false" type="string" inputMode="readonly">
+			<parameter name="reference">isSelected</parameter>
+		</field>
+		<field name="lastModified" title="最后修改时间" type="timestamp" inputMode="readonly"/>
+		<field name="lastModifierId" title="最后修改人ID" type="number" inputMode="none"/>
+		<field name="lastModifier" title="最后修改人姓名" length="30" type="string" inputMode="readonly"/>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="serviceName">templateImageService</parameter>
+		</field>
+		<field name="template" title="模板" type="attachment" inputMode="attachment">
+			<parameter name="type"></parameter>
+			<parameter name="serviceName">templateAttachmentService</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="serviceName">templateAttachmentService</parameter>
+		</field>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="fileExtension">FLASH文件|*.swf|</parameter>
+			<parameter name="maxUploadSize">5000000</parameter>
+			<parameter name="serviceName">templateAttachmentService</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">100000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+			<parameter name="serviceName">templateVideoService</parameter>
+		</field>
+		<field name="css" title="样式表" type="attachment" inputMode="attachment">
+			<parameter name="fileExtension">样式表文件|*.css|</parameter>
+			<parameter name="maxUploadSize">1000000</parameter>
+			<parameter name="serviceName">templateAttachmentService</parameter>
+		</field>
+		<field name="js" title="脚本" type="attachment" inputMode="attachment">
+			<parameter name="fileExtension">脚本文件|*.js|</parameter>
+			<parameter name="maxUploadSize">1000000</parameter>
+			<parameter name="serviceName">templateAttachmentService</parameter>
+		</field>
+		<field name="templateUpload" title="模板上传" length="1" type="attachment" inputMode="attachment">
+			<parameter name="fileExtension">ZIP文件|*.zip|</parameter>
+			<parameter name="maxUploadSize">100000000</parameter>
+			<parameter name="attachmentEditor">../templateAttachmentEditor.shtml</parameter>
+			<parameter name="simpleMode">true</parameter>
+			<parameter name="serviceName">templateAttachmentService</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="CSS样式表文件" class="com.yuanluesoft.cms.templatemanage.pojo.CssFile" businessServiceName="templateService">
+		<field name="cssName" title="名称" length="50" required="true" type="string" inputMode="text"/>
+		<field name="cssUrl" title="URL" length="200" required="true" type="string" inputMode="hidden"/>
+		<field name="fromCssFile" title="源文件" length="200" required="true" type="string" inputMode="hidden"/>
+		<field name="siteId" title="隶属站点ID" required="true" type="string" inputMode="hidden"/>
+		<field name="css" title="样式表" type="attachment" inputMode="attachment">
+			<parameter name="type"></parameter>
+			<parameter name="serviceName">templateAttachmentService</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="serviceName">templateImageService</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="同步设置默认模板" class="com.yuanluesoft.cms.templatemanage.model.SynchSetDefaultTemplate" businessServiceName="templateService">
+		<field name="templateId" title="模板ID" type="number" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject class="com.yuanluesoft.cms.templatemanage.model.LinkOpenMode" title="链接打开方式">
+		<field name="openMode" title="链接方式" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">templateService</parameter>
+			<parameter name="itemsName">linkOpenModes</parameter>
+			<parameter name="defaultValue">newWindow</parameter>
+			<parameter name="onchange">onLinkOpenModeChange(value)</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="linkDialogWidth" title="对话框宽度" type="string" inputMode="text"/>
+		<field name="linkDialogHeight" title="对话框高度" type="string" inputMode="text"/>
+	</businessObject>	
+</businessObjects>

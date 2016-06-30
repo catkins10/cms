@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.j2oa.businesstrip.forms.BusinesstripForm" title="出差申请单" pojo="com.yuanluesoft.j2oa.businesstrip.pojo.Businesstrip">
+		<formFields>
+			<field title="出差人" name="tripPerson" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field title="出差人" name="tripPerson.visitorNames" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectPerson(500, 300, true, 'tripPerson.visitorIds{id},tripPerson.visitorNames{name|出差人|100%},tripPerson.visitorIds{id|ID|0}')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="打印" hide="isNew()" execute="window.print()"/>
+			<action title="审批申请单" hide="workflow()" execute="FormUtils.doAction('run', 'workflowAction=approval')"/>
+			<action title="作废" hide="isNew() or workflow()" execute="if(confirm('是否确定要作废？'))FormUtils.doAction('delete')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.businesstrip.forms.BusinesstripConfigForm" title="出差配置" pojo="com.yuanluesoft.j2oa.businesstrip.pojo.BusinesstripConfig">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+</forms>

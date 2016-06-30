@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminCollectPrologue" type="com.yuanluesoft.cms.interview.collect.forms.admin.CollectPrologue"/>
+  <form-bean name="adminCollect" type="com.yuanluesoft.cms.interview.collect.forms.admin.Collect"/>
+  <form-bean name="collect" type="com.yuanluesoft.cms.interview.collect.forms.Collect"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminCollectPrologue" path="/admin/collectPrologue"
+   scope="request"
+   type="com.yuanluesoft.cms.interview.collect.actions.collectprologue.admin.Load" validate="false">
+   <forward name="load" path="/admin/collectPrologue.jsp"/>
+  </action>
+  <action name="adminCollectPrologue" path="/admin/selectAttachment"
+   scope="request"
+   type="com.yuanluesoft.cms.interview.collect.actions.collectprologue.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="collect" path="/selectAttachment" scope="request"
+   type="com.yuanluesoft.cms.interview.collect.actions.collect.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action input="/admin/collectPrologue.jsp" name="adminCollectPrologue"
+   path="/admin/saveCollectPrologue" scope="request"
+   type="com.yuanluesoft.cms.interview.collect.actions.collectprologue.admin.Save" validate="false"/>
+  <action input="/admin/collectPrologue.jsp" name="adminCollectPrologue"
+   path="/admin/deleteCollectPrologue" scope="request"
+   type="com.yuanluesoft.cms.interview.collect.actions.collectprologue.admin.Delete" validate="false"/>
+  <action name="adminCollect" path="/admin/collect" scope="request"
+   type="com.yuanluesoft.cms.interview.collect.actions.collect.admin.Load" validate="false">
+   <forward name="load" path="/admin/collect.jsp"/>
+  </action>
+  <action input="/admin/collect.jsp" name="adminCollect"
+   path="/admin/saveCollect" scope="request"
+   type="com.yuanluesoft.cms.interview.collect.actions.collect.admin.Save" validate="false"/>
+  <action input="/admin/collect.jsp" name="adminCollect"
+   path="/admin/runCollect" scope="request"
+   type="com.yuanluesoft.cms.interview.collect.actions.collect.admin.Run" validate="false"/>
+  <action input="/admin/collect.jsp" name="adminCollect"
+   path="/admin/deleteCollect" scope="request"
+   type="com.yuanluesoft.cms.interview.collect.actions.collect.admin.Delete" validate="false"/>
+  <action input="/admin/collect.jsp" name="adminCollect"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.cms.interview.collect.actions.collect.admin.WriteOpinion" validate="false"/>
+  <action name="collect" path="/collect" scope="request"
+   type="com.yuanluesoft.cms.interview.collect.actions.collect.Load" validate="false">
+   <forward name="load" path="/collect.jsp"/>
+  </action>
+  <action input="/collect.jsp" name="collect" path="/submitCollect"
+   scope="request"
+   type="com.yuanluesoft.cms.interview.collect.actions.collect.Submit" validate="false">
+   <forward name="result" path="/collectSubmitted.jsp"/>
+  </action>
+  <action input="/admin/collect.jsp" name="adminCollect"
+   path="/admin/undeleteCollect" scope="request"
+   type="com.yuanluesoft.cms.interview.collect.actions.collect.admin.Undelete" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

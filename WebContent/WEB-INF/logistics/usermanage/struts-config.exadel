@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,161,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="320,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,161,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="320,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#user"
+  NAME="action0" PATH="/admin/user" SHAPE="32,208,161,25"
+  TITLE="adminUser" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/user.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/admin/user.jsp" SHAPE="320,224,50,25" SUBTYPE="jsp"
+  TITLE="user.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveUser" TARGET="action1" TITLE="saveUser" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteUser" TARGET="action2"
+   TITLE="deleteUser" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/approvalUser" TARGET="action6"
+   TITLE="approvalUser" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveUser"
+  NAME="action1" PATH="/admin/saveUser" SHAPE="528,240,161,25"
+  TITLE="adminUser" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteUser"
+  NAME="action2" PATH="/admin/deleteUser" SHAPE="528,304,161,25"
+  TITLE="adminUser" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#regist" NAME="action3"
+  PATH="/regist" SHAPE="32,480,161,41" TITLE="user" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/regist.jsp" TARGET="page3" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/regist.jsp" SHAPE="320,496,50,40" SUBTYPE="jsp"
+  TITLE="user.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/doRegist" TARGET="action4" TITLE="saveUser" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#doRegist" NAME="action4"
+  PATH="/doRegist" SHAPE="528,512,161,41" TITLE="user" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/registed.jsp" TARGET="page4" TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/registed.jsp" SHAPE="800,528,50,25" SUBTYPE="jsp"
+  TITLE="registed.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectRegistType"
+  NAME="action5" PATH="/selectRegistType" SHAPE="32,416,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#approvalUser"
+  NAME="action6" PATH="/admin/approvalUser" SHAPE="528,368,161,25"
+  TITLE="adminUser" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#blacklist"
+  NAME="action7" PATH="/admin/blacklist" SHAPE="32,608,161,41"
+  TITLE="adminBlacklist" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/blacklist.jsp" TARGET="page5"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/admin/blacklist.jsp" SHAPE="320,624,50,40" SUBTYPE="jsp"
+  TITLE="blacklist.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveBlacklist" TARGET="action9"
+   TITLE="removeFromBlacklist" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/removeFromBlacklist" TARGET="action8"
+   TITLE="removeFromBlacklist" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#removeFromBlacklist" NAME="action8"
+  PATH="/admin/removeFromBlacklist" SHAPE="528,704,161,25"
+  TITLE="adminBlacklist" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveBlacklist"
+  NAME="action9" PATH="/admin/saveBlacklist" SHAPE="528,640,161,25"
+  TITLE="adminBlacklist" TYPE="action"/>
+</PROCESS>

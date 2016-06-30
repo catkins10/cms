@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="selectParameter" type="com.yuanluesoft.job.company.forms.SelectParameter"/>
+  <form-bean name="adminJobParameter" type="com.yuanluesoft.job.company.forms.admin.JobParameter"/>
+  <form-bean name="company" type="com.yuanluesoft.job.company.forms.Company"/>
+  <form-bean name="adminCompany" type="com.yuanluesoft.job.company.forms.admin.Company"/>
+  <form-bean name="adminCompanyApproval" type="com.yuanluesoft.job.company.forms.admin.CompanyApproval"/>
+  <form-bean name="mailTemplate" type="com.yuanluesoft.job.company.forms.MailTemplate"/>
+  <form-bean name="job" type="com.yuanluesoft.job.company.forms.Job"/>
+  <form-bean name="refreshAllJobs" type="com.yuanluesoft.job.company.forms.RefreshAllJobs"/>
+  <form-bean name="adminJob" type="com.yuanluesoft.job.company.forms.admin.Job"/>
+  <form-bean name="pushJob" type="com.yuanluesoft.job.company.forms.PushJob"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="selectParameter" path="/selectParameter" scope="request"
+   type="com.yuanluesoft.job.company.actions.selectparameter.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="selectParameter" path="/listChildParameters"
+   scope="request"
+   type="com.yuanluesoft.job.company.actions.selectparameter.ListChildParameters" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action name="adminJobParameter" path="/admin/jobParameter"
+   scope="request"
+   type="com.yuanluesoft.job.company.actions.jobparameter.admin.Load" validate="false">
+   <forward name="load" path="/admin/jobParameter.jsp"/>
+  </action>
+  <action input="/admin/jobParameter.jsp" name="adminJobParameter"
+   path="/admin/saveJobParameter" scope="request"
+   type="com.yuanluesoft.job.company.actions.jobparameter.admin.Save" validate="false"/>
+  <action input="/admin/jobParameter.jsp" name="adminJobParameter"
+   path="/admin/deleteJobParameter" scope="request"
+   type="com.yuanluesoft.job.company.actions.jobparameter.admin.Delete" validate="false"/>
+  <action name="company" path="/company" scope="request"
+   type="com.yuanluesoft.job.company.actions.company.Load" validate="false">
+   <forward name="load" path="/company.jsp"/>
+  </action>
+  <action input="/company.jsp" name="company" path="/saveCompany"
+   scope="request"
+   type="com.yuanluesoft.job.company.actions.company.Save" validate="false">
+   <forward name="result" path="/companySubmitted.jsp"/>
+  </action>
+  <action name="company" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.job.company.actions.company.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="adminCompany" path="/admin/company" scope="request"
+   type="com.yuanluesoft.job.company.actions.company.admin.Load" validate="false">
+   <forward name="load" path="/admin/company.jsp"/>
+  </action>
+  <action input="/admin/company.jsp" name="adminCompany"
+   path="/admin/saveCompany" scope="request"
+   type="com.yuanluesoft.job.company.actions.company.admin.Save" validate="false"/>
+  <action input="/admin/company.jsp" name="adminCompany"
+   path="/admin/deleteCompany" scope="request"
+   type="com.yuanluesoft.job.company.actions.company.admin.Delete" validate="false"/>
+  <action input="/admin/company.jsp" name="adminCompany"
+   path="/admin/approvalCompany" scope="request"
+   type="com.yuanluesoft.job.company.actions.company.admin.Approval" validate="false"/>
+  <action name="adminCompanyApproval" path="/admin/companyApproval"
+   scope="request"
+   type="com.yuanluesoft.job.company.actions.companyapproval.admin.Load" validate="false">
+   <forward name="load" path="/admin/companyApproval.jsp"/>
+  </action>
+  <action input="/admin/companyApproval.jsp" name="adminCompanyApproval"
+   path="/admin/saveCompanyApproval" scope="request"
+   type="com.yuanluesoft.job.company.actions.companyapproval.admin.Save" validate="false"/>
+  <action path="/companyIndex" scope="request"
+   type="com.yuanluesoft.job.company.actions.companyindex.Load" validate="false"/>
+  <action name="mailTemplate" path="/mailTemplate" scope="request"
+   type="com.yuanluesoft.job.company.actions.mailtemplate.Load" validate="false">
+   <forward name="load" path="/mailTemplate.jsp"/>
+  </action>
+  <action input="/mailTemplate.jsp" name="mailTemplate"
+   path="/saveMailTemplate" scope="request"
+   type="com.yuanluesoft.job.company.actions.mailtemplate.Save" validate="false"/>
+  <action name="job" path="/job" scope="request"
+   type="com.yuanluesoft.job.company.actions.job.Load" validate="false">
+   <forward name="load" path="/job.jsp"/>
+  </action>
+  <action input="/job.jsp" name="job" path="/saveJob" scope="request"
+   type="com.yuanluesoft.job.company.actions.job.Save" validate="false">
+   <forward name="result" path="/jobSaved.jsp"/>
+  </action>
+  <action input="/job.jsp" name="job" path="/deleteJob" scope="request"
+   type="com.yuanluesoft.job.company.actions.job.Delete" validate="false">
+   <forward name="result" path="/jobDeleted.jsp"/>
+  </action>
+  <action input="/job.jsp" name="job" path="/refreshJob" scope="request"
+   type="com.yuanluesoft.job.company.actions.job.Refresh" validate="false"/>
+  <action name="refreshAllJobs" path="/refreshAllJobs" scope="request"
+   type="com.yuanluesoft.job.company.actions.refreshalljobs.Load" validate="false">
+   <forward name="load" path="/refreshAllJobs.jsp"/>
+  </action>
+  <action input="/refreshAllJobs.jsp" name="refreshAllJobs"
+   path="/doRefreshAllJobs" scope="request"
+   type="com.yuanluesoft.job.company.actions.refreshalljobs.DoRefresh" validate="false"/>
+  <action path="/jobs" scope="request"
+   type="com.yuanluesoft.job.company.actions.jobs.Load" validate="false"/>
+  <action name="adminJob" path="/admin/job" scope="request"
+   type="com.yuanluesoft.job.company.actions.job.admin.Load" validate="false">
+   <forward name="load" path="/admin/job.jsp"/>
+  </action>
+  <action path="/admin/sendToWechat" scope="request"
+   type="com.yuanluesoft.job.company.actions.jobs.admin.SendToWechat" validate="false"/>
+  <action path="/companyJobs" scope="request"
+   type="com.yuanluesoft.job.company.actions.companyjobs.Load" validate="false"/>
+  <action name="pushJob" path="/pushJob" scope="request"
+   type="com.yuanluesoft.job.company.actions.pushjob.Load" validate="false">
+   <forward name="load" path="/pushJob.jsp"/>
+  </action>
+  <action input="/pushJob.jsp" name="pushJob" path="/doPushJob"
+   scope="request"
+   type="com.yuanluesoft.job.company.actions.pushjob.Push" validate="false"/>
+  <action input="/admin/job.jsp" name="adminJob"
+   path="/admin/refreshJob" scope="request"
+   type="com.yuanluesoft.job.company.actions.job.admin.Refresh" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="template" form="template" title="模板配置" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.templatemanage.pojo.Template</pojo>
+			<orderBy>Template.isSelected DESC,Template.templateName</orderBy>
+			<quickFilter>Template.templateName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="templateName"/>
+			<column title="最后修改时间" name="lastModified" align="center" width="110"/>
+			<column title="最后修改人" name="lastModifier" align="center" width="110"/>
+			<column title="默认模板" name="isDefault" align="center" width="80"/>
+		</columns>
+	</view>
+</views>

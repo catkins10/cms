@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="领导日程" class="com.yuanluesoft.j2oa.calendar.pojo.Calendar">
+		<field name="subject" title="主题" length="100" required="true" type="string" inputMode="text"/>
+		<field name="description" title="内容" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="address" title="地点" length="50" required="true" type="string" inputMode="text"/>
+		<field name="important" title="重要性" length="16" type="string" inputMode="dropdown">
+			<parameter name="itemsText">重要\0普通\0不重要</parameter>
+		</field>
+		<field name="department" title="主办部门" length="32" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(500,300,false,'department{name}');</parameter>
+		</field>
+		<field name="beginTime" title="开始时间" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="endTime" title="结束时间" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="created" title="安排时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

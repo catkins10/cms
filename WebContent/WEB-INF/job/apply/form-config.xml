@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form title="职位申请" name="apply" method="post" action="/job/apply/saveApply.shtml" class="com.yuanluesoft.job.apply.forms.Apply" pojo="com.yuanluesoft.job.apply.pojo.JobApply">
+		<actions>
+			<action title="提交" hide="isOld()" type="submit"/>
+			<action title="删除" hide="isNew() or isRead()" execute="FormUtils.doAction('changeApplyStatus', 'status=1')"/>
+			<action title="拟面试" hide="isNew() or isRead()" execute="FormUtils.doAction('changeApplyStatus', 'status=2')"/>
+			<action title="发送面试邀请函" hide="isNew() or isRead()" execute="PageUtils.newrecord('job/apply', 'invitation', 'mode=dialog,width=500,height=400', 'id={PARAMETER:id}')"/>
+			<action title="登记面试情况" hide="isNew() or isRead()" execute="PageUtils.newrecord('job/apply', 'interview', 'mode=dialog,width=500,height=400', 'id={PARAMETER:id}')"/>
+			<action title="录用" hide="isNew() or isRead()" execute="FormUtils.doAction('changeApplyStatus', 'status=5')"/>
+			<action title="不录用" hide="isNew() or isRead()" execute="FormUtils.doAction('changeApplyStatus', 'status=4')"/>
+			<action title="发送录用通知书" hide="isNew() or isRead()" execute="PageUtils.newrecord('job/apply', 'offer', 'mode=dialog,width=500,height=400', 'id={PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form title="邀请函" name="invitation" class="com.yuanluesoft.job.apply.forms.Invitation" pojo="com.yuanluesoft.job.apply.pojo.JobApply">
+		<formFields>
+			<field name="invitation" title="邀请函" type="component">
+				<parameter name="class">com.yuanluesoft.job.apply.pojo.JobApplyInvitation</parameter>
+			</field>
+			<field name="interviewTime" title="面试时间" type="timestamp" inputMode="datetime"/>
+		</formFields>
+		<actions>
+			<action title="发送" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="录用通知书" name="offer" class="com.yuanluesoft.job.apply.forms.Offer" pojo="com.yuanluesoft.job.apply.pojo.JobApply">
+		<formFields>
+			<field name="offer" title="录用通知书" type="component">
+				<parameter name="class">com.yuanluesoft.job.apply.pojo.JobApplyOffer</parameter>
+			</field>
+			<field name="entryTime" title="入职时间" type="timestamp" inputMode="datetime"/>
+		</formFields>
+		<actions>
+			<action title="发送" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="面试情况" name="interview" class="com.yuanluesoft.job.apply.forms.Interview" pojo="com.yuanluesoft.job.apply.pojo.JobApply">
+		<formFields>
+			<field name="interview" title="面试情况" type="component">
+				<parameter name="class">com.yuanluesoft.job.apply.pojo.JobApplyInterview</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确实删除？'))FormUtils.doAction('deleteInterview')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

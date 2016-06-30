@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.j2oa.document.forms.Keyword" title="主题词" pojo="com.yuanluesoft.j2oa.document.pojo.KeywordCategory">
+		<formFields>
+			<field title="主题词" name="keywordList" type="string" inputMode="textarea" required="true">
+				<parameter name="rows">8</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="添加下一个" hide="isOld()" execute="FormUtils.doAction('createNextKeyword')"/>
+			<action title="删除" hide="isNew()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteKeyword')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.document.forms.DocumentOption" title="选择项配置" pojo="com.yuanluesoft.j2oa.document.pojo.DocumentOption">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+</forms>

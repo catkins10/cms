@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="calendarform" type="com.yuanluesoft.j2oa.calendar.forms.CalendarForm"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="calendarform" path="/calendar" scope="request"
+   type="com.yuanluesoft.j2oa.calendar.actions.Load" validate="false">
+   <forward name="load" path="/calendar.jsp"/>
+  </action>
+  <action input="/calendar.jsp" name="calendarform" path="/saveCalendar"
+   scope="request" type="com.yuanluesoft.j2oa.calendar.actions.Save" validate="false"/>
+  <action input="/calendar.jsp" name="calendarform"
+   path="/publishCalendar" scope="request"
+   type="com.yuanluesoft.j2oa.calendar.actions.Publish" validate="false"/>
+  <action input="/calendar.jsp" name="calendarform"
+   path="/deleteCalendar" scope="request"
+   type="com.yuanluesoft.j2oa.calendar.actions.Delete" validate="false"/>
+  <action input="/calendar.jsp" name="calendarform"
+   path="/unpublishCalendar" scope="request"
+   type="com.yuanluesoft.j2oa.calendar.actions.Unpublish" validate="false"/>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="200M"/>
+</struts-config>

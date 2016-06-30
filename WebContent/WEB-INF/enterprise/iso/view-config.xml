@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="document" form="document" title="文件" pageRows="25" openFeatures="width=780,height=550">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.iso.pojo.IsoDocument</pojo>
+			<orderBy>IsoDocument.name</orderBy>
+			<where>IsoDocument.isValid='1'</where>
+			<quickFilter>IsoDocument.subject like '%{KEY}%' or IsoDocument.docmark like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="文件名称" name="name"/>
+			<column title="版本号" name="version" width="60" align="center"/>
+			<column title="受控状态" name="control" width="80" align="center"/>
+			<column title="紧急程度" name="urgency" width="80" align="center"/>
+			<column title="文件密级" name="security" width="80" align="center"/>
+			<column title="保存期限" name="storage" width="80" align="center"/>
+			<column title="编制日期" name="writeDate" align="center" width="68"/>
+		</columns>
+	</view>
+	
+	<view name="todoDocument" form="document" title="待办文件" pageRows="20" openFeatures="width=800,height=620">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.iso.pojo.IsoDocument</pojo>
+			<where>IsoDocument.isValid!='1'</where>
+			<orderBy>IsoDocument.writeDate DESC</orderBy>
+			<quickFilter>IsoDocument.name like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<columns>
+			<column title="文件名称" name="name"/>
+			<column title="版本号" name="version" width="60" align="center"/>
+			<column title="受控状态" name="control" width="80" align="center"/>
+			<column title="紧急程度" name="urgency" width="80" align="center"/>
+			<column title="文件密级" name="security" width="80" align="center"/>
+			<column title="保存期限" name="storage" width="80" align="center"/>
+			<column title="编制日期" name="writeDate" align="center" width="68"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="120" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="processingDocument" form="document" title="在办文件" pageRows="20" openFeatures="width=800,height=620">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.iso.pojo.IsoDocument</pojo>
+			<where>IsoDocument.isValid!='1'</where>
+			<orderBy>IsoDocument.writeDate DESC</orderBy>
+			<quickFilter>IsoDocument.name like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<columns>
+			<column title="文件名称" name="name"/>
+			<column title="版本号" name="version" width="60" align="center"/>
+			<column title="受控状态" name="control" width="80" align="center"/>
+			<column title="紧急程度" name="urgency" width="80" align="center"/>
+			<column title="文件密级" name="security" width="80" align="center"/>
+			<column title="保存期限" name="storage" width="80" align="center"/>
+			<column title="编制日期" name="writeDate" align="center" width="68"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="120" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="modifyDocument" form="document" title="文件修改记录" pageRows="20" openFeatures="width=800,height=620">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.iso.pojo.IsoDocument</pojo>
+			<where>IsoDocument.isModify='1'</where>
+			<orderBy>IsoDocument.writeDate DESC</orderBy>
+			<quickFilter>IsoDocument.name like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<columns>
+			<column title="文件名称" name="name"/>
+			<column title="版本号" name="version" width="60" align="center"/>
+			<column title="受控状态" name="control" width="80" align="center"/>
+			<column title="紧急程度" name="urgency" width="80" align="center"/>
+			<column title="文件密级" name="security" width="80" align="center"/>
+			<column title="保存期限" name="storage" width="80" align="center"/>
+			<column title="编制日期" name="writeDate" align="center" width="68"/>
+		</columns>
+	</view>
+	
+	<view name="destroyDocument" form="document" title="文件销毁记录" pageRows="20" openFeatures="width=800,height=620">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.iso.pojo.IsoDocument</pojo>
+			<where>IsoDocument.isDestroy='1'</where>
+			<orderBy>IsoDocument.writeDate DESC</orderBy>
+			<quickFilter>IsoDocument.name like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<columns>
+			<column title="文件名称" name="name"/>
+			<column title="版本号" name="version" width="60" align="center"/>
+			<column title="受控状态" name="control" width="80" align="center"/>
+			<column title="紧急程度" name="urgency" width="80" align="center"/>
+			<column title="文件密级" name="security" width="80" align="center"/>
+			<column title="保存期限" name="storage" width="80" align="center"/>
+			<column title="编制日期" name="writeDate" align="center" width="68"/>
+		</columns>
+	</view>
+	
+	<view name="directory" form="directory" hide="noPrivilege(application_visitor)" title="目录" pageRows="25" openFeatures="width=750,height=550">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.iso.pojo.IsoDirectory</pojo>
+			<orderBy>IsoDirectory.priority DESC, IsoDirectory.directoryName</orderBy>
+			<quickFilter>IsoDirectory.directoryName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/>
+			<column title="名称" name="directoryName"/>
+		</columns>
+	</view>
+</views>

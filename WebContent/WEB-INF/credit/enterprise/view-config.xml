@@ -1,0 +1,833 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/enterprise" form="admin/enterprise" hide="noPrivilege(application_manager)" title="个体企业" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<orderBy>Enterprise.created DESC</orderBy>
+			<quickFilter>Enterprise.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件"   execute="PageUtils.newrecord('credit/enterprise', 'admin/enterpriseImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="注册"  execute="PageUtils.newrecord('credit/enterprise','admin/enterprise','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="person" title="经营者"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterprisebaishui" form="admin/enterprise" title="白水个体企业" hide="noPrivilege(manageUnit_baishui)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<orderBy>Enterprise.created DESC</orderBy>
+			<where>Enterprise.ascription like '%白水%'</where>
+			<quickFilter>Enterprise.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="person" title="经营者"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterprisebangshan" form="admin/enterprise" title="榜山个体企业" hide="noPrivilege(manageUnit_baishui)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<orderBy>Enterprise.created DESC</orderBy>
+			<where>Enterprise.ascription like '%榜山%'</where>
+			<quickFilter>Enterprise.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="person" title="经营者"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterprisechengxi" form="admin/enterprise" title="程溪个体企业" hide="noPrivilege(manageUnit_chengxi)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<orderBy>Enterprise.created DESC</orderBy>
+			<where>Enterprise.ascription like '%程溪%'</where>
+			<quickFilter>Enterprise.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="person" title="经营者"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterprisedongsi" form="admin/enterprise" title="东泗个体企业" hide="noPrivilege(manageUnit_dongsi)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<orderBy>Enterprise.created DESC</orderBy>
+			<where>Enterprise.ascription like '%东泗%'</where>
+			<quickFilter>Enterprise.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="person" title="经营者"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterprisedongyuan" form="admin/enterprise" title="东园个体企业" hide="noPrivilege(manageUnit_dongyuan)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<orderBy>Enterprise.created DESC</orderBy>
+			<where>Enterprise.ascription like '%东园%'</where>
+			<quickFilter>Enterprise.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="person" title="经营者"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterprisefugong" form="admin/enterprise" title="浮宫个体企业" hide="noPrivilege(manageUnit_fugong)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<orderBy>Enterprise.created DESC</orderBy>
+			<where>Enterprise.ascription like '%浮宫%'</where>
+			<quickFilter>Enterprise.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="person" title="经营者"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterprisegangwei" form="admin/enterprise" title="港尾个体企业" hide="noPrivilege(manageUnit_gangwei)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<orderBy>Enterprise.created DESC</orderBy>
+			<where>Enterprise.ascription like '%港尾%'</where>
+			<quickFilter>Enterprise.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="person" title="经营者"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterprisehaicheng" form="admin/enterprise" title="海澄个体企业" hide="noPrivilege(manageUnit_haicheng)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<orderBy>Enterprise.created DESC</orderBy>
+			<where>Enterprise.ascription like '%海澄%'</where>
+			<quickFilter>Enterprise.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="person" title="经营者"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterprisejiuhu" form="admin/enterprise" title="九湖个体企业" hide="noPrivilege(manageUnit_jiuhu)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<orderBy>Enterprise.created DESC</orderBy>
+			<where>Enterprise.ascription like '%九湖%'</where>
+			<quickFilter>Enterprise.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="person" title="经营者"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriselongjiao" form="admin/enterprise" title="隆教个体企业" hide="noPrivilege(manageUnit_longjiao)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<orderBy>Enterprise.created DESC</orderBy>
+			<where>Enterprise.ascription like '%隆教%'</where>
+			<quickFilter>Enterprise.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="person" title="经营者"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseshima" form="admin/enterprise" title="石码个体企业" hide="noPrivilege(manageUnit_shima)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<orderBy>Enterprise.created DESC</orderBy>
+			<where>Enterprise.ascription like '%石码%'</where>
+			<quickFilter>Enterprise.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="person" title="经营者"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseyancuo" form="admin/enterprise" title="颜厝个体企业" hide="noPrivilege(manageUnit_yancuo)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<orderBy>Enterprise.created DESC</orderBy>
+			<where>Enterprise.ascription like '%颜厝%'</where>
+			<quickFilter>Enterprise.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="person" title="经营者"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterprisezini" form="admin/enterprise" title="紫泥个体企业" hide="noPrivilege(manageUnit_zini)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<orderBy>Enterprise.created DESC</orderBy>
+			<where>Enterprise.ascription like '%紫泥%'</where>
+			<quickFilter>Enterprise.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="person" title="经营者"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<!-- 内资企业 -->
+	
+	<view name="admin/enterpriseinbaishui" form="admin/enterprise" title="白水内资企业" hide="noPrivilege(manageUnit_baishui)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<orderBy>EnterpriseIn.created DESC</orderBy>
+			<where>EnterpriseIn.ascription like '%白水%'</where>
+			<quickFilter>EnterpriseIn.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="登记名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseinbangshan" form="admin/enterprise" title="榜山内资企业" hide="noPrivilege(manageUnit_baishui)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<orderBy>EnterpriseIn.created DESC</orderBy>
+			<where>EnterpriseIn.ascription like '%榜山%'</where>
+			<quickFilter>EnterpriseIn.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="登记名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseinchengxi" form="admin/enterprise" title="程溪内资企业" hide="noPrivilege(manageUnit_chengxi)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<orderBy>EnterpriseIn.created DESC</orderBy>
+			<where>EnterpriseIn.ascription like '%程溪%'</where>
+			<quickFilter>EnterpriseIn.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="登记名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseindongsi" form="admin/enterprise" title="东泗内资企业" hide="noPrivilege(manageUnit_dongsi)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<orderBy>EnterpriseIn.created DESC</orderBy>
+			<where>EnterpriseIn.ascription like '%东泗%'</where>
+			<quickFilter>EnterpriseIn.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="登记名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseindongyuan" form="admin/enterprise" title="东园内资企业" hide="noPrivilege(manageUnit_dongyuan)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<orderBy>EnterpriseIn.created DESC</orderBy>
+			<where>EnterpriseIn.ascription like '%东园%'</where>
+			<quickFilter>EnterpriseIn.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="登记名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseinfugong" form="admin/enterprise" title="浮宫内资企业" hide="noPrivilege(manageUnit_fugong)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<orderBy>EnterpriseIn.created DESC</orderBy>
+			<where>EnterpriseIn.ascription like '%浮宫%'</where>
+			<quickFilter>EnterpriseIn.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="登记名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseingangwei" form="admin/enterprise" title="港尾内资企业" hide="noPrivilege(manageUnit_gangwei)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<orderBy>EnterpriseIn.created DESC</orderBy>
+			<where>EnterpriseIn.ascription like '%港尾%'</where>
+			<quickFilter>EnterpriseIn.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="登记名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseinhaicheng" form="admin/enterprise" title="海澄内资企业" hide="noPrivilege(manageUnit_haicheng)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<orderBy>EnterpriseIn.created DESC</orderBy>
+			<where>EnterpriseIn.ascription like '%海澄%'</where>
+			<quickFilter>EnterpriseIn.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="登记名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseinjiuhu" form="admin/enterprise" title="九湖内资企业" hide="noPrivilege(manageUnit_jiuhu)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<orderBy>EnterpriseIn.created DESC</orderBy>
+			<where>EnterpriseIn.ascription like '%九湖%'</where>
+			<quickFilter>EnterpriseIn.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="登记名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseinlongjiao" form="admin/enterprise" title="隆教内资企业" hide="noPrivilege(manageUnit_longjiao)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<orderBy>EnterpriseIn.created DESC</orderBy>
+			<where>EnterpriseIn.ascription like '%隆教%'</where>
+			<quickFilter>EnterpriseIn.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="登记名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseinshima" form="admin/enterprise" title="石码内资企业" hide="noPrivilege(manageUnit_shima)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<orderBy>EnterpriseIn.created DESC</orderBy>
+			<where>EnterpriseIn.ascription like '%石码%'</where>
+			<quickFilter>EnterpriseIn.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="登记名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseinyancuo" form="admin/enterprise" title="颜厝内资企业" hide="noPrivilege(manageUnit_yancuo)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<orderBy>EnterpriseIn.created DESC</orderBy>
+			<where>EnterpriseIn.ascription like '%颜厝%'</where>
+			<quickFilter>EnterpriseIn.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="登记名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseinzini" form="admin/enterprise" title="紫泥内资企业" hide="noPrivilege(manageUnit_zini)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<orderBy>EnterpriseIn.created DESC</orderBy>
+			<where>EnterpriseIn.ascription like '%紫泥%'</where>
+			<quickFilter>EnterpriseIn.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="登记名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<!-- 外资企业 -->
+	
+	<view name="admin/enterpriseoutbaishui" form="admin/enterprise" title="白水外资企业" hide="noPrivilege(manageUnit_baishui)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<orderBy>EnterpriseOut.created DESC</orderBy>
+			<where>EnterpriseOut.ascription like '%白水%'</where>
+			<quickFilter>EnterpriseOut.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseoutbangshan" form="admin/enterprise" title="榜山外资企业" hide="noPrivilege(manageUnit_baishui)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<orderBy>EnterpriseOut.created DESC</orderBy>
+			<where>EnterpriseOut.ascription like '%榜山%'</where>
+			<quickFilter>EnterpriseOut.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseoutchengxi" form="admin/enterprise" title="程溪外资企业" hide="noPrivilege(manageUnit_chengxi)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<orderBy>EnterpriseOut.created DESC</orderBy>
+			<where>EnterpriseOut.ascription like '%程溪%'</where>
+			<quickFilter>EnterpriseOut.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseoutdongsi" form="admin/enterprise" title="东泗外资企业" hide="noPrivilege(manageUnit_dongsi)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<orderBy>EnterpriseOut.created DESC</orderBy>
+			<where>EnterpriseOut.ascription like '%东泗%'</where>
+			<quickFilter>EnterpriseOut.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseoutdongyuan" form="admin/enterprise" title="东园外资企业" hide="noPrivilege(manageUnit_dongyuan)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<orderBy>EnterpriseOut.created DESC</orderBy>
+			<where>EnterpriseOut.ascription like '%东园%'</where>
+			<quickFilter>EnterpriseOut.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseoutfugong" form="admin/enterprise" title="浮宫外资企业" hide="noPrivilege(manageUnit_fugong)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<orderBy>EnterpriseOut.created DESC</orderBy>
+			<where>EnterpriseOut.ascription like '%浮宫%'</where>
+			<quickFilter>EnterpriseOut.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseoutgangwei" form="admin/enterprise" title="港尾外资企业" hide="noPrivilege(manageUnit_gangwei)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<orderBy>EnterpriseOut.created DESC</orderBy>
+			<where>EnterpriseOut.ascription like '%港尾%'</where>
+			<quickFilter>EnterpriseOut.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseouthaicheng" form="admin/enterprise" title="海澄外资企业" hide="noPrivilege(manageUnit_haicheng)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<orderBy>EnterpriseOut.created DESC</orderBy>
+			<where>EnterpriseOut.ascription like '%海澄%'</where>
+			<quickFilter>EnterpriseOut.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseoutjiuhu" form="admin/enterprise" title="九湖外资企业" hide="noPrivilege(manageUnit_jiuhu)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<orderBy>EnterpriseOut.created DESC</orderBy>
+			<where>EnterpriseOut.ascription like '%九湖%'</where>
+			<quickFilter>EnterpriseOut.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseoutlongjiao" form="admin/enterprise" title="隆教外资企业" hide="noPrivilege(manageUnit_longjiao)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<orderBy>EnterpriseOut.created DESC</orderBy>
+			<where>EnterpriseOut.ascription like '%隆教%'</where>
+			<quickFilter>EnterpriseOut.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseoutshima" form="admin/enterprise" title="石码外资企业" hide="noPrivilege(manageUnit_shima)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<orderBy>EnterpriseOut.created DESC</orderBy>
+			<where>EnterpriseOut.ascription like '%石码%'</where>
+			<quickFilter>EnterpriseOut.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseoutyancuo" form="admin/enterprise" title="颜厝外资企业" hide="noPrivilege(manageUnit_yancuo)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<orderBy>EnterpriseOut.created DESC</orderBy>
+			<where>EnterpriseOut.ascription like '%颜厝%'</where>
+			<quickFilter>EnterpriseOut.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseoutzini" form="admin/enterprise" title="紫泥外资企业" hide="noPrivilege(manageUnit_zini)"  pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<orderBy>EnterpriseOut.created DESC</orderBy>
+			<where>EnterpriseOut.ascription like '%紫泥%'</where>
+			<quickFilter>EnterpriseOut.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterprisein" form="admin/enterprisein" hide="noPrivilege(application_manager)" title="内资企业" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<orderBy>EnterpriseIn.created DESC</orderBy>
+			<quickFilter>EnterpriseIn.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件"   execute="PageUtils.newrecord('credit/enterprise', 'admin/enterpriseInImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="注册"  execute="PageUtils.newrecord('credit/enterprise','admin/enterprisein','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="登记名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseout" form="admin/enterpriseout" hide="noPrivilege(application_manager)" title="外资企业" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<orderBy>EnterpriseOut.created DESC</orderBy>
+			<quickFilter>EnterpriseOut.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件"   execute="PageUtils.newrecord('credit/enterprise', 'admin/enterpriseOutImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="注册"  execute="PageUtils.newrecord('credit/enterprise','admin/enterpriseout','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/financing" form="admin/financing" hide="noPrivilege(application_manager)" title="所有融资需求" pageRows="20" openFeatures="mode=fullscreen" >
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.financing.pojo.Financing</pojo>
+			<orderBy>Financing.created DESC</orderBy>
+			<quickFilter>Financing.projectName like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="projectName" title="融资项目名称"/>
+			<column name="amount" title="资金需求额度"  align="center"/>
+			<column name="purpose" title="资金用途" align="center"/>
+			<column name="type" title="资金需求种类" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/myEnterprise" form="admin/enterprise" hide='Privilege(manageUnit_enterprise)' title="个体企业" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<where>Enterprise.id={USERID} or Enterprise.creatorId={USERID}</where>
+			<quickFilter>Enterprise.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_regist)"  execute="PageUtils.newrecord('credit/enterprise', 'admin/enterpriseImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="注册" hide="noPrivilege(manageUnit_regist)" execute="PageUtils.newrecord('credit/enterprise','admin/enterprise','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/myEnterpriseIn" form="admin/enterprisein" hide='Privilege(manageUnit_enterprise)' title="我的内资企业" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<where>EnterpriseIn.id={USERID} or EnterpriseIn.creatorId={USERID}</where>
+			<quickFilter>EnterpriseIn.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_regist)"  execute="PageUtils.newrecord('credit/enterprise', 'admin/enterpriseInImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="注册" hide="noPrivilege(manageUnit_regist)" execute="PageUtils.newrecord('credit/enterprise','admin/enterprisein','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/myEnterpriseOut" form="admin/enterpriseout" hide='Privilege(manageUnit_enterprise)' title="我的外资企业" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<where>EnterpriseOut.id={USERID} or EnterpriseOut.creatorId={USERID}</where>
+			<quickFilter>EnterpriseOut.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_regist)"  execute="PageUtils.newrecord('credit/enterprise', 'admin/enterpriseOutImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="注册" hide="noPrivilege(manageUnit_regist)" execute="PageUtils.newrecord('credit/enterprise','admin/enterpriseout','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="person" title="法定代表人\负责人"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/myFinancing" form="admin/financing" hide="noPrivilege(manageUnit_regist)" title="我的融资需求" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.financing.pojo.Financing</pojo>
+			<where>Financing.creatorId={USERID}</where>
+			<orderBy>Financing.created DESC</orderBy>
+			<quickFilter>Financing.projectName like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="新增" execute="PageUtils.newrecord('credit/enterprise','admin/financing','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="projectName" title="融资项目名称"/>
+			<column name="amount" title="资金需求额度"  align="center"/>
+			<column name="purpose" title="资金用途" align="center"/>
+			<column name="type" title="资金需求种类" align="center"/>
+		</columns>
+	</view>
+	
+	<!-- 借款申请信息 -->
+	<view name="admin/allApply" form="admin/apply" title="所有借款申请信息" hide="noPrivilege(application_manager)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.apply.pojo.Apply</pojo>
+			<orderBy>Apply.created DESC</orderBy>
+			<quickFilter>Apply.applyPerson like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="applyPerson" title="申请人"/>
+			<column name="level" title="信用等级"  align="center"/>
+			<column name="phone" title="联系电话"  align="center"/>
+			<column name="applyMoney" title="借款金额" width="100" align="center"/>
+			<column name="status" title="状态" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	
+	<view name="admin/myApply" form="admin/apply" hide="noPrivilege(manageUnit_regist)" title="我的借款申请信息" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.apply.pojo.Apply</pojo>
+			<where>Apply.creatorId={USERID}</where>
+			<orderBy>Apply.created DESC</orderBy>
+			<quickFilter>Apply.applyPerson like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="applyPerson" title="申请人"/>
+			<column name="level" title="信用等级"  align="center"/>
+			<column name="phone" title="联系电话"  align="center"/>
+			<column name="applyMoney" title="借款金额" width="100" align="center"/>
+			<column name="status" title="状态" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	<view title="所有个体企业信息列表" name="enterprises">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<orderBy>Enterprise.created DESC</orderBy>
+			<quickFilter>Enterprise.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=credit/enterprise&amp;pageName=enterpriseDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view title="个体企业信息搜索结果" name="enterpriseQueryResults">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<orderBy>Enterprise.created DESC</orderBy>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=credit/enterprise&amp;pageName=enterpriseDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view title="所有内资企业信息列表" name="enterpriseins">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<orderBy>EnterpriseIn.created DESC</orderBy>
+			<quickFilter>EnterpriseIn.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=credit/enterprise&amp;pageName=enterpriseInDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view title="内资企业信息搜索结果" name="enterpriseInQueryResults">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<orderBy>EnterpriseIn.created DESC</orderBy>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=credit/enterprise&amp;pageName=enterpriseInDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view title="所有外资企业信息列表" name="enterpriseouts">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<orderBy>EnterpriseOut.created DESC</orderBy>
+			<quickFilter>EnterpriseOut.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=credit/enterprise&amp;pageName=enterpriseOutDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view title="内资企业信息搜索结果" name="enterpriseInQueryResults">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<orderBy>EnterpriseOut.created DESC</orderBy>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=credit/enterprise&amp;pageName=enterpriseOutDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+</views>

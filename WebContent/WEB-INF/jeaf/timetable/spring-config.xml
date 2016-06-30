@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>	
+	<!-- 作息时间服务 -->
+	<bean id="timetableService" class="com.yuanluesoft.jeaf.timetable.services.spring.TimetableServiceImpl" init-method="startup">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="sessionService"><ref bean="sessionService"/></property>
+		<property name="orgService"><ref bean="orgService"/></property>
+		<property name="distributionService"><ref bean="distributionService"/></property>
+		<property name="timetableServiceListenerNames"><value>monitorService,workflowExploitService,publicService</value></property>
+	</bean>
+</beans>

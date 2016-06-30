@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="待审核企业" name="admin/toApprovalCompany" form="admin/company" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.job.company.pojo.JobCompany</pojo>
+			<where>JobCompany.status=0</where>
+			<orderBy>JobCompany.created DESC</orderBy>
+			<quickFilter>JobCompany.name like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="企业名称" name="name"/>
+			<column title="注册时间" name="created"  width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view title="已审核企业" name="admin/approvaledCompany" form="admin/company" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.job.company.pojo.JobCompany</pojo>
+			<where>JobCompany.status>0</where>
+			<orderBy>JobCompany.created DESC</orderBy>
+			<quickFilter>JobCompany.name like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="企业名称" name="name"/>
+			<column title="注册时间" name="created"  width="110" align="center"/>
+			<column title="状态" name="status"  width="80" align="center"/>
+			<column title="审核时间" name="approvalTime"  width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view title="招聘职位" name="admin/job" form="admin/job" pageRows="20" openFeatures="mode=dialog,width=720,height=400">
+		<data>
+			<pojo>com.yuanluesoft.job.company.pojo.Job</pojo>
+			<orderBy>Job.refreshTime DESC</orderBy>
+			<quickFilter>Job.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="推送到微信公众平台" execute="if(document.getElementsByName('viewPackage.selectedIds')[0].value!='')PageUtils.openurl('{CONTEXTPATH}/job/company/admin/sendToWechat.shtml?ids=' + document.getElementsByName('viewPackage.selectedIds')[0].value, 'mode=fullscreen');" hide="noMyUnitPopedom(wechatMessageManager)"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="职位名称" name="name" width="35%"/>
+			<column title="公司名称" name="company.name" width="65%"/>
+			<column title="招聘人数" name="recruitNumber" width="80"/>
+			<column title="刷新时间" name="refreshTime" width="110"/>
+		</columns>
+	</view>
+	
+	<view title="职位推送" name="admin/jobPush" pageRows="20" hide="noPrivilege(application_manager)" openFeatures="mode=dialog,width=720,height=400">
+		<data>
+			<pojo>com.yuanluesoft.job.company.pojo.JobPush</pojo>
+			<orderBy>JobPush.pushTime DESC</orderBy>
+			<quickFilter>JobPush.companyName like '%{KEY}%' and JobPush.jobName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="公司名称" name="companyName" width="65%"/>
+			<column title="职位名称" name="jobName" width="35%"/>
+			<column title="推送人" name="pusher" width="120"/>
+			<column title="推送时间" name="pushTime" width="110"/>
+		</columns>
+	</view>
+	
+	<view title="企业" name="company">
+		<data>
+			<pojo>com.yuanluesoft.job.company.pojo.JobCompany</pojo>
+			<where>JobCompany.status=1</where>
+			<orderBy>JobCompany.created DESC</orderBy>
+			<quickFilter>JobCompany.name like '%{KEY}%'</quickFilter>
+		</data>
+		<extendParameters>
+			<parameter name="embedViews">jobsByCompany</parameter> <!-- 可以内嵌的其他记录列表,允许多个,用逗号分隔,格式:应用名称_视图名称,如:cms/sitemanage_resources或者resources(默认就是当前应用) -->
+		</extendParameters>
+	</view>
+	
+	<view title="已发布职位(所有企业)" name="jobs">
+		<data>
+			<pojo>com.yuanluesoft.job.company.pojo.Job</pojo>
+			<where>Job.isPublic=1</where>
+			<orderBy>Job.refreshTime DESC, Job.priority DESC, Job.name</orderBy>
+			<quickFilter>Job.name like '%{KEY}%' or company.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>/job/company/job.shtml</link>
+		</links>
+	</view>
+	
+	<view title="同类职位(当前职位)" name="congenerJobs">
+		<data>
+			<pojo>com.yuanluesoft.job.company.pojo.Job</pojo>
+			<where>Job.isPublic=1 and Job.id!={PARAMETER:id} and Job.postId=(select Job.postId from Job Job where Job.id={PARAMETER:id})</where>
+			<orderBy>Job.refreshTime DESC, Job.priority DESC, Job.name</orderBy>
+			<quickFilter>Job.name like '%{KEY}%' or company.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>/job/company/job.shtml</link>
+		</links>
+	</view>
+	
+	<view title="已发布职位(当前企业)" name="jobsByCompany">
+		<data>
+			<pojo>com.yuanluesoft.job.company.pojo.Job</pojo>
+			<where>Job.companyId={PARAMETER:id} and Job.isPublic=1</where>
+			<orderBy>Job.refreshTime DESC, Job.priority DESC, Job.name</orderBy>
+			<quickFilter>Job.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>/job/company/job.shtml</link>
+		</links>
+	</view>
+	
+	<view title="所有职位(当前企业)" name="jobsOfMyCompany">
+		<data>
+			<pojo>com.yuanluesoft.job.company.pojo.Job</pojo>
+			<where>Job.companyId={UNITID}</where>
+			<orderBy>Job.refreshTime DESC, Job.priority DESC, Job.name</orderBy>
+			<quickFilter>Job.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>/job/company/job.shtml</link>
+		</links>
+	</view>
+</views>

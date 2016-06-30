@@ -1,0 +1,375 @@
+package com.yuanluesoft.jeaf.payment.paymentmethod.bocbank.service.spring;
+
+import com.bocnet.common.security.PKCS7Tool;
+import com.yuanluesoft.jeaf.database.DatabaseService;
+import com.yuanluesoft.jeaf.exception.ServiceException;
+import com.yuanluesoft.jeaf.logger.Logger;
+import com.yuanluesoft.jeaf.payment.model.PaymentMethodParameterDefine;
+import com.yuanluesoft.jeaf.payment.model.PaymentResult;
+import com.yuanluesoft.jeaf.payment.paymentmethod.PaymentMethodService;
+import com.yuanluesoft.jeaf.payment.paymentmethod.bocbank.pojo.BocbankB2BOrder;
+import com.yuanluesoft.jeaf.payment.paymentmethod.bocbank.pojo.BocbankB2COrder;
+import com.yuanluesoft.jeaf.payment.pojo.Payment;
+import com.yuanluesoft.jeaf.payment.pojo.PaymentMerchant;
+import com.yuanluesoft.jeaf.util.DateTimeUtils;
+import com.yuanluesoft.jeaf.util.Environment;
+import com.yuanluesoft.jeaf.util.HttpUtils;
+import com.yuanluesoft.jeaf.util.UUIDLongGenerator;
+import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringReader;
+import java.sql.Date;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.httpclient.NameValuePair;
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+
+public class BocbankPaymentMethodService
+  implements PaymentMethodService
+{
+  private DatabaseService databaseService;
+
+  public String getB2BAccountTypes()
+  {
+    return "企业";
+  }
+
+  public String getB2CAccountTypes()
+  {
+    return "个人";
+  }
+
+  public String getIconUrl()
+  {
+    return Environment.getContextPath() + "/jeaf/payment/bocbank/logo/bocbank.jpg";
+  }
+
+  public String getName()
+  {
+    return "中国银行";
+  }
+
+  public List getParameterDefines()
+  {
+    List parameterDefines = new ArrayList();
+    parameterDefines.add(new PaymentMethodParameterDefine("B2C支付URL", "b2cPaymentURL", null, "https://ebspay.boc.cn/PGWPortal/RecvOrder.do", false));
+    parameterDefines.add(new PaymentMethodParameterDefine("B2C查询URL", "b2cQueryURL", null, "https://ebspay.boc.cn/PGWPortal/CommonQueryOrder.do", false));
+    parameterDefines.add(new PaymentMethodParameterDefine("B2C商户号", "b2cMerchantNo", null, null, false));
+
+    parameterDefines.add(new PaymentMethodParameterDefine("B2B支付URL", "b2bPaymentURL", null, "https://ebspay.boc.cn/PGWPortal/B2BRecvOrder.do", false));
+    parameterDefines.add(new PaymentMethodParameterDefine("B2B查询URL", "b2bQueryURL", null, "https://ebspay.boc.cn/PGWPortal/CommonB2BQueryOrder.do", false));
+    parameterDefines.add(new PaymentMethodParameterDefine("B2B商户号", "b2bBocNo", null, null, false));
+
+    parameterDefines.add(new PaymentMethodParameterDefine("证书库路径", "keyStorePath", "证书在服务器上的存放路径，证书类型为pfx", new File(Environment.getWebinfPath() + "jeaf/payment/bocbank/merchant.pfx").getPath(), false));
+    parameterDefines.add(new PaymentMethodParameterDefine("证书库口令", "keyStorePassword", null, null, true));
+    parameterDefines.add(new PaymentMethodParameterDefine("签名私钥口令", "keyPassword", "一般与证书库口令相同", null, true));
+    return parameterDefines;
+  }
+
+  public void redirectToBankPage(Payment payment, PaymentMerchant paymentMerchant, String paymentCompleteCallbackURL, HttpServletRequest request, HttpServletResponse response)
+    throws ServiceException
+  {
+    if (!"企业".equals(payment.getAccountType())) {
+      redirectToB2cBankPage(payment, paymentMerchant, paymentCompleteCallbackURL, request, response);
+    }
+    else
+      redirectToB2bBankPage(payment, paymentMerchant, paymentCompleteCallbackURL, request, response);
+  }
+
+  public void redirectToB2cBankPage(Payment payment, PaymentMerchant paymentMerchant, String paymentCompleteCallbackURL, HttpServletRequest request, HttpServletResponse response)
+    throws ServiceException
+  {
+    try
+    {
+      String orderTime = DateTimeUtils.formatTimestamp(payment.getCreated(), "yyyyMMddHHmmss");
+      String orderAmount = new DecimalFormat("0.00").format(payment.getMoney());
+      String merchantNo = paymentMerchant.getParameterValue("b2cMerchantNo");
+      String data = payment.getId() + "|" + 
+        orderTime + "|" + 
+        "001|" + 
+        orderAmount + "|" + 
+        merchantNo;
+      String signature = sign(data, paymentMerchant);
+
+      response.setCharacterEncoding("UTF-8");
+      PrintWriter writer = response.getWriter();
+      writer.write("<html>");
+      writer.write("\t<body onload=\"document.forms[0].submit()\">");
+      writer.write("\t\t<form name=\"sendOrder\" method=\"POST\" action=\"" + paymentMerchant.getParameterValue("b2cPaymentURL") + "\">");
+      writer.write("\t\t\t<INPUT NAME=\"merchantNo\" TYPE=\"hidden\" value=\"" + merchantNo + "\">");
+      writer.write("\t\t\t<INPUT NAME=\"payType\" TYPE=\"hidden\" value=\"1\">");
+      writer.write("\t\t\t<INPUT NAME=\"orderNo\" TYPE=\"hidden\" value=\"" + payment.getId() + "\">");
+      writer.write("\t\t\t<INPUT NAME=\"curCode\" TYPE=\"hidden\" value=\"001\">");
+      writer.write("\t\t\t<INPUT NAME=\"orderAmount\" TYPE=\"hidden\" value=\"" + orderAmount + "\">");
+      writer.write("\t\t\t<INPUT NAME=\"orderTime\" TYPE=\"hidden\" value=\"" + orderTime + "\">");
+      writer.write("\t\t\t<INPUT NAME=\"orderNote\" TYPE=\"hidden\" value=\"" + (payment.getPaymentReason() == null ? "" : payment.getPaymentReason().substring(0, Math.min(60, payment.getPaymentReason().length()))) + "\">");
+      writer.write("\t\t\t<INPUT NAME=\"orderUrl\" TYPE=\"hidden\" value=\"" + paymentCompleteCallbackURL + "\">");
+
+      writer.write("\t\t\t<INPUT NAME=\"signData\" TYPE=\"hidden\" value=\"" + signature + "\">");
+      writer.write("\t\t</form>");
+      writer.write("\t</body>");
+      writer.write("</html>");
+    }
+    catch (Exception e) {
+      throw new ServiceException(e);
+    }
+  }
+
+  public void redirectToB2bBankPage(Payment payment, PaymentMerchant paymentMerchant, String paymentCompleteCallbackURL, HttpServletRequest request, HttpServletResponse response)
+    throws ServiceException
+  {
+    try
+    {
+      String orderTime = DateTimeUtils.formatTimestamp(payment.getCreated(), "yyyyMMddHHmmss");
+      String orderAmount = new DecimalFormat("0.00").format(payment.getMoney());
+      String bocNo = paymentMerchant.getParameterValue("b2bBocNo");
+      String data = bocNo + "|" + 
+        payment.getId() + "|" + 
+        "001|" + 
+        orderAmount + "|" + 
+        orderTime;
+      String signature = sign(data, paymentMerchant);
+
+      response.setCharacterEncoding("UTF-8");
+      PrintWriter writer = response.getWriter();
+      writer.write("<html>");
+      writer.write("\t<body onload=\"document.forms[0].submit()\">");
+      writer.write("\t\t<form name=\"sendOrder\" method=\"POST\" action=\"" + paymentMerchant.getParameterValue("b2bPaymentURL") + "\">");
+      writer.write("\t\t\t<INPUT NAME=\"bocNo\" TYPE=\"hidden\" value=\"" + bocNo + "\">");
+      writer.write("\t\t\t<INPUT NAME=\"orderNo\" TYPE=\"hidden\" value=\"" + payment.getId() + "\">");
+      writer.write("\t\t\t<INPUT NAME=\"curCode\" TYPE=\"hidden\" value=\"001\">");
+      writer.write("\t\t\t<INPUT NAME=\"orderAmount\" TYPE=\"hidden\" value=\"" + orderAmount + "\">");
+      writer.write("\t\t\t<INPUT NAME=\"orderTime\" TYPE=\"hidden\" value=\"" + orderTime + "\">");
+      writer.write("\t\t\t<INPUT NAME=\"orderNote\" TYPE=\"hidden\" value=\"" + (payment.getPaymentReason() == null ? "" : payment.getPaymentReason().substring(0, Math.min(60, payment.getPaymentReason().length()))) + "\">");
+      writer.write("\t\t\t<INPUT NAME=\"orderUrl\" TYPE=\"hidden\" value=\"" + paymentCompleteCallbackURL + "\">");
+      writer.write("\t\t\t<INPUT NAME=\"signData\" TYPE=\"hidden\" value=\"" + signature + "\">");
+      writer.write("\t\t</form>");
+      writer.write("\t</body>");
+      writer.write("</html>");
+    }
+    catch (Exception e) {
+      throw new ServiceException(e);
+    }
+  }
+
+  private String sign(String data, PaymentMerchant paymentMerchant)
+    throws Exception
+  {
+    PKCS7Tool tool = PKCS7Tool.getSigner(paymentMerchant.getParameterValue("keyStorePath"), paymentMerchant.getParameterValue("keyStorePassword"), paymentMerchant.getParameterValue("keyPassword"));
+
+    return tool.sign(data.getBytes());
+  }
+
+  public PaymentResult queryPayment(Payment payment, PaymentMerchant paymentMerchant)
+    throws ServiceException
+  {
+    if (!"企业".equals(payment.getAccountType())) {
+      return queryB2cPayment(payment, paymentMerchant);
+    }
+
+    return queryB2bPayment(payment, paymentMerchant);
+  }
+
+  private PaymentResult queryB2cPayment(Payment payment, PaymentMerchant paymentMerchant)
+    throws ServiceException
+  {
+    try
+    {
+      String merchantNo = paymentMerchant.getParameterValue("b2cMerchantNo");
+      NameValuePair[] nameValuePairs = new NameValuePair[3];
+      nameValuePairs[0] = new NameValuePair("merchantNo", merchantNo);
+      nameValuePairs[1] = new NameValuePair("orderNos", "" + payment.getId());
+      nameValuePairs[2] = new NameValuePair("signData", sign(merchantNo + ":" + payment.getId(), paymentMerchant));
+      String httpResponse = HttpUtils.doPost(paymentMerchant.getParameterValue("b2cQueryURL"), nameValuePairs);
+      if (httpResponse == null) {
+        throw new ServiceException();
+      }
+      if (Logger.isDebugEnabled()) {
+        Logger.debug("BocbankPaymentMethodService: b2c payment query result is " + httpResponse);
+      }
+
+      SAXReader reader = new SAXReader();
+      StringReader strReader = new StringReader(httpResponse);
+      Element xmlResponse = reader.read(strReader).getRootElement();
+      Element xmlHeader = xmlResponse.element("header");
+      if (!"A".equals(xmlHeader.elementText("hdlSts"))) {
+        throw new ServiceException("hdlSts:" + xmlHeader.elementText("hdlSts"));
+      }
+      if (!"0".equals(xmlHeader.elementText("bdFlg"))) {
+        return null;
+      }
+      Element xmlBody = xmlResponse.element("body");
+      if (xmlBody == null) {
+        return null;
+      }
+      Element xmlOrder = xmlBody.element("orderTrans");
+
+      BocbankB2COrder order = (BocbankB2COrder)this.databaseService.findRecordByHql("from BocbankB2COrder BocbankB2COrder where BocbankB2COrder.paymentId=" + payment.getId());
+      boolean isNew = order == null;
+      if (isNew) {
+        order = new BocbankB2COrder();
+        order.setId(UUIDLongGenerator.generateId());
+        order.setPaymentId(payment.getId());
+      }
+      order.setMerchantNo(xmlOrder.elementText("merchantNo"));
+      order.setOrderNo(xmlOrder.elementText("orderNo"));
+      order.setOrderSeq(xmlOrder.elementText("orderSeq"));
+      order.setOrderStatus(xmlOrder.elementText("orderStatus"));
+      order.setCardTyp(xmlOrder.elementText("cardTyp"));
+      order.setAcctNo(xmlOrder.elementText("acctNo"));
+      order.setHolderName(xmlOrder.elementText("holderName"));
+      order.setIbknum(xmlOrder.elementText("ibknum"));
+      order.setPayTime(xmlOrder.elementText("payTime"));
+      order.setPayAmount(xmlOrder.elementText("payAmount"));
+      order.setVisitorIp(xmlOrder.elementText("visitorIp"));
+      order.setVisitorRefer(xmlOrder.elementText("visitorRefer"));
+      if (isNew) {
+        this.databaseService.saveRecord(order);
+      }
+      else {
+        this.databaseService.updateRecord(order);
+      }
+
+      PaymentResult result = new PaymentResult();
+      result.setTransactTime(DateTimeUtils.parseTimestamp(order.getPayTime(), "yyyyMMddHHmmsss"));
+      result.setTransactMoney(Double.parseDouble(order.getPayAmount()));
+      result.setFee(0.0D);
+      result.setTransactSn(order.getOrderSeq());
+      result.setBankOrderId(order.getOrderSeq());
+      result.setTransactSuccess("1".equals(order.getOrderStatus()) ? '1' : '0');
+      result.setFailedReason(null);
+      return result;
+    }
+    catch (Exception e) {
+      Logger.exception(e);
+    }return null;
+  }
+
+  private PaymentResult queryB2bPayment(Payment payment, PaymentMerchant paymentMerchant)
+    throws ServiceException
+  {
+    try
+    {
+      String bocNo = paymentMerchant.getParameterValue("b2bBocNo");
+      NameValuePair[] nameValuePairs = new NameValuePair[3];
+      nameValuePairs[0] = new NameValuePair("bocNo", bocNo);
+      nameValuePairs[1] = new NameValuePair("orderNos", "" + payment.getId());
+      nameValuePairs[2] = new NameValuePair("signData", sign(bocNo + "|" + payment.getId(), paymentMerchant));
+      String httpResponse = HttpUtils.doPost(paymentMerchant.getParameterValue("b2bQueryURL"), nameValuePairs);
+      if (httpResponse == null) {
+        throw new ServiceException();
+      }
+      if (Logger.isDebugEnabled()) {
+        Logger.debug("BocbankPaymentMethodService: b2b payment query result is " + httpResponse);
+      }
+
+      SAXReader reader = new SAXReader();
+      StringReader strReader = new StringReader(httpResponse);
+      Element xmlResponse = reader.read(strReader).getRootElement();
+      Element xmlBody = xmlResponse.element("body");
+      if (xmlBody == null) {
+        return null;
+      }
+      Element xmlOrder = xmlBody.element("orderTrans");
+
+      BocbankB2BOrder order = (BocbankB2BOrder)this.databaseService.findRecordByHql("from BocbankB2BOrder BocbankB2BOrder where BocbankB2BOrder.paymentId=" + payment.getId());
+      boolean isNew = order == null;
+      if (isNew) {
+        order = new BocbankB2BOrder();
+        order.setId(UUIDLongGenerator.generateId());
+        order.setPaymentId(payment.getId());
+      }
+      order.setBocNo(xmlOrder.elementText("bocNo"));
+      order.setOrderNo(xmlOrder.elementText("orderNo"));
+      order.setOrderSeq(Long.parseLong(xmlOrder.elementText("orderSeq")));
+      order.setCurCode(xmlOrder.elementText("curCode"));
+      order.setOrderAmount(Double.parseDouble(xmlOrder.elementText("orderAmount")));
+      order.setRecvTime(xmlOrder.elementText("recvTime"));
+      order.setLastTranTime(xmlOrder.elementText("lastTranTime"));
+      order.setRefundedAmount(Double.parseDouble(xmlOrder.elementText("refundedAmount")));
+      order.setOrderStatus(xmlOrder.elementText("orderStatus"));
+      order.setActnumT(xmlOrder.elementText("actnumT"));
+      order.setActnamT(xmlOrder.elementText("actnamT"));
+      order.setBocFlag(xmlOrder.elementText("bocFlag"));
+      order.setIbkNamT(xmlOrder.elementText("ibkNamT"));
+      order.setCnapsNo(xmlOrder.elementText("cnapsNo"));
+      order.setIbkNumT(xmlOrder.elementText("ibkNumT"));
+      order.setOrgidtT(xmlOrder.elementText("orgidtT"));
+      order.setOrderType(xmlOrder.elementText("orderType").charAt(0));
+      order.setIbknumF(xmlOrder.elementText("ibknumF"));
+      order.setActnumF(xmlOrder.elementText("actnumF"));
+      order.setActnamF(xmlOrder.elementText("actnamF"));
+      if (isNew) {
+        this.databaseService.saveRecord(order);
+      }
+      else {
+        this.databaseService.updateRecord(order);
+      }
+
+      PaymentResult result = new PaymentResult();
+      result.setTransactTime(DateTimeUtils.parseTimestamp(order.getLastTranTime() == null ? order.getRecvTime() : order.getLastTranTime(), "yyyyMMddHHmmsss"));
+      result.setTransactMoney(order.getOrderAmount());
+      result.setFee(0.0D);
+      result.setTransactSn("" + order.getOrderSeq());
+      result.setBankOrderId("" + order.getOrderSeq());
+      result.setTransactSuccess("T1".equals(order.getOrderStatus()) ? '1' : '0');
+      result.setFailedReason(null);
+      return result;
+    }
+    catch (Exception e) {
+      Logger.exception(e);
+    }return null;
+  }
+
+  public List parseTransactions(String transactionsFilePath)
+    throws ServiceException
+  {
+    return null;
+  }
+
+  public String createTransferFile(List transfers, String transferFilePath, String subject, PaymentMerchant paymentMerchant)
+    throws ServiceException
+  {
+    return null;
+  }
+
+  public List listTransactions(Date day, PaymentMerchant paymentMerchant)
+    throws ServiceException
+  {
+    return null;
+  }
+
+  public void transfer(List transfers, PaymentMerchant paymentMerchant)
+    throws ServiceException
+  {
+  }
+
+  public DatabaseService getDatabaseService()
+  {
+    return this.databaseService;
+  }
+
+  public void setDatabaseService(DatabaseService databaseService)
+  {
+    this.databaseService = databaseService;
+  }
+
+  public static void main(String[] args) throws Exception {
+    Payment payment = new Payment();
+    payment.setId(123L);
+    PaymentMerchant paymentMerchant = new PaymentMerchant();
+    paymentMerchant.setParameterValue("b2cQueryURL", "https://ebspay.boc.cn/PGWPortal/CommonQueryOrder.do");
+    paymentMerchant.setParameterValue("b2bQueryURL", "http://180.168.146.75:81/PGWPortal/CommonB2BQueryOrder.do");
+    paymentMerchant.setParameterValue("b2cMerchantNo", "104110059475555");
+    paymentMerchant.setParameterValue("b2bBocNo", "5664");
+    paymentMerchant.setParameterValue("keyStorePath", new File(Environment.getWebinfPath() + "jeaf/payment/bocbank/merchant.pfx").getPath());
+    paymentMerchant.setParameterValue("keyStorePassword", "111111");
+    paymentMerchant.setParameterValue("keyPassword", "111111");
+    new BocbankPaymentMethodService().queryB2bPayment(payment, paymentMerchant);
+  }
+}

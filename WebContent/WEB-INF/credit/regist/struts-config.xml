@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminUser" type="com.yuanluesoft.credit.regist.forms.admin.CreditUser"/>
+  <form-bean name="user" type="com.yuanluesoft.credit.regist.forms.CreditUser"/>
+  <form-bean name="applicationView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  
+  <action path="/admin/regist" name="adminUser" scope="request" validate="false" 
+    type="com.yuanluesoft.credit.regist.actions.admin.Load">
+       <forward name="load" path="/admin/regist.jsp"/>
+    </action>
+    <action path="/admin/saveRegist" name="adminUser" scope="request" validate="false"  input="/admin/regist.jsp"
+    type="com.yuanluesoft.credit.regist.actions.admin.Save"/>
+    
+    <action path="/admin/deleteRegist" name="adminUser" scope="request" validate="false" input="/admin/regist.jsp"
+    type="com.yuanluesoft.credit.regist.actions.admin.Delete"/>   
+    <!--批量审核-->
+    <action input="/../../jeaf/application/applicationView.jsp"
+   name="applicationView" path="/admin/batchOperate" scope="request"
+   type="com.yuanluesoft.credit.regist.actions.admin.BatchOperate" validate="false"/>
+     
+    <!-- 前台用户注册 -->
+     <action path="/regist" name="user" scope="request" validate="false" 
+    type="com.yuanluesoft.credit.regist.actions.Load">
+       <forward name="load" path="/regist.jsp"/>
+    </action>
+    <action path="/saveRegist" name="user" scope="request" validate="false"  input="/regist.jsp"
+    type="com.yuanluesoft.credit.regist.actions.Save">
+    	<forward name="result" path="/registResult.jsp"/>
+    </action>
+    
+    
+   
+
+  
+ </action-mappings>
+ <controller/>
+</struts-config>

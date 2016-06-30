@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--客户单位-->
+	<class name="com.yuanluesoft.fdi.customer.pojo.FdiCustomerCompany" table="fdi_customer_company">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--中文名称,VARCHAR(300)-->
+		<property name="englishName"/> <!--英文名称,VARCHAR(300)-->
+		<property name="address"/> <!--地址,中英文，邮编,VARCHAR(500)-->
+		<property name="webSite"/> <!--网站地址,VARCHAR(300)-->
+		<property name="country"/> <!--母公司所在国家或地区,VARCHAR(200)-->
+		<property name="introduction" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--单位简介,包括战略布局、核心行业与产品优势、竞争力分析等,TEXT-->
+		<property name="chinaHeadOffice"/> <!--中国区总部名称,VARCHAR(300)-->
+		<property name="contact"/> <!--联络方式,VARCHAR(300)-->
+		<property name="worldTop500"/> <!--是否世界500强企业,NUMERIC(1)-->
+		<property name="chosenYear"/> <!--入选年份,VARCHAR(4)-->
+		<property name="ranking"/> <!--排名,VARCHAR(3)-->
+		<property name="remark"/> <!--备注,VARCHAR(1000)-->
+		<property name="creatorId"/> <!--登记人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--登记人,VARCHAR(100)-->
+		<property name="created"/> <!--登记时间,TIMESTAMP-->
+		<set name="contacts" table="fdi_customer_contact" lazy="true" inverse="true" cascade="delete" order-by="name">
+			<key column="companyId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.fdi.customer.pojo.FdiCustomerContact" />
+		</set>
+		<set name="industries" table="fdi_customer_company_industry" lazy="false" inverse="true" cascade="delete" order-by="id">
+			<key column="companyId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.fdi.customer.pojo.FdiCustomerCompanyIndustry" />
+		</set>
+	</class>
+	
+	<!--客户单位:所属行业-->
+	<class name="com.yuanluesoft.fdi.customer.pojo.FdiCustomerCompanyIndustry" table="fdi_customer_company_industry">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="companyId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="industryId"/> <!--行业ID,NUMERIC(20)-->
+		<property name="industry"/> <!--行业名称,VARCHAR(200)-->
+	</class>
+	
+	<!--客户联系人-->
+	<class name="com.yuanluesoft.fdi.customer.pojo.FdiCustomerContact" table="fdi_customer_contact">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="companyId"/> <!--客户单位ID,NUMERIC(20)-->
+		<property name="companyName"/> <!--客户单位名称,VARCHAR(300)-->
+		<property name="name"/> <!--中文姓名,VARCHAR(50)-->
+		<property name="englishName"/> <!--英文姓名,VARCHAR(100)-->
+		<property name="sex"/> <!--性别,CHAR(1)-->
+		<property name="address"/> <!--个人地址,VARCHAR(500)-->
+		<property name="tel"/> <!--电话,含国别、地区号,VARCHAR(200)-->
+		<property name="mobile"/> <!--手机,VARCHAR(200)-->
+		<property name="fax"/> <!--传真,含国别、地区号,VARCHAR(200)-->
+		<property name="email"/> <!--E-mail,VARCHAR(200)-->
+		<property name="im"/> <!--QQ\MSN\微博,VARCHAR(200)-->
+		<property name="post"/> <!--所在部门及职务,VARCHAR(200)-->
+		<property name="remark"/> <!--个人备注,特点、兴趣、任期等,VARCHAR(4000)-->
+		<property name="discuss"/> <!--商谈事项,VARCHAR(4000)-->
+		<property name="source"/> <!--信息来源,VARCHAR(1000)-->
+		<property name="chinaContact"/> <!--最初中方联系人,VARCHAR(100)-->
+		<property name="created"/> <!--收录时间,TIMESTAMP-->
+		<property name="creatorId"/> <!--录入者ID,NUMERIC(20)-->
+		<property name="creator"/> <!--录入者,VARCHAR(100)-->
+		<set name="discusses" table="fdi_customer_contact_discuss" lazy="true" inverse="true" cascade="delete" order-by="discussTime DESC">
+			<key column="contactId"/>
+			<one-to-many class="com.yuanluesoft.fdi.customer.pojo.FdiCustomerContactDiscuss" />
+		</set>
+	</class>
+	
+	<!--客户联系人:往来情况-->
+	<class name="com.yuanluesoft.fdi.customer.pojo.FdiCustomerContactDiscuss" table="fdi_customer_contact_discuss">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="contactId"/> <!--客户联系人ID,NUMERIC(20)-->
+		<property name="discussTime"/> <!--时间,TIMESTAMP-->
+		<property name="discussAddress"/> <!--地点,VARCHAR(200)-->
+		<property name="discussPerson"/> <!--洽谈人,VARCHAR(200)-->
+		<property name="discussContent" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--洽谈内容,TEXT-->
+	</class>
+</hibernate-mapping>

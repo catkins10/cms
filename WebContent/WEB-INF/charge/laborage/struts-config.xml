@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminMonthlyLaborage" type="com.yuanluesoft.charge.laborage.forms.admin.MonthlyLaborage"/>
+  <form-bean name="monthlyLaborage" type="com.yuanluesoft.charge.laborage.forms.MonthlyLaborage"/>
+  <form-bean name="laborageMode" type="com.yuanluesoft.charge.laborage.forms.LaborageMode"/>
+  <form-bean name="listMonthlyLaborages" type="com.yuanluesoft.charge.laborage.forms.ListMonthlyLaborages"/>
+  <form-bean name="payoffTransaction" type="com.yuanluesoft.charge.laborage.forms.PayoffTransaction"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminMonthlyLaborage" path="/admin/monthlyLaborage"
+   scope="request"
+   type="com.yuanluesoft.charge.laborage.actions.admin.monthlylaborage.Load" validate="false">
+   <forward name="load" path="/admin/monthlyLaborage.jsp"/>
+  </action>
+  <action input="/admin/monthlyLaborage.jsp" name="adminMonthlyLaborage"
+   path="/admin/payoffMonthlyLaborage" scope="request"
+   type="com.yuanluesoft.charge.laborage.actions.admin.monthlylaborage.Payoff" validate="false"/>
+  <action name="listMonthlyLaborages" path="/listMonthlyLaborages"
+   scope="request"
+   type="com.yuanluesoft.charge.laborage.actions.monthlylaborage.ListMonthlyLaboragesAction" validate="false">
+   <forward name="load" path="/listMonthlyLaborages.jsp"/>
+  </action>
+  <action name="listMonthlyLaborages" path="/displayMonthlyLaborages"
+   scope="request"
+   type="com.yuanluesoft.charge.laborage.actions.monthlylaborage.ListMonthlyLaboragesAction" validate="false"/>
+  <action name="laborageMode" path="/laborageMode" scope="request"
+   type="com.yuanluesoft.charge.laborage.actions.laboragemode.Load" validate="false">
+   <forward name="load" path="/laborageMode.jsp"/>
+  </action>
+  <action input="/laborageMode.jsp" name="laborageMode"
+   path="/saveLaborageMode" scope="request"
+   type="com.yuanluesoft.charge.laborage.actions.laboragemode.Save" validate="false">
+   <forward name="result" path="/actionResultSimple.jsp"/>
+  </action>
+  <action name="monthlyLaborage" path="/monthlyLaborage" scope="request"
+   type="com.yuanluesoft.charge.laborage.actions.monthlylaborage.Load" validate="false">
+   <forward name="load" path="/monthlyLaborage.jsp"/>
+  </action>
+  <action input="/monthlyLaborage.jsp" name="monthlyLaborage"
+   path="/receiveMonthlyLaborage" scope="request"
+   type="com.yuanluesoft.charge.laborage.actions.monthlylaborage.Save" validate="false"/>
+  <action input="/admin/monthlyLaborage.jsp" name="adminMonthlyLaborage"
+   path="/admin/saveMonthlyLaborage" scope="request"
+   type="com.yuanluesoft.charge.laborage.actions.admin.monthlylaborage.Save" validate="false"/>
+  <action name="payoffTransaction" path="/payoffTransaction"
+   scope="request"
+   type="com.yuanluesoft.charge.laborage.actions.payofftransaction.Load" validate="false">
+   <forward name="load" path="/payoffTransaction.jsp"/>
+  </action>
+  <action name="payoffTransaction" path="/displayPayoffTransaction"
+   scope="request" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,1485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 短信服务 -->
+	<bean id="smsService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.jeaf.sms.service.spring.SmsServiceImpl" init-method="startup" destroy-method="showdown">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="memberServiceList"><ref bean="memberServiceList"/></property>
+				<property name="orgService"><ref bean="orgService"/></property>
+				<property name="roleService"><ref bean="roleService"/></property>
+				<property name="businessMode"><value>true</value></property>
+				<property name="smsServiceListenerNames"><value>smsSubscriptionService,smsReceiveService,appraiseService,smsSender</value></property> <!-- 短信接收侦听器,按处理的优先级排列 -->
+				<property name="smsClients">
+					<list>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>南靖县山城镇</value></property>
+							<property name="smsNumber"><value>106573062999005</value></property>
+							<property name="apiCode"><value>sczf</value></property>
+							<property name="masSign"><value>【山城镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>南靖县书洋镇</value></property>
+							<property name="smsNumber"><value>1065730600019597005</value></property>
+							<property name="apiCode"><value>syzf</value></property>
+							<property name="masSign"><value>【书洋镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>南靖县梅林镇</value></property>
+							<property name="smsNumber"><value>1065730600008816005</value></property>
+							<property name="apiCode"><value>mlzf</value></property>
+							<property name="masSign"><value>【梅林镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>南靖县船场镇</value></property>
+							<property name="smsNumber"><value>1065730624176005</value></property>
+							<property name="apiCode"><value>cczf</value></property>
+							<property name="masSign"><value>【船场镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>南靖县高新技术产业园区</value></property>
+							<property name="smsNumber"><value>10657306031637005</value></property>
+							<property name="apiCode"><value>njgxgw</value></property>
+							<property name="masSign"><value>【高新区】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>南靖县丰田镇</value></property>
+							<property name="smsNumber"><value>106573060003603005</value></property>
+							<property name="apiCode"><value>ftzf</value></property>
+							<property name="masSign"><value>【丰田镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>南靖县和溪镇</value></property>
+							<property name="smsNumber"><value>1065730628440005</value></property>
+							<property name="apiCode"><value>hxzf</value></property>
+							<property name="masSign"><value>【和溪镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>南靖县金山镇</value></property>
+							<property name="smsNumber"><value>10657306226460005</value></property>
+							<property name="apiCode"><value>jsjw</value></property>
+							<property name="masSign"><value>【金山镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>南靖县奎洋镇</value></property>
+							<property name="smsNumber"><value>106573063719005</value></property>
+							<property name="apiCode"><value>kyzf</value></property>
+							<property name="masSign"><value>【奎洋镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>南靖县龙山镇</value></property>
+							<property name="smsNumber"><value>106573060011695005</value></property>
+							<property name="apiCode"><value>lszf</value></property>
+							<property name="masSign"><value>【龙山镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>南靖县南坑镇</value></property>
+							<property name="smsNumber"><value>1065730600010370005</value></property>
+							<property name="apiCode"><value>nkzf</value></property>
+							<property name="masSign"><value>【南坑镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>南靖县靖城镇</value></property>
+							<property name="smsNumber"><value>106573060000787005</value></property>
+							<property name="apiCode"><value>jczf</value></property>
+							<property name="masSign"><value>【靖城镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>南靖县龙山镇</value></property>
+							<property name="smsNumber"><value>10657306034005</value></property>
+							<property name="apiCode"><value>lszf</value></property>
+							<property name="masSign"><value>【龙山镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山县前楼镇岱南村委</value></property>
+							<property name="smsNumber"><value>1065730609190005</value></property>
+							<property name="apiCode"><value>dsqldn</value></property>
+							<property name="masSign"><value>【岱南村民委员会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>						
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山前楼叶厝村委</value></property>
+							<property name="smsNumber"><value>106573060018093005</value></property>
+							<property name="apiCode"><value>dsqlyc</value></property>
+							<property name="masSign"><value>【叶厝村民委员会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山杏陈镇埔头村委</value></property>
+							<property name="smsNumber"><value>1065730600031890005</value></property>
+							<property name="apiCode"><value>dsxcpt</value></property>
+							<property name="masSign"><value>【杏陈镇埔头村】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山陈城白埕村委</value></property>
+							<property name="smsNumber"><value>10657306018641005</value></property>
+							<property name="apiCode"><value>dsccbc</value></property>
+							<property name="masSign"><value>【白埕村村民委员会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山陈城镇宫前村委</value></property>
+							<property name="smsNumber"><value>1065730622177005</value></property>
+							<property name="apiCode"><value>dsccgq</value></property>
+							<property name="masSign"><value>【宫前行政村】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山陈城镇澳角村委</value></property>
+							<property name="smsNumber"><value>1065730619801005</value></property>
+							<property name="apiCode"><value>dsccaj</value></property>
+							<property name="masSign"><value>【澳角行政村】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山陈城后姚村委</value></property>
+							<property name="smsNumber"><value>106573066361005</value></property>
+							<property name="apiCode"><value>dscchy</value></property>
+							<property name="masSign"><value>【后姚村村民委员会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山陈城镇港口村委</value></property>
+							<property name="smsNumber"><value>106573065122005</value></property>
+							<property name="apiCode"><value>dsccgk</value></property>
+							<property name="masSign"><value>【港口行政村】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山陈城冬古村委</value></property>
+							<property name="smsNumber"><value>106573061807005</value></property>
+							<property name="apiCode"><value>dsccdg</value></property>
+							<property name="masSign"><value>【冬古村民委员会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山陈城黄山村委</value></property>
+							<property name="smsNumber"><value>1065730600010984005</value></property>
+							<property name="apiCode"><value>dscchs</value></property>
+							<property name="masSign"><value>【黄山村村民委员会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山陈城亲营村委</value></property>
+							<property name="smsNumber"><value>1065730614311005</value></property>
+							<property name="apiCode"><value>dsccqy</value></property>
+							<property name="masSign"><value>【亲营村民委员会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山西埔顶西村委</value></property>
+							<property name="smsNumber"><value>10657306011559005</value></property>
+							<property name="apiCode"><value>dsxpdx</value></property>
+							<property name="masSign"><value>【顶西村委】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山西埔双东村委</value></property>
+							<property name="smsNumber"><value>1065730600029020005</value></property>
+							<property name="apiCode"><value>dsxpsd</value></property>
+							<property name="masSign"><value>【双东村民委员会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山陈城行政村</value></property>
+							<property name="smsNumber"><value>106573064192005</value></property>
+							<property name="apiCode"><value>dscccc</value></property>
+							<property name="masSign"><value>【陈城行政村】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山康美美山村</value></property>
+							<property name="smsNumber"><value>1065730600002536</value></property>
+							<property name="apiCode"><value>dskmms</value></property>
+							<property name="masSign"><value>【美山村委会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山康美城垵村</value></property>
+							<property name="smsNumber"><value>1065730600971</value></property>
+							<property name="apiCode"><value>dskmca</value></property>
+							<property name="masSign"><value>【城垵村委会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山康美铜钵村</value></property>
+							<property name="smsNumber"><value>1065730621568</value></property>
+							<property name="apiCode"><value>dskmtb</value></property>
+							<property name="masSign"><value>【铜钵村委会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>华安仙都镇政府</value></property>
+							<property name="smsNumber"><value>106573066046005</value></property>
+							<property name="apiCode"><value>haxdzf</value></property>
+							<property name="masSign"><value>【仙都镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>华安丰山镇政府</value></property>
+							<property name="smsNumber"><value>106573060023457005</value></property>
+							<property name="apiCode"><value>hafszf</value></property>
+							<property name="masSign"><value>【丰山镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>华安华丰镇政府</value></property>
+							<property name="smsNumber"><value>106573061153005</value></property>
+							<property name="apiCode"><value>hahfzf</value></property>
+							<property name="masSign"><value>【华丰镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>华安沙建镇政府</value></property>
+							<property name="smsNumber"><value>1065730627290005</value></property>
+							<property name="apiCode"><value>hasjzf</value></property>
+							<property name="masSign"><value>【沙建镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>华安马坑乡党政办</value></property>
+							<property name="smsNumber"><value>1065730600015881005</value></property>
+							<property name="apiCode"><value>hamkdz</value></property>
+							<property name="masSign"><value>【马坑乡党政办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>华安高安镇党政办</value></property>
+							<property name="smsNumber"><value>106573060014007005</value></property>
+							<property name="apiCode"><value>hagadz</value></property>
+							<property name="masSign"><value>【高安镇党政办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>华安高车乡党政办</value></property>
+							<property name="smsNumber"><value>1065730600025645005</value></property>
+							<property name="apiCode"><value>hagcdz</value></property>
+							<property name="masSign"><value>【高车乡党政办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>华安新圩镇政府</value></property>
+							<property name="smsNumber"><value>10657306022745005</value></property>
+							<property name="apiCode"><value>haxxzf</value></property>
+							<property name="masSign"><value>【新圩镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>华安湖林乡政府</value></property>
+							<property name="smsNumber"><value>1065730600012902005</value></property>
+							<property name="apiCode"><value>hahlzf</value></property>
+							<property name="masSign"><value>【湖林乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>长泰马洋溪管委</value></property>
+							<property name="smsNumber"><value>10657306023168005</value></property>
+							<property name="apiCode"><value>ctmygw</value></property>
+							<property name="masSign"><value>【马洋溪管委】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>长泰武安镇政府</value></property>
+							<property name="smsNumber"><value>106573069970005</value></property>
+							<property name="apiCode"><value>ctwazf</value></property>
+							<property name="masSign"><value>【武安镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>长泰岩溪镇政府</value></property>
+							<property name="smsNumber"><value>10657306018758005</value></property>
+							<property name="apiCode"><value>ctyxzf</value></property>
+							<property name="masSign"><value>【岩溪镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>长泰坂里乡政府</value></property>
+							<property name="smsNumber"><value>1065730600003524005</value></property>
+							<property name="apiCode"><value>ctblzf</value></property>
+							<property name="masSign"><value>【坂里乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙文蓝田镇党政办</value></property>
+							<property name="smsNumber"><value>1065730617858005</value></property>
+							<property name="apiCode"><value>zzlwlt</value></property>
+							<property name="masSign"><value>【蓝田镇党政办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙文步文镇党政办</value></property>
+							<property name="smsNumber"><value>106573068965005</value></property>
+							<property name="apiCode"><value>zzlwbw</value></property>
+							<property name="masSign"><value>【步文镇党政办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙文郭坑镇党政办</value></property>
+							<property name="smsNumber"><value>106573063178005</value></property>
+							<property name="apiCode"><value>zzlwgk</value></property>
+							<property name="masSign"><value>【郭坑镇党政办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>长泰经开区管委</value></property>
+							<property name="smsNumber"><value>106573060021846005</value></property>
+							<property name="apiCode"><value>ctjkgw</value></property>
+							<property name="masSign"><value>【经开区管委】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>长泰陈巷镇政府</value></property>
+							<property name="smsNumber"><value>106573060021927005</value></property>
+							<property name="apiCode"><value>ctcxzf</value></property>
+							<property name="masSign"><value>【陈巷镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>福建国营古农农场</value></property>
+							<property name="smsNumber"><value>1065730600016322005</value></property>
+							<property name="apiCode"><value>ctgnnc</value></property>
+							<property name="masSign"><value>【国营古农农场】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>长泰枋洋镇政府</value></property>
+							<property name="smsNumber"><value>1065730600023845005</value></property>
+							<property name="apiCode"><value>ctfyzf</value></property>
+							<property name="masSign"><value>【枋洋镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>长泰林墩工业区管委</value></property>
+							<property name="smsNumber"><value>106573060726005</value></property>
+							<property name="apiCode"><value>ctldgw</value></property>
+							<property name="masSign"><value>【林墩工业区管委】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山杏陈镇政府</value></property>
+							<property name="smsNumber"><value>1065730603233005</value></property>
+							<property name="apiCode"><value>dsxczf</value></property>
+							<property name="masSign"><value>【杏陈镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>诏安官陂镇政府</value></property>
+							<property name="smsNumber"><value>10657306007176005</value></property>
+							<property name="apiCode"><value>zagbzf</value></property>
+							<property name="masSign"><value>【官陂镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>诏安太平镇政府</value></property>
+							<property name="smsNumber"><value>10657306081005</value></property>
+							<property name="apiCode"><value>zatpzf</value></property>
+							<property name="masSign"><value>【太平镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>诏安秀篆镇政府</value></property>
+							<property name="smsNumber"><value>1065730600018464005</value></property>
+							<property name="apiCode"><value>zaxzzf</value></property>
+							<property name="masSign"><value>【秀篆镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>诏安金星乡政府</value></property>
+							<property name="smsNumber"><value>106573060021540005</value></property>
+							<property name="apiCode"><value>zajxzf</value></property>
+							<property name="masSign"><value>【金星乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>诏安梅岭镇政府</value></property>
+							<property name="smsNumber"><value>1065730600282005</value></property>
+							<property name="apiCode"><value>zamlzf</value></property>
+							<property name="masSign"><value>【梅岭镇人民政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>诏安南诏镇政府</value></property>
+							<property name="smsNumber"><value>10657306012513005</value></property>
+							<property name="apiCode"><value>zanzzf</value></property>
+							<property name="masSign"><value>【南诏镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+					  <bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>诏安红星乡政府</value></property>
+							<property name="smsNumber"><value>1065730607121005</value></property>
+							<property name="apiCode"><value>zahxzf</value></property>
+							<property name="masSign"><value>【红星乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>诏安西潭乡政府</value></property>
+							<property name="smsNumber"><value>10657306028793005</value></property>
+							<property name="apiCode"><value>zaxtzf</value></property>
+							<property name="masSign"><value>【西潭乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>诏安建设乡政府</value></property>
+							<property name="smsNumber"><value>1065730600006736005</value></property>
+							<property name="apiCode"><value>zajszf</value></property>
+							<property name="masSign"><value>【建设乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>诏安白洋乡政府</value></property>
+							<property name="smsNumber"><value>10657306438005</value></property>
+							<property name="apiCode"><value>zabyzf</value></property>
+							<property name="masSign"><value>【白洋乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>诏安深桥镇政府</value></property>
+							<property name="smsNumber"><value>10657306021971005</value></property>
+							<property name="apiCode"><value>zasqzf</value></property>
+							<property name="masSign"><value>【深桥镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>诏安工业园管委</value></property>
+							<property name="smsNumber"><value>1065730604708005</value></property>
+							<property name="apiCode"><value>zagygw</value></property>
+							<property name="masSign"><value>【诏安工业园管委】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙文朝阳镇党政办</value></property>
+							<property name="smsNumber"><value>1065730624932005</value></property>
+							<property name="apiCode"><value>zzlwcy</value></property>
+							<property name="masSign"><value>【朝阳镇党政办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>云霄下河乡政府</value></property>
+							<property name="smsNumber"><value>106573060457005</value></property>
+							<property name="apiCode"><value>yxxhzf</value></property>
+							<property name="masSign"><value>【下河乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>云霄和平乡政府</value></property>
+							<property name="smsNumber"><value>1065730609830005</value></property>
+							<property name="apiCode"><value>yxhpzf</value></property>
+							<property name="masSign"><value>【和平乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>云霄马铺乡政府</value></property>
+							<property name="smsNumber"><value>1065730600013091005</value></property>
+							<property name="apiCode"><value>yxmpzf</value></property>
+							<property name="masSign"><value>【马铺乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>云霄火田镇政府</value></property>
+							<property name="smsNumber"><value>106573064851005</value></property>
+							<property name="apiCode"><value>yxhtzf</value></property>
+							<property name="masSign"><value>【火田镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>云霄东厦镇政府</value></property>
+							<property name="smsNumber"><value>1065730600022198005</value></property>
+							<property name="apiCode"><value>yxdszf</value></property>
+							<property name="masSign"><value>【东厦镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>云霄莆美镇政府</value></property>
+							<property name="smsNumber"><value>106573067801005</value></property>
+							<property name="apiCode"><value>yxpmzf</value></property>
+							<property name="masSign"><value>【莆美镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>云霄陈岱镇政府</value></property>
+							<property name="smsNumber"><value>1065730600021730005</value></property>
+							<property name="apiCode"><value>yxcdzf</value></property>
+							<property name="masSign"><value>【陈岱镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山前楼下西坑村委</value></property>
+							<property name="smsNumber"><value>1065730622429005</value></property>
+							<property name="apiCode"><value>dsqlxxk</value></property>
+							<property name="masSign"><value>【下西坑村民委员会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山杏陈镇磁窑村</value></property>
+							<property name="smsNumber"><value>106573060017886005</value></property>
+							<property name="apiCode"><value>dsxccyc</value></property>
+							<property name="masSign"><value>【磁窑行政村】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山杏陈镇径口村</value></property>
+							<property name="smsNumber"><value>106573060024672005</value></property>
+							<property name="apiCode"><value>dsxcjk</value></property>
+							<property name="masSign"><value>【径口行政村】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山县杏陈镇埕英村委</value></property>
+							<property name="smsNumber"><value>106573069278005</value></property>
+							<property name="apiCode"><value>dsxccy</value></property>
+							<property name="masSign"><value>【埕英村委】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山西埔镇政府</value></property>
+							<property name="smsNumber"><value>10657306018848005</value></property>
+							<property name="apiCode"><value>dsxpzf</value></property>
+							<property name="masSign"><value>【西埔镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山铜陵镇政府</value></property>
+							<property name="smsNumber"><value>106573060013721005</value></property>
+							<property name="apiCode"><value>dstlzf</value></property>
+							<property name="masSign"><value>【铜陵镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>诏安桥东镇政府</value></property>
+							<property name="smsNumber"><value>106573060021973005</value></property>
+							<property name="apiCode"><value>zaqdzf</value></property>
+							<property name="masSign"><value>【桥东镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>诏安霞葛镇政府</value></property>
+							<property name="smsNumber"><value>106573061621005</value></property>
+							<property name="apiCode"><value>zaxgzf</value></property>
+							<property name="masSign"><value>【霞葛政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>平和九峰镇政府</value></property>
+							<property name="smsNumber"><value>10657306003306005</value></property>
+							<property name="apiCode"><value>phjfzf</value></property>
+							<property name="masSign"><value>【九峰镇人民政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>平和崎岭乡政府</value></property>
+							<property name="smsNumber"><value>10657306023816005</value></property>
+							<property name="apiCode"><value>phqlzf</value></property>
+							<property name="masSign"><value>【崎岭乡人民政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>平和秀峰乡政府</value></property>
+							<property name="smsNumber"><value>1065730628883005</value></property>
+							<property name="apiCode"><value>phxfzf</value></property>
+							<property name="masSign"><value>【秀峰乡人民政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>平和工业园管委</value></property>
+							<property name="smsNumber"><value>10657306030944005</value></property>
+							<property name="apiCode"><value>phgyyq</value></property>
+							<property name="masSign"><value>【平和工业区管委会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>平和霞寨镇政府</value></property>
+							<property name="smsNumber"><value>1065730600020298005</value></property>
+							<property name="apiCode"><value>phxzzf</value></property>
+							<property name="masSign"><value>【霞寨镇人民政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>平和文峰镇政府</value></property>
+							<property name="smsNumber"><value>1065730600032530005</value></property>
+							<property name="apiCode"><value>phwfzf</value></property>
+							<property name="masSign"><value>【文峰镇人民政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>平和长乐乡政府</value></property>
+							<property name="smsNumber"><value>10657306023393005</value></property>
+							<property name="apiCode"><value>phclzf</value></property>
+							<property name="masSign"><value>【长乐乡人民政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>平和芦溪镇政府</value></property>
+							<property name="smsNumber"><value>1065730600007637005</value></property>
+							<property name="apiCode"><value>phlxzf</value></property>
+							<property name="masSign"><value>【芦溪镇人民政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山康美镇政府</value></property>
+							<property name="smsNumber"><value>1065730623654005</value></property>
+							<property name="apiCode"><value>dskmzf</value></property>
+							<property name="masSign"><value>【康美镇人民政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山樟塘镇政府</value></property>
+							<property name="smsNumber"><value>106573066379005</value></property>
+							<property name="apiCode"><value>dsztzf</value></property>
+							<property name="masSign"><value>【樟塘镇人民政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山纪检委</value></property>
+							<property name="smsNumber"><value>10657306010245005</value></property>
+							<property name="apiCode"><value>dsjjw</value></property>
+							<property name="masSign"><value>【东山县纪委】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山陈城镇政府</value></property>
+							<property name="smsNumber"><value>10657306009219005</value></property>
+							<property name="apiCode"><value>dscczf</value></property>
+							<property name="masSign"><value>【东山县陈城镇】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山前楼镇政府</value></property>
+							<property name="smsNumber"><value>106573062548005</value></property>
+							<property name="apiCode"><value>dsqlzf</value></property>
+							<property name="masSign"><value>【前楼镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>云霄列屿镇政府</value></property>
+							<property name="smsNumber"><value>1065730600007385005</value></property>
+							<property name="apiCode"><value>yxlyzf</value></property>
+							<property name="masSign"><value>【列屿镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>云霄云陵工业区</value></property>
+							<property name="smsNumber"><value>106573060009040005</value></property>
+							<property name="apiCode"><value>yxgyyq</value></property>
+							<property name="masSign"><value>【云陵开发区】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>平和五寨乡政府</value></property>
+							<property name="smsNumber"><value>106573060024204005</value></property>
+							<property name="apiCode"><value>phwzzf</value></property>
+							<property name="masSign"><value>【五寨乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>平和小溪镇政府</value></property>
+							<property name="smsNumber"><value>106573062072005</value></property>
+							<property name="apiCode"><value>phxxzf</value></property>
+							<property name="masSign"><value>【小溪镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>平和安厚镇政府</value></property>
+							<property name="smsNumber"><value>1065730605959005</value></property>
+							<property name="apiCode"><value>phahzf</value></property>
+							<property name="masSign"><value>【安厚镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>平和南胜镇政府</value></property>
+							<property name="smsNumber"><value>10657306022889005</value></property>
+							<property name="apiCode"><value>phnszf</value></property>
+							<property name="masSign"><value>【南胜镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>平和大溪镇政府</value></property>
+							<property name="smsNumber"><value>10657306674005</value></property>
+							<property name="apiCode"><value>phdxzf</value></property>
+							<property name="masSign"><value>【大溪镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>平和国强乡政府</value></property>
+							<property name="smsNumber"><value>1065730630809005</value></property>
+							<property name="apiCode"><value>phgqzf</value></property>
+							<property name="masSign"><value>【国强乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>平和山格镇政府</value></property>
+							<property name="smsNumber"><value>10657306020351005</value></property>
+							<property name="apiCode"><value>phsgzf</value></property>
+							<property name="masSign"><value>【山格镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>平和坂仔镇政府</value></property>
+							<property name="smsNumber"><value>106573065977005</value></property>
+							<property name="apiCode"><value>phbzzf</value></property>
+							<property name="masSign"><value>【坂仔镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>云霄云陵镇政府</value></property>
+							<property name="smsNumber"><value>10657306602005</value></property>
+							<property name="apiCode"><value>yxylzf</value></property>
+							<property name="masSign"><value>【云陵镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>芗城浦南镇政府</value></property>
+							<property name="smsNumber"><value>106573060001423005</value></property>
+							<property name="apiCode"><value>xcpnzf</value></property>
+							<property name="masSign"><value>【浦南镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>芗城石亭镇政府</value></property>
+							<property name="smsNumber"><value>10657306032576005</value></property>
+							<property name="apiCode"><value>xcstzf</value></property>
+							<property name="masSign"><value>【石亭镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>芗城天宝镇政府</value></property>
+							<property name="smsNumber"><value>10657306023588005</value></property>
+							<property name="apiCode"><value>xctbzf</value></property>
+							<property name="masSign"><value>【天宝镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>芗城芝山镇政府</value></property>
+							<property name="smsNumber"><value>10657306462005</value></property>
+							<property name="apiCode"><value>xczszf</value></property>
+							<property name="masSign"><value>【芝山镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+                            <bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>诏安四都镇政府</value></property>
+							<property name="smsNumber"><value>10657306792005</value></property>
+							<property name="apiCode"><value>zasdzf</value></property>
+							<property name="masSign"><value>【四都镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+                            <bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>诏安梅洲乡纪委</value></property>
+							<property name="smsNumber"><value>106573060010089005</value></property>
+							<property name="apiCode"><value>zamzjw</value></property>
+							<property name="masSign"><value>【梅洲乡纪委】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙海紫泥镇政府</value></property>
+							<property name="smsNumber"><value>106573060000007005</value></property>
+							<property name="apiCode"><value>lhznzf</value></property>
+							<property name="masSign"><value>【紫泥镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙海颜厝镇政府</value></property>
+							<property name="smsNumber"><value>1065730600018437005</value></property>
+							<property name="apiCode"><value>lhyczf</value></property>
+							<property name="masSign"><value>【颜厝镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙海石码镇政府</value></property>
+							<property name="smsNumber"><value>106573060013911005</value></property>
+							<property name="apiCode"><value>lhsmzf</value></property>
+							<property name="masSign"><value>【石码镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙海隆教乡政府</value></property>
+							<property name="smsNumber"><value>10657306011598005</value></property>
+							<property name="apiCode"><value>lhljzf</value></property>
+							<property name="masSign"><value>【隆教乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙海九湖镇政府</value></property>
+							<property name="smsNumber"><value>1065730607978005</value></property>
+							<property name="apiCode"><value>lhjhzf</value></property>
+							<property name="masSign"><value>【九湖镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙海海澄镇政府</value></property>
+							<property name="smsNumber"><value>10657306846005</value></property>
+							<property name="apiCode"><value>lhhczf</value></property>
+							<property name="masSign"><value>【海澄镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙海东园镇政府</value></property>
+							<property name="smsNumber"><value>1065730631499005</value></property>
+							<property name="apiCode"><value>lhdyzf</value></property>
+							<property name="masSign"><value>【东园镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙海东泗镇政府</value></property>
+							<property name="smsNumber"><value>106573060295005</value></property>
+							<property name="apiCode"><value>lhdszf</value></property>
+							<property name="masSign"><value>【东泗乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙海程溪镇政府</value></property>
+							<property name="smsNumber"><value>1065730600012172005</value></property>
+							<property name="apiCode"><value>lhcxzf</value></property>
+							<property name="masSign"><value>【程溪镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙海白水镇政府</value></property>
+							<property name="smsNumber"><value>106573060009766005</value></property>
+							<property name="apiCode"><value>lhbszzf</value></property>
+							<property name="masSign"><value>【白水镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙海榜山镇政府</value></property>
+							<property name="smsNumber"><value>106573061641005</value></property>
+							<property name="apiCode"><value>lhbszf</value></property>
+							<property name="masSign"><value>【榜山镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙海浮宫镇政府</value></property>
+							<property name="smsNumber"><value>1065730600024031005</value></property>
+							<property name="apiCode"><value>lhfgzf</value></property>
+							<property name="masSign"><value>【浮宫镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山杏陈镇大产村</value></property>
+							<property name="smsNumber"><value>10657306025658005</value></property>
+							<property name="apiCode"><value>dsxcdc</value></property>
+							<property name="masSign"><value>【大产行政村】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山康美镇东沈村委</value></property>
+							<property name="smsNumber"><value>1065730600015725005</value></property>
+							<property name="apiCode"><value>dskmds</value></property>
+							<property name="masSign"><value>【东沈村委会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙海港尾镇政府</value></property>
+							<property name="smsNumber"><value>10657306660005</value></property>
+							<property name="apiCode"><value>lhgwzf</value></property>
+							<property name="masSign"><value>【港尾镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦马坪镇政府</value></property>
+							<property name="smsNumber"><value>10657306006732005</value></property>
+							<property name="apiCode"><value>zpmpzf</value></property>
+							<property name="masSign"><value>【马坪镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦湖西乡政府</value></property>
+							<property name="smsNumber"><value>1065730600023107005</value></property>
+							<property name="apiCode"><value>zphxzf</value></property>
+							<property name="masSign"><value>【湖西乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦深土镇政府</value></property>
+							<property name="smsNumber"><value>10657306032324005</value></property>
+							<property name="apiCode"><value>zpstzf</value></property>
+							<property name="masSign"><value>【深土镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦古雷镇政府</value></property>
+							<property name="smsNumber"><value>10657306026528005</value></property>
+							<property name="apiCode"><value>zpglzf</value></property>
+							<property name="masSign"><value>【古雷镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦沙西镇政府</value></property>
+							<property name="smsNumber"><value>10657306023078005</value></property>
+							<property name="apiCode"><value>zpsxzf</value></property>
+							<property name="masSign"><value>【沙西镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦霞美镇政府</value></property>
+							<property name="smsNumber"><value>1065730600023851005</value></property>
+							<property name="apiCode"><value>zpxmzf</value></property>
+							<property name="masSign"><value>【霞美镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦杜浔镇政府</value></property>
+							<property name="smsNumber"><value>1065730600029941005</value></property>
+							<property name="apiCode"><value>zpdxzf</value></property>
+							<property name="masSign"><value>【杜浔镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山西埔镇西埔村委</value></property>
+							<property name="smsNumber"><value>10657306834005</value></property>
+							<property name="apiCode"><value>dsxpxp</value></property>
+							<property name="masSign"><value>【西埔村民委员会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦赤岭乡政府</value></property>
+							<property name="smsNumber"><value>10657306021218005</value></property>
+							<property name="apiCode"><value>zpclzf</value></property>
+							<property name="masSign"><value>【赤岭乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦前亭镇政府</value></property>
+							<property name="smsNumber"><value>106573063118005</value></property>
+							<property name="apiCode"><value>zpqtzf</value></property>
+							<property name="masSign"><value>【前亭镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦佛潭镇政府</value></property>
+							<property name="smsNumber"><value>1065730600028699005</value></property>
+							<property name="apiCode"><value>zpftzf</value></property>
+							<property name="masSign"><value>【佛潭镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦赤土乡政府</value></property>
+							<property name="smsNumber"><value>1065730613612005</value></property>
+							<property name="apiCode"><value>zpctzf</value></property>
+							<property name="masSign"><value>【赤土乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦旧镇镇政府</value></property>
+							<property name="smsNumber"><value>10657306004758005</value></property>
+							<property name="apiCode"><value>zpjzzf</value></property>
+							<property name="masSign"><value>【旧镇镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦六螯镇政府</value></property>
+							<property name="smsNumber"><value>106573062863005</value></property>
+							<property name="apiCode"><value>zplazf</value></property>
+							<property name="masSign"><value>【六螯镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦长桥镇政府</value></property>
+							<property name="smsNumber"><value>1065730629369005</value></property>
+							<property name="apiCode"><value>zpcqzf</value></property>
+							<property name="masSign"><value>【长桥镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦南浦乡政府</value></property>
+							<property name="smsNumber"><value>10657306354005</value></property>
+							<property name="apiCode"><value>zpnpzf</value></property>
+							<property name="masSign"><value>【南浦乡政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦赤湖镇政府</value></property>
+							<property name="smsNumber"><value>106573060013545005</value></property>
+							<property name="apiCode"><value>zpchzf</value></property>
+							<property name="masSign"><value>【赤湖镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦大南坂政府</value></property>
+							<property name="smsNumber"><value>1065730600003586005</value></property>
+							<property name="apiCode"><value>zpdnbzf</value></property>
+							<property name="masSign"><value>【大南坂镇人民政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦石榴镇政府</value></property>
+							<property name="smsNumber"><value>1065730617950005</value></property>
+							<property name="apiCode"><value>zpslzf</value></property>
+							<property name="masSign"><value>【石榴镇人民政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦纪委</value></property>
+							<property name="smsNumber"><value>10657306000155005</value></property>
+							<property name="apiCode"><value>zpjw</value></property>
+							<property name="masSign"><value>【漳浦县纪委办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦绥安镇政府</value></property>
+							<property name="smsNumber"><value>1065730600024570005</value></property>
+							<property name="apiCode"><value>zpsazf</value></property>
+							<property name="masSign"><value>【绥安镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>芗城东铺头街道办</value></property>
+							<property name="smsNumber"><value>1065730629207005</value></property>
+							<property name="apiCode"><value>xcdptjd</value></property>
+							<property name="masSign"><value>【东铺头街道】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>芗城南坑街道办</value></property>
+							<property name="smsNumber"><value>10657306028646005</value></property>
+							<property name="apiCode"><value>xcnkjd</value></property>
+							<property name="masSign"><value>【南坑街道】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>芗城通北街道办</value></property>
+							<property name="smsNumber"><value>106573065829005</value></property>
+							<property name="apiCode"><value>xctbjd</value></property>
+							<property name="masSign"><value>【通北街道】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>芗城西桥街道办</value></property>
+							<property name="smsNumber"><value>1065730614843005</value></property>
+							<property name="apiCode"><value>xcxqjd</value></property>
+							<property name="masSign"><value>【西桥街道】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>芗城巷口街道办</value></property>
+							<property name="smsNumber"><value>106573060009735005</value></property>
+							<property name="apiCode"><value>xcxkjd</value></property>
+							<property name="masSign"><value>【巷口街道】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山漳塘港西村委</value></property>
+							<property name="smsNumber"><value>1065730600004337005</value></property>
+							<property name="apiCode"><value>dsztgx</value></property>
+							<property name="masSign"><value>【港西村委会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山漳塘古港村委</value></property>
+							<property name="smsNumber"><value>106573060000181005</value></property>
+							<property name="apiCode"><value>dsztgg</value></property>
+							<property name="masSign"><value>【古港村委会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山漳塘漳塘村委</value></property>
+							<property name="smsNumber"><value>106573060021814005</value></property>
+							<property name="apiCode"><value>dsztzt</value></property>
+							<property name="masSign"><value>【漳塘村委会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山漳塘湖尾村委</value></property>
+							<property name="smsNumber"><value>1065730600025062005</value></property>
+							<property name="apiCode"><value>dszthw</value></property>
+							<property name="masSign"><value>【湖尾村委会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山铜陵铜兴村委</value></property>
+							<property name="smsNumber"><value>106573060032013005</value></property>
+							<property name="apiCode"><value>dstltx</value></property>
+							<property name="masSign"><value>【铜兴村村民委员会】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦盘陀镇政府</value></property>
+							<property name="smsNumber"><value>10657306484005</value></property>
+							<property name="apiCode"><value>zpptzf</value></property>
+							<property name="masSign"><value>【盘陀镇人民政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦官浔镇政府</value></property>
+							<property name="smsNumber"><value>1065730600023652005</value></property>
+							<property name="apiCode"><value>zpgxzf</value></property>
+							<property name="masSign"><value>【官浔镇政府】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>台商区纪委</value></property>
+							<property name="smsNumber"><value>1065730600018436005</value></property>
+							<property name="apiCode"><value>tsqjw</value></property>
+							<property name="masSign"><value>【台商投资区纪工委】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>芗城新桥街道办</value></property>
+							<property name="smsNumber"><value>106573060643005</value></property>
+							<property name="apiCode"><value>xcxiqjd</value></property>
+							<property name="masSign"><value>【新桥街道】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>11</value></property>
+							<property name="cpKey"><value>527C9C31D5F171B87B35648BFEE004D5</value></property>
+						</bean>	
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="receive*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="send*">PROPAGATION_NOT_SUPPORTED,-Exception</prop>
+				<prop key="startup">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="registSmsBusiness">PROPAGATION_NEVER,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 短信计费视图服务 -->
+	<bean id="smsChargeViewService" class="com.yuanluesoft.jeaf.sms.service.spring.SmsChargeViewServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+	</bean>
+</beans>

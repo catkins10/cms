@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--电报:发报流水号-->
+	<class name="com.yuanluesoft.telex.base.pojo.TelegramSn" table="telex_telegram_sn">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="year"/> <!--年度-->
+		<property name="isSend"/> <!--收/发-->
+		<property name="isCryptic"/> <!--明/密-->
+		<property name="sn"/> <!--流水号-->
+	</class>
+	
+	<!--电报:发报种类-->
+	<class name="com.yuanluesoft.telex.base.pojo.TelegramCategory" table="telex_telegram_category">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="category"/> <!--类型-->
+	</class>
+	
+	<!--电报:发报密级-->
+	<class name="com.yuanluesoft.telex.base.pojo.TelegramSecurityLevel" table="telex_telegram_security_level">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="securityLevel"/> <!--密级-->
+	</class>
+	
+	<!--电报:发报等级-->
+	<class name="com.yuanluesoft.telex.base.pojo.TelegramLevel" table="telex_telegram_level">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="level" column="telegramLevel"/> <!--等级-->
+	</class>
+	
+	<!--办理单-->
+	<class name="com.yuanluesoft.telex.base.pojo.TelegramTransactionSheet" table="telex_transaction_sheet">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--名称-->
+		<property name="telegramType"/> <!--所属电报类型-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--办理单HTML-->
+	</class>
+	
+	<!--电报:市领导代签收-->
+	<class name="com.yuanluesoft.telex.base.pojo.TelegramLeaderAgent" table="telex_leader_agent">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="leaderId"/> <!--领导/机构ID-->
+		<property name="leader"/> <!--领导姓名/机构名称-->
+		<property name="agentId"/> <!--待签收用户/组织机构ID-->
+		<property name="agent"/> <!--待签收用户/组织机构名称-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="creator"/> <!--创建人-->
+		<property name="created"/> <!--创建时间-->
+	</class>
+	
+	<!--电报:意见填写人-->
+	<class name="com.yuanluesoft.telex.base.pojo.TelegramOpinionPerson" table="telex_opinion_person">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="personName"/> <!--填写人姓名-->
+	</class>
+</hibernate-mapping>

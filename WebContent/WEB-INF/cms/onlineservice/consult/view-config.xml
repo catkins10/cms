@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="网上办事已受理咨询" name="onlineServiceConsults">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.interactive.consult.pojo.OnlineServiceConsult</pojo>
+			<where>OnlineServiceConsult.publicPass='1' and OnlineServiceConsult.isDeleted=0</where>
+			<orderBy>OnlineServiceConsult.created DESC</orderBy>
+			<quickFilter>OnlineServiceConsult.itemName like '%{KEY}%' or OnlineServiceConsult.creator like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="咨询">/cms/onlineservice/consult/consult.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/onlineservice/consult</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSiteRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+
+	<view name="admin/todoConsult" form="admin/consult" title="待办咨询" pageRows="25" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.interactive.consult.pojo.OnlineServiceConsult</pojo>
+			<where>OnlineServiceConsult.isDeleted=0</where>
+			<orderBy>OnlineServiceConsult.created DESC</orderBy>
+			<quickFilter>OnlineServiceConsult.itemName like '%{KEY}%' or OnlineServiceConsult.creator like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="办理事项名称" name="itemName" width="200px"/>
+			<column title="咨询主题" name="subject"/>
+			<column title="咨询人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="咨询时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessConsult" form="admin/consult" title="在办咨询" pageRows="25" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.interactive.consult.pojo.OnlineServiceConsult</pojo>
+			<where>OnlineServiceConsult.isDeleted=0</where>
+			<orderBy>OnlineServiceConsult.created DESC</orderBy>
+			<quickFilter>OnlineServiceConsult.itemName like '%{KEY}%' or OnlineServiceConsult.creator like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="办理事项名称" name="itemName" width="200px"/>
+			<column title="咨询主题" name="subject"/>
+			<column title="咨询人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="咨询时间" name="created" align="center" width="108"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedConsult" form="admin/consult" title="办结咨询" pageRows="20" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.interactive.consult.pojo.OnlineServiceConsult</pojo>
+			<where>OnlineServiceConsult.isDeleted=0</where>
+			<filter>COMPLETED</filter>
+			<orderBy>OnlineServiceConsult.created DESC</orderBy>
+			<quickFilter>OnlineServiceConsult.itemName like '%{KEY}%' or OnlineServiceConsult.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="办理事项名称" name="itemName" width="200px"/>
+			<column title="咨询主题" name="subject"/>
+			<column title="咨询人" name="creator" align="center" width="80"/>
+			<column title="咨询时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allConsult" form="admin/consult" title="所有咨询" pageRows="20" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.interactive.consult.pojo.OnlineServiceConsult</pojo>
+			<where>OnlineServiceConsult.isDeleted=0</where>
+			<filter>READABLE</filter>
+			<orderBy>OnlineServiceConsult.created DESC</orderBy>
+			<quickFilter>OnlineServiceConsult.itemName like '%{KEY}%' or OnlineServiceConsult.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="咨询授权" hide="noPrivilege(application_manager)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/publicservice/admin/readersModifyOption.shtml?applicationName={PARAMETER:applicationName}', 430, 200)"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="办理事项名称" name="itemName" width="200px"/>
+			<column title="咨询主题" name="subject"/>
+			<column title="咨询人" name="creator" align="center" width="80"/>
+			<column title="咨询时间" name="created" align="center" width="108"/>
+			<column title="办理状态" name="workflowStatus" width="100"/>
+		</columns>
+		<extendParameters>
+			<parameter name="siteReferenceSupport">true</parameter> <!-- 支持站点引用 -->
+			<parameter name="siteReferenceRecordList">onlineServiceConsults</parameter> <!-- 对应的记录列表视图 -->
+			<parameter name="siteReferenceConfigureJs">/cms/onlineservice/js/onlineservice.js</parameter> <!-- 引用参数配置需要引入的脚本 -->
+			<parameter name="siteReferenceConfigure">selectOnlineServiceDirectory(640, 400, true, 'referenceParameter{id},referenceDescription{name|网上办事目录|100%},referenceParameter{id|网上办事目录ID|0}', '', '', '', 'directory')</parameter>
+			<!-- 引用时,新增的join -->
+			<parameter name="siteReferenceJoin">
+				,OnlineServiceItemSubjection OnlineServiceItemSubjection
+				,OnlineServiceDirectorySubjection OnlineServiceDirectorySubjection
+			</parameter>
+			<!-- 引用时,新增的where条件,如果无法通过配置完成,可以自定义视图服务,并通过request.getAttribute("referenceParameter")读取参数-->
+			<parameter name="siteReferenceWhere">
+				OnlineServiceItemSubjection.itemId=OnlineServiceConsult.itemId
+			 	and OnlineServiceItemSubjection.directoryId=OnlineServiceDirectorySubjection.directoryId
+			 	and OnlineServiceDirectorySubjection.parentDirectoryId in ({PARAMETER:referenceParameter|0})
+			</parameter>
+			<parameter name="siteReferenceRecordListJoin"></parameter> <!-- 记录列表需要扩展的join子句,默认siteReferenceJoin -->
+			<parameter name="siteReferenceRecordListWhere"></parameter> <!-- 记录列表需要扩展的where子句,默认siteReferenceWhere -->
+		</extendParameters>
+	</view>
+</views>

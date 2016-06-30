@@ -1,0 +1,383 @@
+package com.yuanluesoft.jeaf.dataimport.services.guangze;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.yuanluesoft.cms.infopublic.pojo.PublicDirectory;
+import com.yuanluesoft.cms.infopublic.pojo.PublicInfo;
+import com.yuanluesoft.cms.infopublic.pojo.PublicInfoPrivilege;
+import com.yuanluesoft.cms.infopublic.service.PublicDirectoryService;
+import com.yuanluesoft.cms.infopublic.service.PublicInfoService;
+import com.yuanluesoft.cms.siteresource.dataimporter.SiteDataImporter;
+import com.yuanluesoft.jeaf.database.DatabaseService;
+import com.yuanluesoft.jeaf.dataimport.model.DataImportParameter;
+import com.yuanluesoft.jeaf.dataimport.services.DataImportService;
+import com.yuanluesoft.jeaf.exception.ServiceException;
+import com.yuanluesoft.jeaf.logger.Logger;
+import com.yuanluesoft.jeaf.security.service.RecordControlService;
+import com.yuanluesoft.jeaf.util.DateTimeUtils;
+import com.yuanluesoft.jeaf.util.Environment;
+import com.yuanluesoft.jeaf.util.UUIDLongGenerator;
+
+/**
+ * 
+ * @author linchuan
+ *
+ */
+public class DataImportServiceImpl extends DataImportService {
+
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.jeaf.dataimport.services.DataImportService#getDataImporters()
+	 */
+	protected List getDataImporters() {
+		List dataImporters = new ArrayList();
+		dataImporters.add(new SiteDataImporter() {
+			public String generateListChildDirectoriesSQL(String parentDirectoryId) {
+				if(parentDirectoryId==null) { //第一级目录
+					return "(select 'first_公告' as directoryId," +
+						   " '公告' as directoryName" +
+						   " from EC_BigClass" +
+						   " where E_BigClassID=(select max(E_BigClassID) from EC_BigClass))" +
+						   " union " +
+						   "(select distinct ('first_' & E_bigclassid) as directoryId," +
+						   " E_BigClassName as directoryName" +
+						   " from EC_BigClass" +
+						   " where e_typeid not in (8,24,26,36,37,38,39,40,27,28,29,30,31,32,33,34))";
+				}
+				else if(parentDirectoryId.startsWith("first_") && !parentDirectoryId.equals("first_公告")) {
+					return "select distinct ('second_' & E_smallclassid) as directoryId," +
+						   " (select E_smallClassName from EC_smallClass where EC_smallClass.E_smallClassID=EC_News.E_smallclassid) as directoryName" +
+						   " from EC_News" +
+						   " where (aindex is null or aindex='')" +
+						   " and E_smallClassID is not null" +
+						   " and E_bigclassid=" + parentDirectoryId.substring("first_".length());
+				}
+				return null;
+			}
+			
+			public String[] generateRetrieveDataSQL() {
+				return new String[] {"select " +
+					   "iif(E_smallclassid is null, 'first_' & E_bigclassid, 'second_' & E_smallclassid) as directoryId," + //原来的栏目ID
+					   "Title as subject," + //标题
+					   "Content as body," + //正文
+					   "'' as subhead," + //副标题
+					   "'' as source," + //来源
+					   "'' as author," + //作者
+					   "'' as keyword," + //关键字
+					   "UpdateTime as created," + //创建时间
+					   "UpdateTime as issueTime," + //发布时间
+					   "Author as editor," + //创建者
+					   "Original as orgName," + //创建者所在部门名称
+					   "Original as unitName" + //创建者所在单位名称
+					   " from EC_News" +
+					   " where (aindex is null or aindex='')" +
+					   " and E_bigclassid not in (57)",
+					   
+					   "select " +
+					   "('first_公告') as directoryId," + //原来的栏目ID
+					   "title as subject," + //标题
+					   "content as body," + //正文
+					   "'' as subhead," + //副标题
+					   "'' as source," + //来源
+					   "'' as author," + //作者
+					   "'' as keyword," + //关键字
+					   "dateandtime as created," + //创建时间
+					   "dateandtime as issueTime," + //发布时间
+					   "'管理员' as editor," + //创建者
+					   "'光泽县人民政府' as orgName," + //创建者所在部门名称
+					   "'光泽县人民政府' as unitName" + //创建者所在单位名称
+					   " from EC_board"};
+			}
+
+			/* (non-Javadoc)
+			 * @see com.yuanluesoft.jeaf.dataimport.dataimporter.DataImporter#updateAttachmentPath(java.lang.String)
+			 */
+			public String updateAttachmentPath(String htmlBody, ResultSet resultSet) {
+				if(htmlBody==null) {
+					return htmlBody;
+				}
+				
+				//替换<?xml.../>和图片路径
+				htmlBody = super.updateAttachmentPath(htmlBody, resultSet);
+				String[] prefix = {"uploadfile", "jpg", "doc", "rar", "pdf", "images", "down"};
+				for(int i=0; i<prefix.length; i++) {
+					htmlBody = htmlBody.replaceAll("src=\"" + prefix[i], "src=\"" + sourceSiteURL + prefix[i]).replaceAll("href=\"" + prefix[i], "href=\"" + sourceSiteURL + prefix[i]);
+				}
+				return htmlBody;
+			}
+		});
+		return dataImporters;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#importPublicInfos(java.lang.String, boolean)
+	 */
+	public void importPublicInfos() throws ServiceException {
+		System.out.println("ImportData: import infos.");
+		PublicDirectoryService publicDirectoryService = (PublicDirectoryService)Environment.getService("publicDirectoryService");
+		
+		//创建县政府信息公开目录,typeId=8
+		PublicDirectory publicDirectory = (PublicDirectory)publicDirectoryService.getDirectory(0);
+		createPublicDirectory(publicDirectory, 8, 0, false, false, true, false);
+		
+		//创建部门信息公开目录,typeId in (24,26,36,37,38,39,40)
+		publicDirectory = (PublicDirectory)publicDirectoryService.createDirectory(0, "部门信息公开", "main", null, 0, null);
+		int[] typeIds = {24,26,36,37,38,39,40};
+		for(int i=0; i<typeIds.length; i++) {
+			createPublicDirectory(publicDirectory, typeIds[i], 0, false, true, false, false);
+		}
+		
+		//创建乡镇信息公开目录,typeId in (27,28,29,30,31,32,33,34);
+		publicDirectory = (PublicDirectory)publicDirectoryService.createDirectory(0, "乡镇信息公开", "main", null, 0, null);
+		typeIds = new int[]{27,28,29,30,31,32,33,34};
+		for(int i=0; i<typeIds.length; i++) {
+			createPublicDirectory(publicDirectory, typeIds[i], 0, true, false, false, false);
+		}
+		
+		//导入信息
+		importInfo();
+		System.out.println("ImportData: import infos complete.");
+	}
+	
+	/**
+	 * 创建信息公开目录
+	 * @param parentDirectory
+	 * @param typeIds
+	 * @param createMainDirectoryByType 按类型创建主目录
+	 * @param createMainDirectoryByBigClass 按大分类创建主目录
+	 * @param createDirectoryByBigClass 按大分类创建目录
+	 * @param createDirectoryBySmallClass 按小分类创建目录
+	 * @throws ServiceException
+	 */
+	private void createPublicDirectory(PublicDirectory parentDirectory, int typeId, int bigClassId, boolean createMainDirectoryByType, boolean createMainDirectoryByBigClass, boolean createDirectoryByBigClass, boolean createDirectoryBySmallClass) throws ServiceException {
+		PublicDirectoryService publicDirectoryService = (PublicDirectoryService)Environment.getService("publicDirectoryService");
+		Connection con = createConnection();
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = con.createStatement();
+			if(createMainDirectoryByType) { //按类型创建主目录
+				String sql = "select E_typeName as name from EC_type where EC_type.E_typeID=" + typeId;
+				rs = stmt.executeQuery(sql);
+				rs.next();
+				PublicDirectory publicDirectory = (PublicDirectory)publicDirectoryService.createDirectory(parentDirectory.getId(), rs.getString("name"), "main", "" + typeId, 0, null);
+				rs.close();
+				//按大分类创建目录
+				createPublicDirectory(publicDirectory, typeId, 0, false, false, true, false);
+			}
+			else if(createDirectoryByBigClass || createMainDirectoryByBigClass) { //按大分类创建目录或主目录
+				String sql = "select E_bigClassId as id, E_bigClassName as name from EC_bigClass where EC_bigClass.E_typeID=" + typeId;
+				rs = stmt.executeQuery(sql);
+				while(rs.next()) {
+					bigClassId = rs.getInt("id");
+					PublicDirectory publicDirectory = (PublicDirectory)publicDirectoryService.createDirectory(parentDirectory.getId(), rs.getString("name"), (createDirectoryByBigClass ? "info" : "main"), typeId + "_" + bigClassId, 0, null);
+					//按小分类创建目录
+					createPublicDirectory(publicDirectory, typeId, bigClassId, false, false, false, true);
+				}
+				rs.close();
+			}
+			else { //按小分类创建目录或主目录
+				String sql = "select E_smallClassId as id, E_smallClassName as name from EC_smallClass where EC_smallClass.E_bigClassID=" + bigClassId;
+				rs = stmt.executeQuery(sql);
+				while(rs.next()) {
+					int smallClassId = rs.getInt("id");
+					publicDirectoryService.createDirectory(parentDirectory.getId(), rs.getString("name"), "info", typeId + "_" + bigClassId + "_" + smallClassId, 0, null);
+				}
+				rs.close();
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try { 
+				rs.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try { 
+				stmt.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try {
+				con.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+		}
+	}
+	
+	/**
+	 * 导入信息
+	 * @param rs
+	 * @throws ServiceException
+	 */
+	private void importInfo() throws ServiceException {
+		PublicInfoService publicInfoService = (PublicInfoService)Environment.getService("publicInfoService");
+		DatabaseService databaseService = (DatabaseService)Environment.getService("databaseService");
+		Connection con = createConnection();
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT Title as subject," +
+						 " Content as body," +
+						 " Author as creator," +
+						 " UpdateTime as issueTime," +
+						 " Original as unitName," +
+						 " BeiZhu as mark," +
+						 " UpdateTime as generateDate," +
+						 " aindex as infoIndex," +
+						 " E_typeid as typeId," +
+						 " E_bigclassid as bigClassId," +
+						 " E_smallclassid as smallClassId" +
+						 " FROM EC_News";
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			for(int l=0; rs.next() && l<maxImport; l++) {
+				try {
+					String directoryRemark = "" + rs.getInt("typeId");
+					int bigClassId = rs.getInt("bigClassId");
+					if(bigClassId>0) {
+						directoryRemark += "_" + bigClassId;
+					}
+					int smallClassId = rs.getInt("smallClassId");
+					if(smallClassId>0) {
+						directoryRemark += "_" + smallClassId;
+					}
+					PublicDirectory directory = (PublicDirectory)databaseService.findRecordByHql("from PublicDirectory PublicDirectory where PublicDirectory.remark='" + directoryRemark + "'");
+					String subject = rs.getString("subject");
+					System.out.println("ImportData: read a info, subject is " + subject + ".");
+					if(directory==null) {
+						continue;
+					}
+					Date generateDate = rs.getDate("generateDate"); //生成日期
+					//检查相同标题和生成时间的记录是否已经存在
+					String hql = "from PublicInfo PublicInfo" + 
+								 " where PublicInfo.subject='" + subject + "'" +
+								 (generateDate==null ? "" : " and PublicInfo.generateDate=DATE(" + DateTimeUtils.formatDate(generateDate, null) + ")");
+					if(databaseService.findRecordByHql(hql)!=null) {
+						continue;
+					}
+					
+					PublicInfo info = new PublicInfo();
+					info.setId(UUIDLongGenerator.generateId()); //ID
+					info.setSubject(subject); //标题
+					info.setInfoIndex(rs.getString("infoIndex")); //索引号
+					info.setInfoFrom(rs.getString("unitName")); //发布机构
+					info.setMark(rs.getString("mark")); //文号
+					if(info.getMark()==null) {
+						info.setMark("　");
+					}
+					info.setGenerateDate(generateDate); //生成日期
+					info.setCreator(rs.getString("creator")); //创建人
+					info.setCreatorId(0); //创建人ID
+					info.setCreated(rs.getTimestamp("issueTime")); //创建时间
+					info.setIssueTime(info.getCreated()); //发布时间
+					info.setWorkflowInstanceId(null);
+					info.setSummarize("　"); //内容概述
+					info.setCategory(null); //主题分类
+					info.setKeywords(null); //主题词
+					info.setIssuePersonId(100);
+					info.setIssue('1');
+					info.setIssueSite('1');
+					info.setIssueSiteIds(null); //同步的网站ID列表
+					String body = resetBody(rs.getString("body"));
+					info.setBody(body==null ? " " : body);
+					info.setOrgId(0); //创建者所在部门ID
+					info.setOrgName(info.getInfoFrom()); //创建者所在部门名称
+					info.setUnitId(0); //创建者所在单位ID
+					info.setUnitName(info.getOrgName()); //创建者所在单位名称
+					publicInfoService.save(info); //保存
+					
+					//创建权限记录
+					PublicInfoPrivilege privilege = new PublicInfoPrivilege();
+					privilege.setId(UUIDLongGenerator.generateId());
+					privilege.setRecordId(info.getId());
+					privilege.setVisitorId(0);
+					privilege.setVisitorType(RecordControlService.VISITOR_TYPE_DEPARTMENT);
+					privilege.setAccessLevel(RecordControlService.ACCESS_LEVEL_READONLY);
+					databaseService.saveRecord(privilege);
+					
+					//设置所在目录
+					publicInfoService.updateInfoSubjections(info, true, "" + directory.getId());
+					
+					System.out.println("ImportData: importted.");
+				}
+				catch(Exception e) {
+					Logger.exception(e);
+				}
+			}
+			rs.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try { 
+				rs.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try { 
+				stmt.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try {
+				con.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+		}
+	}
+	
+	/**
+	 * 更新正文
+	 * @param content
+	 * @return
+	 * @throws ServiceException
+	 */
+	private String resetBody(String content) throws ServiceException {
+		if(content==null) {
+			return content;
+		}
+		//替换<?xml.../>和图片路径
+		content = content.replaceAll("<\\x3Fxml[^>]+>", "").replaceAll("src=\"/", "src=\"" + sourceSiteURL).replaceAll("href=\"/", "href=\"" + sourceSiteURL);
+		
+		String[] prefix = {"uploadfile", "jpg", "doc", "rar", "pdf", "images", "down"};
+		for(int i=0; i<prefix.length; i++) {
+			content = content.replaceAll("src=\"" + prefix[i], "src=\"" + sourceSiteURL + prefix[i]).replaceAll("href=\"" + prefix[i], "href=\"" + sourceSiteURL + prefix[i]);
+		}
+		return content;// 更新图片路径后的试题内容
+	}
+	
+	/**
+	 * 创建连接
+	 * @param parameter
+	 * @return
+	 * @throws ServiceException
+	 */
+	protected Connection createConnection(DataImportParameter parameter) throws ServiceException {
+		try {
+			Class.forName(parameter.getJdbcDriver());
+			return DriverManager.getConnection(parameter.getJdbcURL(), parameter.getJdbcUserName(), parameter.getJdbcPassword());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+	}
+}

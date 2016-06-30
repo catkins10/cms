@@ -1,0 +1,93 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib uri="/WEB-INF/struts-html" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-ext" prefix="ext" %>
+
+<html>
+<head>
+	<title>会稿传递单</title>
+	<style>
+		body {
+			background-color: #ffffff;
+			margin: 8px;
+			font-size:14px;
+		}
+		td {
+			font-size:14px;
+		}
+	</style>
+	<script>
+		window.onload = function() {
+			window.print();
+		};
+	</script>
+</head>
+<body>
+<ext:form action="/projectPrint">
+	<div style="text-align: center; line-height: 150%" align="center">
+		<b><span style="line-height: 150%; font-size:18px">福州路信设计公司会稿传递单</span></b>
+	</div>
+	<center>
+	<table border="1" cellspacing="0" cellpadding="3" style="border-bottom: medium none; border-left: medium none; border-collapse: collapse; border-top: medium none; border-right: medium none">
+        <tr>
+            <td valign="top" width="115" style="border-bottom: windowtext 1pt solid; border-left: windowtext 1pt solid; width: 86.4pt; border-top: windowtext 1pt solid; border-right: windowtext 1pt solid">
+            <div style="line-height: 150%"><span style="line-height: 150%">名称（合同名称）</span></div>
+            </td>
+            <td valign="top" width="444" style="border-bottom: windowtext 1pt solid; border-left: medium none; width: 333pt; border-top: windowtext 1pt solid; border-right: windowtext 1pt solid">
+            <div style="line-height: 150%"><span style="line-height: 150%"><ext:field writeonly="true" property="name"/></span></div>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" width="115" style="border-bottom: windowtext 1pt solid; border-left: windowtext 1pt solid; width: 86.4pt; border-top: medium none; border-right: windowtext 1pt solid">
+            <div style="line-height: 150%"><span style="line-height: 150%">甲方</span></div>
+            </td>
+            <td valign="top" width="444" style="border-bottom: windowtext 1pt solid; border-left: medium none; width: 333pt; border-top: medium none; border-right: windowtext 1pt solid">
+            <div style="line-height: 150%">&nbsp;</div>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" width="115" style="border-bottom: windowtext 1pt solid; border-left: windowtext 1pt solid; width: 86.4pt; border-top: medium none; border-right: windowtext 1pt solid">
+            <div style="line-height: 150%"><span style="line-height: 150%">乙方</span></div>
+            </td>
+            <td valign="top" width="444" style="border-bottom: windowtext 1pt solid; border-left: medium none; width: 333pt; border-top: medium none; border-right: windowtext 1pt solid">
+            <div style="line-height: 150%"><ext:field writeonly="true" property="owner"/>&nbsp;</div>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" width="115" style="border-bottom: windowtext 1pt solid; border-left: windowtext 1pt solid; width: 86.4pt; border-top: medium none; border-right: windowtext 1pt solid">
+            <div style="line-height: 150%"><span style="line-height: 150%">拟请会稿部门</span></div>
+            </td>
+            <td valign="top" width="444" style="border-bottom: windowtext 1pt solid; border-left: medium none; width: 333pt; border-top: medium none; border-right: windowtext 1pt solid">
+            <div style="line-height: 150%"><span style="line-height: 150%">经营部、设计部、财务部、总工室、副经理</span></div>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" width="559" colspan="2" style="border-bottom: windowtext 1pt solid; border-left: windowtext 1pt solid; width: 419.4pt; border-top: medium none; border-right: windowtext 1pt solid">
+            <div style="text-align: center; line-height: 150%" align="center"><span style="line-height: 150%">办理意见</span></div>
+            </td>
+        </tr>
+<%		String[] optionTypes = {"合同会审", "合同审核", "合同审批", "设计会审", "设计审核", "设计审批", "出版会审", "出版审核", "出版审批"};
+		for(int i=0; i<optionTypes.length; i++) {%>
+	        <tr style="height: 42.5pt">
+	            <td valign="top" width="115" style="border-bottom: windowtext 1pt solid; border-left: windowtext 1pt solid; width: 86.4pt; height: 42.5pt; border-top: medium none; border-right: windowtext 1pt solid">
+	            <div style="line-height: 150%"><span style="line-height: 150%"><%=optionTypes[i]%>意见</span></div>
+	            </td>
+	            <td valign="top" width="444" style="border-bottom: windowtext 1pt solid; border-left: medium none; width: 333pt; height: 42.5pt; border-top: medium none; border-right: windowtext 1pt solid">
+	            	<div style="line-height: 150%">
+	            		<ext:select id="currentOpinion" select="opinionType" property="opinionPackage.opinionList" value="<%=optionTypes[i]%>">
+					     	&nbsp;&nbsp;&nbsp;&nbsp;<ext:write name="currentOpinion" property="opinion"/>
+					      	<div align="right">
+					      		<ext:write name="currentOpinion" property="personName"/>
+					      		<ext:notEmpty name="currentOpinion" property="agentName">(<ext:write name="currentOpinion" property="agentName"/>代)</ext:notEmpty>
+					      		&nbsp;<ext:write name="currentOpinion" property="created" format="yyyy-M-d"/>&nbsp;&nbsp;&nbsp;
+					      	</div>
+					    </ext:select>
+	            		&nbsp;
+	            	</div>
+	            </td>
+	        </tr>
+<%		} %>    
+	</table>
+	</center>
+</ext:form>
+</body>
+</html>

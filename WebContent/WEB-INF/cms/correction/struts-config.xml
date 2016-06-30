@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="correction" type="com.yuanluesoft.cms.correction.forms.Correction"/>
+  <form-bean name="adminCorrection" type="com.yuanluesoft.cms.correction.forms.admin.Correction"/>
+  <form-bean name="insertCorrectionLink" type="com.yuanluesoft.cms.correction.forms.admin.InsertCorrectionLink"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="correction" path="/correction" scope="request"
+   type="com.yuanluesoft.cms.correction.actions.correction.Load" validate="false">
+   <forward name="load" path="/correction.jsp"/>
+  </action>
+  <action input="/correction.jsp" name="correction"
+   path="/submitCorrection" scope="request"
+   type="com.yuanluesoft.cms.correction.actions.correction.Submit" validate="false">
+   <forward name="result" path="/correctionSubmited.jsp"/>
+  </action>
+  <action name="adminCorrection" path="/admin/correction"
+   scope="request"
+   type="com.yuanluesoft.cms.correction.actions.correction.admin.Load" validate="false">
+   <forward name="load" path="/admin/correction.jsp"/>
+  </action>
+  <action input="/admin/correction.jsp" name="adminCorrection"
+   path="/admin/saveCorrection" scope="request"
+   type="com.yuanluesoft.cms.correction.actions.correction.admin.Save" validate="false"/>
+  <action input="/admin/correction.jsp" name="adminCorrection"
+   path="/admin/deleteCorrection" scope="request"
+   type="com.yuanluesoft.cms.correction.actions.correction.admin.Delete" validate="false"/>
+  <action input="/admin/correction.jsp" name="adminCorrection"
+   path="/admin/runCorrection" scope="request"
+   type="com.yuanluesoft.cms.correction.actions.correction.admin.Run" validate="false"/>
+  <action input="/admin/correction.jsp" name="adminCorrection"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.cms.correction.actions.correction.admin.WriteOpinion" validate="false"/>
+  <action name="correction" path="/selectAttachment" scope="request"
+   type="com.yuanluesoft.cms.correction.actions.correction.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="insertCorrectionLink"
+   path="/templatemanage/insertCorrectionLink" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertCorrectionLink.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

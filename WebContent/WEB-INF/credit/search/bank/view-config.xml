@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/bankInfo" form="admin/bank" title="银行" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.bank.pojo.Bank</pojo>
+			<orderBy>Bank.created DESC</orderBy>
+			<quickFilter>Bank.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="addr" title="地址"  align="center"/>
+			<column name="linkMan" title="联系人" width="80" align="center"/>
+			<column name="tel" title="电话" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allProductInfo" form="admin/product" title="所有金融产品" pageRows="20" openFeatures="mode=fullscreen" >
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.financialproducts.pojo.Product</pojo>
+			<orderBy>Product.created DESC</orderBy>
+			<quickFilter>Product.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="type" title="种类"  align="center"/>
+			<column name="forWho" title="适用对象"  align="center"/>
+			<column name="maxMoney" title="最高额度" width="60" align="center"/>
+		</columns>
+	</view>
+	
+	
+	<view name="admin/allLoanInfo" form="admin/loan" title="贷款信息" pageRows="20" openFeatures="mode=fullscreen" >
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.loan.pojo.BankLoan</pojo>
+			<orderBy>BankLoan.created DESC</orderBy>
+			<quickFilter>BankLoan.productName like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="enterpriseName" title="企业名称"/>
+			<column name="productName" title="贷款项目"  align="center"/>
+			<column name="mony" title="贷款金额（万元）"  align="center"/>
+			<column name="time" title="贷款发放时间" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	
+	
+</views>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--培训基本信息-->
+	<class name="com.yuanluesoft.educ.train.pojo.TrainInfo" table="educ_train_info">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--课程名称,VARCHAR(100)-->
+		<property name="simpleIntro"/> <!--简介,VARCHAR(300)-->
+		<property name="personType"/> <!--培训人员,CHAR(1)-->
+		<property name="signupStart"/> <!--报名开始日期,TIMESTAMP-->
+		<property name="signupStop"/> <!--报名截止日期,TIMESTAMP-->
+		<property name="trainStart"/> <!--培训开始日期,TIMESTAMP-->
+		<property name="trainStop"/> <!--培训结束日期,TIMESTAMP-->
+		<property name="profession"/> <!--鉴定职业,VARCHAR(50)-->
+		<property name="type"/> <!--鉴定类型,VARCHAR(10)-->
+		<property name="level"/> <!--鉴定级别,VARCHAR(10)-->
+	</class>
+	
+	<!--培训参数配置-->
+	<class name="com.yuanluesoft.educ.train.pojo.TrainConfig" table="educ_train_config">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="profession"/> <!--鉴定职业,VARCHAR(50)-->
+		<property name="type"/> <!--鉴定类型,VARCHAR(10)-->
+		<property name="level"/> <!--鉴定级别,VARCHAR(10)-->
+	</class>
+</hibernate-mapping>

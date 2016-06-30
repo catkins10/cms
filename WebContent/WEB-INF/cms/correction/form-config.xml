@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="correctionForm" title="纠错" action="/cms/correction/submitCorrection.shtml?act=create&amp;pageUrl={PARAMETER:pageUrl}&amp;applicationName={PARAMETER:applicationName}&amp;pageName={PARAMETER:pageName}&amp;pageTitle={PARAMETER:pageTitle}&amp;recordId={PARAMETER:recordId}" method="post" js="/cms/correction/js/correctionForm.js" class="com.yuanluesoft.cms.correction.forms.Correction" pojo="com.yuanluesoft.cms.correction.pojo.CmsCorrection">
+		<actions>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="admin/correction" class="com.yuanluesoft.cms.correction.forms.admin.Correction" title="纠错" pojo="com.yuanluesoft.cms.correction.pojo.CmsCorrection">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteCorrection')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.correction.forms.admin.InsertCorrectionLink" title="插入纠错链接">
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

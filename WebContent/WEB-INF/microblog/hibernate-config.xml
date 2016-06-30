@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--微博-->
+	<class name="com.yuanluesoft.microblog.pojo.Microblog" table="microblog_blog">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="accountIds"/> <!--帐号ID,VARCHAR(500)-->
+		<property name="range"/> <!--发布范围,微博的可见性，all/所有人能看，self/仅自己可见，groups/指定分组可见，默认为all,VARCHAR(20)-->
+		<property name="groupNames"/> <!--分组名称,VARCHAR(500)-->
+		<property name="groupIds"/> <!--分组ID,VARCHAR(500)-->
+		<property name="creatorId"/> <!--创建人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--创建人,VARCHAR(30)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+		<property name="sendTime"/> <!--发送时间,TIMESTAMP-->
+		<property name="content"/> <!--微博内容,VARCHAR(4000)-->
+		<property name="blogIds"/> <!--微博ID,微博在各平台上的ID,用于检查转发、评论情况,VARCHAR(1000)-->
+		<property name="privateMessageId"/> <!--私信ID,答复私信时有效,NUMBER(20)-->
+		<property name="workflowInstanceId"/> <!--流程实例ID,VARCHAR(20)-->
+		<set name="visitors" table="microblog_blog_privilege" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.microblog.pojo.MicroblogPrivilege" />
+		</set>
+		<set name="opinions" table="microblog_blog_opinion" lazy="true" inverse="true" cascade="delete" order-by="created">
+			<key column="mainRecordId"/>
+			<one-to-many class="com.yuanluesoft.microblog.pojo.MicroblogOpinion" />
+		</set>
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+	</class>
+	
+	<!--微信:消息发送权限控制信息-->
+	<class name="com.yuanluesoft.microblog.pojo.MicroblogPrivilege" table="microblog_blog_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,numeric(20)-->
+		<property name="accessLevel"/> <!--访问级别,CHAR(1)-->
+		<property name="recordId"/> <!--主记录ID,numeric(20)-->
+	</class>
+	
+	<!--微信:消息发送办理意见-->
+	<class name="com.yuanluesoft.microblog.pojo.MicroblogOpinion" table="microblog_blog_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID,numeric(20)-->
+		<property name="workItemId"/> <!--工作项ID,VARCHAR(32)-->
+		<property name="activityName"/> <!--环节名称,VARCHAR(50)-->
+		<property name="activityId"/> <!--环节ID,VARCHAR(32)-->
+		<property name="personId"/> <!--填写人ID,numeric(20)-->
+		<property name="personName"/> <!--填写人姓名,VARCHAR(32)-->
+		<property name="agentId"/> <!--代理人ID,numeric(20)-->
+		<property name="agentName"/> <!--代理人姓名,VARCHAR(32)-->
+		<property name="opinion"/> <!--意见内容,VARCHAR(1000)-->
+		<property name="opinionType"/> <!--意见类型,VARCHAR(20)-->
+		<property name="created"/> <!--填写时间,timestamp null-->
+	</class>
+	
+	<!--微博:私信-->
+	<class name="com.yuanluesoft.microblog.pojo.MicroblogPrivateMessage" table="microblog_private_message">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20,0)-->
+		<property name="accountId"/> <!--微博帐号ID,NUMERIC(20,0)-->
+		<property name="platform"/> <!--微博平台,新浪微博,腾讯微博,搜狐微博,VARCHAR(50)-->
+		<property name="receiverId"/> <!--消息的接收者ID,VARCHAR(200)-->
+		<property name="sender"/> <!--消息的发送者,VARCHAR(200)-->
+		<property name="senderId"/> <!--消息的发送者ID,VARCHAR(200)-->
+		<property name="created"/> <!--消息创建时间,TIMESTAMP-->
+		<property name="type"/> <!--消息类型,text/position/voice/image,VARCHAR(20)-->
+		<property name="content"/> <!--私信内容,VARCHAR(4000)-->
+		<property name="locationX"/> <!--地理位置纬度,VARCHAR(100)-->
+		<property name="locationY"/> <!--地理位置经度,VARCHAR(100)-->
+		<property name="locationLabel"/> <!--地理位置信息,VARCHAR(300)-->
+		<property name="replyTime"/> <!--答复时间,TIMESTAMP-->
+		<property name="replierId"/> <!--答复人ID,NUMERIC(20)-->
+		<property name="replier"/> <!--答复人,VARCHAR(30)-->
+	</class>
+	
+	<!--微博:自动应答-->
+	<class name="com.yuanluesoft.microblog.pojo.MicroblogResponse" table="microblog_response">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="type"/> <!--消息类型,text/voice/video,VARCHAR(20)-->
+		<property name="responseType"/> <!--响应目标,subscribe(关注)、unsubscribe(取消关注)、menu_(菜单事件)、location(上报地理位置事件) 、qrscene(扫描带参数二维码)、talk(用户发言),VARCHAR(30)-->
+		<property name="keywords"/> <!--关键字,分隔符:或/空格,与/加号,VARCHAR(200)-->
+		<property name="content"/> <!--消息内容,VARCHAR(4000)-->
+	</class>
+
+	<!--微博:帐号配置-->
+	<class name="com.yuanluesoft.microblog.pojo.MicroblogAccount" table="microblog_account">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="platform"/> <!--微博平台,新浪微博,腾讯微博,搜狐微博,VARCHAR(50)-->
+		<property name="siteUrl"/> <!--网址,VARCHAR(20)-->
+		<property name="name"/> <!--微博名称,VARCHAR(50)-->
+		<property name="userName"/> <!--微博帐号,VARCHAR(200)-->
+		<property name="password"/> <!--微博密码,VARCHAR(200)-->
+		<set name="parameters" table="microblog_account_parameter" lazy="true" cascade="delete" order-by="id">
+			<key column="accountId" />
+			<one-to-many class="com.yuanluesoft.microblog.pojo.MicroblogAccountParameter" />
+		</set>
+	</class>
+	
+	<!--微博:帐号参数配置-->
+	<class name="com.yuanluesoft.microblog.pojo.MicroblogAccountParameter" table="microblog_account_parameter">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="accountId"/> <!--帐号配置ID,NUMERIC(20)-->
+		<property name="parameterName"/> <!--参数名称,VARCHAR(100)-->
+		<property name="parameterValue"/> <!--参数值,VARCHAR(1000)-->
+	</class>
+	
+	<!--微博:发送流程配置-->
+	<class name="com.yuanluesoft.microblog.pojo.MicroblogWorkflowConfig" table="microblog_workflow_config">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="orgId"/> <!--组织机构ID,NUMERIC(20,0)-->
+		<property name="workflowId"/> <!--流程ID,VARCHAR(20)-->
+		<property name="workflowName"/> <!--流程名称,VARCHAR(200)-->
+	</class>
+	
+	<!--微博:用户分组-->
+	<class name="com.yuanluesoft.microblog.pojo.MicroblogUserGroup" table="microblog_user_group">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20,0)-->
+		<property name="name"/> <!--分组名称,VARCHAR(30)-->
+		<property name="platformGroupIds"/> <!--平台ID,分组在各个微博平台上的ID,VARCHAR(500)-->
+	</class>
+</hibernate-mapping>

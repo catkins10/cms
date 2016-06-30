@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/evaluation"/>
+		<page name="evaluationTopic" title="测评主题" url="/cms/evaluation/evaluationTopic.shtml" systemLink="false" recordClass="com.yuanluesoft.cms.evaluation.forms.EvaluationTopic"/>
+		<page name="evaluation" title="测评" url="/cms/evaluation/evaluation.shtml" systemLink="false">
+			<subPage name="base" title="测评"/>
+		</page>
+	</pages>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="evaluationTopics" processor="evaluationTopicsProcessor"/> <!-- 测评(全部) -->
+		<pageElement name="processingEvaluationTopics" processor="evaluationTopicsProcessor"/> <!-- 测评(测评中) -->
+		<pageElement name="completedEvaluationTopics" processor="evaluationTopicsProcessor"/> <!-- 测评(已结束) -->
+	</pageElements>
+</application>

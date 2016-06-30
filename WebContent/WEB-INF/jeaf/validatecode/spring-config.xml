@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 验证码服务 -->
+	<bean id="validateCodeService" class="com.yuanluesoft.jeaf.validatecode.service.spring.ValidateCodeServiceImpl">
+		<property name="imageGenerator"><ref bean="imageGenerator"/></property>
+		<property name="smsService"><ref bean="smsService"/></property>
+		<property name="siteService"><ref bean="siteService"/></property>
+		<property name="allCharacters"><value>0123456789</value></property>
+		<property name="validateCodeSmsFormat"><value>验证码:{VALIDATECODE}</value></property>
+	</bean>
+</beans>

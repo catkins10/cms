@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="payment" type="com.yuanluesoft.jeaf.payment.forms.Payment"/>
+  <form-bean name="adminPaymentMerchant" type="com.yuanluesoft.jeaf.payment.forms.admin.PaymentMerchant"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+  <forward name="paid" path="/paid.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="payment" path="/payment" scope="request"
+   type="com.yuanluesoft.jeaf.payment.actions.payment.Load" validate="false">
+   <forward name="chooseMerchant" path="/selectPaymentMerchant.jsp"/>
+  </action>
+  <action path="/completePayment" scope="request"
+   type="com.yuanluesoft.jeaf.payment.actions.payment.Complete" validate="false"/>
+  <action name="payment" path="/selectPaymentMerchant" scope="request"
+   type="com.yuanluesoft.jeaf.payment.actions.payment.SelectPaymentMerchant" validate="false">
+   <forward name="selectAccountType" path="/selectAccountType.jsp"/>
+  </action>
+  <action name="payment" path="/selectAccountType" scope="request"
+   type="com.yuanluesoft.jeaf.payment.actions.payment.SelectAccountType" validate="false"/>
+  <action name="adminPaymentMerchant" path="/admin/paymentMerchant"
+   scope="request"
+   type="com.yuanluesoft.jeaf.payment.actions.paymentmerchant.admin.Load" validate="false">
+   <forward name="load" path="/admin/paymentMerchant.jsp"/>
+  </action>
+  <action input="/admin/paymentMerchant.jsp" name="adminPaymentMerchant"
+   path="/admin/savePaymentMerchant" scope="request"
+   type="com.yuanluesoft.jeaf.payment.actions.paymentmerchant.admin.Save" validate="false"/>
+  <action input="/admin/paymentMerchant.jsp" name="adminPaymentMerchant"
+   path="/admin/deletePaymentMerchant" scope="request"
+   type="com.yuanluesoft.jeaf.payment.actions.paymentmerchant.admin.Delete" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

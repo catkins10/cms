@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="政府信息列表" name="infos">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.pojo.PublicInfo</pojo>
+			<where>PublicInfo.status='3'</where>
+			<orderBy>PublicInfo.generateDate DESC, PublicInfo.infoYear DESC, PublicInfo.infoSequence DESC</orderBy>
+			<quickFilter>PublicInfo.subject like '%{KEY}%'</quickFilter>
+			<newestCheckBy>issueTime</newestCheckBy>
+		</data>
+		<links>
+			<link title="政府信息">/cms/infopublic/publicInfo.shtml</link>
+			<link type="hostLink">/cms/infopublic/index.shtml?directoryId={PARAMETER:directoryIds}</link>
+		</links>
+		<columns>
+			<column title="索引号" name="infoIndex" width="86px"/>
+			<column title="名称" name="subject"/>
+			<column title="发布机构" name="infoFrom" width="84"/>
+			<column title="内容概述" name="summarize" width="150"/>
+			<column title="生成日期" name="generateDate" align="center" width="72"/>
+			<column title="备注/文号" name="mark" width="96"/>
+		</columns>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/infopublic/templatemanage/insertInfos.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view title="信息公开目录下载" name="infoDirectoryDownloads">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.model.InfoDirectoryDownload</pojo>
+		</data>
+		<links>
+			<link title="信息公开目录(PDF格式)">/cms/infopublic/printInfoView.shtml?viewName=infosByYear&amp;asAttachment=true&amp;printAsPdf=true&amp;directoryId={PARAMETER:directoryId}&amp;siteId={PARAMETER:siteId}&amp;unitName={PARAMETER:unitName}&amp;year={PARAMETER:year}</link>
+		</links>
+	</view>
+	
+	<view title="年度政府信息公开目录" name="infosByYear">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.pojo.PublicInfo</pojo>
+			<where>PublicInfo.status='3' and year(PublicInfo.generateDate)={PARAMETER:year} and PublicInfo.infoFrom='{PARAMETER:unitName}'</where>
+			<orderBy>PublicInfo.generateDate, PublicInfo.infoIndex</orderBy>
+		</data>
+		<columns>
+			<column title="索引号" name="infoIndex" width="145"/>
+			<column title="信息名称" name="subject"/>
+			<column title="生成日期" name="generateDate" align="center" width="72"/>
+			<column title="备注/文号" name="mark" width="130"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+			<parameter name="print.pageSize">A4</parameter> <!-- PDF:页面大小 -->
+			<parameter name="print.horizontal">true</parameter> <!-- PDF:是否横向页面 -->
+			<parameter name="print.pageMargin">30,30,30,30</parameter> <!-- PDF:页面边距,格式:上/右/下/左 -->
+			<parameter name="print.title">{PARAMETER:unitName}{PARAMETER:year}年政府信息公开目录</parameter> <!-- PDF:标题 -->
+			<parameter name="print.titleFirstPage">false</parameter> <!-- PDF:标题是否只在首页显示 -->
+			<parameter name="print.font">宋体,12</parameter> <!-- PDF:字体, 格式:名称,大小 -->
+			<parameter name="print.titleFont">宋体,18</parameter> <!-- PDF:标题字体, 格式:名称,大小 -->
+			<parameter name="print.pageHeaderFont">宋体,12</parameter> <!-- PDF:页眉字体, 格式:名称,大小 -->
+			<parameter name="print.pageFooterFont">宋体,12</parameter> <!-- PDF:页脚字体, 格式:名称,大小 -->
+			<parameter name="print.pageHeader"/> <!-- PDF:页眉, 格式:左\0中\0右 -->
+			<parameter name="print.pageFooter">\0第 {PARAMETER:pageNumber} 页</parameter> <!-- PDF:页脚, 格式:左\0中\0右 -->
+		</extendParameters>
+	</view>
+	
+	<view title="文章列表" name="publicArticles">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.pojo.PublicInfo</pojo>
+			<where>PublicInfo.status='3'</where>
+			<orderBy>PublicInfo.issueTime DESC, PublicInfo.created DESC</orderBy>
+			<newestCheckBy>issueTime</newestCheckBy>
+			<quickFilter>PublicInfo.subject like '%{KEY}%' or lazyBody.body like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link title="文章">/cms/infopublic/article.shtml</link>
+			<link type="hostLink">/cms/infopublic/index.shtml</link> <!-- 宿主链接 -->
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/infopublic/templatemanage/insertInfos.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="rssChannel">false</parameter> <!-- 不支持RSS -->
+		</extendParameters>
+	</view>
+	
+	<view name="admin/todoPublicInfo" form="admin/publicInfo" title="待处理政府信息" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.pojo.PublicInfo</pojo>
+			<where>PublicInfo.status&lt;'5'</where>
+			<orderBy>PublicInfo.generateDate DESC</orderBy>
+			<quickFilter>PublicInfo.subject like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="添加信息" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/cms/infopublic/selectDirectory.shtml?selectNodeTypes=info,article&amp;displayRecentUsed=true&amp;displayDirectoryCode=true&amp;script=PageUtils.newrecord(&quot;cms/infopublic&quot;, &quot;admin/publicInfo&quot;, &quot;mode=fullscreen&quot;, &quot;directoryId={id}&quot;)', 600, 350)"/>
+			<action title="批量处理" execute="batchSend('admin/runInfoApproval')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="36"/>
+			<column title="名称" name="subject"/>
+			<column title="所在目录" name="directoryName" width="100"/>
+			<column title="发布机构" name="infoFrom" width="120" displayExcept="portlet"/>
+			<column title="生成日期" name="generateDate" align="center" width="70" displayExcept="portlet"/>
+			<column title="创建日期" name="created" format="yyyy-MM-dd" align="center" width="70"/>
+			<!-- column title="创建人" name="creator" width="80" align="center"/-->
+			<column title="状态" name="statusDescription" width="80" align="center" displayExcept="portlet"/>
+		</columns>
+		<extendParameters>
+			<parameter name="emptyPrompt">没有需要处理的政府信息</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="admin/processingPublicInfo" form="admin/publicInfo" title="处理中的政府信息" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.pojo.PublicInfo</pojo>
+			<where>PublicInfo.status&lt;'5'</where>
+			<orderBy>PublicInfo.generateDate DESC</orderBy>
+			<filter>INPROCESS</filter>
+			<quickFilter>PublicInfo.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加信息" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/cms/infopublic/selectDirectory.shtml?selectNodeTypes=info,article&amp;displayRecentUsed=true&amp;displayDirectoryCode=true&amp;script=PageUtils.newrecord(&quot;cms/infopublic&quot;, &quot;admin/publicInfo&quot;, &quot;mode=fullscreen&quot;, &quot;directoryId={id}&quot;)', 600, 350)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="subject"/>
+			<column title="所在目录" name="directoryName" width="100"/>
+			<column title="发布机构" name="infoFrom" width="120" displayExcept="portlet"/>
+			<column title="生成日期" name="generateDate" align="center" width="70" displayExcept="portlet"/>
+			<column title="创建日期" name="created" format="yyyy-MM-dd" align="center" width="70"/>
+			<!-- column title="创建人" name="creator" width="80" align="center"/-->
+			<column title="状态" name="statusDescription" width="80" align="center" displayExcept="portlet"/>
+		</columns>
+	</view>
+	
+	<view name="admin/deleted" form="admin/publicInfo" hide="noPrivilege(application_manager)" title="已删除政府信息" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.pojo.PublicInfo</pojo>
+			<where>PublicInfo.status&gt;'4'</where>
+			<orderBy>PublicInfo.generateDate DESC</orderBy>
+			<quickFilter>PublicInfo.subject like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="36"/>
+			<column title="名称" name="subject"/>
+			<column title="所在目录" name="directoryName" width="100"/>
+			<column title="发布机构" name="infoFrom" width="120" displayExcept="portlet"/>
+			<column title="生成日期" name="generateDate" align="center" width="70" displayExcept="portlet"/>
+			<column title="创建日期" name="created" format="yyyy-MM-dd" align="center" width="70"/>
+		</columns>
+	</view>
+
+	<view name="admin/publicInfo" form="admin/publicInfo" title="政府信息" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.pojo.PublicInfo</pojo>
+			<where>PublicInfo.status&lt;'5'</where>
+			<orderBy>PublicInfo.status, PublicInfo.issueTime DESC</orderBy>
+			<filter>READABLE</filter>
+			<quickFilter>PublicInfo.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有信息" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.infopublic.pojo.PublicInfo</pojo>
+			</data>
+			<category value="status"> <!--value必须有-->
+				<where>PublicInfo.status between '0' and '4'</where>
+				<data>PublicInfo.status={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<scripts>
+			<script>/cms/infopublic/js/infopublic.js</script>
+			<script>/cms/sitemanage/js/site.js</script>
+		</scripts>
+		<actions>
+			<!-- action title="PDF" execute="printAsPdf()"/ -->
+			<!-- action title="导出XML" hide="noPrivilege(application_manager) and isNotSiteManager() and isNotSiteEditor()" execute="FormUtils.doAction('exportInfosAsXML', '',  true)"/-->
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="subject"/>
+			<column title="所在目录" name="directoryName" width="100"/>
+			<column title="索引号" name="infoIndex" width="145" align="center"/>
+			<column title="发布机构" name="infoFrom" width="90"/>
+			<column title="生成日期" name="generateDate" align="center" width="70"/>
+			<column title="发布时间" name="issueTime" align="center" width="70" format="yyyy-MM-dd"/>
+			<!-- column title="创建人" name="creator" width="80" align="center"/-->
+			<column title="状态" name="statusDescription" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/directory" form="admin/directory" title="目录" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.pojo.PublicDirectory</pojo>
+			<orderBy>PublicDirectory.priority DESC, PublicDirectory.code, PublicDirectory.directoryName</orderBy>
+			<quickFilter>PublicDirectory.directoryName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/>
+			<column title="名称" name="directoryName"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="admin/exportPublicInfo" form="admin/publicInfo" title="政府信息导出" pageRows="500" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.pojo.PublicInfo</pojo>
+			<where>PublicInfo.status='3'</where>
+			<orderBy>PublicInfo.issueTime</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="subject"/>
+			<column title="发布机构" name="infoFrom" width="100"/>
+			<column title="内容概述" name="summarize"/>
+			<column title="生成日期" name="generateDate" align="center" width="72"/>
+			<column title="发布日期" name="issueTime" align="center" width="110"/>
+		</columns>
+	</view>
+</views>

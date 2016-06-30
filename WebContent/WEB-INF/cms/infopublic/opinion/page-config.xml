@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 信息公开意见箱 -->
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/infopublic/opinion"/>
+		
+		<page name="publicOpinion" title="意见填写" url="/cms/infopublic/opinion/opinion.shtml" recordClass="com.yuanluesoft.cms.infopublic.opinion.pojo.PublicOpinion">
+			<subPage title="意见填写" name="publicOpinion" type="template"/>
+		</page>
+		
+		<page name="publicOpinionSubmitted" title="意见提交完成">
+			<subPage title="意见提交完成" name="publicOpinionSubmitted" type="template"/>
+		</page>
+		
+		<page name="fullyOpinion" title="意见查看" recordClass="com.yuanluesoft.cms.infopublic.opinion.pojo.PublicOpinion">
+			<subPage title="意见查看" name="fullyOpinion" type="template"/>
+		</page>
+		
+		<page name="opinionPrint" title="办理单" realtimeStaticPage="false" recordPage="false" recordClass="com.yuanluesoft.cms.infopublic.opinion.pojo.PublicOpinion"/>
+		
+		<page name="publicOpinionSearch" title="搜索" searchPage="true" searchResults="publicOpinions" url="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/infopublic/opinion&amp;pageName=publicOpinionSearch"/>
+	</pages>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="publicOpinions" processor="publicServicesProcessor"/> <!-- 信息公开意见 -->
+	</pageElements>
+</application>

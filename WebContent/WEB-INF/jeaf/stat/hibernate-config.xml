@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<class name="com.yuanluesoft.jeaf.stat.pojo.AccessStat" table="stat_access">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="applicationName" />
+		<property name="pageName" />
+		<property name="recordId" />
+		<property name="times" />
+	</class>
+	
+	<class name="com.yuanluesoft.jeaf.stat.pojo.DayAccessStat" table="stat_day_access">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="applicationName" />
+		<property name="pageName" />
+		<property name="recordId" />
+		<property name="accessDate" />
+		<property name="times" />
+	</class>
+	
+	<class name="com.yuanluesoft.jeaf.stat.pojo.HourAccessStat" table="stat_hour_access">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="accessDate" />
+		<property name="accessHour" />
+		<property name="week" />
+		<property name="times" />
+	</class>
+	
+	<class name="com.yuanluesoft.jeaf.stat.pojo.LoginStat" table="stat_login">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="personId" />
+		<property name="personName" />
+		<property name="loginDate"/> <!--日期-->
+		<property name="times" />
+		<property name="lastLogin" />
+	</class>
+	
+	<class name="com.yuanluesoft.jeaf.stat.pojo.TodayLoginStat" table="stat_today_login">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="personId" />
+	</class>
+	
+	<class name="com.yuanluesoft.jeaf.stat.pojo.SchoolLoginStat" table="stat_school_login">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="schoolId" />
+		<property name="schoolName" />
+		<property name="loginDay" />
+		<property name="studentNumber" />
+		<property name="teacherNumber" />
+		<property name="studentTimes" />
+		<property name="teacherTimes" />
+	</class>
+	
+	<!--学生登录统计-->
+	<class name="com.yuanluesoft.jeaf.stat.pojo.StudentLoginStat" table="stat_student_login">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="personId"/> <!--用户ID-->
+		<property name="personName"/> <!--姓名-->
+		<property name="times"/> <!--登录次数-->
+		<property name="loginDate"/> <!--日期-->
+	</class>
+	
+	<!--用户访问记录-->
+	<class name="com.yuanluesoft.jeaf.stat.pojo.UserAccessStat" table="stat_user_access">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="applicationName"/> <!--应用名称-->
+		<property name="recordId"/> <!--记录ID-->
+		<property name="pageName"/> <!--页面名称-->
+		<property name="userId"/> <!--用户ID-->
+		<property name="userName"/> <!--用户名-->
+		<property name="accessTime"/> <!--访问时间-->
+	</class>
+</hibernate-mapping>

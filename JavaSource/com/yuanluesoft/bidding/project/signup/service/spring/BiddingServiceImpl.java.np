@@ -1,0 +1,1309 @@
+package com.yuanluesoft.bidding.project.signup.service.spring;
+
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.yuanluesoft.bidding.enterprise.model.BiddingSessionInfo;
+import com.yuanluesoft.bidding.enterprise.pojo.BiddingBidEnterprise;
+import com.yuanluesoft.bidding.enterprise.services.EnterpriseService;
+import com.yuanluesoft.bidding.project.pojo.BiddingProject;
+import com.yuanluesoft.bidding.project.pojo.BiddingProjectAgent;
+import com.yuanluesoft.bidding.project.pojo.BiddingProjectCity;
+import com.yuanluesoft.bidding.project.pojo.BiddingProjectParameter;
+import com.yuanluesoft.bidding.project.pojo.BiddingProjectTender;
+import com.yuanluesoft.bidding.project.service.BiddingProjectParameterService;
+import com.yuanluesoft.bidding.project.service.BiddingProjectService;
+import com.yuanluesoft.bidding.project.signup.model.SignUpTotal;
+import com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUp;
+import com.yuanluesoft.bidding.project.signup.service.BiddingService;
+import com.yuanluesoft.jeaf.attachmentmanage.service.AttachmentService;
+import com.yuanluesoft.jeaf.attachmentmanage.service.TemporaryFileManageService;
+import com.yuanluesoft.jeaf.business.service.spring.BusinessServiceImpl;
+import com.yuanluesoft.jeaf.database.Record;
+import com.yuanluesoft.jeaf.exception.ServiceException;
+import com.yuanluesoft.jeaf.filetransfer.services.FileDownloadService;
+import com.yuanluesoft.jeaf.logger.Logger;
+import com.yuanluesoft.jeaf.payment.model.Transaction;
+import com.yuanluesoft.jeaf.payment.model.Transfer;
+import com.yuanluesoft.jeaf.payment.pojo.Payment;
+import com.yuanluesoft.jeaf.payment.pojo.PaymentMerchant;
+import com.yuanluesoft.jeaf.payment.service.PaymentService;
+import com.yuanluesoft.jeaf.security.service.AccessControlService;
+import com.yuanluesoft.jeaf.security.service.CryptService;
+import com.yuanluesoft.jeaf.security.service.RecordControlService;
+import com.yuanluesoft.jeaf.sessionmanage.model.SessionInfo;
+import com.yuanluesoft.jeaf.sso.matcher.Matcher;
+import com.yuanluesoft.jeaf.util.CookieUtils;
+import com.yuanluesoft.jeaf.util.DateTimeUtils;
+import com.yuanluesoft.jeaf.util.Environment;
+import com.yuanluesoft.jeaf.util.FileUtils;
+import com.yuanluesoft.jeaf.util.JdbcUtils;
+import com.yuanluesoft.jeaf.util.ListUtils;
+import com.yuanluesoft.jeaf.util.StringUtils;
+import com.yuanluesoft.jeaf.util.UUIDLongGenerator;
+
+public class BiddingServiceImpl extends BusinessServiceImpl
+  implements BiddingService
+{
+  private CryptService cryptService;
+  private BiddingProjectParameterService biddingProjectParameterService;
+  private PaymentService paymentService;
+  private BiddingProjectService biddingProjectService;
+  private EnterpriseService enterpriseService;
+  private AttachmentService attachmentService;
+  private TemporaryFileManageService temporaryFileManageService;
+  private FileDownloadService fileDownloadService;
+  private AccessControlService accessControlService;
+  private RecordControlService recordControlService;
+  private int bidUploadPaddingMinutes = 0;
+  private int signUpNoCookieHours = 72;
+  private String pledgeQueryTime = "08:00";
+  private int maxTransactionQueryDays = 30;
+  private Object transferMutex = new Object();
+
+  public Record load(Class recordClass, long id)
+    throws ServiceException
+  {
+    Record record = super.load(recordClass, id);
+    if ((record instanceof BiddingSignUp)) {
+      BiddingSignUp signUp = (BiddingSignUp)record;
+      decryptSignUp(signUp);
+    }
+    return record;
+  }
+
+  /* (non-Javadoc)
+ * @see com.yuanluesoft.bidding.project.signup.service.BiddingService#redirectToPayment(java.lang.String, java.lang.String, long, javax.servlet.http.HttpServletResponse)
+ */
+public void redirectToPayment(String signUpNo, String paymentType, long siteId, HttpServletResponse response) throws ServiceException {
+	// TODO Auto-generated method stub
+	
+}
+
+public Record save(Record record)
+    throws ServiceException
+  {
+    if ((record instanceof BiddingSignUp)) {
+      BiddingSignUp signUp = (BiddingSignUp)record;
+      encryptSignUp(signUp);
+    }
+    super.save(record);
+    if ((record instanceof BiddingSignUp)) {
+      BiddingSignUp signUp = (BiddingSignUp)record;
+      decryptSignUp(signUp);
+    }
+    return record;
+  }
+
+  public Record update(Record record)
+    throws ServiceException
+  {
+    if ((record instanceof BiddingSignUp)) {
+      BiddingSignUp signUp = (BiddingSignUp)record;
+      encryptSignUp(signUp);
+    }
+    super.update(record);
+    if ((record instanceof BiddingSignUp)) {
+      BiddingSignUp signUp = (BiddingSignUp)record;
+      decryptSignUp(signUp);
+    }
+    return record;
+  }
+
+  private void encryptSignUp(BiddingSignUp signUp)
+    throws ServiceException
+  {
+    signUp.setEnterpriseName(this.cryptService.encrypt(signUp.getEnterpriseName(), "" + signUp.getId(), true));
+    signUp.setEnterpriseBank(this.cryptService.encrypt(signUp.getEnterpriseBank(), "" + signUp.getId(), true));
+    signUp.setEnterpriseAccount(this.cryptService.encrypt(signUp.getEnterpriseAccount(), "" + signUp.getId(), true));
+  }
+
+  public void decryptSignUp(BiddingSignUp signUp)
+    throws ServiceException
+  {
+    signUp.setEnterpriseName(this.cryptService.decrypt(signUp.getEnterpriseName(), "" + signUp.getId(), true));
+    signUp.setEnterpriseBank(this.cryptService.decrypt(signUp.getEnterpriseBank(), "" + signUp.getId(), true));
+    signUp.setEnterpriseAccount(this.cryptService.decrypt(signUp.getEnterpriseAccount(), "" + signUp.getId(), true));
+  }
+
+  public void decryptSignUps(BiddingProject project)
+    throws ServiceException
+  {
+    for (Iterator iterator = project.getSignUps() == null ? null : project.getSignUps().iterator(); (iterator != null) && (iterator.hasNext()); ) {
+      BiddingSignUp signUp = (BiddingSignUp)iterator.next();
+      decryptSignUp(signUp);
+    }
+  }
+
+  public BiddingSignUp completeSignUp(long projectId, HttpServletResponse response)
+    throws ServiceException
+  {
+    BiddingProject project = this.biddingProjectService.getProject(projectId);
+
+    BiddingProjectTender tender = (BiddingProjectTender)project.getTenders().iterator().next();
+
+    Timestamp now = DateTimeUtils.now();
+    if (((tender.getBuyDocumentBegin() != null) && (now.before(tender.getBuyDocumentBegin()))) || ((tender.getBuyDocumentEnd() != null) && (now.after(tender.getBuyDocumentEnd())))) {
+      throw new ServiceException("不在报名时间段内,不允许报名");
+    }
+    BiddingSignUp signUp = new BiddingSignUp();
+    signUp.setId(UUIDLongGenerator.generateId());
+    signUp.setSignUpTime(DateTimeUtils.now());
+    signUp.setEnterpriseId(0L);
+    signUp.setEnterpriseName(null);
+    signUp.setSignUpPersonId(0L);
+    signUp.setSignUpPersonName(null);
+    signUp.setProjectId(projectId);
+    signUp.setIsInternetPayment('0');
+    signUp.setPaymentMoney(getSignUpPrice(project));
+    signUp.setDrawPaymentMoney(getDrawingPrice(project));
+    signUp.setPledgePaymentMoney(tender.getPledgeMoney());
+    signUp.setProjectName(project.getProjectName());
+
+    for (int i = 0; i < 1000; ) {
+      try {
+        signUp.setSignUpNo(this.biddingProjectParameterService.generateSignUpNumber(project, false));
+        getDatabaseService().saveRecord(signUp);
+
+        int cookieAge = 3600 * this.signUpNoCookieHours;
+        CookieUtils.addCookie(response, "BiddingSignUpNo_" + signUp.getSignUpNo(), "" + signUp.getId(), cookieAge, "/", null, null);
+        return signUp;
+      }
+      catch (Exception e) {
+        Logger.error(e.getMessage());
+
+        i++;
+      }
+
+    }
+
+    throw new ServiceException();
+  }
+
+  public BiddingSignUp loadSignUp(String signUpNo, boolean checkPaid)
+    throws ServiceException
+  {
+    String hql = "from BiddingSignUp BiddingSignUp where BiddingSignUp.signUpNo='" + 
+      JdbcUtils.resetQuot(signUpNo) + "'";
+    BiddingSignUp signUp = (BiddingSignUp)getDatabaseService().findRecordByHql(hql);
+    if (signUp == null) {
+      return null;
+    }
+    if (checkPaid) {
+      checkSignUpPaied(signUp);
+    }
+    decryptSignUp(signUp);
+
+    signUp.setBiddingAgent((BiddingProjectAgent)getDatabaseService().findRecordByHql("from BiddingProjectAgent BiddingProjectAgent where BiddingProjectAgent.projectId=" + signUp.getProjectId()));
+    return signUp;
+  }
+
+  public void receivePaperDocuments(String signUpNo, SessionInfo sessionInfo)
+    throws ServiceException
+  {
+    String hql = "from BiddingSignUp BiddingSignUp where BiddingSignUp.signUpNo='" + 
+      JdbcUtils.resetQuot(signUpNo) + "'";
+    BiddingSignUp signUp = (BiddingSignUp)getDatabaseService().findRecordByHql(hql);
+    if (signUp.getReceivePaperDocumentsTime() != null) {
+      return;
+    }
+    if ((signUp.getPaymentTime() == null) && (signUp.getDrawPaymentTime() != null)) {
+      return;
+    }
+    BiddingProject project = this.biddingProjectService.getProject(signUp.getProjectId());
+    if (((sessionInfo instanceof BiddingSessionInfo)) && (project.getAgentId() == sessionInfo.getUnitId())) {
+      signUp.setReceivePaperDocumentsTime(DateTimeUtils.now());
+      getDatabaseService().updateRecord(signUp);
+    }
+  }
+
+  public void redirectToPayment(String signUpNo, String paymentType, HttpServletResponse response)
+    throws ServiceException
+  {
+    BiddingSignUp signUp = loadSignUp(signUpNo, false);
+
+    double paymentMoney = 0.0D;
+    boolean biddingDocumentsPayment = false;
+    boolean drawingsPayment = false;
+    boolean pledgePayment = false;
+    String[] types = paymentType.split(",");
+    for (int i = 0; i < types.length; i++)
+      if ("biddingDocuments".equals(types[i])) {
+        if ((signUp.getPaymentTime() == null) && (!biddingDocumentsPayment)) {
+          paymentMoney += signUp.getPaymentMoney();
+          biddingDocumentsPayment = true;
+          if (isSignUpTimeout(signUp.getProject())) {
+            throw new ServiceException("timeout");
+          }
+        }
+      }
+      else if ("drawing".equals(types[i])) {
+        if ((signUp.getDrawPaymentTime() == null) && (!drawingsPayment)) {
+          paymentMoney += signUp.getDrawPaymentMoney();
+          drawingsPayment = true;
+          if (isSignUpTimeout(signUp.getProject()))
+            throw new ServiceException("timeout");
+        }
+      }
+      else {
+        if ((!"pledge".equals(types[i])) || 
+          (signUp.getPledgePaymentTime() != null) || (pledgePayment)) continue;
+        paymentMoney += signUp.getPledgePaymentMoney();
+        pledgePayment = true;
+        if (isPledgePaymentTimeout(signUp.getProject()))
+          throw new ServiceException("timeout");
+      }
+    String paymentOrderId;
+    if ((biddingDocumentsPayment) && (!pledgePayment) && (!drawingsPayment)) {
+      paymentOrderId = signUp.getSignUpNo();
+    }
+    else {
+      paymentOrderId = (biddingDocumentsPayment ? "A" : "") + (pledgePayment ? "B" : "") + (drawingsPayment ? "C" : "") + signUp.getSignUpNo();
+    }
+
+    String paymentReason = null;
+    if (biddingDocumentsPayment) {
+      paymentReason = "标书";
+    }
+    if (pledgePayment) {
+      paymentReason = (paymentReason == null ? "" : new StringBuffer(String.valueOf(paymentReason)).append("、").toString()) + "保证金";
+    }
+    if (drawingsPayment) {
+      paymentReason = (paymentReason == null ? "" : new StringBuffer(String.valueOf(paymentReason)).append("、").toString()) + "图纸";
+    }
+    paymentReason = paymentReason + "(" + signUp.getProjectName() + "，" + signUp.getSignUpNo() + ")";
+
+    BiddingProjectCity city = this.biddingProjectParameterService.getCityDetail(signUp.getProjectId());
+    String pledgePaymentMerchantIds = null;
+    if (pledgePayment) {
+      pledgePaymentMerchantIds = getPledgePaymentMerchantIds(city, signUp.getProject().getPledgeAccount());
+      if (pledgePaymentMerchantIds == null) {
+        throw new ServiceException();
+      }
+    }
+
+    String redirectOfSuccess = Environment.getWebApplicationUrl() + "/bidding/project/signup/completePayment.shtml?signUpNo=" + signUp.getSignUpNo();
+    this.paymentService.redirectToPayment("bidding/project/signup", 
+      paymentOrderId, 
+      pledgePayment ? pledgePaymentMerchantIds : city.getMerchantIds(), 
+      (!pledgePayment) && (city.getDocumentsB2CPayment() == 1), 
+      (pledgePayment) && (city.getPledgeB2BPayment() == 1), 
+      "0", 
+      "anonymous", 
+      paymentReason, 
+      paymentMoney, 
+      "0", 
+      "", 
+      0.0D, 
+      redirectOfSuccess, 
+      null, 
+      response);
+  }
+
+  public String getPledgePaymentMerchantIds(long projectId, String projectPledgeAccount)
+    throws ServiceException
+  {
+    BiddingProjectCity city = this.biddingProjectParameterService.getCityDetail(projectId);
+    return getPledgePaymentMerchantIds(city, projectPledgeAccount);
+  }
+
+  public void updateSignUps(BiddingBidEnterprise bidEnterprise)
+    throws ServiceException
+  {
+    if ((bidEnterprise.getBank() == null) || (bidEnterprise.getBank().isEmpty())) {
+      return;
+    }
+
+    String hql = "from BiddingSignUp BiddingSignUp where BiddingSignUp.enterpriseAccount is not null and BiddingSignUp.pledgeReturnTime is null order by BiddingSignUp.id";
+
+    for (int i = 0; ; i += 200) {
+      List signUps = getDatabaseService().findRecordsByHql(hql, i, 200);
+      if ((signUps == null) || (signUps.isEmpty())) {
+        break;
+      }
+      for (Iterator iterator = signUps.iterator(); iterator.hasNext(); ) {
+        BiddingSignUp signUp = (BiddingSignUp)iterator.next();
+
+        if (!bidEnterprise.getAccount().equals(this.cryptService.decrypt(signUp.getEnterpriseAccount(), "" + signUp.getId(), true))) {
+          continue;
+        }
+        signUp.setEnterpriseName(bidEnterprise.getName());
+        signUp.setEnterpriseBank(bidEnterprise.getBank());
+        update(signUp);
+      }
+      if (signUps.size() < 200)
+        break;
+    }
+  }
+
+  private String getPledgePaymentMerchantIds(BiddingProjectCity city, String projectPledgeAccount)
+    throws ServiceException
+  {
+    if (city == null) {
+      return null;
+    }
+    if ((city.getPaymentMerchantIds() == null) || (city.getPaymentMerchantIds().isEmpty())) {
+      return null;
+    }
+    if ((projectPledgeAccount == null) || (projectPledgeAccount.isEmpty())) {
+      return city.getPaymentMerchantIds();
+    }
+    PaymentMerchant paymentMerchant = this.paymentService.getPaymentMerchantByAccount(projectPledgeAccount);
+    if (paymentMerchant == null) {
+      return null;
+    }
+    if (("," + city.getPaymentMerchantIds() + ",").indexOf("," + paymentMerchant.getId() + ",") != -1) {
+      return "" + paymentMerchant.getId();
+    }
+    return null;
+  }
+
+  private void checkSignUpPaied(BiddingSignUp signUp)
+    throws ServiceException
+  {
+    if ((signUp.getPaymentTime() != null) && 
+      (signUp.getDrawPaymentTime() != null) && (
+      (signUp.getPledgePaymentTime() != null) || 
+      (!this.biddingProjectParameterService.isPledgeInternetPayment(signUp.getProjectId())))) {
+      return;
+    }
+    String[] paymentOrderIds = { "", "B", "C", "AB", "AC", "BC", "ABC" };
+    double[] paymentMoneys = { signUp.getPaymentMoney(), 
+      signUp.getPledgePaymentMoney(), 
+      signUp.getDrawPaymentMoney(), 
+      Math.round((signUp.getPaymentMoney() + signUp.getPledgePaymentMoney()) * 100.0D) / 100.0D, 
+      Math.round((signUp.getPaymentMoney() + signUp.getDrawPaymentMoney()) * 100.0D) / 100.0D, 
+      Math.round((signUp.getPledgePaymentMoney() + signUp.getDrawPaymentMoney()) * 100.0D) / 100.0D, 
+      Math.round((signUp.getPaymentMoney() + signUp.getPledgePaymentMoney() + signUp.getDrawPaymentMoney()) * 100.0D) / 100.0D };
+
+    boolean paied = false;
+    for (int i = 0; i < paymentOrderIds.length; i++)
+    {
+      Payment payment = null;
+      try {
+        payment = this.paymentService.loadPayment("bidding/project/signup", paymentOrderIds[i] + signUp.getSignUpNo());
+      }
+      catch (Exception e) {
+        Logger.exception(e);
+      }
+      if ((payment == null) || (payment.getTransactSuccess() != '1') || (paymentMoneys[i] != payment.getMoney()))
+      {
+        continue;
+      }
+      if ((signUp.getPaymentTime() == null) && ((paymentOrderIds[i].equals("")) || (paymentOrderIds[i].indexOf('A') != -1))) {
+        signUp.setIsInternetPayment('1');
+        signUp.setPaymentId(payment.getId());
+        signUp.setPaymentTime(payment.getTransactTime());
+        signUp.setPaymentBank(payment.getPaymentMethod());
+        paied = true;
+      }
+
+      if ((signUp.getPledgePaymentTime() == null) && (paymentOrderIds[i].indexOf('B') != -1)) {
+        signUp.setIsPledgeInternetPayment('1');
+        signUp.setPledgePaymentId(payment.getId());
+        signUp.setPledgePaidMoney(payment.getMoney());
+        signUp.setPledgePaymentTime(payment.getTransactTime());
+        signUp.setPledgeConfirm('1');
+        signUp.setPledgePaymentBank(payment.getPaymentMethod());
+        updateEnterpriseAccount(signUp, payment.getPayerAccount(), payment.getPayerAccountName(), payment.getPayerBank());
+        paied = true;
+      }
+
+      if ((signUp.getDrawPaymentTime() == null) && (paymentOrderIds[i].indexOf('C') != -1)) {
+        signUp.setIsDrawInternetPayment('1');
+        signUp.setDrawPaymentId(payment.getId());
+        signUp.setDrawPaymentTime(payment.getTransactTime());
+        signUp.setDrawPaymentBank(payment.getPaymentMethod());
+        paied = true;
+      }
+    }
+    if (paied)
+      update(signUp);
+  }
+
+  private void updateEnterpriseAccount(BiddingSignUp signUp, String account, String accountName, String bank)
+    throws ServiceException
+  {
+    if ((account == null) || (account.trim().isEmpty())) {
+      return;
+    }
+    if ((accountName == null) || (accountName.trim().isEmpty()) || (bank == null) || (bank.trim().isEmpty()))
+    {
+      List bidEnterprises = this.enterpriseService.findBidEnterprise(account, accountName);
+      if ((bidEnterprises == null) || (bidEnterprises.isEmpty())) {
+        this.enterpriseService.addBidEnterprise(account, accountName, bank);
+      }
+      else if ((bidEnterprises != null) && (bidEnterprises.size() == 1)) {
+        BiddingBidEnterprise bidEnterprise = (BiddingBidEnterprise)bidEnterprises.get(0);
+        account = bidEnterprise.getAccount();
+        accountName = bidEnterprise.getName();
+        bank = bidEnterprise.getBank();
+      }
+    }
+    signUp.setEnterpriseAccount(account.trim());
+    signUp.setEnterpriseName(accountName == null ? null : accountName.trim());
+    signUp.setEnterpriseBank(bank == null ? null : bank.trim());
+  }
+
+  public double getSignUpPrice(long projectId)
+    throws ServiceException
+  {
+    BiddingProject project = this.biddingProjectService.getProject(projectId);
+    return getSignUpPrice(project);
+  }
+
+  private double getSignUpPrice(BiddingProject project)
+    throws ServiceException
+  {
+    if (this.biddingProjectParameterService.getCityDetail(project.getCity()).getDocumentsUniformPrice() == 1)
+    {
+      BiddingProjectParameter parameter = this.biddingProjectParameterService.getParameter(project.getProjectCategory(), project.getProjectProcedure(), project.getCity());
+      return parameter == null ? 200.0D : parameter.getBiddingDocumentsPrice();
+    }
+
+    BiddingProjectTender tender = (BiddingProjectTender)project.getTenders().iterator().next();
+    return tender.getDocumentPrice();
+  }
+
+  private double getDrawingPrice(BiddingProject project)
+    throws ServiceException
+  {
+    if (this.biddingProjectParameterService.getCityDetail(project.getCity()).getDocumentsUniformPrice() == 1)
+    {
+      return 600.0D;
+    }
+
+    BiddingProjectTender tender = (BiddingProjectTender)project.getTenders().iterator().next();
+    return tender.getDrawingPrice();
+  }
+
+  public SignUpTotal totalSignUp(long projectId)
+    throws ServiceException
+  {
+    SignUpTotal signUpTotal = new SignUpTotal();
+
+    String hql = "from BiddingSignUp BiddingSignUp where BiddingSignUp.projectId=" + 
+      projectId;
+    List signUps = getDatabaseService().findRecordsByHql(hql);
+    if ((signUps == null) || (signUps.isEmpty())) {
+      return signUpTotal;
+    }
+    signUpTotal.setTotal(signUps.size());
+
+    for (Iterator iterator = signUps.iterator(); iterator.hasNext(); ) {
+      BiddingSignUp signUp = (BiddingSignUp)iterator.next();
+
+      checkSignUpPaied(signUp);
+
+      if (signUp.getPaymentTime() != null) {
+        signUpTotal.setPaymentTotal(signUpTotal.getPaymentTotal() + 1);
+      }
+
+      if (signUp.getPledgePaymentTime() != null) {
+        signUpTotal.setPledgePaymentTotal(signUpTotal.getPledgePaymentTotal() + 1);
+      }
+    }
+    return signUpTotal;
+  }
+
+  public void completeUploadBid(String signUpNo)
+    throws ServiceException
+  {
+    BiddingSignUp signUp = loadSignUp(signUpNo, false);
+    if (signUp.getPaymentTime() == null) {
+      throw new ServiceException("未缴费");
+    }
+    this.biddingProjectService.sendBidToBiddingSystem(signUp);
+    this.attachmentService.deleteAll("bidding/project/signup", "bid", signUp.getId());
+    signUp.setUploadTime(DateTimeUtils.now());
+    getDatabaseService().updateRecord(signUp);
+  }
+
+  public void updatePledgeReturnStatus(long projectId)
+    throws ServiceException
+  {
+    String hql = "select BiddingSignUp.id from BiddingSignUp BiddingSignUp where BiddingSignUp.projectId=" + 
+      projectId + 
+      " and not BiddingSignUp.pledgeReturnTransferTime is null" + 
+      " and BiddingSignUp.pledgeReturnTransferError is null" + 
+      " and BiddingSignUp.pledgeReturnTime is null";
+    if (getDatabaseService().findRecordByHql(hql) == null) {
+      return;
+    }
+
+    hql = "select BiddingProject.city from BiddingProject BiddingProject where BiddingProject.id=" + projectId;
+    bankTransactionsQuery((String)getDatabaseService().findRecordByHql(hql));
+  }
+
+  public void updatePledgeStatus(BiddingProject project)
+    throws ServiceException
+  {
+    if ((project.getPlan() != null) && (project.getPlan().getSubmitTime().after(DateTimeUtils.now()))) {
+      bankTransactionsQuery(project.getCity());
+    }
+
+    String hql = "from BiddingSignUp BiddingSignUp where BiddingSignUp.projectId=" + 
+      project.getId() + 
+      " order by BiddingSignUp.signUpNo DESC, BiddingSignUp.paymentTime, BiddingSignUp.pledgePaymentTime";
+    List signUps = getDatabaseService().findRecordsByHql(hql);
+    project.setSignUps(signUps == null ? null : new LinkedHashSet(signUps));
+    decryptSignUps(project);
+  }
+
+  public void bankTransactionsQuery()
+    throws ServiceException
+  {
+    bankTransactionsQuery(null);
+  }
+
+  private void bankTransactionsQuery(String cityName)
+    throws ServiceException
+  {
+    String hql = "from BiddingProjectCity BiddingProjectCity" + (
+      cityName == null ? "" : new StringBuffer(" where BiddingProjectCity.name='").append(JdbcUtils.resetQuot(cityName)).append("'").toString());
+    List cities = getDatabaseService().findRecordsByHql(hql);
+    if ((cities == null) || (cities.isEmpty())) {
+      return;
+    }
+    for (Iterator iterator = cities.iterator(); iterator.hasNext(); ) {
+      BiddingProjectCity city = (BiddingProjectCity)iterator.next();
+      try {
+        if ((city.getPaymentMerchantIds() == null) || (city.getPaymentMerchantIds().isEmpty())) {
+          continue;
+        }
+        String[] paymentMerchantIds = city.getPaymentMerchantIds().split(",");
+        Date lastSuccessDay = null;
+        Date minDay = DateTimeUtils.add(DateTimeUtils.date(), 5, -this.maxTransactionQueryDays);
+        for (int i = 0; i < paymentMerchantIds.length; i++) {
+          boolean success = true;
+          final PaymentMerchant paymentMerchant = (PaymentMerchant)this.paymentService.load(PaymentMerchant.class, Long.parseLong(paymentMerchantIds[i]));
+          Date day = city.getLastTransactionQuery() == null ? minDay : DateTimeUtils.parseDate(DateTimeUtils.formatTimestamp(city.getLastTransactionQuery(), "yyyy-MM-dd"), "yyyy-MM-dd");
+          Date currentSuccessDay = day;
+          do {
+            List transactions = null;
+            try {
+              transactions = this.paymentService.listTransactions(paymentMerchant.getId(), day);
+            }
+            catch (Exception e) {
+              Logger.exception(e);
+              success = false;
+            }
+            Logger.info("BiddingService: retrieve " + (transactions==null ? 0 : transactions.size()) + " transactions on " + DateTimeUtils.formatDate(day, null) + ".");
+            final Timer timer = new Timer();
+			final List toProcessTransactions = transactions;
+			timer.schedule(new TimerTask() {
+				public void run() {
+					try {
+						processTransactions(toProcessTransactions, paymentMerchant.getPaymentMethod(), null);
+					}
+					catch(Exception e) {
+						Logger.exception(e);
+					}
+					timer.cancel();
+				}
+			}, 10);
+
+            
+            if (success) {
+              currentSuccessDay = day;
+            }
+            day = DateTimeUtils.add(day, 5, 1);
+          }
+          while (!
+            day.after(DateTimeUtils.date()));
+          if ((lastSuccessDay == null) || (currentSuccessDay.before(lastSuccessDay))) {
+            lastSuccessDay = currentSuccessDay;
+          }
+        }
+        if ((lastSuccessDay == null) || (lastSuccessDay.before(minDay))) {
+          lastSuccessDay = minDay;
+        }
+        city.setLastTransactionQuery(new Timestamp(lastSuccessDay.getTime()));
+        getDatabaseService().updateRecord(city);
+      }
+      catch (Exception e) {
+        Logger.exception(e);
+      }
+    }
+  }
+
+  public void processBankTransactions(String bank, String transactionsFileName, SessionInfo sessionInfo)
+    throws ServiceException
+  {
+    List transactions = this.paymentService.parseTransactionsFile(bank, transactionsFileName);
+    processTransactions(transactions, bank, sessionInfo);
+  }
+
+  private void processTransactions(List transactions, String bank, SessionInfo sessionInfo)
+    throws ServiceException
+  {
+    if ((transactions == null) || (transactions.isEmpty())) {
+      return;
+    }
+    for (Iterator iterator = transactions.iterator(); iterator.hasNext(); ) {
+      Transaction transaction = (Transaction)iterator.next();
+      Logger.info("BiddingService: process transaction, sn is " + transaction.getTransactionNumber() + ", money is " + transaction.getMoney() + ", time is " + DateTimeUtils.formatTimestamp(transaction.getTransactionTime(), null));
+      
+      if ((transaction.getMoney() == 0.0D) || 
+        (transaction.getTransactionTime() == null) || 
+        (transaction.getPeerAccount() == null) || (transaction.getPeerAccount().trim().isEmpty()))
+      {
+        continue;
+      }
+      BiddingSignUp signUp = null;
+      String hql = "from BiddingSignUp BiddingSignUp  where BiddingSignUp.signUpNo is not null and 'REMARK' like concat(concat('%', BiddingSignUp.signUpNo), '%')";
+
+      if ((transaction.getRemark() != null) && (!transaction.getRemark().trim().isEmpty())) {
+        signUp = (BiddingSignUp)getDatabaseService().findRecordByHql(hql.replaceFirst("REMARK", StringUtils.fullWidthToHalfAngle(transaction.getRemark().trim()).replaceAll("[\r\n\t '\":]", "")));
+      }
+      if ((signUp == null) && (transaction.getSummary() != null) && (!transaction.getSummary().trim().isEmpty())) {
+        signUp = (BiddingSignUp)getDatabaseService().findRecordByHql(hql.replaceFirst("REMARK", StringUtils.fullWidthToHalfAngle(transaction.getSummary().trim()).replaceAll("[\r\n\t '\":]", "")));
+      }
+      if ((signUp == null) && (transaction.getMoney() < 0.0D))
+      {
+        hql = "from BiddingSignUp BiddingSignUp where BiddingSignUp.pledgeConfirm='1' and BiddingSignUp.signUpNo is null and 'REMARK' like concat(concat('%退保证金', id), '%')";
+        if(signUp==null) {
+					//根据保证金回单ID查找报名记录,保持和旧模式兼容
+					hql = "from BiddingSignUp BiddingSignUp" +
+						  " where BiddingSignUp.pledgeConfirm='1'" + //保证金已确认
+						  " and BiddingSignUp.signUpNo is null" + //没有报名号
+						  " and BiddingSignUp.pledgeReturnMoney=" + (-transaction.getMoney()) +
+						  " and BiddingSignUp.pledgeReturnTime is null" +
+						  " and not BiddingSignUp.pledgeBillBack is null" +
+						  " and 'REMARK' like concat(concat('%退保证金', pledgeBillBack), '%')";
+					if(transaction.getRemark()!=null && !transaction.getRemark().trim().isEmpty()) { //备注不为空
+						signUp = (BiddingSignUp)getDatabaseService().findRecordByHql(hql.replaceFirst("REMARK", StringUtils.fullWidthToHalfAngle(transaction.getRemark().trim()).replaceAll("[\r\n\t '\":]", "")));
+					}
+					if(signUp==null && transaction.getSummary()!=null && !transaction.getSummary().trim().isEmpty()) { //摘要不为空
+						signUp = (BiddingSignUp)getDatabaseService().findRecordByHql(hql.replaceFirst("REMARK", StringUtils.fullWidthToHalfAngle(transaction.getSummary().trim()).replaceAll("[\r\n\t '\":]", "")));
+					}
+				}
+
+        if ((transaction.getRemark() != null) && (!transaction.getRemark().trim().isEmpty())) {
+          signUp = (BiddingSignUp)getDatabaseService().findRecordByHql(hql.replaceFirst("REMARK", StringUtils.fullWidthToHalfAngle(transaction.getRemark().trim()).replaceAll("[\r\n\t '\":]", "")));
+        }
+        if ((signUp == null) && (transaction.getSummary() != null) && (!transaction.getSummary().trim().isEmpty())) {
+          signUp = (BiddingSignUp)getDatabaseService().findRecordByHql(hql.replaceFirst("REMARK", StringUtils.fullWidthToHalfAngle(transaction.getSummary().trim()).replaceAll("[\r\n\t '\":]", "")));
+        }
+      }
+      if ((signUp != null) && (transaction.getMoney() < 0.0D)) {
+        if (signUp.getPledgeReturnTime() != null)
+          continue;
+        signUp.setPledgeReturnTime(transaction.getTransactionTime());
+        signUp.setPledgeReturnMoney(-transaction.getMoney());
+        signUp.setPledgeReturnTransactorId(sessionInfo == null ? 0L : sessionInfo.getUserId());
+        signUp.setPledgeReturnTransactor(sessionInfo == null ? "系统" : sessionInfo.getUserName());
+        signUp.setPledgeReturnEnabled('0');
+        update(signUp);
+      }
+      else if ((signUp != null) && (transaction.getMoney() > 0.0D)) {
+        boolean changed = false;
+        if ((signUp.getEnterpriseAccount() == null) || (signUp.getEnterpriseAccount().trim().isEmpty())) {
+          updateEnterpriseAccount(signUp, transaction.getPeerAccount(), transaction.getPeerAccountName(), null);
+          changed = true;
+        }
+        if (((signUp.getEnterpriseName() == null) || (signUp.getEnterpriseName().trim().isEmpty())) && 
+          (transaction.getPeerAccountName() != null) && (!transaction.getPeerAccountName().isEmpty())) {
+          signUp.setEnterpriseName(transaction.getPeerAccountName());
+          changed = true;
+        }
+        if (signUp.getPledgePaymentTime() == null) {
+          signUp.setIsPledgeInternetPayment('0');
+          signUp.setPledgePaidMoney(transaction.getMoney());
+          signUp.setPledgePaymentTime(transaction.getTransactionTime());
+          signUp.setPledgeConfirm('1');
+          signUp.setPledgePaymentBank(bank);
+          signUp.setPledgeBillBack(transaction.getTransactionNumber());
+          signUp.setPledgeRecorderId(sessionInfo == null ? 0L : sessionInfo.getUserId());
+          signUp.setPledgeRecorder(sessionInfo == null ? "系统" : sessionInfo.getUserName());
+          signUp.setPledgeRecordTime(DateTimeUtils.now());
+          changed = true;
+        }
+        if (changed)
+          update(signUp);
+      }
+      else {
+        if ((transaction.getMoney() <= 0.0D) || (transaction.getTransactionNumber() == null) || (transaction.getTransactionNumber().isEmpty()))
+          continue;
+        String time = "TIMESTAMP(" + DateTimeUtils.formatTimestamp(transaction.getTransactionTime(), null) + ")";
+        hql = "select distinct BiddingProject from BiddingProject BiddingProject left join BiddingProject.plans BiddingProjectPlan left join BiddingProject.tenders BiddingProjectTender where BiddingProjectPlan.buyDocumentBegin<=" + 
+          time + 
+          " and BiddingProjectPlan.submitTime>=" + time + 
+          " and BiddingProjectTender.pledgeMoney=" + transaction.getMoney() + 
+          " and (select min(BiddingSignUp.id)" + 
+          "  from BiddingSignUp BiddingSignUp" + 
+          "  where BiddingSignUp.projectId=BiddingProject.id" + 
+          "  and BiddingSignUp.pledgePaymentBank='" + JdbcUtils.resetQuot(bank) + "'" + 
+          "  and BiddingSignUp.pledgeBillBack='" + JdbcUtils.resetQuot(transaction.getTransactionNumber()) + "') is null";
+        List projects = getDatabaseService().findRecordsByHql(hql);
+        for (Iterator iteratorProject = projects == null ? null : projects.iterator(); (iteratorProject != null) && (iteratorProject.hasNext()); ) {
+          BiddingProject project = (BiddingProject)iteratorProject.next();
+          if ((project.getPledgeAccount() != null) && (!project.getPledgeAccount().isEmpty()) && 
+            (transaction.getMyAccount() != null) && (!transaction.getMyAccount().isEmpty()) && 
+            (!transaction.getMyAccount().trim().equals(project.getPledgeAccount().replaceAll("&nbsp;", "").trim())))
+          {
+            continue;
+          }
+          BiddingSignUp pledgeSignUp = new BiddingSignUp();
+          pledgeSignUp.setId(UUIDLongGenerator.generateId());
+          pledgeSignUp.setProjectId(project.getId());
+          pledgeSignUp.setProjectName(project.getProjectName());
+
+          updateEnterpriseAccount(pledgeSignUp, transaction.getPeerAccount(), transaction.getPeerAccountName(), null);
+
+          pledgeSignUp.setPledgePaymentMoney(transaction.getMoney());
+          pledgeSignUp.setPledgePaidMoney(transaction.getMoney());
+          pledgeSignUp.setPledgePaymentTime(transaction.getTransactionTime());
+          pledgeSignUp.setPledgePaymentBank(bank);
+          pledgeSignUp.setPledgeBillBack(transaction.getTransactionNumber());
+          String remark = null;
+          if ((transaction.getRemark() != null) && (!transaction.getRemark().trim().isEmpty())) {
+            remark = transaction.getRemark().trim();
+          }
+          if ((transaction.getSummary() != null) && (!transaction.getSummary().trim().isEmpty())) {
+            remark = (remark == null ? "" : new StringBuffer(String.valueOf(remark)).append(",").toString()) + transaction.getSummary().trim();
+          }
+          if (remark != null) {
+            pledgeSignUp.setPledgeBillBackRemark(remark.length() < 150 ? remark : remark.substring(0, 150));
+          }
+          save(pledgeSignUp);
+        }
+      }
+    }
+  }
+
+  public void accountComplement(long projectId, long signUpId, String enterpriseName, String enterpriseBank, String enterpriseAccount)
+    throws ServiceException
+  {
+    BiddingSignUp signUp = (BiddingSignUp)load(BiddingSignUp.class, signUpId);
+    if (signUp.getProjectId() != projectId) {
+      return;
+    }
+    if ((signUp.getEnterpriseName() == null) || (signUp.getEnterpriseName().isEmpty()) || (signUp.getEnterpriseName().indexOf('*') != -1)) {
+      signUp.setEnterpriseName(enterpriseName);
+    }
+    signUp.setEnterpriseBank(enterpriseBank);
+    if ((signUp.getEnterpriseAccount() == null) || (signUp.getEnterpriseAccount().isEmpty()) || (signUp.getEnterpriseAccount().indexOf('*') != -1)) {
+      signUp.setEnterpriseAccount(enterpriseAccount);
+    }
+    update(signUp);
+
+    this.enterpriseService.addBidEnterprise(signUp.getEnterpriseAccount(), signUp.getEnterpriseName(), signUp.getEnterpriseBank());
+  }
+
+  public void accountsComplement(BiddingProject project, HttpServletRequest request)
+    throws ServiceException
+  {
+    String[] signUpIds = request.getParameterValues("signUpId");
+    if ((signUpIds == null) || (signUpIds.length == 0)) {
+      return;
+    }
+
+    String[] pledgeConfirmSignUpIds = request.getParameterValues("pledgeConfirmSignUpId");
+
+    String[] pledgeReturnSignUpIds = request.getParameterValues("pledgeReturnSignUpId");
+    if ((pledgeReturnSignUpIds != null) && (pledgeReturnSignUpIds.length > 0)) {
+      retrievePledgeReturnMoney(project);
+    }
+    String[] enterpriseNames = request.getParameterValues("enterpriseName");
+    String[] enterpriseBanks = request.getParameterValues("enterpriseBank");
+    String[] enterpriseAccounts = request.getParameterValues("enterpriseAccount");
+    for (int i = 0; i < signUpIds.length; i++) {
+      BiddingSignUp signUp = (BiddingSignUp)ListUtils.findObjectByProperty(project.getSignUps(), "id", new Long(signUpIds[i]));
+      if ((signUp.getEnterpriseName() == null) || (signUp.getEnterpriseName().isEmpty()) || (signUp.getEnterpriseName().indexOf('*') != -1)) {
+        signUp.setEnterpriseName(enterpriseNames[i]);
+      }
+      signUp.setEnterpriseBank(enterpriseBanks[i]);
+      if ((signUp.getEnterpriseAccount() == null) || (signUp.getEnterpriseAccount().isEmpty()) || (signUp.getEnterpriseAccount().indexOf('*') != -1)) {
+        signUp.setEnterpriseAccount(enterpriseAccounts[i]);
+      }
+      if ((pledgeConfirmSignUpIds != null) && 
+        (signUp.getPledgeConfirm() != '3') && (
+        (signUp.getSignUpNo() == null) || (signUp.getSignUpNo().isEmpty()))) {
+        boolean remove = false;
+        for (int j = 0; j < pledgeConfirmSignUpIds.length; j++) {
+          if (pledgeConfirmSignUpIds[j].equals(signUpIds[i])) {
+            remove = true;
+            break;
+          }
+        }
+        if (remove) {
+          if (signUp.getPledgeConfirm() == '2') {
+            continue;
+          }
+          if (signUp.getPledgeConfirm() == '1') {
+            relationPledgeConfirm(signUp, '0');
+          }
+          signUp.setPledgeConfirm('2');
+        }
+        else {
+          if (signUp.getPledgeConfirm() == '1')
+          {
+            continue;
+          }
+          relationPledgeConfirm(signUp, '3');
+          signUp.setPledgeConfirm('1');
+        }
+      }
+      if (pledgeReturnSignUpIds != null)
+      {
+        char pledgeReturnEnabled = '0';
+        for (int j = 0; j < pledgeReturnSignUpIds.length; j++) {
+          if (pledgeReturnSignUpIds[j].equals(signUpIds[i])) {
+            pledgeReturnEnabled = '1';
+            break;
+          }
+        }
+        if ((pledgeReturnEnabled == '1') && (signUp.getPledgeReturnEnabled() != pledgeReturnEnabled)) {
+          signUp.setPledgeReturnExportTime(DateTimeUtils.now());
+        }
+        signUp.setPledgeReturnEnabled(pledgeReturnEnabled);
+      }
+      update(signUp);
+
+      this.enterpriseService.addBidEnterprise(signUp.getEnterpriseAccount(), signUp.getEnterpriseName(), signUp.getEnterpriseBank());
+    }
+  }
+
+  private void relationPledgeConfirm(BiddingSignUp signUp, char status)
+    throws ServiceException
+  {
+    String hql = "from BiddingSignUp BiddingSignUp where BiddingSignUp.id!=" + 
+      signUp.getId() + 
+      " and BiddingSignUp.pledgePaymentBank='" + JdbcUtils.resetQuot(signUp.getPledgePaymentBank()) + "'" + 
+      " and BiddingSignUp.pledgeBillBack='" + JdbcUtils.resetQuot(signUp.getPledgeBillBack()) + "'" + 
+      " and BiddingSignUp.signUpNo is null";
+    List signUps = getDatabaseService().findRecordsByHql(hql);
+    if ((signUps == null) || (signUps.isEmpty())) {
+      return;
+    }
+    for (Iterator iterator = signUps.iterator(); iterator.hasNext(); ) {
+      BiddingSignUp relationSignUp = (BiddingSignUp)iterator.next();
+
+      if (!signUp.getEnterpriseAccount().equals(this.cryptService.decrypt(relationSignUp.getEnterpriseAccount(), "" + relationSignUp.getId(), true))) {
+        continue;
+      }
+      relationSignUp.setPledgeConfirm(status);
+      update(relationSignUp);
+    }
+  }
+
+  public void saveSignUpRanking(BiddingProject biddingProject, String rankingSignUpIds)
+    throws ServiceException
+  {
+    if ((biddingProject.getSignUps() == null) || (biddingProject.getSignUps().isEmpty())) {
+      return;
+    }
+    List rankingSignUpList = (rankingSignUpIds == null) || (rankingSignUpIds.isEmpty()) ? new ArrayList() : ListUtils.generateList(rankingSignUpIds, ",");
+    for (Iterator iterator = biddingProject.getSignUps().iterator(); iterator.hasNext(); ) {
+      BiddingSignUp signUp = (BiddingSignUp)iterator.next();
+      signUp.setRanking(rankingSignUpList.indexOf("" + signUp.getId()) + 1);
+      update(signUp);
+    }
+  }
+
+  public List listRankingSignUps(BiddingProject biddingProject)
+    throws ServiceException
+  {
+    if ((biddingProject.getSignUps() == null) || (biddingProject.getSignUps().isEmpty())) {
+      return null;
+    }
+    List rankingSignUps = new ArrayList();
+    for (Iterator iterator = biddingProject.getSignUps().iterator(); iterator.hasNext(); ) {
+      BiddingSignUp signUp = (BiddingSignUp)iterator.next();
+      if (signUp.getRanking() > 0) {
+        rankingSignUps.add(signUp);
+      }
+    }
+    Collections.sort(rankingSignUps, new Comparator() {
+      public int compare(Object arg0, Object arg1) {
+        BiddingSignUp signUp0 = (BiddingSignUp)arg0;
+        BiddingSignUp signUp1 = (BiddingSignUp)arg1;
+        return signUp0.getRanking() > signUp1.getRanking() ? 1 : signUp0.getRanking() == signUp1.getRanking() ? 0 : -1;
+      }
+    });
+    return rankingSignUps.isEmpty() ? null : rankingSignUps;
+  }
+
+  public void retrievePledgeReturnMoney(BiddingProject biddingProject)
+    throws ServiceException
+  {
+    if ((biddingProject.getSignUps() == null) || (biddingProject.getSignUps().isEmpty())) {
+      return;
+    }
+
+    BiddingProjectCity city = this.biddingProjectParameterService.getCityDetail(biddingProject.getCity());
+    for (Iterator iterator = biddingProject.getSignUps().iterator(); iterator.hasNext(); ) {
+      BiddingSignUp signUp = (BiddingSignUp)iterator.next();
+      if ((signUp.getPledgePaymentTime() == null) || (signUp.getPledgeReturnTime() != null))
+      {
+        continue;
+      }
+      long days = 0L;
+      try {
+        days = (DateTimeUtils.date().getTime() - DateTimeUtils.parseDate(DateTimeUtils.formatTimestamp(signUp.getPledgePaymentTime(), "yyyy-MM-dd"), "yyyy-MM-dd").getTime()) / 86400000L;
+      }
+      catch (ParseException localParseException)
+      {
+      }
+      signUp.setPledgeReturnDays(Math.max(0L, days - 1L));
+
+      double interest = 0.0D;
+      if (city.getPledgeReturnRate() > 0.0D) {
+        interest = signUp.getPledgePaidMoney() * city.getPledgeReturnRate() / 100.0D / 360.0D * signUp.getPledgeReturnDays();
+        if ((city.getPledgeReturnTax() > 0.0D) && (city.getPledgeReturnTax() < 100.0D)) {
+          interest = interest * (100.0D - city.getPledgeReturnTax()) / 100.0D;
+        }
+      }
+
+      signUp.setPledgeReturnMoney(Math.round((signUp.getPledgePaidMoney() + interest) * 100.0D) / 100.0D);
+    }
+  }
+
+  public void pledgeReturnTransfer(BiddingProject project, String transferPassword, Matcher passwordMatcher, HttpServletRequest request)
+    throws ServiceException
+  {
+    accountsComplement(project, request);
+    PaymentMerchant paymentMerchant = getPledgePaymentMerchant(project);
+    synchronized(transferMutex) {
+		List transfers = generatePledgeReturnTransfers(project, paymentMerchant); //生成保证金返还转账记录列表
+		if(transfers==null || transfers.isEmpty()) {
+			return;
+		}
+		//记录转账时间
+		for(Iterator iterator = transfers.iterator(); iterator.hasNext(); ) {
+			Transfer transfer = (Transfer)iterator.next();
+			BiddingSignUp signUp = (BiddingSignUp)transfer.getRelationRecord();
+			signUp.setPledgeReturnTransferTime(DateTimeUtils.now());
+			signUp.setPledgeReturnTransferError(null);
+			update(signUp);
+		}
+		//转账
+		try {
+			paymentService.transfer(paymentMerchant.getId(), transfers, transferPassword, passwordMatcher);
+		}
+		catch(Exception e) {
+			Logger.exception(e);
+		}
+		catch(Error e) {
+			e.printStackTrace();
+		}
+		for(Iterator iterator = transfers.iterator(); iterator.hasNext(); ) {
+			Transfer transfer = (Transfer)iterator.next();
+			if(transfer.isSuccess()) { //转账成功
+				continue;
+			}
+			//转账失败
+			BiddingSignUp signUp = (BiddingSignUp)transfer.getRelationRecord();
+			signUp.setPledgeReturnTransferError(transfer.getError()==null || transfer.getError().isEmpty() ? "未知原因" : transfer.getError());
+			update(signUp);
+		}
+	}
+  }
+
+  public void writePledgeTransferFile(BiddingProject project, HttpServletRequest request, HttpServletResponse response)
+    throws ServiceException
+  {
+    accountsComplement(project, request);
+    PaymentMerchant paymentMerchant = getPledgePaymentMerchant(project);
+    List transfers = generatePledgeReturnTransfers(project, paymentMerchant);
+    if (transfers == null) {
+      return;
+    }
+
+    String transferFilePath = this.temporaryFileManageService.createTemporaryDirectory(null);
+    String transferFileName = this.paymentService.createTransferFile(paymentMerchant.getId(), transfers, transferFilePath, "保证金返还(" + project.getProjectName() + ")");
+    try {
+      this.fileDownloadService.httpDownload(request, response, transferFileName, null, true, null);
+    }
+    catch (Exception e) {
+      throw new ServiceException(e);
+    }
+    finally {
+      FileUtils.deleteFile(transferFileName);
+    }
+  }
+
+  private PaymentMerchant getPledgePaymentMerchant(BiddingProject project)
+    throws ServiceException
+  {
+    String account = project.getTender().getAccounts();
+    PaymentMerchant paymentMerchant = null;
+    if (account != null) {
+      paymentMerchant = this.paymentService.getPaymentMerchantByAccount(account);
+    }
+    if (paymentMerchant != null) {
+      return paymentMerchant;
+    }
+
+    BiddingProjectCity city = this.biddingProjectParameterService.getCityDetail(project.getCity());
+    if ((city.getPaymentMerchantIds() == null) || (city.getPaymentMerchantIds().isEmpty())) {
+      throw new ServiceException("payment merchant not set");
+    }
+
+    paymentMerchant = (PaymentMerchant)this.paymentService.load(PaymentMerchant.class, Long.parseLong(city.getPaymentMerchantIds().split(",")[0]));
+    if (paymentMerchant == null) {
+      throw new ServiceException("payment merchant not exists");
+    }
+    return paymentMerchant;
+  }
+
+  private List generatePledgeReturnTransfers(BiddingProject project, PaymentMerchant paymentMerchant)
+    throws ServiceException
+  {
+    List transfers = new ArrayList();
+
+    for (Iterator iterator = project.getSignUps() == null ? null : project.getSignUps().iterator(); iterator.hasNext(); ) {
+      BiddingSignUp signUp = (BiddingSignUp)iterator.next();
+      signUp = (BiddingSignUp)load(BiddingSignUp.class, signUp.getId());
+      if ((signUp.getPledgePaymentTime() == null) || 
+        (signUp.getPledgeConfirm() != '1') || 
+        (signUp.getPledgeReturnTime() != null) || 
+        (signUp.getPledgeReturnEnabled() != '1'))
+      {
+        continue;
+      }
+      if ((signUp.getPledgeReturnTransferTime() != null) && ((signUp.getPledgeReturnTransferError() == null) || (signUp.getPledgeReturnTransferError().isEmpty()))) {
+        continue;
+      }
+      if ((signUp.getEnterpriseName() == null) || (signUp.getEnterpriseName().isEmpty()) || 
+        (signUp.getEnterpriseAccount() == null) || (signUp.getEnterpriseAccount().isEmpty()) || 
+        (signUp.getEnterpriseBank() == null) || (signUp.getEnterpriseBank().isEmpty()))
+      {
+        continue;
+      }
+      Transfer transfer = new Transfer();
+      transfer.setRelationRecord(signUp);
+      transfer.setFromUnit(paymentMerchant.getName());
+      transfer.setFromUnitAcount(paymentMerchant.getAccount());
+
+      transfer.setToUnitAccount(signUp.getEnterpriseAccount());
+      transfer.setToUnit(signUp.getEnterpriseName());
+      transfer.setToBankFirstCode("");
+      transfer.setToUnitBank(signUp.getEnterpriseBank());
+      transfer.setToBankCode("");
+      transfer.setToUnitOrgCode("");
+      transfer.setMoney(signUp.getPledgeReturnMoney());
+      transfer.setCurrency("人民币");
+      transfer.setUses("退保证金" + ((signUp.getSignUpNo() == null) || (signUp.getSignUpNo().isEmpty()) ? "" + signUp.getId() : signUp.getSignUpNo()));
+      transfers.add(transfer);
+    }
+    return transfers;
+  }
+
+  public boolean isPledgeVisible(BiddingProject project, SessionInfo sessionInfo)
+    throws ServiceException
+  {
+    if (project.getPlan() == null) {
+      return false;
+    }
+    Timestamp time = project.getPlan().getSubmitTime();
+    if (time == null) {
+      time = project.getPlan().getBidopeningTime();
+    }
+    if (time == null) {
+      return false;
+    }
+
+    if (this.recordControlService.getAccessLevel(project.getId(), BiddingProject.class.getName(), sessionInfo) < '2') {
+      return false;
+    }
+    if (time.before(DateTimeUtils.now())) {
+      return true;
+    }
+    if ((this.pledgeQueryTime == null) || (this.pledgeQueryTime.isEmpty())) {
+      return false;
+    }
+
+    List acl = this.accessControlService.getAcl("bidding/project/signup", sessionInfo);
+    if ((acl == null) || (!acl.contains("manageUnit_signUpQuery")))
+      return false;
+    try
+    {
+      if (DateTimeUtils.parseTimestamp(DateTimeUtils.formatTimestamp(time, "yyyy-MM-dd") + " " + this.pledgeQueryTime, "yyyy-MM-dd HH:mm").before(DateTimeUtils.now()))
+        return true;
+    }
+    catch (ParseException e)
+    {
+      Logger.exception(e);
+    }
+    return false;
+  }
+
+  public boolean isPledgePaymentTimeout(BiddingProject project)
+  {
+    BiddingProjectTender tender = getTender(project);
+    return (tender.getPledgeTime() != null) && (tender.getPledgeTime().before(DateTimeUtils.now()));
+  }
+
+  public boolean isSignUpTimeout(BiddingProject project)
+  {
+    BiddingProjectTender tender = getTender(project);
+    Timestamp now = DateTimeUtils.now();
+    return ((tender.getBuyDocumentBegin() != null) && (now.before(tender.getBuyDocumentBegin()))) || ((tender.getBuyDocumentEnd() != null) && (now.after(tender.getBuyDocumentEnd())));
+  }
+
+  public BiddingProjectTender getTender(BiddingProject project)
+  {
+    BiddingProjectTender tender = project.getTender();
+    if (tender == null) {
+      tender = (BiddingProjectTender)getDatabaseService().findRecordByHql("from BiddingProjectTender BiddingProjectTender where BiddingProjectTender.projectId=" + project.getId());
+      project.setTenders(new HashSet());
+      project.getTenders().add(tender);
+    }
+    return tender;
+  }
+
+  public PaymentService getPaymentService()
+  {
+    return this.paymentService;
+  }
+
+  public void setPaymentService(PaymentService paymentService)
+  {
+    this.paymentService = paymentService;
+  }
+
+  public BiddingProjectService getBiddingProjectService()
+  {
+    return this.biddingProjectService;
+  }
+
+  public void setBiddingProjectService(BiddingProjectService biddingProjectService)
+  {
+    this.biddingProjectService = biddingProjectService;
+  }
+
+  public int getBidUploadPaddingMinutes()
+  {
+    return this.bidUploadPaddingMinutes;
+  }
+
+  public void setBidUploadPaddingMinutes(int bidUploadPaddingMinutes)
+  {
+    this.bidUploadPaddingMinutes = bidUploadPaddingMinutes;
+  }
+
+  public AttachmentService getAttachmentService()
+  {
+    return this.attachmentService;
+  }
+
+  public void setAttachmentService(AttachmentService attachmentService)
+  {
+    this.attachmentService = attachmentService;
+  }
+
+  public BiddingProjectParameterService getBiddingProjectParameterService()
+  {
+    return this.biddingProjectParameterService;
+  }
+
+  public void setBiddingProjectParameterService(BiddingProjectParameterService biddingProjectParameterService)
+  {
+    this.biddingProjectParameterService = biddingProjectParameterService;
+  }
+
+  public int getSignUpNoCookieHours()
+  {
+    return this.signUpNoCookieHours;
+  }
+
+  public void setSignUpNoCookieHours(int signUpNoCookieHours)
+  {
+    this.signUpNoCookieHours = signUpNoCookieHours;
+  }
+
+  public CryptService getCryptService()
+  {
+    return this.cryptService;
+  }
+
+  public void setCryptService(CryptService cryptService)
+  {
+    this.cryptService = cryptService;
+  }
+
+  public FileDownloadService getFileDownloadService()
+  {
+    return this.fileDownloadService;
+  }
+
+  public void setFileDownloadService(FileDownloadService fileDownloadService)
+  {
+    this.fileDownloadService = fileDownloadService;
+  }
+
+  public TemporaryFileManageService getTemporaryFileManageService()
+  {
+    return this.temporaryFileManageService;
+  }
+
+  public void setTemporaryFileManageService(TemporaryFileManageService temporaryFileManageService)
+  {
+    this.temporaryFileManageService = temporaryFileManageService;
+  }
+
+  public AccessControlService getAccessControlService()
+  {
+    return this.accessControlService;
+  }
+
+  public void setAccessControlService(AccessControlService accessControlService)
+  {
+    this.accessControlService = accessControlService;
+  }
+
+  public RecordControlService getRecordControlService()
+  {
+    return this.recordControlService;
+  }
+
+  public void setRecordControlService(RecordControlService recordControlService)
+  {
+    this.recordControlService = recordControlService;
+  }
+
+  public int getMaxTransactionQueryDays()
+  {
+    return this.maxTransactionQueryDays;
+  }
+
+  public void setMaxTransactionQueryDays(int maxTransactionQueryDays)
+  {
+    this.maxTransactionQueryDays = maxTransactionQueryDays;
+  }
+
+  public String getPledgeQueryTime()
+  {
+    return this.pledgeQueryTime;
+  }
+
+  public void setPledgeQueryTime(String pledgeQueryTime)
+  {
+    this.pledgeQueryTime = pledgeQueryTime;
+  }
+
+  public EnterpriseService getEnterpriseService()
+  {
+    return this.enterpriseService;
+  }
+
+  public void setEnterpriseService(EnterpriseService enterpriseService)
+  {
+    this.enterpriseService = enterpriseService;
+  }
+}

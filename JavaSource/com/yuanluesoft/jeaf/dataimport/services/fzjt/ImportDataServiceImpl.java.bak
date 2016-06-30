@@ -1,0 +1,307 @@
+package com.yuanluesoft.cms.importdata.services.fzjt;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.yuanluesoft.cms.articlemanage.service.ArticleService;
+import com.yuanluesoft.cms.importdata.ImportDataService;
+import com.yuanluesoft.jeaf.base.exception.ServiceException;
+import com.yuanluesoft.jeaf.dao.BaseDAO;
+
+/**
+ * 
+ * @author yuanluesoft
+ *
+ */
+public class ImportDataServiceImpl implements ImportDataService {
+	private BaseDAO baseDAO;
+	private ArticleService articleService;
+	private String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=fzjtweb";
+	private String userName = "px5110";
+	private String password = "pxid77";
+
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#listColumnsNotInNewCms()
+	 */
+	public List listColumnsNotInNewCms() throws ServiceException {
+		// Declare the JDBC objects.
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			// Establish the connection.
+			System.out.println("ImportData: connect to localhost:1433 ...");
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); //com.microsoft.jdbc.sqlserver.SQLServerDriver
+			con = DriverManager.getConnection(connectionUrl, userName, password);
+			System.out.println("ImportData: connectted.");
+			// Create and execute an SQL statement that returns some data.
+			String sql = "SELECT T_CMS_CATALOG.CATALOGNAME as columnName FROM T_CMS_CATALOG";
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			List columnsNotInNewCms = new ArrayList();
+			while(rs.next()) {
+				String column = rs.getString("columnName");
+				if(baseDAO.findObjectByHql("select WebDirectory.id from WebDirectory WebDirectory where WebDirectory.directoryName='" + column + "'")==null) {
+					columnsNotInNewCms.add(column);
+				}
+			}
+			return columnsNotInNewCms;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+		finally {
+			try { 
+				rs.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try { 
+				stmt.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try {
+				con.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#importData(java.lang.String, boolean)
+	 */
+	public void importArticles(String columnMappings, boolean autoCreateColumn) throws ServiceException {
+		// Declare the JDBC objects.
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		//String[] mapping = columnMappings.replaceAll(" ", "").split(",");
+		try {
+			System.out.println("ImportData: connect to localhost:1433 ...");
+			// Establish the connection.
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			con = DriverManager.getConnection(connectionUrl, userName, password);
+			System.out.println("ImportData: connectted.");
+			// Create and execute an SQL statement that returns some data.
+			String sql = "SELECT T_CMS_CATALOG.CATALOGNAME as columnName," +
+						 " T_CMS_MSG_ARTICLE.HEADING as subject," +
+						 " T_CMS_MSG_ARTICLE.KEYWORD as keyword," +
+						 " T_CMS_MSG_ARTICLE.SOURCE as source," +
+						 " T_CMS_MSG_ARTICLE.CONTENT as body," +
+						 " T_CMS_MSG_ARTICLE.EDITOR_ID as creator," +
+						 " T_CMS_MSG_ARTICLE.CREATEDATE as issueTime" +
+						 " FROM T_CMS_MSG_ARTICLE left join T_CMS_CATALOG on T_CMS_MSG_ARTICLE.CATALOG_ID=T_CMS_CATALOG.CATALOG_ID" +
+						 " ORDER BY T_CMS_CATALOG.CATALOG_ID";
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			// Iterate through the data in the result set and display it.
+			//importData(rs, mapping);
+			//下一张表
+			/*rs.close();
+			sql = "SELECT tbColumnInfo.columnName as columnName," +
+				  " tbLHNewsInfo.newsTitle as subject," +
+				  " tbLHNewsInfo.newsContent as body," +
+				  " tbLHNewsInfo.UserName as creator," +
+				  " tbLHNewsInfo.AddTime as issueTime" +
+				  " FROM tbLHNewsInfo left join tbColumnInfo on tbLHNewsInfo.columnId=tbColumnInfo.columnId" +
+				  " ORDER BY tbColumnInfo.columnId";
+			rs = stmt.executeQuery(sql);
+			importData(rs, mapping);*/
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try { 
+				rs.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try { 
+				stmt.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try {
+				con.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+		}
+	}
+
+	/**
+	 * 从RS导入数据
+	 * @param rs
+	 * @throws ServiceException
+	 *
+	private void importData(ResultSet rs, String[] mapping) throws ServiceException {
+		try {
+			String previousColumn = "";
+			Site site = null;
+			while(rs.next()) {
+				try {
+					String column = rs.getString("columnName");
+					System.out.println("*********import column:" + column);
+					if(column==null) {
+						continue;
+					}
+					if(!previousColumn.equals(column)) {
+						previousColumn = column;
+						//查找对应的栏目
+						site = (Site)baseDAO.findObjectByHql("from Site Site where Site.name='" + column + "'");
+						if(site==null) {
+							//查找栏目映射表,找到匹配的栏目
+							for(int i=0; i<mapping.length; i++) {
+								if(mapping[i].startsWith(column + ">>")) {
+									site = (Site)baseDAO.findObjectByHql("from Site Site where Site.name='" + mapping[i].substring((column + ">>").length()) + "'");
+									break;
+								}
+							}
+						}
+					}
+					String subject = rs.getString("subject");
+					System.out.println("*********import:" + subject + "," + column);
+					Timestamp issueTime = rs.getTimestamp("issueTime");
+					System.out.println("ImportData: read a article, subject is " + subject + ", column is " + column + ".");
+					if(site==null) {
+						continue;
+					}
+					//检查相同标题和发布时间打记录是否已经存在
+					String hql = "from Article Article" + 
+								 " where Article.subject='" + subject + "'" +
+								 " and Article.issueTime=TIMESTAMP(" + DateTimeUtils.formatTimestamp(issueTime, null) + ")";
+					if(baseDAO.findObjectByHql(hql)!=null) {
+						continue;
+					}
+					articleService.addArticle(site.getId() + "",
+											  subject, 
+											  null,
+											  rs.getString("source"), 
+											  null,
+											  rs.getString("keyword"),
+											  rs.getTimestamp("issueTime"),
+											  rs.getTimestamp("issueTime"),
+											  true,
+											  rs.getString("body"), 
+											  0,
+											  null,
+											  false, null);
+					System.out.println("ImportData: importted.");
+				}
+				catch(Exception e) {
+					Logger.exception(e);
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#importPublicInfos(java.lang.String, boolean)
+	 */
+	public void importPublicInfos(String directoryMappings, boolean autoCreateDirectory) throws ServiceException {
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#importOtherData()
+	 */
+	public void importOtherData() throws ServiceException {
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#listPublicInfoDirectoriesNotInNewCms()
+	 */
+	public List listPublicInfoDirectoriesNotInNewCms() throws ServiceException {
+		return null;
+	}
+
+	/**
+	 * @return the baseDAO
+	 */
+	public BaseDAO getBaseDAO() {
+		return baseDAO;
+	}
+
+	/**
+	 * @param baseDAO the baseDAO to set
+	 */
+	public void setBaseDAO(BaseDAO baseDAO) {
+		this.baseDAO = baseDAO;
+	}
+
+	
+	/**
+	 * @return the articleService
+	 */
+	public ArticleService getArticleService() {
+		return articleService;
+	}
+
+	/**
+	 * @param articleService the articleService to set
+	 */
+	public void setArticleService(ArticleService articleService) {
+		this.articleService = articleService;
+	}
+
+	/**
+	 * @return the connectionUrl
+	 */
+	public String getConnectionUrl() {
+		return connectionUrl;
+	}
+
+	/**
+	 * @param connectionUrl the connectionUrl to set
+	 */
+	public void setConnectionUrl(String connectionUrl) {
+		this.connectionUrl = connectionUrl;
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+	/**
+	 * @param userName the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+}

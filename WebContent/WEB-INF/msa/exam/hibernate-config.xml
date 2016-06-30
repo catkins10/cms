@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--考试-->
+	<class name="com.yuanluesoft.msa.exam.pojo.MsaExam" table="msa_exam">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--名称,VARCHAR(200)-->
+		<property name="speciality"/> <!--专业,VARCHAR(50)-->
+		<property name="period"/> <!--期数,VARCHAR(30)-->
+		<property name="examPaperCode"/> <!--试卷代码,VARCHAR(50)-->
+		<property name="examTime"/> <!--考试时间,TIMESTAMP-->
+		<property name="examAddress"/> <!--考试地点,VARCHAR(200)-->
+		<property name="creatorId"/> <!--创建者ID,NUMERIC(20)-->
+		<property name="creator"/> <!--创建者,VARCHAR(30)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+		<property name="publishTime"/> <!--发布时间,TIMESTAMP-->
+		<property name="importId"/> <!--导入日志ID,NUMERIC(20)-->
+		<!-- 科目列表 -->
+		<set name="subjects" table="msa_exam_subject" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="examId"/>
+			<one-to-many class="com.yuanluesoft.msa.exam.pojo.MsaExamSubject"/>
+		</set>
+		<!-- 成绩单列表 -->	
+		<set name="transcripts" table="msa_exam_transcript" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="examId"/>
+			<one-to-many class="com.yuanluesoft.msa.exam.pojo.MsaExamTranscript"/>
+		</set>
+	</class>
+
+	<!--考试:科目-->
+	<class name="com.yuanluesoft.msa.exam.pojo.MsaExamSubject" table="msa_exam_subject">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="examId"/> <!--考试ID,NUMERIC(20)-->
+		<property name="subject"/> <!--科目名称,VARCHAR(50)-->
+	</class>
+
+	<!--成绩单-->
+	<class name="com.yuanluesoft.msa.exam.pojo.MsaExamTranscript" table="msa_exam_transcript">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="examId"/> <!--考试ID,NUMERIC(20)-->
+		<property name="name"/> <!--姓名,VARCHAR(50)-->
+		<property name="identityCard"/> <!--身份证号码,VARCHAR(30)-->
+		<property name="permit"/> <!--准考证号码,VARCHAR(100)-->
+		<property name="totalScore"/> <!--总成绩,VARCHAR(20)-->
+		<property name="pass"/> <!--是否通过,VARCHAR(10)-->
+		<property name="examLevel"/> <!--申考等级,VARCHAR(100)-->
+		<property name="job"/> <!--申考职务,VARCHAR(100)-->
+		<!-- 各科目成绩 -->
+		<set name="scores" table="msa_exam_score" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="transcriptId"/>
+			<one-to-many class="com.yuanluesoft.msa.exam.pojo.MsaExamScore"/>
+		</set>
+		<!-- 考试 -->
+		<many-to-one name="exam" class="com.yuanluesoft.msa.exam.pojo.MsaExam" column="examId" update="false" insert="false"/>
+	</class>
+	
+	<!--成绩单：各科目成绩-->
+	<class name="com.yuanluesoft.msa.exam.pojo.MsaExamScore" table="msa_exam_score">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="transcriptId"/> <!--成绩单ID,NUMERIC(20)-->
+		<property name="subject"/> <!--科目名称,VARCHAR(50)-->
+		<property name="score"/> <!--成绩,VARCHAR(20)-->
+	</class>
+	
+	<!--成绩导入日志-->
+	<class name="com.yuanluesoft.msa.exam.pojo.MsaExamImportLog" table="msa_exam_import_log">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="examName"/> <!--考试名称,从导入的文件名解析,VARCHAR(200)-->
+		<property name="creatorId"/> <!--创建者ID,NUMERIC(20)-->
+		<property name="creator"/> <!--创建者,VARCHAR(30)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+	</class>
+</hibernate-mapping>

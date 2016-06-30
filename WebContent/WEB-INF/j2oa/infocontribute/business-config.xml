@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="投稿" class="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContribute" businessServiceName="infoContributeService">
+		<field name="subject" title="标题" length="200" required="true" type="string" inputMode="text"/>
+		<field name="keywords" title="主题词" length="100" type="string" inputMode="text"/>
+		<field name="presetMagazines" title="预选刊型" length="200" type="string" inputMode="none"/>
+		<field name="secretLevel" title="密级" length="10" type="string" inputMode="radio">
+			<parameter name="itemsText">普通\0秘密\0机密</parameter>
+			<parameter name="defaultValue">普通</parameter>
+		</field>
+		<field name="fromUnit" title="来稿单位名称" length="200" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{UNITNAME}</parameter>
+		</field>
+		<field name="fromUnitId" title="来稿单位ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{UNITID}</parameter>
+		</field>
+		<field name="source" title="信息来源" length="100" type="string" inputMode="text"/>
+		<field name="sn" title="期数" length="20" type="string" inputMode="readonly"/>
+		<field name="editor" title="责任编辑" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsHql">select distinct InfoContribute.editor, InfoContribute.editorTel from InfoContribute InfoContribute where InfoContribute.fromUnitId={UNITID} order by InfoContribute.editor</parameter>
+			<parameter name="titleField">editor</parameter>
+			<parameter name="valueField">editorTel</parameter>
+		</field>
+		<field name="editorTel" title="电话" length="30" required="true" type="string" inputMode="text"/>
+		<field name="signer" title="签发领导" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsHql">select distinct InfoContribute.signer, InfoContribute.signerTel from InfoContribute InfoContribute where InfoContribute.fromUnitId={UNITID} order by InfoContribute.signer</parameter>
+			<parameter name="titleField">signer</parameter>
+			<parameter name="valueField">signerTel</parameter>
+		</field>
+		<field name="signerTel" title="签发领导电话" length="30" required="true" type="string" inputMode="text"/>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="contributeTime" title="投稿时间" type="timestamp" inputMode="readonly"/>
+		<field name="supplementTime" title="补录时间" type="timestamp" inputMode="readonly"/>
+		<field name="lazyBody" title="正文" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeBody</parameter>
+		</field>
+		<field name="receiveUnits" title="接收单位" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeReceiveUnit</parameter>
+		</field>
+		<field name="revises" title="退改稿" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeRevise</parameter>
+		</field>
+		<field name="uses" title="采用情况" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeUse</parameter>
+		</field>
+		<field name="instructs" title="领导批示" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeInstruct</parameter>
+		</field>
+		<field name="body" title="正文" persistence="false" required="true" type="string" length="5000" inputMode="textarea">
+			<parameter name="rows">15</parameter>
+			<parameter name="referenceFields">lazyBody</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">10000000</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="退改稿" class="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeRevise" businessServiceName="infoContributeService">
+		<field name="infoId" title="稿件ID" length="20" type="number" inputMode="none"/>
+		<field name="subject" title="稿件标题" length="200" type="string" inputMode="readonly"/>
+		<field name="revisePersonId" title="退改稿人ID" length="20" type="number" inputMode="none"/>
+		<field name="revisePerson" title="退改稿人" length="30" type="string" inputMode="readonly"/>
+		<field name="revisePersonTel" title="退改稿人电话" length="30" type="string" inputMode="readonly"/>
+		<field name="reviseOpinion" title="退改稿意见" length="1000" type="string" inputMode="readonly"/>
+		<field name="reviseTime" title="退改稿时间" type="timestamp" inputMode="readonly"/>
+		<field name="newBody" title="修改后的正文" type="string" inputMode="textarea" required="true">
+			<parameter name="rows">15</parameter>
+		</field>
+		<field name="editTime" title="修改时间" type="timestamp" inputMode="readonly"/>
+		<field name="editorId" title="修改人ID" length="20" type="number" inputMode="none"/>
+		<field name="editor" title="修改人" length="30" type="string" inputMode="readonly"/>
+		<field name="info" title="投稿" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.j2oa.infocontribute.pojo.InfoContribute</parameter>
+		</field>
+	</businessObject>
+			
+	<businessObject title="采用情况" class="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeUse">
+		<field name="infoId" title="稿件ID" length="20" type="number" inputMode="none"/>
+		<field name="useId" title="采用情况ID" length="20" type="number" inputMode="none"/>
+		<field name="level" title="报送级别" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">县办1\0市办|2\0省办|3\0国办|4</parameter>
+		</field>
+		<field name="sendTime" title="报送时间" type="timestamp" inputMode="readonly"/>
+		<field name="useTime" title="采用时间" type="timestamp" inputMode="readonly"/>
+		<field name="magazineId" title="采用刊物ID" length="20" type="number" inputMode="none"/>
+		<field name="magazine" title="采用刊物名称" length="30" type="string" inputMode="readonly"/>
+		<field name="info" title="投稿" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.j2oa.infocontribute.pojo.InfoContribute</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="领导批示" class="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeInstruct">
+		<field name="infoId" title="稿件ID" length="20" type="number" inputMode="none"/>
+		<field name="instructId" title="批示ID" length="20" type="number" inputMode="none"/>
+		<field name="leader" title="领导姓名" length="20" type="string" inputMode="readonly"/>
+		<field name="level" title="领导级别" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">县领导|1\0市领导|2\0省领导|3\0国家领导|4</parameter>
+		</field>
+		<field name="instruct" title="批示内容" type="string" inputMode="readonly"/>
+		<field name="instructTime" title="批示时间" type="timestamp" inputMode="readonly"/>
+		<field name="creatorId" title="录入人ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="录入人" length="30" type="string" inputMode="readonly"/>
+		<field name="created" title="录入时间" type="timestamp" inputMode="readonly"/>
+		<field name="info" title="投稿" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.j2oa.infocontribute.pojo.InfoContribute</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="刊物发布" class="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeMagazine">
+		<field name="name" title="名称" length="30" type="string" inputMode="readonly"/>
+		<field name="issueTime" title="发布时间" type="timestamp" inputMode="readonly"/>
+		<field name="sn" title="期数" length="8" type="number" inputMode="readonly"/>
+		<field name="snTotal" title="总期数" length="8" type="number" inputMode="readonly"/>
+		<field name="visitors" title="访问者" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeMagazinePrivilege</parameter>
+		</field>
+		<field name="magazine" title="刊物" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">100000000</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

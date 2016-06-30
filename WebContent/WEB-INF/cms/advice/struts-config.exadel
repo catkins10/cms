@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,177,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="336,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,112,177,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="336,112,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#submitAdvice"
+  NAME="action1" PATH="/submitAdvice" SHAPE="32,1224,177,41"
+  TITLE="advice" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/adviceSubmitted.jsp" TARGET="page4"
+   TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#advice"
+  NAME="action4" PATH="/admin/advice" SHAPE="32,624,177,41"
+  TITLE="adminAdvice" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/advice.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/admin/advice.jsp" SHAPE="336,640,50,145" SUBTYPE="jsp"
+  TITLE="advice.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveAdvice" TARGET="action5" TITLE="saveAdvice" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/runAdvice" TARGET="action6" TITLE="runAdvice" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/deleteAdvice" TARGET="action7" TITLE="deleteAdvice" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/admin/writeOpinion" TARGET="action8" TITLE="saveOpinion" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link6"
+   PATH="/admin/setPublishOption" TARGET="action11"
+   TITLE="setPublishOption" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link7"
+   PATH="/admin/publish" TARGET="action12" TITLE="publish" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveAdvice"
+  NAME="action5" PATH="/admin/saveAdvice" SHAPE="544,656,177,25"
+  TITLE="adminAdvice" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#runAdvice"
+  NAME="action6" PATH="/admin/runAdvice" SHAPE="544,712,177,25"
+  TITLE="adminAdvice" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteAdvice"
+  NAME="action7" PATH="/admin/deleteAdvice" SHAPE="544,768,177,25"
+  TITLE="adminAdvice" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#writeOpinion"
+  NAME="action8" PATH="/admin/writeOpinion" SHAPE="544,824,177,25"
+  TITLE="adminAdvice" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#setPublishOption"
+  NAME="action11" PATH="/admin/setPublishOption" SHAPE="544,880,177,25"
+  TITLE="adminAdvice" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#publish"
+  NAME="action12" PATH="/admin/publish" SHAPE="544,936,177,25"
+  TITLE="adminAdvice" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/adviceSubmitted.jsp" SHAPE="336,1240,50,25" SUBTYPE="jsp"
+  TITLE="adviceSumitted.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectAttachment"
+  NAME="action2" PATH="/selectAttachment" SHAPE="32,480,177,41"
+  TITLE="advice" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/selectAttachment.jsp"
+   TARGET="page6" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#adviceTopic"
+  NAME="action3" PATH="/admin/adviceTopic" SHAPE="32,192,177,41"
+  TITLE="adminAdviceTopic" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/adviceTopic.jsp" TARGET="page7"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteAdviceTopic"
+  NAME="action13" PATH="/admin/deleteAdviceTopic" SHAPE="544,280,177,25"
+  TITLE="adminAdviceTopic" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveAdviceTopic"
+  NAME="action14" PATH="/admin/saveAdviceTopic" SHAPE="544,224,177,25"
+  TITLE="adminAdviceTopic" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page7"
+  PATH="/admin/adviceTopic.jsp" SHAPE="336,208,50,55" SUBTYPE="jsp"
+  TITLE="adviceTopic.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveAdviceTopic" TARGET="action14"
+   TITLE="saveAdviceTopic" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteAdviceTopic" TARGET="action13"
+   TITLE="deleteAdviceTopic" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/refreshAdviceTopic.shtml" TARGET="action19"
+   TITLE="adviceTopic.jsp" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#selectAttachment"
+  NAME="action15" PATH="/admin/selectAttachment" SHAPE="32,400,177,25"
+  TITLE="adminAdviceTopic" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/selectAttachment.jsp"
+   TARGET="page6" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/../../jeaf/attachment/selectAttachment.jsp"
+  SHAPE="336,416,50,25" SUBTYPE="jsp" TITLE="selectAttachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#adviceTopic"
+  NAME="action16" PATH="/adviceTopic" SHAPE="32,1144,177,25"
+  TITLE="advice" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#advice" NAME="action0"
+  PATH="/advice" SHAPE="32,1312,177,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#adviceFeedback"
+  NAME="action9" PATH="/admin/adviceFeedback" SHAPE="32,992,178,41"
+  TITLE="adminAdviceFeedback" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/adviceFeedback.jsp" TARGET="page5"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/admin/adviceFeedback.jsp" SHAPE="336,1008,50,25" SUBTYPE="jsp"
+  TITLE="adviceFeedback.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveAdviceFeedback.shtml" TARGET="action10"
+   TITLE="saveAdviceFeedback.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteAdviceFeedback.shtml" TARGET="action17"
+   TITLE="deleteAdviceFeedback.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveAdviceFeedback"
+  NAME="action10" PATH="/admin/saveAdviceFeedback"
+  SHAPE="544,1024,179,25" TITLE="adminAdviceFeedback" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#deleteAdviceFeedback" NAME="action17"
+  PATH="/admin/deleteAdviceFeedback" SHAPE="544,1088,177,25"
+  TITLE="adminAdviceFeedback" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#adviceFeedback"
+  NAME="action18" PATH="/adviceFeedback" SHAPE="32,1392,177,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#refreshAdviceTopic"
+  NAME="action19" PATH="/admin/refreshAdviceTopic"
+  SHAPE="544,336,177,25" TITLE="adminAdviceTopic" TYPE="action"/>
+</PROCESS>

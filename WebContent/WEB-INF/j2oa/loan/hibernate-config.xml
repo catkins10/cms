@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--借款单-->
+	<class name="com.yuanluesoft.j2oa.loan.pojo.Loan" table="loan_loan">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="loanPersonName"/> <!--借款人-->
+		<property name="loanPersonId"/> <!--借款人ID-->
+		<property name="loanDepartmentName"/> <!--借款人所在部门-->
+		<property name="loanDepartmentId"/> <!--借款人所在部门ID-->
+		<property name="projectId"/> <!--项目ID-->
+		<property name="projectName"/> <!--项目名称-->
+		<property name="type" column="loanType"/> <!--费用类别-->
+		<property name="reason"/> <!--借款事由-->
+		<property name="money"/> <!--借款金额-->
+		<property name="loanDate"/> <!--借款时间-->
+		<property name="intendingRepayDate"/> <!--预计还款时间-->
+		<property name="repayDate"/> <!--实际还款时间-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<property name="prepaid"/> <!--是否支付-->
+		<property name="payDate"/> <!--支付时间-->
+		<property name="repaid"/> <!--是否已还款-->
+		<property name="reimburseMoney"/> <!--已核销金额-->
+		<property name="remark"/> <!--备注-->
+		<set name="opinions" table="loan_loan_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.j2oa.loan.pojo.LoanOpinion" />
+		</set>
+		<set name="visitors" table="loan_loan_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.loan.pojo.LoanPrivilege"/>
+		</set>
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+		<set name="reimburseLoans" table="reimburse_loan" lazy="true" inverse="true" order-by="reimburseTime">
+			<key column="loanId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseLoan" />
+		</set>
+	</class>
+	
+	<!--借款单权限控制-->
+	<class name="com.yuanluesoft.j2oa.loan.pojo.LoanPrivilege" table="loan_loan_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--借款单办理意见-->
+	<class name="com.yuanluesoft.j2oa.loan.pojo.LoanOpinion" table="loan_loan_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="created"/> <!--填写时间-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+	</class>
+	
+	<!--借款配置-->
+	<class name="com.yuanluesoft.j2oa.loan.pojo.LoanConfig" table="loan_config">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="types"/> <!--借款类别-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminEvaluationTopic" type="com.yuanluesoft.cms.evaluation.forms.admin.EvaluationTopic"/>
+  <form-bean name="adminEvaluationOption" type="com.yuanluesoft.cms.evaluation.forms.admin.EvaluationOption"/>
+  <form-bean name="adminEvaluationItem" type="com.yuanluesoft.cms.evaluation.forms.admin.EvaluationItem"/>
+  <form-bean name="evaluationTopic" type="com.yuanluesoft.cms.evaluation.forms.EvaluationTopic"/>
+  <form-bean name="evaluation" type="com.yuanluesoft.cms.evaluation.forms.Evaluation"/>
+  <form-bean name="adminEvaluation" type="com.yuanluesoft.cms.evaluation.forms.admin.Evaluation"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminEvaluationTopic" path="/admin/evaluationTopic"
+   scope="request"
+   type="com.yuanluesoft.cms.evaluation.actions.evaluationtopic.admin.Load" validate="false">
+   <forward name="load" path="/admin/evaluationTopic.jsp"/>
+  </action>
+  <action input="/admin/evaluationTopic.jsp" name="adminEvaluationTopic"
+   path="/admin/saveEvaluationTopic" scope="request"
+   type="com.yuanluesoft.cms.evaluation.actions.evaluationtopic.admin.Save" validate="false"/>
+  <action input="/admin/evaluationTopic.jsp" name="adminEvaluationTopic"
+   path="/admin/deleteEvaluationTopic" scope="request"
+   type="com.yuanluesoft.cms.evaluation.actions.evaluationtopic.admin.Delete" validate="false"/>
+  <action input="/admin/evaluationTopic.jsp" name="adminEvaluationTopic"
+   path="/admin/refreshEvaluationTopic" scope="request"
+   type="com.yuanluesoft.cms.evaluation.actions.evaluationtopic.admin.Refresh" validate="false"/>
+  <action input="/admin/evaluationTopic.jsp" name="adminEvaluationTopic"
+   path="/admin/issueEvaluationTopic" scope="request"
+   type="com.yuanluesoft.cms.evaluation.actions.evaluationtopic.admin.Issue" validate="false"/>
+  <action input="/admin/evaluationTopic.jsp" name="adminEvaluationTopic"
+   path="/admin/unissueEvaluationTopic" scope="request"
+   type="com.yuanluesoft.cms.evaluation.actions.evaluationtopic.admin.Unissue" validate="false"/>
+  <action name="adminEvaluationOption" path="/admin/evaluationOption"
+   scope="request"
+   type="com.yuanluesoft.cms.evaluation.actions.evaluationoption.admin.Load" validate="false">
+   <forward name="load" path="/admin/evaluationOption.jsp"/>
+  </action>
+  <action name="adminEvaluationItem" path="/admin/evaluationItem"
+   scope="request"
+   type="com.yuanluesoft.cms.evaluation.actions.evaluationitem.admin.Load" validate="false">
+   <forward name="load" path="/admin/evaluationItem.jsp"/>
+  </action>
+  <action input="/admin/evaluationOption.jsp"
+   name="adminEvaluationOption" path="/admin/saveEvaluationOption"
+   scope="request"
+   type="com.yuanluesoft.cms.evaluation.actions.evaluationoption.admin.Save" validate="false"/>
+  <action input="/admin/evaluationOption.jsp"
+   name="adminEvaluationOption" path="/admin/deleteEvaluationOption"
+   scope="request"
+   type="com.yuanluesoft.cms.evaluation.actions.evaluationoption.admin.Delete" validate="false"/>
+  <action input="/admin/evaluationItem.jsp" name="adminEvaluationItem"
+   path="/admin/saveEvaluationItem" scope="request"
+   type="com.yuanluesoft.cms.evaluation.actions.evaluationitem.admin.Save" validate="false"/>
+  <action input="/admin/evaluationItem.jsp" name="adminEvaluationItem"
+   path="/admin/deleteEvaluationItem" scope="request"
+   type="com.yuanluesoft.cms.evaluation.actions.evaluationitem.admin.Delete" validate="false"/>
+  <action name="evaluationTopic" path="/evaluationTopic" scope="request"
+   type="com.yuanluesoft.cms.evaluation.actions.evaluationtopic.Load" validate="false">
+   <forward name="load" path="/evaluationTopic.jsp"/>
+  </action>
+  <action name="evaluation" path="/evaluation" scope="request"
+   type="com.yuanluesoft.cms.evaluation.actions.evaluation.Load" validate="false">
+   <forward name="load" path="/evaluation.jsp"/>
+  </action>
+  <action name="evaluation" path="/submitEvaluation" scope="request"
+   type="com.yuanluesoft.cms.evaluation.actions.evaluation.Submit" validate="false"/>
+  <action input="/admin/evaluationTopic.jsp" name="adminEvaluationTopic"
+   path="/admin/copyEvaluationTopic" scope="request"
+   type="com.yuanluesoft.cms.evaluation.actions.evaluationtopic.admin.Copy" validate="false"/>
+  <action name="adminEvaluation" path="/admin/evaluation"
+   scope="request"
+   type="com.yuanluesoft.cms.evaluation.actions.evaluation.admin.Load" validate="false">
+   <forward name="load" path="/admin/evaluation.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,132 @@
+﻿<html dir="ltr">
+    <head>
+        <title>对话</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+        <script type="text/javascript">window.onerror=function(){return true;}</script>
+        <link href="{CONTEXTPATH}/im/webim/template/css/dialog.css" rel="stylesheet" type="text/css"/>
+        <style>
+        form {
+			height: 100%;
+			width: 100%;
+		}
+		p {
+			margin:0px;
+		}
+		#chatSpeaksArea {
+			border-bottom: #cccccc 1px solid;
+		}
+		#fontSettingBox, #expressionBox, #chatActionBar { /*操作栏单元格*/
+			border-bottom: #dddddd 1px solid;
+			background-color: #f2f2f2;
+			height: 22px;
+			padding: 0px 0px 0px 2px;
+		}
+		#chatSpeaksArea, #fontSettingBox, #expressionBox { /*字体设置和表情栏*/
+			background-color: #f8fafa;
+		}
+		#expressionBox img {
+			margin: 0px;
+		}
+		.chatActionNormal { /*操作*/
+			padding: 2px 3px 2px 3px;
+			border: transparent 1px none;
+		}
+		.chatActionOver {
+			padding: 1px 2px 1px 2px;
+			border: #dddddd 1px solid;
+			background-color: #f8fafa;
+		}
+		.chatInput { /*输入框*/
+			overflow: hidden;
+			padding: 0px;
+			width: 100%;
+			height: 16px;
+			border-style: none;
+			background-color: transparent;
+			font-family: 宋体;
+			font-size: 12px;
+		}
+		#chatInputArea { /*输入框单元格*/
+			background-image: url({CONTEXTPATH}/im/webim/template/chat/images/chat_input.gif);
+			background-repeat: no-repeat;
+			background-position: 3px 3px;
+			padding: 0px 0px 0px 22px;
+			height: 20px;
+			background-color: #f8fafa;
+		}
+		.contentArea {
+			overflow: hidden;
+			padding: 0px;
+		    /*ie6*/
+		    width: expression(document.body.clientWidth);
+		    height: expression(document.body.clientHeight - 22);
+		}
+		.speaksScrollArea {
+			overflow: auto;
+			padding: 5px;
+		    position: absolute;
+		    top: 0px;
+		    bottom: 0px;
+		    left: 0px;
+		    right: 0px;
+		    /*ie6*/
+		    width: expression(document.body.clientWidth - 2);
+		    height: expression(document.body.clientHeight - 24 - document.getElementById('chatActionBar').offsetHeight - document.getElementById('chatInputArea').offsetHeight);
+		}
+		</style>
+    </head>
+    <body style="margin: 0px">
+         <div class="titleBar">
+         	<div style="float: left"><a id="field" urn="name=chatPersonNames&amp;maxLength=26">&lt;对话用户姓名&gt;</a></div>
+        	<div style="float: right"><span class="minimizeButton" onclick="parent.frames['frameWebim'].webim.closeWebimDialog(true)" onmouseout="className='minimizeButton';" onmouseover="className='minimizeButton minimizeButtonMouseover';">&nbsp;</span><span class="zoomOutButton" onclick="parent.frames['frameWebim'].webim.zoomOutWebimDialog(0.2)" onmouseout="className='zoomOutButton';" onmouseover="className='zoomOutButton zoomOutButtonMouseover';">&nbsp;</span><span class="closeButton" onclick="parent.frames['frameWebim'].webim.closeWebimDialog(false)" onmouseout="className='closeButton';" onmouseover="className='closeButton closeButtonMouseover';">&nbsp;</span></div>
+        </div>
+        <div class="contentArea">
+        	<form action="applicationName=im/webim" id="webimChat" title="表单:对话">
+	            <table border="0" cellpadding="0" cellspacing="0" height="100%" style="background-color: #f2f2f2" width="100%">
+                    <tr>
+                        <td id="chatSpeaksArea" valign="top">
+                        	<div style="position:relative; width:100%; height:100%;">
+                        		<div class="speaksScrollArea"><a id="recordList" urn="recordListName=talks&amp;privateRecordList=true&amp;recordClassName=com.yuanluesoft.im.webim.model.WebimChat&amp;applicationName=im/webim&amp;recordCount=6&amp;recordFormat=&lt;DIV style%3D&quot;COLOR: #666666&quot;&gt;&lt;A id%3Dfield urn%3Dname%3Dcreator%26amp;link%3Dtrue&gt;%26lt;发言人姓名%26gt;&lt;/A&gt;%26nbsp;&lt;A id%3Dfield urn%3D&quot;name%3Dcreated%26amp;link%3Dtrue%26amp;fieldFormat%3DMM-dd HH:mm&quot;&gt;%26lt;发言时间%26gt;&lt;/A&gt;&lt;/DIV&gt;                                     &lt;div style%3D&quot;padding: 3px 0 8px 0&quot;&gt;&lt;A id%3Dfield urn%3Dname%3Dcontent%26amp;link%3Dtrue&gt;%26lt;内容%26gt;&lt;/A&gt;&lt;/div&gt;&amp;separatorMode=newLine&amp;separatorHeight=5&amp;linkOpenMode=_blank&amp;emptyPrompt=&amp;extendProperties=">&lt;对话记录&gt;</a></div>
+                        	</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="fontSettingBox" title="字体" valign="middle">
+                        	<table border="0" cellpadding="1" cellspacing="0">
+                                <tr valign="middle">
+                                    <td nowrap>字体</td>
+                                    <td><input id="field" name="fontName" style="border-bottom: #a0a0a0 1px solid; border-left: #a0a0a0 1px solid; background-color: #ffffff; width: 50px; font-family: 宋体; height: 20px; color: #000000; font-size: 12px; border-top: #a0a0a0 1px solid; border-right: #a0a0a0 1px solid" title="字体名称" type="text"/></td>
+                                    <td nowrap style="padding-left: 3px">字号</td>
+                                    <td><input id="field" name="fontSize" style="border-bottom: #a0a0a0 1px solid; border-left: #a0a0a0 1px solid; background-color: #ffffff; width: 50px; font-family: 宋体; height: 20px; color: #000000; font-size: 12px; border-top: #a0a0a0 1px solid; border-right: #a0a0a0 1px solid" title="字体大小" type="text"/></td>
+                                    <td nowrap style="padding-left: 3px">颜色</td>
+                                    <td><input id="field" name="fontColor" style="border-bottom: #a0a0a0 1px solid; border-left: #a0a0a0 1px solid; background-color: #ffffff; width: 50px; font-family: 宋体; height: 20px; color: #000000; font-size: 12px; border-top: #a0a0a0 1px solid; border-right: #a0a0a0 1px solid" title="字体颜色" type="text"/></td>
+                                </tr>
+                        	</table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="expressionBox" title="表情"><img alt="微笑" src="{CONTEXTPATH}/im/expression/weixiao.gif" title="微笑"> <img alt="傲慢" src="{CONTEXTPATH}/im/expression/aomang.gif" title="傲慢"> <img alt="白眼" src="{CONTEXTPATH}/im/expression/baiyan.gif" title="白眼"> <img alt="别嘴" src="{CONTEXTPATH}/im/expression/biezui.gif" title="别嘴"> <img alt="闭嘴" src="{CONTEXTPATH}/im/expression/bizui.gif" title="闭嘴"> <img alt="擦汗" src="{CONTEXTPATH}/im/expression/cahan.gif" title="擦汗"> <img alt="大兵" src="{CONTEXTPATH}/im/expression/dabing.gif" title="大兵"> <img alt="大哭" src="{CONTEXTPATH}/im/expression/daku.gif" title="大哭"> <img alt="得意" src="{CONTEXTPATH}/im/expression/deyi.gif" title="得意"> <img alt="发呆" src="{CONTEXTPATH}/im/expression/fadai.gif" title="发呆"> <img alt="发怒" src="{CONTEXTPATH}/im/expression/fanu.gif" title="发怒"> <img alt="尴尬" src="{CONTEXTPATH}/im/expression/ganga.gif" title="尴尬"> <img alt="害羞" src="{CONTEXTPATH}/im/expression/haixiu.gif" title="害羞"> <img alt="憨笑" src="{CONTEXTPATH}/im/expression/hanxiao.gif" title="憨笑"> <img alt="饥饿" src="{CONTEXTPATH}/im/expression/jie.gif" title="饥饿"> <img alt="惊恐" src="{CONTEXTPATH}/im/expression/jingkong.gif" title="惊恐"> <img alt="惊讶" src="{CONTEXTPATH}/im/expression/jingya.gif" title="惊讶"> <img alt="可爱" src="{CONTEXTPATH}/im/expression/keai.gif" title="可爱"> <img alt="扣鼻" src="{CONTEXTPATH}/im/expression/koubi.gif" title="扣鼻"> <img alt="酷" src="{CONTEXTPATH}/im/expression/ku.gif" title="酷"> <img alt="困" src="{CONTEXTPATH}/im/expression/kun.gif" title="困"> <img alt="冷汗" src="{CONTEXTPATH}/im/expression/lenghan.gif" title="冷汗"> <img alt="咧牙" src="{CONTEXTPATH}/im/expression/lieya.gif" title="咧牙"> <img alt="流汗" src="{CONTEXTPATH}/im/expression/liuhan.gif" title="流汗"> <img alt="流泪" src="{CONTEXTPATH}/im/expression/liulei.gif" title="流泪"> <img alt="难过" src="{CONTEXTPATH}/im/expression/nanguo.gif" title="难过"> <img alt="色" src="{CONTEXTPATH}/im/expression/se.gif" title="色"> <img alt="衰" src="{CONTEXTPATH}/im/expression/shuai.gif" title="衰"> <img alt="睡" src="{CONTEXTPATH}/im/expression/shui.gif" title="睡"> <img alt="调皮" src="{CONTEXTPATH}/im/expression/tiaopi.gif" title="调皮"> <img alt="偷笑" src="{CONTEXTPATH}/im/expression/touxiao.gif" title="偷笑"> <img alt="吐" src="{CONTEXTPATH}/im/expression/tu.gif" title="吐"> <img alt="敲打" src="{CONTEXTPATH}/im/expression/qiaoda.gif" title="敲打"> <img alt="再见" src="{CONTEXTPATH}/im/expression/zaijian.gif" title="再见"> <img alt="抓狂" src="{CONTEXTPATH}/im/expression/zhuakuang.gif" title="抓狂"> </td>
+                    </tr>
+                    <tr>
+                        <td id="chatActionBar" valign="middle">
+                        	<table border="0" cellpadding="1" cellspacing="0" width="100%">
+                                <tr>
+                                    <td class="chatActionNormal" id="fontSettingAction" onmouseout="className='chatActionNormal';" onmouseover="className='chatActionNormal chatActionOver';" title="字体"><img alt="字体" height="13" src="{CONTEXTPATH}/im/webim/template/chat/images/im_set_font.gif" title="字体" width="13"></td>
+                                    <td class="chatActionNormal" id="insertExpressionAction" onmouseout="className='chatActionNormal';" onmouseover="className='chatActionNormal chatActionOver';" title="插入表情"><img alt="表情" height="13" src="{CONTEXTPATH}/im/webim/template/chat/images/im_smile.gif" title="表情" width="13"></td>
+                                    <td class="chatActionNormal" id="sendFileAction" onmouseout="className='chatActionNormal';" onmouseover="className='chatActionNormal chatActionOver';" title="发送文件"><img alt="发送文件" height="13" src="{CONTEXTPATH}/im/webim/template/chat/images/im_send_file.gif" title="发送文件" width="13"></td>
+                                    <td class="chatActionNormal" id="sendImageAction" onmouseout="className='chatActionNormal';" onmouseover="className='chatActionNormal chatActionOver';" title="发送图片"><img alt="发送图片" height="13" src="{CONTEXTPATH}/im/webim/template/chat/images/im_send_image.gif" title="发送图片" width="13"></td>
+                                    <td class="chatActionNormal" id="addPersonAction" onmouseout="className='chatActionNormal';" onmouseover="className='chatActionNormal chatActionOver';" title="添加用户"><img alt="添加用户" height="13" src="{CONTEXTPATH}/im/webim/template/chat/images/add_person.gif" title="添加用户" width="13"></td>
+                                    <td width="100%"></td>
+                                    <td id="fileUploadingBox" title="正在上传..."><img alt="" height="11" src="{CONTEXTPATH}/im/webim/template/chat/images/loading.gif" width="16">&nbsp;</td>
+                                </tr>
+                        	</table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="chatInputArea"><input class="chatInput" id="field" name="content" title="发言" type="text"/></td>
+                    </tr>
+	            </table>
+	        </form>
+        </div>
+	</body>
+</html>

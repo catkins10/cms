@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="帖子" class="com.yuanluesoft.bbs.article.pojo.BbsArticle" businessServiceName="bbsArticleService">
+		<field name="subject" title="主题" length="200" required="true" type="string" inputMode="text">
+			<parameter name="rssTitleField">true</parameter>
+		</field>
+		<field name="creatorId" title="发帖人ID" type="number" inputMode="none"/>
+		<field name="creatorNickname" title="发帖人昵称" length="50" required="true" type="string" inputMode="text"/>
+		<field name="created" title="发帖时间" type="timestamp" inputMode="readonly">
+			<parameter name="rssPubDateField">true</parameter>
+		</field>
+		<field name="priority" title="优先级" type="number" inputMode="none"/>
+		<field name="quint" title="是否精华贴" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+		<field name="top" title="是否置顶" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+		<field name="systemMessage" title="是否系统公告" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+		<field name="accessTimes" title="访问次数" length="6" type="number" inputMode="readonly"/>
+		<field name="isDeleted" title="是否被管理员删除" length="1" type="char" inputMode="none"/>
+		<field name="deleteReason" title="删除原因" length="200" type="string" inputMode="text"/>
+		<field name="subjections" title="隶属板块" type="components">
+			<parameter name="class">com.yuanluesoft.bbs.article.pojo.BbsArticleSubjection</parameter>
+		</field>
+		<field name="lazyBody" title="正文" type="components">
+			<parameter name="class">com.yuanluesoft.bbs.article.pojo.BbsArticleBody</parameter>
+		</field>
+		<field name="body" title="正文" required="true" persistence="false" type="html" inputMode="htmleditor">
+			<parameter name="height">280</parameter>
+			<parameter name="rssDescriptionField">true</parameter>
+			<parameter name="commandSet">outer</parameter>
+			<parameter name="referenceFields">lazyBody</parameter>
+		</field>
+		<field name="replies" title="回复" type="components">
+			<parameter name="lazyLoad">false</parameter>
+			<parameter name="class">com.yuanluesoft.bbs.article.pojo.BbsReply</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment"/>
+		<field name="images" title="图片" type="image" inputMode="attachment"/>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">1000000</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">100000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+		</field>
+		<field name="attachment" title="主题附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="帖子正文" class="com.yuanluesoft.bbs.article.pojo.BbsArticleBody">
+		<field name="body" title="正文" type="html" inputMode="htmleditor">
+			<parameter name="commandSet">outer</parameter>
+			<parameter name="height">280</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="帖子所属版块" class="com.yuanluesoft.bbs.article.pojo.BbsArticleSubjection">
+		<field name="articleId" title="帖子ID" type="number" inputMode="none"/>
+		<field name="forumId" title="版块ID" type="number" inputMode="none"/>
+	</businessObject>
+	<businessObject title="回复" class="com.yuanluesoft.bbs.article.pojo.BbsReply" businessServiceName="bbsReplyService">
+		<field name="articleId" title="帖子ID" type="number" inputMode="hidden"/>
+		<field name="replyId" title="被回复的回复ID" type="number" inputMode="hidden"/>
+		<field name="subject" title="主题" length="200" type="string" inputMode="text">
+			<parameter name="rssTitleField">true</parameter>
+		</field>
+		<field name="creatorId" title="回复人ID" type="number" inputMode="none"/>
+		<field name="creatorNickname" title="回复人昵称" length="50" required="true" type="string" inputMode="text"/>
+		<field name="created" title="回复时间" length="100" type="string" inputMode="text">
+			<parameter name="rssPubDateField">true</parameter>
+		</field>
+		<field name="isDeleted" title="是否被管理员删除" length="1" type="char" inputMode="none"/>
+		<field name="deleteReason" title="删除原因" length="200" type="string" inputMode="text"/>
+		<field name="lazyBody" title="正文" type="components">
+			<parameter name="class">com.yuanluesoft.bbs.article.pojo.BbsReplyBody</parameter>
+		</field>
+		<field name="body" title="正文" required="true" type="html" inputMode="htmleditor" persistence="false">
+			<parameter name="height">280</parameter>
+			<parameter name="rssDescriptionField">true</parameter>
+			<parameter name="commandSet">outer</parameter>
+			<parameter name="attachmentSelector">/bbs/article/selectReplyAttachment.shtml</parameter>
+			<parameter name="referenceFields">lazyBody</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment"/>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment"/>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">1000000</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">100000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+		</field>
+		<field name="attachment" title="回复附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+			<parameter name="attachmentEditor">/bbs/article/replyAttachmentEditor.shtml</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="回复正文" class="com.yuanluesoft.bbs.article.pojo.BbsReplyBody">
+		<field name="body" title="正文" type="html" inputMode="htmleditor">
+			<parameter name="commandSet">outer</parameter>
+			<parameter name="height">280</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

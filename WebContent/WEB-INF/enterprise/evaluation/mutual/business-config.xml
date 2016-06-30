@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="互评" class="com.yuanluesoft.enterprise.evaluation.mutual.pojo.MutualEvaluation" businessServiceName="mutualEvaluationService">
+		<field name="evaluationYear" title="年度" length="4" type="number" inputMode="hidden"/>
+		<field name="evaluationMonth" title="月份" length="2" type="number" inputMode="hidden"/>
+		<field name="orgId" title="部门ID" length="20" type="number" inputMode="hidden"/>
+		<field name="orgName" title="部门名称" length="60" type="string" inputMode="readonly"/>
+		<field name="voteNumber" title="投票数" length="3" type="number" inputMode="readonly"/>
+		<field name="creatorId" title="评价人ID" length="20" type="number" inputMode="text"/>
+		<field name="creator" title="评价人" length="60" type="string" inputMode="readonly"/>
+		<field name="created" title="评价时间" type="timestamp" inputMode="readonly"/>
+		<field name="results" title="评价结果" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.evaluation.mutual.pojo.MutualEvaluationResult</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="结果" class="com.yuanluesoft.enterprise.evaluation.mutual.pojo.MutualEvaluationResult" businessServiceName="mutualEvaluationService">
+		<field name="evaluationId" title="互评ID" length="20" type="number" inputMode="hidden"/>
+		<field name="personId" title="被评价人ID" length="20" type="number" inputMode="none"/>
+		<field name="personName" title="被评价人" length="60" type="string" inputMode="readonly"/>
+		<field name="evaluateLevel" title="评价等级" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">靠后|0\0居中|1\0靠前|2</parameter>
+		</field>
+		<field name="evaluation" title="互评" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.enterprise.evaluation.mutual.pojo.MutualEvaluation</parameter>
+		</field>
+		<field name="highEvaluateLevelCount" title="靠前数量统计" persistence="false" type="number" inputMode="readonly"/>
+		<field name="lowEvaluateLevelCount" title="靠后数量统计" persistence="false" type="number" inputMode="readonly"/>
+	</businessObject>
+	<businessObject title="参数配置" class="com.yuanluesoft.enterprise.evaluation.mutual.pojo.MutualEvaluationParameter" businessServiceName="mutualEvaluationService">
+		<field name="ratio" title="比例" length="3,1" required="true" type="number" inputMode="text"/>
+		<field name="minPersonNumber" title="最低人数要求" length="3" required="true" type="number" inputMode="text"/>
+		<field name="leaderEnabled" title="部门领导是否参与" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">参与|1\0不参与|0</parameter>
+		</field>
+		<field name="rejectPostIds" title="不参与的岗位ID" length="4000" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="rejectPosts" title="不参与的岗位名称" length="4000" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectRole(550, 360, true, 'rejectPostIds{id},rejectPosts{name|岗位|100%|}', '', '', ',', '', false, true)</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

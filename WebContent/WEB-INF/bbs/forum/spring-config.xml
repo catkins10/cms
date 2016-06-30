@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 论坛服务 -->
+	<bean id="forumService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.bbs.forum.service.spring.ForumServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="memberService"><ref bean="memberService"/></property>
+				<property name="bbsArticleService"><ref bean="bbsArticleService"/></property>
+				<property name="exchangeClient"><ref bean="exchangeClient"/></property>
+				<property name="pageService"><ref bean="pageService"/></property>
+				<property name="templateService"><ref bean="bbsTemplateService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="init*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="create*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="setManagers">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="setVisitors">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 信息公开目录链接处理器 -->	
+	<bean id="bbsDirectoryLinkProcessor" class="com.yuanluesoft.bbs.forum.processor.BbsDirectoryLinkProcessor">
+		<property name="forumService"><ref bean="forumService"/></property>
+	</bean>
+</beans>

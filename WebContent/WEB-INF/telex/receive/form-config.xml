@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="receiveTelegram" class="com.yuanluesoft.telex.receive.base.forms.ReceiveTelegram" title="收报登记" pojo="com.yuanluesoft.telex.receive.base.pojo.ReceiveTelegram">
+		<formFields>
+			<field name="signReceiverIds" title="新增的签收人ID" type="string" inputMode="hidden"/>
+			<field name="signReceiverNames" title="新增的签收人姓名" type="string" inputMode="hidden"/>
+			<field name="opinionId" title="意见记录ID" type="number" inputMode="hidden"/>
+			<field name="opinion" title="输入的意见" type="string" inputMode="textarea">
+				<parameter name="rows">8</parameter>
+			</field>
+			<field name="opinionCreator" title="意见输入人" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">telexService</parameter>
+				<parameter name="itemsName">opinionPersons</parameter>
+			</field>
+			<field name="opinionCreated" title="意见输入时间" type="date" inputMode="date"/>
+			<field name="opinionType" title="意见类型" type="string" inputMode="dropdown">
+				<parameter name="itemsText">秘书长批示\0市委市府领导批示</parameter>
+			</field>
+		</formFields>
+	</form>
+</forms>

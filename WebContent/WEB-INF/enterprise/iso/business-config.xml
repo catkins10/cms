@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="ISO文件目录" class="com.yuanluesoft.enterprise.iso.pojo.IsoDirectory" businessServiceName="isoDirectoryService">
+		<field name="category" title="文件类别" length="100" type="string" inputMode="text"/>
+		<field name="version" title="版本号" length="10" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="control" title="受控状态" length="20" type="string" inputMode="text"/>
+		<field name="urgency" title="紧急程度" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsText">普通\0急\0特急</parameter>
+		</field>
+		<field name="security" title="文件密级" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsText">普通\0秘密\0机密\0绝密</parameter>
+		</field>
+		<field name="storage" title="保存期限" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsText">无\0三个月\0半年\0一年\0二年\0三年\0五年</parameter>
+		</field>
+		<field name="storageDepartment" title="管理部门" length="50" type="string" inputMode="text"/>
+		<field name="numberingRule" title="编号规则" length="100" type="string" inputMode="text"/>
+		<field name="createWorkflowId" title="登记流程ID" length="20" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="createWorkflowName" title="登记流程名称" length="100" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('directoryWorkflowConfig', 'workflowType=create', false, null, '_self')</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="modifyWorkflowId" title="修改流程ID" length="20" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="modifyWorkflowName" title="修改流程名称" length="100" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('directoryWorkflowConfig', 'workflowType=modify', false, null, '_self')</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="loanWorkflowId" title="借阅流程ID" length="20" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="loanWorkflowName" title="借阅流程名称" length="100" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('directoryWorkflowConfig', 'workflowType=loan', false, null, '_self')</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="destroyWorkflowId" title="销毁流程ID" length="20" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="destroyWorkflowName" title="销毁流程名称" length="100" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('directoryWorkflowConfig', 'workflowType=destroy', false, null, '_self')</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="ISO文档" class="com.yuanluesoft.enterprise.iso.pojo.IsoDocument" businessServiceName="isoDocumentService">
+		<field name="category" title="文件类别" length="30" type="string" inputMode="text"/>
+		<field name="documentNumber" title="文件编号" length="50" type="string" inputMode="text"/>
+		<field name="name" title="文件名称" length="300" required="true" type="string" inputMode="text"/>
+		<field name="keywords" title="关键词" length="100" type="string" inputMode="text"/>
+		<field name="version" title="版本号" length="7,3" type="number" inputMode="text"/>
+		<field name="control" title="受控状态" length="30" type="string" inputMode="text"/>
+		<field name="urgency" title="紧急程度" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsText">普通\0急\0特急</parameter>
+		</field>
+		<field name="security" title="文件密级" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsText">普通\0秘密\0机密\0绝密</parameter>
+		</field>
+		<field name="storage" title="保存期限" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsText">无\0三个月\0半年\0一年\0二年\0三年\0五年</parameter>
+		</field>
+		<field name="writer" title="编制人" length="30" type="string" inputMode="text"/>
+		<field name="writeDate" title="编制日期" required="true" type="date" inputMode="date"/>
+		<field name="status" title="文件状态" length="30" type="string" inputMode="text"/>
+		<field name="storageDepartment" title="管理部门" length="50" type="string" inputMode="text"/>
+		<field name="manager" title="管理员" length="100" type="string" inputMode="text"/>
+		<field name="summary" title="内容概述" length="1000" type="string" inputMode="textarea">
+			<parameter name="rows">4</parameter>
+		</field>
+		<field name="isValid" title="文件是否生效" length="1" type="char" inputMode="none"/>
+		<field name="isDestroy" title="是否文件销毁记录" length="1" type="char" inputMode="none"/>
+		<field name="isModify" title="是否文件修改记录" length="1" type="char" inputMode="none"/>
+		<field name="sourceDocumentId" title="修改或销毁源文件ID" type="number" inputMode="none"/>
+		<field name="modifyDescription" title="修改说明" length="500" type="string" inputMode="textarea">
+			<parameter name="rows">4</parameter>
+		</field>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+		<field name="subjections" title="ISO文档所属目录" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.iso.pojo.IsoDocumentSubjection</parameter>
+		</field>
+		<field name="attachments" title="正文和附件" type="attachment" inputMode="attachment"/>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">会审,审核,审批</parameter>
+			<parameter name="class">com.yuanluesoft.enterprise.iso.pojo.IsoDocumentOpinion</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="ISO文档所属目录" class="com.yuanluesoft.enterprise.iso.pojo.IsoDocumentSubjection">
+		<field name="documentId" title="文档ID" type="number" inputMode="none"/>
+		<field name="directoryId" title="目录ID" type="number" inputMode="none"/>
+	</businessObject>
+</businessObjects>

@@ -1,0 +1,918 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--工程项目-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProject" table="bidding_project">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectName"/> <!--工程名称-->
+		<property name="projectCategory"/> <!--工程类别-->
+		<property name="projectProcedure"/> <!--招标内容-->
+		<property name="city"/> <!--所属地区-->
+		<property name="projectNumber"/> <!--项目编号-->
+		<property name="agentEnable"/> <!--是否委托招标代理-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="approvalMode"/> <!--资格审查方式-->
+		<property name="agentMode"/> <!--代理产生方式-->
+		<property name="ownerId"/> <!--建设单位ID-->
+		<property name="owner"/> <!--建设单位-->
+		<property name="ownerType"/> <!--建设单位性质-->
+		<property name="ownerRepresentative"/> <!--建设单位法人代表-->
+		<property name="ownerLinkman"/> <!--建设单位联系人-->
+		<property name="ownerLinkmanIdCard"/> <!--建设单位联系人身份证-->
+		<property name="ownerTel"/> <!--建设单位联系电话-->
+		<property name="ownerFax"/> <!--建设单位传真-->
+		<property name="ownerMail"/> <!--建设单位电子邮件-->
+		<property name="projectAddress"/> <!--建设地点-->
+		<property name="scale"/> <!--建设规模-->
+		<property name="area"/> <!--建筑面积-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<property name="created"/> <!--创建时间-->
+		<property name="registTime"/> <!--完成登记时间-->
+		<property name="failed"/> <!--是否招标失败,失败时为“是”-->
+		<property name="pledgeBank"/> <!--保证金开户行-->
+		<property name="pledgeAccountName"/> <!--保证金帐户名-->
+		<property name="pledgeAccount"/> <!--保证金帐号-->
+		<property name="remark"/> <!--备注-->
+		<property name="halt"/> <!--是否作废-->
+		<property name="isRealNameSignUp"/> <!--是否实名报名,是/否-->
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem"/>
+		</set>
+		<set name="opinions" table="bidding_project_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectOpinion"/>
+		</set>
+		<set name="visitors" table="bidding_project_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectPrivilege"/>
+		</set>
+		<set name="askQuestions" table="bidding_project_ask" lazy="true" inverse="true" cascade="delete" order-by="askTime DESC">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAsk"/>
+		</set>
+		<set name="prophases" table="bidding_project_prophase" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectProphase"/>
+		</set>
+		<set name="documents" table="bidding_project_document" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectDocument"/>
+		</set>
+		<set name="kcs" table="bidding_project_kc" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectKC"/>
+		</set>
+		<set name="agentDraws" table="bidding_project_agent_draw" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectAgentDraw"/>
+		</set>
+		<set name="biddingAgents" table="bidding_project_agent" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectAgent"/>
+		</set>
+		<set name="materials" table="bidding_project_material" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectMaterial"/>
+		</set>
+		<set name="tenders" table="bidding_project_tender" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectTender"/>
+		</set>
+		<set name="plans" table="bidding_project_plan" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectPlan"/>
+		</set>
+		<set name="preapprovals" table="bidding_project_preapproval" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectPreapproval"/>
+		</set>
+		<set name="bidopenings" table="bidding_project_bidopening" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectBidopening"/>
+		</set>
+		<set name="grades" table="bidding_project_grade" lazy="true" inverse="true" cascade="delete" order-by="serial">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectGrade"/>
+		</set>
+		<set name="pitchons" table="bidding_project_pitchon" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectPitchon"/>
+		</set>
+		<set name="pitchouts" table="bidding_project_pitchout" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectPitchout"/>
+		</set>
+		<set name="notices" table="bidding_project_notice" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectNotice"/>
+		</set>
+		<set name="invites" table="bidding_project_invite" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectInvite"/>
+		</set>
+		<set name="pays" table="bidding_project_pay" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectPay"/>
+		</set>
+		<set name="useFees" table="bidding_project_use_fee" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectUseFee"/>
+		</set>
+		<set name="supplements" table="bidding_project_supplement" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectSupplement"/>
+		</set>
+		<set name="answers" table="bidding_project_answer" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectAnswer"/>
+		</set>
+		<set name="signUps" table="bidding_signup" lazy="true" inverse="true" cascade="delete" order-by="paymentTime,pledgePaymentTime">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUp"/>
+		</set>
+		<set name="bidopeningRoomSchedules" table="bidding_room_schedule" lazy="true" inverse="true" cascade="delete" where="roomType='开标'">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.biddingroom.pojo.BiddingRoomSchedule"/>
+		</set>
+		<set name="evaluatingRoomSchedules" table="bidding_room_schedule" lazy="true" inverse="true" cascade="delete" where="roomType='评标'">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.biddingroom.pojo.BiddingRoomSchedule"/>
+		</set>
+		<set name="archives" table="bidding_project_archive" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectArchive"/>
+		</set>
+		<set name="declares" table="bidding_project_declare" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectDeclare"/>
+		</set>
+		<set name="licences" table="bidding_project_licence" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectLicence"/>
+		</set>
+		<set name="completions" table="bidding_project_completion" lazy="true" inverse="true" cascade="delete">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectCompletion"/>
+		</set>
+		<!--人员需求-->
+		<set name="jobholders" table="bidding_project_jobholder" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="projectId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectJobholder"/>
+		</set>
+	</class>
+	
+	<!--工程项目:权限控制-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectPrivilege" table="bidding_project_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/>
+		<property name="recordId"/>
+		<property name="accessLevel"/>
+	</class>
+	
+	<!--工程项目:审核意见-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectOpinion" table="bidding_project_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="opinion"/>
+		<property name="created"/>
+		<property name="mainRecordId"/>
+		<property name="opinionType"/>
+		<property name="personId"/>
+		<property name="activityId"/>
+		<property name="workItemId"/>
+		<property name="activityName"/>
+		<property name="personName"/>
+		<property name="agentName"/>
+		<property name="agentId"/>
+	</class>
+	
+	<!--工程项目:建设单位-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectOwner" table="bidding_project_owner">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="owner"/> <!--建设单位名称-->
+		<property name="ownerType"/> <!--建设单位性质-->
+		<property name="ownerRepresentative"/> <!--建设单位法人代表-->
+		<property name="ownerLinkman"/> <!--建设单位联系人-->
+		<property name="ownerLinkmanIdCard"/> <!--建设单位联系人身份证-->
+		<property name="ownerTel"/> <!--建设单位联系电话-->
+		<property name="ownerFax"/> <!--建设单位传真-->
+		<property name="ownerMail"/> <!--建设单位电子邮件-->
+	</class>
+	
+	<!--招标前期资料备案-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectProphase" table="bidding_project_prophase">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="publicEndTime"/> <!--公示截止时间-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<property name="remark"/> <!--备注-->
+		<property name="submitted"/> <!--已提交资料列表 -->
+	</class>
+	
+	<!--招标文件上传-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectDocument" table="bidding_project_document">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="path"/> <!--标书文件路径-->
+		<property name="uploadTime"/> <!--上传时间-->
+		<property name="uploadPersonId"/> <!--上传人ID-->
+		<property name="uploadPersonName"/> <!--上传人-->
+	</class>
+	
+	<!--代理抽签公示-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectAgentDraw" table="bidding_project_agent_draw">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="drawMode"/> <!--代理申请方式-->
+		<property name="agentLevel"/> <!--代理资格条件-->
+		<property name="content"/> <!--委托代理内容-->
+		<property name="agentSignup"/> <!--代理机构报名时间-->
+		<property name="agentSignupEnd"/> <!--代理机构报名截止时间-->
+		<property name="drawTime"/> <!--抽选时间-->
+		<property name="drawAddress"/> <!--抽选地点-->
+		<property name="money"/> <!--代理取费标准-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="publicLimit"/> <!--公示期限-->
+		<property name="publicEndTime"/> <!--公示截止时间-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<property name="remark"/> <!--备注-->
+		<many-to-one name="project" class="com.yuanluesoft.bidding.project.pojo.BiddingProject" column="projectId" update="false" insert="false"/>
+	</class>
+	
+	<!--中选代理-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectAgent" table="bidding_project_agent">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="agentId"/> <!--中选代理ID-->
+		<property name="agentName"/> <!--中选代理-->
+		<property name="agentLinkman"/> <!--联系人-->
+		<property name="agentTel"/> <!--电话-->
+		<property name="agentCertificateNumber"/> <!--资格证书号-->
+		<property name="agentLevel"/> <!--资质等级-->
+		<property name="agentRepresentative"/> <!--法人代表-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="publicLimit"/> <!--公示期限-->
+		<property name="publicEndTime"/> <!--公示截止时间-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<many-to-one name="project" class="com.yuanluesoft.bidding.project.pojo.BiddingProject" column="projectId" update="false" insert="false"/>
+	</class>
+	
+	<!--招标公告-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectTender" table="bidding_project_tender">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--报建工程名称-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="publicLimit"/> <!--公示期限-->
+		<property name="publicEndTime"/> <!--公示截止时间-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<property name="tenderProjectName"/> <!--项目名称-->
+		<property name="approvalUnit"/> <!--项目审批机关-->
+		<property name="projectSn"/> <!--批文名称及编号-->
+		<property name="owner"/> <!--项目业主-->
+		<property name="investSource"/> <!--资金来源-->
+		<property name="tenderee"/> <!--招标人-->
+		<property name="agent"/> <!--招标代理-->
+		<property name="projectAddress"/> <!--建设地点-->
+		<property name="projectScale"/> <!--建设规模-->
+		<property name="biddingContent"/> <!--招标范围和内容-->
+		<property name="timeLimit"/> <!--总工期-->
+		<property name="keysTimeLimit"/> <!--关键节点的工期要求-->
+		<property name="quality"/> <!--工程质量要求-->
+		<property name="consultationUnit"/> <!--咨询单位-->
+		<property name="designUnit"/> <!--设计单位-->
+		<property name="fillinUnit"/> <!--代建单位-->
+		<property name="supervisorUnit"/> <!--监理单位-->
+		<property name="bidderLevel"/> <!--资质类别及等级-->
+		<property name="managerLevel"/> <!--项目经理等级-->
+		<property name="managerSubject"/> <!--项目经理专业-->
+		<property name="unionBid"/> <!--接受/不接受联合体投标-->
+		<property name="majorBidder"/> <!--联合体投标主办方-->
+		<property name="managerAchievement"/> <!--项目经理"类似工程业绩"要求-->
+		<property name="similarityProject"/> <!--类似工程业绩-->
+		<property name="approvalMode"/> <!--资格审查采用的方式-->
+		<property name="buyDocumentAddress"/> <!--购买招标文件地址-->
+		<property name="buyDocumentBegin"/> <!--购买招标文件开始时间-->
+		<property name="buyDocumentEnd"/> <!--购买招标文件结束时间-->
+		<property name="documentPrice"/> <!--招标文件每份售价-->
+		<property name="drawingPrice"/> <!--招标图纸每份售价-->
+		<property name="evaluateMethod"/> <!--采用的评标办法-->
+		<property name="pledgeTime"/> <!--保证金提交的时间-->
+		<property name="pledgeMode"/> <!--保证金提交的方式-->
+		<property name="pledgeMoney"/> <!--保证金金额-->
+		<property name="pledgeMoneyText"/> <!--保证金金额(文本格式)-->
+		<property name="submitTime"/> <!--投标文件的递交截止时间-->
+		<property name="submitAddress"/> <!--投标文件的递交地点-->
+		<property name="media"/> <!--发布公告的媒体名称-->
+		<property name="tendereeAddress"/> <!--招标人地址-->
+		<property name="tendereePostalCode"/> <!--招标人邮编-->
+		<property name="tendereeTel"/> <!--招标人电话-->
+		<property name="tendereeFax"/> <!--招标人传真-->
+		<property name="tendereeLinkman"/> <!--招标人联系人-->
+		<property name="agentAddress"/> <!--招标代理机构地址-->
+		<property name="agentPostalCode"/> <!--招标代理机构邮编-->
+		<property name="agentTel"/> <!--招标代理机构电话-->
+		<property name="agentFax"/> <!--招标代理机构传真-->
+		<property name="agentLinkman"/> <!--招标代理机构联系人-->
+		<property name="bank"/> <!--开户银行-->
+		<property name="accountName"/> <!--帐户名称-->
+		<property name="accounts"/> <!--帐号-->
+		<property name="tradingName"/> <!--交易中心名称-->
+		<property name="tradingAddress"/> <!--地址-->
+		<property name="controlPrice"/> <!--附加字段：招标控制价-->
+		<property name="agentGenerate"/> <!--附加字段：代理单位产生方式-->
+		<property name="invitation"/> <!--邀请函,邀请招标时有效-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文,没有固定模板时使用-->
+		<property name="remark1"/> <!--备注1-->
+		<property name="remark2"/> <!--备注2-->
+		<property name="remark3"/> <!--备注3-->
+		<property name="remark4"/> <!--备注4-->
+		<property name="remark31"/> <!--备注31-->
+		<property name="remark32"/> <!--备注32-->
+		<property name="remark311"/> <!--备注311-->
+		<property name="remark312"/> <!--备注312-->
+		<property name="remark43"/> <!--备注43-->
+		<property name="remark62"/> <!--备注62-->
+		<property name="remark71"/> <!--备注71-->
+		<many-to-one name="project" class="com.yuanluesoft.bidding.project.pojo.BiddingProject" column="projectId" update="false" insert="false"/>
+	</class>
+	
+	<!--被邀请企业-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectInvite" table="bidding_project_invite">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="enterpriseId"/> <!--企业ID-->
+		<property name="enterpriseName"/> <!--企业名称-->
+	</class>
+	
+	<!--招标时间安排-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectPlan" table="bidding_project_plan">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--报建工程名称-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="publicLimit"/> <!--公示期限-->
+		<property name="publicEndTime"/> <!--公示截止时间-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<property name="inviteDate"/> <!--发布招标邀请书时间-->
+		<property name="inviteMedia"/> <!--发布招标邀请书媒体-->
+		<property name="buyDocumentBegin"/> <!--购买招标文件开始时间-->
+		<property name="buyDocumentEnd"/> <!--购买招标文件结束时间-->
+		<property name="buyDocumentAddress"/> <!--购买招标文件地址-->
+		<property name="askEnd"/> <!--招标文件质疑时限-->
+		<property name="askMedia"/> <!--招标文件质疑地点-->
+		<property name="submitTime"/> <!--投标文件的递交截止时间-->
+		<property name="submitAddress"/> <!--投标文件的递交地点-->
+		<property name="bidopeningTime"/> <!--开标、评标时间-->
+		<property name="bidopeningAddress"/> <!--开标、评标地点-->
+		<property name="pitchonDate"/> <!--确定中标人-->
+		<property name="pitchonAddress"/> <!--确定中标人地点-->
+		<property name="publicPitchonDays"/> <!--中标结果公示-->
+		<property name="publicPitchonMedia"/> <!--中标结果公示媒体-->
+		<property name="noticeDays"/> <!--发放中标通知书时间-->
+		<property name="noticeAddress"/> <!--发放中标通知书地点-->
+		<property name="archiveDays"/> <!--书面报告备案时间-->
+		<property name="archiveAddress"/> <!--书面报告备案地点-->
+		<property name="signUpExported"/> <!--是否已经导出报名清单-->
+		<many-to-one name="project" class="com.yuanluesoft.bidding.project.pojo.BiddingProject" column="projectId" update="false" insert="false"/>
+	</class>
+	
+	<!--答疑会议纪要-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectAnswer" table="bidding_project_answer">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="publicLimit"/> <!--公示期限-->
+		<property name="publicEndTime"/> <!--公示截止时间-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--内容-->
+		<property name="isPreapproval"/> <!--是否预审-->
+		<many-to-one name="project" class="com.yuanluesoft.bidding.project.pojo.BiddingProject" column="projectId" update="false" insert="false"/>
+	</class>
+	
+	<!--补充通知-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectSupplement" table="bidding_project_supplement">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="created"/> <!--创建时间-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="publicLimit"/> <!--公示期限-->
+		<property name="publicEndTime"/> <!--公示截止时间-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--内容-->
+		<property name="isPreapproval"/> <!--是否预审-->
+		<many-to-one name="project" class="com.yuanluesoft.bidding.project.pojo.BiddingProject" column="projectId" update="false" insert="false"/>
+	</class>
+	
+	<!--招标文件实质性内容,目前不需要-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectMaterial" table="bidding_project_material">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="publicLimit"/> <!--公示期限-->
+		<property name="publicEndTime"/> <!--公示截止时间-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<property name="body"/> <!--正文-->
+		<property name="remark"/> <!--备注-->
+		<many-to-one name="project" class="com.yuanluesoft.bidding.project.pojo.BiddingProject" column="projectId" update="false" insert="false"/>
+	</class>
+	
+	<!--预审公示-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectPreapproval" table="bidding_project_preapproval">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--内容-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="publicLimit"/> <!--公示期限-->
+		<property name="publicEndTime"/> <!--公示截止时间-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<many-to-one name="project" class="com.yuanluesoft.bidding.project.pojo.BiddingProject" column="projectId" update="false" insert="false"/>
+	</class>
+	
+	<!--开标公示-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectBidopening" table="bidding_project_bidopening">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="unitCode"/> <!--单位编码-->
+		<property name="unitName"/> <!--单位名称-->
+		<property name="room"/> <!--开标室-->
+		<property name="beginTime"/> <!--开标时间-->
+		<property name="endTime"/> <!--截标时间-->
+		<property name="linkman"/> <!--联系人-->
+		<property name="tel"/> <!--联系电话-->
+		<property name="timeLimit"/> <!--工期-->
+		<property name="serviceMan"/> <!--服务人员-->
+		<property name="status"/> <!--开标状态-->
+		<property name="description" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--开标情况描述-->
+		<property name="compere"/> <!--主持人-->
+		<property name="callouter"/> <!--唱标人-->
+		<property name="recorder"/> <!--记录人-->
+		<property name="surverllant"/> <!--监标人-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="publicLimit"/> <!--公示期限-->
+		<property name="publicEndTime"/> <!--公示截止时间-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<property name="synch"/> <!--是否同步过-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文,没有固定模板时使用-->
+		<many-to-one name="project" class="com.yuanluesoft.bidding.project.pojo.BiddingProject" column="projectId" update="false" insert="false"/>
+	</class>
+	
+	<!--开标:投标单位评分-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectGrade" table="bidding_project_grade">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="serial"/> <!--序号-->
+		<property name="enterpriseId"/> <!--企业ID-->
+		<property name="enterpriseName"/> <!--企业名称-->
+		<property name="seal"/> <!--密封情况-->
+		<property name="price"/> <!--投标报价-->
+		<property name="manager"/> <!--项目经理-->
+		<property name="certificate"/> <!--执业证书编号-->
+		<property name="timeLimit"/> <!--工期-->
+		<property name="pledge"/> <!--保证金-->
+		<property name="quality"/> <!--质量目标-->
+		<property name="sign"/> <!--签名-->
+	</class>
+	
+	<!--KC值抽签公示-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectKC" table="bidding_project_kc">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="publicLimit"/> <!--公示期限-->
+		<property name="publicEndTime"/> <!--公示截止时间-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<property name="basePrice"/> <!--标底价-->
+		<property name="controlPrice"/> <!--控制价-->
+		<property name="coefficient"/> <!--采用系数-->
+		<property name="budgetPrice"/> <!--预算价-->
+		<property name="preferentialPrice"/> <!--优惠价-->
+		<property name="k1"/> <!--K1-->
+		<property name="k2"/> <!--K2-->
+		<property name="q"/> <!--Q-->
+		<many-to-one name="project" class="com.yuanluesoft.bidding.project.pojo.BiddingProject" column="projectId" update="false" insert="false"/>
+	</class>
+	
+	<!--中标公示-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectPitchon" table="bidding_project_pitchon">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="publicLimit"/> <!--公示期限-->
+		<property name="publicEndTime"/> <!--公示截止时间-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<property name="projectNumber"/> <!--项目编号-->
+		<property name="bidopeningTime"/> <!--开标时间-->
+		<property name="pitchonEnterpriseId"/> <!--中标人ID-->
+		<property name="pitchonEnterprise"/> <!--中标人-->
+		<property name="manager"/> <!--项目经理-->
+		<property name="pitchonMoney"/> <!--中标金额-->
+		<property name="ownerRater"/> <!--业主评委-->
+		<property name="raters"/> <!--评标专家-->
+		<property name="tenderee"/> <!--招标人-->
+		<property name="tendereeAddress"/> <!--招标人地址-->
+		<property name="tendereePostalCode"/> <!--招标人邮政编码-->
+		<property name="tendereeMail"/> <!--招标人电子邮件-->
+		<property name="tendereeLinkman"/> <!--招标人联系人-->
+		<property name="tendereeTel"/> <!--招标人联系电话-->
+		<property name="tendereeFax"/> <!--招标人传真-->
+		<property name="agent"/> <!--招标代理机构-->
+		<property name="agentAddress"/> <!--代理办公地址-->
+		<property name="agentPostalCode"/> <!--代理邮政编码-->
+		<property name="agentFax"/> <!--代理传真-->
+		<property name="agentTel"/> <!--代理电话-->
+		<property name="agentLinkman"/> <!--代理联系人-->
+		<property name="agentMail"/> <!--代理电子邮件-->
+		<property name="supervision"/> <!--招投标监督机构-->
+		<property name="supervisionAddress"/> <!--监督机构地址-->
+		<property name="supervisionTel"/> <!--监督电话-->
+		<property name="remark"/> <!--备注-->
+		<property name="synch"/> <!--是否同步过-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文,没有固定模板时使用-->
+		<many-to-one name="project" class="com.yuanluesoft.bidding.project.pojo.BiddingProject" column="projectId" update="false" insert="false"/>
+	</class>
+	
+	<!--不合格投标人-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectPitchout" table="bidding_project_pitchout">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="enterpriseName"/> <!--投标人名称-->
+		<property name="result"/> <!--评审结果-->
+		<property name="reason"/> <!--原因-->
+		<property name="basis"/> <!--依据及理由-->
+		<property name="remark"/> <!--备注-->
+	</class>
+	
+	<!--中标通知书-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectNotice" table="bidding_project_notice">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="publicLimit"/> <!--公示期限-->
+		<property name="publicEndTime"/> <!--公示截止时间-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<property name="noticeNumber"/> <!--通知书编号-->
+		<property name="pitchonEnterpriseId"/> <!--中标人ID-->
+		<property name="pitchonEnterprise"/> <!--中标人-->
+		<property name="pitchonPrice"/> <!--中标价-->
+		<property name="timeLimit"/> <!--总工期-->
+		<property name="keysTimeLimit"/> <!--关键节点工期要求-->
+		<property name="contractDays"/> <!--签订合同时限-->
+		<property name="contractAddress"/> <!--签订合同地点-->
+		<property name="quality"/> <!--工程质量-->
+		<property name="stage"/> <!--标段-->
+		<property name="biddingDate"/> <!--投标日期-->
+		<property name="manager"/> <!--项目经理-->
+		<property name="tenderee"/> <!--招标人-->
+		<property name="tendereeRepresentative"/> <!--法定代表人-->
+		<property name="noticeDate"/> <!--通知时间-->
+		<property name="remark"/> <!--备注-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文,没有固定模板时使用-->
+		<many-to-one name="project" class="com.yuanluesoft.bidding.project.pojo.BiddingProject" column="projectId" update="false" insert="false"/>
+	</class>
+	
+	<!--场地费-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectUseFee" table="bidding_project_use_fee">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="publicEndTime"/> <!--公示截止时间-->
+		<property name="money"/> <!--缴费金额-->
+		<property name="billingTime"/> <!--开票时间-->
+		<property name="payTime"/> <!--收款时间-->
+		<property name="remark"/> <!--备注-->
+		<many-to-one name="project" class="com.yuanluesoft.bidding.project.pojo.BiddingProject" column="projectId" update="false" insert="false"/>
+	</class>
+	
+	<!--缴费-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectPay" table="bidding_project_pay">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="publicEndTime"/> <!--公示截止时间-->
+		<property name="tendereeMoney"/> <!--建设单位缴费金额-->
+		<property name="tendereePay"/> <!--建设单位缴费情况-->
+		<property name="tendereeReason"/> <!--建设单位减免理由-->
+		<property name="pitchonMoney"/> <!--中标单位缴费金额-->
+		<property name="pitchonPay"/> <!--中标单位缴费情况-->
+		<property name="pitchonReason"/> <!--中标单位减免理由-->
+		<property name="payTime"/> <!--缴费时间-->
+		<property name="remark"/> <!--备注-->
+	</class>
+	
+	<!--归档-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectArchive" table="bidding_project_archive">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="publicLimit"/> <!--公示期限-->
+		<property name="publicEndTime"/> <!--公示截止时间-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<property name="remark"/> <!--备注-->
+		<property name="submitted"/> <!--已提交的资料-->
+	</class>
+	
+	<!--工程项目报建-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectDeclare" table="bidding_project_declare">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<property name="declareNumber"/> <!--报建编号-->
+		<property name="owner"/> <!--建设单位-->
+		<property name="ownerType"/> <!--建设单位性质-->
+		<property name="ownerRepresentative"/> <!--建设单位法人代表-->
+		<property name="ownerLinkman"/> <!--建设单位联系人-->
+		<property name="ownerTel"/> <!--建设单位联系电话-->
+		<property name="declaringProjectName"/> <!--报建名称-->
+		<property name="projectAddress"/> <!--建设地点-->
+		<property name="projectProperty"/> <!--项目性质-->
+		<property name="proposalNumber"/> <!--立项文号-->
+		<property name="proposalDate"/> <!--批准时间-->
+		<property name="invest"/> <!--投资规模-->
+		<property name="scale"/> <!--工程规模-->
+		<property name="govInvest"/> <!--拨款-->
+		<property name="personalInvest"/> <!--自筹-->
+		<property name="foriegnInvest"/> <!--外资-->
+		<property name="otherInvest"/> <!--其他投资-->
+		<property name="investYear"/> <!--当年投资-->
+		<property name="govInvestYear"/> <!--当年拨款-->
+		<property name="personalInvestYear"/> <!--当年自筹-->
+		<property name="foriegnInvestYear"/> <!--当年外资-->
+		<property name="otherInvestYear"/> <!--当年其他投资-->
+		<property name="prepare"/> <!--筹建情况-->
+		<property name="award"/> <!--申请发包形式-->
+		<property name="beginDate"/> <!--计划开工时间-->
+		<property name="endDate"/> <!--计划竣工时间-->
+		<property name="receiveTime"/> <!--收理时间-->
+		<property name="receiveNumber"/> <!--收件编号-->
+		<property name="declarePersonId"/> <!--受理经办人ID-->
+		<property name="declarePerson"/> <!--受理经办人-->
+		<property name="verify"/> <!--核实情况-->
+		<property name="remark"/> <!--备注-->
+	</class>
+	
+	<!--施工许可证-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectLicence" table="bidding_project_licence">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<property name="remark"/> <!--备注-->
+	</class>
+	
+	<!--竣工-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectCompletion" table="bidding_project_completion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="biddingMode"/> <!--招标方式-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<property name="remark"/> <!--备注-->
+		<property name="completeDate"/> <!--竣工时间-->
+	</class>
+	
+	<!--工程项目:人员需求-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectJobholder" table="bidding_project_jobholder">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID,NUMBER(20)-->
+		<property name="jobholderCategory"/> <!--人员类别,VARCHAR(30)-->
+		<property name="qualifications"/> <!--资质等级,VARCHAR(500)-->
+		<property name="jobholderNumber"/> <!--需求数量,NUMBER(3)-->
+	</class>
+	
+	<!--地区配置-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectCity" table="bidding_project_city">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--名称-->
+		<property name="shortName"/> <!--简称-->
+		<property name="trading"/> <!--交易中心名称-->
+		<property name="tradingAddress"/> <!--交易中心地址-->
+		<property name="drawAddress"/> <!--代理抽签地址-->
+		<property name="inviteMedia"/> <!--发布招标邀请书媒体-->
+		<property name="buyDocumentAddress"/> <!--购买招标文件地址-->
+		<property name="askMedia"/> <!--招标文件质疑地点-->
+		<property name="submitAddress"/> <!--投标文件的递交地点-->
+		<property name="bidopeningAddress"/> <!--开标、评标地点-->
+		<property name="pitchonAddress"/> <!--确定中标人地点-->
+		<property name="publicPitchonMedia"/> <!--中标结果公示媒体-->
+		<property name="noticeAddress"/> <!--发放中标通知书地点-->
+		<property name="archiveAddress"/> <!--书面报告备案地点-->
+		<property name="declareAddress"/> <!--项目报建地点-->
+		<property name="licenceAddress"/> <!--施工许可证发放地点-->
+		<property name="workBeginAm"/> <!--上午上班时间-->
+		<property name="workEndAm"/> <!--上午下班时间-->
+		<property name="workBeginPm"/> <!--下午上班时间-->
+		<property name="workEndPm"/> <!--下午下班时间-->
+		<property name="agentChargeStandard"/> <!--代理取费标准-->
+		<property name="agentDrawRemark"/> <!--代理抽签说明-->
+		<property name="agentSettleFee"/> <!--代理结算手续费-->
+		<property name="merchantIds"/> <!--网银商户ID-->
+		<property name="merchantNames"/> <!--网银商户名称-->
+		<property name="documentsB2CPayment"/> <!--标书和图纸强制B2C支付-->
+		<property name="paymentMerchantIds"/> <!--保证金网银商户ID,VARCHAR2(500)-->
+		<property name="paymentMerchantNames"/> <!--保证金网银商户名称,VARCHAR2(500)-->
+		<property name="pledgeB2BPayment"/> <!--保证金强制B2B支付-->
+		<property name="documentsUniformPrice"/> <!--标书统一定价-->
+		<property name="pledgeInternetPayment"/> <!--网络支付保证金-->
+		<property name="pledgeReturnRate"/> <!--保证金利率-->
+		<property name="pledgeReturnTax"/> <!--保证金利息所得税率-->
+		<property name="lastTransactionQuery"/> <!--交易记录最后查询时间,用于获取保证金缴纳和退还信息,TIMESTAMP null-->
+		<set name="visitors" table="bidding_project_city_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectCityPrivilege"/>
+		</set>
+	</class>
+	
+	<!--地区配置:权限控制-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectCityPrivilege" table="bidding_project_city_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/>
+		<property name="recordId"/>
+		<property name="accessLevel"/>
+	</class>
+	
+	<!--参数配置-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectParameter" table="bidding_project_parameter">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="categories"/> <!--适用的工程分类列表-->
+		<property name="procedures"/> <!--适用的招标内容列表-->
+		<property name="cities"/> <!--适用的地区列表-->
+		<property name="biddingNumberFormat"/> <!--项目招标编号规则-->
+		<property name="signUpNumberFormat"/> <!--投标报名号规则-->
+		<property name="noticeNumberFormat"/> <!--中标通知书编号规则-->
+		<property name="declareNumberFormat"/> <!--项目报建编号规则-->
+		<property name="declareReceiveNumberFormat"/> <!--项目收件编号规则-->
+		<property name="biddingDocumentsPrice"/> <!--标书价格-->
+		<property name="agentDrawDays"/> <!--代理抽签公告有效期-->
+		<property name="agentResultDays"/> <!--中选代理公示有效期-->
+		<property name="kcDays"/> <!--KC值公示有效期-->
+		<property name="askDays"/> <!--提问有效期-->
+		<property name="signUpDays"/> <!--报名有效期-->
+		<property name="receveDays"/> <!--收标有效期-->
+		<property name="bidopeningDays"/> <!--开标公示有效期-->
+		<property name="pitchonDays"/> <!--中标公示有效期-->
+		<property name="preapprovalDays"/> <!--预审公示有效期-->
+		<property name="noticeDays"/> <!--中标通知时间-->
+		<property name="archiveDays"/> <!--书面报告备案时间-->
+	</class>
+	
+	<!--招标流程配置-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectWorkflow" table="bidding_project_workflow">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="categories"/> <!--适用的工程分类列表-->
+		<property name="procedures"/> <!--适用的招标内容列表-->
+		<property name="cities"/> <!--适用的地区列表-->
+		<property name="workflowId"/> <!--招标流程ID-->
+		<property name="workflowName"/> <!--招标流程名称-->
+	</class>
+	
+	<!--工程类别:资料清单-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectFile" table="bidding_project_file">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="categories"/> <!--适用的工程分类列表-->
+		<property name="procedures"/> <!--适用的招标内容列表-->
+		<property name="cities"/> <!--适用的地区列表-->
+		<property name="needFull"/> <!--是否要求全部齐全才能继续	-->
+		<set name="items" table="bidding_project_file_item" lazy="true" inverse="true" cascade="delete" order-by="sn">
+			<key column="configId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.pojo.BiddingProjectFileItem"/>
+		</set>
+	</class>
+	
+	<!--资料清单配置:资料条目-->
+	<class name="com.yuanluesoft.bidding.project.pojo.BiddingProjectFileItem" table="bidding_project_file_item">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="configId"/> <!--配置ID-->
+		<property name="fileType"/> <!--资料类型-->
+		<property name="fileCategory"/> <!--资料分类-->
+		<property name="sn"/> <!--序号-->
+		<property name="name"/> <!--名称-->
+		<property name="remark"/> <!--备注-->
+	</class>
+</hibernate-mapping>

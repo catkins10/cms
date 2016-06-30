@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.jeaf.dataimport.forms.ImportData" title="数据导入">
+		<formFields>
+			<field name="targetSiteId" title="目标站点ID" type="number" inputMode="hidden"/>
+			<field name="targetSiteName" title="目标站点名称" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 350, false, 'targetSiteId{id},targetSiteName{name}', '', '', '', 'site')</parameter>
+			</field>
+			<field name="dataImportServiceName" title="数据导入服务名称" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsServiceName">dataImportParameterService</parameter>
+				<parameter name="itemsName">dataImportServices</parameter>
+				<parameter name="valueField">dataImportServiceClass</parameter>
+				<parameter name="titleField">dataImportServiceName</parameter>
+			</field>
+			<field name="dataImportServiceClass" title="数据导入服务类名称" type="string" inputMode="hidden"/>
+			<field name="parameter" title="数据导入参数配置" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.dataimport.model.DataImportParameter</parameter>
+			</field>
+		</formFields>
+	</form>
+</forms>

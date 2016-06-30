@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="常见问题解答" class="com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaq" businessServiceName="onlineServiceFaqService">
+		<field name="question" title="问题" length="600" required="true" type="string" inputMode="text"/>
+		<field name="questionSpell" title="问题的拼音" length="50" type="string" inputMode="none"/>
+		<field name="answer" title="解答" required="true" type="html" inputMode="htmleditor">
+			<parameter name="height">300</parameter>
+		</field>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="issueTime" title="发布时间" type="timestamp" inputMode="readonly"/>
+		<field name="issuePersonId" title="发布人ID" length="20" type="number" inputMode="none"/>
+		<field name="status" title="状态" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">撤销发布|0\0退回、取回修改|1\0待处理|2\0已发布|3\0办结未发布|4\0已删除|5</parameter>
+		</field>
+		<field name="statusDescription" title="状态描述" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">workItems,status</parameter>
+		</field>
+		<field name="askTimes" title="被提问次数" length="8" type="number" inputMode="readonly"/>
+		<field name="subjections" title="隶属目录列表" type="components">
+			<parameter name="class">com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaqSubjection</parameter>
+		</field>
+		<field name="subjectionItems" title="隶属事项列表" type="components">
+			<parameter name="class">com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaqItem</parameter>
+		</field>
+		<field name="relations" title="相关问题" type="components">
+			<parameter name="class">com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaqRelation</parameter>
+		</field>
+		<field name="beRelations" title="被关联问题" type="components">
+			<parameter name="class">com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaqRelation</parameter>
+		</field>
+		<field name="accessStats" title="访问统计" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="lazyLoad">false</parameter>
+			<parameter name="class">com.yuanluesoft.jeaf.stat.pojo.AccessStat</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="recordList">false</parameter>
+			<parameter name="serviceName">siteImageService</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="recordList">false</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">1000000</parameter>
+			<parameter name="recordList">false</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">100000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="recordList">false</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+			<parameter name="serviceName">siteVideoService</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审核</parameter>
+			<parameter name="class">com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaqOpinion</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="相关问题" class="com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaqRelation">
+		<field name="faqId" title="问题ID" length="20" type="number" inputMode="hidden"/>
+		<field name="relationFaqId" title="关联问题ID" length="20" type="number" inputMode="hidden"/>
+	</businessObject>
+</businessObjects>

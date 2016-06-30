@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,177,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="336,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,177,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="336,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#documentTemplate"
+  NAME="action0" PATH="/documentTemplate" SHAPE="32,224,177,25"
+  TITLE="documentTemplate" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/documentTemplate.jsp" TARGET="page2"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/documentTemplate.jsp" SHAPE="336,240,50,55" SUBTYPE="jsp"
+  TITLE="documentTemplate.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveDocumentTemplate" TARGET="action1"
+   TITLE="saveDocumentTemplate" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteDocumentTemplate" TARGET="action2"
+   TITLE="deleteDocumentTemplate" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveDocumentTemplate"
+  NAME="action1" PATH="/saveDocumentTemplate" SHAPE="560,256,177,25"
+  TITLE="documentTemplate" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteDocumentTemplate"
+  NAME="action2" PATH="/deleteDocumentTemplate" SHAPE="560,320,177,25"
+  TITLE="documentTemplate" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#document" NAME="action3"
+  PATH="/document" SHAPE="32,432,177,41" TITLE="qualityDocument" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/document.jsp" TARGET="page3" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/document.jsp" SHAPE="336,448,50,130" SUBTYPE="jsp"
+  TITLE="document.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveDocument" TARGET="action4"
+   TITLE="saveDocument" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteDocument" TARGET="action5"
+   TITLE="deleteDocument" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/runDocument" TARGET="action6" TITLE="runDocument" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/writeOpinion" TARGET="action7" TITLE="saveOpinion" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link6"
+   PATH="/appendDocument" TARGET="action10"
+   TITLE="appendDocument" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveDocument"
+  NAME="action4" PATH="/saveDocument" SHAPE="560,464,177,25"
+  TITLE="qualityDocument" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteDocument"
+  NAME="action5" PATH="/deleteDocument" SHAPE="560,528,177,25"
+  TITLE="qualityDocument" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#runDocument"
+  NAME="action6" PATH="/runDocument" SHAPE="560,584,177,25"
+  TITLE="qualityDocument" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#writeOpinion"
+  NAME="action7" PATH="/writeOpinion" SHAPE="560,648,177,25"
+  TITLE="qualityDocument" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#appendDocument"
+  NAME="action10" PATH="/appendDocument" SHAPE="560,712,177,25"
+  TITLE="qualityDocument" TYPE="action"/>
+</PROCESS>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="部门考核" class="com.yuanluesoft.enterprise.evaluation.department.pojo.DepartmentEvaluation">
+		<field name="evaluationMonth" title="月份" length="2" type="number" inputMode="hidden"/>
+		<field name="evaluationYear" title="年度" length="4" type="number" inputMode="hidden"/>
+		<field name="created" title="考核时间" type="timestamp" inputMode="readonly"/>
+		<field name="creator" title="考核人" length="60" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="考核人ID" length="20" type="number" inputMode="text"/>
+		<field name="results" title="评价结果" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.evaluation.department.pojo.DepartmentEvaluationResult</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="结果" class="com.yuanluesoft.enterprise.evaluation.department.pojo.DepartmentEvaluationResult">
+		<field name="evaluationId" title="考核ID" length="20" type="number" inputMode="hidden"/>
+		<field name="departmentId" title="部门ID" length="20" type="number" inputMode="none"/>
+		<field name="departmentName" title="部门名称" length="60" type="string" inputMode="readonly"/>
+		<field name="result" title="权重" length="5,2" type="number" inputMode="dropdown">
+			<parameter name="itemsText">1\0 1.2\0 1.15\0 1.1\0 1.05\0 0.95\0 0.9\0 0.85\0 0.8</parameter>
+		</field>
+		<field name="remark" title="考核说明" length="2000" type="string" inputMode="text"/>
+		<field name="evaluation" title="部门考核" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.enterprise.evaluation.department.pojo.DepartmentEvaluation</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="参数配置" class="com.yuanluesoft.enterprise.evaluation.department.pojo.DepartmentEvaluationParameter">
+		<field name="dropoutDepartmentIds" title="不参与的部门ID" length="4000" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="dropoutDepartments" title="不参与的部门" length="4000" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(550, 360, true, 'dropoutDepartmentIds{id},dropoutDepartments{name|不参与的部门|100%|}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

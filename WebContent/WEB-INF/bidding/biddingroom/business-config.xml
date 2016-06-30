@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="开标室" class="com.yuanluesoft.bidding.biddingroom.pojo.BiddingRoom" businessServiceName="biddingRoomService">
+		<field name="name" title="名称" length="30" required="true" type="string" inputMode="text"/>
+		<field name="type" title="类型" length="10" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">开标\0评标</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="city" title="地区" length="10" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">biddingProjectParameterService</parameter>
+		</field>
+		<field name="seat" title="位置数" length="4" type="number" inputMode="text"/>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+		<field name="remark" title="备注" length="1000" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="开评标室安排" class="com.yuanluesoft.bidding.biddingroom.pojo.BiddingRoomSchedule" businessServiceName="biddingRoomService">
+		<field name="projectId" title="工程ID" length="20" type="number" inputMode="none"/>
+		<field name="projectName" title="工程名称" length="250" type="string" inputMode="readonly">
+			<parameter name="rssTitleField">true</parameter>
+		</field>
+		<field name="roomType" title="开标/评标" length="20" type="string" inputMode="readonly"/>
+		<field name="roomId" title="开标室ID" type="number" inputMode="hidden"/>
+		<field name="roomName" title="开标室名称" length="30" type="string" inputMode="select">
+			<parameter name="execute">if(document.getElementsByName('bidopeningRoomSchedule.roomName')[0]){selectRoom('开标', '{PARAMETER:city}', true, '{PARAMETER:id}', document.getElementsByName('bidopeningRoomSchedule.beginTime')[0].value, document.getElementsByName('bidopeningRoomSchedule.endTime')[0].value, 500, 360, false, 'bidopeningRoomSchedule.roomId{id},bidopeningRoomSchedule.roomName{name}');}else{selectRoom('评标', '{PARAMETER:city}', true, '{PARAMETER:id}', document.getElementsByName('evaluatingRoomSchedule.beginTime')[0].value, document.getElementsByName('evaluatingRoomSchedule.endTime')[0].value, 500, 360, false, 'evaluatingRoomSchedule.roomId{id},evaluatingRoomSchedule.roomName{name}')}</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="js">/bidding/biddingroom/js/biddingroom.js</parameter>
+		</field>
+		<field name="beginTime" title="使用开始时间" type="timestamp" inputMode="datetime">
+			<parameter name="rssPubDateField">true</parameter>
+		</field>
+		<field name="endTime" title="使用结束时间" type="timestamp" inputMode="datetime"/>
+		<field name="publicBeginTime" title="公示时间" type="timestamp" inputMode="readonly"/>
+		<field name="publicPersonId" title="发布人ID" type="number" inputMode="none"/>
+		<field name="publicPersonName" title="发布人" length="30" type="string" inputMode="readonly"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+		<field name="agent" title="中选代理" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.bidding.project.pojo.BiddingProjectAgent</parameter>
+		</field>
+		<field name="project" title="工程项目" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.bidding.project.pojo.BiddingProject</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

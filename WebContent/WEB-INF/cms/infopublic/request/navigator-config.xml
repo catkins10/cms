@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<application title="信息公开申请">
+	<viewLink local="admin/todoRequest" title="待办申请"/>
+	<viewLink local="admin/inProcessRequest" title="在办申请"/>
+	<viewLink local="admin/completedRequest" title="已办申请"/>
+	<viewLink local="admin/allRequest" title="所有申请"/>
+	<link title="办理流程" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/infopublic/request&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/workflowSetting
+	</link>
+	<link title="办结短信格式" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/infopublic/request&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/smsFormat
+	</link>
+</application>

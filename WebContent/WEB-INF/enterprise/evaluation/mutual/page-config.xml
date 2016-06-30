@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=enterprise/evaluation/mutual&amp;anonymous=false"/>
+		
+		<page name="evaluation" title="互评" url="/enterprise/evaluation/mutual/evaluation.shtml" systemLink="false">
+			<subPage name="base" title="互评"/>
+		</page>
+
+		<page name="evaluationSubmitted" title="互评完成提示" systemLink="false"/>
+		
+		<page name="myEvaluationTotal" title="我的互评统计" url="/cms/sitemanage/applicationIndex.shtml?applicationName=enterprise/evaluation/mutual&amp;pageName=myEvaluationTotal&amp;anonymous=false"/>
+
+		<page name="mutualEvaluations" title="已完成互评" url="/cms/sitemanage/applicationIndex.shtml?applicationName=enterprise/evaluation/mutual&amp;pageName=mutualEvaluations&amp;anonymous=false"/>
+	</pages>
+	
+	<links>
+		<link title="互评" dialogURL="/enterprise/evaluation/mutual/templatemanage/insertEvaluationLink.shtml"/>
+	</links>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="mutualEvaluationLink" processor="mutualEvaluationLinkProcessor"/> <!-- 互评链接 -->
+	</pageElements>
+</application>

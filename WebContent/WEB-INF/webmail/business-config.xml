@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="邮件" class="com.yuanluesoft.webmail.pojo.Mail">
+		<field name="userId" title="邮件用户ID" type="number" inputMode="none"/>
+		<field name="mailboxId" title="邮箱ID" type="number" inputMode="hidden"/>
+		<field name="attachmentImg" title="是否有附件" type="imageName" persistence="false" inputMode="readonly"/>
+		<field name="newMailImg" title="是否新邮件" type="imageName" persistence="false" inputMode="readonly"/>
+		<field name="sender" title="发件人" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">mailFrom</parameter>
+		</field>
+		<field name="viewSubject" title="邮件主题" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">subject</parameter>
+		</field>
+		<field name="mailIdOnServer" title="在邮件服务器中的ID" length="100" type="string" inputMode="none">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="newMail" title="是否新邮件" type="string" inputMode="none"/>
+		<field name="mailFrom" title="邮件发送人" length="200" type="string" inputMode="readonly"/>
+		<field name="mailTo" title="邮件接收人" length="1000" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(550, 350, true, 'mailTo{mailFullAddress},mailTo{mailFullAddress|收件人|100%}', 'afterSelectReceiver(0)', '', '', ';');</parameter>
+		</field>
+		<field name="mailCc" title="抄送" length="1000" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(550, 350, true, 'mailCc{mailFullAddress},mailCc{mailFullAddress|抄送|100%}', 'afterSelectReceiver(1)', '', '', ';')</parameter>
+		</field>
+		<field name="mailBcc" title="密送" length="1000" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(550, 350, true, 'mailBcc{mailFullAddress},mailBcc{mailFullAddress|密送|100%}', 'afterSelectReceiver(2)', '', '', ';');</parameter>
+		</field>
+		<field name="replyTo" title="回复" length="200" type="string" inputMode="text"/>
+		<field name="subject" title="主题" length="200" type="string" inputMode="text"/>
+		<field name="receiveDate" title="接收时间" type="timestamp" inputMode="readonly"/>
+		<field name="priority" title="重要等级" length="20" type="string" inputMode="radio">
+			<parameter name="itemsText">高|3\0中|2\0低|1</parameter>
+		</field>
+		<field name="size" title="大小" length="12" type="number" inputMode="readonly"/>
+		<field name="sizeKBytes" title="大小(文本)" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">size</parameter>
+		</field>
+		<field name="hasAttachment" title="是否有附件" length="1" type="char" inputMode="none"/>
+		<field name="readLevel" title="邮件读取等级" length="1" type="char" inputMode="none"/>
+		<field name="mailServer" title="邮件服务器名称" length="100" type="string" inputMode="none">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="lastModified" title="最后修改时间" type="timestamp" inputMode="readonly"/>
+		<field name="mailBodies" title="正文" type="components">
+			<parameter name="class">com.yuanluesoft.webmail.pojo.MailBody</parameter>
+		</field>
+		<field name="mailAttachments" title="附件" type="components">
+			<parameter name="class">com.yuanluesoft.webmail.pojo.MailAttachment</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="serviceName">webMailAttachmentService</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment"/>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">1000000</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="QMAIL" class="com.yuanluesoft.webmail.pojo.qmail.VpopMail"/>
+	<businessObject title="邮件正文" class="com.yuanluesoft.webmail.pojo.MailBody">
+		<field name="mailId" title="邮件记录ID" type="number" inputMode="none"/>
+		<field name="body" title="正文" type="string" inputMode="none"/>
+	</businessObject>
+	<businessObject title="邮件附件" class="com.yuanluesoft.webmail.pojo.MailAttachment">
+		<field name="mailId" title="邮件记录ID" type="number" inputMode="none"/>
+		<field name="contentType" title="附件类型" length="32" type="string" inputMode="none">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="name" title="附件名称" length="128" type="string" inputMode="readonly"/>
+		<field name="size" title="附件大小" length="12" type="number" inputMode="readonly"/>
+		<field name="contentTransferEncoding" title="传输编码" length="50" type="string" inputMode="none">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="contentId" title="内容ID" length="100" type="string" inputMode="none">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="beginIndex" title="在邮件中的起始位置" length="12" type="number" inputMode="text"/>
+		<field name="endIndex" title="在邮件中的结束位置" length="12" type="number" inputMode="text"/>
+	</businessObject>
+	<businessObject title="邮箱" class="com.yuanluesoft.webmail.pojo.Mailbox">
+		<field name="userId" title="邮件用户ID" type="number" inputMode="none"/>
+		<field name="mailboxName" title="邮箱名称" length="25" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="邮件过滤" class="com.yuanluesoft.webmail.pojo.MailFilter" businessServiceName="mailFilterService">
+		<field name="userId" title="用户ID" type="number" inputMode="none"/>
+		<field name="conditions" title="过虑条件" type="string" inputMode="text"/>
+		<field name="action" title="执行的操作" length="100" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="enable" title="是否生效" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">启用|1\0禁用|0</parameter>
+		</field>
+		<field name="priority" title="优先级" length="4" type="string" inputMode="none"/>
+		<field name="conditionsDescribe" title="条件描述" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">conditions</parameter>
+		</field>
+		<field name="actionDescribe" title="执行的操作" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">action</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="POP3代收" class="com.yuanluesoft.webmail.pojo.POP3Server">
+		<field name="userId" title="邮件用户ID" type="number" inputMode="none"/>
+		<field name="serverAddress" title="服务器地址" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="serverPort" title="POP3端口" length="5" type="number" inputMode="text"/>
+		<field name="mailAddress" title="邮件地址" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="loginName" title="用户名" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="password" title="密码" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

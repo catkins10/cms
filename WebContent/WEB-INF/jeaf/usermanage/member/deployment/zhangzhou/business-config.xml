@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="网上用户注册" class="com.yuanluesoft.jeaf.usermanage.member.pojo.Member" businessServiceName="memberService">
+		<field name="loginName" title="登录用户名" length="32" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+			<parameter name="validateRule">^[a-zA-Z][a-zA-Z0-9_]{1,19}$</parameter>
+		</field>
+		<field name="password" title="密码" length="100" required="true" type="password" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="email" title="邮箱" length="100" required="true" type="email" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="question" title="密码问题" length="200" type="string" inputMode="text"/>
+		<field name="answer" title="问题答案" length="200" type="string" inputMode="text"/>
+		<field name="registTime" title="注册时间" type="timestamp" inputMode="readonly"/>
+		<field name="name" title="真实姓名" length="30" required="true" type="string" inputMode="text"/>
+		<field name="sex" title="性别" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">男|M\0女|F</parameter>
+		</field>
+		<field name="area" title="所属省份" length="30" type="string" inputMode="dropdown">
+			<parameter name="itemsText">北京市\0天津市\0河北省\0山西省\0辽宁省\0吉林省\0上海市\0江苏省\0浙江省\0安徽省\0福建省\0江西省\0山东省\0河南省\0内蒙古自治区\0黑龙江省\0湖北省\0湖南省\0广东省\0广西壮族自治区\0海南省\0四川省\0重庆市\0贵州省\0云南省\0西藏自治区\0陕西省\0甘肃省\0青海省\0宁夏回族自治区\0新疆维吾尔自治区\0香港特别行政区\0澳门特别行政区\0台湾地区\0东南亚\0欧洲\0南美洲\0澳洲\0非洲\0美国\0加拿大\0新加坡</parameter>
+		</field>
+		<field name="company" title="所在单位" length="100" required="true" type="string" inputMode="text"/>
+		<field name="organization" title="单位所属行业" length="50" type="string" inputMode="dropdown">
+			<parameter name="itemsText">银行\0电信\0政府\0保险\0金融证券\0交通物流\0互联网\0系统集成\0计算机软件\0计算机硬件\0电子\0制造\0能源\0媒体\0教育科研\0其他</parameter>
+		</field>
+		<field name="address" title="地址" length="200" type="string" inputMode="text"/>
+		<field name="postalcode" title="邮编" length="20" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="fax" title="传真" length="100" type="phone" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="telephone" title="联系电话" length="16" type="phone" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="cell" title="手机" length="16" required="true" type="phone" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="department" title="部门" length="50" type="string" inputMode="text"/>
+		<field name="duty" title="职务" length="50" type="string" inputMode="dropdown">
+			<parameter name="itemsText">开发工程师\0系统工程师\0架构师\0业务咨询师\0技术咨询师\0媒体/分析师\0教授/教师\0销售人员\0学生\0项目经理\0IT项目经理\0市场/销售经理\0技术开发总监\0IT部门总监\0市场/销售总监\0信息技术总监\0首席技术执行官\0首席信息执行官\0首席财务执行官\0首席执行官\0其他</parameter>
+		</field>
+		<field name="identityCardName" title="证件名称" length="30" required="true" type="string" inputMode="text"/>
+		<field name="identityCard" title="证件号码" length="100" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="hideDetail" title="公开用户资料" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">允许|0\0禁止|1</parameter>
+		</field>
+		<field name="portraitName" title="使用的系统头像名称" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="halt" title="是否禁用" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">启用|0\0禁用|1</parameter>
+		</field>
+		<field name="lastSetPassword" title="上次设置密码的时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+	<businessObject title="网上用户注册配置" class="com.yuanluesoft.jeaf.usermanage.member.pojo.MemberRegistSetting">
+		<field name="registDisabled" title="是否禁止注册" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">禁止注册|1\0允许注册|0</parameter>
+		</field>
+		<field name="registDisabledReason" title="禁止注册的原因" length="100" type="string" inputMode="text"/>
+	</businessObject>
+</businessObjects>

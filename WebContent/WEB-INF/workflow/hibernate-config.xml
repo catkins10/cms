@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--工作流定义-->
+	<class name="com.yuanluesoft.workflow.server.engin.pojo.WorkflowDefinition" table="workflow_definition">
+		<id name="id" type="long">
+			<column name="id" sql-type="BINARY" />
+			<generator class="assigned" />
+		</id>
+		<property name="workflowId"/> <!--流程ID,不随流程更新而改变-->
+		<property name="configure" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--XML配置-->
+		<property name="deprecated"/> <!--是否过期-->
+	</class>
+	
+	<!--工作流定义扩展-->
+	<class name="com.yuanluesoft.workflow.server.engin.pojo.WorkflowDefinitionExtend" table="workflow_definition_extend">
+		<id name="id" type="long">
+			<column name="id" />
+			<generator class="assigned" />
+		</id>
+		<property name="configure" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--扩展配置XML-->
+	</class>
+	
+	<!--工作流实例(本年度)-->
+	<class name="com.yuanluesoft.workflow.server.engin.pojo.WorkflowInstanceCurrentYear" table="workflow_instance_current_year">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="workflowInstance" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--工作流实例XML-->
+		<property name="state"/> <!--运行状态-->
+		<property name="workflowDefinitionId"/> <!--工作流定义ID-->
+		<property name="lastModifyTime"/> <!--最后办理时间-->
+	</class>
+	
+	<!--工作流实例(过去)-->
+	<class name="com.yuanluesoft.workflow.server.engin.pojo.WorkflowInstanceElapsed" table="workflow_instance_elapsed">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="workflowInstance" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--工作流实例XML-->
+		<property name="state"/> <!--运行状态-->
+		<property name="workflowDefinitionId"/> <!--工作流定义ID-->
+	</class>
+</hibernate-mapping>

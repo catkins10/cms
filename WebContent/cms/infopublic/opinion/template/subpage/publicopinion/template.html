@@ -1,0 +1,54 @@
+<form id="publicOpinion" class="form" title="表单:信息公开意见填写" action="applicationName=cms/infopublic/opinion" style="border-bottom: #ffc0c0 1px dotted; border-left: #ffc0c0 1px dotted; margin: 0px; border-top: #ffc0c0 1px dotted; border-right: #ffc0c0 1px dotted">
+<span class="systemPrompt"><a id="systemPrompt" urn="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;IMG src=&quot;{CONTEXTPATH}/cms/image/warn.gif&quot; align=absMiddle&gt;&amp;nbsp;&amp;lt;提示信息&amp;gt;">&lt;系统提示&gt;</a></span>
+<table class="editabledTable">
+	<colgroup><col align="right" /><col width="100%" /></colgroup>
+	<tr>
+		<td nowrap="nowrap">主题：</td>
+		<td><input class="field" id="field" title="主题" name="subject" type="text" /></td>
+	</tr>
+	<tr>
+		<td valign="top">详细内容：</td>
+		<td><textarea class="field" id="field" title="正文" style="height: 120px" name="content"></textarea></td>
+	</tr>
+	<tr>
+		<td nowrap="nowrap">&nbsp;是否允许公开：</td>
+		<td><span id="fieldSpan" title="是否允许公开"><input id="field" type="radio" name="isPublic" value="1" checked="checked"/>&nbsp;允许&nbsp;<input id="field" type="radio" name="isPublic" value="0" />&nbsp;禁止</span></td>
+	</tr>
+	<tr>
+		<td nowrap="nowrap">您的姓名：</td>
+		<td><input class="field" id="field" title="咨询人" name="creator" type="text" /></td>
+	</tr>
+	<tr>
+		<td>电子邮箱：</td>
+		<td><input class="field" id="field" title="邮箱" name="creatorMail" type="text" /></td>
+	</tr>
+	<tr>
+		<td nowrap="nowrap">手机：</td>
+		<td><input class="field" id="field" title="手机" name="creatorMobile" type="text" /></td>
+	</tr>
+	
+	<tr>
+		<td nowrap="nowrap">工作单位：</td>
+		<td><input class="field" id="field" title="所在单位" name="creatorUnit" type="text" /></td>
+	</tr>
+	<tr>
+		<td nowrap="nowrap">联系地址：</td>
+		<td><input class="field" id="field" title="地址" name="creatorAddress" type="text" /></td>
+	</tr>
+	<tr>
+		<td valign="bottom" nowrap="nowrap">验证码：</td>
+		<td><img id="validateCodeImage" title="验证码" alt="" src="{CONTEXTPATH}/jeaf/validatecode/generateValidateCodeImage.shtml" /> <a onclick="document.getElementById('validateCodeImage').src=document.getElementById('validateCodeImage').src.split('?')[0] + '?reload=true&amp;seq=' + Math.random();return false;" href="#">看不清，换一张</a> </td>
+	</tr>
+	<tr>
+		<td nowrap="nowrap">输入验证码：</td>
+		<td><input class="field" name="validateCode" type="text" /></td>
+	</tr>
+	<tr>
+		<td nowrap="nowrap"></td>
+		<td align="center">
+			<br />
+			<input class="submitButton" id="button" title="提交" tabindex="0" type="button" value="提交" />
+		</td>
+	</tr>
+</table>
+</form>

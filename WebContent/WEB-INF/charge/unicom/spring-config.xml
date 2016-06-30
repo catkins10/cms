@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- hibernate会话 -->
+	<bean id="unicomSessionFactory" class="org.springframework.orm.hibernate.LocalSessionFactoryBean">
+		<property name="mappingResources">
+			<list>
+				<value>../charge/unicom/hbm-unicom-synch.xml</value> <!-- 视图 -->
+			</list>
+		</property>
+		<property name="dataSource">  <!-- hibernate数据源 -->
+			<bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> 
+			    <property name="driverClassName"><value>oracle.jdbc.driver.OracleDriver</value></property>
+			    <property name="url"><value>jdbc:oracle:thin:@localhost:1521:yuanluesoft</value></property>
+			    <property name="username"><value>kd9191edu</value></property>
+			    <property name="password"><value>kd9191edu</value></property>
+			    <property name="maxActive"><value>10</value></property>
+			    <property name="maxIdle"><value>10</value></property>
+			    <property name="maxWait"><value>-1</value></property>
+			</bean>
+		</property>
+		<property name="hibernateProperties"> 
+			<props> 
+				<prop key="hibernate.dialect">net.sf.hibernate.dialect.Oracle9Dialect</prop>
+				<prop key="hibernate.show_sql">true</prop> 
+			</props>
+		</property> 
+	</bean>
+
+	<!-- 数据访问对象 -->
+	<bean id="unicomDAO" class="com.yuanluesoft.jeaf.database.hibernate.DatabaseServiceImpl">
+		<property name="sessionFactory"><ref local="unicomSessionFactory"/></property>
+	</bean>
+	
+	<!-- 联通同步服务 -->
+	<bean id="unicomSynchClient" class="com.yuanluesoft.charge.thirdparty.unicom.service.spring.UnicomSynchClientImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="unicomDAO"><ref bean="unicomDAO"/></property>
+		<property name="orgService"><ref bean="orgService"/></property>
+		<property name="personalOrderService"><ref bean="personalOrderService"/></property>
+	</bean>
+	
+	<!-- 联通账户服务 -->
+	<bean id="unicomAccountService" class="com.yuanluesoft.charge.thirdparty.unicom.service.spring.PersonalAccountServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="soapConnectionPool"><ref bean="soapConnectionPool"/></property>
+		<property name="soapPassport"><ref bean="unicomSoapPassport"/></property>
+		<property name="unicomCardService"><ref bean="unicomCardService"/></property>
+	</bean>
+	
+	<!-- 账号卡服务 -->
+	<bean id="unicomCardService" class="com.yuanluesoft.charge.thirdparty.unicom.service.spring.UnicomCardServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="cryptService"><ref bean="cryptService"/></property>
+	</bean>
+</beans>

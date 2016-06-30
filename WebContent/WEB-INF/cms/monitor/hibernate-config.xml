@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--单位配置-->
+	<class name="com.yuanluesoft.cms.monitor.pojo.MonitorUnitConfig" table="monitor_unit_config">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(200)-->
+		<property name="ip"/> <!--IP地址,VARCHAR(100)-->
+		<property name="jdbcUrl"/> <!--JDBC URL,VARCHAR(1000)-->
+		<property name="dbUserName"/> <!--数据库用户名,VARCHAR(200)-->
+		<property name="dbPassword"/> <!--数据库密码,VARCHAR(200)-->
+		<property name="captureTime"/> <!--采集时间点,如果没有设置,设为最后一个单位的时间加5分钟,VARCHAR(5)-->
+		<property name="captureDays"/> <!--采集周期,以天为单位,默认1天,NUMERIC(2)-->
+		<property name="creatorId"/> <!--创建人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--创建人,VARCHAR(100)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+		<set inverse="true" lazy="false" name="sqls" table="monitor_unit_sql" cascade="delete" order-by="captureContent">
+			<key column="unitConfigId" />
+			<one-to-many class="com.yuanluesoft.cms.monitor.pojo.MonitorUnitSql" />
+		</set>
+	</class>
+	
+	<!--单位配置:SQL配置-->
+	<class name="com.yuanluesoft.cms.monitor.pojo.MonitorUnitSql" table="monitor_unit_sql">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitConfigId"/> <!--单位配置ID,NUMERIC(20)-->
+		<property name="captureContent"/> <!--采集内容,如:政府信息、短信接收,VARCHAR(100)-->
+		<property name="captureContentClass"/> <!--采集内容类名称,VARCHAR(200)-->
+		<property name="captureSql"/> <!--SQL,VARCHAR(4000)-->
+		<property name="lastCaptureTime"/> <!--最后采集时间,TIMESTAMP null-->
+		<many-to-one name="unitConfig" class="com.yuanluesoft.cms.monitor.pojo.MonitorUnitConfig" column="unitConfigId" update="false" insert="false"/>
+	</class>
+	
+	<!--监察参数-->
+	<class name="com.yuanluesoft.cms.monitor.pojo.MonitorParameter" table="monitor_parameter">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="orgId"/> <!--适用的机构ID,NUMERIC(20)-->
+		<property name="orgName"/> <!--适用的机构名称,VARCHAR(200)-->
+		<set inverse="true" lazy="false" name="contentParameters" table="monitor_parameter_content" cascade="delete">
+			<key column="parameterId" />
+			<one-to-many class="com.yuanluesoft.cms.monitor.pojo.MonitorContentParameter" />
+		</set>
+	</class>
+	
+	<!--监察参数:采集对象配置-->
+	<class name="com.yuanluesoft.cms.monitor.pojo.MonitorContentParameter" table="monitor_parameter_content">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="parameterId"/> <!--参数配置ID,NUMERIC(20)-->
+		<property name="contentClassName"/> <!--采集对象类名称,VARCHAR(200)-->
+		<property name="timeout"/> <!--超时参数,VARCHAR(200)-->
+		<many-to-one name="monitorParameter" class="com.yuanluesoft.cms.monitor.pojo.MonitorParameter" column="parameterId" update="false" insert="false"/>
+	</class>
+	
+	<!--监察:采集日志-->
+	<class name="com.yuanluesoft.cms.monitor.pojo.MonitorCaptureLog" table="monitor_capture_log">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="unitSqlId"/> <!--SQL配置ID,NUMERIC(20)-->
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(100)-->
+		<property name="captureSql"/> <!--SQL,VARCHAR(4000)-->
+		<property name="captureTime"/> <!--采集时间,TIMESTAMP null-->
+		<property name="isSuccess"/> <!--是否成功,NUMERIC(1)-->
+		<property name="captureFailedReason" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--采集失败原因,TEXT-->
+	</class>
+</hibernate-mapping>

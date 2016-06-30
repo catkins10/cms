@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 应用集成服务 -->
+	<bean id="eaiService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<ref bean="eaiServiceImpl"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="eaiServiceImpl" class="com.yuanluesoft.eai.server.service.spring.EAIServiceImpl">
+		<property name="eaiParser"><ref local="eaiParser"/></property>
+		<property name="cache"><ref bean="eaiCache"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="sessionService"><ref bean="sessionService"/></property>
+		<property name="serviceSoapPassport"><ref bean="localSoapPassport"/></property>
+	</bean>
+	
+	<!-- EAI配置服务 -->
+	<bean id="eaiConfigureService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<ref bean="eaiConfigureServiceImpl"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="refresh*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="init*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="process*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="eaiConfigureServiceImpl" class="com.yuanluesoft.eai.server.configure.service.spring.EAIConfigureServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="eaiService"><ref bean="eaiServiceImpl"/></property>
+		<property name="eaiParser"><ref bean="eaiParser"/></property>
+		<property name="applicationSetParser"><ref bean="applicationSetParser"/></property>
+	</bean>
+	
+	<!-- 应用集成校验 -->
+	<bean id="eaiServer" class="com.yuanluesoft.eai.server.local.EAIServerImpl">
+		<property name="eaiService"><ref bean="eaiService"/></property>
+		<property name="eaiConfigureService"><ref bean="eaiConfigureService"/></property>
+	</bean>
+	
+	<!-- 应用解析器 -->
+	<bean id="applicationParser" class="com.yuanluesoft.eai.server.parser.dom4j.ApplicationParser">
+		<property name="userParser"><ref bean="userParser"/></property>
+		<property name="manageUnitParser"><ref bean="manageUnitParser"/></property>
+	</bean>
+
+	<!-- 链接解析器 -->
+	<bean id="linkParser" class="com.yuanluesoft.eai.server.parser.dom4j.LinkParser">
+		<property name="userParser"><ref bean="userParser"/></property>
+	</bean>
+	
+	<!-- 管理单元解析器 -->
+	<bean id="manageUnitParser" class="com.yuanluesoft.eai.server.parser.dom4j.ManageUnitParser">
+		<property name="userParser"><ref bean="userParser"/></property>
+	</bean>
+
+	<!-- 应用集合解析器 -->
+	<bean id="applicationSetParser" class="com.yuanluesoft.eai.server.parser.dom4j.ApplicationSetParserImpl">
+		<property name="applicationParser"><ref bean="applicationParser"/></property>
+		<property name="linkParser"><ref bean="linkParser"/></property>
+	</bean>
+	
+	<!-- 应用集成解析器 -->
+	<bean id="eaiParser" class="com.yuanluesoft.eai.server.parser.dom4j.EAIParserImpl">
+		<property name="applicationParser"><ref bean="applicationParser"/></property>
+		<property name="linkParser"><ref bean="linkParser"/></property>
+		<property name="userParser"><ref bean="userParser"/></property>
+		<property name="transitionParser"><ref bean="transitionParser"/></property>
+		<property name="configureExtendParser"><ref bean="configureExtendParser"/></property>
+	</bean>
+</beans>

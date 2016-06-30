@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--人才-->
+	<class name="com.yuanluesoft.job.talent.pojo.JobTalent" table="job_talent">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--姓名,VARCHAR(30)-->
+		<property name="email"/> <!--邮箱,VARCHAR(100)-->
+		<property name="password"/> <!--密码,VARCHAR(100)-->
+		<property name="sex"/> <!--性别,男/M,女/F,CHAR(1)-->
+		<property name="nation"/> <!--民族,VARCHAR(20)-->
+		<property name="birthday"/> <!--生日,DATE-->
+		<property name="identificationType"/> <!--证件类型,VARCHAR(30)-->
+		<property name="identificationNumber"/> <!--证件号码,VARCHAR(100)-->
+		<property name="maritalStatus"/> <!--婚姻状况,NUMERIC(1)-->
+		<property name="stature"/> <!--身高,NUMERIC(3)-->
+		<property name="politicalStatus"/> <!--政治面貌,VARCHAR(20)-->
+		<property name="workYear"/> <!--工作年限,在读学生,应届毕业生,1年,2年,3-4年,5-7年,8-9年,10年以上,不限,NUMERIC(2)-->
+		<property name="residence"/> <!--户口所在地,VARCHAR(30)-->
+		<property name="studentSource"/> <!--生源所在地,VARCHAR(30)-->
+		<property name="isPoor"/> <!--是否困难生,NUMERIC(1)-->
+		<property name="areaId"/> <!--居住地ID,NUMERIC(20)-->
+		<property name="area"/> <!--居住地名称,VARCHAR(30)-->
+		<property name="cell"/> <!--手机,VARCHAR(100)-->
+		<property name="im"/> <!--IM,VARCHAR(100)-->
+		<property name="englishLevel"/> <!--英语等级,未参加,未通过,英语四级,英语六级,专业四级,专业八级,VARCHAR(10)-->
+		<property name="japaneseLevel"/> <!--日语等级,无,一级,二级,三级,四级,VARCHAR(10)-->
+		<property name="computerLevel"/> <!--计算机水平,VARCHAR(100)-->
+		<property name="drivingLicense"/> <!--驾照,VARCHAR(3)-->
+		<property name="selfAppraisal"/> <!--自我评价,VARCHAR(4000)-->
+		<property name="receivePushMail"/> <!--接收推送邮件,NUMERIC(1),1/接收,0/不接收-->
+		<property name="created"/> <!--注册时间,TIMESTAMP-->
+		<property name="lastModified"/> <!--最后更新时间,TIMESTAMP-->
+		<property name="status"/> <!--状态,0/注册,1/审核通过,2/审核未通过,3/停用,NUMERIC(1)-->
+		<property name="approverId"/> <!--审核人ID,NUMERIC(20)-->
+		<property name="approver"/> <!--审核人,VARCHAR(50)-->
+		<property name="approvalTime"/> <!--审核时间,TIMESTAMP null-->
+		<property name="failedReason"/> <!--审核未通过原因,VARCHAR(2000)-->
+		<!-- 求职意向 -->
+		<set cascade="delete" inverse="true" lazy="true" name="intentions" table="job_talent_intention" order-by="id">
+			<key column="talentId" />
+			<one-to-many class="com.yuanluesoft.job.talent.pojo.JobTalentIntention" />
+		</set>
+		<!-- 教育经历 -->
+		<set cascade="delete" inverse="true" lazy="true" name="schoolings" table="job_talent_schooling" order-by="startDate DESC">
+			<key column="talentId" />
+			<one-to-many class="com.yuanluesoft.job.talent.pojo.JobTalentSchooling" />
+		</set>
+		<!-- 培训经历 -->
+		<set cascade="delete" inverse="true" lazy="true" name="trainings" table="job_talent_training" order-by="startDate DESC">
+			<key column="talentId" />
+			<one-to-many class="com.yuanluesoft.job.talent.pojo.JobTalentTraining" />
+		</set>
+		<!-- 语言能力 -->
+		<set cascade="delete" inverse="true" lazy="true" name="speechs" table="job_talent_speech" order-by="id">
+			<key column="talentId" />
+			<one-to-many class="com.yuanluesoft.job.talent.pojo.JobTalentSpeech" />
+		</set>
+		<!-- 工作经历 -->
+		<set cascade="delete" inverse="true" lazy="true" name="careers" table="job_talent_career" order-by="startDate DESC">
+			<key column="talentId" />
+			<one-to-many class="com.yuanluesoft.job.talent.pojo.JobTalentCareer" />
+		</set>
+		<!-- 就业跟踪调查表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="employments" table="job_talent_employment" order-by="created DESC">
+			<key column="talentId" />
+			<one-to-many class="com.yuanluesoft.job.talent.pojo.JobTalentEmployment" />
+		</set>
+		
+		<!--就业报到-->
+		<set cascade="delete" inverse="true" lazy="true" name="reports" table="job_talent_report">
+			<key column="talentId" />
+			<one-to-many class="com.yuanluesoft.job.talent.pojo.JobTalentReport" />
+		</set>
+	
+		<!-- 项目经验 -->
+		<set cascade="delete" inverse="true" lazy="true" name="projects" table="job_talent_project" order-by="startDate DESC">
+			<key column="talentId" />
+			<one-to-many class="com.yuanluesoft.job.talent.pojo.JobTalentProject" />
+		</set>
+		<!-- 证书 -->
+		<set cascade="delete" inverse="true" lazy="true" name="certificates" table="job_talent_certificate" order-by="gained DESC">
+			<key column="talentId" />
+			<one-to-many class="com.yuanluesoft.job.talent.pojo.JobTalentCertificate" />
+		</set>
+		<!-- 其它技能 -->
+		<set cascade="delete" inverse="true" lazy="true" name="abilities" table="job_talent_ability" order-by="id">
+			<key column="talentId" />
+			<one-to-many class="com.yuanluesoft.job.talent.pojo.JobTalentAbility" />
+		</set>
+	</class>
+	
+	<!--人才:教育经历-->
+	<class name="com.yuanluesoft.job.talent.pojo.JobTalentSchooling" table="job_talent_schooling">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="talentId"/> <!--人才ID,NUMERIC(20)-->
+		<property name="startDate"/> <!--开始时间,DATE-->
+		<property name="endDate"/> <!--结束时间,DATE-->
+		<property name="school"/> <!--学校,VARCHAR(100)-->
+		<property name="department"/> <!--院系,VARCHAR(100)-->
+		<property name="specialty"/> <!--专业,VARCHAR(50)-->
+		<property name="schoolClassId"/> <!--所在班级ID,NUMERIC(20)-->
+		<property name="schoolClass"/> <!--所在班级,VARCHAR(60)-->
+		<property name="qualification"/> <!--学历,初中,高中,职业高中,职业中专,中专,大专,本科,MBA,硕士,博士,NUMERIC(2)-->
+		<property name="degree"/> <!--学位,VARCHAR(20)-->
+		<property name="description"/> <!--专业描述,VARCHAR(2000)-->
+		<property name="abroad"/> <!--海外学习经历,NUMERIC(1)-->
+		<property name="studentNumber"/> <!--学号,VARCHAR(30)-->
+		<property name="candidateNumber"/> <!--考生号,VARCHAR(100)-->
+	</class>
+	
+	<!--人才:培训经历-->
+	<class name="com.yuanluesoft.job.talent.pojo.JobTalentTraining" table="job_talent_training">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="talentId"/> <!--人才ID,NUMERIC(20)-->
+		<property name="startDate"/> <!--开始时间,DATE-->
+		<property name="endDate"/> <!--结束时间,DATE-->
+		<property name="organization"/> <!--培训机构,VARCHAR(100)-->
+		<property name="address"/> <!--培训地点,VARCHAR(200)-->
+		<property name="course"/> <!--培训课程,初中,高中,职业高中,职业中专,中专,大专,本科,MBA,硕士,博士,VARCHAR(200)-->
+		<property name="certificate"/> <!--获得证书,VARCHAR(100)-->
+		<property name="description"/> <!--详细描述,VARCHAR(2000)-->
+		<property name="showInResume"/> <!--显示在简历中,NUMERIC(1)-->
+	</class>
+	
+	<!--人才:求职意向-->
+	<class name="com.yuanluesoft.job.talent.pojo.JobTalentIntention" table="job_talent_intention">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="talentId"/> <!--人才ID,NUMERIC(20)-->
+		<property name="companyScale"/> <!--企业规模,NUMERIC(1)-->
+		<property name="minMonthlyPay"/> <!--期望最低月薪,NUMERIC(8)-->
+		<property name="maxMonthlyPay"/> <!--期望最高月薪,NUMERIC(8)-->
+		<property name="entryDate"/> <!--到岗时间,DATE-->
+		<!-- 求职意向地点 -->
+		<set cascade="delete" inverse="true" lazy="false" name="areas" table="job_talent_intention_area" order-by="id">
+			<key column="intentionId" />
+			<one-to-many class="com.yuanluesoft.job.talent.pojo.JobTalentIntentionArea" />
+		</set>
+		<!-- 求职意向地点 -->
+		<set cascade="delete" inverse="true" lazy="false" name="types" table="job_talent_intention_type" order-by="id">
+			<key column="intentionId" />
+			<one-to-many class="com.yuanluesoft.job.talent.pojo.JobTalentIntentionType" />
+		</set>
+		<!-- 求职意向行业 -->
+		<set cascade="delete" inverse="true" lazy="false" name="industries" table="job_talent_intention_industry" order-by="id">
+			<key column="intentionId" />
+			<one-to-many class="com.yuanluesoft.job.talent.pojo.JobTalentIntentionIndustry" />
+		</set>
+		<!-- 求职意向职能类别 -->
+		<set cascade="delete" inverse="true" lazy="false" name="posts" table="job_talent_intention_post" order-by="id">
+			<key column="intentionId" />
+			<one-to-many class="com.yuanluesoft.job.talent.pojo.JobTalentIntentionPost" />
+		</set>
+		<!--人才:求职意向公司性质-->
+		<set cascade="delete" inverse="true" lazy="false" name="companyTypes" table="job_talent_intention_co_type" order-by="id">
+			<key column="intentionId" />
+			<one-to-many class="com.yuanluesoft.job.talent.pojo.JobTalentIntentionCompanyType" />
+		</set>
+	</class>
+	
+	<!--人才:求职意向地点-->
+	<class name="com.yuanluesoft.job.talent.pojo.JobTalentIntentionArea" table="job_talent_intention_area">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="intentionId"/> <!--求职意向ID,NUMERIC(20)-->
+		<property name="areaId"/> <!--地点ID,NUMERIC(20)-->
+		<property name="area"/> <!--地点,VARCHAR(50)-->
+	</class>
+	
+	<!--人才:求职意向工作性质-->
+	<class name="com.yuanluesoft.job.talent.pojo.JobTalentIntentionType" table="job_talent_intention_type">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="intentionId"/> <!--求职意向ID,NUMERIC(20)-->
+		<property name="type"/> <!--工作性质,全职,兼职,实习,暑期工,NUMERIC(1)-->
+	</class>
+	
+	<!--人才:求职意向行业-->
+	<class name="com.yuanluesoft.job.talent.pojo.JobTalentIntentionIndustry" table="job_talent_intention_industry">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="intentionId"/> <!--求职意向ID,NUMERIC(20)-->
+		<property name="industryId"/> <!--行业ID,NUMERIC(20)-->
+		<property name="industry"/> <!--行业,VARCHAR(100)-->
+	</class>
+	
+	<!--人才:求职意向职能类别-->
+	<class name="com.yuanluesoft.job.talent.pojo.JobTalentIntentionPost" table="job_talent_intention_post">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="intentionId"/> <!--求职意向ID,NUMERIC(20)-->
+		<property name="postId"/> <!--职能类别ID,NUMERIC(20)-->
+		<property name="post"/> <!--职能类别,VARCHAR(100)-->
+	</class>
+	
+	<!--人才:求职意向公司性质-->
+	<class name="com.yuanluesoft.job.talent.pojo.JobTalentIntentionCompanyType" table="job_talent_intention_co_type">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="intentionId"/> <!--求职意向ID,NUMERIC(20)-->
+		<property name="companyType"/> <!--公司性质,外资（欧美）,外资（非欧美）,合资,国企,民营公司,国内上市公司,外企代表处,政府机关,事业单位,非营利机构,其它性质,VARCHAR(30)-->
+	</class>
+	
+	<!--人才:语言能力-->
+	<class name="com.yuanluesoft.job.talent.pojo.JobTalentSpeech" table="job_talent_speech">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="talentId"/> <!--人才ID,NUMERIC(20)-->
+		<property name="language"/> <!--语言类别,英语,日语,俄语,阿拉伯语,法语,德语,西班牙语,葡萄牙语,意大利语,韩语/朝鲜语,普通话,粤语,闽南语,上海话,其它,VARCHAR(20)-->
+		<property name="level"/> <!--掌握程度,不限,一般,良好,熟练,精通,VARCHAR(10)-->
+		<property name="literacy"/> <!--读写能力,不限,一般,良好,熟练,精通,VARCHAR(10)-->
+		<property name="spoken"/> <!--听说能力,不限,一般,良好,熟练,精通,VARCHAR(10)-->
+	</class>
+	
+	<!--人才:工作经历-->
+	<class name="com.yuanluesoft.job.talent.pojo.JobTalentCareer" table="job_talent_career">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="talentId"/> <!--人才ID,NUMERIC(20)-->
+		<property name="startDate"/> <!--开始时间,DATE-->
+		<property name="endDate"/> <!--结束时间,DATE-->
+		<property name="company"/> <!--公司,VARCHAR(100)-->
+		<property name="industry"/> <!--行业,VARCHAR(100)-->
+		<property name="scale"/> <!--公司规模,NUMERIC(1)-->
+		<property name="type"/> <!--公司性质,VARCHAR(30)-->
+		<property name="area"/> <!--所在地,VARCHAR(60)-->
+		<property name="department"/> <!--部门,VARCHAR(50)-->
+		<property name="job"/> <!--职位,VARCHAR(50)-->
+		<property name="postId"/> <!--职位类别ID,NUMERIC(20)-->
+		<property name="post"/> <!--职位类别,VARCHAR(100)-->
+		<property name="description"/> <!--工作描述,VARCHAR(2000)-->
+		<property name="monthlyPay"/> <!--月薪,NUMERIC(8)-->
+		<property name="reterence"/> <!--证明人,VARCHAR(30)-->
+		<property name="reterenceJob"/> <!--证明人职务,VARCHAR(50)-->
+		<property name="reterenceTel"/> <!--证明人电话,VARCHAR(100)-->
+		<property name="leaveReason"/> <!--离职原因,VARCHAR(2000)-->
+	</class>
+	
+	<!--人才:就业跟踪调查表-->
+	<class name="com.yuanluesoft.job.talent.pojo.JobTalentEmployment" table="job_talent_employment">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="talentId"/> <!--人才ID,NUMERIC(20)-->
+		<property name="graduationYear"/> <!--毕业年份,NUMERIC(4)-->
+		<property name="name"/> <!--姓名,VARCHAR(30)-->
+		<property name="schoolClass"/> <!--专业（班级）,VARCHAR(60)-->
+		<property name="studentNumber"/> <!--学号,VARCHAR(30)-->
+		<property name="studentSource"/> <!--生源所在地,VARCHAR(30)-->
+		<property name="tel"/> <!--联系方式,VARCHAR(100)-->
+		<property name="email"/> <!--电子邮箱,VARCHAR(100)-->
+		<property name="employmentType"/> <!--就业类型,已签约、有接收函、定向委培、灵活就业、升学、出国出境、国家地方项目、暂不就业、待就业,NUMERIC(2)-->
+		<property name="company"/> <!--单位名称,VARCHAR(100)-->
+		<property name="companyAddress"/> <!--单位地址,VARCHAR(100)-->
+		<property name="post"/> <!--岗位,VARCHAR(100)-->
+		<property name="monthlyPay"/> <!--月薪,NUMERIC(8)-->
+		<property name="counterpart"/> <!--专业是否对口,A对口、B较对口、C不对口、D很不对口,NUMERIC(1)-->
+		<property name="satisfaction"/> <!--就业满意度,A满意、B基本满意、C不满意、D很不满意,NUMERIC(1)-->
+		<property name="changeCompany"/> <!--第几次换单位,VARCHAR(20)-->
+		<property name="leaveReason"/> <!--离职原因,VARCHAR(2000)-->
+		<property name="needHelp"/> <!--是否需要推荐,NUMERIC(1)-->
+		<property name="waitReason"/> <!--暂不就业原因,VARCHAR(2000)-->
+		<property name="isNewest"/> <!--是否最新记录,NUMERIC(1)-->
+		<property name="created"/> <!--登记时间,TIMESTAMP-->
+		<property name="remark"/> <!--备注,VARCHAR(4000)-->
+	</class>
+	
+	<!--人才:就业报到-->
+	<class name="com.yuanluesoft.job.talent.pojo.JobTalentReport" table="job_talent_report">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="talentId"/> <!--人才ID,NUMERIC(20)-->
+		<property name="schoolClassId"/> <!--班级ID,NUMERIC(20)-->
+		<property name="schoolClass"/> <!--班级名称,VARCHAR(100)-->
+		<property name="company"/> <!--单位名称,VARCHAR(100)-->
+		<property name="companyCode"/> <!--单位组织机构代码,VARCHAR(100)-->
+		<property name="companyType"/> <!--单位性质,VARCHAR(30)-->
+		<property name="companySector"/> <!--单位产业,VARCHAR(100)-->
+		<property name="companyIndustry"/> <!--单位行业,VARCHAR(100)-->
+		<property name="personnelFileCompany"/> <!--档案接收单位,VARCHAR(100)-->
+		<property name="personnelFileAddress"/> <!--档案接收地址,VARCHAR(100)-->
+		<property name="name"/> <!--姓名,VARCHAR(30)-->
+		<property name="sex"/> <!--性别,CHAR(1)-->
+		<property name="birthday"/> <!--出生年月,DATE-->
+		<property name="graduateDate"/> <!--毕业时间,DATE-->
+		<property name="residence"/> <!--入学前户口所在地,VARCHAR(100)-->
+		<property name="nation"/> <!--民族,VARCHAR(20)-->
+		<property name="politicalStatus"/> <!--政治面貌,VARCHAR(30)-->
+		<property name="studentNumber"/> <!--学号,VARCHAR(30)-->
+		<property name="schoolingLength"/> <!--学制,VARCHAR(20)-->
+		<property name="qualification"/> <!--学历层次,VARCHAR(20)-->
+		<property name="specialty"/> <!--专业,VARCHAR(100)-->
+		<property name="trainingMode"/> <!--培养方式,VARCHAR(50)-->
+		<property name="tel"/> <!--联系电话,VARCHAR(100)-->
+		<property name="address"/> <!--家庭地址,VARCHAR(100)-->
+		<property name="email"/> <!--电子邮箱,VARCHAR(100)-->
+		<property name="jobType"/> <!--工作职位类别,VARCHAR(50)-->
+		<property name="reportBegin"/> <!--报到开始时间,DATE-->
+		<property name="reportEnd"/> <!--报到截止时间,DATE-->
+		<property name="noticeNumber"/> <!--就业通知书编号,VARCHAR(50)-->
+		<property name="reportNumber"/> <!--就业报到证编号,VARCHAR(50)-->
+		<property name="remark"/> <!--备注,VARCHAR(200)-->
+	</class>
+	
+	<!--人才:项目经验-->
+	<class name="com.yuanluesoft.job.talent.pojo.JobTalentProject" table="job_talent_project">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="talentId"/> <!--人才ID,NUMERIC(20)-->
+		<property name="startDate"/> <!--开始时间,DATE-->
+		<property name="endDate"/> <!--结束时间,DATE-->
+		<property name="projectName"/> <!--项目名称,VARCHAR(200)-->
+		<property name="description"/> <!--项目描述,VARCHAR(2000)-->
+		<property name="duty"/> <!--责任描述,VARCHAR(2000)-->
+		<property name="showInResume"/> <!--显示在简历中,NUMERIC(1)-->
+	</class>
+	
+	<!--人才:证书-->
+	<class name="com.yuanluesoft.job.talent.pojo.JobTalentCertificate" table="job_talent_certificate">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="talentId"/> <!--人才ID,NUMERIC(20)-->
+		<property name="gained"/> <!--获得时间,DATE-->
+		<property name="certificateName"/> <!--证书名称,VARCHAR(100)-->
+		<property name="mark"/> <!--成绩,VARCHAR(100)-->
+	</class>
+	
+	<!--人才:其它技能-->
+	<class name="com.yuanluesoft.job.talent.pojo.JobTalentAbility" table="job_talent_ability">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="talentId"/> <!--人才ID,NUMERIC(20)-->
+		<property name="name"/> <!--名称,VARCHAR(100)-->
+		<property name="description"/> <!--描述,VARCHAR(2000)-->
+	</class>
+	
+	<!--人才审核设置-->
+	<class name="com.yuanluesoft.job.talent.pojo.JobTalentApproval" table="job_talent_approval">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="approvalRequired"/> <!--人才注册审核,NUMERIC(1)-->
+		<property name="passMailSubject"/> <!--审核通过邮件标题,VARCHAR(200)-->
+		<property name="passMailTemplate"/> <!--审核通过邮件模板,VARCHAR(4000)-->
+		<property name="failedMailSubject"/> <!--审核未通过邮件标题,VARCHAR(200)-->
+		<property name="failedMailTemplate"/> <!--审核未通过邮件模板,VARCHAR(4000)-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--招商项目-->
+	<class name="com.yuanluesoft.dpc.investmentproject.pojo.InvestmentProject" table="investment_project">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--项目全称,varchar(200)-->
+		<property name="industry"/> <!--所属行业,包括交通、能源、农林业、工业园区、工业、社会事业、城建环保、旅游业、商贸服务业,varchar(20)-->
+		<property name="childIndustry"/> <!--所属子行业,高速公路、铁路、热电、水利、石油化工、高新技术产业、电子信息技术、机械、传统产业等,varchar(20)-->
+		<property name="area"/> <!--所在地区(开发区),varchar(200)-->
+		<property name="address"/> <!--项目地址,varchar(200)-->
+		<property name="reason"/> <!--项目建设理由及条件,mediumtext-->
+		<property name="scale"/> <!--项目建设规模和内容,mediumtext-->
+		<property name="benefit"/> <!--项目经济效益分析,mediumtext-->
+		<property name="investment"/> <!--总投资(万元),numeric(12,4)-->
+		<property name="foreignInvestment"/> <!--利用外资(万元),numeric(12,4)-->
+		<property name="currency"/> <!--币种,默认人民币,varchar(20)-->
+		<property name="investMode"/> <!--利用外资方式,独资、合资等,varchar(80)-->
+		<property name="investmentDetail"/> <!--投资情况详情,mediumtext-->
+		<property name="cycle"/> <!--建设周期,varchar(1000)-->
+		<property name="progress"/> <!--前期工作进展情况,mediumtext-->
+		<property name="preferential"/> <!--配套的优惠措施,mediumtext-->
+		<property name="managingUnit"/> <!--承办单位,varchar(200)-->
+		<property name="leader"/> <!--项目负责人,varchar(200)-->
+		<property name="linkman"/> <!--联系人及电话,varchar(500)-->
+		<property name="creatorId"/> <!--登记人ID,numeric(20)-->
+		<property name="creator"/> <!--登记人,varchar(50)-->
+		<property name="created"/> <!--登记时间,timestamp-->
+		<property name="remark"/> <!--备注,varchar(1000)-->
+	</class>
+	
+	<!--招商项目:行业配置-->
+	<class name="com.yuanluesoft.dpc.investmentproject.pojo.InvestmentProjectIndustry" table="investment_project_industry">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="industry"/> <!--行业,varchar(20)-->
+		<property name="childIndustry"/> <!--子行业列表,varchar(500)-->
+		<property name="priority"/> <!--优先级,numeric(7,4)-->
+	</class>
+	
+	<!--招商项目:参数配置-->
+	<class name="com.yuanluesoft.dpc.investmentproject.pojo.InvestmentProjectParameter" table="investment_project_parameter">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="area"/> <!--区域和开发区,varchar(4000)-->
+		<property name="investMode"/> <!--利用外资方式,varchar(500)-->
+		<property name="currency"/> <!--币种,人民币,美元,varchar(200)-->
+	</class>
+</hibernate-mapping>

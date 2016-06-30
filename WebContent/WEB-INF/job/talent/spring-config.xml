@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 人才服务 -->
+	<bean id="jobTalentService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.job.talent.service.spring.JobTalentServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="cryptService"><ref bean="cryptService"/></property>
+				<property name="jobParameterService"><ref bean="jobParameterService"/></property>
+				<property name="mailService"><ref bean="mailService"/></property>
+				<property name="personService"><ref bean="personService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="change*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="remove*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="approval*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="cancel*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 人才记录列表处理器 -->
+	<bean id="jobTalentsProcessor" class="com.yuanluesoft.job.talent.processor.JobTalentsProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="jobTalentService"><ref bean="jobTalentService"/></property>
+	</bean>
+	
+	<!-- 报到证打印页面服务 -->
+	<bean id="jobTalentReportPageService" class="com.yuanluesoft.job.talent.pages.TalentReportPageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+	</bean>
+	
+	<!-- 人才推送视图服务 -->
+	<bean id="pushTalentViewService" class="com.yuanluesoft.job.talent.service.spring.PushTalentViewServiceImpl">
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="jobCompanyService"><ref bean="jobCompanyService"/></property>
+	</bean>
+</beans>

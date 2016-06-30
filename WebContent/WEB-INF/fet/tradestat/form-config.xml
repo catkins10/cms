@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<forms>
+	<form name="admin/uploadData" class="com.yuanluesoft.fet.tradestat.forms.admin.UploadData" title="数据上传" pojo="com.yuanluesoft.fet.tradestat.pojo.UploadTradeData">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('删除后不可恢复，是否确定删除？')FormUtils.doAction('deleteUploadData')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/company" class="com.yuanluesoft.fet.tradestat.forms.admin.Company" title="企业信息" pojo="com.yuanluesoft.fet.tradestat.pojo.FetCompany">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('删除后不可恢复，是否确定删除？')FormUtils.doAction('deleteCompany')"/>
+			<action title="审核申请" hide="isRead()" execute="approval()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/county" class="com.yuanluesoft.fet.tradestat.forms.admin.County" title="区县信息" pojo="com.yuanluesoft.fet.tradestat.pojo.FetCounty">
+		<formFields>
+			<field title="查询授权" name="queryUsers" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('删除后不可恢复，是否确定删除？')FormUtils.doAction('deleteCounty')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/developmentArea" class="com.yuanluesoft.fet.tradestat.forms.admin.DevelopmentArea" title="开发区信息" pojo="com.yuanluesoft.fet.tradestat.pojo.FetDevelopmentArea">
+		<formFields>
+			<field title="查询授权" name="queryUsers" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('删除后不可恢复，是否确定删除？')FormUtils.doAction('deleteDevelopmentArea')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.fet.tradestat.forms.StatLogin" title="登录">
+		<formFields>
+			<field name="userType" title="用户类型" type="string" inputMode="radio">
+				<parameter name="itemsText">企业|company\0区县|county\0开发区|developmentArea</parameter>
+			</field>
+			<field name="companyCode" title="企业海关代码" type="string" inputMode="text"/>
+			<field name="county" title="区县名称" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">fetCompanyService</parameter>
+				<parameter name="itemsName">counties</parameter>
+				<parameter name="valueField"></parameter>
+				<parameter name="titleField">county</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="developmentArea" title="开发区名称" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">fetCompanyService</parameter>
+				<parameter name="itemsName">developmentAreas</parameter>
+				<parameter name="valueField"></parameter>
+				<parameter name="titleField">developmentArea</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field title="用户名" name="userName" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form name="company" class="com.yuanluesoft.fet.tradestat.forms.Company" title="企业信息" pojo="com.yuanluesoft.fet.tradestat.pojo.FetCompany">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.fet.tradestat.forms.admin.ImportQuery" title="进口数据查询">
+		<formFields>
+			<field name="categoryByCounty" title="是否按区县分类" type="string" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.fet.tradestat.forms.admin.ExportQuery" title="出口数据查询">
+		<formFields>
+			<field name="categoryByCounty" title="是否按区县分类" type="string" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.fet.tradestat.forms.ImportQuery" title="进口数据查询">
+		<formFields>
+			<field name="queryYear" title="年度" length="4" type="number" inputMode="dropdown">
+				<parameter name="itemsText">{YEARS}</parameter>
+			</field>
+			<field name="queryMonth" title="月份" length="2" type="number" inputMode="dropdown">
+				<parameter name="itemsText">{MONTHS}</parameter>
+			</field>
+			<field name="queryCompany" title="企业名称" type="string" inputMode="text"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.fet.tradestat.forms.ExportQuery" title="出口数据查询">
+		<formFields>
+			<field name="queryYear" title="年度" length="4" type="number" inputMode="dropdown">
+				<parameter name="itemsText">{YEARS}</parameter>
+			</field>
+			<field name="queryMonth" title="月份" length="2" type="number" inputMode="dropdown">
+				<parameter name="itemsText">{MONTHS}</parameter>
+			</field>
+			<field name="queryCompany" title="企业名称" type="string" inputMode="text"/>
+		</formFields>
+	</form>
+</forms>

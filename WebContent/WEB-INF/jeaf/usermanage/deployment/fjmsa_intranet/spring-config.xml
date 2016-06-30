@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!-- 添加和Domino的用户同步 -->
+<beans>
+	<!--组织机构服务 -->
+	<bean id="orgService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<ref bean="orgServiceImpl"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="init*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="authorize">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="upgrade">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="create*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="import*">PROPAGATION_NEVER,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="orgServiceImpl" class="com.yuanluesoft.jeaf.usermanage.service.spring.OrgServiceImpl">
+		<property name="distributionService"><ref bean="distributionService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="personService"><ref bean="personServiceImpl"/></property>
+		<property name="userSynchClientList"><ref bean="userSynchClientList"/></property>
+		<property name="sessionService"><ref bean="sessionService"/></property>
+		<property name="templateService"><ref bean="userPageTemplateServiceImpl"/></property>
+		<property name="recordCache"><ref bean="recordCache"/></property>
+		<property name="schoolSupport"><value>false</value></property>
+		<property name="schoolTypes"><value>小学,初中,高中,完全中学</value></property>
+		<property name="studyStages"><value>小学,初中,高中</value></property>
+		<property name="curriculums">
+			<value>小学,语文,数学,英语,历史与社会,科学,音乐,美术,体育,信息技术,思想品德;
+				   初中,语文,英语,数学,思想政治,历史,地理,物理,化学,生物,信息技术,通用技术,音乐,美术,体育与健康,综合实践活动;
+				   高中,语文,英语,数学,思想政治,历史,地理,物理,化学,生物,信息技术,通用技术,音乐,美术,体育与健康,综合实践活动</value>
+		</property>
+		<property name="grades">
+			<value>小学,小学一年级,小学二年级,小学三年级,小学四年级,小学五年级,小学六年级;
+				   初中,初中一年级,初中二年级,初中三年级;
+				   高中,高中一年级,高中二年级,高中三年级</value>
+		</property>
+	</bean>
+	
+	<!-- 用户服务 -->
+	<bean id="personService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref bean="personServiceImpl"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="change*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="setPriority">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="login*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="set*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="batchRegist*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="personServiceImpl" class="com.yuanluesoft.jeaf.usermanage.service.spring.PersonServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="orgService"><ref bean="orgServiceImpl"/></property>
+		<property name="roleService"><ref bean="roleServiceImpl"/></property>
+		<property name="userSynchClientList"><ref bean="userSynchClientList"/></property>
+		<property name="newUserSynchClientList"><ref local="newUserSynchClientList"/></property>
+		<property name="cryptService"><ref bean="cryptService"/></property>
+		<property name="createMailAccount"><value>true</value></property>
+		<property name="webApplicationUrl"><ref bean="webApplicationUrl"/></property>
+		<property name="webApplicationSafeUrl"><ref bean="webApplicationSafeUrl"/></property>
+		<property name="imageService"><ref bean="imageService"/></property>
+		<property name="fileDownloadService"><ref bean="fileDownloadService"/></property>
+		<!-- property name="serviceSoapPassport"><ref bean="localSoapPassport"/></property-->
+		<property name="templateService"><ref bean="userPageTemplateServiceImpl"/></property>
+		<property name="sessionService"><ref bean="sessionService"/></property>
+		<property name="memberServiceList"><ref bean="memberServiceList"/></property>
+		<property name="userReplicateServiceList"><ref bean="userReplicateServiceList"/></property>
+	</bean>
+
+	<!-- 角色服务 -->
+	<bean id="roleService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref bean="roleServiceImpl"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="roleServiceImpl" class="com.yuanluesoft.jeaf.usermanage.service.spring.RoleServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="personService"><ref bean="personServiceImpl"/></property>
+		<property name="userSynchClientList"><ref bean="userSynchClientList"/></property>
+		<property name="sessionService"><ref bean="sessionService"/></property>
+	</bean>
+	
+	<!-- 代理人服务 -->
+	<bean id="agentService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.jeaf.usermanage.service.spring.AgentServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="personService"><ref bean="personService"/></property>
+				<property name="serviceSoapPassport"><ref bean="localSoapPassport"/></property>
+				<!-- 代理人同步客户端 -->
+				<property name="userSynchClientList"><ref bean="userSynchClientList"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="setAgent*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="remove*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 用户注册服务 -->
+	<bean id="registPersonService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.jeaf.usermanage.service.spring.RegistPersonServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="personService"><ref bean="personService"/></property>
+				<property name="orgService"><ref bean="orgService"/></property>
+				<property name="memberServiceList"><ref bean="memberServiceList"/></property>
+				<property name="messageService"><ref bean="messageService"/></property>
+				<!-- 短信内容,{ACCOUNT}表示账户名,{USERNAME}表示用户名,{CHILDNAME}表示孩子姓名 -->
+				<property name="message"><value>您好，您的孩子{CHILDNAME}已加入中国互动教育网，请您访问9191edu.com免费索取您的帐号和密码。验证码：{VALIDATECODE}。</value></property>
+				<property name="mailService"><ref bean="mailService"/></property>
+				<property name="schoolRegistMailSubject"><value>关于申请福建省中小学网络互动平台示范应用项目的批复</value></property>
+				<property name="schoolRegistMailBody"><value>&lt;p style="font-family:宋体;font-size:12px;line-height:20px"&gt;{SCHOOLNAME}：&lt;br&gt;　　贵校申请关于福建省中小学网络互动平台示范应用项目，经福建省电化教育馆“十一五”规划课题组审批通过，特发放帐号如下：&lt;br&gt;　　管理员：{MANAGERLOGINNAME}&lt;br&gt;　　密  码：{MANAGERPASSWORD}&lt;br&gt;　　学校教师验证码：{SCHOOLREGISTCODE}&lt;br&gt;　　请务必在收到帐号后的一周内完成学校教师及学生注册工作。&lt;/p&gt;&lt;p style="font-family:宋体;font-size:12px;line-height:20px"&gt;&lt;br&gt;　　附：福建省中小学网络互动平台示范应用项目注册方法&lt;br&gt;　　A、教师、学生帐号统一注册需登录至www.9191edu.com“中国互动教育网”进行；&lt;br&gt;　　B、所有用户注册信息采用实名制注册；&lt;br&gt;　　C、教师帐号需要管理员发放统一的验证码方可注册完成；&lt;br&gt;　　D、关于学生帐号注册各校可结合学校自身条件完成，如统一安排在信息技术课上注册，并要求学生如实填写；学生完成注册后由班主任在平台上对学生信息进行审核。&lt;br&gt;　　在具体实施过程中，如有疑问可随时咨询网站在线客服、发送邮件到客服邮箱help@9191edu.com或拨打电话：0591-83885911。&lt;/p&gt;&lt;p align="right" style="font-family:宋体;font-size:12px;line-height:20px;padding-right:80px"&gt;福建省电化教育馆&lt;br&gt;{DATE}&amp;nbsp;&lt;/p&gt;</value></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="approval*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="retrieveGenearchAccount">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="modify*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="create*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 新的用户同步客户端列表,用来做用户导入用 -->	
+	<bean id="newUserSynchClientList" class="com.yuanluesoft.jeaf.usermanage.service.spring.UserSynchClientList">
+		<property name="userSynchClients">
+			<list>
+				
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 用户同步服务 -->
+	<bean id="userSynchService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.jeaf.usermanage.service.spring.UserSynchServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="serviceSoapPassport"><ref bean="localSoapPassport"/></property>
+				<property name="sessionService"><ref bean="sessionService"/></property>
+				<property name="cryptService"><ref bean="cryptService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="remove*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 用户忙碌检查服务 -->
+	<bean id="userBusyCheckService" class="com.yuanluesoft.jeaf.usermanage.service.spring.UserBusyCheckServiceImpl">
+		<property name="userBusyCheckServiceNames">
+			<value>meetingUserBusyCheckService,calendarUserBusyCheckService</value>
+		</property>
+	</bean>
+	
+	<!-- 用户页面模板服务 -->
+	<bean id="userPageTemplateService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref bean="userPageTemplateServiceImpl"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="setDefaultTemplate">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="restore*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="loadNormalTemplate">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="copy*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="upload*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="userPageTemplateServiceImpl" class="com.yuanluesoft.jeaf.usermanage.service.spring.UserPageTemplateServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="siteTemplateThemeService"><ref bean="siteTemplateThemeServiceImpl"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templatePath"><ref bean="tempatePath"/></property>
+		<property name="templateUrl"><ref bean="tempateUrl"/></property>
+		<property name="fileDownloadService"><ref bean="fileDownloadService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="cache"><ref bean="templateCache"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="templateAttachmentService"><ref bean="templateAttachmentService"/></property>
+		<!-- property name="exchangeClient"><ref bean="exchangeClient"/></property -->
+		<property name="personService"><ref bean="personServiceImpl"/></property>
+	</bean>
+	
+	<!-- 用户表单服务 -->
+	<bean id="userFormService" class="com.yuanluesoft.jeaf.usermanage.service.spring.UserFormServiceImpl">
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="userPageTemplateService"/></property>
+	</bean>
+	
+	<!-- 用户页面服务 -->
+	<bean id="userPageService" class="com.yuanluesoft.jeaf.usermanage.pages.UserPageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="userPageTemplateService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="portalService"><ref bean="portalService"/></property>
+		<property name="portletContainer"><ref bean="portletContainer"/></property>
+	</bean>
+	
+	<!-- 用户复制服务列表 -->
+	<bean id="userReplicateServiceList" class="com.yuanluesoft.jeaf.usermanage.replicator.spring.UserReplicateServiceList">
+		<property name="replicateServiceList">
+			<list>
+				<bean class="com.yuanluesoft.jeaf.usermanage.replicator.ldap.UserReplicateServiceLdapImpl">
+					<property name="ldapURL"><value>ldap://198.20.1.10:389</value></property> <!-- LDAPURL -->
+					<property name="ldapUser"><value>admin</value></property> <!-- LDAP用户 -->
+					<property name="ldapPassword"><value>fjmsa2007</value></property> <!-- LDAP密码 -->
+					<property name="ldapRoot"><value>fjmsa</value></property> <!-- LDAP根 -->
+					<property name="ladpRootRegistAsUnit"><value>false</value></property> <!-- 是否把LDAP根注册成为单位 -->
+					<property name="orgService"><ref bean="orgService"/></property> <!-- 组织机构服务 -->
+					<property name="personService"><ref bean="personServiceImpl"/></property> <!-- 用户服务 -->
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

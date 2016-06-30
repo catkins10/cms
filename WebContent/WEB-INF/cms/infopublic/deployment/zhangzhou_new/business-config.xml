@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 发布机构采用下拉列表 -->
+<businessObjects>
+	<businessObject title="信息公开目录" class="com.yuanluesoft.cms.infopublic.pojo.PublicDirectory" businessServiceName="publicDirectoryService"/>
+	
+	<businessObject title="主目录" class="com.yuanluesoft.cms.infopublic.pojo.PublicMainDirectory" businessServiceName="publicDirectoryService">
+		<field name="parentDirectoryId" title="上级目录ID" type="number" inputMode="hidden"/>
+		<field name="directoryName" title="名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="creator" title="创建人" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="备注" length="100" type="string" inputMode="text"/>
+		<field name="description" title="描述" length="50" type="string" inputMode="text"/>
+		<field name="synchSiteIds" title="同步更新的网站栏目ID" length="200" type="string" inputMode="hidden"/>
+		<field name="workflowId" title="信息发布流程ID" type="string" inputMode="hidden"/>
+		<field name="workflowName" title="信息发布流程" length="25" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('mainDirectoryWorkflowConfig', '', false, null, '_self')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+		<field name="editorDeleteable" title="允许编辑删除" type="string" inputMode="radio">
+			<parameter name="itemsText">从上级继承|0\0允许|1\0不允许|2</parameter>
+		</field>
+		<field name="editorReissueable" title="允许编辑撤销" type="string" inputMode="radio">
+			<parameter name="itemsText">从上级继承|0\0允许|1\0不允许|2</parameter>
+		</field>
+		<field name="siteId" title="隶属站点ID" length="20" type="number" inputMode="hidden"/>
+		<field name="siteName" title="隶属站点名称" length="50" type="string" inputMode="select">
+			<parameter name="execute">selectSite(550, 360, false, 'siteId{id},siteName{name}', '', '', '', 'site')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="manualCodeEnabled" title="允许手工编制索引号" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">允许|1\0不允许|0</parameter>
+		</field>
+		<field name="recodeEnabled" title="信息删除后重新编号" type="number" inputMode="radio">
+			<parameter name="itemsText">允许|1\0不允许|0</parameter>
+		</field>
+		<field name="sequenceByDirectory" title="流水号" type="number" inputMode="radio">
+			<parameter name="itemsText">按目录|1\0按发布机构|0</parameter>
+		</field>
+		<field name="guides" title="信息公开指南" type="components">
+			<parameter name="class">com.yuanluesoft.cms.infopublic.pojo.PublicGuide</parameter>
+		</field>
+		<field name="unitCodes" title="机构代码" type="components">
+			<parameter name="class">com.yuanluesoft.cms.infopublic.pojo.PublicUnitCode</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="serviceName">siteImageService</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">1000000</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">100000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+			<parameter name="serviceName">siteVideoService</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="信息公开指南" class="com.yuanluesoft.cms.infopublic.pojo.PublicGuide">
+		<field name="directoryId" title="主目录ID" type="number" inputMode="none"/>
+		<field name="guide" title="信息公开指南" type="html" inputMode="htmleditor">
+			<parameter name="attachmentSelector">/cms/infopublic/admin/selectGuideAttachment.shtml</parameter>
+			<parameter name="height">330</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="机构代码" class="com.yuanluesoft.cms.infopublic.pojo.PublicUnitCode">
+		<field name="directoryId" title="信息公开目录ID" type="number" inputMode="hidden"/>
+		<field name="unitId" title="机构ID" type="number" inputMode="hidden"/>
+		<field name="unitName" title="机构名称" length="100" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'unitId{id},unitName{fullName}', '', 'root,unit,category')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="code" title="编号" length="20" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="目录分类" class="com.yuanluesoft.cms.infopublic.pojo.PublicDirectoryCategory" businessServiceName="publicDirectoryService">
+		<field name="parentDirectoryId" title="上级目录ID" type="number" inputMode="hidden"/>
+		<field name="directoryName" title="名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="creator" title="创建人" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="备注" length="100" type="string" inputMode="text"/>
+		<field name="code" title="类目代码" length="20" type="string" inputMode="text"/>
+		<field name="description" title="描述" length="50" type="string" inputMode="text"/>
+		<field name="synchSiteIds" title="同步更新的网站栏目ID" length="200" type="string" inputMode="hidden"/>
+		<field name="workflowId" title="信息发布流程ID" type="string" inputMode="hidden"/>
+		<field name="workflowName" title="信息发布流程" length="25" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('directoryCategoryWorkflowConfig', '', false, null, '_self')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+		<field name="editorDeleteable" title="允许编辑删除" type="string" inputMode="radio">
+			<parameter name="itemsText">从上级继承|0\0允许|1\0不允许|2</parameter>
+		</field>
+		<field name="editorReissueable" title="允许编辑撤销" type="string" inputMode="radio">
+			<parameter name="itemsText">从上级继承|0\0允许|1\0不允许|2</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="信息目录" class="com.yuanluesoft.cms.infopublic.pojo.PublicInfoDirectory" businessServiceName="publicDirectoryService">
+		<field name="parentDirectoryId" title="上级目录ID" type="number" inputMode="hidden"/>
+		<field name="directoryName" title="名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="creator" title="创建人" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="备注" length="100" type="string" inputMode="text"/>
+		<field name="code" title="类目代码" length="20" required="true" type="string" inputMode="text"/>
+		<field name="description" title="描述" length="50" type="string" inputMode="text"/>
+		<field name="synchSiteIds" title="同步更新的网站栏目ID" length="200" type="string" inputMode="hidden"/>
+		<field name="workflowId" title="信息发布流程ID" type="string" inputMode="hidden"/>
+		<field name="workflowName" title="信息发布流程" length="25" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('infoDirectoryWorkflowConfig', '', false, null, '_self')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+		<field name="editorDeleteable" title="允许编辑删除" type="string" inputMode="radio">
+			<parameter name="itemsText">从上级继承|0\0允许|1\0不允许|2</parameter>
+		</field>
+		<field name="editorReissueable" title="允许编辑撤销" type="string" inputMode="radio">
+			<parameter name="itemsText">从上级继承|0\0允许|1\0不允许|2</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="文章目录" class="com.yuanluesoft.cms.infopublic.pojo.PublicArticleDirectory" businessServiceName="publicDirectoryService">
+		<field name="parentDirectoryId" title="上级目录ID" type="number" inputMode="hidden"/>
+		<field name="directoryName" title="名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="creator" title="创建人" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="备注" length="100" type="string" inputMode="text"/>
+		<field name="redirectUrl" title="重定向URL" length="800" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="description" title="描述" length="50" type="string" inputMode="text"/>
+		<field name="synchSiteIds" title="同步更新的网站栏目ID" length="200" type="string" inputMode="hidden"/>
+		<field name="workflowId" title="发布流程ID" type="string" inputMode="hidden"/>
+		<field name="workflowName" title="发布流程" length="25" type="string" inputMode="select">
+			<parameter name="execute">FormUtils.doAction('articleDirectoryWorkflowConfig', '', false, null, '_self')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="selectButtonStyleClass">configureButton</parameter>
+		</field>
+		<field name="editorDeleteable" title="允许编辑删除" type="string" inputMode="radio">
+			<parameter name="itemsText">从上级继承|0\0允许|1\0不允许|2</parameter>
+		</field>
+		<field name="editorReissueable" title="允许编辑撤销" type="string" inputMode="radio">
+			<parameter name="itemsText">从上级继承|0\0允许|1\0不允许|2</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="政府信息" class="com.yuanluesoft.cms.infopublic.pojo.PublicInfo" businessServiceName="publicInfoService">
+		<parameter name="captureConfigure">/cms/infopublic/admin/captureConfigure.jsp</parameter> <!-- 抓取配置页面 -->
+		<field name="type" title="类型" length="1" type="number" inputMode="hidden"/>
+		<field name="subject" title="名称" length="200" required="true" type="string" inputMode="textarea">
+			<parameter name="rssTitleField">true</parameter>
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="infoIndex" title="索引号" length="60" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="infoYear" title="年度" length="4" type="number" inputMode="readonly"/>
+		<field name="infoSequence" title="顺序号" length="6" type="number" inputMode="readonly"/>
+		<field name="infoFrom" title="发布机构" length="60" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="valueField">infoFromUnitId</parameter>
+			<parameter name="titleField">infoFrom</parameter>
+			<parameter name="itemsServiceName">orgService</parameter>
+			<parameter name="itemsName">units</parameter>
+		</field>
+		<field name="infoFromUnitId" title="发布机构ID" length="20" type="number" inputMode="hidden"/>
+		<field name="mark" title="备注/文号" length="60" required="true" type="string" inputMode="text"/>
+		<field name="generateDate" title="生成日期" required="true" type="date" inputMode="date"/>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="issueTime" title="发布时间" type="timestamp" inputMode="datetime">
+			<parameter name="rssPubDateField">true</parameter>
+		</field>
+		<field name="orgName" title="创建者所在部门名称" length="50" type="string" inputMode="readonly"/>
+		<field name="unitName" title="创建者所在单位名称" length="50" type="string" inputMode="readonly"/>
+		<field name="issueSite" title="是否同步到网站" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">同步|1\0不同步|0</parameter>
+		</field>
+		<field name="issueSiteIds" title="同步的网站栏目ID列表" length="600" type="string" inputMode="hidden"/>
+		<field name="summarize" title="内容概述" length="500" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="category" title="主题分类" length="100" type="string" inputMode="dropdown">
+			<parameter name="itemsText">1、机构职能类|机构职能类\0 2、政策、规范性文件类|政策、规范性文件类\0 3、规划计划类|规划计划类\0 4、行政许可类|行政许可类\0 5、重大建设项目、为民办实事类|重大建设项目、为民办实事类\0 6、民政扶贫救灾社会保障就业类|民政扶贫救灾社会保障就业类\0 7、国土资源城乡建设环保能源类|国土资源城乡建设环保能源类\0 8、科教文体卫生类|科教文体卫生类\0 9、安全生产、应急管理类|安全生产、应急管理类</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="valueField">category</parameter>
+		</field>
+		<field name="keywords" title="主题词" length="100" type="string" inputMode="text"/>
+		<field name="body" title="正文" persistence="false" type="html" inputMode="htmleditor">
+			<parameter name="rssDescriptionField">true</parameter>
+			<parameter name="referenceFields">lazyBody</parameter>
+			<parameter name="autoIndentation">false</parameter> <!-- 自动缩进 -->
+			<parameter name="height">280</parameter>
+		</field>
+		<field name="statusDescription" title="状态描述" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">workItems,status</parameter>
+		</field>
+		<field name="sourceRecordId" title="源记录ID" length="80" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="sourceRecordUrl" title="源记录URL" length="300" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="directoryName" title="所在目录名称" length="200" type="string" inputMode="readonly"/>
+		<field name="status" title="状态" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">撤销发布|0\0退回、取回修改|1\0待处理|2\0已发布|3\0办结未发布|4\0已删除|5</parameter>
+		</field>
+		<field name="subjections" title="隶属目录" type="components">
+			<parameter name="class">com.yuanluesoft.cms.infopublic.pojo.PublicInfoSubjection</parameter>
+		</field>
+		<field name="lazyBody" title="正文" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.infopublic.pojo.PublicInfoBody</parameter>
+		</field>
+		<field name="accessStats" title="访问统计" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="lazyLoad">false</parameter>
+			<parameter name="class">com.yuanluesoft.jeaf.stat.pojo.AccessStat</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="serviceName">siteImageService</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="fileExtension">FLASH文件|*.swf|</parameter>
+			<parameter name="maxUploadSize">1000000</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">100000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+			<parameter name="serviceName">siteVideoService</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审核</parameter>
+			<parameter name="class">com.yuanluesoft.cms.infopublic.pojo.PublicInfoOpinion</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="信息(用于数据交换)" class="com.yuanluesoft.cms.infopublic.model.Info" businessServiceName="publicInfoService"/>
+	
+	<businessObject title="信息公开目录下载" class="com.yuanluesoft.cms.infopublic.model.InfoDirectoryDownload">
+		<field name="name" title="名称" type="string" inputMode="text"/>
+		<field name="unitName" title="单位名称" type="string" inputMode="text"/>
+		<field name="year" title="年度" type="number" inputMode="text"/>
+	</businessObject>
+</businessObjects>

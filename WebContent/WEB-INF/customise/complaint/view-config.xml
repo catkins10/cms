@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="todoComplaint" title="待办投诉单" form="complaint" openFeatures="mode=fullscreen" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.customise.complaint.pojo.CustomiseComplaint</pojo>
+			<orderBy>CustomiseComplaint.workDay ASC,CustomiseComplaint.name ASC,CustomiseComplaint.returnTime ASC</orderBy>
+			<filter>TODO</filter>
+			<quickFilter>CustomiseComplaint.unit like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建投诉单" hide="noPrivilege(application_manager)" type="workflow" applicationName="customise/complaint" form="complaint"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" width="32" align="center" hideTitle="true"/>
+			<column name="unit" title="投诉人单位" width="100%" align="left"/>
+		</columns>
+	</view>
+	<view name="inprocssComplaint" title="在办投诉单" form="complaint" openFeatures="mode=fullscreen" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.customise.complaint.pojo.CustomiseComplaint</pojo>
+			<orderBy>CustomiseComplaint.workDay ASC,CustomiseComplaint.name ASC</orderBy>
+			<filter>INPROCESS</filter>
+			<quickFilter>CustomiseComplaint.unit like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建投诉单" hide="noPrivilege(application_manager)" type="workflow" applicationName="customise/complaint" form="complaint"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" width="32" align="center" hideTitle="true"/>
+			<column name="unit" title="投诉人单位" width="100%" align="left"/>
+		</columns>
+	</view>
+	<view name="completedComplaint" title="办结投诉单" form="complaint" openFeatures="mode=fullscreen" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.customise.complaint.pojo.CustomiseComplaint</pojo>
+			<orderBy>CustomiseComplaint.workDay ASC,CustomiseComplaint.name ASC</orderBy>
+			<filter>COMPLETED</filter>
+			<quickFilter>CustomiseComplaint.unit like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建投诉单" hide="noPrivilege(application_manager)" type="workflow" applicationName="customise/complaint" form="complaint"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" width="32" align="center" hideTitle="true"/>
+			<column name="unit" title="投诉人单位" width="100%" align="left"/>
+		</columns>
+	</view>
+	<view name="allComplaint" title="所有投诉单" form="complaint" openFeatures="mode=fullscreen" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.customise.complaint.pojo.CustomiseComplaint</pojo>
+			<orderBy>CustomiseComplaint.workDay ASC,CustomiseComplaint.name ASC</orderBy>
+			<filter>READABLE</filter>
+			<quickFilter>CustomiseComplaint.unit like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建投诉单" hide="noPrivilege(application_manager)" type="workflow" applicationName="customise/complaint" form="complaint"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" width="32" align="center" hideTitle="true"/>
+			<column name="unit" title="投诉人单位" width="100%" align="left"/>
+		</columns>
+	</view>
+	<view name="new" title="new" form="complaint" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager)" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.customise.complaint.pojo.CustomiseComplaint</pojo>
+			<filter>TODO</filter>
+			<quickFilter>CustomiseComplaint.name like '%{KEY}%' or CustomiseComplaint.address like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建投诉单" hide="noPrivilege(application_manager)" type="workflow" applicationName="customise/complaint" form="complaint"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" width="32" align="center" hideTitle="true"/>
+			<column name="complaintTime" title="投诉时间" width="70" align="center"/>
+			<column name="workDay" title="办理时间" width="58" align="center"/>
+			<column name="name" title="投诉人姓名" width="164" align="center"/>
+			<column name="address" title="地点" width="100%" align="left"/>
+		</columns>
+	</view>
+</views>

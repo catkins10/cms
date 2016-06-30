@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/photocollect"/>
+		
+		<page name="photoCollects" systemLink="false" title="图片征集列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/photocollect&amp;pageName=photoCollects"/>
+		
+		<page name="photoCollect" title="图片提交" url="/cms/photocollect/photoCollect.shtml">
+			<subPage title="图片征集填写" name="photoCollect" type="template"/>
+		</page>
+		
+		<page name="photoCollectSubmitted" title="图片提交完成">
+			<subPage title="图片提交完成" name="photoCollectSubmitted" type="template"/>
+		</page>
+		
+		<!-- page name="publishPhotoCollect" title="图片查看" recordClass="com.yuanluesoft.cms.photoCollectect.pojo.PhotoCollect">
+			<subPage title="图片查看" name="publishPhotoCollect" type="template"/>
+		</page -->
+		
+		<page name="photoCollectSearch" title="搜索" searchPage="true" searchResults="photoCollects" url="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/photocollect&amp;pageName=photoCollectSearch"/>
+	</pages>
+	
+	<links>
+		<link title="图片征集列表" dialogURL="/cms/photocollect/templatemanage/insertPhotoCollectsLink.shtml"/>
+	</links>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="photoCollects" processor="photoCollectsProcessor"/> <!-- 图片征集列表 -->
+	</pageElements>
+</application>

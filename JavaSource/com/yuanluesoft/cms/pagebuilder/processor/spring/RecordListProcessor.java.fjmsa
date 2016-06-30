@@ -1,0 +1,981 @@
+package com.yuanluesoft.cms.pagebuilder.processor.spring;
+
+import com.yuanluesoft.cms.pagebuilder.PageBuilder;
+import com.yuanluesoft.cms.pagebuilder.PageDefineService;
+import com.yuanluesoft.cms.pagebuilder.model.page.SitePage;
+import com.yuanluesoft.cms.pagebuilder.model.recordlist.RecordList;
+import com.yuanluesoft.cms.pagebuilder.pojo.StaticPageRecordList;
+import com.yuanluesoft.cms.pagebuilder.processor.PageElementProcessor;
+import com.yuanluesoft.cms.pagebuilder.util.LinkUtils;
+import com.yuanluesoft.cms.pagebuilder.util.PageElementUtils;
+import com.yuanluesoft.cms.pagebuilder.util.PageUtils;
+import com.yuanluesoft.cms.sitemanage.pojo.WebDirectory;
+import com.yuanluesoft.cms.sitemanage.pojo.WebSite;
+import com.yuanluesoft.jeaf.business.model.Field;
+import com.yuanluesoft.jeaf.business.util.FieldUtils;
+import com.yuanluesoft.jeaf.database.DatabaseService;
+import com.yuanluesoft.jeaf.exception.ServiceException;
+import com.yuanluesoft.jeaf.form.model.Form;
+import com.yuanluesoft.jeaf.form.service.FormDefineService;
+import com.yuanluesoft.jeaf.htmlparser.HTMLParser;
+import com.yuanluesoft.jeaf.logger.Logger;
+import com.yuanluesoft.jeaf.util.DateTimeUtils;
+import com.yuanluesoft.jeaf.util.ListUtils;
+import com.yuanluesoft.jeaf.util.RequestUtils;
+import com.yuanluesoft.jeaf.util.StringUtils;
+import com.yuanluesoft.jeaf.util.UUIDLongGenerator;
+import com.yuanluesoft.jeaf.view.model.Link;
+import com.yuanluesoft.jeaf.view.model.View;
+import com.yuanluesoft.jeaf.view.service.ViewService;
+import com.yuanluesoft.jeaf.view.statisticview.model.StatisticView;
+import com.yuanluesoft.jeaf.view.util.ViewUtils;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.html.HTMLAnchorElement;
+import org.w3c.dom.html.HTMLDivElement;
+import org.w3c.dom.html.HTMLDocument;
+import org.w3c.dom.html.HTMLElement;
+import org.w3c.dom.html.HTMLHeadElement;
+import org.w3c.dom.html.HTMLImageElement;
+import org.w3c.dom.html.HTMLScriptElement;
+import org.w3c.dom.html.HTMLTableElement;
+import org.w3c.dom.html.HTMLTableRowElement;
+
+public class RecordListProcessor
+  implements PageElementProcessor
+{
+  public static final String RECORDLIST_ATTRIBUTE_RECORDS = "records";
+  private PageDefineService pageDefineService;
+  private PageBuilder pageBuilder;
+  private FormDefineService formDefineService;
+  private static int sequence = 0;
+
+  /* (non-Javadoc)
+ * @see com.yuanluesoft.cms.pagebuilder.processor.PageElementProcessor#writePageElement(org.w3c.dom.html.HTMLElement, com.yuanluesoft.cms.sitemanage.pojo.WebDirectory, com.yuanluesoft.cms.sitemanage.pojo.WebSite, com.yuanluesoft.jeaf.htmlparser.HTMLParser, com.yuanluesoft.cms.pagebuilder.model.page.SitePage, javax.servlet.http.HttpServletRequest, int)
+ */
+public void writePageElement(HTMLElement pageElement, WebDirectory webDirectory, WebSite parentSite, HTMLParser htmlParser, SitePage sitePage, HttpServletRequest request, int pageMode) throws ServiceException {
+	// TODO Auto-generated method stub
+	
+}
+
+public void writePageElement(HTMLElement pageElement, WebDirectory webDirectory, WebSite parentSite, HTMLParser htmlParser, SitePage sitePage, HttpServletRequest request, boolean editMode, boolean isGenerateStaticPage)
+    throws ServiceException
+  {
+    RecordList recordListModel = (RecordList)PageElementUtils.parsePageElement(RecordList.class, pageElement.getAttribute("urn"));
+
+    HTMLDocument recordFormatDocument = htmlParser.parseHTMLString(recordListModel.getRecordFormat());
+
+    View view = request == null ? null : (View)request.getAttribute("viewDefine");
+    if (view != null) {
+      request.removeAttribute("viewDefine");
+    }
+    else {
+      view = this.pageDefineService.getRecordList(recordListModel.getApplicationName(), recordListModel.getRecordListName(), recordListModel.isPrivateRecordList(), recordListModel.getRecordClassName(), RequestUtils.getSessionInfo(request));
+    }
+    if (view == null)
+    {
+      pageElement.getParentNode().removeChild(pageElement);
+      return;
+    }
+
+    resetView(view, pageElement, recordListModel, recordFormatDocument, webDirectory, parentSite, htmlParser, sitePage, request);
+
+    int pageIndex = 1;
+    if (("paging".equals(pageElement.getAttribute("target"))) || ("total".equals(pageElement.getAttribute("target")))) {
+      if (request != null) {
+        String value = request.getParameter("page");
+        pageIndex = value != null ? Integer.parseInt(value) : 1;
+      }
+
+      int recordCount = getRecordCount(view, recordListModel, webDirectory, parentSite, sitePage, request);
+
+      pageIndex = recordListModel.getRecordCount() == 0 ? 0 : Math.max(1, Math.min((recordCount + recordListModel.getRecordCount() - 1) / recordListModel.getRecordCount(), pageIndex));
+
+      sitePage.setAttribute("recordCount", new Integer(recordCount));
+      sitePage.setAttribute("pageIndex", new Integer(pageIndex));
+      sitePage.setAttribute("pageRows", new Integer(recordListModel.getRecordCount()));
+      if ("total".equals(pageElement.getAttribute("target"))) {
+        return;
+      }
+
+      HTMLAnchorElement anchorElement = (HTMLAnchorElement)pageElement.getOwnerDocument().createElement("A");
+      anchorElement.setAttribute("name", "listtop");
+      pageElement.getParentNode().insertBefore(anchorElement, pageElement);
+    }
+
+    List records = readRecords(view, recordListModel, pageIndex, recordListModel.getRecordCount(), webDirectory, parentSite, sitePage, request);
+    sitePage.setAttribute("records", records);
+    try
+    {
+      sitePage = (SitePage)sitePage.clone();
+    }
+    catch (CloneNotSupportedException localCloneNotSupportedException)
+    {
+    }
+
+    NodeList recordFormatNodes = recordFormatDocument == null ? null : recordFormatDocument.getBody().getChildNodes();
+    if ((recordFormatNodes != null) && (recordFormatNodes.getLength() > 0)) {
+      writeRecords(records, view, recordListModel, recordFormatNodes, pageIndex, pageElement, webDirectory, parentSite, htmlParser, sitePage, request, editMode, isGenerateStaticPage);
+    }
+
+    pageElement.getParentNode().removeChild(pageElement);
+  }
+
+  public String writePageElementAsJs(HTMLElement pageElement, WebDirectory webDirectory, WebSite parentSite, HTMLParser htmlParser, SitePage sitePage, HttpServletRequest request)
+    throws ServiceException
+  {
+    return null;
+  }
+
+  public void createStaticPageRebuildBasis(long staticPageId, HTMLElement pageElement, SitePage sitePage, WebDirectory webDirectory, WebSite parentSite, HTMLParser htmlParser, DatabaseService databaseService, HttpServletRequest request)
+    throws ServiceException
+  {
+    if (!sitePage.isRealtimeStaticPage()) {
+      return;
+    }
+
+    RecordList recordListModel = (RecordList)PageElementUtils.parsePageElement(RecordList.class, pageElement.getAttribute("urn"));
+    if (recordListModel.isSearchResults()) {
+      return;
+    }
+
+    View view = this.pageDefineService.getRecordList(recordListModel.getApplicationName(), recordListModel.getRecordListName(), recordListModel.isPrivateRecordList(), recordListModel.getRecordClassName(), RequestUtils.getSessionInfo(request));
+    if (view == null) {
+      return;
+    }
+    createStaticPageRebuildBasisByRecordList(recordListModel, view, staticPageId, pageElement, sitePage, webDirectory, parentSite, htmlParser, databaseService, request);
+  }
+
+  public void createStaticPageRebuildBasisByRecordList(RecordList recordListModel, View view, long staticPageId, HTMLElement pageElement, SitePage sitePage, WebDirectory webDirectory, WebSite parentSite, HTMLParser htmlParser, DatabaseService databaseService, HttpServletRequest request)
+    throws ServiceException
+  {
+    String siteIds = getRecordListSiteIds(recordListModel, view, pageElement, sitePage, webDirectory, parentSite, request);
+    if ((siteIds == null) || (siteIds.isEmpty())) {
+      siteIds = "0";
+    }
+    if (("," + siteIds + ",").indexOf(",0,") != -1) {
+      siteIds = "0";
+    }
+    String[] ids = siteIds.split(",");
+    for (int i = 0; i < ids.length; i++)
+      if (!"-1".equals(ids[i]))
+        saveStaticPageRecordList(staticPageId, view.getPojoClassName(), Long.parseLong(ids[i]), databaseService);
+  }
+
+  public List listStaticPageForModifiedObject(Object object, String modifyAction, Timestamp baseTime, DatabaseService databaseService, int max)
+    throws ServiceException
+  {
+    String siteIds = getRecordSiteIds(object, databaseService);
+
+    String hql = "select distinct StaticPage from StaticPage StaticPage left join StaticPage.recordLists StaticPageRecordList, WebDirectorySubjection WebDirectorySubjection where StaticPage.created<TIMESTAMP(" + 
+      DateTimeUtils.formatTimestamp(baseTime, null) + ")" + 
+      " and StaticPageRecordList.siteId=WebDirectorySubjection.parentDirectoryId" + (
+      (siteIds == null) || (siteIds.isEmpty()) ? "" : new StringBuffer(" and WebDirectorySubjection.directoryId in (").append(siteIds).append(")").toString()) + 
+      " and StaticPageRecordList.recordClassName='" + getRecordClassNameForStaticPage(object) + "'" + 
+      " and StaticPageRecordList.processorClassName='" + getClass().getName() + "'";
+    return databaseService.findRecordsByHql(hql, 0, max);
+  }
+
+  public void saveStaticPageRecordList(long staticPageId, String recordClassName, long siteId, DatabaseService databaseService)
+  {
+    String hql = "select StaticPageRecordList.id from StaticPageRecordList StaticPageRecordList where StaticPageRecordList.pageId=" + 
+      staticPageId + 
+      " and StaticPageRecordList.recordClassName='" + recordClassName + "'" + 
+      " and StaticPageRecordList.siteId=" + siteId;
+    if (databaseService.findRecordByHql(hql) == null)
+    {
+      StaticPageRecordList staticPageRecordList = new StaticPageRecordList();
+      staticPageRecordList.setId(UUIDLongGenerator.generateId());
+      staticPageRecordList.setPageId(staticPageId);
+      staticPageRecordList.setRecordClassName(recordClassName);
+      staticPageRecordList.setProcessorClassName(getClass().getName());
+      staticPageRecordList.setSiteId(siteId);
+      databaseService.saveRecord(staticPageRecordList);
+    }
+  }
+
+  protected String getRecordListSiteIds(RecordList recordListModel, View view, HTMLElement pageElement, SitePage sitePage, WebDirectory webDirectory, WebSite parentSite, HttpServletRequest request)
+    throws ServiceException
+  {
+    return parentSite.getId();
+  }
+
+  protected String getRecordClassNameForStaticPage(Object object)
+    throws ServiceException
+  {
+    return object.getClass().getName();
+  }
+
+  protected String getRecordSiteIds(Object object, DatabaseService databaseService)
+    throws ServiceException
+  {
+    try
+    {
+      return PropertyUtils.getProperty(object, "siteId").toString();
+    } catch (Exception e) {
+    }
+    return null;
+  }
+
+  protected void resetView(View view, HTMLElement pageElement, RecordList recordListModel, HTMLDocument recordFormatDocument, WebDirectory webDirectory, WebSite parentSite, HTMLParser htmlParser, SitePage sitePage, HttpServletRequest request)
+    throws ServiceException
+  {
+    if (recordFormatDocument != null) {
+      NodeList elements = recordFormatDocument.getElementsByTagName("a");
+      view.setColumns(new ArrayList());
+      for (int i = elements == null ? -1 : elements.getLength() - 1; i >= 0; i--) {
+        HTMLAnchorElement a = (HTMLAnchorElement)elements.item(i);
+        if (("field".equals(a.getId())) && (!inTableHeader(a))) {
+          String fieldName = StringUtils.getPropertyValue(a.getAttribute("urn"), "name");
+          com.yuanluesoft.jeaf.view.model.Column column = (view instanceof StatisticView) ? new com.yuanluesoft.jeaf.view.statisticview.model.Column() : new com.yuanluesoft.jeaf.view.model.Column();
+          column.setName(fieldName);
+          view.getColumns().add(column);
+        }
+        else if (("recordList".equals(a.getId())) && (!inTableHeader(a))) {
+          RecordList nestedRecordListModel = (RecordList)PageElementUtils.parsePageElement(RecordList.class, a.getAttribute("urn"));
+          if (nestedRecordListModel.isPrivateRecordList()) {
+            com.yuanluesoft.jeaf.view.model.Column column = new com.yuanluesoft.jeaf.view.model.Column();
+            column.setName(nestedRecordListModel.getRecordListName() + ".id");
+            view.getColumns().add(column);
+          }
+        }
+      }
+
+    }
+
+    if (view.getWhere() != null) {
+      view.setWhere(StringUtils.fillParameters(view.getWhere(), false, "utf-8", sitePage == null ? null : sitePage.getAttribute("record"), request, new RecordListProcessor.1(this, webDirectory, parentSite, sitePage, recordListModel)));
+    }
+
+    if (recordListModel.isSearchResults()) {
+      String searchConditions = generateSearchConditions(view, recordListModel, webDirectory, parentSite, sitePage, request);
+      if (searchConditions != null)
+        view.addWhere(searchConditions);
+    }
+  }
+
+  protected List readRecords(View view, RecordList recordListModel, int pageIndex, int pageRows, WebDirectory webDirectory, WebSite parentSite, SitePage sitePage, HttpServletRequest request)
+    throws ServiceException
+  {
+    if (!recordListModel.isPrivateRecordList()) {
+      if (hideRecords(view, recordListModel, webDirectory, parentSite, sitePage, request)) {
+        return null;
+      }
+      ViewService viewService = ViewUtils.getViewService(view);
+      view.setPageRows(pageRows);
+      return viewService.retrieveRecords(view, null, null, pageIndex, request, RequestUtils.getSessionInfo(request));
+    }
+
+    Object record = sitePage.getAttribute("record");
+    try
+    {
+      fieldValue = FieldUtils.getFieldValue(record, view.getName(), request);
+    }
+    catch (Exception e)
+    {
+      Object fieldValue;
+      Logger.exception(e);
+      return null;
+    }
+    Object fieldValue;
+    if (fieldValue == null) {
+      return null;
+    }
+    List records = null;
+    if ((fieldValue instanceof List)) {
+      records = (List)fieldValue;
+    }
+    else if ((fieldValue instanceof Collection)) {
+      records = new ArrayList((Collection)fieldValue);
+    }
+    if (records != null) {
+      int beginIndex = (pageIndex - 1) * pageRows;
+      int endIndex = pageIndex * pageRows;
+      if (beginIndex >= records.size()) {
+        records = null;
+      }
+      else {
+        records = records.subList(beginIndex, Math.min(endIndex, records.size()));
+      }
+    }
+    return records;
+  }
+
+  protected void writeRecords(List records, View view, RecordList recordListModel, NodeList recordFormatNodes, int pageIndex, HTMLElement pageElement, WebDirectory webDirectory, WebSite parentSite, HTMLParser htmlParser, SitePage sitePage, HttpServletRequest request, boolean editMode, boolean isGenerateStaticPage)
+    throws ServiceException
+  {
+    HTMLDivElement divRecords = (HTMLDivElement)pageElement.getOwnerDocument().createElement("div");
+    String width = "100%";
+    if ((recordListModel.getAreaWidth() != null) && (!"".equals(recordListModel.getAreaWidth()))) {
+      width = recordListModel.getAreaWidth();
+    }
+    divRecords.setAttribute("style", "float:left; width:" + width + ((recordListModel.getAreaHeight() != null) && (!"".equals(recordListModel.getAreaHeight())) ? "; height:" + recordListModel.getAreaHeight() : ""));
+    divRecords.setId(recordListModel.getRecordListName());
+    pageElement.getParentNode().insertBefore(divRecords, pageElement);
+
+    sitePage.setAttribute("fromRecordList", "true");
+    sitePage.setAttribute("linkOpenMode", recordListModel.getLinkOpenMode());
+    int offset = (pageIndex - 1) * recordListModel.getRecordCount();
+    if (recordListModel.isTableMode()) {
+      writeRecordsTable(view, recordFormatNodes, divRecords, records, offset, pageElement, recordListModel, sitePage, htmlParser, webDirectory, parentSite, request, editMode, isGenerateStaticPage);
+    }
+    else if ("switch".equals(recordListModel.getScrollMode())) {
+      writeSlideShowRecords(view, recordFormatNodes, divRecords, records, offset, pageElement, recordListModel, sitePage, htmlParser, webDirectory, parentSite, request, editMode, isGenerateStaticPage);
+    }
+    else
+      writeRecords(view, recordFormatNodes, divRecords, records, offset, pageElement, recordListModel, sitePage, htmlParser, webDirectory, parentSite, request, editMode, isGenerateStaticPage);
+  }
+
+  protected int getRecordCount(View view, RecordList recordListModel, WebDirectory webDirectory, WebSite parentSite, SitePage sitePage, HttpServletRequest request)
+    throws ServiceException
+  {
+    if (recordListModel.isPrivateRecordList()) {
+      List records = readRecords(view, recordListModel, 0, 0, webDirectory, parentSite, sitePage, request);
+      return records == null ? 0 : records.size();
+    }
+
+    if (hideRecords(view, recordListModel, webDirectory, parentSite, sitePage, request)) {
+      return 0;
+    }
+    ViewService viewService = ViewUtils.getViewService(view);
+    return viewService.retrieveRecordCount(view, null, null, request, RequestUtils.getSessionInfo(request));
+  }
+
+  private boolean hideRecords(View view, RecordList recordListModel, WebDirectory webDirectory, WebSite parentSite, SitePage sitePage, HttpServletRequest request)
+    throws ServiceException
+  {
+    return (recordListModel.isSearchResults()) && 
+      (request != null) && 
+      (!"post".equalsIgnoreCase(request.getMethod())) && 
+      (generateSearchConditions(view, recordListModel, webDirectory, parentSite, sitePage, request) == null);
+  }
+
+  protected String generateSearchConditions(View view, RecordList recordListModel, WebDirectory webDirectory, WebSite parentSite, SitePage sitePage, HttpServletRequest request)
+    throws ServiceException
+  {
+    String currentFormApplicationName = request.getParameter("currentFormApplicationName");
+    String currentFormName = request.getParameter("currentFormName");
+    Form form = this.formDefineService.loadFormDefine(currentFormApplicationName, currentFormName);
+
+    Enumeration parameterNames = request.getParameterNames();
+    if (parameterNames == null) {
+      return null;
+    }
+    String searchConditions = null;
+    while (parameterNames.hasMoreElements()) {
+      String parameterName = (String)parameterNames.nextElement();
+      if ("id".equals(parameterName))
+      {
+        continue;
+      }
+      String[] parameterValues = request.getParameterValues(parameterName);
+      if ((parameterValues == null) || (parameterValues.length == 0)) {
+        continue;
+      }
+      boolean isEmpty = true;
+      for (int i = 0; i < parameterValues.length; i++) {
+        if ((parameterValues[i] != null) && (!parameterValues[i].equals(""))) {
+          isEmpty = false;
+          break;
+        }
+      }
+      if (isEmpty)
+      {
+        continue;
+      }
+      Field field = FieldUtils.getRecordField(view.getPojoClassName(), parameterName, request);
+      if (field == null)
+      {
+        String[] ends = { "Begin", "End", "Min", "Max" };
+        for (int i = 0; i < ends.length; i++) {
+          if (parameterName.endsWith(ends[i])) {
+            field = FieldUtils.getRecordField(view.getPojoClassName(), parameterName.substring(0, parameterName.length() - ends[i].length()), request);
+            break;
+          }
+        }
+      }
+      String fieldName = null;
+      if (field != null) {
+        fieldName = (parameterName.indexOf('.') == -1 ? view.getPojoClassName().substring(view.getPojoClassName().lastIndexOf(".") + 1) + "." : "") + field.getName();
+      }
+      Field formField = null;
+      String searchCondition = null;
+      if ((field == null) && (parameterName.equals("key"))) {
+        if (view.getQuickFilter() != null) {
+          String[] keys = parameterValues[0].split(" ");
+          for (int i = 0; i < keys.length; i++)
+            if (!keys[i].isEmpty()) {
+              String subSearch = null;
+              String[] andKeys = keys[i].split("\\+");
+              for (int j = 0; j < andKeys.length; j++) {
+                if (!andKeys[j].isEmpty()) {
+                  subSearch = (subSearch == null ? "" : new StringBuffer(String.valueOf(subSearch)).append(" and ").toString()) + "(" + view.getQuickFilter().replaceAll("\\x7bKEY\\x7d", andKeys[j]) + ")";
+                }
+              }
+              if (subSearch != null)
+                searchCondition = (searchCondition == null ? "" : new StringBuffer(String.valueOf(searchCondition)).append(" or ").toString()) + "(" + subSearch + ")";
+            }
+        }
+      }
+      else
+      {
+        if (field == null) {
+          continue;
+        }
+        if ((form != null) && 
+          ((formField = FieldUtils.getFormField(form, parameterName, request)) != null) && 
+          ((searchCondition = formField.getParameter("searchCondition")) != null)) {
+          if ((!searchCondition.equals("")) && (!searchCondition.equals("NONE"))) {
+            searchCondition = LinkUtils.fillParameters(searchCondition, false, "utf-8", webDirectory.getId(), parentSite.getId(), null, sitePage, request);
+          }
+        }
+        else if (parameterValues.length > 1) {
+          String separate = "number".equals(field.getType()) ? "" : "'";
+          for (int i = 0; i < parameterValues.length; i++) {
+            if ((parameterValues[i] != null) && (!parameterValues[i].equals(""))) {
+              searchCondition = (searchCondition == null ? "" : new StringBuffer(String.valueOf(searchCondition)).append(",").toString()) + separate + parameterValues[i] + separate;
+            }
+          }
+          searchCondition = fieldName + " in (" + searchCondition + ")";
+        }
+        else if ((formField != null) && (
+          (",radio,checkbox,multibox,".indexOf("," + formField.getInputMode() + ",") != -1) || ("true".equals(formField.getParameter("selectOnly"))))) {
+          String separate = "number".equals(field.getType()) ? "" : "'";
+          searchCondition = fieldName + "=" + separate + parameterValues[0] + separate;
+        }
+        else if ("number".equals(field.getType())) {
+          if (field.getName().equals(parameterName)) {
+            searchCondition = fieldName + "=" + parameterValues[0];
+          }
+          else if (parameterName.endsWith("Min")) {
+            searchCondition = fieldName + ">=" + parameterValues[0];
+          }
+          else if (parameterName.endsWith("Max")) {
+            searchCondition = fieldName + "<=" + parameterValues[0];
+          }
+        }
+        else if (("date".equals(field.getType())) || ("timestamp".equals(field.getType()))) {
+          java.sql.Date dateValue = null;
+          if (parameterValues[0].indexOf(':') == -1) {
+            try {
+              dateValue = DateTimeUtils.parseDate(parameterValues[0], null);
+            }
+            catch (ParseException e) {
+              continue;
+            }
+            searchCondition = "DATE(" + DateTimeUtils.formatDate(dateValue, null) + ")";
+          }
+          else {
+            try {
+              searchCondition = "TIMESTAMP(" + DateTimeUtils.formatTimestamp(DateTimeUtils.parseTimestamp(parameterValues[0], null), null) + ")";
+            }
+            catch (ParseException e) {
+              continue;
+            }
+          }
+          if (field.getName().equals(parameterName)) {
+            searchCondition = fieldName + "=" + searchCondition;
+          }
+          else if (parameterName.endsWith("Begin")) {
+            searchCondition = fieldName + ">=" + searchCondition;
+          }
+          else if (parameterName.endsWith("End")) {
+            if (dateValue != null) {
+              searchCondition = fieldName + "<DATE(" + DateTimeUtils.formatDate(DateTimeUtils.add(dateValue, 5, 1), null) + ")";
+            }
+            else
+              searchCondition = fieldName + "<=" + searchCondition;
+          }
+        }
+        else
+        {
+          searchCondition = fieldName + " like '%" + parameterValues[0] + "%'";
+        }
+      }
+      if ((searchCondition != null) && (!searchCondition.isEmpty()) && (!searchCondition.equals("NONE"))) {
+        searchConditions = (searchConditions == null ? "" : new StringBuffer(String.valueOf(searchConditions)).append(" and ").toString()) + searchCondition;
+      }
+    }
+    return searchConditions;
+  }
+
+  protected java.util.Date getDateForCheckNewest(View view, Object record)
+    throws ServiceException
+  {
+    if (view.getNewestCheckBy() == null) {
+      return null;
+    }
+    java.util.Date date = null;
+    try {
+      date = (java.util.Date)PropertyUtils.getProperty(record, view.getNewestCheckBy());
+    }
+    catch (Exception localException)
+    {
+    }
+    return date;
+  }
+
+  protected boolean isCurrentRecord(Object record, HTMLElement pageElement, RecordList recordListModel, SitePage sitePage, WebDirectory webDirectory, WebSite parentSite, HttpServletRequest request)
+    throws ServiceException
+  {
+    return false;
+  }
+
+  private void writeRecordsTable(View view, NodeList recordFormatNodes, Element divRecords, List records, int offset, HTMLElement pageElement, RecordList recordListModel, SitePage sitePage, HTMLParser htmlParser, WebDirectory webDirectory, WebSite parentSite, HttpServletRequest request, boolean editMode, boolean isGenerateStaticPage)
+    throws ServiceException
+  {
+    Element recordContainer = divRecords;
+
+    NodeList tables = recordFormatNodes.item(0).getOwnerDocument().getElementsByTagName("table");
+    if ((tables != null) && (tables.getLength() > 0)) {
+      HTMLTableElement table = (HTMLTableElement)tables.item(0);
+      HTMLTableRowElement row = null;
+
+      NodeList anchors = table.getElementsByTagName("a");
+      for (int i = 0; i < anchors.getLength(); i++) {
+        HTMLAnchorElement anchor = (HTMLAnchorElement)anchors.item(i);
+        if ((!"field".equals(anchor.getId())) || (inTableHeader(anchor)))
+        {
+          continue;
+        }
+        Node parentNode = anchor.getParentNode();
+        do {
+          if ((parentNode instanceof HTMLTableRowElement)) {
+            row = (HTMLTableRowElement)parentNode;
+            break;
+          }
+          parentNode = parentNode.getParentNode(); if (parentNode == null) break; 
+        }while (parentNode != table);
+
+        break;
+      }
+      if (row != null) {
+        HTMLTableRowElement dataRow = row;
+        recordFormatNodes = new RecordListProcessor.2(this, dataRow);
+
+        row.getParentNode().removeChild(row);
+
+        recordContainer = (Element)recordContainer.appendChild(recordContainer.getOwnerDocument().importNode(table, true));
+
+        this.pageBuilder.processPageElement((HTMLElement)recordContainer, webDirectory, parentSite, sitePage, request, editMode, isGenerateStaticPage);
+      }
+    }
+    if (records != null)
+      for (int i = 0; i < records.size(); i++) {
+        Object record = records.get(i);
+        writeRecord(view, record, i, offset, recordFormatNodes, recordContainer, pageElement, recordListModel, sitePage, htmlParser, webDirectory, parentSite, request, editMode, isGenerateStaticPage);
+      }
+  }
+
+  private void writeSlideShowRecords(View view, NodeList recordFormatNodes, Element divRecords, List records, int offset, HTMLElement pageElement, RecordList recordListModel, SitePage sitePage, HTMLParser htmlParser, WebDirectory webDirectory, WebSite parentSite, HttpServletRequest request, boolean editMode, boolean isGenerateStaticPage)
+    throws ServiceException
+  {
+    try
+    {
+      if ((records == null) || (records.isEmpty())) {
+        return;
+      }
+      divRecords.setAttribute("class", "slideShowImages");
+
+      int scrollImageId = getSequence();
+      for (int i = 0; i < records.size(); i++)
+      {
+        HTMLDivElement divImage = (HTMLDivElement)divRecords.getOwnerDocument().createElement("div");
+        divRecords.appendChild(divImage);
+        divImage.setId(scrollImageId + "_" + i);
+        divImage.setAttribute("style", (i > 0 ? "visibility:hidden;" : "") + "position:absolute; text-align:center");
+        writeRecord(view, records.get(i), i, offset, recordFormatNodes, divImage, pageElement, recordListModel, sitePage, htmlParser, webDirectory, parentSite, request, editMode, isGenerateStaticPage);
+      }
+
+      NodeList imgs = divRecords.getElementsByTagName("img");
+      if (imgs.getLength() > 1) {
+        for (int i = 0; i < imgs.getLength(); i++) {
+          ((HTMLImageElement)imgs.item(i)).setAttribute("style", "FILTER: revealTrans(Transition=crossFadeDuration)");
+        }
+        i = 16; int i = 12; int j = 3; int k = 10;
+
+        HTMLElement styleElement = (HTMLElement)divRecords.getOwnerDocument().createElement("style");
+        htmlParser.getHTMLHeader((HTMLDocument)divRecords.getOwnerDocument(), true).appendChild(styleElement);
+        String style = ".imageCurrent { float:left; cursor:pointer; border-right-width: 1px; border-right-color: #ffffff; border-right-style: solid; background-color:#A52A2A; color:#ffffff; width:15px !important; width:16px; height:11px !important; height:12px; font-size:10px; line-height:10px; font-family:黑体; text-align:center; vertical-align:middle; padding-top:1px;}.imageSwitch { float:left; cursor:pointer; border-right-width: 1px; border-right-color: #ffffff; border-right-style: solid; background-color:#000000; filter: Alpha(Opacity=66);-moz-opacity: 0.66; color:#ffffff; width:15px !important; width:16px; height:11px !important; height:12px; font-size:10px; line-height:10px; font-family:黑体; text-align:center; vertical-align:middle; padding-top:1px}.slideShowImages p { margin:0px;}";
+
+        htmlParser.setTextContent(styleElement, style);
+        if (!recordListModel.isHideSwitchNumber())
+        {
+          int switchButtonFontSize;
+          int switchButtonPadding;
+          int switchButtonHeight;
+          int switchButtonWidth;
+          HTMLImageElement imageElement = (HTMLImageElement)imgs.item(0);
+          HTMLElement divImageSwitch = (HTMLElement)divRecords.getOwnerDocument().createElement("div");
+          divImageSwitch.setAttribute("style", "width:" + imageElement.getWidth() + "px;height:" + imageElement.getHeight() + "px; text-align:left; font-size:1px");
+          divRecords.appendChild(divImageSwitch);
+          divImageSwitch = (HTMLElement)divImageSwitch.appendChild(divRecords.getOwnerDocument().createElement("div"));
+          divImageSwitch.setAttribute("style", "float:left; font-size:1px; text-align:left; position:relative;left:" + (Integer.parseInt(imageElement.getWidth()) - records.size() * 16 - 3) + "px;top:" + (Integer.parseInt(imageElement.getHeight()) - 3 - 12) + "px;");
+          for (int i = 0; i < records.size(); i++) {
+            HTMLElement div = (HTMLElement)divRecords.getOwnerDocument().createElement("div");
+            div.setAttribute("class", i == 0 ? "imageCurrent" : "imageSwitch");
+            htmlParser.setTextContent(div, i + 1);
+            div.setId("switchImage_" + scrollImageId + "_" + i);
+            div.setAttribute("onclick", "scrollImage_" + scrollImageId + "(" + i + ")");
+            divImageSwitch.appendChild(div);
+          }
+        }
+
+        int speed = Math.max(1000, recordListModel.getScrollSpeed());
+        HTMLScriptElement scriptElement = (HTMLScriptElement)divRecords.getOwnerDocument().createElement("script");
+        String script = "var timerId_" + scrollImageId + "=0,imageIndex_" + scrollImageId + "=0;" + 
+          "function scrollImage_" + scrollImageId + "(index) {" + 
+          "\tindex = (index || index==0 ? index : (imageIndex_" + scrollImageId + "<" + (records.size() - 1) + " ? imageIndex_" + scrollImageId + "+1 : 0));" + 
+          "\tif(index!=imageIndex_" + scrollImageId + ") {" + 
+          "\t\tvar div = document.getElementById('" + scrollImageId + "_' + imageIndex_" + scrollImageId + ");" + 
+          "\t\tvar img = div.getElementsByTagName('img')[0];" + 
+          "\t\tvar newDiv = document.getElementById('" + scrollImageId + "_' + index);" + 
+          "\t\tvar newImg = newDiv.getElementsByTagName('img')[0];" + 
+          "\t\tvar src = newImg.src;" + 
+          "\t\tnewImg.src = img.src;" + 
+          "\t\tdiv.style.visibility = 'hidden';" + 
+          "\t\tnewDiv.style.visibility = 'visible';" + 
+          "\t\tif(document.all) {" + 
+          "\t\t\tnewImg.style.filter='revealTrans(duration=2)';" + 
+          "\t\t\tnewImg.style.filter='revealTrans(Transition=crossFadeDuration)';" + 
+          "\t\t\tnewImg.filters.revealTrans.Apply();" + 
+          "\t\t}" + (
+          recordListModel.isHideSwitchNumber() ? "" : 
+          new StringBuffer("\t\tdocument.getElementById('switchImage_").append(scrollImageId).append("_' + index).className = 'imageCurrent';")
+          .append("\t\tdocument.getElementById('switchImage_").append(scrollImageId).append("_' + imageIndex_").append(scrollImageId).append(").className = 'imageSwitch';").toString()) + 
+          "\t\tnewImg.src = src;" + 
+          "\t\tif(document.all) {" + 
+          "\t\t\tnewImg.filters.revealTrans.Play();" + 
+          "\t\t}" + 
+          "\t\timageIndex_" + scrollImageId + " = index;" + 
+          "\t}" + 
+          "\twindow.clearTimeout(timerId_" + scrollImageId + ");" + 
+          "\ttimerId_" + scrollImageId + " = window.setTimeout('scrollImage_" + scrollImageId + "()', " + speed + ");" + 
+          "}" + 
+          "scrollImage_" + scrollImageId + "(0);";
+        scriptElement.setText(script);
+        divRecords.appendChild(scriptElement);
+      }
+    }
+    catch (Exception e) {
+      Logger.exception(e);
+    }
+  }
+
+  private void writeRecords(View view, NodeList recordFormatNodes, HTMLElement divRecords, List records, int offset, HTMLElement pageElement, RecordList recordListModel, SitePage sitePage, HTMLParser htmlParser, WebDirectory webDirectory, WebSite parentSite, HttpServletRequest request, boolean editMode, boolean isGenerateStaticPage)
+    throws ServiceException
+  {
+    if ((records == null) || (records.isEmpty()))
+    {
+      if ((recordListModel.getEmptyPrompt() != null) && (!recordListModel.getEmptyPrompt().equals(""))) {
+        HTMLDocument emptyPropmtDocument = htmlParser.parseHTMLString(recordListModel.getEmptyPrompt());
+        htmlParser.importNodes(emptyPropmtDocument.getBody().getChildNodes(), divRecords, false);
+      }
+      return;
+    }
+    Element recordContainer = divRecords;
+    int scrollSpeed = Math.max(10, recordListModel.getScrollSpeed());
+    boolean joinScroll = false;
+    int sequence = getSequence();
+    if ((recordListModel.getScrollMode() != null) && (!"".equals(recordListModel.getScrollMode()))) {
+      if (!recordListModel.isScrollJoin())
+      {
+        Element marquee = recordContainer.getOwnerDocument().createElement("MARQUEE");
+        marquee.setAttribute("direction", recordListModel.getScrollMode());
+        marquee.setAttribute("scrollAmount", recordListModel.getScrollAmount());
+        marquee.setAttribute("scrollDelay", scrollSpeed);
+        marquee.setAttribute("onmousemove", "this.stop()");
+        marquee.setAttribute("onmouseout", "this.start()");
+
+        String width = "100%";
+        if ((recordListModel.getAreaWidth() != null) && (!"".equals(recordListModel.getAreaWidth()))) {
+          width = recordListModel.getAreaWidth();
+        }
+        marquee.setAttribute("style", "width:" + width + ((recordListModel.getAreaHeight() != null) && (!"".equals(recordListModel.getAreaHeight())) ? "; height:" + recordListModel.getAreaHeight() : ""));
+        recordContainer.appendChild(marquee);
+        recordContainer = marquee;
+      }
+      else {
+        joinScroll = true;
+        recordContainer.setAttribute("id", "marquee_" + sequence);
+        recordContainer.setAttribute("onmouseover", "clearInterval(marqueeTimer_" + sequence + ")");
+        recordContainer.setAttribute("onmouseout", "marqueeTimer_" + sequence + " = setInterval('scroll_" + sequence + "()', " + scrollSpeed + ");");
+        recordContainer.setAttribute("style", recordContainer.getAttribute("style") + ";overflow:hidden");
+
+        Element pre = pageElement.getOwnerDocument().createElement("pre");
+        recordContainer.appendChild(pre);
+
+        Element span = pageElement.getOwnerDocument().createElement("span");
+        span.setAttribute("id", "marqueeContent_" + sequence);
+        pre.appendChild(span);
+        recordContainer = span;
+      }
+    }
+    String separatorMode = recordListModel.getSeparatorMode();
+    if (separatorMode.equals("tile"))
+    {
+      for (int i = 0; i < records.size(); i++) {
+        Object record = records.get(i);
+        Element container = recordContainer;
+        if (i < records.size() - 1) {
+          container = (Element)recordContainer.getParentNode().cloneNode(true);
+          recordContainer.getParentNode().getParentNode().insertBefore(container, recordContainer.getParentNode());
+          HTMLElement element = htmlParser.getElementById((HTMLElement)container, "a", pageElement.getId());
+          element.getParentNode().removeChild(element);
+          container = htmlParser.getElementById((HTMLElement)container, "div", recordContainer.getAttribute("id"));
+        }
+        writeRecord(view, record, i, offset, recordFormatNodes, container, pageElement, recordListModel, sitePage, htmlParser, webDirectory, parentSite, request, editMode, isGenerateStaticPage);
+      }
+      return;
+    }
+    Element recordSeparatorNode;
+    if ((separatorMode.equals("blank")) || (separatorMode.equals("custom"))) {
+      Element recordSeparatorNode = recordContainer.getOwnerDocument().createElement("span");
+      String style = "display:inline-block;";
+      if ((recordListModel.getRecordWidth() != null) || (recordListModel.getRecordHeight() != null)) {
+        style = style + "float:left;";
+      }
+      if ((recordListModel.getSeparatorCustom() == null) || (recordListModel.getSeparatorCustom().isEmpty())) {
+        htmlParser.setTextContent(recordSeparatorNode, " ");
+        style = style + "line-height:0px; font-size:0px;" + ((recordListModel.getSeparatorHeight() == null) || (recordListModel.getSeparatorHeight().equals("")) ? "" : new StringBuffer("width:").append(recordListModel.getSeparatorHeight()).append("px").toString());
+      }
+      else {
+        HTMLDocument separatorCustomDocument = htmlParser.parseHTMLString(recordListModel.getSeparatorCustom());
+        htmlParser.importNodes(separatorCustomDocument.getBody().getChildNodes(), (HTMLElement)recordSeparatorNode, false);
+      }
+      recordSeparatorNode.setAttribute("style", style);
+    }
+    else {
+      recordSeparatorNode = recordContainer.getOwnerDocument().createElement("div");
+      String style = "clear:both; line-height:0px; font-size:0px; width:100%; height:" + ((recordListModel.getSeparatorHeight() == null) || (recordListModel.getSeparatorHeight().equals("")) ? "0" : recordListModel.getSeparatorHeight()) + "px;";
+      if (separatorMode.equals("image")) {
+        style = style + "background-image:url(" + recordListModel.getSeparatorImage() + ");background-repeat:repeat-x;background-position:0,0";
+      }
+      htmlParser.setTextContent(recordSeparatorNode, " ");
+      recordSeparatorNode.setAttribute("style", style);
+    }
+
+    for (int i = 0; i < records.size(); i++) {
+      Object record = records.get(i);
+
+      writeRecord(view, record, i, offset, recordFormatNodes, recordContainer, pageElement, recordListModel, sitePage, htmlParser, webDirectory, parentSite, request, editMode, isGenerateStaticPage);
+
+      if ((i >= records.size() - 1) && 
+        ((!recordListModel.isSeparatorImageOfLastRecord()) || (!separatorMode.equals("image"))) && (
+        (!recordListModel.isSeparatorOfLastRecord()) || (!separatorMode.equals("custom")))) continue;
+      recordContainer.appendChild(recordSeparatorNode.cloneNode(true));
+    }
+
+    if (joinScroll)
+    {
+      if (recordSeparatorNode != null) {
+        recordContainer.appendChild(recordSeparatorNode.cloneNode(true));
+      }
+
+      NodeList nodes = recordContainer.getChildNodes();
+      int size = nodes.getLength();
+      for (int i = 0; i < size; i++) {
+        recordContainer.appendChild(nodes.item(i).cloneNode(true));
+      }
+
+      HTMLScriptElement scriptElement = (HTMLScriptElement)recordContainer.getOwnerDocument().createElement("script");
+      String script = "function scroll_" + sequence + "() {" + 
+        "\tif(document.getElementById('marquee_" + sequence + "').scrollLeft >= document.getElementById('marqueeContent_" + sequence + "').offsetWidth/2) {" + 
+        "\t\tdocument.getElementById('marquee_" + sequence + "').scrollLeft -= document.getElementById('marqueeContent_" + sequence + "').offsetWidth/2;" + 
+        "\t}" + 
+        "\telse {" + 
+        "\t\tdocument.getElementById('marquee_" + sequence + "').scrollLeft+=" + recordListModel.getScrollAmount() + ";" + 
+        "\t}" + 
+        "}" + 
+        "var marqueeTimer_" + sequence + " = setInterval('scroll_" + sequence + "()', " + scrollSpeed + ");";
+      scriptElement.setText(script);
+      divRecords.getParentNode().appendChild(scriptElement);
+    }
+  }
+
+  protected void writeRecord(View view, Object record, int recordIndex, int offset, NodeList recordFormatNodes, Element recordContainer, HTMLElement pageElement, RecordList recordListModel, SitePage sitePage, HTMLParser htmlParser, WebDirectory webDirectory, WebSite parentSite, HttpServletRequest request, boolean editMode, boolean isGenerateStaticPage)
+    throws ServiceException
+  {
+    try
+    {
+      sitePage.setAttribute("record", record);
+      sitePage.setAttribute("recordNumber", new Integer(offset + recordIndex + 1));
+      sitePage.setAttribute("recordUrl", getRecordUrl(view, record, recordListModel.getLinkTitle(), sitePage, recordListModel, webDirectory, parentSite, editMode, request));
+      String width = recordListModel.getRecordWidth();
+      String height = recordListModel.getRecordHeight();
+      if ((recordListModel.getRecordIndent() != null) && (!recordListModel.getRecordIndent().equals(""))) {
+        Element p = recordContainer.getOwnerDocument().createElement("p");
+        p.setAttribute("style", "margin-left:" + recordListModel.getRecordIndent() + "; text-indent:-" + recordListModel.getRecordIndent() + "; margin-top:0px; margin-bottom:0px");
+        recordContainer.appendChild(p);
+        recordContainer = p;
+      }
+      if ((width != null) || (height != null))
+      {
+        Element div = recordContainer.getOwnerDocument().createElement("div");
+        div.setAttribute("style", "text-align:center; float:left" + (width == null ? "" : new StringBuffer(";width:").append(width).toString()) + (height == null ? "" : new StringBuffer(";height:").append(height).toString()));
+        recordContainer.appendChild(div);
+        recordContainer = div;
+      }
+      for (int j = 0; j < recordFormatNodes.getLength(); j++) {
+        Node recordNode = recordContainer.getOwnerDocument().importNode(recordFormatNodes.item(j), true);
+        recordContainer.appendChild(recordNode);
+        if (!(recordNode instanceof Element)) {
+          continue;
+        }
+        if ((j == 0) && (recordFormatNodes.getLength() == 1) && (isCurrentRecord(record, pageElement, recordListModel, sitePage, webDirectory, parentSite, request)))
+        {
+          Element element = (Element)recordNode;
+          String styleClass = element.getAttribute("class");
+          element.setAttribute("class", (styleClass != null) && (!styleClass.equals("")) ? styleClass + " " + styleClass + "Current" : "current");
+        }
+        if ((recordNode instanceof HTMLAnchorElement)) {
+          HTMLAnchorElement fieldElement = (HTMLAnchorElement)recordNode;
+          writeRecordElement(view, record, fieldElement, webDirectory, parentSite, htmlParser, sitePage, recordListModel, request, editMode, isGenerateStaticPage);
+        }
+        else {
+          NodeList elements = ((Element)recordNode).getElementsByTagName("a");
+          for (int k = elements.getLength() - 1; k >= 0; k--) {
+            HTMLAnchorElement fieldElement = (HTMLAnchorElement)elements.item(k);
+            writeRecordElement(view, record, fieldElement, webDirectory, parentSite, htmlParser, sitePage, recordListModel, request, editMode, isGenerateStaticPage);
+          }
+        }
+      }
+    }
+    catch (Exception e) {
+      Logger.exception(e);
+    }
+  }
+
+  protected String getRecordUrl(View view, Object record, String linkTitle, SitePage sitePage, RecordList recordListModel, WebDirectory webDirectory, WebSite parentSite, boolean editMode, HttpServletRequest request)
+    throws ServiceException
+  {
+    if ((view.getLinks() == null) || (view.getLinks().isEmpty())) {
+      return null;
+    }
+    Link link = null;
+    if (linkTitle != null) {
+      link = (Link)ListUtils.findObjectByProperty(view.getLinks(), "title", linkTitle);
+    }
+    if (link == null) {
+      link = (Link)view.getLinks().get(0);
+    }
+    return link.getUrl();
+  }
+
+  protected void writeRecordElement(View view, Object record, HTMLAnchorElement recordElement, WebDirectory webDirectory, WebSite parentSite, HTMLParser htmlParser, SitePage sitePage, RecordList recordListModel, HttpServletRequest request, boolean editMode, boolean isGenerateStaticPage)
+    throws ServiceException
+  {
+    String anchorId = recordElement.getId();
+    if ("field".equals(anchorId)) {
+      this.pageBuilder.processPageElement(recordElement, webDirectory, parentSite, sitePage, request, editMode, isGenerateStaticPage);
+    }
+    else if ("newestImage".equals(anchorId)) {
+      writeNewestImage(view, record, recordElement, sitePage, htmlParser, request, editMode);
+    }
+    else if ("recordLink".equals(anchorId)) {
+      HTMLAnchorElement a = recordElement;
+
+      String urn = recordElement.getAttribute("urn");
+      String linkTitle = StringUtils.getPropertyValue(urn, "linkTitle");
+      if ((linkTitle == null) || (linkTitle.isEmpty())) {
+        linkTitle = urn;
+      }
+      String url = getRecordUrl(view, record, linkTitle, sitePage, recordListModel, webDirectory, parentSite, editMode, request);
+      if (url == null) {
+        a.getParentNode().removeChild(a);
+        return;
+      }
+      a.removeAttribute("id");
+      a.removeAttribute("urn");
+
+      long relationSiteId = StringUtils.getPropertyLongValue(urn, "siteId", -1L);
+      LinkUtils.writeLink(a, url, a.getTarget(), webDirectory.getId(), relationSiteId == -1L ? parentSite.getId() : relationSiteId, record, true, true, sitePage, request);
+    }
+    else if ("recordList".equals(anchorId)) {
+      sitePage.setAttribute("parentRecord", record);
+      this.pageBuilder.processPageElement(recordElement, webDirectory, parentSite, sitePage, request, editMode, isGenerateStaticPage);
+    }
+  }
+
+  private void writeNewestImage(View view, Object record, HTMLAnchorElement newestImageElement, SitePage sitePage, HTMLParser htmlParser, HttpServletRequest request, boolean editMode)
+    throws ServiceException
+  {
+    String urn = newestImageElement.getAttribute("urn");
+    String imageURL = StringUtils.getPropertyValue(urn, "imageURL");
+    int timeLimit = StringUtils.getPropertyIntValue(urn, "timeLimit", 10);
+    if ((imageURL != null) && (timeLimit > 0)) {
+      java.util.Date date = getDateForCheckNewest(view, record);
+      if ((date != null) && (System.currentTimeMillis() - date.getTime() < timeLimit * 3600000L)) {
+        HTMLImageElement img = (HTMLImageElement)newestImageElement.getOwnerDocument().createElement("img");
+        img.setSrc(imageURL);
+        newestImageElement.getParentNode().replaceChild(img, newestImageElement);
+
+        PageUtils.setPageExpiresTime(new Timestamp(date.getTime() + timeLimit * 3600000L), request);
+        return;
+      }
+    }
+    newestImageElement.getParentNode().removeChild(newestImageElement);
+  }
+
+  private boolean inTableHeader(HTMLElement element)
+  {
+    HTMLElement parentElement = (HTMLElement)element.getParentNode();
+    while ((!"tr".equalsIgnoreCase(parentElement.getTagName())) && (!"table".equalsIgnoreCase(parentElement.getTagName())) && (!"body".equalsIgnoreCase(parentElement.getTagName())))
+    {
+      if ("th".equalsIgnoreCase(parentElement.getTagName()))
+        return true;
+      parentElement = (HTMLElement)parentElement.getParentNode();
+    }
+
+    return false;
+  }
+
+  private int getSequence()
+  {
+    sequence += 1;
+    if (sequence > 10000) {
+      sequence = 0;
+    }
+    return sequence;
+  }
+
+  public PageDefineService getPageDefineService()
+  {
+    return this.pageDefineService;
+  }
+
+  public void setPageDefineService(PageDefineService pageDefineService)
+  {
+    this.pageDefineService = pageDefineService;
+  }
+
+  public PageBuilder getPageBuilder()
+  {
+    return this.pageBuilder;
+  }
+
+  public void setPageBuilder(PageBuilder pageBuilder)
+  {
+    this.pageBuilder = pageBuilder;
+  }
+
+  public FormDefineService getFormDefineService()
+  {
+    return this.formDefineService;
+  }
+
+  public void setFormDefineService(FormDefineService formDefineService)
+  {
+    this.formDefineService = formDefineService;
+  }
+}

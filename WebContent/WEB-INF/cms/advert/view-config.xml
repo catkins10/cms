@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="admin/advertSpace" form="admin/advertSpace" title="广告位" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/advert&amp;viewName=admin/advertSpace" hide="noPrivilege(application_manager) and isNotSiteManager() and isNotSiteEditor()" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.advert.pojo.AdvertSpace</pojo>
+			<orderBy>AdvertSpace.name</orderBy>
+			<quickFilter>AdvertSpace.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建广告位" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('cms/advert','admin/advertSpace','mode=fullscreen', 'siteId={PARAMETER:siteId}')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name"/>
+			<column title="创建人" name="creator" align="center" width="60"/>
+			<column title="创建时间" name="created" align="center" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="admin/advertCustomer" form="admin/advertCustomer" title="广告客户" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/advert&amp;viewName=admin/advertCustomer" hide="noPrivilege(application_manager) and isNotSiteManager() and isNotSiteEditor()" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.advert.pojo.AdvertCustomer</pojo>
+			<orderBy>AdvertCustomer.name</orderBy>
+			<quickFilter>AdvertCustomer.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加广告客户" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('cms/advert','admin/advertCustomer','mode=fullscreen', 'siteId={PARAMETER:siteId}')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name"/>
+			<column title="联系人" name="linkman" width="60"/>
+			<column title="联系电话" name="tel" width="120"/>
+		</columns>
+	</view>
+	
+	<view name="admin/advert" form="admin/advert" title="广告" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/advert&amp;viewName=admin/advert" hide="noPrivilege(application_manager) and isNotSiteManager() and isNotSiteEditor()" pageRows="20" openFeatures="mode=dialog,width=80%,height=500">
+		<data>
+			<pojo>com.yuanluesoft.cms.advert.pojo.Advert</pojo>
+			<orderBy>Advert.created DESC</orderBy>
+			<quickFilter>Advert.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加广告" hide="noPrivilege(application_manager)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/advert/admin/advert.shtml?siteId={PARAMETER:siteId}', '80%', 500)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="广告客户" name="customerName" width="40%"/>
+			<column title="广告名称" name="name" width="30%"/>
+			<column title="广告位" name="spaceName" width="30%"/>
+			<column title="创建时间" name="created" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="admin/advertPut" form="admin/advertPut" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/advert&amp;viewName=admin/advertPut" hide="noPrivilege(application_manager) and isNotSiteManager() and isNotSiteEditor()" title="广告投放" pageRows="20" openFeatures="mode=dialog,width=430,height=300">
+		<data>
+			<pojo>com.yuanluesoft.cms.advert.pojo.AdvertPut</pojo>
+			<orderBy>AdvertPut.beginTime</orderBy>
+			<quickFilter>AdvertPut.advertName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="广告客户" name="customerName" width="40%"/>
+			<column title="广告名称" name="advertName" width="30%"/>
+			<column title="广告位" name="spaceName" width="30%"/>
+			<column title="开始时间" name="beginTime" width="110"/>
+			<column title="结束时间" name="end" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="selectAdvertSpace" title="选择广告位" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.cms.advert.pojo.AdvertSpace</pojo>
+			<where>AdvertSpace.siteId={PARAMETER:siteId}</where>
+			<orderBy>AdvertSpace.name</orderBy>
+			<quickFilter>AdvertSpace.name like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name"/>
+			<column title="宽度" name="width" align="center" width="60"/>
+			<column title="高度" name="height" align="center" width="60"/>
+			<column title="报价" name="price"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+</views>

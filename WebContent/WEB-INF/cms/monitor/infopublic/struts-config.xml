@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="publicInfo" type="com.yuanluesoft.cms.monitor.infopublic.forms.PublicInfo"/>
+  <form-bean name="publicInfoOpinion" type="com.yuanluesoft.cms.monitor.infopublic.forms.PublicInfoOpinion"/>
+  <form-bean name="publicInfoRequest" type="com.yuanluesoft.cms.monitor.infopublic.forms.PublicInfoRequest"/>
+  <form-bean name="publicInfoReport" type="com.yuanluesoft.cms.monitor.infopublic.forms.PublicInfoReport"/>
+  <form-bean name="publicInfoRule" type="com.yuanluesoft.cms.monitor.infopublic.forms.PublicInfoRule"/>
+  <form-bean name="partyInfo" type="com.yuanluesoft.cms.monitor.infopublic.forms.PartyInfo"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="publicInfo" path="/publicInfo" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Load" validate="false">
+   <forward name="load" path="/publicInfo.jsp"/>
+  </action>
+  <action name="publicInfoOpinion" path="/publicInfoOpinion"
+   scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Load" validate="false">
+   <forward name="load" path="/publicInfoOpinion.jsp"/>
+  </action>
+  <action name="publicInfoRequest" path="/publicInfoRequest"
+   scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Load" validate="false">
+   <forward name="load" path="/publicInfoRequest.jsp"/>
+  </action>
+  <action name="publicInfoReport" path="/publicInfoReport"
+   scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Load" validate="false">
+   <forward name="load" path="/publicInfoReport.jsp"/>
+  </action>
+  <action name="publicInfoRule" path="/publicInfoRule" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Load" validate="false">
+   <forward name="load" path="/publicInfoRule.jsp"/>
+  </action>
+  <action name="partyInfo" path="/partyInfo" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Load" validate="false">
+   <forward name="load" path="/partyInfo.jsp"/>
+  </action>
+  <action input="/publicInfo.jsp" name="publicInfo"
+   path="/savePublicInfo" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Save" validate="false"/>
+  <action input="/publicInfo.jsp" name="publicInfo"
+   path="/deletePublicInfo" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Delete" validate="false"/>
+  <action input="/partyInfo.jsp" name="partyInfo" path="/savePartyInfo"
+   scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Save" validate="false"/>
+  <action input="/partyInfo.jsp" name="partyInfo"
+   path="/deletePartyInfo" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Delete" validate="false"/>
+  <action input="/publicInfoOpinion.jsp" name="publicInfoOpinion"
+   path="/savePublicInfoOpinion" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Save" validate="false"/>
+  <action input="/publicInfoOpinion.jsp" name="publicInfoOpinion"
+   path="/deletePublicInfoOpinion" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Delete" validate="false"/>
+  <action input="/publicInfoRequest.jsp" name="publicInfoRequest"
+   path="/savePublicInfoRequest" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Save" validate="false"/>
+  <action input="/publicInfoRequest.jsp" name="publicInfoRequest"
+   path="/deletePublicInfoRequest" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Delete" validate="false"/>
+  <action input="/publicInfoReport.jsp" name="publicInfoReport"
+   path="/savePublicInfoReport" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Save" validate="false"/>
+  <action input="/publicInfoReport.jsp" name="publicInfoReport"
+   path="/deletePublicInfoReport" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Delete" validate="false"/>
+  <action input="/publicInfoRule.jsp" name="publicInfoRule"
+   path="/savePublicInfoRule" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Save" validate="false"/>
+  <action input="/publicInfoRule.jsp" name="publicInfoRule"
+   path="/deletePublicInfoRule" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Delete" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

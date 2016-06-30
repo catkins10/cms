@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views>
+	<view name="leaderAgent" form="leaderAgent" title="领导代理" pageRows="20" openFeatures="mode=dialog,width=430,height=200" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.telex.base.pojo.TelegramLeaderAgent</pojo>
+			<orderBy>TelegramLeaderAgent.leader</orderBy>
+			<quickFilter>TelegramLeaderAgent.leader like '%{KEY}%' or TelegramLeaderAgent.agent like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加代理" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('telex', 'leaderAgent', 'mode=dialog,width=430,height=200')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="领导" name="leader" width="120"/>
+			<column title="代理人" name="agent"/>
+		</columns>
+	</view>
+	
+	<view name="transactionSheet" form="transactionSheet" title="办理单配置" pageRows="20" openFeatures="mode=dialog,width=80%,height=80%" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.telex.base.pojo.TelegramTransactionSheet</pojo>
+			<orderBy>TelegramTransactionSheet.name</orderBy>
+			<quickFilter>TelegramTransactionSheet.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加办理单" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('telex', 'transactionSheet', 'mode=dialog,width=80%,height=80%')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+			<column title="所属电报类型" name="telegramType" width="120" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="selectTransactionSheet" form="transactionSheet" title="选择办理单" pageRows="20" openFeatures="width=720,height=480" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.telex.base.pojo.TelegramTransactionSheet</pojo>
+			<orderBy>TelegramTransactionSheet.name</orderBy>
+			<quickFilter>TelegramTransactionSheet.telegramType like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+		</columns>
+	</view>
+</views>

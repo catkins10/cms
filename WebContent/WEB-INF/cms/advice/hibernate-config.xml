@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--民意征集:主题-->
+	<class name="com.yuanluesoft.cms.advice.pojo.AdviceTopic" table="cms_advice_topic">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="subject"/> <!--标题-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--内容-->
+		<property name="endDate"/> <!--截止日期-->
+		<property name="issue"/> <!--是否发布-->
+		<property name="issueTime"/> <!--发布时间-->
+		<property name="creatorId"/> <!--创建者ID-->
+		<property name="creator"/> <!--创建者-->
+		<property name="created"/> <!--创建时间-->
+		<property name="siteId"/> <!--站点ID-->
+		<set name="advices" table="cms_advice" lazy="true" inverse="true" cascade="delete">
+			<key column="topicId" />
+			<one-to-many class="com.yuanluesoft.cms.advice.pojo.Advice" />
+		</set>
+		<set inverse="true" lazy="true" name="feedbacks" table="cms_advice_feedback" cascade="delete">
+			<key column="topicId" />
+			<one-to-many class="com.yuanluesoft.cms.advice.pojo.AdviceFeedback" />
+		</set>
+	</class>
+	
+	<!--民意征集:结果反馈-->
+	<class name="com.yuanluesoft.cms.advice.pojo.AdviceFeedback" table="cms_advice_feedback">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="topicId"/> <!--主题ID,NUMERIC(20,0)-->
+		<property name="feedback"/> <!--结果反馈,TEXT-->
+		<property name="creatorId"/> <!--反馈人ID,NUMERIC(20,0)-->
+		<property name="creator"/> <!--反馈人,VARCHAR(30)-->
+		<property name="created"/> <!--反馈时间,timestamp null-->
+		<many-to-one name="adviceTopic" class="com.yuanluesoft.cms.advice.pojo.AdviceTopic" column="topicId" update="false" insert="false"/>
+	</class>
+</hibernate-mapping>

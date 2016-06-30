@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,161,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="320,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,161,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="320,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#book" NAME="action0"
+  PATH="/book" SHAPE="32,224,161,25" TITLE="book" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/book.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2" PATH="/book.jsp"
+  SHAPE="320,240,50,25" SUBTYPE="jsp" TITLE="book.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveBook" TARGET="action1" TITLE="saveBook" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteBook" TARGET="action2" TITLE="deleteBook" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/refreshBook" TARGET="action8" TITLE="refreshBook" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveBook" NAME="action1"
+  PATH="/saveBook" SHAPE="512,256,161,25" TITLE="book" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteBook"
+  NAME="action2" PATH="/deleteBook" SHAPE="512,312,161,25" TITLE="book" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#borrow" NAME="action3"
+  PATH="/borrow" SHAPE="32,472,161,41" TITLE="borrow" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/borrow.jsp" TARGET="page3" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/borrow.jsp" SHAPE="320,488,50,85" SUBTYPE="jsp"
+  TITLE="borrow.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveBorrow" TARGET="action5" TITLE="saveBorrow" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteBorrow" TARGET="action6"
+   TITLE="deleteBorrow" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/completeBorrow" TARGET="action4"
+   TITLE="completeBorrow" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/completeReturn" TARGET="action7"
+   TITLE="completeReturn" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#completeBorrow"
+  NAME="action4" PATH="/completeBorrow" SHAPE="512,624,161,25"
+  TITLE="borrow" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveBorrow"
+  NAME="action5" PATH="/saveBorrow" SHAPE="512,504,161,25"
+  TITLE="borrow" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteBorrow"
+  NAME="action6" PATH="/deleteBorrow" SHAPE="512,560,161,25"
+  TITLE="borrow" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#completeReturn"
+  NAME="action7" PATH="/completeReturn" SHAPE="512,688,161,25"
+  TITLE="borrow" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#refreshBook"
+  NAME="action8" PATH="/refreshBook" SHAPE="512,368,161,25" TITLE="book" TYPE="action"/>
+</PROCESS>

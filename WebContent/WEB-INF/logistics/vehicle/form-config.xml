@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="vehicle" action="/logistics/vehicle/saveVehicle.shtml" class="com.yuanluesoft.logistics.vehicle.forms.Vehicle" title="车辆登记" pojo="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicle">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteVehicle')"/>
+		</actions>
+	</form>
+	
+	<form name="vehicleSearch" method="get" action="/logistics/vehicle/vehicleSearch.shtml" title="车辆查询">
+		<formFields>
+			<field name="plateNumber" title="车牌号码" type="string" inputMode="text" length="10"/>
+			<field name="owner" title="车主姓名" type="string" inputMode="text" length="25"/>
+			<field name="linkman" title="随车联系人" type="string" inputMode="text" length="25"/>
+			<field name="linkmanTel" title="随车联系人电话" type="string" inputMode="text" length="100"/>
+			<field name="brand" title="汽车品牌" type="string" inputMode="text" length="25"/>
+			<field name="type" title="车型" type="string" inputMode="text" length="50"/>
+			<field name="vehicleBody" title="车体状况" type="string" inputMode="dropdown" length="25">
+				<parameter name="itemsText">厢式\0敞蓬\0半挂\0全挂\0高栏\0中栏\0低栏\0平板车\0不锈钢大槽罐车\0油罐车\0中型罐车\0铁笼车\0冷藏车\0加长挂\0进口气囊避震车\0保温车\0起重车\0自卸车\0后八轮\0前四后八</parameter>
+			</field>
+			<field name="vehicleLoadMin" title="最小载重" type="number" inputMode="text" length="5,2"/>
+			<field name="vehicleLoadMax" title="最大载重" type="number" inputMode="text" length="5,2"/>
+			<field name="vehicleLongMin" title="最小车长" type="number" inputMode="text" length="5,2"/>
+			<field name="vehicleLongMax" title="最大车长" type="number" inputMode="text" length="5,2"/>
+			<field name="vehicleWidthMin" title="最小车宽" type="number" inputMode="text" length="5,2"/>
+			<field name="vehicleWidthMax" title="最大车宽" type="number" inputMode="text" length="5,2"/>
+			<field name="area" title="车辆归属地" type="string" inputMode="select" length="25">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(500, 300, false, 'areaId{id},area{name}', '', 'area')</parameter>
+			</field>
+			<field name="transportLines" title="主要运输路线" type="string" inputMode="text" length="250"/>
+			<field name="isEmpty" title="空车/重车" type="string" inputMode="radio">
+				<parameter name="itemsText">空车|1\0重车|0</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="查询" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="vehicleLocationSearch" method="get" action="/logistics/vehicle/vehicleLocationSearch.shtml" title="车辆定位查询">
+		<formFields>
+			<field name="plateNumber" title="车牌号码" type="string" inputMode="text" length="10"/>
+			<field name="owner" title="车主姓名" type="string" inputMode="text" length="25"/>
+			<field name="linkman" title="随车联系人" type="string" inputMode="text" length="25"/>
+			<field name="linkmanTel" title="随车联系人电话" type="string" inputMode="text" length="100"/>
+			<field name="brand" title="汽车品牌" type="string" inputMode="text" length="25"/>
+			<field name="type" title="车型" type="string" inputMode="text" length="50"/>
+			<field name="vehicleBody" title="车体状况" type="string" inputMode="dropdown" length="25">
+				<parameter name="itemsText">厢式\0敞蓬\0半挂\0全挂\0高栏\0中栏\0低栏\0平板车\0不锈钢大槽罐车\0油罐车\0中型罐车\0铁笼车\0冷藏车\0加长挂\0进口气囊避震车\0保温车\0起重车\0自卸车\0后八轮\0前四后八</parameter>
+			</field>
+			<field name="vehicleLoadMin" title="最小载重" type="number" inputMode="text" length="5,2"/>
+			<field name="vehicleLoadMax" title="最大载重" type="number" inputMode="text" length="5,2"/>
+			<field name="vehicleLongMin" title="最小车长" type="number" inputMode="text" length="5,2"/>
+			<field name="vehicleLongMax" title="最大车长" type="number" inputMode="text" length="5,2"/>
+			<field name="vehicleWidthMin" title="最小车宽" type="number" inputMode="text" length="5,2"/>
+			<field name="vehicleWidthMax" title="最大车宽" type="number" inputMode="text" length="5,2"/>
+			<field name="area" title="车辆归属地" type="string" inputMode="select" length="25">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(500, 300, false, 'areaId{id},area{name}', '', 'area')</parameter>
+			</field>
+			<field name="transportLines" title="主要运输路线" type="string" inputMode="text" length="250"/>
+			<field name="isEmpty" title="空车/重车" type="string" inputMode="radio">
+				<parameter name="itemsText">空车|1\0重车|0</parameter>
+			</field>
+			<field name="gpsLocation" title="车辆位置(定时更新)" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.gps.pojo.GpsLocation</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="查询" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="vehicleSupply" action="/logistics/vehicle/saveVehicleSupply.shtml" class="com.yuanluesoft.logistics.vehicle.forms.VehicleSupply" title="车源登记" pojo="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicleSupply">
+		<formFields>
+			<field name="freeVehicleNumbers" title="车牌" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.openSelectDialog('logistics/vehicle', 'selectVehicle', 550, 350, true, 'freeVehicleNumbers{plateNumber},freeVehicleNumbers{plateNumber|车牌号码|100%}')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteVehicleSupply')"/>
+		</actions>
+	</form>
+	
+	<form name="vehicleSupplySearch" method="get" action="/logistics/vehicle/vehicleSupplySearch.shtml" title="车源查询">
+		<formFields>
+			<field name="freightAmountMin" title="最低运费金额" type="number" inputMode="text" length="8,2"/>
+			<field name="freightAmountMax" title="最高运费金额" type="number" inputMode="text" length="8,2"/>
+			<field name="departureAreaId" title="出发地点ID" type="string" inputMode="hidden"/>
+			<field name="departureArea" title="出发地点" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'departureAreaId{id},departureArea{name}', '', 'area')</parameter>
+			</field>
+			<field name="destinationAreaId" title="目的地点ID" type="string" inputMode="hidden"/>
+			<field name="destinationArea" title="目的地点" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, false, 'destinationAreaId{id},destinationArea{name}', '', 'area')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="查询" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="admin/vehicle" class="com.yuanluesoft.logistics.vehicle.forms.admin.Vehicle" title="车辆" pojo="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicle">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteVehicle')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/vehicleSupply" class="com.yuanluesoft.logistics.vehicle.forms.admin.VehicleSupply" title="车源" pojo="com.yuanluesoft.logistics.vehicle.pojo.LogisticsVehicleSupply">
+		<formFields>
+			<field name="freeVehicleNumbers" title="车牌" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.openSelectDialog('logistics/vehicle', 'admin/selectVehicle', 550, 350, true, 'freeVehicleNumbers{plateNumber},freeVehicleNumbers{plateNumber|车牌号码|100%}', '', '', '', '', false, 'logisticsUserId={PARAMETER:userId}')</parameter>
+			</field>
+			<field name="departureAreaIds" title="出发地点ID" type="string" inputMode="hidden"/>
+			<field name="departureAreas" title="出发地点" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, true, 'departureAreaIds{id},departureAreas{name|出发地点|100%}', '', 'area')</parameter>
+			</field>
+			<field name="destinationAreaIds" title="目的地点ID" type="string" inputMode="hidden"/>
+			<field name="destinationAreas" title="目的地点" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, true, 'destinationAreaIds{id},destinationAreas{name|目的地点|100%}', '', 'area')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="发布" execute="FormUtils.doAction('issueVehicleSupply')"/>
+			<action title="撤销发布" execute="FormUtils.doAction('unissueVehicleSupply')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteVehicleSupply')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.logistics.vehicle.forms.admin.UpdateVehicleLocation" title="更新车辆位置">
+		<actions>
+			<action name="close" title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

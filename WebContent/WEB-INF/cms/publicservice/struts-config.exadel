@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,56,177,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="336,56,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,177,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="336,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#workflowSetting"
+  NAME="action4" PATH="/admin/workflowSetting" SHAPE="32,232,177,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#smsFormat"
+  NAME="action0" PATH="/admin/smsFormat" SHAPE="32,336,177,25"
+  TITLE="adminSmsFormat" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/smsFormat.jsp" TARGET="page2"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/admin/smsFormat.jsp" SHAPE="336,352,50,40" SUBTYPE="jsp"
+  TITLE="smsFormat.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveSmsFormat" TARGET="action1" TITLE="saveSmsFormat" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveSmsFormat"
+  NAME="action1" PATH="/admin/saveSmsFormat" SHAPE="528,368,177,25"
+  TITLE="adminSmsFormat" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#readersModifyOption" NAME="action2"
+  PATH="/admin/readersModifyOption" SHAPE="32,464,177,41"
+  TITLE="adminModifyReaders" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/readersModifyOption.jsp" TARGET="page3"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/admin/readersModifyOption.jsp" SHAPE="336,480,50,25"
+  SUBTYPE="jsp" TITLE="readersModifyOption.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#modifyReaders"
+  NAME="action3" PATH="/admin/modifyReaders" SHAPE="32,576,177,25"
+  TITLE="applicationView" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#batchDelete"
+  NAME="action5" PATH="/admin/batchDelete" SHAPE="32,656,177,25"
+  TITLE="applicationView" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#replyStatisticView"
+  NAME="action6" PATH="/admin/replyStatisticView" SHAPE="32,752,177,41"
+  TITLE="adminReplyStatisticView" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/application/applicationView.jsp"
+   TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/../../jeaf/application/applicationView.jsp"
+  SHAPE="336,768,50,25" SUBTYPE="jsp" TITLE="applicationView.jsp" TYPE="page"/>
+</PROCESS>

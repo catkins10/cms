@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="bulletin" type="com.yuanluesoft.j2oa.bulletin.forms.Bulletin"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action input="/bulletin.jsp" name="bulletin" path="/bulletin"
+   scope="request" type="com.yuanluesoft.j2oa.bulletin.actions.Load" validate="false">
+   <forward name="load" path="/bulletin.jsp"/>
+  </action>
+  <action input="/bulletin.jsp" name="bulletin" path="/save"
+   scope="request" type="com.yuanluesoft.j2oa.bulletin.actions.Save" validate="false"/>
+  <action input="/bulletin.jsp" name="bulletin" path="/delete"
+   scope="request" type="com.yuanluesoft.j2oa.bulletin.actions.Delete" validate="false"/>
+  <action input="/bulletin.jsp" name="bulletin" path="/issue"
+   scope="request" type="com.yuanluesoft.j2oa.bulletin.actions.Issue" validate="false"/>
+  <action input="/bulletin.jsp" name="bulletin" path="/undoIssue"
+   scope="request"
+   type="com.yuanluesoft.j2oa.bulletin.actions.UndoIssue" validate="false"/>
+  <action name="bulletin" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.j2oa.bulletin.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="bulletin" path="/selectAttachment" scope="request"
+   type="com.yuanluesoft.j2oa.bulletin.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action input="/bulletin.jsp" name="bulletin" path="/run"
+   scope="request" type="com.yuanluesoft.j2oa.bulletin.actions.Run" validate="false"/>
+  <action input="/bulletin.jsp" name="bulletin" path="/writeOpinion"
+   scope="request"
+   type="com.yuanluesoft.j2oa.bulletin.actions.WriteOpinion" validate="false"/>
+  <action input="/bulletin.jsp" name="bulletin" path="/redoIssue"
+   scope="request"
+   type="com.yuanluesoft.j2oa.bulletin.actions.RedoIssue" validate="false"/>
+  <action input="/bulletin.jsp" name="bulletin" path="/approval"
+   scope="request" type="com.yuanluesoft.j2oa.bulletin.actions.Approval" validate="false"/>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="200M"/>
+</struts-config>

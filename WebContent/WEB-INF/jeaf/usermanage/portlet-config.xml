@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+			 version="1.0">
+	<portlet>
+		<description>用户信息</description>
+		<portlet-name>userInfo</portlet-name>
+		<display-name>用户信息</display-name>
+		<portlet-class>com.yuanluesoft.portal.portlet.TemplateBasedPortlet</portlet-class>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<supported-locale>zh</supported-locale>
+		<resource-bundle/>
+		<portlet-info>
+			<title>用户信息</title>
+		</portlet-info>
+	</portlet>
+	
+	<portlet>
+		<description>快速通道</description>
+		<portlet-name>shortcuts</portlet-name>
+		<display-name>快速通道</display-name>
+		<portlet-class>com.yuanluesoft.portal.portlet.TemplateBasedPortlet</portlet-class>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>zh</supported-locale>
+		<resource-bundle>Resource</resource-bundle>
+		<portlet-info>
+			<title>快速通道</title>
+		</portlet-info>
+	</portlet>
+	
+	<portlet>
+		<description>天气预报</description>
+		<portlet-name>weather</portlet-name>
+		<display-name>天气预报</display-name>
+		<portlet-class>com.yuanluesoft.jeaf.weather.portlet.WeatherPortlet</portlet-class>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supported-locale>zh</supported-locale>
+		<resource-bundle/>
+		<portlet-info>
+			<title>天气预报</title>
+		</portlet-info>
+		<portlet-preferences>
+			<preference>
+				<name>area</name>
+				<value>label=地区&amp;inputMode=text</value>
+			</preference>
+			<preference>
+				<name>days</name>
+				<value>defaultValue=3&amp;label=预报天数&amp;inputMode=text</value>
+			</preference>
+		</portlet-preferences>
+	</portlet>
+	
+	<portlet>
+		<description>自定义PORTLET</description>
+		<portlet-name>templateBasedPortlet</portlet-name>
+		<display-name>自定义PORTLET</display-name>
+		<portlet-class>com.yuanluesoft.portal.portlet.TemplateBasedPortlet</portlet-class>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>zh</supported-locale>
+		<resource-bundle>Resource</resource-bundle>
+		<portlet-info>
+			<title>自定义PORTLET</title>
+		</portlet-info>
+	</portlet>
+</portlet-app>

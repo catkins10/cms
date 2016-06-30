@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/enterpriseInfo" form="admin/enterprise"  title="个体企业信息" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.Enterprise</pojo>
+			<orderBy>Enterprise.created DESC</orderBy>
+			<quickFilter>Enterprise.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="person" title="经营者"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseinInfo" form="admin/enterprise"  title="内资企业信息" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn</pojo>
+			<orderBy>EnterpriseIn.created DESC</orderBy>
+			<quickFilter>EnterpriseIn.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="person" title="经营者"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterpriseoutInfo" form="admin/enterprise"  title="外资企业信息" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut</pojo>
+			<orderBy>EnterpriseOut.created DESC</orderBy>
+			<quickFilter>EnterpriseOut.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="person" title="经营者"  align="center"/>
+			<column name="registCode" title="注册号" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/financingInfo" form="admin/financing" title="融资需求" pageRows="20" openFeatures="mode=fullscreen" >
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprise.financing.pojo.Financing</pojo>
+			<orderBy>Financing.created DESC</orderBy>
+			<quickFilter>Financing.projectName like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="projectName" title="融资项目名称"/>
+			<column name="amount" title="资金需求额度"  align="center"/>
+			<column name="purpose" title="资金用途" align="center"/>
+			<column name="type" title="资金需求种类" align="center"/>
+		</columns>
+	</view>
+	
+	
+	
+	
+</views>

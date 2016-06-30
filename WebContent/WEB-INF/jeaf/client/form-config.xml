@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.jeaf.client.forms.Channel" title="设为频道">
+		<formFields>
+			<field title="频道名称" name="name" type="string" inputMode="text"/>
+			<field title="显示栏目数" name="columnCount" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.client.forms.ColumnBar" title="设为栏目栏">
+		<formFields>
+			<field title="显示方式" name="barDisplayMode" type="string" inputMode="radio">
+				<parameter name="itemsText">总是显示|alwaysDisplay\0自动隐藏|autoHide</parameter>
+				<parameter name="defaultValue">autoHide</parameter>
+			</field>
+			<field title="显示时间(秒)" name="displaySeconds" type="string" inputMode="text">
+				<parameter name="defaultValue">5</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--信息采编:来稿-->
+	<class name="com.yuanluesoft.j2oa.info.pojo.InfoReceive" table="info_receive">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="subject"/> <!--标题,VARCHAR(200)-->
+		<property name="keywords"/> <!--主题词,VARCHAR(100)-->
+		<property name="presetMagazines"/> <!--预选刊型,VARCHAR(200)-->
+		<property name="secretLevel"/> <!--密级,普通 秘密 机密,VARCHAR(10)-->
+		<property name="fromUnit"/> <!--来稿单位名称,VARCHAR(200)-->
+		<property name="fromUnitId"/> <!--来稿单位ID,NUMERIC(20)-->
+		<property name="source"/> <!--信息来源,VARCHAR(100)-->
+		<property name="sn"/> <!--期数,VARCHAR(20)-->
+		<property name="editor"/> <!--责任编辑,VARCHAR(50)-->
+		<property name="editorTel"/> <!--电话,VARCHAR(100)-->
+		<property name="signer"/> <!--签发领导,VARCHAR(50)-->
+		<property name="signerTel"/> <!--签发领导电话,VARCHAR(100)-->
+		<property name="creatorId"/> <!--创建人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--创建人,VARCHAR(30)-->
+		<property name="contributeTime"/> <!--投稿时间,TIMESTAMP-->
+		<property name="filterPersonId"/> <!--筛选人ID,NUMERIC(20)-->
+		<property name="filterPerson"/> <!--筛选人,VARCHAR(30)-->
+		<property name="filterTime"/> <!--筛选时间,TIMESTAMP-->
+		<property name="filterOpinion"/> <!--筛选意见,VARCHAR(1000)-->
+		<set name="lazyBody" cascade="delete" inverse="true" lazy="true" table="info_receive_body">
+			<key column="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.info.pojo.InfoReceiveBody"/>
+		</set>
+		<set name="infoFilters" cascade="none" inverse="true" lazy="true" table="info_filter">
+			<key column="infoReceiveId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.info.pojo.InfoFilter"/>
+		</set>
+		<!-- 退改稿记录 -->
+		<set name="revises" cascade="delete" inverse="true" lazy="true" table="info_revise" order-by="reviseTime desc">
+			<key column="infoId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.info.pojo.InfoRevise"/>
+		</set>
+	</class>
+	
+	<!--信息采编:来稿正文-->
+	<class name="com.yuanluesoft.j2oa.info.pojo.InfoReceiveBody" table="info_receive_body">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文,TEXT-->
+	</class>
+	
+	<!--信息采编:拟采用稿件-->
+	<class name="com.yuanluesoft.j2oa.info.pojo.InfoFilter" table="info_filter">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="infoReceiveId"/> <!--来稿ID,NUMERIC(20)-->
+		<property name="magazineDefineId"/> <!--刊物配置ID,NUMERIC(20)-->
+		<property name="magazineName"/> <!--刊物名称,VARCHAR(20)-->
+		<property name="subject"/> <!--标题,VARCHAR(200)-->
+		<property name="level" column="infoLevel"/> <!--采用级别,普通 优先,VARCHAR(10)-->
+		<property name="isBrief"/> <!--是否简讯,NUMERIC(1)-->
+		<property name="isVerified"/> <!--是否核实,NUMERIC(1)-->
+		<property name="isCircular"/> <!--是否通报,NUMERIC(1)-->
+		<property name="isCombined"/> <!--是否多条合一,NUMERIC(1)-->
+		<property name="isBeCombined"/> <!--是否被合并,NUMERIC(1)-->
+		<property name="combineInfoIds"/> <!--合并的稿件ID,VARCHAR(200)-->
+		<property name="status"/> <!--状态,0/审核中,1/待排版,2/已排版,3/已定版,NUMERIC(1)-->
+		<property name="magazineId"/> <!--刊物ID,NUMERIC(20)-->
+		<property name="magazineColumn"/> <!--栏目,VARCHAR(30)-->
+		<property name="priority"/> <!--序号,NUMERIC(7,4)-->
+		<property name="issueTime"/> <!--定版时间,TIMESTAMP-->
+		<property name="magazineSN"/> <!--刊物期数,NUMERIC(20)-->
+		<property name="supplementPersonId"/> <!--补录人ID,NUMERIC(20)-->
+		<property name="supplementPerson"/> <!--补录人,VARCHAR(30)-->
+		<property name="supplementTime"/> <!--补录时间,TIMESTAMP-->
+		<property name="workflowInstanceId"/> <!--流程实例ID,VARCHAR(20)-->
+		<!-- 来稿 -->
+		<many-to-one name="infoReceive" class="com.yuanluesoft.j2oa.info.pojo.InfoReceive" column="infoReceiveId" update="false" insert="false"/>
+		<set name="lazyBody" cascade="delete" inverse="true" lazy="true" table="info_filter_body">
+			<key column="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.info.pojo.InfoFilterBody"/>
+		</set>
+		<set name="opinions" table="info_filter_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.j2oa.info.pojo.InfoFilterOpinion" />
+		</set>
+		<set name="visitors" table="info_filter_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.info.pojo.InfoFilterPrivilege"/>
+		</set>
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+		<!--报送情况-->
+		<set name="sendHighers" table="info_send_higher" lazy="true" inverse="true" cascade="delete" order-by="sendTime desc">
+			<key column="infoId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.j2oa.info.pojo.InfoSendHigher" />
+		</set>
+		<!-- 领导批示 -->
+		<set name="instructs" table="info_instruct" lazy="true" inverse="true" cascade="delete" order-by="instructTime desc">
+			<key column="infoId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.j2oa.info.pojo.InfoInstruct" />
+		</set>
+		<!-- 退改稿记录 -->
+		<set name="revises" cascade="delete" inverse="true" lazy="true" table="info_revise" order-by="reviseTime desc">
+			<key column="infoId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.info.pojo.InfoRevise"/>
+		</set>
+	</class>
+	
+	<!--信息采编:拟采用稿件正文-->
+	<class name="com.yuanluesoft.j2oa.info.pojo.InfoFilterBody" table="info_filter_body">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文,TEXT-->
+	</class>
+	
+	<!--信息采编:稿件权限控制信息-->
+	<class name="com.yuanluesoft.j2oa.info.pojo.InfoFilterPrivilege" table="info_filter_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,numeric(20)-->
+		<property name="accessLevel"/> <!--访问级别,CHAR(1)-->
+		<property name="recordId"/> <!--主记录ID,numeric(20)-->
+	</class>
+	
+	<!--信息采编:稿件办理意见-->
+	<class name="com.yuanluesoft.j2oa.info.pojo.InfoFilterOpinion" table="info_filter_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID,numeric(20)-->
+		<property name="workItemId"/> <!--工作项ID,VARCHAR(32)-->
+		<property name="activityName"/> <!--环节名称,VARCHAR(50)-->
+		<property name="activityId"/> <!--环节ID,VARCHAR(32)-->
+		<property name="personId"/> <!--填写人ID,numeric(20)-->
+		<property name="personName"/> <!--填写人姓名,VARCHAR(32)-->
+		<property name="agentId"/> <!--代理人ID,numeric(20)-->
+		<property name="agentName"/> <!--代理人姓名,VARCHAR(32)-->
+		<property name="opinion"/> <!--意见内容,VARCHAR(1000)-->
+		<property name="opinionType"/> <!--意见类型,VARCHAR(20)-->
+		<property name="created"/> <!--填写时间,timestamp null-->
+	</class>
+	
+	<!--拟采用稿件:报送情况-->
+	<class name="com.yuanluesoft.j2oa.info.pojo.InfoSendHigher" table="info_send_higher">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="infoId"/> <!--稿件ID,NUMERIC(20)-->
+		<property name="level" column="sendLevel"/> <!--报送级别,1/县办,2/市办,3/省办,4/国办,NUMERIC(1)-->
+		<property name="sendTime"/> <!--报送时间,TIMESTAMP-->
+		<property name="senderId"/> <!--报送人ID,NUMERIC(20)-->
+		<property name="sender"/> <!--报送人,VARCHAR(30)-->
+		<property name="useTime"/> <!--采用时间,TIMESTAMP-->
+		<property name="useMagazine"/> <!--采用刊物名称,VARCHAR(30)-->
+		<property name="useRegisterId"/> <!--采用登记人ID,NUMERIC(20)-->
+		<property name="useRegister"/> <!--采用登记人,VARCHAR(30)-->
+	</class>
+	
+	<!--信息采编:领导批示-->
+	<class name="com.yuanluesoft.j2oa.info.pojo.InfoInstruct" table="info_instruct">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="infoId"/> <!--稿件ID,NUMERIC(20)-->
+		<property name="leader"/> <!--领导姓名,VARCHAR(20)-->
+		<property name="level" column="leaderLevel"/> <!--领导级别,1/县,2/市,3/省,4/国,NUMERIC(1)-->
+		<property name="instruct" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--批示内容,TEXT-->
+		<property name="instructTime"/> <!--批示时间,TIMESTAMP-->
+		<property name="creatorId"/> <!--录入人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--录入人,VARCHAR(30)-->
+		<property name="created"/> <!--录入时间,TIMESTAMP-->
+	</class>
+	
+	<!--信息采编:退改稿-->
+	<class name="com.yuanluesoft.j2oa.info.pojo.InfoRevise" table="info_revise">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="subject"/> <!--稿件标题,VARCHAR(200)-->
+		<property name="infoId"/> <!--稿件ID,原始稿件ID或者录用稿件ID,NUMERIC(20)-->
+		<property name="isReceive"/> <!--是否来稿,NUMERIC(1)-->
+		<property name="revisePersonId"/> <!--退改稿人ID,NUMERIC(20)-->
+		<property name="revisePerson"/> <!--退改稿人,VARCHAR(30)-->
+		<property name="revisePersonTel"/> <!--退改稿人电话,VARCHAR(30)-->
+		<property name="reviseOpinion"/> <!--退改稿意见,VARCHAR(1000)-->
+		<property name="reviseTime"/> <!--退改稿时间,TIMESTAMP-->
+		<property name="newBody" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--修改后的正文,TEXT-->
+		<property name="editTime"/> <!--修改时间,TIMESTAMP-->
+		<property name="editorId"/> <!--修改人ID,NUMERIC(20)-->
+		<property name="editor"/> <!--修改人,VARCHAR(30)-->
+	</class>
+	
+	<!--信息采编:刊物配置-->
+	<class name="com.yuanluesoft.j2oa.info.pojo.InfoMagazineDefine" table="info_magazine_define">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--名称,VARCHAR(20)-->
+		<property name="hasBrief"/> <!--有无简讯,NUMERIC(1)-->
+		<property name="sn"/> <!--当前期号,NUMERIC(8)-->
+		<property name="snYear"/> <!--编号年度,NUMERIC(4)-->
+		<property name="snTotal"/> <!--当前总期号,NUMERIC(8)-->
+		<property name="resetSnByYear"/> <!--每年重排期号,NUMERIC(1)-->
+		<property name="columns"/> <!--栏目列表,用逗号分隔,VARCHAR(1000)-->
+		<set name="visitors" table="info_magazine_define_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.info.pojo.InfoMagazineDefinePrivilege"/>
+		</set>
+	</class>
+	
+	<!--信息采编:刊物权限控制-->
+	<class name="com.yuanluesoft.j2oa.info.pojo.InfoMagazineDefinePrivilege" table="info_magazine_define_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,numeric(20)-->
+		<property name="accessLevel"/> <!--访问级别,CHAR(1)-->
+		<property name="recordId"/> <!--主记录ID,numeric(20)-->
+	</class>
+	
+	<!--信息采编:积分和稿酬-->
+	<class name="com.yuanluesoft.j2oa.info.pojo.InfoPoint" table="info_point">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="item"/> <!--得分项目,0/录用,1/领导批示,2/报市办,3/市办录用,4/市领导批示,5/报省办,6/省办录用,7/省领导批示,8/报国办,9/国办录用,10/国办领导批示,NUMERIC(2)-->
+		<property name="magazineIds"/> <!--刊物ID列表,VARCHAR(500)-->
+		<property name="magazineNames"/> <!--刊物名称列表,VARCHAR(500)-->
+		<property name="point"/> <!--积分,NUMERIC(6,2)-->
+		<property name="remuneration"/> <!--稿酬,NUMERIC(6,2)-->
+		<property name="briefPoint"/> <!--简讯积分,NUMERIC(6,2)-->
+		<property name="briefRemuneration"/> <!--简讯稿酬,NUMERIC(6,2)-->
+	</class>
+	
+	<!--信息采编:刊物-->
+	<class name="com.yuanluesoft.j2oa.info.pojo.InfoMagazine" table="info_magazine">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="defineId"/> <!--刊物配置ID,NUMERIC(20)-->
+		<property name="name"/> <!--刊物名称,VARCHAR(20)-->
+		<property name="sn"/> <!--期数,NUMERIC(8)-->
+		<property name="snTotal"/> <!--总期数,NUMERIC(8)-->
+		<property name="typesetPersonId"/> <!--排版人ID,NUMERIC(20)-->
+		<property name="typesetPerson"/> <!--排版人,VARCHAR(30)-->
+		<property name="typesetTime"/> <!--排版时间,TIMESTAMP-->
+		<property name="generateDate"/> <!--生成日期,DATE-->
+		<property name="issuePersonId"/> <!--定版人ID,NUMERIC(20)-->
+		<property name="issuePerson"/> <!--定版人,VARCHAR(30)-->
+		<property name="issueTime"/> <!--定版时间,TIMESTAMP-->
+		<property name="workflowInstanceId"/> <!--流程实例ID,VARCHAR(20)-->
+		<set name="htmlBodies" cascade="delete" inverse="true" lazy="true" table="info_magazine_body">
+			<key column="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.info.pojo.InfoMagazineBody"/>
+		</set>
+		<set name="useInfos" table="info_filter" lazy="true" inverse="true" cascade="delete" order-by="priority desc" where="isBeCombined=0">
+			<key column="magazineId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.j2oa.info.pojo.InfoFilter" />
+		</set>
+		<set name="opinions" table="info_magazine_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.j2oa.info.pojo.InfoMagazineOpinion" />
+		</set>
+		<set name="visitors" table="info_magazine_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.info.pojo.InfoMagazinePrivilege"/>
+		</set>
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+	</class>
+	
+	<!--信息采编:刊物正文-->
+	<class name="com.yuanluesoft.j2oa.info.pojo.InfoMagazineBody" table="info_magazine_body">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文,TEXT-->
+	</class>
+		
+	<!--信息采编:刊物权限控制信息-->
+	<class name="com.yuanluesoft.j2oa.info.pojo.InfoMagazinePrivilege" table="info_magazine_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,numeric(20)-->
+		<property name="accessLevel"/> <!--访问级别,CHAR(1)-->
+		<property name="recordId"/> <!--主记录ID,numeric(20)-->
+	</class>
+	
+	<!--信息采编:刊物办理意见-->
+	<class name="com.yuanluesoft.j2oa.info.pojo.InfoMagazineOpinion" table="info_magazine_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID,numeric(20)-->
+		<property name="workItemId"/> <!--工作项ID,VARCHAR(32)-->
+		<property name="activityName"/> <!--环节名称,VARCHAR(50)-->
+		<property name="activityId"/> <!--环节ID,VARCHAR(32)-->
+		<property name="personId"/> <!--填写人ID,numeric(20)-->
+		<property name="personName"/> <!--填写人姓名,VARCHAR(32)-->
+		<property name="agentId"/> <!--代理人ID,numeric(20)-->
+		<property name="agentName"/> <!--代理人姓名,VARCHAR(32)-->
+		<property name="opinion"/> <!--意见内容,VARCHAR(1000)-->
+		<property name="opinionType"/> <!--意见类型,VARCHAR(20)-->
+		<property name="created"/> <!--填写时间,timestamp null-->
+	</class>
+	
+	<!--信息采编:流程配置-->
+	<class name="com.yuanluesoft.j2oa.info.pojo.InfoWorkflow" table="info_workflow">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="type"/> <!--流程类型,1/稿件,2/刊物,NUMERIC(1)-->
+		<property name="workflowId"/> <!--流程ID,NUMERIC(20,0)-->
+		<property name="workflowName"/> <!--流程名称,VARCHAR(50)-->
+	</class>
+</hibernate-mapping>

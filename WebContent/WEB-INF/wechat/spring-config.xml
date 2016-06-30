@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>	
+	<!-- 微信服务 -->
+	<bean id="wechatService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.wechat.service.spring.WechatServiceImpl" init-method="init">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="orgService"><ref bean="orgService"/></property>
+				<property name="imageService"><ref bean="imageService"/></property>
+				<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+				<property name="siteService"><ref bean="siteService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-MailException</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="process*">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="issue*">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="create*">PROPAGATION_REQUIRED,-MailException</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

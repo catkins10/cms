@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html dir="ltr">
+<head>
+	<SCRIPT type="text/javascript">window.onerror=function(){return true;}</SCRIPT>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<style type="text/css">
+		.folderName a {
+			width: 200px;
+			color: #fff;
+			font-size: 18px;
+		}
+		.file {
+			border-bottom: #f2f2f2 1px solid;
+		}
+		.fileName {
+			display: block;
+			overflow: hidden;
+		}
+		.fileModified, .fileSize {
+			display: block
+			float: left;
+			font-size: 12px;
+			color: #999;
+		}
+		.fileSize {
+			padding-left: 6px;
+		}
+	</style>
+</head>
+<body style="background-color: rgb(255, 255, 255);">
+<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			<div id="titleBar" class="titleBar">
+				<button title="关闭" class="returnButton" onclick="window.closeWindow();">&nbsp;</button>
+				<span class="folderName"><a id="folderName">&lt;当前目录名称&gt;</a></span>
+				<div title="确定" class="button" id="okButton">确定</div>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" style="height: 100%;">
+			<div title="文件列表区域" id="fileListArea">
+				<table width="100%" class="file" border="0" cellspacing="0" cellpadding="2">
+					<tr valign="middle">
+						<td width="50" align="center" nowrap=""><a id="fileIcon">&lt;文件图标&gt;</a></td>
+						<td width="100%">
+							<a class="fileName" id="fileName">&lt;文件名称&gt;</a>
+							<a class="fileModified" id="fileModified">&lt;文件修改时间&gt;</a>
+							<a class="fileSize" id="fileSize">&lt;文件大小&gt;</a>
+						</td>
+						<td width="36" align="center" nowrap=""><a id="fileSelectBox">&lt;文件选择框&gt;</a></td>
+					</tr>
+				</table>
+			</div>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

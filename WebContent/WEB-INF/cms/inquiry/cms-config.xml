@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 在线调查 -->
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/inquiry"/>
+		<page name="inquiry" title="调查" systemLink="false" url="javascript:window.open('{CONTEXTPATH}/cms/inquiry/inquirySubject.shtml?id={ID}&amp;siteId={PARAMETER:siteId}', 'inquiry', 'width=380,height=500,left=100,top=50,scrollbars=yes,status=no,resizable=yes,toolbar=no,menubar=no,location=no', false)">
+			<subPage name="base" title="调查"/>
+			<field title="调查主题" name="subject"/>
+			<field title="创建时间" name="created" type="timestamp"/>
+		</page>
+	</pages>
+	
+	<recordLists>
+		<recordList title="调查主题列表" name="inquiries" recordPage="inquiry" hostPage="index" dialogExtendURL="/cms/inquiry/templatemanage/dialog/insertInquiries.jsp"/>
+	</recordLists>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="inquiries" processor="inquiriesProcessor"/> <!-- 投诉列表列表处理器 -->
+	</pageElements>
+</application>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminSchedule" type="com.yuanluesoft.sportsevents.contestschedule.forms.ContestSchedule"/>
+  <form-bean name="scheduleCalendar" type="com.yuanluesoft.sportsevents.contestschedule.forms.ScheduleCalendar"/>
+  <form-bean name="adminScore" type="com.yuanluesoft.sportsevents.contestschedule.forms.Score"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminSchedule" path="/admin/schedule" scope="request"
+   type="com.yuanluesoft.sportsevents.contestschedule.actions.gamearrange.admin.Load" validate="false">
+   <forward name="load" path="/admin/schedule.jsp"/>
+  </action>
+  <action input="/admin/schedule.jsp" name="adminSchedule"
+   path="/admin/saveSchedule" scope="request"
+   type="com.yuanluesoft.sportsevents.contestschedule.actions.gamearrange.admin.Save" validate="false"/>
+  <action input="/admin/schedule.jsp" name="adminSchedule"
+   path="/admin/deleteSchedule" scope="request"
+   type="com.yuanluesoft.sportsevents.contestschedule.actions.gamearrange.admin.Delete" validate="false"/>
+   
+   
+ <action name="scheduleCalendar" path="/scheduleCalendar" scope="request"
+   type="com.yuanluesoft.sportsevents.contestschedule.actions.schedulecalendar.Load" validate="false">
+   <forward name="load" path="/scheduleCalendar.jsp"/>
+  </action>
+  
+  <action name="adminScore" path="/admin/score" scope="request"
+   type="com.yuanluesoft.sportsevents.contestschedule.actions.score.admin.Load" validate="false">
+   <forward name="load" path="/admin/score.jsp"/>
+  </action>
+  <action input="/admin/score.jsp" name="adminScore" path="/admin/saveScore" scope="request"
+   type="com.yuanluesoft.sportsevents.contestschedule.actions.score.admin.Save" validate="false"/>
+  <action input="/admin/score.jsp" name="adminScore" path="/admin/deleteScore" scope="request"
+   type="com.yuanluesoft.sportsevents.contestschedule.actions.score.admin.Delete" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

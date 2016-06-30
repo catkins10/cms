@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 论坛 -->
+<application>
+	<!-- 模板视图,page也可以有自己的配置 -->
+	<templateView name="admin/template" application="bbs/templatemanage"/>
+	
+	<!-- 模板插件,page也可以有自己的配置 -->
+	<templatePlugins>
+		<templatePlugin path="/bbs/templatemanage/plugin.js" private="true">
+			<templateActions>bbsDirectoryBind</templateActions> <!-- 扩展的模板操作 -->
+			<pageElementActions></pageElementActions> <!-- 扩展的页面元素操作 -->
+		</templatePlugin>
+	</templatePlugins>
+
+	<pages>
+		<page name="bbs" systemLink="false" title="论坛">
+			<subPage name="base" title="论坛" normalCssFile="/bbs/forum/css/bbs.css.jsp"/>
+		</page>
+		
+		<page name="bbsArticle" title="文章" systemLink="false" url="/bbs/article/viewArticle.shtml" recordClass="com.yuanluesoft.bbs.article.pojo.BbsArticle">
+			<subPage name="base" title="文章" normalCssFile="/bbs/article/css/article.css.jsp"/>
+			<field title="主题" name="subject"/>
+			<field title="发帖人昵称" name="creatorNickname"/>
+			<field title="发帖时间" name="created" type="timestamp"/>
+		</page>
+		
+		<page name="bbsPrompt" systemLink="false" title="提示页面">
+			<subPage name="base" title="提示页面" normalCssFile="/bbs/article/css/article.css.jsp"/>
+		</page>
+		
+		<page name="bbsLogin" systemLink="false" title="登录页面">
+			<subPage name="base" title="登录页面" normalCssFile="/bbs/article/css/article.css.jsp"/>
+		</page>
+		
+		<page name="bbsMember" systemLink="false" title="论坛注册用户资料">
+			<subPage name="base" title="用户资料" normalCssFile="/bbs/article/css/article.css.jsp"/>
+		</page>
+		
+		<page name="bbsPersonalPanel" title="个人控制面板" systemLink="false">
+			<subPage name="personalPanelMenu" title="个人控制面板菜单"/>
+			<subPage name="personalPanelConfigure" title="配置页面" type="iframe" iframeUrl="/bbs/usermanage/personalPanelConfigure.jsp"/>
+		</page>
+	</pages>
+	
+	<!-- 链接 -->
+	<links>
+		<link title="论坛目录链接" dialogURL="/bbs/templatemanage/insertBbsDirectoryLink.shtml"/>
+	</links>
+
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="bbsArticles" processor="bbsArticlesProcessor"/> <!-- 论坛主题列表 -->
+		<pageElement name="bbsDirectoryLink" processor="bbsDirectoryLinkProcessor"/> <!-- 论坛目录链接 -->
+	</pageElements>
+</application>

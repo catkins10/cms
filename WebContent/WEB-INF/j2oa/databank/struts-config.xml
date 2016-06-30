@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="data" type="com.yuanluesoft.j2oa.databank.forms.Data"/>
+  <form-bean name="directory" type="com.yuanluesoft.j2oa.databank.forms.Directory"/>
+  <form-bean name="dataview" type="com.yuanluesoft.j2oa.databank.forms.DataView"/>
+  <form-bean name="import" type="com.yuanluesoft.j2oa.databank.forms.Import"/>
+  <form-bean name="adjustPriority" type="com.yuanluesoft.jeaf.dialog.forms.AdjustPriority"/>
+  <form-bean name="selectDirectory" type="com.yuanluesoft.j2oa.databank.forms.SelectDirectory"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="directory" path="/directory" scope="request"
+   type="com.yuanluesoft.j2oa.databank.actions.directory.Load" validate="false">
+   <forward name="load" path="/directory.jsp"/>
+  </action>
+  <action input="/directory.jsp" name="directory" path="/saveDirectory"
+   scope="request"
+   type="com.yuanluesoft.j2oa.databank.actions.directory.Save" validate="false"/>
+  <action input="/directory.jsp" name="directory"
+   path="/deleteDirectory" scope="request"
+   type="com.yuanluesoft.j2oa.databank.actions.directory.Delete" validate="false"/>
+  <action name="data" path="/data" scope="request"
+   type="com.yuanluesoft.j2oa.databank.actions.data.Load" validate="false">
+   <forward name="load" path="/data.jsp"/>
+  </action>
+  <action input="/data.jsp" name="data" path="/saveData" scope="request"
+   type="com.yuanluesoft.j2oa.databank.actions.data.Save" validate="false"/>
+  <action input="/data.jsp" name="data" path="/deleteData"
+   scope="request"
+   type="com.yuanluesoft.j2oa.databank.actions.data.Delete" validate="false"/>
+  <action name="dataview" path="/dataView" scope="request"
+   type="com.yuanluesoft.j2oa.databank.actions.dataview.DataViewAction" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action name="import" path="/import" scope="request"
+   type="com.yuanluesoft.j2oa.databank.actions.importdata.Load" validate="false">
+   <forward name="load" path="/import.jsp"/>
+  </action>
+  <action input="/import.jsp" name="import" path="/doImport"
+   scope="request"
+   type="com.yuanluesoft.j2oa.databank.actions.importdata.Import" validate="false"/>
+  <action input="/directory.jsp" name="directory"
+   path="/createNextDirectory" scope="request"
+   type="com.yuanluesoft.j2oa.databank.actions.directory.CreateNext" validate="false"/>
+  <action name="adjustPriority" path="/adjustDirectoryPriority"
+   scope="request"
+   type="com.yuanluesoft.j2oa.databank.actions.adjustdirectorypriority.AdjustDirectoryPriorityAction" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/adjustpriority/adjustPriority.jsp"/>
+  </action>
+  <action name="data" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.j2oa.databank.actions.data.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="data" path="/selectAttachment" scope="request"
+   type="com.yuanluesoft.j2oa.databank.actions.data.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="selectDirectory" path="/selectDirectory" scope="request"
+   type="com.yuanluesoft.j2oa.databank.actions.selectdirectory.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="selectDirectory" path="/listChildDirectories"
+   scope="request"
+   type="com.yuanluesoft.j2oa.databank.actions.selectdirectory.ListChildDirectories" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="200M"/>
+</struts-config>

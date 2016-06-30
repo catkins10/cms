@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	
+<!-- 用于前台显示日历历程 -->	
+	<calendarView name="scheduleCalendar"  title="赛程安排" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.sportsevents.contestschedule.pojo.ContestSchedule</pojo>
+			<orderBy>ContestSchedule.beginTime desc</orderBy>
+			<quickFilter>ContestSchedule.gameName like '%{KEY}%'</quickFilter>
+			<calendarColumn>ContestSchedule.beginTime</calendarColumn>
+		</data>
+		<columns>
+			<column title="开始时间" name="beginTime" width="50px" format="HH:mm"/>
+			<column title="比赛名称" name="gameName" width="200px"/>
+			<column title="比赛地点" name="address"/>
+		</columns>
+	</calendarView>
+
+
+
+	<calendarView name="admin/scheduleCalendar" form="admin/schedule" title="赛程安排" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.sportsevents.contestschedule.pojo.ContestSchedule</pojo>
+			<orderBy>ContestSchedule.beginTime desc</orderBy>
+			<quickFilter>ContestSchedule.gameName like '%{KEY}%'</quickFilter>
+			<calendarColumn>ContestSchedule.beginTime</calendarColumn>
+		</data>
+		<!-- 该action用于点击日历具体日期时发起操作 -->
+		<calendarAction hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('sportsevents/contestschedule', 'admin/schedule','mode=fullscreen','beginTime={CALENDAR_TIMESTAMP}')"/>
+		<actions>
+			<action title="新增赛事" execute="PageUtils.newrecord('sportsevents/contestschedule', 'admin/schedule', 'width=720,height=480')" hide="noPrivilege(application_manager)"/>
+		</actions>
+		<columns>
+			<column title="开始时间" name="beginTime" width="50px" format="HH:mm"/>
+			<column title="比赛名称" name="gameName" width="200px"/>
+		</columns>
+	</calendarView>
+	
+	<view name="admin/score" form="admin/score" title="比赛成绩" pageRows="20" openFeatures="mode=fullscreen" >
+		<data>
+			<pojo>com.yuanluesoft.sportsevents.contestschedule.pojo.Score</pojo>
+			<orderBy>Score.score desc</orderBy>
+			<quickFilter>Score.player like '%{KEY}%' or Score.gameName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新增比赛成绩" execute="DialogUtils.openDialog('{CONTEXTPATH}/sportsevents/contestschedule/admin/score.shtml', 550, 330)" hide="noPrivilege(application_manager)"/>
+		</actions>
+		<links>
+		   <link>javascript:DialogUtils.openDialog('{CONTEXTPATH}/sportsevents/contestschedule/admin/score.shtml?id={PARAMETER:id}', 550, 330)</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="参赛代表团" name="player" />
+			<column title="比赛项目" name="gameName" />
+			<column title="分数" name="score" width="100"/>	
+		</columns>
+	</view>
+	<!-- 给成绩用 -->
+	<view name="admin/scheduleForScore" form="admin/scheduleForScore" title="比赛项目(供比赛成绩用)" pageRows="20" openFeatures="mode=fullscreen" >
+		<data>
+			<pojo>com.yuanluesoft.sportsevents.contestschedule.pojo.ContestSchedule</pojo>
+			<orderBy>ContestSchedule.beginTime desc</orderBy>
+			<quickFilter>ContestSchedule.gameName like '%{KEY}%'</quickFilter>
+		</data>
+		
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+	        <column title="开始时间" name="beginTime" width="100px" format="yyyy-MM-dd HH:mm"/>
+			<column title="比赛名称" name="gameName" width="200px"/>
+		</columns>
+	</view>
+	
+<!-- 前台 -->
+	<view name="medalPlate" title="奖牌排行榜" pageRows="2" viewServiceName="SportsEventsViewService" >
+		<data>
+			<pojo>com.yuanluesoft.sportsevents.contestschedule.pojo.Score</pojo>
+			<quickFilter>Score.player like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+	        <column title="参赛代表团" name="player"  />
+	        <column title="金牌数" name="goldMedalCount"  width="80px"/>
+	        <column title="银牌数" name="silverMedalCount"  width="80px"/>
+	        <column title="铜牌数" name="bronzeMedalCount"  width="80px"/>
+			<column title="合计" name="medalCount" width="80px"/>
+		</columns>
+	</view>
+	
+	<view name="scorePlate" title="分数排行榜" pageRows="20" viewServiceName="SportsEventsViewService" >
+		<data>
+			<pojo>com.yuanluesoft.sportsevents.contestschedule.pojo.Score</pojo>
+			<quickFilter>Score.player like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+	        <column title="参赛代表团" name="player"  />
+			<column title="比赛总分" name="score" width="80px"/>
+		</columns>
+	</view>
+</views>

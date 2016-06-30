@@ -1,0 +1,27 @@
+UserManageService.UserManageSoapServiceService UserManage=new iPaper2005.UserManageService.UserManageSoapServiceService();
+//UserManageService.Person UserManage=new iPaper2005.UserManageService.Person();
+      
+UserManageService.Person UserInfo=UserManage.getPersonByLoginName(LoginName);
+
+
+string name=UserInfo.name; //用户名
+string sex=UserInfo.sex; //性别,男 
+string loginName=UserInfo.loginName; //登录用户名
+string mailAddress=UserInfo.mailAddress; //邮箱地址
+string familyAddress=UserInfo.familyAddress; //家庭地址
+string mobile=UserInfo.mobile; //手机
+string telOffice=UserInfo.telOffice; //办公室电话
+string telFamily=UserInfo.telFamily; //家庭电话
+string type=UserInfo.type; //用户类型,普通用户1/教师2/学生3/学生家长4
+string orgName=UserInfo.orgName; //所在组织机构
+
+type=(type=="2"||type=="4")?"1":( (type=="3"?"2":"3") );
+
+
+
+
+行 36：         [return: System.Xml.Serialization.SoapElementAttribute("getPersonByLoginNameReturn")]
+行 37：         public Person getPersonByLoginName(string loginName) {
+行 38：             object[] results = this.Invoke("getPersonByLoginName", new object[] {
+行 39：                         loginName});
+行 40：             return ((Person)(results[0]));

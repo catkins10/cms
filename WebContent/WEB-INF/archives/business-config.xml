@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="全宗设置" class="com.yuanluesoft.archives.pojo.ArchivesFonds">
+		<field name="fondsName" title="全宗名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="fondsCode" title="全宗号" length="10" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="文件密级配置" class="com.yuanluesoft.archives.pojo.ArchivesSecureLevel">
+		<field name="secureLevelCode" title="密级编号" length="10" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="secureLevel" title="密级" length="16" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="保管期限" class="com.yuanluesoft.archives.pojo.ArchivesRotentionPeriod">
+		<field name="rotentionPeriodCode" title="期限编号" length="10" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="rotentionPeriod" title="保管期限" length="16" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="分类配置" class="com.yuanluesoft.archives.pojo.ArchivesCategory">
+		<field name="categoryCode" title="分类号" length="10" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="category" title="分类" length="50" required="true" type="string" inputMode="text"/>
+		<field name="parentCategoryId" title="父类ID" length="100" type="string" inputMode="hidden"/>
+	</businessObject>
+	
+	<businessObject title="机构或问题配置" class="com.yuanluesoft.archives.pojo.ArchivesUnit">
+		<field name="unitCode" title="编号" length="10" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="unit" title="机构或问题" length="16" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="档号配置" class="com.yuanluesoft.archives.pojo.ArchivesCode" businessServiceName="archivesCodeService">
+		<field name="archivesType" title="档案类别" length="16" type="string" inputMode="dropdown">
+			<parameter name="itemsText">文书档案</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="codeConfig" title="档号规则" length="100" required="true" type="string" inputMode="text"/>
+	</businessObject>
+</businessObjects>

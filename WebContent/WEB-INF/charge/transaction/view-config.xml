@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views>
+		
+	<view name="chargeTransaction" form="chargeTransaction" title="我的交易记录" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.transaction.pojo.ChargeTransaction</pojo>
+			<where>ChargeTransaction.personId={USERID}</where>
+			<orderBy>ChargeTransaction.created DESC</orderBy>
+		</data>
+		<links>
+			<link>javascript:openChargeTransaction('{PARAMETER:id}', {type})</link>
+		</links>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="交易类型" name="typeTitle"/>
+			<column title="交易金额(元)" name="money" width="100" align="center"/>
+			<column title="交易后的帐户余额(元)" name="balance" width="138" align="center"/>
+			<column title="交易时间" name="created" width="120" align="center"/>
+		</columns>
+	</view>
+</views>

@@ -1,0 +1,44 @@
+package com.yuanluesoft.cms.onlineservice.forms.admin;
+
+import com.yuanluesoft.jeaf.form.ActionForm;
+
+/**
+ * 
+ * @author linchuan
+ *
+ */
+public class ImportAuthority extends ActionForm {
+	private long directoryId; //目录ID
+	private boolean sheetAsDirectory; //把sheet作为目录
+
+	/**
+	 * @return the directoryId
+	 */
+	public long getDirectoryId() {
+		return directoryId;
+	}
+
+	/**
+	 * @param directoryId the directoryId to set
+	 */
+	public void setDirectoryId(long directoryId) {
+		this.directoryId = directoryId;
+	}
+
+	/**
+	 * @return the sheetAsDirectory
+	 */
+	public boolean isSheetAsDirectory() {
+		return sheetAsDirectory;
+	}
+
+	/**
+	 * @param sheetAsDirectory the sheetAsDirectory to set
+	 */
+	public void setSheetAsDirectory(boolean sheetAsDirectory) {
+		this.sheetAsDirectory = sheetAsDirectory;
+	}
+
+	
+	
+}

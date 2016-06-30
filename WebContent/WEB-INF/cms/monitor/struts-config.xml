@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="unitConfig" type="com.yuanluesoft.cms.monitor.forms.UnitConfig"/>
+  <form-bean name="monitorSql" type="com.yuanluesoft.cms.monitor.forms.MonitorSql"/>
+  <form-bean name="monitorParameter" type="com.yuanluesoft.cms.monitor.forms.MonitorParameter"/>
+  <form-bean name="monitorStat" type="com.yuanluesoft.cms.monitor.forms.MonitorStat"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="unitConfig" path="/unitConfig" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.unitconfig.Load" validate="false">
+   <forward name="load" path="/unitConfig.jsp"/>
+  </action>
+  <action input="/unitConfig.jsp" name="unitConfig"
+   path="/saveUnitConfig" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.unitconfig.Save" validate="false"/>
+  <action input="/unitConfig.jsp" name="unitConfig"
+   path="/deleteUnitConfig" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.unitconfig.Delete" validate="false"/>
+  <action name="monitorSql" path="/monitorSql" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.unitconfig.monitorsql.Load" validate="false">
+   <forward name="load" path="/monitorSql.jsp"/>
+  </action>
+  <action input="/monitorSql.jsp" name="monitorSql"
+   path="/saveMonitorSql" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.unitconfig.monitorsql.Save" validate="false"/>
+  <action input="/monitorSql.jsp" name="monitorSql"
+   path="/deleteMonitorSql" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.unitconfig.monitorsql.Delete" validate="false"/>
+  <action input="/unitConfig.jsp" name="unitConfig"
+   path="/refreshUnitConfig" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.unitconfig.Refresh" validate="false"/>
+  <action name="monitorStat" path="/monitorStat" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorstat.MonitorStatViewAction" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action name="monitorParameter" path="/monitorParameter"
+   scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorparameter.Load" validate="false">
+   <forward name="load" path="/monitorParameter.jsp"/>
+  </action>
+  <action input="/monitorParameter.jsp" name="monitorParameter"
+   path="/saveMonitorParameter" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorparameter.Save" validate="false"/>
+  <action input="/monitorParameter.jsp" name="monitorParameter"
+   path="/deleteMonitorParameter" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorparameter.Delete" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 视图服务 -->
+	<bean id="viewService" class="com.yuanluesoft.jeaf.view.service.spring.ViewServiceImpl">
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+	</bean>
+
+	<!-- 统计视图数据服务 -->
+	<bean id="statisticViewService" class="com.yuanluesoft.jeaf.view.statisticview.service.spring.StatisticViewServiceImpl">
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+	</bean>
+	
+	<!-- 日历视图数据服务 -->
+	<bean id="calendarViewService" class="com.yuanluesoft.jeaf.view.calendarview.service.spring.CalendarViewServiceImpl">
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+	</bean>
+	
+	<!-- 视图定义服务 -->
+	<bean id="viewDefineService" class="com.yuanluesoft.jeaf.view.service.spring.ViewDefineServiceImpl">
+		<property name="cache"><ref bean="modelCache"/></property>
+		<property name="viewDefineParser"><ref local="viewDefineParser"/></property>
+		<property name="formulaService"><ref bean="formulaService"/></property>
+	</bean>
+	
+	<!-- 视图定义解析器 -->
+	<bean id="viewDefineParser" class="com.yuanluesoft.jeaf.view.parser.dom4j.ViewDefineParserImpl">
+		<property name="viewParser"><ref local="viewParser"/></property>
+		<property name="statisticViewParser"><ref local="statisticViewParser"/></property>
+		<property name="calendarViewParser"><ref local="calendarViewParser"/></property>
+	</bean>
+	
+	<!-- 视图解析器 -->
+	<bean id="viewParser" class="com.yuanluesoft.jeaf.view.parser.dom4j.ViewParser"/>
+	
+	<!-- 统计视图解析器 -->
+	<bean id="statisticViewParser" class="com.yuanluesoft.jeaf.view.statisticview.parser.dom4j.StatisticViewParser"/>
+	
+	<!-- 日历视图解析器 -->
+	<bean id="calendarViewParser" class="com.yuanluesoft.jeaf.view.calendarview.parser.dom4j.CalendarViewParser"/>
+	
+	<!-- 视图定时服务 -->
+	<bean id="viewCustomizeService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.jeaf.view.viewcustomize.service.spring.ViewCustomizeServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="viewCustomParser"><ref bean="viewCustomParser"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 视图定制解析器 -->
+	<bean id="viewCustomParser" class="com.yuanluesoft.jeaf.view.viewcustomize.parser.dom4j.ViewCustomParserImpl"/>
+</beans>

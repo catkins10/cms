@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--图片征集:分类配置-->
+	<class name="com.yuanluesoft.cms.photocollect.pojo.PhotoCollectCategory" table="cms_photo_collect_category">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="category"/> <!--分类-->
+		<property name="columnIds"/> <!--同步栏目ID-->
+		<property name="columnNames"/> <!--同步栏目名称-->
+		<property name="siteId"/> <!--绑定的站点ID-->
+	</class>
+</hibernate-mapping>

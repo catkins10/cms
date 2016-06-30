@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../form/result.jsp" SHAPE="24,40,185,21" TARGET="page2"
+  TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../form/error.jsp" SHAPE="24,104,185,21"
+  TARGET="page3" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#customView"
+  NAME="action2" PATH="/customView" SHAPE="24,200,185,41"
+  TITLE="customView" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/viewcustomize/customView.jsp" TARGET="page1"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#resetViewCustom"
+  NAME="action3" PATH="/resetViewCustom" SHAPE="512,304,184,25"
+  TITLE="customView" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveViewCustom"
+  NAME="action4" PATH="/saveViewCustom" SHAPE="512,232,184,25"
+  TITLE="customView" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/../form/error.jsp" SHAPE="320,104,56,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/../form/result.jsp" SHAPE="320,40,56,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/viewcustomize/customView.jsp" SHAPE="320,216,56,55"
+  SUBTYPE="jsp" TITLE="customView.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveViewCustom" TARGET="action4" TITLE="saveViewCustom" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/resetViewCustom" TARGET="action3" TITLE="resetViewCustom" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listChildCategories"
+  NAME="action0" PATH="/listChildCategories" SHAPE="32,480,177,41"
+  TITLE="categoryTree" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/tree/listChildNodes.jsp"
+   TARGET="page5" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#categoryTree"
+  NAME="action5" PATH="/categoryTree" SHAPE="32,384,171,41"
+  TITLE="categoryTree" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/categoryTree.jsp" TARGET="page0" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/categoryTree.jsp" SHAPE="320,400,50,25" SUBTYPE="jsp"
+  TITLE="categoryTree.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/../../jeaf/tree/listChildNodes.jsp" SHAPE="320,496,50,25"
+  SUBTYPE="jsp" TITLE="listChildNodes.jsp" TYPE="page"/>
+</PROCESS>

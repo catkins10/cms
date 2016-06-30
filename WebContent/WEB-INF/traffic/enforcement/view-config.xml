@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="CASEINFO_WAY" title="公路路政行政处罚案件统计" viewServiceName="trafficSqlViewService">
+		<data>
+			<pojo>CASEINFO</pojo>
+			<where>T1.IETYPE='01' and T1.BRANUM='{PARAMETER:BRANUM_SHIPNAME}'</where>
+		</data>
+		<links>
+			<link>/traffic/detail.shtml?applicationName=traffic/enforcement&amp;pageName=CASEINFO_WAY&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view name="CASEINFO_ROAD" title="道路运输违章案件处罚情况" viewServiceName="trafficSqlViewService">
+		<data>
+			<pojo>CASEINFO</pojo>
+			<where>T1.IETYPE='03' and T1.BRANUM='{PARAMETER:BRANUM_SHIPNAME}'</where>
+		</data>
+		<links>
+			<link>/traffic/detail.shtml?applicationName=traffic/enforcement&amp;pageName=CASEINFO_ROAD&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view name="CASEINFO_WATER" title="福州市地方海事局行政处罚案件公示" viewServiceName="trafficSqlViewService">
+		<data>
+			<pojo>CASEINFO</pojo>
+			<where>T1.IETYPE='07' and T1.SHIPNAME='{PARAMETER:BRANUM_SHIPNAME}'</where>
+		</data>
+		<links>
+			<link>/traffic/detail.shtml?applicationName=traffic/enforcement&amp;pageName=CASEINFO_WATER&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+</views>

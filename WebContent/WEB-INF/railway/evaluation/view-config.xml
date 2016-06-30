@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/railwayEvaluation" title="综合评价" pageRows="1000" url="/railway/evaluation/admin/evaluationView.shtml" viewServiceName="railwayEvaluationViewService" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_evaluate)">
+	    <data>
+			<pojo>com.yuanluesoft.railway.evaluation.model.RailwayEvaluation</pojo>
+		</data>
+		<links>
+			<link>javascript:DialogUtils.openDialog('{CONTEXTPATH}/railway/evaluation/evaluation.shtml?personId={PARAMETER:personId}&amp;year={PARAMETER:year}&amp;month={PARAMETER:month}', 600, 400)</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="30"/>
+			<column title="姓名" name="personName" width="43"/>
+			<column title="部门" name="departmentName" width="55"/>
+			<column title="岗位" name="postName" width="55"/>
+			<column title="工作量" name="workload" align="center"/>
+			<column title="权重" name="departmentWeight" align="center"/>
+			<column title="考试得分" name="testScore" align="center" hideZero="true"/>
+			<column title="考试题量" name="testedQuestionNumber" align="center" hideZero="true"/>
+			<column title="考试奖惩" name="testReward" align="center" hideZero="true"/>
+			<column title="互评情况" name="mutualEvaluationNumber" align="center"/>
+			<column title="互评奖惩" name="mutualEvaluationReward" align="center" hideZero="true"/>
+			<column title="问题数" name="eventLevelNumber" align="center"/>
+			<column title="问题处罚" name="eventPunish" align="center" hideZero="true"/>
+			<column title="综合评价" name="score" align="center"/>
+		</columns>
+		<extendParameters>
+			<parameter name="extendPage">/railway/evaluation/admin/railwayEvaluation.jsp</parameter> <!-- 扩展页面 -->
+		</extendParameters>
+	</view>
+	
+	<view name="myRailwayEvaluations" title="我的综合评价成绩" viewServiceName="railwayEvaluationViewService">
+	    <data>
+			<pojo>com.yuanluesoft.railway.evaluation.model.RailwayEvaluation</pojo>
+		</data>
+		<links>
+			<link>javascript:DialogUtils.openDialog('{CONTEXTPATH}/railway/evaluation/evaluation.shtml?personId={PARAMETER:personId}&amp;year={PARAMETER:year}&amp;month={PARAMETER:month}', 600, 400)</link>
+		</links>
+	</view>
+</views>

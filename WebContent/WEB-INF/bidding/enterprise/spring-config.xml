@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 企业服务 -->
+	<bean id="enterpriseService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.bidding.enterprise.services.spring.EnterpriseServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+				<property name="enterpriseKinds"><value>国有,私营,合资,外资,其他</value></property>
+				<property name="pageService"><ref bean="pageService"/></property>
+				<property name="attachmentService"><ref bean="attachmentService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="create*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="complete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="import*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 企业视图服务 -->
+	<bean id="enterpriseViewService" class="com.yuanluesoft.bidding.enterprise.services.spring.EnterpriseViewServiceImpl">
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="enterpriseService"><ref bean="enterpriseService"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+	</bean>
+	
+	<!-- 企业用户服务 -->
+	<bean id="employeeService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.bidding.enterprise.services.spring.EmployeeServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="cryptService"><ref bean="cryptService"/></property>
+				<property name="tryCount"><value>100</value></property>
+				<property name="tryDays"><value>60</value></property>
+				<property name="ekeySupport"><value>false</value></property> <!-- 南平：不支持ekey -->
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="change*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="write*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 用户登录表单处理器 -->
+	<bean id="employeeLoginFormProcessor" class="com.yuanluesoft.bidding.enterprise.processor.LoginFormProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="formFieldService"><ref bean="formFieldService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="formSecurityService"><ref bean="formSecurityService"/></property>
+	</bean>
+	
+	<!-- 企业信息页面服务 -->
+	<bean id="biddingEnterprisePageService" class="com.yuanluesoft.bidding.enterprise.pages.BiddingEnterprisePageService">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+	</bean>
+	
+	<!-- 企业首页服务 -->
+	<bean id="biddingEnterpriseIndexPageService" class="com.yuanluesoft.bidding.enterprise.pages.BiddingEnterpriseIndexPageService">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+		<property name="enterpriseService"><ref bean="enterpriseService"/></property>
+	</bean>
+	
+	<!-- 用户信息页面服务 -->
+	<bean id="biddingEmployeePageService" class="com.yuanluesoft.bidding.enterprise.pages.BiddingEmployeePageService">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+	</bean>
+	
+	<!-- 名录库页面服务 -->
+	<bean id="biddingAgentLibPageService" class="com.yuanluesoft.bidding.enterprise.pages.BiddingAgentLibPageService">
+		<property name="enterpriseService"><ref bean="enterpriseService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+	</bean>
+</beans>

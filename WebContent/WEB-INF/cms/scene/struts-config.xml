@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminSceneService" type="com.yuanluesoft.cms.scene.forms.admin.SceneService"/>
+  <form-bean name="adminSceneTree" type="com.yuanluesoft.cms.scene.forms.admin.SceneTree"/>
+  <form-bean name="adminScene" type="com.yuanluesoft.cms.scene.forms.admin.SceneDirectory"/>
+  <form-bean name="adminSceneContent" type="com.yuanluesoft.cms.scene.forms.admin.SceneContent"/>
+  <form-bean name="adminSceneLink" type="com.yuanluesoft.cms.scene.forms.admin.SceneLink"/>
+  <form-bean name="adminTemplate" type="com.yuanluesoft.cms.scene.forms.admin.Template"/>
+  <form-bean name="insertSceneLink" type="com.yuanluesoft.cms.scene.forms.admin.InsertSceneLink"/>
+  <form-bean name="selectScene" type="com.yuanluesoft.cms.scene.forms.SelectScene"/>
+  <form-bean name="adminAdjustPriority" type="com.yuanluesoft.jeaf.dialog.forms.AdjustPriority"/>
+  <form-bean name="insertSceneServiceLink" type="com.yuanluesoft.cms.scene.forms.admin.InsertSceneServiceLink"/>
+  <form-bean name="insertSceneLocation" type="com.yuanluesoft.cms.scene.forms.admin.InsertSceneLocation"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminSceneService" path="/admin/sceneService"
+   scope="request"
+   type="com.yuanluesoft.cms.scene.actions.sceneservice.admin.Load" validate="false">
+   <forward name="load" path="/admin/sceneService.jsp"/>
+  </action>
+  <action input="/admin/sceneService.jsp" name="adminSceneService"
+   path="/admin/saveSceneService" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.sceneservice.admin.Save" validate="false"/>
+  <action input="/admin/sceneService.jsp" name="adminSceneService"
+   path="/admin/deleteSceneService" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.sceneservice.admin.Delete" validate="false">
+   <forward name="result" path="/admin/sceneServiceDeleted.jsp"/>
+  </action>
+  <action name="adminScene" path="/admin/scene" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenedirectory.admin.Load" validate="false">
+   <forward name="load" path="/admin/scene.jsp"/>
+  </action>
+  <action input="/admin/scene.jsp" name="adminScene"
+   path="/admin/saveScene" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenedirectory.admin.Save" validate="false"/>
+  <action input="/admin/scene.jsp" name="adminScene"
+   path="/admin/deleteScene" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenedirectory.admin.Delete" validate="false">
+   <forward name="result" path="/admin/sceneDirectoryDeleted.jsp"/>
+  </action>
+  <action name="adminSceneContent" path="/admin/sceneContent"
+   scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenedirectory.admin.Load" validate="false">
+   <forward name="load" path="/admin/sceneContent.jsp"/>
+  </action>
+  <action input="/admin/sceneContent.jsp" name="adminSceneContent"
+   path="/admin/saveSceneContent" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenedirectory.admin.Save" validate="false"/>
+  <action input="/admin/sceneContent.jsp" name="adminSceneContent"
+   path="/admin/deleteSceneContent" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenedirectory.admin.Delete" validate="false">
+   <forward name="result" path="/admin/sceneDirectoryDeleted.jsp"/>
+  </action>
+  <action name="adminSceneContent" path="/admin/selectAttachment"
+   scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenedirectory.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action input="/../../cms/templatemanage/template.jsp"
+   name="adminTemplate" path="/admin/saveTemplate" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Save" validate="false"/>
+  <action input="/../../cms/templatemanage/template.jsp"
+   name="adminTemplate" path="/admin/deleteTemplate" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Delete" validate="false"/>
+  <action name="adminTemplate" path="/admin/template" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Load" validate="false">
+   <forward name="load" path="/../../cms/templatemanage/template.jsp"/>
+  </action>
+  <action name="insertSceneLink" path="/templatemanage/insertSceneLink"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertSceneLink.jsp"/>
+  </action>
+  <action path="/sceneService" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.sceneservice.Load" validate="false"/>
+  <action name="selectScene" path="/selectScene" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.selectscene.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="selectScene" path="/listScenes" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.selectscene.ListScenes" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action name="adminSceneTree" path="/admin/sceneTree" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenetree.admin.Load" validate="false">
+   <forward name="load" path="/admin/sceneTree.jsp"/>
+  </action>
+  <action path="/admin/sceneConfig" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.sceneconfig.admin.Load" validate="false">
+   <forward name="load" path="/admin/sceneConfig.jsp"/>
+  </action>
+  <action name="adminSceneTree" path="/admin/displaySceneTree"
+   scope="request" validate="false"/>
+  <action name="adminSceneTree" path="/admin/listChildNodes"
+   scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenetree.admin.ListChildDirectories" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action name="adminSceneLink" path="/admin/sceneLink" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenedirectory.admin.Load" validate="false">
+   <forward name="load" path="/admin/sceneLink.jsp"/>
+  </action>
+  <action input="/admin/sceneLink.jsp" name="adminSceneLink"
+   path="/admin/saveSceneLink" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenedirectory.admin.Save" validate="false"/>
+  <action input="/admin/sceneLink.jsp" name="adminSceneLink"
+   path="/admin/deleteSceneLink" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenedirectory.admin.Delete" validate="false">
+   <forward name="result" path="/admin/sceneDirectoryDeleted.jsp"/>
+  </action>
+  <action input="/admin/scene.jsp" name="adminScene"
+   path="/admin/createNextScene" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenedirectory.admin.CreateNext" validate="false"/>
+  <action input="/admin/sceneContent.jsp" name="adminSceneContent"
+   path="/admin/createNextSceneContent" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenedirectory.admin.CreateNext" validate="false"/>
+  <action input="/admin/sceneLink.jsp" name="adminSceneLink"
+   path="/admin/createNextSceneLink" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenedirectory.admin.CreateNext" validate="false"/>
+  <action name="adminAdjustPriority" path="/admin/adjustScenePriority"
+   scope="request"
+   type="com.yuanluesoft.cms.scene.actions.adjustscenepriority.admin.AdjustScenePriorityAction" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/adjustpriority/adjustPriority.jsp"/>
+  </action>
+  <action path="/scene" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scene.Load" validate="false"/>
+  <action path="/sceneIndex" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.sceneindex.Load" validate="false"/>
+  <action name="adminSceneTree" path="/sceneTree" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenetree.Load" validate="false">
+   <forward name="load" path="/sceneTree.jsp"/>
+  </action>
+  <action input="/admin/scene.jsp" name="adminScene"
+   path="/admin/copyScene" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenedirectory.admin.Copy" validate="false"/>
+  <action input="/admin/sceneContent.jsp" name="adminSceneContent"
+   path="/admin/copySceneContent" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenedirectory.admin.Copy" validate="false"/>
+  <action input="/admin/sceneLink.jsp" name="adminSceneLink"
+   path="/admin/copySceneLink" scope="request"
+   type="com.yuanluesoft.cms.scene.actions.scenedirectory.admin.Copy" validate="false"/>
+  <action name="insertSceneServiceLink"
+   path="/templatemanage/insertSceneServiceLink" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertSceneServiceLink.jsp"/>
+  </action>
+  <action name="insertSceneLocation"
+   path="/templatemanage/insertSceneLocation" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertSceneLocation.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

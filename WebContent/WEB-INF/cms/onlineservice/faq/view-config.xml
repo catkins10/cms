@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="常见问题目录" name="onlineServiceFaqDirectories">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectory</pojo>
+			<orderBy>OnlineServiceDirectory.priority DESC, OnlineServiceDirectory.directoryName</orderBy>
+			<quickFilter>OnlineServiceDirectory.directoryName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="常见问题目录">/cms/onlineservice/faq/faqs.shtml?directoryId={PARAMETER:id}</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/onlineservice/templatemanage/insertDirectories.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="rssChannel">false</parameter>
+			<parameter name="totalSupport">false</parameter> <!-- 不支持统计 -->
+		</extendParameters>
+	</view>
+	
+	<view title="常见问题解答" name="onlineServiceFaqs">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaq</pojo>
+			<where>OnlineServiceFaq.status='3' and
+				   ((subjections.directoryId in (
+	    			 select OnlineServiceDirectorySubjection.directoryId
+	    			  from OnlineServiceDirectorySubjection OnlineServiceDirectorySubjection
+	    		      where OnlineServiceDirectorySubjection.parentDirectoryId={PARAMETER:directoryId|0}))
+	    			or (
+	    			 subjectionItems.itemId in (
+	    			  select OnlineServiceItem.id
+	    			   from OnlineServiceItem OnlineServiceItem
+	    			   left join OnlineServiceItem.subjections OnlineServiceItemSubjection, OnlineServiceDirectorySubjection OnlineServiceDirectorySubjection
+	    			   where OnlineServiceItemSubjection.directoryId=OnlineServiceDirectorySubjection.directoryId
+	    			   and OnlineServiceDirectorySubjection.parentDirectoryId={PARAMETER:directoryId|0})))</where>
+			<orderBy>accessStats.times DESC, OnlineServiceFaq.question</orderBy>
+			<quickFilter>OnlineServiceFaq.question like '%{KEY}%' or OnlineServiceFaq.answer like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link title="常见问题">/cms/onlineservice/faq/faq.shtml</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/onlineservice/templatemanage/insertServiceItems.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="rssChannel">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view title="智能互动热点问题" name="hotOnlineServiceFaqs">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaq</pojo>
+			<where>OnlineServiceFaq.status='3' and
+				   ((subjections.directoryId in (
+	    			 select OnlineServiceDirectorySubjection.directoryId
+	    			  from OnlineServiceDirectorySubjection OnlineServiceDirectorySubjection
+	    		      where OnlineServiceDirectorySubjection.parentDirectoryId={PARAMETER:directoryId|0}))
+	    			or (
+	    			 subjectionItems.itemId in (
+	    			  select OnlineServiceItem.id
+	    			   from OnlineServiceItem OnlineServiceItem
+	    			   left join OnlineServiceItem.subjections OnlineServiceItemSubjection, OnlineServiceDirectorySubjection OnlineServiceDirectorySubjection
+	    			   where OnlineServiceItemSubjection.directoryId=OnlineServiceDirectorySubjection.directoryId
+	    			   and OnlineServiceDirectorySubjection.parentDirectoryId={PARAMETER:directoryId|0})))</where>
+			<orderBy>OnlineServiceFaq.askTimes DESC, accessStats.times DESC, OnlineServiceFaq.question</orderBy>
+			<quickFilter>OnlineServiceFaq.question like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link title="常见问题">javascript:openFaq('{PARAMETER:id}', '{PARAMETER:siteId}')</link>
+		</links>
+		<extendParameters>
+			<parameter name="rssChannel">false</parameter>
+			<parameter name="totalSupport">false</parameter> <!-- 不支持统计 -->
+		</extendParameters>
+	</view>
+	
+	<view title="智能互动相关问题" name="relationOnlineServiceFaqs">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaq</pojo>
+			<where>OnlineServiceFaq.status='3' and
+				   (OnlineServiceFaq.id in (
+					  select OnlineServiceFaqRelation.relationFaqId from OnlineServiceFaqRelation OnlineServiceFaqRelation where OnlineServiceFaqRelation.faqId={PARAMETER:faqId|0}
+					)
+					or OnlineServiceFaq.id in (
+						select OnlineServiceFaqRelation.faqId from OnlineServiceFaqRelation OnlineServiceFaqRelation where OnlineServiceFaqRelation.relationFaqId={PARAMETER:faqId|0}
+					))</where>
+			<orderBy>OnlineServiceFaq.askTimes DESC, accessStats.times DESC, OnlineServiceFaq.question</orderBy>
+			<quickFilter>OnlineServiceFaq.question like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link title="常见问题">javascript:openFaq('{PARAMETER:id}', '{PARAMETER:siteId}')</link>
+		</links>
+		<extendParameters>
+			<parameter name="rssChannel">false</parameter>
+			<parameter name="totalSupport">false</parameter> <!-- 不支持统计 -->
+		</extendParameters>
+	</view>
+	
+	<view name="admin/todoFaq" form="admin/faq" title="待处理常见问题" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaq</pojo>
+			<where>OnlineServiceFaq.status&lt;'5'</where>
+			<orderBy>OnlineServiceFaq.created DESC</orderBy>
+			<quickFilter>OnlineServiceFaq.question like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="添加常见问题" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/cms/onlineservice/selectDirectory.shtml?script=PageUtils.newrecord(&quot;cms/onlineservice/faq&quot;, &quot;admin/faq&quot;, &quot;mode=fullscreen&quot;, &quot;directoryId={id}&quot;)', 600, 350)"/>
+		</actions>
+		<columns>
+			<!-- column title="选择" type="select" align="center" hideTitle="true" width="32" /-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="问题" name="question"/>
+			<column title="创建人" name="creator" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+			<column title="状态" name="statusDescription" width="80" align="center" displayExcept="portlet"/>
+		</columns>
+		<extendParameters>
+			<parameter name="emptyPrompt">没有需要处理的问题</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="admin/processingFaq" form="admin/faq" title="处理中的常见问题" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaq</pojo>
+			<where>OnlineServiceFaq.status&lt;'5'</where>
+			<orderBy>OnlineServiceFaq.created DESC</orderBy>
+			<filter>INPROCESS</filter>
+			<quickFilter>OnlineServiceFaq.question like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加常见问题" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/cms/onlineservice/selectDirectory.shtml?script=PageUtils.newrecord(&quot;cms/onlineservice/faq&quot;, &quot;admin/faq&quot;, &quot;mode=fullscreen&quot;, &quot;directoryId={id}&quot;)', 600, 350)"/>
+		</actions>
+		<columns>
+			<!-- column title="选择" type="select" align="center" hideTitle="true" width="32" /-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="问题" name="question"/>
+			<column title="创建人" name="creator" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+			<column title="状态" name="statusDescription" width="80" align="center" displayExcept="portlet"/>
+		</columns>
+	</view>
+	
+	<view name="admin/deleted" form="admin/faq" hide="noPrivilege(application_manager)" title="已删除常见问题" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaq</pojo>
+			<where>OnlineServiceFaq.status&gt;'4'</where>
+			<orderBy>OnlineServiceFaq.created DESC</orderBy>
+			<quickFilter>OnlineServiceFaq.question like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<columns>
+			<!-- column title="选择" type="select" align="center" hideTitle="true" width="32" /-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="问题" name="question"/>
+			<column title="创建人" name="creator" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+
+	<view name="admin/faq" form="admin/faq" title="所有问题" pageRows="20" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.cms.onlineservice.faq.pojo.OnlineServiceFaq</pojo>
+			<where>OnlineServiceFaq.status&lt;'5'</where>
+			<orderBy>OnlineServiceFaq.created DESC</orderBy>
+			<quickFilter>OnlineServiceFaq.question like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<scripts>
+			<script>/cms/onlineservice/js/onlineservice.js</script>
+		</scripts>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="问题" name="question"/>
+			<column title="创建人" name="creator" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+			<column title="状态" name="statusDescription" width="80" align="center" displayExcept="portlet"/>
+		</columns>
+	</view>
+</views>

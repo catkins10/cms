@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--请假条-->
+	<class name="com.yuanluesoft.j2oa.leave.pojo.Leave" table="leave_leave">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="personId"/> <!--请假人ID-->
+		<property name="personName"/> <!--请假人-->
+		<property name="departmentId"/> <!--部门ID-->
+		<property name="departmentName"/> <!--部门名称-->
+		<property name="type" column="leaveType"/> <!--请假类别-->
+		<property name="reason"/> <!--请假事由-->
+		<property name="beginTime"/> <!--开始时间-->
+		<property name="endTime"/> <!--结束时间-->
+		<property name="dayCount"/> <!--请假天数-->
+		<property name="approvalPass"/> <!--是否审批通过-->
+		<property name="isTerminated"/> <!--是否已销假-->
+		<property name="terminateTime"/> <!--销假时间-->
+		<property name="remark"/> <!--备注-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<set name="opinions" table="leave_leave_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.j2oa.leave.pojo.LeaveOpinion" />
+		</set>
+		<set name="visitors" table="leave_leave_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.leave.pojo.LeavePrivilege"/>
+		</set>
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+	</class>
+	
+	<!--请假条权限控制-->
+	<class name="com.yuanluesoft.j2oa.leave.pojo.LeavePrivilege" table="leave_leave_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--请假条办理意见-->
+	<class name="com.yuanluesoft.j2oa.leave.pojo.LeaveOpinion" table="leave_leave_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="created"/> <!--填写时间-->
+	</class>
+	
+	<!--请假配置-->
+	<class name="com.yuanluesoft.j2oa.leave.pojo.LeaveConfig" table="leave_config">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="types"/> <!--请假类别-->
+	</class>
+</hibernate-mapping>

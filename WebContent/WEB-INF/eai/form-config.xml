@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.eai.server.configure.forms.EAIConfigure" title="应用管理">
+		<formFields>
+			<field title="参考链接" name="referer" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="保存" execute="window.eaiEditor.save()" image="/eai/configure/icons/save.gif"/>
+			<action title="全选" execute="window.eaiEditor.selectAll()" image="/eai/configure/icons/select.gif"/>
+			<action title="删除" execute="window.eaiEditor.deleteElements()" image="/eai/configure/icons/delete.gif"/>
+			<action title="返回" execute="if(!window.eaiEditor.modified || confirm('配置已修改，是否确定返回？'))window.location.href='{PARAMETER:referer}'" image="/eai/configure/icons/exit.gif"/>
+		</actions>
+	</form>
+</forms>

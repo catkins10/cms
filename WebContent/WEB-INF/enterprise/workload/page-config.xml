@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=enterprise/workload&amp;anonymous=false"/>
+		
+		<page name="workloadAssess" title="工作量考核" url="/enterprise/workload/workloadAssess.shtml" systemLink="false">
+			<subPage name="base" title="工作量考核"/>
+		</page>
+
+		<page name="workloadAssessSubmitted" title="工作量考核完成提示" systemLink="false"/>
+		
+		<page name="myWorkloads" title="我的工作量" url="/cms/sitemanage/applicationIndex.shtml?applicationName=enterprise/workload&amp;pageName=myWorkloads&amp;anonymous=false"/>
+
+		<page name="workloadAssesses" title="已完成考核" url="/cms/sitemanage/applicationIndex.shtml?applicationName=enterprise/workload&amp;pageName=workloadAssesses&amp;anonymous=false"/>
+	</pages>
+	
+	<links>
+		<link title="工作量考核" dialogURL="/enterprise/workload/templatemanage/insertAssessLink.shtml"/>
+	</links>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="workloadAssessLink" processor="workloadAssessLinkProcessor"/> <!-- 工作量考核链接 -->
+	</pageElements>
+</application>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--土地证-->
+	<class name="com.yuanluesoft.land.landcertificate.pojo.LandCertificate" table="land_certificate">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="caseNumber"/> <!--受理编号,VARCHAR(20)-->
+		<property name="caseYear"/> <!--年度,VARCHAR(50)-->
+		<property name="caseBatch"/> <!--批号,VARCHAR(50)-->
+		<property name="category"/> <!--收件类别,NUMERIC(2)-->
+		<property name="created"/> <!--收件时间,TIMESTAMP NULL-->
+		<property name="applicant"/> <!--申请人,VARCHAR(200)-->
+		<property name="idCard"/> <!--身份证号码,VARCHAR(200)-->
+		<property name="tel"/> <!--联系电话,VARCHAR(50)-->
+		<property name="address"/> <!--土地座落,VARCHAR(200)-->
+		<property name="certificateNumber"/> <!--证号,VARCHAR(100)-->
+	</class>
+</hibernate-mapping>

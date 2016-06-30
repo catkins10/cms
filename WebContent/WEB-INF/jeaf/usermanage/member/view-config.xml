@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="admin/member" form="admin/member" title="网上用户" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.usermanage.member.pojo.Member</pojo>
+			<orderBy>Member.loginName</orderBy>
+			<quickFilter>Member.loginName like '%{KEY}%' or Member.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="网上用户注册" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('jeaf/usermanage/member','/regist','mode=fullscreen','')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32" displayExcept="select"/>
+			<column title="用户名" name="loginName" width="100"/>
+			<column title="姓名" name="name" width="100"/>
+			<column title="邮箱" name="email"/>
+			<column title="单位" name="company"/>
+			<column title="注册时间" name="registTime" align="center" width="108" displayExcept="select"/>
+		</columns>
+	</view>
+</views>

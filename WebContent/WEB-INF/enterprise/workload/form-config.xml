@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="workloadAssess" class="com.yuanluesoft.enterprise.workload.forms.WorkloadAssess" title="工作量考核" pojo="com.yuanluesoft.enterprise.workload.pojo.WorkloadAssess"/>
+
+	<form name="admin/workloadAssess" class="com.yuanluesoft.enterprise.workload.forms.admin.WorkloadAssess" title="工作量考核" pojo="com.yuanluesoft.enterprise.workload.pojo.WorkloadAssess">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="submitAssess()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.enterprise.workload.forms.admin.InsertAssessLink" title="插入工作量考核链接">
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

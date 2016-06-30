@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--电报:发报登记-->
+	<class name="com.yuanluesoft.telex.send.base.pojo.SendTelegram" table="telex_send_telegram">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="isCryptic"/> <!--明/密-->
+		<property name="subject"/> <!--标题-->
+		<property name="summary"/> <!--内容摘要-->
+		<property name="sequence"/> <!--流水号-->
+		<property name="category"/> <!--发电类型-->
+		<property name="securityLevel"/> <!--密级-->
+		<property name="telegramLevel"/> <!--等级-->
+		<property name="pages"/> <!--页数-->
+		<property name="telegramNumber"/> <!--份数-->
+		<property name="totalPages"/> <!--总页数-->
+		<property name="sendTime"/> <!--发电时间-->
+		<property name="unitCode"/> <!--部委号-->
+		<property name="fromUnitIds"/> <!--发电单位ID列表-->
+		<property name="fromUnitNames"/> <!--发电单位名称列表-->
+		<property name="toUnitIds"/> <!--受电单位ID列表-->
+		<property name="toUnitNames"/> <!--受电单位名称列表-->
+		<property name="creatorId"/> <!--登记人ID-->
+		<property name="creator"/> <!--登记人-->
+		<property name="created"/> <!--登记时间-->
+		<property name="archiveTime"/> <!--归档时间-->
+		<property name="archivePersonId"/> <!--归档人ID-->
+		<property name="archivePersonName"/> <!--归档人姓名-->
+		<property name="remark"/> <!--备注-->
+	</class>
+</hibernate-mapping>

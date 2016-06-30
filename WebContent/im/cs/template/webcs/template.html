@@ -1,0 +1,50 @@
+﻿<html>
+    <head>
+        <title>webcs</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <link href="{CONTEXTPATH}/im/cs/template/css/csdialog.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+        	body {
+        		font-size: 12px;
+        		font-family: 宋体;
+        	}
+			.specialists {
+				height: 130px;
+				clear: both;
+				border-top: #c9d2e0 1px solid;
+				padding-top: 3px
+			}
+		</style>
+    </head>
+    <body onselectstart="return false;">
+    	显示客服人员列表时删除下面的两个链接:<br/>
+    	<a id="pageLink" urn="在线交谈" target="_self"><img border="0" alt="" src="{CONTEXTPATH}/im/cs/template/webcs/images/online.gif" width="200" height="60"/></a>
+        <a id="pageLink" urn="留言" target="_self"><img border="0" alt="" src="{CONTEXTPATH}/im/cs/template/webcs/images/offline.gif" width="200" height="60"/></a>
+        <div class="closeButton" onmouseover="className='closeButton closeButtonMouseover';" onmouseout="className='closeButton';" onclick="window.webim.closeWebim();" style="position:absolute; left:185px; top:2px;">&nbsp;</div>
+        
+		<br/>自动选择客服人员时删除以下表格:<br/>
+        <table border="0" cellspacing="0" cellpadding="0" width="120" style="table-layout: fixed">
+            <tbody>
+                <tr>
+                    <td class="leftTop">&nbsp;</td>
+                    <td class="centerTop">&nbsp;</td>
+                    <td class="rightTop">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="leftMiddle">&nbsp;</td>
+                    <td class="centerMiddle" valign="top">
+                    <div class="title">在线客服</div>
+                    <div class="closeButton" onmouseover="className='closeButton closeButtonMouseover';" onmouseout="className='closeButton';" onclick="window.webim.closeWebim();" style="float: right">&nbsp;</div>
+                    <div class="specialists"><a id="recordList" urn="recordListName=customerServiceSpecialists&amp;applicationName=im/cs&amp;recordCount=10&amp;recordFormat=&lt;div style%3D&quot;float:left&quot;&gt;&lt;IMG align%3DabsMiddle src%3D&quot;{CONTEXTPATH}/im/cs/template/webcs/images/person.gif&quot;&gt;%26nbsp;&lt;A id%3Dfield urn%3Dname%3DpersonName%26amp;link%3Dtrue&gt;%26lt;用户名%26gt;&lt;/A&gt;&lt;/div&gt;&lt;div style%3D&quot;float:right&quot;&gt;&lt;A style%3D&quot;DISPLAY: inline-block; PADDING-TOP: 1px&quot; id%3Dfield urn%3Dname%3DstatusText%26amp;link%3Dtrue%26amp;insteadImageWidth%3D%26amp;insteadImageHeight%3D%26amp;insteadImageAlign%3Dabsmiddle&gt;%26lt;用户状态说明%26gt;&lt;/A&gt;&lt;/div&gt;&amp;separatorMode=newLine&amp;separatorHeight=5&amp;linkOpenMode=_blank&amp;emptyPrompt=&amp;extendProperties=">&lt;客服列表&gt;</a></div>
+                    </td>
+                    <td class="rightMiddle">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="leftBottom">&nbsp;</td>
+                    <td class="centerBottom">&nbsp;</td>
+                    <td class="rightBottom">&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

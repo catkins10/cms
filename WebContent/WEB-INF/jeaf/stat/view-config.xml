@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<statisticView name="accessStat" title="访问统计" pageRows="50" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.stat.pojo.DayAccessStat</pojo>
+			<orderBy>DayAccessStat.accessDate DESC</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.jeaf.stat.pojo.DayAccessStat</pojo>
+			</data>
+			<category value="year(DayAccessStat.accessDate)"> <!--value必须有-->
+				<data>year(DayAccessStat.accessDate)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(DayAccessStat.accessDate)"> <!--value必须有-->
+				<where>year(DayAccessStat.accessDate)={CATEGORY1VALUE}</where>
+				<data>year(DayAccessStat.accessDate)={CATEGORY1VALUE} and month(DayAccessStat.accessDate)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<statistics hideDetail="true">
+			<statistic>
+				<groupFields>
+					<groupField name="accessDate"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="times" function="sum(DayAccessStat.times)"/>
+				</statisticColumns>
+			</statistic>
+			<statistic statisticAll="true" title="总计">
+				<statisticColumns>
+					<statisticColumn name="times" function="sum(DayAccessStat.times)"/>
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<columns>
+			<column title="时间" name="accessDate" align="center" width="100"/>
+			<column title="访问次数" name="times" type="statistic" align="center"/>
+		</columns>
+	</statisticView>
+	
+	<statisticView name="hourAccessStat" title="访问时段统计" pageRows="50" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.stat.pojo.HourAccessStat</pojo>
+			<orderBy>HourAccessStat.accessHour DESC</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.jeaf.stat.pojo.HourAccessStat</pojo>
+			</data>
+			<category value="year(HourAccessStat.accessDate)"> <!--value必须有-->
+				<data>year(HourAccessStat.accessDate)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(HourAccessStat.accessDate)"> <!--value必须有-->
+				<where>year(HourAccessStat.accessDate)={CATEGORY1VALUE}</where>
+				<data>year(HourAccessStat.accessDate)={CATEGORY1VALUE} and month(HourAccessStat.accessDate)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<statistics hideDetail="true">
+			<statistic>
+				<groupFields>
+					<groupField name="accessHour"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="times" function="sum(HourAccessStat.times)"/>
+				</statisticColumns>
+			</statistic>
+			<statistic statisticAll="true" title="总计">
+				<statisticColumns>
+					<statisticColumn name="times" function="sum(HourAccessStat.times)"/>
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<columns>
+			<column title="时段" name="accessHour" align="center" width="100"/>
+			<column title="访问次数" name="times" type="statistic" align="center"/>
+		</columns>
+	</statisticView>
+	
+	<!-- EXCEL合并数据 =IF(ISNUMBER(VLOOKUP(B2,Sheet1!$B$2:$C$5,2,FALSE)),VLOOKUP(B2,Sheet1!$B$2:$C$5,2,FALSE),0) -->
+	<statisticView name="loginStat" title="登录统计" pageRows="50">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.usermanage.pojo.Person</pojo>
+			<orderBy>sum(logins.times) DESC</orderBy>
+		</data>
+		<statistics hideDetail="true">
+			<statistic>
+				<groupFields>
+					<groupField name="id"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="loginTimes" function="sum(logins.times)"/>
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<columns>
+			<column title="序号" type="rownum"  align="center" width="50"/>
+			<column title="用户名" name="name"/>
+			<column title="登录次数" name="loginTimes" type="statistic" align="center" width="100"/>
+		</columns>
+	</statisticView>
+	
+	<view name="siteStat" title="栏目访问统计" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.sitemanage.pojo.WebDirectory</pojo>
+			<where>accessStats.times>0</where>
+			<orderBy>accessStats.times DESC</orderBy>
+			<quickFilter>WebDirectory.directoryName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum"  align="center" width="50"/>
+			<column title="名称" name="directoryName"/>
+			<column title="访问次数" name="accessStats.times" width="100" align="center" length="1"/>
+		</columns>
+	</view>
+	
+	<view name="siteResourceStat" title="文章访问统计" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.siteresource.pojo.SiteResource</pojo>
+			<where>accessStats.times>0</where>
+			<orderBy>accessStats.times DESC</orderBy>
+			<quickFilter>SiteResource.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="打印" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="主题" name="subject"/>
+			<column title="发布时间" name="issueTime" width="110" align="center"/>
+			<column title="访问次数" name="accessStats.times" width="100" align="center" length="1"/>
+		</columns>
+	</view>
+	
+	<view name="publicInfoStat" title="政务信息访问统计" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.pojo.PublicInfo</pojo>
+			<where>accessStats.times>0</where>
+			<orderBy>accessStats.times DESC</orderBy>
+			<quickFilter>PublicInfo.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="主题" name="subject"/>
+			<column title="访问次数" name="accessStats.times" width="100" align="center" length="1"/>
+		</columns>
+	</view>
+</views>

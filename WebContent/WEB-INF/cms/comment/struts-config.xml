@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="comment" type="com.yuanluesoft.cms.comment.forms.Comment"/>
+  <form-bean name="adminComment" type="com.yuanluesoft.cms.comment.forms.admin.Comment"/>
+  <form-bean name="insertComments" type="com.yuanluesoft.cms.comment.forms.InsertComments"/>
+  <form-bean name="insertCommentLink" type="com.yuanluesoft.cms.comment.forms.InsertCommentLink"/>
+  <form-bean name="insertCommentListLink" type="com.yuanluesoft.cms.comment.forms.InsertCommentListLink"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="comment" path="/comment" scope="request"
+   type="com.yuanluesoft.cms.comment.actions.comment.Load" validate="false">
+   <forward name="load" path="/comment.jsp"/>
+  </action>
+  <action input="/comment.jsp" name="comment" path="/submitComment"
+   scope="request"
+   type="com.yuanluesoft.cms.comment.actions.comment.Submit" validate="false">
+   <forward name="result" path="/commentSubmited.jsp"/>
+  </action>
+  <action name="adminComment" path="/admin/comment" scope="request"
+   type="com.yuanluesoft.cms.comment.actions.comment.admin.Load" validate="false">
+   <forward name="load" path="/admin/comment.jsp"/>
+  </action>
+  <action input="/admin/comment.jsp" name="adminComment"
+   path="/admin/saveComment" scope="request"
+   type="com.yuanluesoft.cms.comment.actions.comment.admin.Save" validate="false"/>
+  <action input="/admin/comment.jsp" name="adminComment"
+   path="/admin/deleteComment" scope="request"
+   type="com.yuanluesoft.cms.comment.actions.comment.admin.Delete" validate="false"/>
+  <action input="/admin/comment.jsp" name="adminComment"
+   path="/admin/runComment" scope="request"
+   type="com.yuanluesoft.cms.comment.actions.comment.admin.Run" validate="false"/>
+  <action input="/admin/comment.jsp" name="adminComment"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.cms.comment.actions.comment.admin.WriteOpinion" validate="false"/>
+  <action input="/admin/comment.jsp" name="adminComment"
+   path="/admin/publish" scope="request"
+   type="com.yuanluesoft.cms.comment.actions.comment.admin.Publish" validate="false"/>
+  <action name="comment" path="/selectAttachment" scope="request"
+   type="com.yuanluesoft.cms.comment.actions.comment.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action input="/admin/comment.jsp" name="adminComment"
+   path="/admin/setPublishOption" scope="request"
+   type="com.yuanluesoft.cms.comment.actions.comment.admin.SetPublishOption" validate="false"/>
+  <action path="/citationComment" scope="request"
+   type="com.yuanluesoft.cms.comment.actions.citationcomment.Load" validate="false"/>
+  <action name="insertComments" path="/templatemanage/insertComments"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertComments.jsp"/>
+  </action>
+  <action name="insertCommentLink"
+   path="/templatemanage/insertCommentLink" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertCommentLink.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

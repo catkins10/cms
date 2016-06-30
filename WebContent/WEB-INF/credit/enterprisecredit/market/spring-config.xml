@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- Excel导入服务 -->
+	<bean id="marketPersonImportServiceImpl" class="com.yuanluesoft.credit.enterprisecredit.market.service.spring.MarketPersonImportServiceImpl">
+		<property name="databaseService"><ref bean="databaseService" /></property>
+		<property name="businessDefineService"><ref bean="businessDefineService" /></property>
+		<property name="attachmentService"><ref bean="attachmentService" /></property>
+	</bean>
+	<!-- Excel导入服务 -->
+	<bean id="marketEnterpriseImportServiceImpl" class="com.yuanluesoft.credit.enterprisecredit.market.service.spring.MarketEnterpriseImportServiceImpl">
+		<property name="databaseService"><ref bean="databaseService" /></property>
+		<property name="businessDefineService"><ref bean="businessDefineService" /></property>
+		<property name="attachmentService"><ref bean="attachmentService" /></property>
+	</bean>
+	
+</beans>

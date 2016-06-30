@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/message" class="com.yuanluesoft.cms.smssend.forms.admin.SmsSendMessage" title="发送短信" pojo="com.yuanluesoft.cms.smssend.pojo.SmsSendMessage">
+		<formFields>
+			<field title="接收人" name="receivers" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field name="receivers.visitorNames" title="用户名" type="string" inputMode="select" required="true">
+				<parameter name="execute">DialogUtils.selectVisitors('', '', this);</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteMessage')"/>
+			<action title="送审核" hide="workflow()" execute="FormUtils.doAction('runMessage', 'workflowAction=send')"/>
+			<action title="审核" hide="workflow()" execute="FormUtils.doAction('runMessage', 'workflowAction=approval')"/>
+			<action title="发送短信" hide="workflow()" execute="FormUtils.doAction('sendMessage')"/>
+			<action title="发送明细" execute="DialogUtils.openSelectDialog('jeaf/sms', 'admin/smsSendBySourceRecord', '80%', '80%', false, '', '', '', '', '', true, 'sourceRecordId={PARAMETER:id}')"/>
+		</actions>
+	</form>
+
+	<form name="admin/workflowConfig" class="com.yuanluesoft.cms.smssend.forms.admin.SmsSendWorkflow" title="流程配置" pojo="com.yuanluesoft.cms.smssend.pojo.SmsSendWorkflow">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteWorkflowConfig')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/chargeStandard" class="com.yuanluesoft.cms.smssend.forms.admin.SmsChargeStandard" title="计费配置" pojo="com.yuanluesoft.cms.smssend.pojo.SmsChargeStandard">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteChargeStandard')"/>
+		</actions>
+	</form>
+</forms>

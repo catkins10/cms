@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/error.jsp" SHAPE="32,48,177,21"
+  TARGET="page2" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/result.jsp" SHAPE="32,128,177,21" TARGET="page0" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2" PATH="/error.jsp"
+  SHAPE="352,48,50,25" SUBTYPE="jsp" TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/result.jsp" SHAPE="352,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#authentication"
+  NAME="action0" PATH="/authentication" SHAPE="32,224,177,25"
+  TITLE="authentication" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/authentication.jsp" TARGET="page1"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/authentication.jsp" SHAPE="352,240,50,25" SUBTYPE="jsp"
+  TITLE="authentication.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/doAuthentication" TARGET="action1"
+   TITLE="doAuthentication" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#doAuthentication"
+  NAME="action1" PATH="/doAuthentication" SHAPE="560,256,161,25"
+  TITLE="authentication" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#main" NAME="action2"
+  PATH="/main" SHAPE="32,352,177,41" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#supplyQuery"
+  NAME="action3" PATH="/supplyQuery" SHAPE="32,432,177,25"
+  TITLE="supplyQuery" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#supply" NAME="action4"
+  PATH="/supply" SHAPE="32,512,177,25" TYPE="action"/>
+</PROCESS>

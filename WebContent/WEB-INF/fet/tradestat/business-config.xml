@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="企业信息" class="com.yuanluesoft.fet.tradestat.pojo.FetCompany">
+		<field name="code" title="组织海关代码" length="20" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="loginName" title="企业帐号" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="password" title="密码" length="60" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="name" title="中文名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="englishName" title="英文名称" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="created" title="企业成立时间" type="date" inputMode="date" required="true"/>
+		<field name="type" title="经济类型" length="20" type="string" inputMode="radio">
+			<parameter name="itemsText">国有及民营\0三资</parameter>
+		</field>
+		<field name="address" title="企业通讯地址(中文)" length="200" type="string" inputMode="text"/>
+		<field name="englishAddress" title="企业通讯地址(英文)" length="200" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="countyId" title="所属县、市ID" type="number" inputMode="hidden"/>
+		<field name="county" title="所属县、市" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">fetCompanyService</parameter>
+			<parameter name="itemsName">counties</parameter>
+			<parameter name="titleField">county</parameter>
+			<parameter name="valueField">countyId</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="developmentAreaId" title="所属开发区ID" type="number" inputMode="hidden"/>
+		<field name="developmentArea" title="所属开发区" length="30" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">fetCompanyService</parameter>
+			<parameter name="itemsName">developmentAreas</parameter>
+			<parameter name="titleField">developmentArea</parameter>
+			<parameter name="valueField">developmentAreaId</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="businessType" title="企业经营性质" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsText">制造商\0经销(贸易)商\0制造商、经销(贸易)商</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="hasPrivilege" title="有无进出口经营权" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">有|1\0没有|0</parameter>
+		</field>
+		<field name="principalName" title="业务负责人中文名" length="10" type="string" inputMode="text"/>
+		<field name="principalEnglishName" title="业务负责人英文名" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="job" title="职务(中文)" length="30" type="string" inputMode="text"/>
+		<field name="englishJob" title="职务(英文)" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="totalLastYear" title="上年进出口额" length="10" type="number" inputMode="text"/>
+		<field name="registeredCapital" title="注册资金" length="10" type="number" inputMode="text"/>
+		<field name="tel" title="联系电话" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="fax" title="传真" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="webSite" title="企业网址" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="email" title="电子邮箱" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="postalCode" title="邮政编码" length="20" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="employeeCount" title="员工人数" length="6" type="number" inputMode="text"/>
+		<field name="foreignOfficeName" title="境外办事机构(中文)" length="100" type="string" inputMode="text"/>
+		<field name="foreignOfficeEnglishName" title="境外办事机构(英文)" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="foreignOfficeCityName" title="所在城市(中文)" length="20" type="string" inputMode="text"/>
+		<field name="foreignOfficeCityEnglishName" title="所在城市(英文)" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="motherCompanyName" title="母公司名称(中文)" length="100" type="string" inputMode="text"/>
+		<field name="motherCompanyEnglishName" title="母公司名称(英文)" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="remark" title="备注" length="250" type="string" inputMode="text"/>
+		<field name="approvalPass" title="审核通过否" length="1" type="char" inputMode="none"/>
+	</businessObject>
+	<businessObject title="区县信息" class="com.yuanluesoft.fet.tradestat.pojo.FetCounty">
+		<field name="code" title="编码" length="20" required="true" type="string" inputMode="text"/>
+		<field name="name" title="名称" length="20" required="true" type="string" inputMode="text"/>
+		<field name="loginName" title="帐号" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="password" title="密码" length="60" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="开发区信息" class="com.yuanluesoft.fet.tradestat.pojo.FetDevelopmentArea">
+		<field name="code" title="编码" length="20" required="true" type="string" inputMode="text"/>
+		<field name="name" title="名称" length="20" required="true" type="string" inputMode="text"/>
+		<field name="loginName" title="帐号" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="password" title="密码" length="60" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="webSite" title="网址" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="数据上传" class="com.yuanluesoft.fet.tradestat.pojo.UploadTradeData">
+		<field name="transactorId" title="经办人ID" type="number" inputMode="none"/>
+		<field name="transactor" title="经办人" length="32" type="string" inputMode="readonly"/>
+		<field name="uploadTime" title="上传时间" type="timestamp" inputMode="none"/>
+		<field name="isExport" title="进口/出口" length="1" required="true" type="char" inputMode="radio">
+			<parameter name="itemsText">出口|1\0进口|0</parameter>
+		</field>
+		<field name="dataYear" title="年度" length="4" required="true" type="number" inputMode="text"/>
+		<field name="dataMonth" title="月份" length="2" required="true" type="number" inputMode="text"/>
+	</businessObject>
+	<businessObject title="企业进口数据" class="com.yuanluesoft.fet.tradestat.pojo.TradeImport">
+		<field name="companyCode" title="企业编号" length="20" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="companyName" title="单位名称" length="100" type="string" inputMode="text"/>
+		<field name="monthlyTotal" title="本月数" length="12,2" type="number" inputMode="text"/>
+		<field name="yearTotal" title="累计数" length="12,2" type="number" inputMode="text"/>
+		<field name="lastYearMonthlyTotal" title="同期数" length="12,2" type="number" inputMode="text"/>
+		<field name="monthlyGrowthRate" title="月增长率" length="10,2" type="number" inputMode="text"/>
+		<field name="lastYearTotal" title="同期累计数" length="12,2" type="number" inputMode="text"/>
+		<field name="growthRate" title="累计比增" length="10,2" type="number" inputMode="text"/>
+		<field name="county" title="区县" length="20" type="string" inputMode="text"/>
+		<field name="countyCode" title="县码" length="3" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="isState" title="国有" length="1" type="char" inputMode="text"/>
+		<field name="isMachine" title="机电" length="1" type="char" inputMode="text"/>
+		<field name="isImportant" title="重点企业" length="1" type="char" inputMode="text"/>
+		<field name="countryCode" title="投资国别" length="5" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="developmentAreaCode" title="开发区" length="5" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="dataYear" title="年份" length="4" type="number" inputMode="text"/>
+		<field name="dataMonth" title="月份" length="2" type="number" inputMode="text"/>
+	</businessObject>
+	<businessObject title="企业出口数据" class="com.yuanluesoft.fet.tradestat.pojo.TradeExport">
+		<field name="companyCode" title="企业编号" length="20" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="companyName" title="单位名称" length="100" type="string" inputMode="text"/>
+		<field name="monthlyTotal" title="本月数" length="12,2" type="number" inputMode="text"/>
+		<field name="yearTotal" title="累计数" length="12,2" type="number" inputMode="text"/>
+		<field name="lastYearMonthlyTotal" title="同期数" length="12,2" type="number" inputMode="text"/>
+		<field name="monthlyGrowthRate" title="月增长率" length="10,2" type="number" inputMode="text"/>
+		<field name="lastYearTotal" title="同期累计数" length="12,2" type="number" inputMode="text"/>
+		<field name="growthRate" title="累计比增" length="10,2" type="number" inputMode="text"/>
+		<field name="county" title="区县" length="20" type="string" inputMode="text"/>
+		<field name="countyCode" title="县码" length="3" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="isState" title="国有" length="1" type="char" inputMode="text"/>
+		<field name="isMachine" title="机电" length="1" type="char" inputMode="text"/>
+		<field name="isImportant" title="重点企业" length="1" type="char" inputMode="text"/>
+		<field name="countryCode" title="投资国别" length="5" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="developmentAreaCode" title="开发区" length="5" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="dataYear" title="年份" length="4" type="number" inputMode="text"/>
+		<field name="dataMonth" title="月份" length="2" type="number" inputMode="text"/>
+	</businessObject>
+</businessObjects>

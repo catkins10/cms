@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="采矿权审批" name="admin/miningRights" form="admin/miningRights" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.land.declare.pojo.MiningRights</pojo>
+			<orderBy>MiningRights.approvalTime DESC</orderBy>
+			<quickFilter>MiningRights.applicant like '%{KEY}%' or MiningRights.subject like '%{KEY}%' or MiningRights.licenseNum like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+		    <action title="导入EXCEL文件"  execute="PageUtils.newrecord('land/declare', 'admin/importData', 'mode=dialog,width=390,height=180')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)"/>
+			<action title="采矿权审批登记"  execute="PageUtils.newrecord('land/declare', 'admin/miningRights', 'mode=fullscreen')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)"/>
+			<action title="删除记录" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/land/declare/admin/deleteDeclares.shtml')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="标题" name="subject"/>
+			<column title="申请人" name="applicant"/>
+			<column title="许可证号" name="licenseNum" width="160"/>
+			<column title="审批时间" name="approvalTime"  width="80" format="yyyy年MM月"/>
+			<column title="导入时间" name="created"  width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view title="采矿权审批" name="miningRights">
+		<data>
+			<pojo>com.yuanluesoft.land.declare.pojo.MiningRights</pojo>
+			<orderBy>MiningRights.approvalTime DESC</orderBy>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=land/declare&amp;pageName=miningRightsDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view title="探矿权审批" name="admin/explorationRights" form="admin/explorationRights" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.land.declare.pojo.ExplorationRights</pojo>
+			<orderBy>ExplorationRights.approvalTime DESC</orderBy>
+			<quickFilter>ExplorationRights.applicant like '%{KEY}%' or ExplorationRights.projectName like '%{KEY}%' or ExplorationRights.licenseNum like '%{KEY}%'</quickFilter>
+		</data>
+		
+		<actions>
+		    <action title="导入EXCEL文件"  execute="PageUtils.newrecord('land/declare', 'admin/importData', 'mode=dialog,width=390,height=180')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)"/>
+			<action title="探矿权审批登记"  execute="PageUtils.newrecord('land/declare', 'admin/explorationRights', 'mode=fullscreen')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)"/>
+			<action title="删除记录" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/land/declare/admin/deleteDeclares.shtml')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="projectName"/>
+			<column title="申请人" name="applicant"/>
+			<column title="许可证号" name="licenseNum" width="160"/>
+			<column title="审批时间" name="approvalTime"  width="80" format="yyyy年MM月"/>
+			<column title="导入时间" name="created"  width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view title="探矿权审批" name="explorationRights">
+		<data>
+			<pojo>com.yuanluesoft.land.declare.pojo.ExplorationRights</pojo>
+			<orderBy>ExplorationRights.approvalTime DESC</orderBy>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=land/declare&amp;pageName=explorationRightsDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view title="地质灾害单位资质" name="admin/disastersUnit" form="admin/disastersUnit" pageRows="20" openFeatures="mode=dialog,width=500,height=400" >
+		<data>
+			<pojo>com.yuanluesoft.land.declare.pojo.DisastersUnit</pojo>
+			<orderBy>DisastersUnit.approvalTime DESC</orderBy>
+			<quickFilter>DisastersUnit.investigationUnit like '%{KEY}%' </quickFilter>
+		</data>
+		
+		<actions>
+		    <action title="导入EXCEL文件"  execute="PageUtils.newrecord('land/declare', 'admin/importData', 'mode=dialog,width=390,height=180')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)"/>
+			<action title="地质灾害单位资质登记"  execute="PageUtils.newrecord('land/declare', 'admin/disastersUnit', 'mode=dialog,width=500,height=400')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)"/>
+			<action title="删除记录" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/land/declare/admin/deleteDeclares.shtml')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="勘察单位" name="investigationUnit"/>
+			<column title="资质类型" name="qualificationType"/>
+			<column title="资质等级" name="qualificationLevel" width="80"/>
+			<column title="审批时间" name="approvalTime"  width="80" format="yyyy年MM月"/>
+			<column title="导入时间" name="created"  width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view title="地质灾害单位资质" name="disastersUnit">
+		<data>
+			<pojo>com.yuanluesoft.land.declare.pojo.DisastersUnit</pojo>
+			<orderBy>DisastersUnit.approvalTime DESC</orderBy>
+		</data>
+	</view>
+	
+	<view title="地质勘察单位资质" name="admin/investigateUnit" form="admin/investigateUnit" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.land.declare.pojo.InvestigateUnit</pojo>
+			<quickFilter>InvestigateUnit.certificateNum like '%{KEY}%' or InvestigateUnit.unitName like '%{KEY}%' or InvestigateUnit.leader like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+		    <action title="导入EXCEL文件"  execute="PageUtils.newrecord('land/declare', 'admin/importData', 'mode=dialog,width=390,height=180')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)"/>
+			<action title="地质勘察单位资质登记"  execute="PageUtils.newrecord('land/declare', 'admin/investigateUnit', 'mode=fullscreen')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)"/>
+			<action title="删除记录" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/land/declare/admin/deleteDeclares.shtml')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="单位名称" name="unitName"/>
+			<column title="法定代表人" name="leader" width="100"/>
+			<column title="证书编号" name="certificateNum" width="160"/>
+			<column title="有效期起" name="validFrom"  width="100"/>
+			<column title="有效期止" name="validEnd"  width="100"/>
+			<column title="导入时间" name="created"  width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view title="地质勘察单位资质" name="investigateUnit">
+		<data>
+			<pojo>com.yuanluesoft.land.declare.pojo.InvestigateUnit</pojo>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=land/declare&amp;pageName=investigateUnitDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view title="地质公园登记" name="admin/geopark" form="admin/geopark" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.land.declare.pojo.Geopark</pojo>
+			<quickFilter>Geopark.parkName like '%{KEY}%'</quickFilter>
+		</data>
+		
+		<actions>
+		    <action title="导入EXCEL文件"  execute="PageUtils.newrecord('land/declare', 'admin/importData', 'mode=dialog,width=390,height=180')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)"/>
+			<action title="地质公园登记"  execute="PageUtils.newrecord('land/declare', 'admin/geopark', 'mode=fullscreen')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)"/>
+			<action title="删除记录" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/land/declare/admin/deleteDeclares.shtml')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="公园名称" name="parkName"/>
+			<column title="公园位置" name="location" width="150"/>
+			<column title="批准时间" name="approvalTime" width="60"/>
+			<column title="开园时间" name="enableTime" width="60"/>
+			<column title="导入时间" name="created"  width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view title="地质公园" name="geopark">
+		<data>
+			<pojo>com.yuanluesoft.land.declare.pojo.Geopark</pojo>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=land/declare&amp;pageName=geoparkQueryDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view title="土地登记" name="admin/landRegister" form="admin/landRegister" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.land.declare.pojo.LandRegister</pojo>
+			<orderBy>LandRegister.registerDate DESC</orderBy>
+			<quickFilter>LandRegister.personName like '%{KEY}%' or LandRegister.certificateNum like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+		    <action title="导入EXCEL文件"  execute="PageUtils.newrecord('land/declare', 'admin/importData', 'mode=dialog,width=390,height=180')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)"/>
+			<action title="土地登记"  execute="PageUtils.newrecord('land/declare', 'admin/landRegister', 'mode=fullscreen')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)"/>
+			<action title="删除记录" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/land/declare/admin/deleteDeclares.shtml')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="权利人名称" name="personName"/>
+			<column title="土地证号" name="certificateNum" width="150"/>
+			<column title="使用权面积" name="area"  width="80"/>
+			<column title="登记日期" name="registerDate"  width="100"/>
+			<column title="导入时间" name="created"  width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view title="土地登记" name="landRegister">
+		<data>
+			<pojo>com.yuanluesoft.land.declare.pojo.LandRegister</pojo>
+			<orderBy>LandRegister.registerDate DESC</orderBy>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=land/declare&amp;pageName=landRegisterDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+</views>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--收文单-->
+	<class name="com.yuanluesoft.j2oa.receival.pojo.Receival" table="receival_receival">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<property name="docWord"/> <!--文件字号-->
+		<property name="fromUnit"/> <!--来文单位-->
+		<property name="registPerson"/> <!--登记人-->
+		<property name="subject"/> <!--标题-->
+		<property name="sequence"/> <!--收文序号(TODO)-->
+		<property name="docType"/> <!--文件分类-->
+		<property name="secureLevel"/> <!--秘密等级-->
+		<property name="secureTerm"/> <!--保密期限-->
+		<property name="priority"/> <!--紧急程度-->
+		<property name="receivalCount"/> <!--份数-->
+		<property name="pageCount"/> <!--页数-->
+		<property name="signDate"/> <!--成文日期-->
+		<property name="registDepartment"/> <!--登记部门-->
+		<property name="receivalDate"/> <!--收文日期-->
+		<property name="transactDate"/> <!--办理期限-->
+		<property name="keyword"/> <!--主题词-->
+		<property name="content"/> <!--来文摘要-->
+		<property name="filingTime"/> <!--归档时间-->
+		<property name="mainDo"/> <!--主办部门-->
+		<property name="remark"/> <!--附注-->
+		<set name="opinions" table="receival_receival_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.receival.pojo.ReceivalOpinion"/>
+		</set>
+		<set name="visitors" table="receival_receival_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.receival.pojo.ReceivalPrivilege"/>
+		</set>
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+	</class>
+	
+	<!--收文单权限控制信息-->
+	<class name="com.yuanluesoft.j2oa.receival.pojo.ReceivalPrivilege" table="receival_receival_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--收文:办理意见-->
+	<class name="com.yuanluesoft.j2oa.receival.pojo.ReceivalOpinion" table="receival_receival_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="created"/> <!--填写时间-->
+	</class>
+	
+	<!--模板配置-->
+	<class name="com.yuanluesoft.j2oa.receival.pojo.ReceivalTemplateConfig" table="receival_config_template">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="handlingHtmlTemplate" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--办理单HTML模板-->
+	</class>
+	
+	<!--收文归档配置-->
+	<class name="com.yuanluesoft.j2oa.receival.pojo.ReceivalFilingConfig" table="receival_config_filing">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="toArchives"/> <!--是否归档到文书档案-->
+		<property name="toDatabank"/> <!--是否归档到资料库-->
+		<property name="directoryId"/> <!--资料库归档目录ID-->
+		<property name="createDirectoryByYear"/> <!--是否自动按年创建目录-->
+	</class>
+</hibernate-mapping>

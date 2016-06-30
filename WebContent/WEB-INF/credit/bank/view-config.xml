@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/bank" form="admin/bank" hide="noPrivilege(application_manager)" title="所有银行" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.bank.pojo.Bank</pojo>
+			<orderBy>Bank.created DESC</orderBy>
+			<quickFilter>Bank.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="注册"  execute="PageUtils.newrecord('credit/bank','admin/bank','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="addr" title="地址"  align="center"/>
+			<column name="linkMan" title="联系人" width="80" align="center"/>
+			<column name="tel" title="电话" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allProduct" form="admin/product" hide="noPrivilege(application_manager)" title="所有金融产品" pageRows="20" openFeatures="mode=fullscreen" >
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.financialproducts.pojo.Product</pojo>
+			<orderBy>Product.created DESC</orderBy>
+			<quickFilter>Product.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="新增" execute="PageUtils.newrecord('credit/bank','admin/product','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="type" title="种类"  align="center"/>
+			<column name="forWho" title="适用对象"  align="center"/>
+			<column name="maxMoney" title="最高额度" width="60" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allLoanInfo" form="admin/loan" hide="noPrivilege(application_manager)" title="贷款信息" pageRows="20" openFeatures="mode=fullscreen" >
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.loan.pojo.BankLoan</pojo>
+			<orderBy>BankLoan.created DESC</orderBy>
+			<quickFilter>BankLoan.enterpriseName like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="新增" execute="PageUtils.newrecord('credit/bank','admin/loan','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="enterpriseName" title="企业名称"/>
+			<column name="productName" title="贷款项目"  align="center"/>
+			<column name="mony" title="贷款金额（万元）"  align="center"/>
+			<column name="time" title="贷款发放时间" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allApply" form="admin/apply" title="所有借款申请信息" hide="noPrivilege(application_manager)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.apply.pojo.Apply</pojo>
+			<orderBy>Apply.created DESC</orderBy>
+			<quickFilter>Apply.applyPerson like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="applyPerson" title="申请人"/>
+			<column name="level" title="信用等级"  align="center"/>
+			<column name="phone" title="联系电话"  align="center"/>
+			<column name="applyMoney" title="借款金额" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	
+	<view name="admin/myBank" form="admin/bank" title="我的银行信息" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.bank.pojo.Bank</pojo>
+			<where>Bank.id={USERID}</where>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="addr" title="地址"  align="center"/>
+			<column name="linkMan" title="联系人" width="80" align="center"/>
+			<column name="tel" title="电话" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/myProduct" form="admin/product" title="我的金融产品" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.financialproducts.pojo.Product</pojo>
+			<where>Product.creatorId={USERID}</where>
+			<orderBy>Product.created DESC</orderBy>
+			<quickFilter>Product.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="新增" execute="PageUtils.newrecord('credit/bank','admin/product','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="type" title="种类"  align="center"/>
+			<column name="forWho" title="适用对象"  align="center"/>
+			<column name="maxMoney" title="最高额度" width="60" align="center"/>
+		</columns>
+	</view>
+	
+	
+	<view name="admin/myLoanInfo" form="admin/loan" title="我的贷款信息" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.loan.pojo.BankLoan</pojo>
+			<where>BankLoan.creatorId={USERID}</where>
+			<orderBy>BankLoan.created DESC</orderBy>
+			<quickFilter>BankLoan.productName like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="新增" execute="PageUtils.newrecord('credit/bank','admin/loan','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="enterpriseName" title="企业名称"/>
+			<column name="productName" title="贷款项目"  align="center"/>
+			<column name="mony" title="贷款金额（万元）"  align="center"/>
+			<column name="time" title="贷款发放时间" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	
+	<!-- 借款申请信息 -->
+	<view name="admin/apply" form="admin/apply" title="借款申请信息" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.apply.pojo.Apply</pojo>
+			<where>Apply.bankId={USERID}</where>
+			<orderBy>Apply.created DESC</orderBy>
+			<quickFilter>Apply.applyPerson like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="applyPerson" title="申请人"/>
+			<column name="level" title="信用等级"  align="center"/>
+			<column name="phone" title="联系电话"  align="center"/>
+			<column name="applyMoney" title="借款金额" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	<view title="我的金融产品列表" name="mayProducts">
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.financialproducts.pojo.Product</pojo>
+			<where>Product.creatorId={PARAMETER:id}</where>
+			<quickFilter>Product.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=credit/bank&amp;pageName=productDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view title="所有金融产品列表" name="products">
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.financialproducts.pojo.Product</pojo>
+			<orderBy>Product.created DESC</orderBy>
+			<quickFilter>Product.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=credit/bank&amp;pageName=productDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view title="所有贷款信息列表" name="loans">
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.loan.pojo.BankLoan</pojo>
+			<orderBy>BankLoan.created DESC</orderBy>
+			<quickFilter>BankLoan.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=credit/bank&amp;pageName=bankLoanDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view title="所有金融机构列表" name="banks">
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.bank.pojo.Bank</pojo>
+			<orderBy>Bank.created DESC</orderBy>
+			<quickFilter>Bank.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=credit/bank&amp;pageName=bankDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view name="allapply"  title="借款申请信息" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.apply.pojo.Apply</pojo>
+			<orderBy>Apply.created DESC</orderBy>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=credit/bank&amp;pageName=applyDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view title="金融产品搜索列表" name="productQueryResults">
+		<data>
+			<pojo>com.yuanluesoft.credit.bank.financialproducts.pojo.Product</pojo>
+			<orderBy>Product.created DESC</orderBy>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=credit/bank&amp;pageName=productDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	<view title="部门单位列表" name="departments">
+		<data>
+			<pojo>com.yuanluesoft.credit.stat.pojo.CreditStat</pojo>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=credit/bank&amp;pageName=creditStatDetail&amp;id={PARAMETER:id}&amp;unitName={PARAMETER:unitName}</link>
+		</links>
+	</view>
+	
+	<view title="栏目发布统计数据" name="statColumnResults">
+		<data>
+			<pojo>com.yuanluesoft.credit.stat.pojo.Datas</pojo>
+		</data>
+	</view>
+	<view title="应用发布统计数据" name="statAppResults">
+		<data>
+			<pojo>com.yuanluesoft.credit.stat.pojo.Datas</pojo>
+		</data>
+	</view>
+	
+</views>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/infopublic/request"/>
+		
+		<page name="processedPublicRequests" title="已受理申请列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/infopublic/request&amp;pageName=processedPublicRequests"/>
+		
+		<page name="personalRequest" title="个人申请" url="/cms/infopublic/request/personalRequest.shtml" parentPage="publicRequest" recordClass="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest">
+			<subPage title="个人申请" name="personalRequest" type="template"/>
+		</page>
+		
+		<page name="companyRequest" title="企业申请" url="/cms/infopublic/request/companyRequest.shtml" parentPage="publicRequest" recordClass="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest">
+			<subPage title="企业申请" name="companyRequest" type="template"/>
+		</page>
+		
+		<page name="requestSubmitted" title="申请提交完成">
+			<subPage title="申请提交完成" name="requestSubmitted" type="template"/>
+		</page>
+		
+		<page name="requestFailed" title="申请查询失败">
+			<subPage title="申请查询失败" name="requestFailed" type="template"/>
+		</page>
+		
+		<page name="poorRequest" title="申请查看(公开主题)" recordClass="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest">
+			<subPage title="申请查看(公开主题)" name="poorRequest" type="template"/>
+		</page>
+		
+		<page name="originalPersonalRequest" title="个人申请查看(公开正文)" recordClass="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest">
+			<subPage title="个人申请查看(公开正文)" name="originalPersonalRequest" type="template"/>
+		</page>
+		
+		<page name="originalCompanyRequest" title="企业申请查看(公开正文)" recordClass="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest">
+			<subPage title="企业申请查看(公开正文)" name="originalCompanyRequest" type="template"/>
+		</page>
+		
+		<page name="processingRequest" title="申请查看(公开办理情况)" recordClass="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest">
+			<subPage title="申请查看(公开办理情况)" name="processingRequest" type="template"/>
+		</page>
+		
+		<page name="fullyPersonalRequest" title="个人申请查看(完全公开)" recordClass="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest">
+			<subPage title="个人申请查看(完全公开)" name="fullyPersonalRequest" type="template"/>
+		</page>
+		
+		<page name="fullyCompanyRequest" title="企业申请查看(完全公开)" recordClass="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest">
+			<subPage title="企业申请查看(完全公开)" name="fullyCompanyRequest" type="template"/>
+		</page>
+		
+		<page name="requestPrint" title="办理单" realtimeStaticPage="false" recordPage="false" recordClass="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest"/>
+		
+		<page name="publicRequestSearch" title="搜索" searchPage="true" searchResults="publicRequests" url="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/infopublic/request&amp;pageName=publicRequestSearch"/>
+	
+		<page name="requestNotify" title="申请告知书" recordClass="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequestNotify"/>
+	</pages>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="publicRequests" processor="publicServicesProcessor"/> <!-- 信息公开申请 -->
+		<pageElement name="processedPublicRequests" processor="publicServicesProcessor"/> <!-- 已受理申请 -->
+		<pageElement name="personalPublicRequests" processor="publicServicesProcessor"/> <!-- 个人信息公开申请 -->
+		<pageElement name="companyPublicRequests" processor="publicServicesProcessor"/> <!-- 企业信息公开申请 -->
+		<pageElement name="publicRequestStatistic" staticPageSupport="false" processor="publicServiceStatisticProcessor"/> <!-- 信息公开申请统计 -->
+	</pageElements>
+</application>

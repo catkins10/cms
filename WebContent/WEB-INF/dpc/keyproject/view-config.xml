@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="todoProject" form="project" title="待办项目" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.dpc.keyproject.pojo.KeyProject</pojo>
+			<where>KeyProject.fiveYearPlan!='1'</where>
+			<orderBy>KeyProject.created DESC</orderBy>
+			<quickFilter>KeyProject.name like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="新建项目" type="workflow"/>
+			<action hide="noPrivilege(application_manager)" title="调整项目优先级" execute="DialogUtils.adjustPriority('dpc/keyproject', 'adjustProjectPriority', '项目优先级','80%', '80%')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="name"/>
+			<column title="项目级别" name="level" align="center" width="80"/>
+			<column title="所属行业" name="industry" align="center" width="68"/>
+			<column title="项目状态" name="status" align="center" width="68"/>
+			<column title="所属区域" name="areas.area" align="center" width="90"/>
+			<column title="投资主体" name="investmentSubject" align="center" width="120"/>
+			<column title="项目总投资" name="invest" align="center" width="68"/>
+			<column title="办理状态" name="workflowStatus" align="center" width="150" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="inProcessProject" form="project" title="在办项目" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.dpc.keyproject.pojo.KeyProject</pojo>
+			<where>KeyProject.fiveYearPlan!='1'</where>
+			<orderBy>KeyProject.created DESC</orderBy>
+			<quickFilter>KeyProject.name like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="新建项目" type="workflow"/>
+			<action hide="noPrivilege(application_manager)" title="调整项目优先级" execute="DialogUtils.adjustPriority('dpc/keyproject', 'adjustProjectPriority', '项目优先级','80%', '80%')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="name"/>
+			<column title="项目级别" name="level" align="center" width="80"/>
+			<column title="所属行业" name="industry" align="center" width="68"/>
+			<column title="项目状态" name="status" align="center" width="68"/>
+			<column title="所属区域" name="areas.area" align="center" width="90"/>
+			<column title="投资主体" name="investmentSubject" align="center" width="120"/>
+			<column title="项目总投资" name="invest" align="center" width="68"/>
+			<column title="办理状态" name="workflowStatus" align="center" width="150" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="keyproject" form="project" title="重点项目" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.dpc.keyproject.pojo.KeyProject</pojo>
+			<where>KeyProject.fiveYearPlan!='1' and declares.declareYear={YEAR} and declares.isKeyProject='1'</where>
+			<orderBy>declares.priority DESC, KeyProject.name</orderBy>
+			<quickFilter>KeyProject.name like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="新建项目" type="workflow"/>
+			<action hide="noPrivilege(application_manager)" title="调整项目优先级" execute="DialogUtils.adjustPriority('dpc/keyproject', 'adjustProjectPriority', '项目优先级','80%', '80%')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="name"/>
+			<column title="项目级别" name="level" align="center" width="80"/>
+			<column title="所属行业" name="industry" align="center" width="68"/>
+			<column title="项目状态" name="status" align="center" width="68"/>
+			<column title="所属区域" name="areas.area" align="center" width="90"/>
+			<column title="投资主体" name="investmentSubject" align="center" width="120"/>
+			<column title="项目总投资" name="invest" align="center" width="68"/>
+		</columns>
+	</view>
+	
+	<view name="allProject" form="project" title="所有项目" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.dpc.keyproject.pojo.KeyProject</pojo>
+			<where>KeyProject.fiveYearPlan!='1'</where>
+			<filter>READABLE</filter>
+			<orderBy>KeyProject.created DESC</orderBy>
+			<quickFilter>KeyProject.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建项目" type="workflow"/>
+			<action hide="noPrivilege(application_manager)" title="调整项目优先级" execute="DialogUtils.adjustPriority('dpc/keyproject', 'adjustProjectPriority', '项目优先级','80%', '80%')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="name"/>
+			<column title="项目级别" name="level" align="center" width="80"/>
+			<column title="所属行业" name="industry" align="center" width="68"/>
+			<column title="项目状态" name="status" align="center" width="68"/>
+			<column title="所属区域" name="areas.area" align="center" width="90"/>
+			<column title="投资主体" name="investmentSubject" align="center" width="120"/>
+			<column title="项目总投资" name="invest" align="center" width="68"/>
+		</columns>
+	</view>
+	
+	<view name="myProject" form="project" title="我的项目" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.dpc.keyproject.pojo.KeyProject</pojo>
+			<where>KeyProject.creatorId={USERID} and KeyProject.fiveYearPlan!='1'</where>
+			<orderBy>KeyProject.created DESC</orderBy>
+			<quickFilter>KeyProject.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建项目" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="name"/>
+			<column title="项目级别" name="level" align="center" width="80"/>
+			<column title="所属行业" name="industry" align="center" width="68"/>
+			<column title="项目状态" name="status" align="center" width="68"/>
+			<column title="所属区域" name="areas.area" align="center" width="90"/>
+			<column title="投资主体" name="investmentSubject" align="center" width="120"/>
+			<column title="项目总投资" name="invest" align="center" width="68"/>
+		</columns>
+	</view>
+	
+	<view name="industry" form="industry" title="行业" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.dpc.keyproject.pojo.KeyProjectIndustry</pojo>
+			<orderBy>KeyProjectIndustry.priority DESC, KeyProjectIndustry.industry</orderBy>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="行业" name="industry"/>
+		</columns>
+	</view>
+	
+	<view name="investSource" form="investSource" title="资金来源" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvestSource</pojo>
+			<orderBy>KeyProjectInvestSource.priority DESC, KeyProjectInvestSource.source</orderBy>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="资金来源" name="source"/>
+		</columns>
+	</view>
+	
+	<view name="adjustProjectPriority" form="project" title="调整重点项目优先级" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.dpc.keyproject.pojo.KeyProjectDeclare</pojo>
+			<where>KeyProjectDeclare.declareYear={YEAR} and KeyProjectDeclare.isKeyProject='1'</where>
+			<orderBy>KeyProjectDeclare.priority DESC, project.name</orderBy>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="project.name"/>
+			<column title="项目级别" name="project.level" align="center" width="68"/>
+			<column title="所属行业" name="project.industry" align="center" width="68"/>
+			<column title="项目状态" name="project.status" align="center" width="68"/>
+			<column title="项目总投资" name="project.invest" align="center" width="68"/>
+		</columns>
+	</view>
+</views>

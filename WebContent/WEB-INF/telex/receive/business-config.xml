@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="收报登记" class="com.yuanluesoft.telex.receive.base.pojo.ReceiveTelegram" businessServiceName="receiveTelegramService">
+		<field name="subject" title="标题" length="100" required="true" type="string" inputMode="text"/>
+		<field name="summary" title="内容摘要" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">4</parameter>
+		</field>
+		<field name="isCryptic" title="明/密" length="1" required="true" type="char" inputMode="radio">
+			<parameter name="itemsText">明文|0\0密文|1</parameter>
+		</field>
+		<field name="sn" title="原电号" length="30" required="true" type="string" inputMode="text"/>
+		<field name="sequence" title="流水号" length="30" required="true" type="string" inputMode="text"/>
+		<field name="unitCode" title="部委号" length="30" type="string" inputMode="text"/>
+		<field name="category" title="发电类型" length="20" required="true" type="string" inputMode="dropdown">
+			 <parameter name="itemsServiceName">telexService</parameter>
+			 <parameter name="itemsName">telegramCategories</parameter>
+		</field>
+		<field name="securityLevel" title="密级" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">telexService</parameter>
+			 <parameter name="itemsName">telegramSecurityLevels</parameter>
+		</field>
+		<field name="telegramLevel" title="等级" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">telexService</parameter>
+			 <parameter name="itemsName">telegramLevels</parameter>
+		</field>
+		<field name="pages" title="页数" length="3" required="true" type="number" inputMode="text">
+			<parameter name="minValue">1</parameter>
+			<parameter name="maxValue">300</parameter>
+		</field>
+		<field name="telegramNumber" title="份数" length="3" required="true" type="number" inputMode="text"/>
+		<field name="totalPages" title="总页数" length="5" required="true" type="number" inputMode="text"/>
+		<field name="sendTime" title="发电时间" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="fromUnitIds" title="发电单位ID" length="500" type="string" inputMode="hidden"/>
+		<field name="fromUnitNames" title="发电单位名称" length="500" required="true" type="string" inputMode="select">
+			<parameter name="js">/telex/js/telex.js</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">selectFromUnits(this)</parameter>
+		</field>
+		<field name="station" title="来电台家" length="100" type="string" inputMode="text"/>
+		<field name="toUnitIds" title="收电单位ID" length="4000" type="string" inputMode="hidden"/>
+		<field name="toUnitNames" title="收电单位名称" length="4000" required="true" type="string" inputMode="select">
+			<parameter name="js">/telex/js/telex.js</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">selectToUnits(this)</parameter>
+		</field>
+		<field name="receiveTime" title="接收时间" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="receiverId" title="接收人ID" length="20" type="number" inputMode="hidden"/>
+		<field name="receiverName" title="接收人姓名" length="30" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(520, 320, false, 'receiverId{id},receiverName{name}')</parameter>
+		</field>
+		<field name="needReturn" title="是否需要退报" length="1" required="true" type="char" inputMode="radio">
+			<parameter name="itemsText">是|1\0否|0</parameter>
+		</field>
+		<field name="creatorId" title="登记人ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="登记人" length="20" type="string" inputMode="readonly"/>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly"/>
+		<field name="archiveTime" title="归档时间" type="timestamp" inputMode="readonly"/>
+		<field name="archivePersonId" title="归档人ID" length="20" type="number" inputMode="none"/>
+		<field name="archivePersonName" title="归档人姓名" length="20" type="string" inputMode="readonly"/>
+		<field name="remark" title="备注" length="100" type="string" inputMode="text"/>
+		<field name="signs" title="签收人列表" type="components">
+           <parameter name="class">com.yuanluesoft.telex.receive.base.pojo.TelegramSign</parameter>
+        </field>
+		<field name="opinions" title="办理意见列表" type="components">
+            <parameter name="class">com.yuanluesoft.telex.receive.base.pojo.TelegramSignOpinion</parameter>
+        </field>
+        <field name="attachments" title="正文" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+	</businessObject>
+
+	<businessObject title="签收清退" class="com.yuanluesoft.telex.receive.base.pojo.TelegramSign" businessServiceName="receiveTelegramService">
+		<field name="telegramId" title="电报ID" length="20" type="number" inputMode="hidden"/>
+		<field name="receiverId" title="签收单位/个人ID" length="20" type="number" inputMode="hidden"/>
+		<field name="receiverName" title="签收单位/个人" length="20" required="true" type="string" inputMode="select">
+		
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly"/>
+		<field name="creatorId" title="登记人ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="登记人姓名" length="20" type="string" inputMode="readonly"/>
+		<field name="signTime" title="签收时间" type="timestamp" inputMode="readonly"/>
+		<field name="signPersonId" title="签收人ID" length="20" type="number" inputMode="none"/>
+		<field name="signPersonName" title="签收人姓名" length="20" type="string" inputMode="readonly"/>
+		<field name="isAgentSign" title="是否代签收" length="1" type="char" inputMode="radio">
+		
+		</field>
+		<field name="signOperatorId" title="签收时经办人ID" length="20" type="number" inputMode="none"/>
+		<field name="signOperatorName" title="签收时经办人姓名" length="20" type="string" inputMode="readonly"/>
+		<field name="returnTime" title="清退时间" type="timestamp" inputMode="readonly"/>
+		<field name="returnPersonId" title="清退人ID" length="20" type="number" inputMode="none"/>
+		<field name="returnPersonName" title="清退人姓名" length="20" type="string" inputMode="readonly"/>
+		<field name="isAgentReturn" title="是否代清退" length="1" type="char" inputMode="radio">
+		
+		</field>
+		<field name="returnOperatorId" title="清退时经办人ID" length="20" type="number" inputMode="none"/>
+		<field name="returnOperatorName" title="清退时经办人姓名" length="20" type="string" inputMode="readonly"/>
+		<field name="needReturn" title="是否需要清退" length="1" type="char" inputMode="radio">
+		
+		</field>
+		<field name="telegram" title="电报" type="components">
+			<parameter name="class">com.yuanluesoft.telex.receive.base.pojo.ReceiveTelegram</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="代签收人" class="com.yuanluesoft.telex.receive.base.pojo.TelegramSignAgent" businessServiceName="receiveTelegramService">
+		<field name="name" title="姓名)" length="20" required="true" type="string" inputMode="text"/>
+		<field name="orgId" title="所属组织机构ID" length="20" type="number" inputMode="hidden"/>
+		<field name="orgName" title="所属组织机构" length="50" required="true" type="string" inputMode="select">
+			
+		</field>
+		<field name="certificateName" title="证件名称" length="20" required="true" type="string" inputMode="text"/>
+		<field name="certificateCode" title="证件号码" length="50" required="true" type="string" inputMode="text"/>
+		<field name="sex" title="性别" length="1" required="true" type="char" inputMode="radio">
+			<parameter name="itemsText">男|M\0女|F</parameter>
+		</field>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="创建人" length="20" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

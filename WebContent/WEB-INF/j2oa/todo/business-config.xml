@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="待办事宜" class="com.yuanluesoft.j2oa.todo.pojo.Todo" businessServiceName="handService">
+		<field name="personName" title="用户名" length="30" type="string" inputMode="text"/>
+		<field name="subject" title="主题" length="100" required="true" type="string" inputMode="text"/>
+		<field name="description" title="描述" length="5000" type="string" inputMode="textarea">
+			<parameter name="rows">10</parameter>
+		</field>
+		<field name="category" title="类别" length="16" type="string" inputMode="dropdown">
+			<parameter name="itemsText">提醒\0会议\0约会</parameter>
+		</field>
+		<field name="important" title="重要性" length="16" type="string" inputMode="dropdown">
+			<parameter name="itemsText">普通\0重要\0特别重要</parameter>
+		</field>
+		<field name="isHand" title="是否交办事宜" length="1" type="char" inputMode="none"/>
+		<field name="handTime" title="交办时间" type="timestamp" inputMode="readonly"/>
+		<field name="beginTime" title="开始时间" type="timestamp" inputMode="datetime"/>
+		<field name="endTime" title="结束时间" type="timestamp" inputMode="datetime"/>
+		<field name="completeTime" title="完成时间" type="timestamp" inputMode="readonly"/>
+		<field name="handPersons" title="交办执行人" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.todo.pojo.HandPerson</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="enterprisePayment" title="企业支付">
+			<subPage title="企业支付" name="enterprisePayment" type="template"/>
+			<field name="paymentVerifyName" title="支付验证说明"/>
+			<field name="paymentVerifyCode" title="支付验证密码"/>
+			<field name="applicationOrderId" title="订单号"/>
+			<field name="sellAccountId" title="卖方帐号"/>
+			<field name="sellAccountName" title="卖方帐户名"/>
+			<field name="sellBank" title="卖方开户行"/>
+			<field name="paymentReason" title="支付原因"/>
+			<field name="money" title="支付金额"/>
+			
+			<link title="登录企业银行" url="{PARAMETER:enterpriseBankURL}"/>
+			<link title="完成付款" url="{PARAMETER:paymentCompleteCallbackURL}"/>
+		</page>
+	</pages>
+</application>

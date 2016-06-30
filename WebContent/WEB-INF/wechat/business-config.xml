@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="消息发送" class="com.yuanluesoft.wechat.pojo.WechatMessageSend" businessServiceName="wechatService">
+		<field name="unitId" title="单位ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{UNITID}</parameter>
+		</field>
+		<field name="type" title="消息类型" length="20" type="string" inputMode="radio">
+			<parameter name="itemsText">文本|text\0图文消息|news\0图片|image\0语音|voice\0视频|video</parameter>
+		</field>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="sendTime" title="发送时间" type="timestamp" inputMode="readonly"/>
+		<field name="rangeMode" title="发送范围" length="1" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">全部|0\0指定用户|1</parameter>
+		</field>
+		<field name="groupNames" title="分组名称" length="300" type="string" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.openSelectDialog('wechat', 'selectMyUnitUserGroup', 640, 400, true, 'groupIds{id},groupNames{name|用户分组|100%}')</parameter>
+		</field>
+		<field name="groupIds" title="分组ID列表" length="300" type="string" inputMode="hidden"/>
+		<field name="userNames" title="用户列表" length="4000" type="string" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.openSelectDialog('wechat', 'selectMyUnitUser', 640, 400, true, 'userIds{id},userNames{nickname|用户昵称|100%}', '', '', '', ',', true)</parameter>
+		</field>
+		<field name="userIds" title="用户ID列表" length="4000" type="string" inputMode="hidden"/>
+		<field name="title" title="消息标题" length="200" type="string" inputMode="text"/>
+		<field name="description" title="消息描述" length="1000" type="string" inputMode="text"/>
+		<field name="content" title="消息内容" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="showCoverPic" title="是否显示封面" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">不显示|0\0显示|1</parameter>
+		</field>
+		<field name="msgId" title="微信消息ID" length="30" type="string" inputMode="none"/>
+		<field name="status" title="状态" length="30" type="string" inputMode="readonly"/>
+		<field name="totalCount" title="用户数" length="8" type="number" inputMode="readonly"/>
+		<field name="filterCount" title="过滤后用户数" length="8" type="number" inputMode="readonly"/>
+		<field name="sentCount" title="发送成功用户数" length="8" type="number" inputMode="readonly"/>
+		<field name="errorCount" title="发送失败用户数" length="8" type="number" inputMode="readonly"/>
+		<field name="receiveMessageId" title="接收消息ID" length="20" type="number" inputMode="hidden"/>
+		<field name="news" title="消息内容" type="components">
+			<parameter name="class">com.yuanluesoft.wechat.pojo.WechatMessageNews</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审核</parameter>
+			<parameter name="class">com.yuanluesoft.wechat.pojo.WechatMessageSendOpinion</parameter>
+		</field>
+		<field name="image" title="图片" type="attachment" inputMode="attachment" length="1"> <!-- 128K，支持JPG格式 -->
+			<parameter name="fileExtension">JPG图片|*.jpg|</parameter>
+			<parameter name="maxUploadSize">128000</parameter> 
+			<parameter name="attachmentEditor">/wechat/sendMessageAttachmentEditor.shtml</parameter>
+		</field>
+		<field name="voice" title="语音" type="attachment" inputMode="attachment" length="1"> <!-- 256K，播放长度不超过60s，支持AMR\MP3格式  -->
+			<parameter name="fileExtension">所有语音(*.amr;*.mp3)|*.amr;*.mp3|</parameter>
+			<parameter name="maxUploadSize">256000</parameter>
+			<parameter name="attachmentEditor">/wechat/sendMessageAttachmentEditor.shtml</parameter>
+		</field>
+		<field name="video" title="视频" type="attachment" inputMode="attachment" length="1"> <!-- 1MB，支持MP4格式  -->
+			<parameter name="fileExtension">MP4视频|*.mp4|</parameter>
+			<parameter name="maxUploadSize">1000000</parameter>
+			<parameter name="attachmentEditor">/wechat/sendMessageAttachmentEditor.shtml</parameter>
+		</field>
+		<field name="subject" title="主题" type="string" persistence="false" inputMode="readonly">
+			<parameter name="referenceFields">news,type,title,content</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="图文消息" class="com.yuanluesoft.wechat.pojo.WechatMessageNews" businessServiceName="wechatService">
+		<field name="messageId" title="消息ID" length="20" type="number" inputMode="hidden"/>
+		<field name="title" title="标题" length="200" type="string" required="true" inputMode="text"/>
+		<field name="description" title="描述" length="240" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="content" title="内容" type="html" length="40000" inputMode="htmleditor" required="true">
+			<parameter name="commandSet">simplify</parameter>
+			<parameter name="height">280</parameter>
+		</field>
+		<field name="author" title="作者" length="50" type="string" inputMode="text"/>
+		<field name="url" title="链接" length="500" type="string" inputMode="text"/>
+		<field name="showCoverPic" title="是否显示封面" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">不显示|0\0显示|1\0继承上级|2</parameter>
+		</field>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+		<field name="image" title="图片" type="image" inputMode="attachment" length="1">
+			<parameter name="fileExtension">JPG图片|*.jpg|</parameter>
+			<parameter name="maxSaveSize">64000</parameter>
+			<parameter name="attachmentEditor">/wechat/sendMessageNewsAttachmentEditor.shtml</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="接收消息" class="com.yuanluesoft.wechat.pojo.WechatMessageReceive" businessServiceName="wechatService">
+		<field name="unitId" title="单位ID" length="20" type="number" inputMode="none"/>
+		<field name="toUserName" title="开发者微信号" length="200" type="string" inputMode="readonly"/>
+		<field name="fromUserOpenId" title="发送方帐号" length="200" type="string" inputMode="readonly"/>
+		<field name="fromUserNickname" title="发送方用户昵称" length="200" type="string" inputMode="readonly"/>
+		<field name="fromUserId" title="发送方用户ID" length="20" type="number" inputMode="none"/>
+		<field name="createTime" title="消息创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="msgId" title="消息ID" length="100" type="string" inputMode="readonly"/>
+		<field name="msgType" title="消息类型" length="20" type="string" inputMode="radio">
+			<parameter name="itemsText">文本|text\0图片|image\0语音|voice\0地理位置|location\0链接|link</parameter>
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="content" title="消息内容" length="4000" type="html" inputMode="readonly"/>
+		<field name="picUrl" title="图片链接" length="500" type="string" inputMode="readonly"/>
+		<field name="mediaId" title="消息媒体ID" length="200" type="string" inputMode="readonly"/>
+		<field name="voiceFormat" title="语音格式" length="20" type="string" inputMode="readonly"/>
+		<field name="locationX" title="地理位置纬度" length="100" type="string" inputMode="readonly"/>
+		<field name="locationY" title="地理位置经度" length="100" type="string" inputMode="readonly"/>
+		<field name="mapScale" title="地图缩放大小" length="100" type="string" inputMode="readonly"/>
+		<field name="locationLabel" title="地理位置信息" length="300" type="string" inputMode="readonly"/>
+		<field name="linkTitle" title="链接消息标题" length="300" type="string" inputMode="readonly"/>
+		<field name="linkDescription" title="链接消息描述" length="1000" type="string" inputMode="readonly"/>
+		<field name="url" title="消息链接" length="500" type="string" inputMode="readonly"/>
+		<field name="replyTime" title="答复时间" type="timestamp" inputMode="readonly"/>
+		<field name="replierId" title="答复人ID" length="20" type="number" inputMode="none"/>
+		<field name="replier" title="答复人" length="30" type="string" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="自动应答" class="com.yuanluesoft.wechat.pojo.WechatMessageResponse" businessServiceName="wechatService">
+		<field name="unitId" title="单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="type" title="消息类型" length="20" type="string" inputMode="radio">
+			<parameter name="itemsText">文本|text\0图文消息|news\0图片|image\0语音|voice\0视频|video</parameter>
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="responseType" title="应答目标" length="30" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">wechatService</parameter>
+			<parameter name="itemsName">responseType</parameter>
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="keywords" title="关键字" length="200" type="string" inputMode="text"/>
+		<field name="title" title="消息标题" length="200" type="string" inputMode="text"/>
+		<field name="description" title="消息描述" length="1000" type="string" inputMode="text"/>
+		<field name="content" title="消息内容" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="news" title="消息内容" type="components">
+			<parameter name="class">com.yuanluesoft.wechat.pojo.WechatMessageNews</parameter>
+		</field>
+		<field name="image" title="图片" type="attachment" inputMode="attachment" length="1"> <!-- 128K，支持JPG格式 -->
+			<parameter name="fileExtension">JPG图片|*.jpg|</parameter>
+			<parameter name="maxUploadSize">128000</parameter> 
+			<parameter name="attachmentEditor">/wechat/responseMessageAttachmentEditor.shtml</parameter>
+		</field>
+		<field name="voice" title="语音" type="attachment" inputMode="attachment" length="1"> <!-- 256K，播放长度不超过60s，支持AMR\MP3格式  -->
+			<parameter name="fileExtension">所有语音(*.amr;*.mp3)|*.amr;*.mp3|</parameter>
+			<parameter name="maxUploadSize">256000</parameter>
+			<parameter name="attachmentEditor">/wechat/responseMessageAttachmentEditor.shtml</parameter>
+		</field>
+		<field name="video" title="视频" type="attachment" inputMode="attachment" length="1"> <!-- 1MB，支持MP4格式  -->
+			<parameter name="fileExtension">MP4视频|*.mp4|</parameter>
+			<parameter name="maxUploadSize">1000000</parameter>
+			<parameter name="attachmentEditor">/wechat/responseMessageAttachmentEditor.shtml</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="微信用户" class="com.yuanluesoft.wechat.pojo.WechatUser" businessServiceName="wechatService">
+		<field name="unitId" title="单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="openId" title="用户标识" length="200" type="string" inputMode="readonly"/>
+		<field name="nickname" title="用户昵称" length="200" type="string" inputMode="readonly"/>
+		<field name="sex" title="用户的性别" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">男|M\0女|F\0未知|0</parameter>
+		</field>
+		<field name="city" title="用户所在城市" length="50" type="string" inputMode="readonly"/>
+		<field name="province" title="用户所在省份" length="50" type="string" inputMode="readonly"/>
+		<field name="country" title="用户所在国家" length="50" type="string" inputMode="readonly"/>
+		<field name="language" title="用户的语言" length="50" type="string" inputMode="readonly"/>
+		<field name="headimgUrl" title="用户头像" length="300" type="string" inputMode="readonly"/>
+		<field name="subscribeTime" title="用户关注时间" type="timestamp" inputMode="readonly"/>
+		<field name="unsubscribeTime" title="取消关注时间" type="timestamp" inputMode="readonly"/>
+		<field name="name" title="真实姓名" length="30" type="string" inputMode="text"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="备注" length="500" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="微信用户分组" class="com.yuanluesoft.wechat.pojo.WechatUserGroup" businessServiceName="wechatService">
+		<field name="unitId" title="单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="name" title="分组名称" length="30" required="true" type="string" inputMode="text"/>
+		<field name="members" title="成员列表" type="components">
+			<parameter name="class">com.yuanluesoft.wechat.pojo.WechatUserGroupMember</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="微信用户分组成员" class="com.yuanluesoft.wechat.pojo.WechatUserGroupMember" businessServiceName="wechatService">
+		<field name="groupId" title="分组ID" length="20" type="number" inputMode="hidden"/>
+		<field name="memberId" title="成员ID" length="20" type="number" inputMode="hidden"/>
+		<field name="memberNickname" title="成员昵称" length="200" type="string" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="公众号配置" class="com.yuanluesoft.wechat.pojo.WechatAccount" businessServiceName="wechatService">
+		<field name="unitId" title="单位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="siteUrl" title="网址" length="200" required="true" type="string" inputMode="text"/>
+		<field name="name" title="名称" length="50" required="true" type="string" inputMode="text"/>
+		<field name="accountType" title="帐号类型" length="1" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">服务号|0\0订阅号|1</parameter>
+		</field>
+		<field name="certificate" title="是否认证过" length="1" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">已认证|1\0未认证|0</parameter>
+		</field>
+		<field name="token" title="Token" length="200" type="string" inputMode="text"/>
+		<field name="appId" title="用户唯一凭证" length="200" type="string" inputMode="text"/>
+		<field name="appSecret" title="用户唯一凭证密钥" length="500" type="string" inputMode="text"/>
+		<field name="menuItems" title="菜单项" type="components">
+			<parameter name="class">com.yuanluesoft.wechat.pojo.WechatMenuItem</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="菜单项" class="com.yuanluesoft.wechat.pojo.WechatMenuItem" businessServiceName="wechatService">
+		<field name="accountId" title="公众号配置ID" length="20" type="number" inputMode="hidden"/>
+		<field name="parentItemId" title="父菜单项ID" length="20" type="number" inputMode="hidden"/>
+		<field name="name" title="菜单名称" length="50" required="true" type="string" inputMode="text"/>
+		<field name="type" title="类型" length="1" required="true" type="number" inputMode="hidden"/>
+		<field name="url" title="链接地址" length="300" type="string" required="true" inputMode="select">
+			<parameter name="js">/cms/js/reference.js</parameter>
+			<parameter name="execute">reference(this, 'menuItem.url')</parameter>
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+	</businessObject>
+	
+	<businessObject title="消息发送流程配置" class="com.yuanluesoft.wechat.pojo.WechatWorkflowConfig">
+		<field name="orgId" title="组织机构ID" length="20" type="number" inputMode="hidden"/>
+		<field name="workflowId" title="流程ID" length="20" type="string" inputMode="none"/>
+		<field name="workflowName" title="流程名称" length="200" type="string" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

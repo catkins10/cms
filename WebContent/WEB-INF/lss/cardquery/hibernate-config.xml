@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+   <!--社保制卡查询-->
+	<class name="com.yuanluesoft.lss.cardquery.pojo.CardQuery" table="lss_cardquery">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--姓名,VARCHAR(20)-->
+		<property name="sex"/> <!--性别,NUMERIC(1)-->
+		<property name="securityNumber"/> <!--社会保障号,VARCHAR(30)-->
+		<property name="batchNumber"/> <!--批号,VARCHAR(20)-->
+		<property name="jurisdiction"/> <!--参保辖区,VARCHAR(20)-->
+		<property name="cardType"/> <!--制卡类型,VARCHAR(30)-->
+		<property name="receiveDate"/> <!--接收数据日期,DATE-->
+		<property name="makeCardDate"/> <!--制卡日期,DATE-->
+		<property name="removedCardDate"/> <!--移出卡片日期,DATE-->
+		<property name="mark"/> <!--备注,DATE-->
+		<property name="creator"/> <!--登记人,VARCHAR(50)-->
+		<property name="creatorId"/> <!--登记人ID,NUMERIC(20)-->
+		<property name="created"/> <!--登记时间,TIMESTAMP-->
+	</class>
+	<!--社保制卡查询备注参数配置-->
+	<class name="com.yuanluesoft.lss.cardquery.pojo.CardQueryConfig" table="lss_cardquery_config">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="cardType"/> <!--制卡类型,VARCHAR(30)-->
+		<property name="receiveMark"/> <!--接收数据备注,VARCHAR(300)-->
+		<property name="removedCardMark"/> <!--移出卡片备注,VARCHAR(300)-->
+		<property name="makeCardMark"/> <!--制卡备注,VARCHAR(300)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+	</class>
+</hibernate-mapping>

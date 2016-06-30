@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+
+    <form name="cardQuery"
+		action="/cms/sitemanage/applicationIndex.shtml?applicationName=lss/cardquery&amp;pageName=cardQuery" js="/lss/cardquery/js/cardQuery.js"
+		title="社保卡制卡查询" method="get">
+		<formFields>
+			<!--  没定义continue条件的按字段本身匹配 -->
+			<field title="身份证号码" name="securityNumber">
+			   <parameter name="searchCondition">
+			   CardQuery.securityNumber='{PARAMETER:securityNumber}'
+			   </parameter>
+			</field>
+			<field title="姓名" name="name">
+			   <parameter name="searchCondition">
+			     CardQuery.name='{PARAMETER:name}'
+			   </parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="查询" execute="beforSubmit()" /><!-- 这里的按钮动作在配置页面的表单中选择选择“插入按钮”时将会列出来 -->
+		</actions>
+    </form>
+		
+	<form name="admin/importData" class="com.yuanluesoft.lss.cardquery.forms.admin.ImportData" title="数据导入">
+	   <formFields>
+	   		<field name="data" title="数据文件" type="attachment" inputMode="attachment" length="1">
+				<parameter name="fileExtension">Excel表格|*.xls</parameter><!-- 指定过滤文件 -->
+				<parameter name="simpleMode">true</parameter><!-- 简单模式 -->
+			</field>
+			<field name="mark" title="备注"   type="string" inputMode="text"/>
+	   </formFields>
+	   <actions>
+			<action title="导入" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/cardQuery" class="com.yuanluesoft.lss.cardquery.forms.admin.CardQuery" title="社保卡制卡查询" pojo="com.yuanluesoft.lss.cardquery.pojo.CardQuery">
+	   <actions>
+	   		<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" execute="FormUtils.submitForm()" hide="notEditable()"/>
+			<action title="删除" execute="if(confirm('删除后将不可恢复，是否确定要删除？'))FormUtils.doAction('deleteCardQuery')" hide="isNew() or deleteDisable()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/config" class="com.yuanluesoft.lss.cardquery.forms.admin.CardQueryConfig" title="参数配置" pojo="com.yuanluesoft.lss.cardquery.pojo.CardQueryConfig">
+	   <actions>
+	   		<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" execute="FormUtils.submitForm()" hide="notEditable()"/>
+			<action title="删除" execute="if(confirm('删除后将不可恢复，是否确定要删除？'))FormUtils.doAction('deleteConfig')" hide="isNew() or deleteDisable()"/>
+		</actions>
+	</form>
+</forms>

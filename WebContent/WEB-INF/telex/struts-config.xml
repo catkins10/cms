@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="telexConfigure" type="com.yuanluesoft.telex.base.forms.TelexConfigure"/>
+  <form-bean name="selectUnit" type="com.yuanluesoft.telex.base.forms.SelectUnit"/>
+  <form-bean name="leaderAgent" type="com.yuanluesoft.telex.base.forms.LeaderAgent"/>
+  <form-bean name="transactionSheet" type="com.yuanluesoft.telex.base.forms.TransactionSheet"/>
+  <form-bean name="total" type="com.yuanluesoft.telex.base.forms.Total"/>
+  <form-bean name="unitSearch" type="com.yuanluesoft.telex.base.forms.UnitSearch"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="telexConfigure" path="/telexConfigure" scope="request"
+   type="com.yuanluesoft.telex.base.actions.telexconfigure.Load" validate="false">
+   <forward name="load" path="/telexConfigure.jsp"/>
+  </action>
+  <action input="/telexConfigure.jsp" name="telexConfigure"
+   path="/saveTelegramConfigure" scope="request"
+   type="com.yuanluesoft.telex.base.actions.telexconfigure.Save" validate="false"/>
+  <action name="selectUnit" path="/selectUnit" scope="request"
+   type="com.yuanluesoft.telex.base.actions.selectunit.Load" validate="false">
+   <forward name="load" path="/selectUnit.jsp"/>
+  </action>
+  <action name="selectUnit" path="/displaySelectUnit" scope="request" validate="false"/>
+  <action name="leaderAgent" path="/leaderAgent" scope="request"
+   type="com.yuanluesoft.telex.base.actions.leaderagent.Load" validate="false">
+   <forward name="load" path="/leaderAgent.jsp"/>
+  </action>
+  <action input="/leaderAgent.jsp" name="leaderAgent"
+   path="/saveLeaderAgent" scope="request"
+   type="com.yuanluesoft.telex.base.actions.leaderagent.Save" validate="false"/>
+  <action input="/leaderAgent.jsp" name="leaderAgent"
+   path="/deleteLeaderAgent" scope="request"
+   type="com.yuanluesoft.telex.base.actions.leaderagent.Delete" validate="false"/>
+  <action name="transactionSheet" path="/transactionSheet"
+   scope="request"
+   type="com.yuanluesoft.telex.base.actions.transactionsheet.Load" validate="false">
+   <forward name="load" path="/transactionSheet.jsp"/>
+  </action>
+  <action input="/transactionSheet.jsp" name="transactionSheet"
+   path="/saveTransactionSheet" scope="request"
+   type="com.yuanluesoft.telex.base.actions.transactionsheet.Save" validate="false"/>
+  <action input="/transactionSheet.jsp" name="transactionSheet"
+   path="/deleteTransactionSheet" scope="request"
+   type="com.yuanluesoft.telex.base.actions.transactionsheet.Delete" validate="false"/>
+  <action name="total" path="/total" scope="request"
+   type="com.yuanluesoft.telex.base.actions.total.Load" validate="false">
+   <forward name="load" path="/total.jsp"/>
+  </action>
+  <action input="/total.jsp" name="total" path="/doTotal"
+   scope="request" type="com.yuanluesoft.telex.base.actions.total.Total" validate="false"/>
+  <action name="unitSearch" path="/unitSearch" scope="request"
+   type="com.yuanluesoft.telex.base.actions.selectunit.Search" validate="false">
+   <forward name="load" path="/unitSearch.jsp"/>
+  </action>
+  <action name="unitSearch" path="/unitSearchResult" scope="request" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="magazineDefine" type="com.yuanluesoft.j2oa.info.forms.MagazineDefine"/>
+  <form-bean name="infoReceive" type="com.yuanluesoft.j2oa.info.forms.InfoReceive"/>
+  <form-bean name="info" type="com.yuanluesoft.j2oa.info.forms.Info"/>
+  <form-bean name="magazine" type="com.yuanluesoft.j2oa.info.forms.Magazine"/>
+  <form-bean name="infoFilter" type="com.yuanluesoft.j2oa.info.forms.InfoFilter"/>
+  <form-bean name="reviseInfo" type="com.yuanluesoft.j2oa.info.forms.ReviseInfo"/>
+  <form-bean name="sendHigher" type="com.yuanluesoft.j2oa.info.forms.SendHigher"/>
+  <form-bean name="instruct" type="com.yuanluesoft.j2oa.info.forms.Instruct"/>
+  <form-bean name="point" type="com.yuanluesoft.j2oa.info.forms.Point"/>
+  <form-bean name="issueStatistic" type="com.yuanluesoft.j2oa.info.forms.IssueStatistic"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="magazineDefine" path="/magazineDefine" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.magazinedefine.Load" validate="false">
+   <forward name="load" path="/magazineDefine.jsp"/>
+  </action>
+  <action input="/magazineDefine.jsp" name="magazineDefine"
+   path="/saveMagazineDefine" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.magazinedefine.Save" validate="false"/>
+  <action input="/magazineDefine.jsp" name="magazineDefine"
+   path="/deleteMagazineDefine" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.magazinedefine.Delete" validate="false"/>
+  <action name="infoReceive" path="/infoReceive" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.inforeceive.Load" validate="false">
+   <forward name="load" path="/infoReceive.jsp"/>
+  </action>
+  <action input="/infoReceive.jsp" name="infoReceive"
+   path="/deleteInfoReceive" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.inforeceive.Delete" validate="false"/>
+  <action name="infoFilter" path="/infoFilter" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.inforeceive.filter.Load" validate="false">
+   <forward name="load" path="/infoFilter.jsp"/>
+  </action>
+  <action path="/workflowConfig" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.workflowconfig.Load" validate="false"/>
+  <action name="info" path="/info" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.info.Load" validate="false">
+   <forward name="load" path="/info.jsp"/>
+  </action>
+  <action input="/info.jsp" name="info" path="/saveInfo" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.info.Save" validate="false"/>
+  <action input="/info.jsp" name="info" path="/deleteInfo"
+   scope="request" type="com.yuanluesoft.j2oa.info.actions.info.Delete" validate="false"/>
+  <action input="/info.jsp" name="info" path="/runInfo" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.info.Run" validate="false"/>
+  <action name="magazine" path="/magazine" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.magazine.Load" validate="false">
+   <forward name="load" path="/magazine.jsp"/>
+  </action>
+  <action input="/magazine.jsp" name="magazine" path="/saveMagazine"
+   scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.magazine.Save" validate="false"/>
+  <action input="/magazine.jsp" name="magazine" path="/deleteMagazine"
+   scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.magazine.Delete" validate="false"/>
+  <action input="/magazine.jsp" name="magazine" path="/runMagazine"
+   scope="request" type="com.yuanluesoft.j2oa.info.actions.magazine.Run" validate="false"/>
+  <action input="/info.jsp" name="info" path="/writeInfoOpinion"
+   scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.info.WriteOpinion" validate="false"/>
+  <action input="/magazine.jsp" name="magazine"
+   path="/writeMagazineOpinion" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.magazine.WriteOpinion" validate="false"/>
+  <action input="/infoFilter.jsp" name="infoFilter"
+   path="/completeInfoFilter" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.inforeceive.filter.Complete" validate="false"/>
+  <action input="/info.jsp" name="info" path="/infoApproval"
+   scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.info.Approval" validate="false"/>
+  <action input="/magazine.jsp" name="magazine"
+   path="/saveMagazineUseInfos" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.magazine.SaveMagazineUseInfos" validate="false"/>
+  <action input="/magazine.jsp" name="magazine"
+   path="/completeGenerateOfficialMagazine" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.magazine.CompleteGenerateOfficialMagazine" validate="false"/>
+  <action input="/magazine.jsp" name="magazine" path="/saveMagazineBody"
+   scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.magazine.SaveMagazineBody" validate="false"/>
+  <action path="/downloadAttachment" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.magazine.DownloadAttachment" validate="false"/>
+  <action input="/magazine.jsp" name="magazine" path="/issueMagazine"
+   scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.magazine.IssueMagazine" validate="false"/>
+  <action name="reviseInfo" path="/reviseInfo" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.revise.Load" validate="false">
+   <forward name="load" path="/reviseInfo.jsp"/>
+  </action>
+  <action input="/reviseInfo.jsp" name="reviseInfo" path="/doReviseInfo"
+   scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.revise.DoRevise" validate="false"/>
+  <action name="sendHigher" path="/sendHigher" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.info.sendhigher.Load" validate="false">
+   <forward name="load" path="/sendHigher.jsp"/>
+  </action>
+  <action name="instruct" path="/instruct" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.info.instruct.Load" validate="false">
+   <forward name="load" path="/instruct.jsp"/>
+  </action>
+  <action input="/sendHigher.jsp" name="sendHigher"
+   path="/saveSendHigher" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.info.sendhigher.Save" validate="false"/>
+  <action input="/sendHigher.jsp" name="sendHigher"
+   path="/deleteSendHigher" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.info.sendhigher.Delete" validate="false"/>
+  <action input="/instruct.jsp" name="instruct" path="/saveInstruct"
+   scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.info.instruct.Save" validate="false"/>
+  <action input="/instruct.jsp" name="instruct" path="/deleteInstruct"
+   scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.info.instruct.Delete" validate="false"/>
+  <action input="/info.jsp" name="info" path="/refreshInfo"
+   scope="request" type="com.yuanluesoft.j2oa.info.actions.info.Refresh" validate="false"/>
+  <action name="point" path="/point" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.point.Load" validate="false">
+   <forward name="load" path="/point.jsp"/>
+  </action>
+  <action input="/point.jsp" name="point" path="/savePoint"
+   scope="request" type="com.yuanluesoft.j2oa.info.actions.point.Save" validate="false"/>
+  <action input="/point.jsp" name="point" path="/deletePoint"
+   scope="request" type="com.yuanluesoft.j2oa.info.actions.point.Delete" validate="false"/>
+  <action name="issueStatistic" path="/issueStatistic" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.issuestatistic.IssueStatisticViewAction" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action input="/magazineDefine.jsp" name="magazineDefine"
+   path="/editTemplate" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.magazinedefine.EditTemplate" validate="false"/>
+  <action input="/magazineDefine.jsp" name="magazineDefine"
+   path="/saveTemplate" scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.magazinedefine.SaveTemplate" validate="false"/>
+  <action input="/magazine.jsp" name="magazine" path="/editMagazineBody"
+   scope="request"
+   type="com.yuanluesoft.j2oa.info.actions.magazine.EditMagazineBody" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

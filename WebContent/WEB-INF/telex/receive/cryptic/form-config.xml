@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="receiveTelegram" class="com.yuanluesoft.telex.receive.cryptic.forms.ReceiveCrypticTelegram" title="收报登记" pojo="com.yuanluesoft.telex.receive.base.pojo.ReceiveTelegram">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="保存并转办理" hide="isRead()" execute="FormUtils.doAction('synchSigns')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteReceiveTelegram')"/>
+			<action title="签收/清退" hide="isRead() or isNew()" execute="DialogUtils.openDialog('{CONTEXTPATH}/telex/receive/cryptic/verifyFingerprint.shtml?telegramId={PARAMETER:id}', 280, 200)"/>
+			<action title="打印办理单" hide="isNew()" execute="printTransactionSheet(true, true)"/>
+			<action title="归档" hide="isRead() or isNew()" execute="if(confirm('是否确定要归档？'))FormUtils.doAction('archive')"/>
+			<action title="撤销归档" hide="isRead() or isNew()" execute="FormUtils.doAction('unarchive')"/>
+		</actions>
+	</form>
+	
+	<form name="sign" class="com.yuanluesoft.telex.receive.cryptic.forms.Sign" title="签收">
+		<formFields>
+			<field name="telegramId" title="电报ID" inputMode="hidden"/>
+			<field name="selectedTelegramSignIds" title="选中的电报ID列表" inputMode="hidden"/>
+			<field name="signPersonName" title="当前签收人姓名" inputMode="readonly"/>
+			<field name="signPersonOrgFullName" title="签收人单位" inputMode="readonly"/>
+			<field name="isAgent" title="是否代理人" inputMode="none"/>
+			<field name="printTime" title="打印时间" inputMode="none"/>
+			<!-- 以下属性在录入代理人信息时有效 -->
+			<field name="agentName" title="姓名" required="true" inputMode="text"/>
+			<field name="agentOrgId" title="所属组织机构ID" inputMode="hidden"/>
+			<field name="agentOrgName" title="所属组织机构" required="true" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(550, 320, false, 'agentOrgId{id},agentOrgName{name}', '', 'unit,department', '', ',', '', false, true)</parameter>
+			</field>
+			<field name="agentCertificateName" title="证件名称" inputMode="text"/>
+			<field name="agentCertificateCode" title="证件号码" inputMode="text"/>
+			<field name="agentSex" title="性别" inputMode="radio">
+				<parameter name="itemsText">男|M\0女|F</parameter>
+			</field>
+			<field name="template" title="指纹模板" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="agentPerson" class="com.yuanluesoft.telex.receive.cryptic.forms.AgentPerson" title="代签收人" pojo="com.yuanluesoft.telex.receive.base.pojo.TelegramSignAgent">
+		<formFields>
+			<field name="loginName" title="登录用户名" type="string" inputMode="text"/>
+			<field name="password" title="密码" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册为正式用户" hide="isRead()" execute="FormUtils.doAction('createRegularPerson')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteAgentPerson')"/>
+		</actions>
+	</form>
+	
+	<form name="exportListing" class="com.yuanluesoft.telex.receive.cryptic.forms.ExportListing" title="密码收报核对清单">
+		<formFields>
+			<field name="year" title="年度" type="number" inputMode="text"/>
+			<field name="month" title="月份" type="number" inputMode="dropdown">
+				<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10\0 11\0 12</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="输出清单" execute="FormUtils.submitForm(true)"/>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

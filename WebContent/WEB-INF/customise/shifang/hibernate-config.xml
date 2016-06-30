@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping>
+	<!--现场报道-->
+	<class name="com.yuanluesoft.customise.shifang.pojo.CustomiseNews" table="_shifang_news"  polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<!--流程实例ID-->
+		<property name="workflowInstanceId"/>
+		<!--是否逻辑删除-->
+		<property name="isDeleted"/>
+		<!--公开的主题-->
+		<property name="publicSubject"/>
+		<!--公布办理流程-->
+		<property name="publicWorkflow"/>
+		<!--公布正文-->
+		<property name="publicBody"/>
+		<!--是否公布到网站-->
+		<property name="publicPass"/>
+		<!--隶属站点ID-->
+		<property name="siteId"/>
+		<!--附注-->
+		<property name="remark"/>
+		<!--是否允许公开-->
+		<property name="isPublic"/>
+		<!--邮政编码-->
+		<property name="creatorPostalcode"/>
+		<!--创建人地址-->
+		<property name="creatorAddress"/>
+		<!--创建人职业-->
+		<property name="creatorJob"/>
+		<!--创建人所在单位-->
+		<property name="creatorUnit"/>
+		<!--创建人传真-->
+		<property name="creatorFax"/>
+		<!--创建人手机-->
+		<property name="creatorMobile"/>
+		<!--创建人IP-->
+		<property name="creatorIP"/>
+		<!--邮箱-->
+		<property name="creatorMail"/>
+		<!--创建人证件号码-->
+		<property name="creatorIdentityCard"/>
+		<!--创建人证件名称-->
+		<property name="creatorCertificateName"/>
+		<!--联系电话-->
+		<property name="creatorTel"/>
+		<!--创建人性别-->
+		<property name="creatorSex"/>
+		<!--创建人姓名-->
+		<property name="creator"/>
+		<!--创建时间-->
+		<property name="created"/>
+		<!--指定工作日-->
+		<property name="workingDay"/>
+		<!--主题-->
+		<property name="subject"/>
+		<!--查询密码-->
+		<property name="queryPassword"/>
+		<!--编号-->
+		<property name="sn"/>
+		<!--正文-->
+		<set name="lazyBody" table="_shifang_news_body" lazy="true" inverse="true" cascade="delete">
+			<key/>
+			<one-to-many class="com.yuanluesoft.customise.shifang.pojo.CustomiseNewsBody"/>
+		</set>
+		<!--工作项列表-->
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem"/>
+		</set>
+		<!--办理意见-->
+		<set name="opinions" table="_shifang_news_opinion" lazy="true" inverse="true" cascade="delete" order-by="created DESC">
+			<key column="mainRecordId"/>
+			<one-to-many class="com.yuanluesoft.customise.shifang.pojo.CustomiseNewsOpinion"/>
+		</set>
+		<!--访问者-->
+		<set name="visitors" table="_shifang_news_privilege" lazy="false" inverse="true" cascade="delete" order-by="id">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.customise.shifang.pojo.CustomiseNewsPrivilege"/>
+		</set>
+	</class>
+	<!--现场报道:正文-->
+	<class name="com.yuanluesoft.customise.shifang.pojo.CustomiseNewsBody" table="_shifang_news_body"  polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<!--正文-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/>
+	</class>
+	<!--现场报道:办理意见-->
+	<class name="com.yuanluesoft.customise.shifang.pojo.CustomiseNewsOpinion" table="_shifang_news_opinion"  polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<!--主记录ID-->
+		<property name="mainRecordId"/>
+		<!--工作项ID-->
+		<property name="workItemId"/>
+		<!--办理环节名称-->
+		<property name="activityName"/>
+		<!--环节ID-->
+		<property name="activityId"/>
+		<!--填写人ID-->
+		<property name="personId"/>
+		<!--填写人姓名-->
+		<property name="personName"/>
+		<!--代理人ID-->
+		<property name="agentId"/>
+		<!--代理人姓名-->
+		<property name="agentName"/>
+		<!--意见内容-->
+		<property name="opinion" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/>
+		<!--意见类型-->
+		<property name="opinionType"/>
+		<!--填写时间-->
+		<property name="created"/>
+	</class>
+	<!--现场报道:访问者-->
+	<class name="com.yuanluesoft.customise.shifang.pojo.CustomiseNewsPrivilege" table="_shifang_news_privilege"  polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<!--访问者ID-->
+		<property name="visitorId"/>
+		<!--访问级别-->
+		<property name="accessLevel"/>
+		<!--主记录ID-->
+		<property name="recordId"/>
+	</class>
+	<!--报道类型-->
+	<class name="com.yuanluesoft.customise.shifang.pojo.CustomiseType" table="_shifang_type"  polymorphism="explicit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<!--站点ID-->
+		<property name="siteId"/>
+		<!--类型-->
+		<property name="type"/>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<tables>
+	<table name="road_project" description="项目">
+		<column name="id" description="ID" type="number" length="20"/> <!-- ID,必须有,且是主键  -->
+	 	<column name="name" description="项目名称" type="varchar" length="30"/>
+	 	<column name="created" description="创建时间" type="timestamp"/>
+	 </table>
+	 
+	 <table name="road_project_section" description="路段">
+	 	<column name="id" description="ID" type="number" length="20"/> <!-- ID,必须有,且是主键  -->
+	 	<column name="projectId" description="项目ID" type="number" length="10" referenceTable="road_project"/>
+	 	<column name="name" description="路段名称" type="varchar" length="30"/>
+	 	<column name="created" description="创建时间" type="timestamp"/>
+	 	<index name="index_section_projectId" columns="projectId"/>
+	 </table>
+	 
+	 <table name="road_traverse" description="导线点">
+	 	<column name="id" description="ID" type="number" length="20"/> <!-- ID,必须有,且是主键  -->
+	 	<column name="projectId" description="项目ID" type="number" length="10" referenceTable="road_project"/>
+	 	<column name="sectionId" description="路段ID" type="number" length="10" referenceTable="road_project_section"/>
+	 	<column name="name" description="名称" type="varchar" length="20"/>
+	 	<column name="x" description="X坐标" type="varchar" length="12"/>
+	 	<column name="y" description="Y坐标" type="varchar" length="12"/>
+	 	<column name="z" description="高程" type="varchar" length="12"/>
+	 	<index name="index_traverse" columns="projectId,sectionId"/>
+	 </table>
+	 
+	 <table name="road_cross_point" description="交点">
+	 	<column name="id" description="ID" type="number" length="20"/> <!-- ID,必须有,且是主键  -->
+	 	<column name="projectId" description="项目ID" type="number" length="10" referenceTable="road_project"/>
+	 	<column name="sectionId" description="路段ID" type="number" length="10" referenceTable="road_project_section"/>
+	 	<column name="sn" description="SN" type="number" length="8"/>
+	 	<column name="name" description="名称" type="varchar" length="12"/>
+	 	<column name="jx" description="Jx" type="varchar" length="12"/>
+	 	<column name="jy" description="Jy" type="varchar" length="12"/>
+	 	<column name="pj" description="PJ" type="varchar" length="12"/>
+	 	<column name="eta" description="ETa" type="varchar" length="12"/>
+	 	<column name="r" description="R" type="varchar" length="12"/>
+	 	<column name="lsa" description="LSa" type="varchar" length="12"/>
+	 	<column name="lsb" description="LSb" type="varchar" length="12"/>
+	 	<column name="ly" description="LY" type="varchar" length="12"/>
+	 	<column name="ta" description="Ta" type="varchar" length="12"/>
+	 	<column name="d" description="D" type="varchar" length="12"/>
+	 	<column name="dp" description="DP" type="varchar" length="12"/>
+	 	<column name="sl" description="SL" type="varchar" length="12"/>
+	 	<column name="lx" description="LX" type="varchar" length="12"/>
+	 	<column name="jd" description="JD" type="varchar" length="12"/>
+	 	<column name="jddl" description="JDDL" type="varchar" length="12"/>
+	 	<column name="tb" description="Tb" type="varchar" length="12"/>
+	 	<column name="qfw" description="QFW" type="varchar" length="12"/>
+	 	<column name="hfw" description="HFW" type="varchar" length="12"/>
+	 	<index name="index_cross_point" columns="projectId,sectionId"/>
+	 </table>
+	 
+	 <table name="road_block" description="积木法放样资料">
+	 	<column name="id" description="ID" type="number" length="20"/> <!-- ID,必须有,且是主键  -->
+	 	<column name="projectId" description="项目ID" type="number" length="10" referenceTable="road_project"/>
+	 	<column name="sectionId" description="路段ID" type="number" length="10" referenceTable="road_project_section"/>
+	 	<column name="lc" description="桩号" type="varchar" length="12"/>
+	 	<column name="fw" description="方位角" type="varchar" length="12"/>
+	 	<column name="x" description="X" type="varchar" length="12"/>
+	 	<column name="y" description="Y" type="varchar" length="12"/>
+	 	<column name="ra" description="半径" type="varchar" length="12"/>
+	 	<column name="eta" description="左偏/右偏" type="varchar" length="2"/>
+	 	<index name="index_block" columns="projectId,sectionId"/>
+	 </table>
+	 
+	 <table name="road_lofting" description="放样">
+	 	<column name="id" description="ID" type="number" length="20"/> <!-- ID,必须有,且是主键  -->
+	 	<column name="projectId" description="项目ID" type="number" length="10" referenceTable="road_project"/>
+	 	<column name="sectionId" description="路段ID" type="number" length="10" referenceTable="road_project_section"/>
+	 	<column name="pile" description="桩号" type="varchar" length="12"/>
+	 	<column name="z" description="Z" type="varchar" length="12"/>
+	 	<index name="index_lofting" columns="projectId,sectionId"/>
+	 </table>
+</tables>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="assess" class="com.yuanluesoft.enterprise.assess.forms.Assess" title="绩效考核" pojo="com.yuanluesoft.enterprise.assess.pojo.Assess">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="作废" hide="isNew() or workflow() and noPrivilege(application_manager)" execute="if(confirm('作废后不可恢复，是否确定要作废？'))FormUtils.doAction('deleteAssess')"/>
+		</actions>
+	</form>
+	
+	<form name="assessClassify" class="com.yuanluesoft.enterprise.assess.forms.AssessClassify" title="考核类型" pojo="com.yuanluesoft.enterprise.assess.pojo.AssessClassify">
+		<formFields>
+			<field title="适用的用户" name="assessUser" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteAssessClassify')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.enterprise.assess.forms.AssessActivity" title="考核步骤" pojo="com.yuanluesoft.enterprise.assess.pojo.AssessClassify">
+		<formFields>
+			<field name="activity" title="考核步骤" type="component">
+				<parameter name="class">com.yuanluesoft.enterprise.assess.pojo.AssessActivity</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteAssessActivity')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.enterprise.assess.forms.AssessStandard" title="考核内容和标准" pojo="com.yuanluesoft.enterprise.assess.pojo.AssessClassify">
+		<formFields>
+			<field name="standard" title="考核内容和标准" type="component">
+				<parameter name="class">com.yuanluesoft.enterprise.assess.pojo.AssessStandard</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteAssessStandard')"/>
+		</actions>
+	</form>
+</forms>

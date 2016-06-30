@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--民主测评：主题-->
+	<class name="com.yuanluesoft.cms.evaluation.pojo.EvaluationTopic" table="evaluation_topic">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--主题名称,varchar(200)-->
+		<property name="description"/> <!--描述,varchar(4000)-->
+		<property name="anonymous"/> <!--是否匿名测评,char(1)-->
+		<property name="endTime"/> <!--截止日期,timestamp null-->
+		<property name="issueTime"/> <!--发布时间,timestamp null-->
+		<property name="issue"/> <!--是否发布,char(1)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="creatorId"/> <!--创建者ID,numeric(20)-->
+		<property name="creator"/> <!--创建者,varchar(30)-->
+		<!-- 选择项列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="options" table="evaluation_option" order-by="score DESC">
+			<key column="topicId" />
+			<one-to-many class="com.yuanluesoft.cms.evaluation.pojo.EvaluationOption" />
+		</set>
+		<!-- 测评项目列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="items" table="evaluation_item" order-by="priority DESC, id">
+			<key column="topicId" />
+			<one-to-many class="com.yuanluesoft.cms.evaluation.pojo.EvaluationItem" />
+		</set>
+		<!-- 访问者列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="visitors" table="evaluation_topic_privilege" order-by="id">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.cms.evaluation.pojo.EvaluationTopicPrivilege" />
+		</set>
+		<!-- 测评记录列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="marks" table="evaluation_mark" order-by="id">
+			<key column="topicId" />
+			<one-to-many class="com.yuanluesoft.cms.evaluation.pojo.EvaluationMark" />
+		</set>
+	</class>
+	
+	<!--民主测评:权限控制(参与人)-->
+	<class name="com.yuanluesoft.cms.evaluation.pojo.EvaluationTopicPrivilege" table="evaluation_topic_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,numeric(20)-->
+		<property name="accessLevel"/> <!--访问级别,char(1)-->
+		<property name="recordId"/> <!--主记录ID,numeric(20)-->
+	</class>
+	
+	<!--民主测评：选择项-->
+	<class name="com.yuanluesoft.cms.evaluation.pojo.EvaluationOption" table="evaluation_option">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="topicId"/> <!--测评主题ID,numeric(20)-->
+		<property name="name"/> <!--选项名称,如：好、较好、一般、差,varchar(200)-->
+		<property name="description"/> <!--描述,varchar(200)-->
+		<property name="score"/> <!--选中时对应的分数,百分制,numeric(3)-->
+	</class>
+	
+	<!--民主测评：测评项目-->
+	<class name="com.yuanluesoft.cms.evaluation.pojo.EvaluationItem" table="evaluation_item">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="topicId"/> <!--测评主题ID,numeric(20)-->
+		<property name="category"/> <!--分类,varchar(100)-->
+		<property name="name"/> <!--测评项目名称,varchar(1000)-->
+		<property name="description"/> <!--描述,varchar(2000)-->
+		<property name="score"/> <!--分值(百分制),所有的项目分数加一块是100,如果等于0,使用平均值,numeric(4,1)-->
+		<property name="priority"/> <!--优先级,numeric(7,4)-->
+	</class>
+	
+	<!--民主测评：测评记录-->
+	<class name="com.yuanluesoft.cms.evaluation.pojo.EvaluationMark" table="evaluation_mark">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="topicId"/> <!--主题ID,numeric(20)-->
+		<property name="targetPersonId"/> <!--被测评人ID,numeric(20)-->
+		<property name="targetPersonName"/> <!--被测评人名称,varchar(50)-->
+		<property name="evaluatePersonId"/> <!--测评人ID,numeric(20)-->
+		<property name="evaluatePersonName"/> <!--测评人名称,varchar(50)-->
+		<property name="evaluatePersonIP"/> <!--测评人IP,varchar(50)-->
+		<property name="evaluateTime"/> <!--测评时间,timestamp null-->
+		<!-- 测评分数列表 -->
+		<set cascade="delete" inverse="true" lazy="true" name="scores" table="evaluation_score">
+			<key column="markId" />
+			<one-to-many class="com.yuanluesoft.cms.evaluation.pojo.EvaluationScore" />
+		</set>
+	</class>
+	
+	<!--民主测评:评分-->
+	<class name="com.yuanluesoft.cms.evaluation.pojo.EvaluationScore" table="evaluation_score">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="markId"/> <!--测评记录ID,numeric(20)-->
+		<property name="itemId"/> <!--测评项目ID,numeric(20)-->
+		<property name="optionId"/> <!--选择项ID,numeric(20)-->
+		<property name="option"/> <!--选择项名称,varchar(50)-->
+		<property name="score"/> <!--分值,numeric(4,1)-->
+		<property name="remark"/> <!--备注,varchar(1000)-->
+	</class>
+</hibernate-mapping>

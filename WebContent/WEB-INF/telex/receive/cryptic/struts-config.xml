@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="receiveTelegram" type="com.yuanluesoft.telex.receive.cryptic.forms.ReceiveCrypticTelegram"/>
+  <form-bean name="sign" type="com.yuanluesoft.telex.receive.cryptic.forms.Sign"/>
+  <form-bean name="agentPerson" type="com.yuanluesoft.telex.receive.cryptic.forms.AgentPerson"/>
+  <form-bean name="printTransactionSheet" type="com.yuanluesoft.telex.base.forms.PrintTransactionSheet"/>
+  <form-bean name="exportListing" type="com.yuanluesoft.telex.receive.cryptic.forms.ExportListing"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+  <forward name="listTodoTelegrams" path="/listTodoTelegrams.shtml"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="receiveTelegram" path="/receiveTelegram" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.receivecryptictelegram.Load" validate="false">
+   <forward name="load" path="/receiveTelegram.jsp"/>
+  </action>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/saveReceiveTelegram" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.receivecryptictelegram.Save" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/deleteReceiveTelegram" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.receivecryptictelegram.Delete" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/appendSigns" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.receivecryptictelegram.AppendSigns" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/deleteSigns" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.receivecryptictelegram.DeleteSigns" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/saveOpinion" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.receivecryptictelegram.SaveOpinion" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/deleteOpinion" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.receivecryptictelegram.DeleteOpinion" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/editOpinion" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.receivecryptictelegram.EditOpinion" validate="false"/>
+  <action name="sign" path="/verifyFingerprint" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.sign.fingerprint.VerifyFingerprint" validate="false">
+   <forward name="load" path="/verifyFingerprint.jsp"/>
+  </action>
+  <action name="sign" path="/submitFingerprint" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.sign.fingerprint.DoVerifyFingerprint" validate="false">
+   <forward name="failed" path="/verifyFingerprintFailed.jsp"/>
+  </action>
+  <action name="sign" path="/saveAgent" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.sign.agent.SaveAgent" validate="false"/>
+  <action name="sign" path="/signTelegrams" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.sign.SignTelegrams" validate="false">
+   <forward name="complete" path="/signComplete.jsp"/>
+  </action>
+  <action name="sign" path="/returnTelegrams" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.sign.ReturnTelegrams" validate="false">
+   <forward name="complete" path="/returnComplete.jsp"/>
+  </action>
+  <action name="sign" path="/listTodoTelegrams" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.sign.ListTodoTelegrams" validate="false">
+   <forward name="load" path="/listTodoTelegrams.jsp"/>
+  </action>
+  <action name="sign" path="/agent" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.sign.agent.Agent" validate="false">
+   <forward name="load" path="/agent.jsp"/>
+  </action>
+  <action name="sign" path="/printBill" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.sign.PrintBill" validate="false">
+   <forward name="load" path="/printBill.jsp"/>
+  </action>
+  <action name="agentPerson" path="/agentPerson" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.agentperson.Load" validate="false">
+   <forward name="load" path="/agentPerson.jsp"/>
+  </action>
+  <action input="/agentPerson.jsp" name="agentPerson"
+   path="/saveAgentPerson" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.agentperson.Save" validate="false"/>
+  <action input="/agentPerson.jsp" name="agentPerson"
+   path="/deleteAgentPerson" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.agentperson.Delete" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/archive" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.receivecryptictelegram.Archive" validate="false"/>
+  <action name="printTransactionSheet" path="/printTransactionSheet"
+   scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.receivecryptictelegram.PrintTransactionSheet" validate="false">
+   <forward name="load" path="/printTransactionSheet.jsp"/>
+  </action>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/synchSigns" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.receivecryptictelegram.SynchSigns" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/unarchive" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.receivecryptictelegram.Unarchive" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/setReturnOption" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.receivecryptictelegram.SetReturnOption" validate="false"/>
+  <action input="/agentPerson.jsp" name="agentPerson"
+   path="/createRegularPerson" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.agentperson.CreateRegularPerson" validate="false"/>
+  <action input="/agentPerson.jsp" name="agentPerson"
+   path="/doCreateRegularPerson" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.agentperson.DoCreateRegularPerson" validate="false"/>
+  <action name="exportListing" path="/exportListing" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.exportlisting.Load" validate="false">
+   <forward name="load" path="/exportListing.jsp"/>
+  </action>
+  <action name="exportListing" path="/doExportListing" scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.exportlisting.Export" validate="false"/>
+  <action name="receiveTelegram" path="/attachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.telex.receive.cryptic.actions.receivecryptictelegram.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

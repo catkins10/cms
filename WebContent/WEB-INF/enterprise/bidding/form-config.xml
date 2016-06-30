@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="bidding" class="com.yuanluesoft.enterprise.bidding.forms.Bidding" title="招投标项目" pojo="com.yuanluesoft.enterprise.bidding.pojo.EnterpriseBidding">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteBidding')"/>
+		</actions>
+	</form>
+</forms>

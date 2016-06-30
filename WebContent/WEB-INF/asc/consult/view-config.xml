@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="96123已受理咨询" name="ascConsults">
+		<data>
+			<pojo>com.yuanluesoft.asc.consult.pojo.AscConsult</pojo>
+			<where>AscConsult.siteId={PARAMETER:siteId} and AscConsult.publicPass='1' and AscConsult.isDeleted=0</where>
+			<orderBy>AscConsult.created DESC</orderBy>
+			<quickFilter>AscConsult.subject like '%{KEY}%' or AscConsult.publicSubject like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="咨询">/asc/consult/consult.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=asc/consult</link>
+		</links>
+	</view>
+
+	<view name="admin/todoConsult" form="admin/consult" title="待办咨询" pageRows="25" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.asc.consult.pojo.AscConsult</pojo>
+			<where>AscConsult.isDeleted=0</where>
+			<orderBy>AscConsult.created DESC</orderBy>
+			<quickFilter>AscConsult.itemName like '%{KEY}%' or AscConsult.creator like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="咨询主题" name="subject"/>
+			<column title="办理事项名称" name="itemName" width="200px"/>
+			<column title="咨询人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="咨询时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessConsult" form="admin/consult" title="在办咨询" pageRows="25" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.asc.consult.pojo.AscConsult</pojo>
+			<where>AscConsult.isDeleted=0</where>
+			<orderBy>AscConsult.created DESC</orderBy>
+			<quickFilter>AscConsult.itemName like '%{KEY}%' or AscConsult.creator like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="咨询主题" name="subject"/>
+			<column title="办理事项名称" name="itemName" width="200px"/>
+			<column title="咨询人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="咨询时间" name="created" align="center" width="108"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedConsult" form="admin/consult" title="办结咨询" pageRows="20" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.asc.consult.pojo.AscConsult</pojo>
+			<where>AscConsult.isDeleted=0</where>
+			<filter>COMPLETED</filter>
+			<orderBy>AscConsult.created DESC</orderBy>
+			<quickFilter>AscConsult.itemName like '%{KEY}%' or AscConsult.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="咨询主题" name="subject"/>
+			<column title="办理事项名称" name="itemName" width="200px"/>
+			<column title="咨询人" name="creator" align="center" width="80"/>
+			<column title="咨询时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allConsult" form="admin/consult" title="所有咨询" pageRows="20" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.asc.consult.pojo.AscConsult</pojo>
+			<where>AscConsult.isDeleted=0</where>
+			<filter>READABLE</filter>
+			<orderBy>AscConsult.created DESC</orderBy>
+			<quickFilter>AscConsult.itemName like '%{KEY}%' or AscConsult.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="咨询授权" hide="noPrivilege(application_manager)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/publicservice/admin/readersModifyOption.shtml?applicationName={PARAMETER:applicationName}', 430, 200)"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="咨询主题" name="subject"/>
+			<column title="办理事项名称" name="itemName" width="200px"/>
+			<column title="咨询人" name="creator" align="center" width="80"/>
+			<column title="咨询时间" name="created" align="center" width="108"/>
+			<column title="办理状态" name="workflowStatus" width="100"/>
+		</columns>
+	</view>
+</views>

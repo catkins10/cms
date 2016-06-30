@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/trafficCredit" class="com.yuanluesoft.credit.enterprisecredit.trafficcredit.forms.TrafficCredit" title="龙海市公民信用记录登记表（交通肇事逃逸类）" pojo="com.yuanluesoft.credit.enterprisecredit.trafficcredit.pojo.TrafficCredit">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteTrafficCredit')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/carCredit" class="com.yuanluesoft.credit.enterprisecredit.trafficcredit.forms.CarCredit" title="龙海交通综合行政执法大队处罚信息公开一览表" pojo="com.yuanluesoft.credit.enterprisecredit.trafficcredit.pojo.CarCredit">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteCarCredit')"/>
+		</actions>
+	</form>
+	 <!-- Excel导入表单 -->
+	<form name="admin/trafficImportData" class="com.yuanluesoft.credit.enterprisecredit.trafficcredit.forms.ImportDateExcel" title="龙海市公民信用记录登记表（交通肇事逃逸类）">
+	   <formFields>
+	   		<field name="data" title="数据文件" type="attachment" inputMode="attachment" length="1"><!-- 附件操作，length是个数 -->
+				<parameter name="fileExtension">Excel表格|*.xls;*.xlsx|</parameter><!-- 指定过滤文件 -->
+				<parameter name="simpleMode">true</parameter><!-- 简单模式 -->
+			</field>
+	   </formFields>
+	   <actions>
+			<action title="导入" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	 <!-- Excel导入表单 -->
+	<form name="admin/carImportData" class="com.yuanluesoft.credit.enterprisecredit.trafficcredit.forms.CarImportDateExcel" title="龙海交通综合行政执法大队处罚信息公开一览表">
+	   <formFields>
+	   		<field name="data" title="数据文件" type="attachment" inputMode="attachment" length="1"><!-- 附件操作，length是个数 -->
+				<parameter name="fileExtension">Excel表格|*.xls;*.xlsx|</parameter><!-- 指定过滤文件 -->
+				<parameter name="simpleMode">true</parameter><!-- 简单模式 -->
+				<parameter name="attachmentEditor">carAttachmentEditor.shtml</parameter>
+			</field>
+	   </formFields>
+	   <actions>
+			<action title="导入" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--工作汇报-->
+	<class name="com.yuanluesoft.enterprise.workreport.pojo.WorkReport" table="workreport_report">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="reporterId"/> <!--汇报人ID-->
+		<property name="reporterName"/> <!--汇报人姓名-->
+		<property name="teamId"/> <!--项目组ID-->
+		<property name="workDescription"/> <!--前一阶段完成情况-->
+		<property name="problem"/> <!--存在的问题-->
+		<property name="plan"/> <!--下一阶段计划-->
+		<property name="reportType"/> <!--汇报类型-->
+		<property name="reportTime"/> <!--汇报时间-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem"/>
+		</set>
+		<set name="opinions" table="workreport_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.workreport.pojo.WorkReportOpinion"/>
+		</set>
+		<set name="visitors" table="workreport_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.workreport.pojo.WorkReportPrivilege"/>
+		</set>
+	</class>
+	
+	<!--工作汇报:权限控制-->
+	<class name="com.yuanluesoft.enterprise.workreport.pojo.WorkReportPrivilege" table="workreport_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--工作汇报:审核意见-->
+	<class name="com.yuanluesoft.enterprise.workreport.pojo.WorkReportOpinion" table="workreport_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="created"/> <!--填写时间-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--督办-->
+	<class name="com.yuanluesoft.j2oa.supervise.pojo.Supervise" table="supervise_supervise">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="sn"/> <!--督办号,varchar(10)-->
+		<property name="content"/> <!--工作内容,varchar(4000)-->
+		<property name="departmentIds"/> <!--责任部门ID,varchar(500)-->
+		<property name="departmentNames"/> <!--责任部门,varchar(500)-->
+		<property name="departmentSupervisors"/> <!--分管领导,varchar(200)-->
+		<property name="transactorIds"/> <!--经办人ID,varchar(500)-->
+		<property name="transactorNames"/> <!--经办人,varchar(500)-->
+		<property name="result"/> <!--落实情况,varchar(4000)-->
+		<property name="completeTime"/> <!--落实时间,timestamp null-->
+		<property name="status"/> <!--状态,0/正在落实,1/销号,numeric(1)-->
+		<property name="creatorId"/> <!--创建人ID,numeric(20)-->
+		<property name="creator"/> <!--创建人,varchar(60)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="remark"/> <!--备注,varchar(200)-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID,varchar(32)-->
+		<set name="opinions" table="supervise_supervise_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.j2oa.supervise.pojo.SuperviseOpinion" />
+		</set>
+		<set name="visitors" table="supervise_supervise_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.supervise.pojo.SupervisePrivilege"/>
+		</set>
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+		<set name="timeLimits" table="supervise_supervise_time_limit" lazy="true" inverse="true" order-by="created">
+			<key column="superviseId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.j2oa.supervise.pojo.SuperviseTimeLimit" />
+		</set>
+	</class>
+	
+	<!--督办:权限控制-->
+	<class name="com.yuanluesoft.j2oa.supervise.pojo.SupervisePrivilege" table="supervise_supervise_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,numeric(20)-->
+		<property name="accessLevel"/> <!--访问级别,char(1)-->
+		<property name="recordId"/> <!--主记录ID,numeric(20)-->
+	</class>
+	
+	<!--督办:办理意见-->
+	<class name="com.yuanluesoft.j2oa.supervise.pojo.SuperviseOpinion" table="supervise_supervise_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID,numeric(20)-->
+		<property name="workItemId"/> <!--工作项ID,varchar(32)-->
+		<property name="activityName"/> <!--环节名称,varchar(50)-->
+		<property name="activityId"/> <!--环节ID,varchar(32)-->
+		<property name="personId"/> <!--填写人ID,numeric(20)-->
+		<property name="personName"/> <!--填写人姓名,varchar(32)-->
+		<property name="agentId"/> <!--代理人ID,numeric(20)-->
+		<property name="agentName"/> <!--代理人姓名,varchar(32)-->
+		<property name="opinion"/> <!--意见内容,varchar(1000)-->
+		<property name="opinionType"/> <!--意见类型,varchar(20)-->
+		<property name="created"/> <!--填写时间,timestamp null-->
+	</class>
+	
+	<!--督办:完成时限-->
+	<class name="com.yuanluesoft.j2oa.supervise.pojo.SuperviseTimeLimit" table="supervise_supervise_time_limit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="superviseId"/> <!--督办ID,numeric(20)-->
+		<property name="timeLimit"/> <!--时限,timestamp-->
+		<property name="created"/> <!--设置时间,timestamp-->
+	</class>
+</hibernate-mapping>

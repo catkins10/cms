@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form title="链接" class="com.yuanluesoft.jeaf.htmleditor.forms.EditorLinkDialog">
+		<formFields>
+			<field title="链接地址" name="url" type="string" inputMode="select">
+				<parameter name="execute">selectAttachment()</parameter>
+			</field>
+			<field title="打开方式" name="target" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">none</parameter>
+				<parameter name="itemsText">不指定|none\0新窗口|_blank\0本窗口|_self\0父窗口|_parent\0整个页面|_top\0指定框架|other</parameter>
+			</field>
+			<field title="框架名称" name="targetName" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOK()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="图片" class="com.yuanluesoft.jeaf.htmleditor.forms.EditorImageDialog">
+		<formFields>
+			<field title="图片地址" name="url" type="string" inputMode="select">
+				<parameter name="execute">selectImage()</parameter>
+			</field>
+			<field title="替换文本" name="alt" type="string" inputMode="text"/>
+			<field title="宽度" name="width" type="number" inputMode="text"/>
+			<field title="高度" name="height" type="number" inputMode="text"/>
+			<field title="对齐方式" name="align" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">左对齐|left\0绝对底边|absBottom\0绝对居中|absMiddle\0基线|baseline\0底边|bottom\0居中|middle\0右对齐|right\0文本上方|textTop\0顶端|top</parameter>
+			</field>
+			<field title="自动居中" name="center" type="string" inputMode="checkbox">
+				<parameter name="value">true</parameter>
+				<parameter name="label"></parameter>
+				<parameter name="defaultValue">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOK()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="FLASH" class="com.yuanluesoft.jeaf.htmleditor.forms.EditorFlashDialog">
+		<formFields>
+			<field title="FLASH地址" name="url" type="string" inputMode="select">
+				<parameter name="execute">selectFlash()</parameter>
+			</field>
+			<field title="宽度" name="width" type="number" inputMode="text"/>
+			<field title="高度" name="height" type="number" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOK()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="视频" class="com.yuanluesoft.jeaf.htmleditor.forms.EditorVideoDialog">
+		<formFields>
+			<field title="视频地址" name="url" type="string" inputMode="select">
+				<parameter name="execute">selectVideo()</parameter>
+			</field>
+			<field title="宽度" name="width" type="number" inputMode="text"/>
+			<field title="高度" name="height" type="number" inputMode="text"/>
+			<field title="自动播放" name="autoStart" type="string" inputMode="checkbox">
+				<parameter name="value">true</parameter>
+				<parameter name="label">自动播放</parameter>
+			</field>
+			<field title="自动居中" name="center" type="string" inputMode="checkbox">
+				<parameter name="value">true</parameter>
+				<parameter name="label">自动居中</parameter>
+				<parameter name="defaultValue">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOK()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="查找" class="com.yuanluesoft.jeaf.htmleditor.forms.EditorFindDialog">
+		<formFields>
+			<field title="查找" name="find" type="string" inputMode="text"/>
+			<field title="替换" name="replace" type="number" inputMode="text"/>
+			<field title="区分大小写" name="matchCase" type="string" inputMode="checkbox">
+				<parameter name="value">true</parameter>
+				<parameter name="label">区分大小写</parameter>
+			</field>
+			<field title="查找方向" name="direction" type="string" inputMode="radio">
+				<parameter name="itemsText">向上|up\0向下|down</parameter>
+				<parameter name="defaultValue">down</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="查找下一个" execute="findNext()"/>
+			<action title="替换" execute="replaceText()"/>
+			<action title="全部替换" execute="replaceAll()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="表格" class="com.yuanluesoft.jeaf.htmleditor.forms.EditorTableDialog">
+		<formFields>
+			<field title="是否新表格" name="newTable" type="boolean" inputMode="hidden"/>
+			<field title="行数" name="rows" type="number" inputMode="text">
+				<parameter name="defaultValue">3</parameter>
+			</field>
+			<field title="列数" name="cols" type="number" inputMode="text">
+				<parameter name="defaultValue">2</parameter>
+			</field>
+			<field title="宽度" name="width" type="string" inputMode="text">
+				<parameter name="defaultValue">100%</parameter>
+			</field>
+			<field title="高度" name="height" type="string" inputMode="text"/>
+			<field title="间距" name="spacing" type="number" inputMode="text">
+				<parameter name="defaultValue">0</parameter>
+			</field>
+			<field title="边距" name="padding" type="number" inputMode="text">
+				<parameter name="defaultValue">3</parameter>
+			</field>
+			<field title="边框宽度" name="border" type="number" inputMode="text">
+				<parameter name="defaultValue">1</parameter>
+			</field>
+			<field title="边框颜色" name="borderColor" type="string" inputMode="select">
+				<parameter name="defaultValue">#000000</parameter>
+				<parameter name="execute">DialogUtils.openColorDialog('边框颜色', document.getElementsByName('borderColor')[0].value, "document.getElementsByName('borderColor')[0].value='{colorValue}'")</parameter>
+			</field>
+			<field title="对齐方式" name="align" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">默认|auto\0左对齐|left\0居中|center\0右对齐|right</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOK()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="单元格" class="com.yuanluesoft.jeaf.htmleditor.forms.EditorTableCellDialog">
+		<formFields>
+			<field title="宽度" name="width" type="string" inputMode="text"/>
+			<field title="高度" name="height" type="string" inputMode="text"/>
+			<field title="自动换行" name="nowrap" type="boolean" inputMode="checkbox">
+				<parameter name="label"></parameter>
+				<parameter name="value">true</parameter>
+			</field>
+			<field title="水平对齐" name="align" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">默认|auto\0左对齐|left\0居中|center\0右对齐|right</parameter>
+			</field>
+			<field title="垂直对齐" name="valign" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">默认|auto\0顶端|top\0居中|middle\0底部|bottom\0基线|baseline</parameter>
+			</field>
+			<field title="边框颜色" name="borderColor" type="string" inputMode="select">
+				<parameter name="execute">DialogUtils.openColorDialog('边框颜色', document.getElementsByName('borderColor')[0].value, "document.getElementsByName('borderColor')[0].value='{colorValue}'")</parameter>
+			</field>
+			<field title="背景颜色" name="backgroundColor" type="string" inputMode="select">
+				<parameter name="execute">DialogUtils.openColorDialog('边框颜色', document.getElementsByName('backgroundColor')[0].value, "document.getElementsByName('backgroundColor')[0].value='{colorValue}'")</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOK()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

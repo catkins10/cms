@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=appraise"/>
+		
+		<page name="appraises" title="评议列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=appraise&amp;pageName=appraises"/>
+		
+		<page name="recipientAppraises" title="服务对象评议列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=appraise&amp;pageName=recipientAppraises"/>
+
+		<page name="historicalAppraises" title="往期评议列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=appraise&amp;pageName=historicalAppraises"/>
+		
+		<page name="historicalRecipientAppraises" title="往期服务对象评议列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=appraise&amp;pageName=historicalRecipientAppraises"/>
+
+		<page name="internetAppraise" title="网上评议" recordClass="com.yuanluesoft.appraise.pojo.Appraise" recordPage="false">
+			<subPage title="网上评议" name="internetAppraise" type="template"/>
+		</page>
+		
+		<page name="internetAppraiseSubmitted" title="网上评议提交完成">
+			<subPage title="网上评议提交完成" name="internetAppraiseSubmitted" type="template"/>
+		</page>
+		
+		<page name="internetAppraiseCodeFailed" title="网上评议验证码无效提示">
+			<subPage title="网上评议验证码无效提示" name="internetAppraiseCodeFailed" type="template"/>
+		</page>
+		
+		<page name="wapAppraise" title="WAP评议" recordClass="com.yuanluesoft.appraise.pojo.Appraise" recordPage="false">
+			<subPage title="WAP评议" name="wapAppraise" type="template"/>
+		</page>
+		
+		<page name="wapAppraiseSubmitted" title="WAP评议提交完成">
+			<subPage title="WAP评议提交完成" name="wapAppraiseSubmitted" type="template"/>
+		</page>
+		
+		<page name="appraise" title="评议" recordClass="com.yuanluesoft.appraise.pojo.Appraise" realtimeStaticPage="true"/>
+		
+		<page name="appraiseParticipateUnits" title="参评单位列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=appraise&amp;pageName=appraiseParticipateUnits"/>
+	</pages>
+	
+	<!-- 页面元素,name必须在所有的应用中唯一 -->
+	<pageElements>
+		<pageElement name="appraises" processor="appraisesProcessor"/> <!-- 评议(全部) -->
+		<pageElement name="appraisesCompleted" processor="appraisesProcessor"/> <!-- 评议(已结束) -->
+		<pageElement name="appraiseParticipateUnits" processor="appraisesProcessor"/> <!-- 参评单位 -->
+		<pageElement name="appraiseVoteTotal" staticPageSupport="false" processor="appraisesProcessor"/> <!-- 投票统计 -->
+		<pageElement name="yearAppraiseVoteTotal" staticPageSupport="false" processor="appraisesProcessor"/> <!-- 本年度投票统计 -->
+		<pageElement name="unitAppraises" processor="appraisesProcessor"/> <!-- 单位评议列表 -->
+		<pageElement name="unitAppraisesByCategory" processor="appraisesProcessor"/> <!-- 单位评议(按分类)列表 -->
+	</pageElements>
+</application>

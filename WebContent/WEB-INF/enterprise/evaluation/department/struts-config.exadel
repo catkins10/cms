@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../../jeaf/form/error.jsp"
+  SHAPE="32,48,177,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../../jeaf/form/error.jsp" SHAPE="352,48,50,25"
+  SUBTYPE="jsp" TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../../jeaf/form/result.jsp" SHAPE="32,128,177,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../../jeaf/form/result.jsp" SHAPE="352,128,50,25"
+  SUBTYPE="jsp" TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#evaluationParameter" NAME="action0"
+  PATH="/admin/evaluationParameter" SHAPE="32,240,177,41"
+  TITLE="adminEvaluationParameter" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/evaluationParameter.jsp" TARGET="page2"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/admin/evaluationParameter.jsp" SHAPE="352,256,50,25"
+  SUBTYPE="jsp" TITLE="evaluationParameter.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveEvaluationParameter" TARGET="action1"
+   TITLE="saveEvaluationParameter" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#saveEvaluationParameter" NAME="action1"
+  PATH="/admin/saveEvaluationParameter" SHAPE="560,272,177,25"
+  TITLE="adminEvaluationParameter" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#evaluation"
+  NAME="action2" PATH="/evaluation" SHAPE="32,368,177,41"
+  TITLE="evaluation" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/evaluation.jsp" TARGET="page3" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/evaluation.jsp" SHAPE="352,384,50,25" SUBTYPE="jsp"
+  TITLE="evaluation.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveEvaluation" TARGET="action5" TITLE="saveEvaluation" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveEvaluation"
+  NAME="action3" PATH="/admin/saveEvaluation" SHAPE="560,544,177,25"
+  TITLE="adminEvaluation" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/evaluationSubmitted.jsp" SHAPE="864,416,50,25" SUBTYPE="jsp"
+  TITLE="evaluationSubmitted.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#evaluation"
+  NAME="action4" PATH="/admin/evaluation" SHAPE="32,512,177,41"
+  TITLE="adminEvaluation" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/evaluation.jsp" TARGET="page5"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/admin/evaluation.jsp" SHAPE="352,528,50,25" SUBTYPE="jsp"
+  TITLE="evaluation.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveEvaluation" TARGET="action3" TITLE="saveEvaluation" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveEvaluation"
+  NAME="action5" PATH="/saveEvaluation" SHAPE="560,400,177,41"
+  TITLE="evaluation" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/evaluationSubmitted.jsp" TARGET="page4"
+   TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#templatemanage#insertEvaluationLink" NAME="action6"
+  PATH="/templatemanage/insertEvaluationLink" SHAPE="32,632,178,25"
+  TITLE="insertEvaluationLink" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templatemanage/insertEvaluationLink.jsp"
+   TARGET="page6" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/templatemanage/insertEvaluationLink.jsp" SHAPE="352,648,50,25"
+  SUBTYPE="jsp" TITLE="insertEvaluationLink.jsp" TYPE="page"/>
+</PROCESS>

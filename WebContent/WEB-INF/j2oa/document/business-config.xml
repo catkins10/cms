@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="主题词分类" class="com.yuanluesoft.j2oa.document.pojo.KeywordCategory" businessServiceName="keywordService">
+		<field name="district" title="区域分类" length="50" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">keywordService</parameter>
+		</field>
+		<field name="category" title="类别词" length="20" required="true" type="string" inputMode="text"/>
+		<field name="keywords" title="主题词" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.document.pojo.Keyword</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="主题词" class="com.yuanluesoft.j2oa.document.pojo.Keyword" businessServiceName="keywordService">
+		<field name="categoryId" title="分类ID" type="number" inputMode="hidden"/>
+		<field name="keyword" title="主题词" length="100" required="true" type="string" inputMode="text"/>
+		<field name="keywordIndex" title="序号" type="number" inputMode="hidden"/>
+	</businessObject>
+	
+	<businessObject title="选择项配置" class="com.yuanluesoft.j2oa.document.pojo.DocumentOption" businessServiceName="documentService">
+		<field name="secureLevel" title="秘密等级" length="255" required="true" type="string" inputMode="text"/>
+		<field name="secureTerm" title="保密期限" length="255" required="true" type="string" inputMode="text"/>
+		<field name="priority" title="紧急程度" length="255" required="true" type="string" inputMode="text"/>
+		<field name="docType" title="公文种类" length="255" required="true" type="string" inputMode="text"/>
+	</businessObject>
+</businessObjects>

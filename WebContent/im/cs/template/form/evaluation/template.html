@@ -1,0 +1,31 @@
+<span class="systemPrompt"><a id="systemPrompt" urn="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;IMG src=&quot;{CONTEXTPATH}/cms/image/warn.gif&quot; align=absMiddle&gt;&amp;nbsp;&amp;lt;提示信息&amp;gt;">&lt;系统提示&gt;</a></span>
+<table class="editabledTable">
+	<colgroup><col align="right"/><col width="100%"/></colgroup>
+	<tbody>
+		<tr>
+			<td>评价等级：</td>
+			<td>
+				<span id="fieldSpan" title="评价等级"><input id="field" type="radio" name="level" value="on" />&nbsp;选项1&nbsp;<input id="field" type="radio" name="level" value="on" />&nbsp;选项2&nbsp;<input id="field" type="radio" name="level" value="on" />&nbsp;选项3
+			</td>
+		</tr>
+		<tr>
+			<td>其他说明：</td>
+			<td>
+				<textarea id="field" title="补充说明" class="field" name="remark" style="height: 50px"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td valign="bottom" nowrap="nowrap">验证码：</td>
+			<td><img id="validateCodeImage" title="验证码" alt="" src="{CONTEXTPATH}/jeaf/validatecode/generateValidateCodeImage.shtml" /> <a onclick="document.getElementById('validateCodeImage').src=document.getElementById('validateCodeImage').src.split('?')[0] + '?reload=true&amp;seq=' + Math.random();return false;" href="#">看不清，换一张</a> </td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap">输入验证码：</td>
+			<td><input class="field" name="validateCode" type="text" /></td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap"></td>
+			<td align="center"><br />
+			<input class="submitButton" id="button" title="提交" tabindex="0" type="button" value="提交" /></td>
+		</tr>
+	</tbody>
+</table>

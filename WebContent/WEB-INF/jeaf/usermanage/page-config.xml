@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="personalIndex" title="个人主页" url="/jeaf/usermanage/personalIndex.shtml" internal="true">
+			<templatePlugin path="/portal/templatemanage/plugin.js" private="false">
+				<pageElementActions>portal,portlet</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="application" title="应用" internal="true">
+			<templateView name="admin/applicationTemplate" application="jeaf/usermanage"/>
+			<templatePlugin path="/jeaf/usermanage/templatemanage/plugin.js" private="false">
+				<templateActions>applicationTemplateRange</templateActions> <!-- 模板操作 -->
+			</templatePlugin>
+			<subPage name="navigator" title="应用程序导航栏" type="iframe" iframeUrl="/jeaf/application/applicationNavigator.shtml" normalCssFile="/jeaf/application/css/navigator.css"/> <!-- 子页面,显示在系统预置页面中,采用iframe模式显示-->
+			<subPage name="view" title="视图" type="iframe" iframeUrl="about:blank" normalCssFile="/jeaf/view/css/view.css"/> <!-- 子页面,显示在系统预置页面中,采用iframe模式显示 -->
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="internalForm" title="表单" internal="true" recordClass="com.yuanluesoft.jeaf.form.ActionForm">
+			<subPage name="base" title="表单主体" normalCssFile="/jeaf/form/css/form.css"/>
+			<subPage name="/jeaf/form/warn" title="系统提示" normalCssFile="/jeaf/form/css/prompt.css"/>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+			</extendedParameters>
+		</page>
+				
+		<page name="error" title="系统错误提示" internal="true">
+			<subPage name="base" title="错误详情" normalCssFile="/jeaf/form/css/form.css"/>
+			<extendedParameters>
+				<parameter name="rootOnly">true</parameter>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+
+		<page name="internalLogin" title="用户登录" internal="true">
+			<templateView name="admin/loginTemplate" application="jeaf/usermanage"/>
+			<templatePlugin path="/jeaf/usermanage/templatemanage/plugin.js" private="false">
+				<templateActions>loginTemplateHosts</templateActions> <!-- 模板操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="rootOnly">true</parameter>
+			</extendedParameters>
+			<extendedParameters>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="internalLoginDialog" title="用户登录(对话框)" internal="true">
+			<extendedParameters>
+				<parameter name="rootOnly">true</parameter>
+			</extendedParameters>
+			<extendedParameters>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+
+		<page name="internalDialog" title="对话框" internal="true"> <!-- 后台 -->
+			<templatePlugin path="/jeaf/dialog/templatemanage/plugin.js" private="true">
+				<pageElementActions>dialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+
+		<page name="member" title="网上用户注册" url="/jeaf/usermanage/member/regist.shtml">
+			<subPage name="base" title="用户注册"/>
+		</page>
+		<page name="registResult" title="注册结果" systemLink="false"></page>
+		
+		<page name="externalLogin" title="对外用户登录">
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="externalLoginDialog" title="对外用户登录(对话框)">
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="memberIndex" title="个人主页(网上注册用户)" url="/jeaf/usermanage/member/index.shtml">
+			<templatePlugin path="/portal/templatemanage/plugin.js" private="false">
+				<pageElementActions>portal,portlet</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<link title="项目申报链接"  url="/cms/onlineservice/accept/accept.shtml"/>
+		</page>
+	</pages>
+	
+	<links>
+		<link title="应用链接" dialogURL="/cms/templatemanage/dialog/insertApplicationLink.shtml"/>
+	</links>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="loginForm" processor="loginFormProcessor"/> <!-- 登录表单处理器 -->
+		<pageElement name="admin/eai" processor="eaiProcessor"/> <!-- EAI导航-->
+		<pageElement name="applicationLink" processor="applicationLinkProcessor"/> <!-- 应用链接 -->
+		<pageElement name="portalPages" processor="portalPagesProcessor"/> <!-- PORTAL页面列表 -->
+	</pageElements>
+</application>

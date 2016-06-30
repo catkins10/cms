@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/allServiceorg" form="admin/serviceorg" hide="noPrivilege(application_manager)" title="所有服务机构" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.serviceorg.org.pojo.ServiceOrg</pojo>
+			<orderBy>ServiceOrg.created DESC</orderBy>
+			<quickFilter>ServiceOrg.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="注册"  execute="PageUtils.newrecord('credit/serviceorg','admin/serviceorg','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="type" title="机构类别"  align="center"/>
+			<column name="addr" title="地址" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allServiceitem" form="admin/serviceitem" hide="noPrivilege(application_manager)" title="所有办事事项" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.serviceorg.serviceitem.pojo.ServiceItem</pojo>
+			<orderBy>ServiceItem.created DESC</orderBy>
+			<quickFilter>ServiceItem.name like '%{KEY}%' </quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="事项名称"/>
+			<column name="person" title="联系人"  align="center"/>
+			<column name="tel" title="电话" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/myServiceorg" form="admin/serviceorg" title="我的服务机构" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.serviceorg.org.pojo.ServiceOrg</pojo>
+			<where>ServiceOrg.id = {USERID}</where>
+			<orderBy>ServiceOrg.created DESC</orderBy>
+			<quickFilter>ServiceOrg.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="注册" hide="noPrivilege(manageUnit_orgedit)" execute="PageUtils.newrecord('credit/serviceorg','admin/serviceorg','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="名称"/>
+			<column name="type" title="机构类别"  align="center"/>
+			<column name="addr" title="地址" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/myServiceitem" form="admin/serviceitem" title="我的办事事项" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.serviceorg.serviceitem.pojo.ServiceItem</pojo>
+			<where>ServiceItem.creatorId={USERID}</where>
+			<orderBy>ServiceItem.created DESC</orderBy>
+			<quickFilter>ServiceItem.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="新增" execute="PageUtils.newrecord('credit/serviceorg','admin/serviceitem','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="事项名称"/>
+			<column name="person" title="联系人"  align="center"/>
+			<column name="tel" title="电话" align="center"/>
+		</columns>
+	</view>
+	
+	<view title="服务机构列表" name="serviceOrgs">
+		<data>
+			<pojo>com.yuanluesoft.credit.serviceorg.org.pojo.ServiceOrg</pojo>
+			<orderBy>ServiceOrg.created DESC</orderBy>
+			<quickFilter>ServiceOrg.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=credit/serviceorg&amp;pageName=serviceOrgDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view title="我的办事事项列表" name="serviceItems">
+		<data>
+			<pojo>com.yuanluesoft.credit.serviceorg.serviceitem.pojo.ServiceItem</pojo>
+			<where>ServiceItem.creatorId={PARAMETER:id}</where>
+			<orderBy>ServiceItem.created DESC</orderBy>
+			<quickFilter>ServiceItem.name like '%{KEY}%' </quickFilter>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=credit/serviceorg&amp;pageName=serviceItemDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view title="所有办事事项列表" name="allServiceItems">
+		<data>
+			<pojo>com.yuanluesoft.credit.serviceorg.serviceitem.pojo.ServiceItem</pojo>
+			<orderBy>ServiceItem.created DESC</orderBy>
+			<quickFilter>ServiceItem.name like '%{KEY}%' </quickFilter>
+		</data>
+		<links>
+			<link>/cms/sitemanage/applicationIndex.shtml?applicationName=credit/serviceorg&amp;pageName=serviceItemDetail&amp;id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	
+</views>

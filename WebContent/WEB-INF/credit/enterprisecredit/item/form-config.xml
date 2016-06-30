@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<!-- Excel导入表单 -->
+	<form name="admin/importData" class="com.yuanluesoft.credit.enterprisecredit.item.forms.ImportDateExcel" title="公布事项">
+	   <formFields>
+	   		<field name="data" title="数据文件" type="attachment" inputMode="attachment" length="1"><!-- 附件操作，length是个数 -->
+				<parameter name="fileExtension">Excel表格|*.xls;*.xlsx|</parameter><!-- 指定过滤文件 -->
+				<parameter name="simpleMode">true</parameter><!-- 简单模式 -->
+			</field>
+	   </formFields>
+	   <actions>
+			<action title="导入" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/bigstandard" class="com.yuanluesoft.credit.enterprisecredit.item.forms.BigStandard" title="龙海市工贸行业标准化网上申报通过名单" pojo="com.yuanluesoft.credit.enterprisecredit.item.pojo.BigStandard">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteBigstandard')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/handle" class="com.yuanluesoft.credit.enterprisecredit.item.forms.Handle" title="龙海市安监局行政处罚情况统计" pojo="com.yuanluesoft.credit.enterprisecredit.item.pojo.Handle">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteHandle')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/permit" class="com.yuanluesoft.credit.enterprisecredit.item.forms.Permit" title="龙海市安监局行政许可情况统计" pojo="com.yuanluesoft.credit.enterprisecredit.item.pojo.Permit">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deletePermit')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/punish" class="com.yuanluesoft.credit.enterprisecredit.item.forms.Punish" title="龙海市安监局行政处罚情况统计" pojo="com.yuanluesoft.credit.enterprisecredit.item.pojo.Punish">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deletePunish')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/smallstandard" class="com.yuanluesoft.credit.enterprisecredit.item.forms.SmallStandard" title="龙海市安监局行政处罚情况统计" pojo="com.yuanluesoft.credit.enterprisecredit.item.pojo.SmallStandard">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteSmallstandard')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/linkperson" class="com.yuanluesoft.credit.enterprisecredit.item.forms.LinkPerson" title="联系人" pojo="com.yuanluesoft.credit.enterprisecredit.item.pojo.LinkPerson">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteLinkperson')"/>
+		</actions>
+	</form>
+</forms>

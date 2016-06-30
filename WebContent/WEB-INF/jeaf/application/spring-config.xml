@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 应用导航解析器 -->
+	<bean id="applicationNavigatorDefinitionParser" class="com.yuanluesoft.jeaf.application.parser.dom4j.ApplicationNavigatorDefinitionParserImpl"/>
+	
+	<!-- 应用导航服务 -->
+	<bean id="applicationNavigatorService" class="com.yuanluesoft.jeaf.application.service.spring.ApplicationNavigatorServiceImpl">
+		<property name="accessControlService"><ref bean="accessControlService"/></property>
+		<property name="viewDefineService"><ref bean="viewDefineService"/></property>
+		<property name="formulaService"><ref bean="formulaService"/></property>
+		<property name="cache"><ref bean="modelCache"/></property>
+		<property name="applicationNavigatorDefinitionParser"><ref bean="applicationNavigatorDefinitionParser"/></property>
+	</bean>
+	
+	<!-- 应用页面服务 -->
+	<bean id="applicationPageService" class="com.yuanluesoft.jeaf.application.pages.ApplicationPageService">
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="userPageTemplateService"/></property>
+	</bean>
+</beans>

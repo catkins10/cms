@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 在线访谈 -->
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/interview"/>
+		
+		<page name="interview" title="访谈实录" systemLink="false" recordClass="com.yuanluesoft.cms.interview.pojo.InterviewSubject" url="/cms/interview/interview.shtml">
+			<link title="查看访谈背景" url="/cms/interview/interviewBackground.shtml?id={PARAMETER:id}"/>
+			<link title="查看嘉宾介绍" url="/cms/interview/interviewGuestsIntro.shtml?id={PARAMETER:id}"/>
+			<link title="访谈图片" url="/cms/interview/listInterviewImages.shtml?id={PARAMETER:id}"/>
+			<link title="访谈视频" url="/cms/interview/listInterviewVideos.shtml?id={PARAMETER:id}"/>
+		</page>
+		
+		<page name="interviewLive" title="访谈直播(网友)" systemLink="false" recordClass="com.yuanluesoft.cms.interview.pojo.InterviewSubject" url="/cms/interview/interviewLive.shtml">
+			<link title="查看全部发言" url="/cms/interview/interview.shtml?id={PARAMETER:id}"/>
+			<link title="查看访谈背景" url="/cms/interview/interviewBackground.shtml?id={PARAMETER:id}"/>
+			<link title="查看嘉宾介绍" url="/cms/interview/interviewGuestsIntro.shtml?id={PARAMETER:id}"/>
+			<link title="嘉宾、主持人登录" url="/cms/interview/interviewLiveLogin.shtml?id={PARAMETER:id}"/>
+			<link title="访谈图片列表" url="/cms/interview/listInterviewImages.shtml?id={PARAMETER:id}"/>
+			<link title="访谈视频列表" url="/cms/interview/listInterviewVideos.shtml?id={PARAMETER:id}"/>
+		</page>
+		
+		<page name="interviewCompereLive" title="访谈直播(主持人)" systemLink="false" recordClass="com.yuanluesoft.cms.interview.pojo.InterviewSubject" url="/cms/interview/interviewLive.shtml">
+			<link title="结束访谈" url="javascript:if(confirm('是否确定结束访谈？'))location.href='endInterview.shtml?id={PARAMETER:id}&amp;siteId={PARAMETER:siteId}'"/>
+			<link title="查看全部待审核发言" url="/cms/interview/listAllToApprovalSpeaks.shtml?id={PARAMETER:id}"/>
+			<link title="查看全部发言" url="/cms/interview/interview.shtml?id={PARAMETER:id}"/>
+			<link title="上传访谈图片" url="javascript:DialogUtils.openDialog('{CONTEXTPATH}/cms/interview/uploadImage.shtml?id={PARAMETER:id}&amp;siteId={PARAMETER:siteId}', 430, 200)"/>
+			<link title="查看访谈背景" url="/cms/interview/interviewBackground.shtml?id={PARAMETER:id}"/>
+			<link title="查看嘉宾介绍" url="/cms/interview/interviewGuestsIntro.shtml?id={PARAMETER:id}"/>
+			<link title="访谈图片列表" url="/cms/interview/listInterviewImages.shtml?id={PARAMETER:id}"/>
+			<link title="访谈视频列表" url="/cms/interview/listInterviewVideos.shtml?id={PARAMETER:id}"/>
+		</page>
+		
+		<page name="interviewGuestsLive" title="访谈直播(嘉宾)" systemLink="false" recordClass="com.yuanluesoft.cms.interview.pojo.InterviewSubject" url="/cms/interview/interviewLive.shtml">
+			<link title="查看全部待审核发言" url="/cms/interview/listAllToApprovalSpeaks.shtml?id={PARAMETER:id}"/>
+			<link title="查看全部发言" url="/cms/interview/interview.shtml?id={PARAMETER:id}"/>
+			<link title="查看访谈背景" url="/cms/interview/interviewBackground.shtml?id={PARAMETER:id}"/>
+			<link title="查看嘉宾介绍" url="/cms/interview/interviewGuestsIntro.shtml?id={PARAMETER:id}"/>
+			<link title="访谈图片列表" url="/cms/interview/listInterviewImages.shtml?id={PARAMETER:id}"/>
+			<link title="访谈视频列表" url="/cms/interview/listInterviewVideos.shtml?id={PARAMETER:id}"/>
+		</page>
+		
+		<page name="interviewApprovalLive" title="访谈直播(审核人)" systemLink="false" recordClass="com.yuanluesoft.cms.interview.pojo.InterviewSubject" url="/cms/interview/interviewLive.shtml">
+			<link title="查看全部待审核发言" url="/cms/interview/listAllToApprovalSpeaks.shtml?id={PARAMETER:id}"/>
+			<link title="查看全部发言" url="/cms/interview/interview.shtml?id={PARAMETER:id}"/>
+			<link title="上传访谈图片" url="javascript:DialogUtils.openDialog('{CONTEXTPATH}/cms/interview/uploadImage.shtml?id={PARAMETER:id}&amp;siteId={PARAMETER:siteId}', 430, 200)"/>
+			<link title="查看访谈背景" url="/cms/interview/interviewBackground.shtml?id={PARAMETER:id}"/>
+			<link title="查看嘉宾介绍" url="/cms/interview/interviewGuestsIntro.shtml?id={PARAMETER:id}"/>
+			<link title="访谈图片列表" url="/cms/interview/listInterviewImages.shtml?id={PARAMETER:id}"/>
+			<link title="访谈视频列表" url="/cms/interview/listInterviewVideos.shtml?id={PARAMETER:id}"/>
+		</page>
+		
+		<page name="interviewLiveLogin" title="访谈直播登录">
+			<subPage name="base" title="登录"/>
+		</page>
+		
+		<page name="listAllToApprovalSpeaks" title="全部待审核发言" systemLink="false" url="/cms/interview/listAllToApprovalSpeaks.shtml"/>
+
+		<page name="interviewImages" title="访谈图片列表" systemLink="false"/>
+		
+		<page name="interviewVideos" title="访谈视频列表" systemLink="false"/>
+		
+		<page name="interviewImage" title="访谈图片" systemLink="false" recordClass="com.yuanluesoft.cms.interview.pojo.InterviewImage" url="/cms/interview/interviewImage.shtml"/>
+
+		<page name="interviewVideo" title="访谈视频" systemLink="false" recordClass="com.yuanluesoft.cms.interview.pojo.InterviewVideo" url="/cms/interview/interviewVideo.shtml"/>
+		
+		<page name="interviewBackground" title="访谈背景" systemLink="false" recordClass="com.yuanluesoft.cms.interview.pojo.InterviewSubject" url="/cms/interview/interviewBackground.shtml"/>
+		
+		<page name="interviewGuestsIntro" title="访谈嘉宾介绍" systemLink="false" recordClass="com.yuanluesoft.cms.interview.pojo.InterviewSubject" url="/cms/interview/interviewGuestsIntro.shtml"/>
+	</pages>
+	
+	<links>
+		<!-- link title="在线访谈链接" dialogURL="/cms/interview/admin/insertInterviewLink.jsp"/ -->
+	</links>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="todoInterviews" processor="siteRecordListProcessor"/> <!-- 在线访谈预告列表处理器 -->
+		<pageElement name="bypastInterviews" processor="siteRecordListProcessor"/> <!-- 往期访谈列表处理器 -->
+		<pageElement name="interviewSpeak" processor="interviewSpeakFormProcessor"/> <!-- 在线访谈发言表单处理器 -->
+		<pageElement name="interviewLiveSpeaks" processor="interviewLiveSpeaksProcessor"/> <!-- 访谈直播发言列表处理器 -->
+		<pageElement name="toApprovalSpeaks" processor="interviewLiveSpeaksProcessor"/> <!-- 访谈直播待审核发言列表处理器 -->
+		<pageElement name="interviewImages" processor="interviewLiveSpeaksProcessor"/> <!-- 访谈图片列表处理器 -->
+	</pageElements>
+</application>

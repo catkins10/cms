@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- IM消息发送 -->
+	<bean id="imSender" class="com.yuanluesoft.jeaf.messagecenter.sender.im.IMSender">
+		<property name="imService"><ref bean="imService"/></property>
+		<property name="name"><value>im</value></property>
+		<property name="description"><value>IM消息客户端</value></property>
+		<property name="feedback"><value>true</value></property>
+	</bean>
+</beans>

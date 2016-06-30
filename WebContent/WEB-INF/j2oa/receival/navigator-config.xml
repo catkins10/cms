@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<application name="j2oa/receival" title="收文管理" defaultView="todoReceival,allReceival" openFeatures="width=720,height=480">
+	<viewLink local="todoReceival" title="待办收文"/>
+	<viewLink local="inProcessReceival" title="在办收文"/>
+	<viewLink local="allReceivalByMonth" title="按年月查询"/>
+	<viewLink local="allReceivalByType" title="按文种查询"/>
+	<viewLink local="allReceivalByMainDo" title="按部门查询"/>
+	<link name="templateConfig" title="办理单配置" hide="noPrivilege(application_manager)">
+		javascript:PageUtils.openurl('{WEBAPPLICATIONURL}/j2oa/receival/templateConfig.shtml', 'width=640,height=480', 'templateConfig')
+	</link>
+	<link name="filingConfig" title="归档配置" hide="noPrivilege(application_manager)">
+		javascript:PageUtils.openurl('{WEBAPPLICATIONURL}/j2oa/receival/filingConfig.shtml', 'width=640,height=480', 'filingConfig')
+	</link>
+</application>

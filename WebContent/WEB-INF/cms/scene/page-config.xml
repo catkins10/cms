@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/scene"/>
+		
+		<page name="sceneService" title="场景服务" realtimeStaticPage="true" recordClass="com.yuanluesoft.cms.scene.pojo.SceneService" systemLink="false" url="/cms/scene/sceneService.shtml">
+			<templateView name="admin/template" application="cms/scene"/>
+			<templatePlugin path="/cms/scene/templatemanage/plugin.js" private="true">
+				<templateActions>selectScene</templateActions> <!-- 扩展的模板操作 -->
+			</templatePlugin>
+			<link title="场景链接" dialogURL="/cms/scene/templatemanage/insertSceneLink.shtml"/>
+		</page>
+		
+		<page name="sceneIndex" title="场景服务(带场景目录树)" recordClass="com.yuanluesoft.cms.scene.pojo.SceneService" systemLink="false" url="/cms/scene/sceneIndex.shtml">
+			<templateView name="admin/template" application="cms/scene"/>
+			<templatePlugin path="/cms/scene/templatemanage/plugin.js" private="true">
+				<templateActions>selectScene</templateActions> <!-- 扩展的模板操作 -->
+			</templatePlugin>
+			<subPage name="sceneTree" title="场景目录树" type="iframe" iframeUrl="/cms/scene/sceneTree.shtml?parentNodeId={PARAMETER:id}" normalCssFile="/jeaf/tree/css/tree.css"/>
+			<subPage name="sceneList" title="场景列表" type="iframe" iframeUrl="/cms/scene/sceneService.shtml"/>
+		</page>
+		
+		<page name="scene" title="场景" realtimeStaticPage="true" recordClass="com.yuanluesoft.cms.scene.pojo.SceneDirectory" systemLink="false" url="/cms/scene/scene.shtml">
+			<templateView name="admin/template" application="cms/scene"/>
+			<templatePlugin path="/cms/scene/templatemanage/plugin.js" private="true">
+				<templateActions>selectScene</templateActions> <!-- 扩展的模板操作 -->
+				<pageElementActions>sceneLocation</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<link title="场景链接" dialogURL="/cms/scene/templatemanage/insertSceneLink.shtml"/>
+		</page>
+		
+		<page name="sceneContent" title="内容" realtimeStaticPage="true" recordClass="com.yuanluesoft.cms.scene.pojo.SceneContent" systemLink="false" url="/cms/scene/scene.shtml">
+			<templateView name="admin/template" application="cms/scene"/>
+			<templatePlugin path="/cms/scene/templatemanage/plugin.js" private="true">
+				<templateActions>selectSceneContent</templateActions> <!-- 扩展的模板操作 -->
+				<pageElementActions>sceneLocation</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+		</page>
+	</pages>
+	
+	<links>
+		<link title="场景服务链接" dialogURL="/cms/scene/templatemanage/insertSceneServiceLink.shtml"/>
+		<link title="场景服务(带场景目录树)链接" dialogURL="/cms/scene/templatemanage/insertSceneServiceLink.shtml?sceneTree=true"/>
+	</links>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="sceneServiceLink" processor="sceneServiceLinkProcessor"/> <!-- 场景服务链接处理器 -->
+		<pageElement name="sceneDirectories" processor="sceneDirectoriesProcessor"/> <!-- 场景选项列表处理器 -->
+		<pageElement name="sceneLink" processor="sceneLinkProcessor"/> <!-- 场景选项链接处理器 -->
+		<pageElement name="sceneLocation" processor="sceneLocationProcessor"/> <!-- 场景位置处理器 -->
+	</pageElements>
+</application>

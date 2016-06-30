@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="archivesUnit" type="com.yuanluesoft.archives.forms.ArchivesUnit"/>
+  <form-bean name="archivesFonds" type="com.yuanluesoft.archives.forms.ArchivesFonds"/>
+  <form-bean name="archivesSecureLevel" type="com.yuanluesoft.archives.forms.ArchivesSecureLevel"/>
+  <form-bean name="archivesRotentionPeriod" type="com.yuanluesoft.archives.forms.ArchivesRotentionPeriod"/>
+  <form-bean name="archivesCategory" type="com.yuanluesoft.archives.forms.ArchivesCategory"/>
+  <form-bean name="archivesCode" type="com.yuanluesoft.archives.forms.ArchivesCode"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="archivesFonds" path="/archivesFonds" scope="request"
+   type="com.yuanluesoft.archives.actions.base.Load" validate="false">
+   <forward name="load" path="/archivesFonds.jsp"/>
+  </action>
+  <action name="archivesSecureLevel" path="/archivesSecureLevel"
+   scope="request"
+   type="com.yuanluesoft.archives.actions.securelevel.Load" validate="false">
+   <forward name="load" path="/archivesSecureLevel.jsp"/>
+  </action>
+  <action name="archivesRotentionPeriod" path="/archivesRotentionPeriod"
+   scope="request" type="com.yuanluesoft.archives.actions.base.Load" validate="false">
+   <forward name="load" path="/archivesRotentionPeriod.jsp"/>
+  </action>
+  <action name="archivesCategory" path="/archivesCategory"
+   scope="request" type="com.yuanluesoft.archives.actions.base.Load" validate="false">
+   <forward name="load" path="/archivesCategory.jsp"/>
+  </action>
+  <action name="archivesUnit" path="/archivesUnit" scope="request"
+   type="com.yuanluesoft.archives.actions.base.Load" validate="false">
+   <forward name="load" path="/archivesUnit.jsp"/>
+  </action>
+  <action input="/archivesFonds.jsp" name="archivesFonds"
+   path="/saveArchivesFonds" scope="request"
+   type="com.yuanluesoft.archives.actions.base.Save" validate="false"/>
+  <action input="/archivesSecureLevel.jsp" name="archivesSecureLevel"
+   path="/saveArchivesSecureLevel" scope="request"
+   type="com.yuanluesoft.archives.actions.securelevel.Save" validate="false"/>
+  <action input="/archivesRotentionPeriod.jsp"
+   name="archivesRotentionPeriod" path="/saveArchivesRotentionPeriod"
+   scope="request" type="com.yuanluesoft.archives.actions.base.Save" validate="false"/>
+  <action input="/archivesCategory.jsp" name="archivesCategory"
+   path="/saveArchivesCategory" scope="request"
+   type="com.yuanluesoft.archives.actions.base.Save" validate="false"/>
+  <action input="/archivesUnit.jsp" name="archivesUnit"
+   path="/saveArchivesUnit" scope="request"
+   type="com.yuanluesoft.archives.actions.base.Save" validate="false"/>
+  <action name="archivesCode" path="/archivesCode" scope="request"
+   type="com.yuanluesoft.archives.actions.archivescode.Load" validate="false">
+   <forward name="load" path="/archivesCode.jsp"/>
+  </action>
+  <action input="/archivesCode.jsp" name="archivesCode"
+   path="/saveArchivesCode" scope="request"
+   type="com.yuanluesoft.archives.actions.archivescode.Save" validate="false"/>
+  <action input="/archivesCode.jsp" name="archivesCode"
+   path="/deleteArchivesCode" scope="request"
+   type="com.yuanluesoft.archives.actions.archivescode.Delete" validate="false"/>
+  <action input="/archivesUnit.jsp" name="archivesUnit"
+   path="/deleteArchivesUnit" scope="request"
+   type="com.yuanluesoft.archives.actions.base.Delete" validate="false"/>
+  <action input="/archivesCategory.jsp" name="archivesCategory"
+   path="/deleteArchivesCategory" scope="request"
+   type="com.yuanluesoft.archives.actions.base.Delete" validate="false"/>
+  <action input="/archivesRotentionPeriod.jsp"
+   name="archivesRotentionPeriod" path="/deleteArchivesRotentionPeriod"
+   scope="request" type="com.yuanluesoft.archives.actions.base.Delete" validate="false"/>
+  <action input="/archivesSecureLevel.jsp" name="archivesSecureLevel"
+   path="/deleteArchivesSecureLevel" scope="request"
+   type="com.yuanluesoft.archives.actions.securelevel.Delete" validate="false"/>
+  <action input="/archivesFonds.jsp" name="archivesFonds"
+   path="/deleteArchivesFonds" scope="request"
+   type="com.yuanluesoft.archives.actions.base.Delete" validate="false"/>
+  <action input="/archivesCode.jsp" name="archivesCode"
+   path="/createNextArchivesCode" scope="request"
+   type="com.yuanluesoft.archives.actions.archivescode.CreateNext" validate="false"/>
+  <action input="/archivesSecureLevel.jsp" name="archivesSecureLevel"
+   path="/createNextArchivesSecureLevel" scope="request"
+   type="com.yuanluesoft.archives.actions.securelevel.CreateNext" validate="false"/>
+  <action input="/archivesRotentionPeriod.jsp"
+   name="archivesRotentionPeriod"
+   path="/createNextArchivesRotentionPeriod" scope="request"
+   type="com.yuanluesoft.archives.actions.base.CreateNext" validate="false"/>
+  <action input="/archivesCategory.jsp" name="archivesCategory"
+   path="/createNextArchivesCategory" scope="request"
+   type="com.yuanluesoft.archives.actions.base.CreateNext" validate="false"/>
+  <action input="/archivesUnit.jsp" name="archivesUnit"
+   path="/createNextArchivesUnit" scope="request"
+   type="com.yuanluesoft.archives.actions.base.CreateNext" validate="false"/>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="200M"/>
+</struts-config>

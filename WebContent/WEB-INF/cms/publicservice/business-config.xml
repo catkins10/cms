@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="公众服务" class="com.yuanluesoft.cms.publicservice.pojo.PublicService" businessServiceName="publicService">
+		<parameter name="captureConfigure">/cms/publicservice/admin/captureConfigure.jsp</parameter> <!-- 抓取配置页面 -->
+		<field name="sn" title="编号" length="20" type="string" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="queryPassword" title="查询密码" length="30" required="true" type="string" inputMode="text"/>
+		<field name="subject" title="主题" length="2000" required="true" type="string" inputMode="text">
+			<parameter name="rssTitleField">true</parameter>
+		</field>
+		<field name="content" title="内容" persistence="false" type="string" inputMode="textarea">
+			<parameter name="rssDescriptionField">true</parameter>
+			<parameter name="referenceFields">lazyBody</parameter>
+			<parameter name="rows">8</parameter>
+		</field>
+		<field name="workingDay" title="指定工作日" length="3" type="number" inputMode="readonly"/>
+		<field name="workingDate" title="办理截止时间" type="timestamp" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="rssPubDateField">true</parameter>
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="creator" title="姓名" length="20" required="true" type="string" inputMode="text"/>
+		<field name="creatorSex" title="性别" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">男|M\0女|F</parameter>
+		</field>
+		<field name="creatorTel" title="联系电话" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="creatorCertificateName" title="证件名称" length="20" type="string" inputMode="text"/>
+		<field name="creatorIdentityCard" title="证件号码" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="creatorMail" title="邮箱" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="creatorIP" title="IP" length="30" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="creatorMobile" title="手机" length="100" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="creatorFax" title="传真" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="creatorUnit" title="所在单位" length="200" type="string" inputMode="text"/>
+		<field name="creatorJob" title="职业" length="100" type="string" inputMode="text"/>
+		<field name="creatorAddress" title="地址" length="100" type="string" inputMode="text"/>
+		<field name="creatorPostalcode" title="邮政编码" length="10" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="isPublic" title="是否允许公开" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">允许|1\0禁止|0</parameter>
+		</field>
+		<field name="remark" title="备注" length="1000" type="string" inputMode="text"/>
+		<field name="siteId" title="隶属站点ID" length="20" type="number" inputMode="hidden"/>
+		<field name="publicPass" title="是否公布到网站" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">公布|1\0不公布|0</parameter>
+		</field>
+		<field name="publicBody" title="公布正文" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">公布|1\0不公布|0</parameter>
+		</field>
+		<field name="publicWorkflow" title="公布办理流程" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">公布|1\0不公布|0</parameter>
+		</field>
+		<field name="publicSubject" title="公开的主题" length="200" type="string" inputMode="text"/>
+		<field name="publicEnd" title="公开截止时间" type="timestamp" inputMode="datetime"/>
+		<field name="publicPersonName" title="公开经办人" length="200" type="string" inputMode="readonly"/>
+		<field name="publicPersonId" title="公开经办人ID" length="20" type="number" inputMode="none"/>
+		<field name="completeTime" title="办结时间" type="timestamp" inputMode="readonly"/>
+		<field name="isDeleted" title="是否逻辑删除" length="1" type="number" inputMode="none"/>
+		<field name="clientDeviceId" title="客户端设备ID" length="100" type="string" inputMode="none"/>
+		<field name="lazyBody" title="正文" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.publicservice.pojo.PublicServiceBody</parameter>
+		</field>
+		<field name="replier" title="回复人" persistence="false" type="string" inputMode="readonly"/>
+		<field name="replyContent" title="回复内容" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">opinions</parameter>
+		</field>
+		<field name="replyTime" title="回复时间" persistence="false" type="timestamp" inputMode="readonly">
+			<parameter name="referenceFields">opinions</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="流程配置" class="com.yuanluesoft.cms.publicservice.pojo.WorkflowSetting">
+		<field name="applicationName" title="应用名称" length="30" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="siteId" title="绑定的站点ID" type="number" inputMode="hidden"/>
+		<field name="workflowId" title="流程ID" length="20" type="string" inputMode="none">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="workflowName" title="流程名称" length="50" type="string" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="办结短信格式" class="com.yuanluesoft.cms.publicservice.pojo.PublicServiceSms">
+		<field name="applicationName" title="应用名称" length="30" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="siteId" title="绑定的站点ID" length="100" type="number" inputMode="hidden"/>
+		<field name="smsFormat" title="短信格式" length="300" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="编号" class="com.yuanluesoft.cms.publicservice.pojo.PublicServiceSN" businessServiceName="publicService">
+		<field name="day" title="日期" type="date" inputMode="none"/>
+		<field name="sn" title="编号" type="number" inputMode="none"/>
+	</businessObject>
+	
+	<businessObject title="受理统计" class="com.yuanluesoft.cms.publicservice.model.PublicServiceStatistic">
+		<field name="total" title="累计受理" type="number" inputMode="readonly"/>
+		<field name="completeTotal" title="累计办结" type="number" inputMode="readonly"/>
+		<field name="monthTotal" title="本月累计受理" type="number" inputMode="readonly"/>
+		<field name="monthCompleteTotal" title="本月累计办结" type="number" inputMode="readonly"/>
+		<field name="yesterdayTotal" title="昨日累计受理" type="number" inputMode="readonly"/>
+		<field name="yesterdayCompleteTotal" title="昨日累计办结" type="number" inputMode="readonly"/>
+		<field name="todayTotal" title="今日累计受理" type="number" inputMode="readonly"/>
+		<field name="todayCompleteTotal" title="今日累计办结" type="number" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

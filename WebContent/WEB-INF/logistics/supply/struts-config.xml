@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="supply" type="com.yuanluesoft.logistics.supply.forms.Supply"/>
+  <form-bean name="adminSupply" type="com.yuanluesoft.logistics.supply.forms.admin.Supply"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="supply" path="/supply" scope="request"
+   type="com.yuanluesoft.logistics.supply.actions.supply.Load" validate="false">
+   <forward name="load" path="/supply.jsp"/>
+  </action>
+  <action input="/supply.jsp" name="supply" path="/saveSupply"
+   scope="request"
+   type="com.yuanluesoft.logistics.supply.actions.supply.Save" validate="false">
+   <forward name="result" path="/supplySubmitted.jsp"/>
+  </action>
+  <action input="/supply.jsp" name="supply" path="/deleteSupply"
+   scope="request"
+   type="com.yuanluesoft.logistics.supply.actions.supply.Delete" validate="false">
+   <forward name="result" path="/supplyDeleted.jsp"/>
+  </action>
+  <action path="/index" scope="request"
+   type="com.yuanluesoft.logistics.supply.actions.index.Load" validate="false"/>
+  <action path="/supplies" scope="request"
+   type="com.yuanluesoft.logistics.supply.actions.supplies.Load" validate="false"/>
+  <action path="/mySupplies" scope="request"
+   type="com.yuanluesoft.logistics.supply.actions.mysupplies.Load" validate="false"/>
+  <action name="adminSupply" path="/admin/supply" scope="request"
+   type="com.yuanluesoft.logistics.supply.actions.supply.admin.Load" validate="false">
+   <forward name="load" path="/admin/supply.jsp"/>
+  </action>
+  <action input="/admin/supply.jsp" name="adminSupply"
+   path="/admin/saveSupply" scope="request"
+   type="com.yuanluesoft.logistics.supply.actions.supply.admin.Save" validate="false"/>
+  <action input="/admin/supply.jsp" name="adminSupply"
+   path="/admin/deleteSupply" scope="request"
+   type="com.yuanluesoft.logistics.supply.actions.supply.admin.Delete" validate="false"/>
+  <action path="/supplySearch" scope="request"
+   type="com.yuanluesoft.logistics.supply.actions.supplysearch.Load" validate="false"/>
+  <action input="/admin/supply.jsp" name="adminSupply"
+   path="/admin/issueSupply" scope="request"
+   type="com.yuanluesoft.logistics.supply.actions.supply.admin.Issue" validate="false"/>
+  <action input="/admin/supply.jsp" name="adminSupply"
+   path="/admin/unissueSupply" scope="request"
+   type="com.yuanluesoft.logistics.supply.actions.supply.admin.Unissue" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

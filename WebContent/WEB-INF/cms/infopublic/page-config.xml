@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<!-- 模板插件,page也可以有自己的配置 -->
+	<templatePlugins>
+		<templatePlugin path="/cms/infopublic/templatemanage/plugin.js" private="true">
+			<templateActions/> <!-- 模板操作 -->
+			<pageElementActions>infoDirectoryLocation</pageElementActions> <!-- 页面元素操作 -->
+		</templatePlugin>
+	</templatePlugins>
+
+	<pages>
+		<page name="publicInfoIndex" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/infopublic&amp;pageName=publicInfoIndex"/>
+		
+		<page name="index" title="信息公开目录" url="/cms/infopublic/index.shtml">
+			<subPage name="publicInfoDirectory" title="信息公开目录" type="iframe" iframeUrl="/cms/infopublic/directoryTree.shtml" normalCssFile="/jeaf/tree/css/tree.css"/> <!-- 子表单,显示在系统预置页面中,采用iframe模式显示-->
+			<subPage name="publicInfoList" title="信息列表" type="iframe" iframeUrl="/cms/infopublic/publicInfoView.shtml"/> <!-- 子表单,显示在系统预置页面中,采用iframe模式显示 -->
+			<link title="目录下载(电子表格)" url="javascript:location.href='{CONTEXTPATH}/cms/infopublic/printInfoView.shtml' + frames['publicInfoList'].location.search;"/>
+			<link title="目录下载(PDF)列表" url="javascript:frames['publicInfoList'].location='{CONTEXTPATH}/cms/sitemanage/applicationIndex.shtml?applicationName=cms/infopublic&amp;pageName=infoDirectoryDownload&amp;directoryId={PARAMETER:directoryId}&amp;siteId={PARAMETER:siteId}'"/>
+			<link title="短信订阅" url="javascript:location.href='{CONTEXTPATH}/cms/smssubscription/subscribe.shtml?siteId={PARAMETER:siteId}&amp;contentName=%E4%BF%A1%E6%81%AF%E5%85%AC%E5%BC%80&amp;subscribeParameter=directoryId%3d' + StringUtils.getPropertyValue(frames['publicInfoList'].location.search, 'directoryId', '');"/>
+			<link title="短信退订" url="javascript:location.href='{CONTEXTPATH}/cms/smssubscription/unsubscribe.shtml?siteId={PARAMETER:siteId}&amp;contentName=%E4%BF%A1%E6%81%AF%E5%85%AC%E5%BC%80&amp;subscribeParameter=directoryId%3d' + StringUtils.getPropertyValue(frames['publicInfoList'].location.search, 'directoryId', '');"/>
+		</page>
+
+		<page name="publicInfoView" title="政府信息列表" url="/cms/infopublic/publicInfoView.shtml" systemLink="false"/>
+		
+		<page name="info" title="政府信息" systemLink="false" url="/cms/infopublic/publicInfo.shtml" recordClass="com.yuanluesoft.cms.infopublic.pojo.PublicInfo" pagingSupport="true"/> <!-- 支持翻页 -->
+		
+		<page name="publicInfoQuickQuery" title="信息公开查询" searchPage="true" searchResults="infos" url="/cms/infopublic/publicInfoQuery.shtml?quickQuery=true"/>
+
+		<page name="publicInfoQuery" title="信息公开查询(高级)" searchPage="true" searchResults="infos" url="/cms/infopublic/publicInfoQuery.shtml">
+			<subPage title="信息公开查询结果" name="publicInfoQueryResult" type="template"/>
+		</page>
+		
+		<page name="guide" title="信息公开指南" url="/cms/infopublic/guide.shtml" recordClass="com.yuanluesoft.cms.infopublic.pojo.PublicGuide"/>
+		
+		<page name="articleDirectory" systemLink="false" title="文章目录" recordClass="com.yuanluesoft.cms.infopublic.pojo.PublicArticleDirectory" recordPage="false"/>
+		
+		<page name="article" url="/cms/infopublic/article.shtml" systemLink="false" title="文章" recordClass="com.yuanluesoft.cms.infopublic.pojo.PublicInfo"/>
+	
+		<page name="accessStat" title="信息公开栏目访问统计" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/infopublic&amp;pageName=accessStat"/>
+		
+		<page name="infoDirectoryDownload" title="信息公开目录下载" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/infopublic&amp;pageName=infoDirectoryDownload"/>
+	</pages>
+	
+	<!-- 链接 -->
+	<links>
+		<link title="信息公开目录链接" dialogURL="/cms/infopublic/templatemanage/insertInfoDirectoryLink.shtml"/>
+	</links>
+	
+	<!-- 页面元素,name必须在所有的应用中唯一 -->
+	<pageElements>
+		<pageElement name="infoDirectoryLocation" processor="infoDirectoryLocationProcessor"/> <!-- 信息公开目录位置处理器 -->
+		<pageElement name="infoDirectoryLink" processor="infoDirectoryLinkProcessor"/> <!-- 信息公开目录链接 -->
+		<pageElement name="infos" processor="publicInfosProcessor"/> <!-- 政府信息列表 -->
+		<pageElement name="publicArticles" processor="publicInfosProcessor"/> <!-- 信息公开文章列表 -->
+		<pageElement name="infoDirectoryDownloads" processor="publicInfosProcessor"/> <!-- 信息公开目录下载 -->
+		<pageElement name="publicInfoQuery" processor="publicInfoQueryFormProcessor"/> <!-- 政府信息高级搜索表单 -->
+		<pageElement name="publicInfoQuickQuery" processor="publicInfoQueryFormProcessor"/> <!-- 政府信息快速搜索表单 -->
+	</pageElements>
+</application>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+  
+    <businessObject title="用户信息" class="com.yuanluesoft.credit.regist.pojo.admin.CreditUser" businessServiceName="memberRegistService">	
+        <field name="loginName" title="登录用户名"  type="string" inputMode="text" required="true"/>
+		<field name="password" title="密码"  type="string" inputMode="text" required="true"/>
+        <field name="name" title="姓名"  type="string" inputMode="text" required="true"/>
+        <field name="email" title="邮箱"  type="string" inputMode="text" required="true"/>
+		<field name="tel" title="联系方式"  type="string" inputMode="text" required="true"/>
+		<field name="addr" title="地址"  type="string" inputMode="text" required="true"/>
+		<field name="unitName" title="单位名称"  type="string" inputMode="text" required="true" />
+		<field name="job" title="职务"  type="string" inputMode="text" required="true"/>
+		<field name="buniessScope" title="经营范围"  type="string" inputMode="text" required="true"/>
+		<field name="status" title="状态"  type="number" inputMode="dropdown" required="true">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsText">提交|0\0审核通过|1\0审核不通过|2</parameter>
+		</field>
+		<field name="remark" title="审核意见"  type="string" inputMode="text" />
+		<field name="created" title="注册时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		
+		<field name="approverId" title="审核人ID" length="20" type="number" inputMode="readonly"/>
+		<field name="approver" title="审核人" length="100" type="string" inputMode="readonly"/>
+		<field name="approveDate" title="审核时间" type="timestamp" inputMode="readonly"/>
+		
+	</businessObject>
+	
+
+</businessObjects>

@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view title="待办项目" name="todoBiddingProjects">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProject</pojo>
+			<where>BiddingProject.halt!='1'</where>
+			<orderBy>BiddingProject.created DESC</orderBy>
+			<filter>TODO</filter>
+			<quickFilter>BiddingProject.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="项目">/bidding/project/project.shtml</link>
+			<link type="hostLink">/bidding/project/todoBiddingProjects.shtml</link>
+		</links>
+	</view>
+	
+	<view title="参与招标项目" name="agentBiddingProjects">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProject</pojo>
+			<where>BiddingProject.halt!='1' and biddingAgents.agentId={DEPARTMENTID}</where>
+			<orderBy>BiddingProject.created DESC</orderBy>
+			<quickFilter>BiddingProject.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="项目">/bidding/project/project.shtml</link>
+			<link type="hostLink">/bidding/project/agentBiddingProjects.shtml</link>
+		</links>
+		<extendParameters>
+			<parameter name="rssChannel">false</parameter> <!-- 不支持RSS -->
+		</extendParameters>
+	</view>
+	
+	<view title="项目信息" name="biddingProjectInfos">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProject</pojo>
+			<where>BiddingProject.halt!='1' and not BiddingProject.registTime is null</where>
+			<orderBy>BiddingProject.registTime DESC</orderBy>
+			<quickFilter>BiddingProject.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>registTime</newestCheckBy>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/bidding/project/templatemanage/insertRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+		<links>
+			<link title="项目信息">/bidding/project/projectInfo.shtml</link>
+			<link type="hostLink">/bidding/project/prepareBiddingProjects.shtml</link>
+		</links>
+	</view>
+	
+	<view title="项目信息(进度查询)" name="biddingProjectProgresses">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProject</pojo>
+			<where>BiddingProject.halt!='1' and not BiddingProject.registTime is null</where>
+			<orderBy>BiddingProject.registTime DESC</orderBy>
+			<quickFilter>BiddingProject.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>registTime</newestCheckBy>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/bidding/project/templatemanage/insertRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="rssChannel">false</parameter>
+		</extendParameters>
+		<links>
+			<link title="项目进度">/bidding/project/projectProgress.shtml</link>
+			<link type="hostLink">/bidding/project/biddingProjectProgressQuery.shtml</link>
+		</links>
+	</view>
+	
+	<view title="代理抽签公告" name="biddingAgentDraws">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectAgentDraw</pojo>
+			<where>project.halt!='1' and not BiddingProjectAgentDraw.publicBeginTime is null</where>
+			<orderBy>BiddingProjectAgentDraw.publicBeginTime DESC</orderBy>
+			<quickFilter>BiddingProjectAgentDraw.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>publicBeginTime</newestCheckBy>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/bidding/project/templatemanage/insertRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+		<links>
+			<link title="代理抽签公告">/bidding/project/agentDraw.shtml</link>
+			<link type="hostLink">/bidding/project/biddingAgentDraws.shtml</link>
+		</links>
+	</view>
+	
+	<view title="中选代理公示" name="biddingAgents">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectAgent</pojo>
+			<where>project.halt!='1' and not BiddingProjectAgent.publicBeginTime is null</where>
+			<orderBy>BiddingProjectAgent.publicBeginTime DESC</orderBy>
+			<quickFilter>BiddingProjectAgent.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>publicBeginTime</newestCheckBy>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/bidding/project/templatemanage/insertRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+		<links>
+			<link title="中选代理公示">/bidding/project/agent.shtml</link>
+			<link type="hostLink">/bidding/project/biddingAgents.shtml</link>
+		</links>
+	</view>
+	
+	<view title="招标公告" name="biddingTenders">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectTender</pojo>
+			<where>project.halt!='1' and not BiddingProjectTender.publicBeginTime is null</where>
+			<orderBy>BiddingProjectTender.publicBeginTime DESC</orderBy>
+			<quickFilter>BiddingProjectTender.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>publicBeginTime</newestCheckBy>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/bidding/project/templatemanage/insertRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+		<links>
+			<link title="招标公告">/bidding/project/tender.shtml</link>
+			<link type="hostLink">/bidding/project/biddingTenders.shtml</link>
+		</links>
+	</view>
+	
+	<view title="允许报名的招标公告" name="toSignUpBiddingTenders">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectTender</pojo>
+			<where>project.halt!='1' and not BiddingProjectTender.publicBeginTime is null and BiddingProjectTender.buyDocumentBegin&lt;=TIMESTAMP({NOW}) and BiddingProjectTender.buyDocumentEnd>=TIMESTAMP({NOW})</where>
+			<orderBy>BiddingProjectTender.publicBeginTime DESC</orderBy>
+			<quickFilter>BiddingProjectTender.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>publicBeginTime</newestCheckBy>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/bidding/project/templatemanage/insertRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+		<links>
+			<link title="招标公告">/bidding/project/tender.shtml</link>
+			<link type="hostLink">/bidding/project/toSignUpBiddingTenders.shtml</link>
+		</links>
+	</view>
+	
+	<view title="招标时间安排" name="biddingPlans">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectPlan</pojo>
+			<where>project.halt!='1' and not BiddingProjectPlan.publicBeginTime is null</where>
+			<orderBy>BiddingProjectPlan.publicBeginTime DESC</orderBy>
+			<quickFilter>BiddingProjectPlan.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>publicBeginTime</newestCheckBy>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/bidding/project/templatemanage/insertRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+		<links>
+			<link title="招标时间安排">/bidding/project/plan.shtml</link>
+			<link type="hostLink">/bidding/project/biddingPlans.shtml</link>
+		</links>
+	</view>
+	
+	<!-- view title="招标文件实质性内容" name="biddingMaterials">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectMaterial</pojo>
+			<where>project.halt!='1' and not BiddingProjectMaterial.publicBeginTime is null</where>
+			<orderBy>BiddingProjectMaterial.publicBeginTime DESC</orderBy>
+			<quickFilter>BiddingProjectMaterial.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>publicBeginTime</newestCheckBy>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/bidding/project/templatemanage/insertRecordList.shtml</parameter>
+		</extendParameters>
+		<links>
+			<link title="招标文件实质性内容">/bidding/project/material.shtml</link>
+			<link type="hostLink">/bidding/project/biddingMaterials.shtml</link>
+		</links>
+	</view -->
+	
+	<view title="答疑会议纪要" name="biddingAnswers">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectAnswer</pojo>
+			<where>project.halt!='1' and not BiddingProjectAnswer.publicBeginTime is null</where>
+			<orderBy>BiddingProjectAnswer.publicBeginTime DESC</orderBy>
+			<quickFilter>BiddingProjectAnswer.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>publicBeginTime</newestCheckBy>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/bidding/project/templatemanage/insertRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+		<links>
+			<link title="答疑会议纪要">/bidding/project/answer.shtml</link>
+			<link type="hostLink">/bidding/project/biddingAnswers.shtml</link>
+		</links>
+	</view>
+	
+	<view title="补充通知" name="biddingSupplements">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectSupplement</pojo>
+			<where>project.halt!='1' and not BiddingProjectSupplement.publicBeginTime is null</where>
+			<orderBy>BiddingProjectSupplement.publicBeginTime DESC</orderBy>
+			<quickFilter>BiddingProjectSupplement.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>publicBeginTime</newestCheckBy>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/bidding/project/templatemanage/insertRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+		<links>
+			<link title="补充通知">/bidding/project/supplement.shtml</link>
+			<link type="hostLink">/bidding/project/biddingSupplements.shtml</link>
+		</links>
+	</view>
+		
+	<view title="当前项目的其它补充通知" name="otherBiddingSupplements">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectSupplement</pojo>
+			<where>project.halt!='1' and BiddingProjectSupplement.projectId={PARAMETER:projectId} and BiddingProjectSupplement.id!={PARAMETER:id} and not BiddingProjectSupplement.publicBeginTime is null</where>
+			<orderBy>BiddingProjectSupplement.publicBeginTime DESC</orderBy>
+			<quickFilter>BiddingProjectSupplement.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>publicBeginTime</newestCheckBy>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/bidding/project/templatemanage/insertRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+		<links>
+			<link title="补充通知">/bidding/project/supplement.shtml</link>
+			<link type="hostLink">/bidding/project/biddingSupplements.shtml</link>
+		</links>
+	</view>
+	
+	<view title="预审公示" name="biddingPreapprovals">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectPreapproval</pojo>
+			<where>project.halt!='1' and not BiddingProjectPreapproval.publicBeginTime is null</where>
+			<orderBy>BiddingProjectPreapproval.publicBeginTime DESC</orderBy>
+			<quickFilter>BiddingProjectPreapproval.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>publicBeginTime</newestCheckBy>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/bidding/project/templatemanage/insertRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+		<links>
+			<link title="预审公示">/bidding/project/preapproval.shtml</link>
+			<link type="hostLink">/bidding/project/biddingPreapprovals.shtml</link>
+		</links>
+	</view>
+	
+	<view title="开标公示" name="bidopenings">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectBidopening</pojo>
+			<where>project.halt!='1' and not BiddingProjectBidopening.publicBeginTime is null</where>
+			<orderBy>BiddingProjectBidopening.publicBeginTime DESC</orderBy>
+			<quickFilter>BiddingProjectBidopening.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>publicBeginTime</newestCheckBy>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/bidding/project/templatemanage/insertRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+		<links>
+			<link title="开标公示">/bidding/project/bidopening.shtml</link>
+			<link type="hostLink">/bidding/project/bidopenings.shtml</link>
+		</links>
+	</view>
+	
+	<view title="中标结果公示" name="biddingPitchons">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectPitchon</pojo>
+			<where>project.halt!='1' and not BiddingProjectPitchon.publicBeginTime is null</where>
+			<orderBy>BiddingProjectPitchon.publicBeginTime DESC</orderBy>
+			<quickFilter>BiddingProjectPitchon.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>publicBeginTime</newestCheckBy>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/bidding/project/templatemanage/insertRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+		<links>
+			<link title="中标结果公示">/bidding/project/pitchon.shtml</link>
+			<link type="hostLink">/bidding/project/biddingPitchons.shtml</link>
+		</links>
+	</view>
+	
+	<view title="中标通知书" name="biddingNotices">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectNotice</pojo>
+			<where>project.halt!='1' and not BiddingProjectNotice.publicBeginTime is null</where>
+			<orderBy>BiddingProjectNotice.publicBeginTime DESC</orderBy>
+			<quickFilter>BiddingProjectNotice.projectName like '%{KEY}%'</quickFilter>
+			<newestCheckBy>publicBeginTime</newestCheckBy>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/bidding/project/templatemanage/insertRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+		<links>
+			<link title="中标通知书">/bidding/project/notice.shtml</link>
+			<link type="hostLink">/bidding/project/biddingNotices.shtml</link>
+		</links>
+	</view>
+		
+	<view name="admin/todo" form="admin/project" title="待办项目" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="biddingProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProject</pojo>
+			<where>BiddingProject.halt!='1'</where>
+			<orderBy>BiddingProject.created DESC</orderBy>
+			<quickFilter>BiddingProject.projectName like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="登记" execute="PageUtils.newrecord('bidding/project', 'admin/project', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="projectName"/>
+			<column title="编号" name="projectNumber" width="120" displayExcept="portlet"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="120" display="normal,print,portlet"/>
+			<column title="创建时间" name="created" format="yyyy-MM-dd" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/processing" form="admin/project" title="在办项目" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="biddingProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProject</pojo>
+			<where>BiddingProject.halt!='1'</where>
+			<orderBy>BiddingProject.created DESC</orderBy>
+			<quickFilter>BiddingProject.projectName like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="登记" execute="PageUtils.newrecord('bidding/project', 'admin/project', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="projectName"/>
+			<column title="编号" name="projectNumber" width="120" align="center" displayExcept="portlet"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="120" display="normal,print,portlet"/>
+			<column title="创建时间" name="created" format="yyyy-MM-dd" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/project" form="admin/project" title="所有项目" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="biddingProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProject</pojo>
+			<where>BiddingProject.halt!='1'</where>
+			<orderBy>BiddingProject.created DESC</orderBy>
+			<quickFilter>BiddingProject.projectName like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="登记" execute="PageUtils.newrecord('bidding/project', 'admin/project', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="projectName"/>
+			<column title="编号" name="projectNumber" width="120" align="center" displayExcept="portlet"/>
+			<column title="创建时间" name="created" format="yyyy-MM-dd" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/haltProject" form="admin/project" title="作废项目" hide="noPrivilege(application_manager)" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="biddingProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProject</pojo>
+			<where>BiddingProject.halt='1'</where>
+			<orderBy>BiddingProject.created DESC</orderBy>
+			<quickFilter>BiddingProject.projectName like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="登记" execute="PageUtils.newrecord('bidding/project', 'admin/project', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="projectName"/>
+			<column title="编号" name="projectNumber" width="120" align="center" displayExcept="portlet"/>
+			<column title="创建时间" name="created" format="yyyy-MM-dd" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/parameterConfig" form="admin/parameterConfig" title="参数配置" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectParameter</pojo>
+			<quickFilter>BiddingProjectParameter.categories like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加配置" execute="PageUtils.newrecord('bidding/project', 'admin/parameterConfig', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="适用的项目分类" name="categoriesText" width="40%"/>
+			<column title="适用的招标内容" name="proceduresText" width="30%"/>
+			<column title="适用的地区" name="citiesText" width="30%"/>
+		</columns>
+	</view>
+	
+	<view name="admin/workflowConfig" form="admin/workflowConfig" title="流程配置" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectWorkflow</pojo>
+			<quickFilter>BiddingProjectWorkflow.categories like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加配置" execute="PageUtils.newrecord('bidding/project', 'admin/workflowConfig', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="适用的项目分类" name="categoriesText" width="40%"/>
+			<column title="适用的招标内容" name="proceduresText" width="30%"/>
+			<column title="适用的地区" name="citiesText" link="trueText" width="30%"/>
+			<column title="流程名称" name="workflowName" width="150"/>
+		</columns>
+	</view>
+	
+	<view name="admin/fileConfig" form="admin/fileConfig" title="资料配置" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectFile</pojo>
+			<quickFilter>BiddingProjectFile.categories like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加配置" execute="PageUtils.newrecord('bidding/project', 'admin/fileConfig', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="适用的项目分类" name="categoriesText" width="40%"/>
+			<column title="适用的招标内容" name="proceduresText" width="30%"/>
+			<column title="适用的地区" name="citiesText" width="30%"/>
+		</columns>
+	</view>
+	
+	<view name="admin/cityConfig" form="admin/cityConfig" title="地区配置" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectCity</pojo>
+			<orderBy>BiddingProjectCity.name</orderBy>
+			<quickFilter>BiddingProjectCity.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加地区" execute="PageUtils.newrecord('bidding/project', 'admin/cityConfig', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+			<column title="简称" name="shortName" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/template" form="admin/template" title="模板配置" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectTemplate</pojo>
+			<orderBy>BiddingProjectTemplate.templateName</orderBy>
+			<quickFilter>BiddingProjectTemplate.templateName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="名称" name="templateName" width="90"/>
+			<column title="最后修改时间" name="lastModified" align="center" width="105"/>
+			<column title="最后修改人" name="lastModifier" align="center" width="72"/>
+			<column title="适用的项目分类" name="categoriesText" width="110"/>
+			<column title="适用的招标内容" name="proceduresText" width="125"/>
+			<column title="适用的地区" name="citiesText"/>
+			<column title="适用的招标方式" name="biddingModesText" width="110"/>
+			<column title="默认" name="isDefault" align="center" width="32"/>
+		</columns>
+	</view>
+	
+	<view name="projectOwner" title="建设单位" pageRows="100">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectOwner</pojo>
+			<orderBy>BiddingProjectOwner.owner</orderBy>
+			<quickFilter>BiddingProjectOwner.owner like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="名称" name="owner"/>
+			<column title="法人代表" name="ownerRepresentative" width="100"/>
+			<column title="单位性质" name="ownerType" width="0"/>
+			<column title="联系人" name="ownerLinkman" width="0"/>
+			<column title="联系人身份证" name="ownerLinkmanIdCard" width="0"/>
+			<column title="联系电话" name="ownerTel" width="0"/>
+			<column title="传真" name="ownerFax" width="0"/>
+			<column title="电子邮件" name="ownerMail" width="0"/>
+		</columns>
+	</view>
+	
+	<view title="保证金账户选择" name="selectPledgeAccount">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProject</pojo>
+			<where>BiddingProject.city='{PARAMETER:city}' and not BiddingProject.pledgeBank is null</where>
+			<groupBy>BiddingProject.pledgeBank, BiddingProject.pledgeAccountName, BiddingProject.pledgeAccount</groupBy>
+			<orderBy>BiddingProject.pledgeBank</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="开户行" name="pledgeBank" width="120"/>
+			<column title="帐户名" name="pledgeAccountName"/>
+			<column title="帐号" name="pledgeAccount" width="120"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+</views>

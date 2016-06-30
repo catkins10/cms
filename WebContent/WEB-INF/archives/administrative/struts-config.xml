@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="administrativeArchives" type="com.yuanluesoft.archives.administrative.forms.AdministrativeArchives"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="administrativeArchives" path="/administrativeArchives"
+   scope="request"
+   type="com.yuanluesoft.archives.administrative.actions.Load" validate="false">
+   <forward name="load" path="/administrativeArchives.jsp"/>
+  </action>
+  <action input="/administrativeArchives.jsp"
+   name="administrativeArchives" path="/save" scope="request"
+   type="com.yuanluesoft.archives.administrative.actions.Save" validate="false"/>
+  <action name="administrativeArchives" path="/delete" scope="request"
+   type="com.yuanluesoft.archives.administrative.actions.Delete" validate="false"/>
+  <action name="administrativeArchives" path="/selectAttachment"
+   scope="request"
+   type="com.yuanluesoft.archives.administrative.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="administrativeArchives" path="/attachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.archives.administrative.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="200M"/>
+</struts-config>

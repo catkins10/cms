@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/signUp" class="com.yuanluesoft.onlinesignup.forms.admin.SignUpForm" title="报名信息" pojo="com.yuanluesoft.onlinesignup.pojo.admin.SignUp">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="审核" hide="workflow()" execute="FormUtils.doAction('runSignUp', 'workflowAction=approval')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteSignUp');"/>
+		</actions>
+	</form>
+	
+	
+	<form name="signUp" title="提交报名信息" method="post" action="/onlinesignup/saveSignUp.shtml?act=create" class="com.yuanluesoft.onlinesignup.forms.SignUpForm" pojo="com.yuanluesoft.onlinesignup.pojo.admin.SignUp">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.onlinesignup.forms.admin.SignUpStat" title="统计">
+		<formFields>
+			<field name="province" title="省" required="true" length="50" type="string" inputMode="text"/>
+			<field name="city" title="市" required="true" length="50" type="string" inputMode="text"/>
+			<field name="country" title="县" required="true" length="50" type="string" inputMode="text"/>
+		</formFields>
+	</form>
+	
+	
+	<!-- 是否前台表单是通过action属性判断的。貌似不能和action中pageName对应的页面插入表单。即不能自己提交给自己 -->
+	<form name="onlinesignupquery"
+		action="/cms/sitemanage/applicationSearch.shtml?applicationName=onlinesignup&amp;pageName=onlineSignupQueryResult"
+		title="报名信息查询表单" method="get"					      
+		class="com.yuanluesoft.onlinesignup.forms.SignUpForm" js="/onlinesignup/js/search.js"><!-- 这里若是写入pojo参数，则配置页面时会把所有的字段都列举出来.只是搜索的话只需写出需要的搜索字段即可 -->
+		<formFields>
+			<!-- 搜索关键字 -->
+			<field title="姓名" required="true" name="name"/><!-- 有指定searchCondition参数的他会按该参数的条件进行匹配。没写的只是匹配字段本身 -->
+			<field title="身份证号" required="true" name="idCard" />
+		</formFields>
+		<actions>
+			<action title="查询" execute="FormUtils.submitForm()" /><!-- 这里的按钮动作在配置页面的表单中选择选择“插入按钮”时将会列出来 -->
+		</actions>
+	</form>
+	
+	
+	
+	
+	
+</forms>

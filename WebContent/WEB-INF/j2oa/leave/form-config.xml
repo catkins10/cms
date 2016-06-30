@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.j2oa.leave.forms.LeaveForm" title="请假条" pojo="com.yuanluesoft.j2oa.leave.pojo.Leave">
+		<formFields>
+			<field title="工作代理人" name="agents" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field title="工作代理人" name="agents.visitorNames" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectPerson(500, 300, true, 'agents.visitorIds{id},agents.visitorNames{name|出差人|100%},agents.visitorIds{id|ID|0}')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="打印" hide="isNew()" execute="window.print()"/>
+			<action title="审批请假条" hide="workflow()" execute="FormUtils.doAction('run', 'workflowAction=approval')"/>
+			<action title="销假" hide="isNew() or workflow()" execute="FormUtils.doAction('terminate')"/>
+			<action title="作废" hide="isNew() or workflow()" execute="if(confirm('是否确定要作废？'))FormUtils.doAction('delete')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.leave.forms.LeaveConfigForm" title="请假配置" pojo="com.yuanluesoft.j2oa.leave.pojo.LeaveConfig">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+</forms>

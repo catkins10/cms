@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,161,21" TARGET="page1" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,112,161,21"
+  TARGET="page2" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#bulletin" NAME="action1"
+  PATH="/bulletin" SHAPE="32,208,161,41" TITLE="bulletin" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/bulletin.jsp" TARGET="page3" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#save" NAME="action2"
+  PATH="/save" SHAPE="496,240,161,25" TITLE="bulletin" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#delete" NAME="action3"
+  PATH="/delete" SHAPE="496,288,161,25" TITLE="bulletin" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#issue" NAME="action4"
+  PATH="/issue" SHAPE="496,432,161,25" TITLE="bulletin" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#undoIssue" NAME="action5"
+  PATH="/undoIssue" SHAPE="496,480,161,25" TITLE="bulletin" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/bulletin.jsp" SHAPE="304,224,56,85" SUBTYPE="jsp"
+  TITLE="bulletin.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/save" TARGET="action2" TITLE="save" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/delete" TARGET="action3" TITLE="delete" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link4"
+   PATH="/run.shtml" TARGET="action7" TITLE="run.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link5"
+   PATH="/writeOpinion.shtml" TARGET="action8"
+   TITLE="writeOpinion.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/issue" TARGET="action4" TITLE="issue" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/undoIssue" TARGET="action5" TITLE="undoIssue" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link6"
+   PATH="/redoIssue.shtml" TARGET="action9" TITLE="redoIssue.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link7"
+   PATH="/approval.shtml" TARGET="action10" TITLE="approval.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="304,112,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="304,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#attachmentEditor"
+  NAME="action0" PATH="/attachmentEditor" SHAPE="32,736,161,41"
+  TITLE="bulletin" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/attachment.jsp"
+   TARGET="page0" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/attachment/attachment.jsp" SHAPE="304,752,50,25"
+  SUBTYPE="jsp" TITLE="attachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectAttachment"
+  NAME="action6" PATH="/selectAttachment" SHAPE="32,832,161,41"
+  TITLE="bulletin" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/selectAttachment.jsp"
+   TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/../../jeaf/attachment/selectAttachment.jsp"
+  SHAPE="304,848,50,25" SUBTYPE="jsp" TITLE="selectAttachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#run" NAME="action7"
+  PATH="/run" SHAPE="496,336,161,25" TITLE="bulletin" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#writeOpinion"
+  NAME="action8" PATH="/writeOpinion" SHAPE="496,384,161,25"
+  TITLE="bulletin" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#redoIssue" NAME="action9"
+  PATH="/redoIssue" SHAPE="496,528,161,25" TITLE="bulletin" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#approval" NAME="action10"
+  PATH="/approval" SHAPE="496,576,161,25" TITLE="bulletin" TYPE="action"/>
+</PROCESS>

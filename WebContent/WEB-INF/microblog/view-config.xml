@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="microblogs" title="微博">
+		<data>
+			<pojo>com.yuanluesoft.microblog.model.Microblog</pojo>
+		</data>
+		<links>
+			<link type="recordLink" title="原文链接">{PARAMETER:url}</link>
+			<link type="recordLink" title="转发链接">{PARAMETER:repostUrl}</link>
+			<link type="recordLink" title="评论链接">{PARAMETER:commentUrl}</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/microblog/templatemanage/insertMicroblogs.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+
+	<view name="todoMicroblog" form="microblog" title="待处理消息发送" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.microblog.pojo.Microblog</pojo>
+			<quickFilter>Microblog.content like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="新建微博" execute="PageUtils.newrecord('microblog', 'microblog', 'mode=fullscreen')" hide="noMyUnitPopedom(microblogMessageManager)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="微博内容" name="content"/>
+			<column title="创建人" name="creator" align="center" width="66"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="105" display="normal,print,portlet"/>
+			<column title="发送人" name="workflowSender" align="center" width="66" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="inProcessMicroblog" form="microblog" title="在处理消息发送" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.microblog.pojo.Microblog</pojo>
+			<orderBy>Microblog.created DESC</orderBy>
+			<quickFilter>Microblog.content like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="新建微博" execute="PageUtils.newrecord('microblog', 'microblog', 'mode=fullscreen')" hide="noMyUnitPopedom(microblogMessageManager)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="微博内容" name="content"/>
+			<column title="创建人" name="creator" align="center" width="66"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="105" display="normal,print,portlet"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="allMicroblog" form="microblog" title="所有消息发送" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.microblog.pojo.Microblog</pojo>
+			<filter>READABLE</filter>
+			<orderBy>Microblog.created DESC</orderBy>
+			<quickFilter>Microblog.content like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建微博" execute="PageUtils.newrecord('microblog', 'microblog', 'mode=fullscreen')" hide="noMyUnitPopedom(microblogMessageManager)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="微博内容" name="content"/>
+			<column title="创建人" name="creator" align="center" width="66"/>
+			<column title="创建时间" name="created" align="center" width="110"/>
+			<column title="发布时间" name="sendTime" align="center" width="110"/>
+		</columns>
+	</view>
+	
+	<!-- view name="privateMessage" form="privateMessage" title="私信" url="/jeaf/usermanage/admin/orgRelationConfigView.shtml?applicationName=microblog&amp;viewName=privateMessage&amp;orgTypes=unit&amp;popedomNames=microblogMessageManager" hide="noPrivilege(application_manager) and noOrgPopedom(microblogMessageManager)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.microblog.pojo.MicroblogPrivateMessage</pojo>
+			<orderBy>MicroblogPrivateMessage.created DESC</orderBy>
+			<quickFilter>MicroblogPrivateMessage.content like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="发送人" name="fromUserNickname" width="100"/>
+			<column title="内容" name="content"/>
+			<column title="发送时间" name="createTime" width="110" align="center"/>
+			<column title="答复时间" name="replyTime" width="110" align="center"/>
+		</columns>
+	</view -->
+	
+	<!-- view name="responseMessage" form="responseMessage" title="自动应答" url="/jeaf/usermanage/admin/orgRelationConfigView.shtml?applicationName=microblog&amp;viewName=responseMessage&amp;orgTypes=unit" hide="noPrivilege(application_manager) and isNotOrgManager(unit)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.microblog.pojo.MicroblogResponse</pojo>
+		</data>
+		<actions>
+			<action title="新建应答消息" execute="PageUtils.newrecord('microblog', 'responseMessage', 'mode=fullscreen', 'unitId={PARAMETER:orgId}')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="应答目标" name="responseType" width="200"/>
+			<column title="关键字" name="keywords"/>
+		</columns>
+	</view -->
+	
+	<!-- view name="userGroup" form="userGroup" title="用户分组" url="/jeaf/usermanage/admin/orgRelationConfigView.shtml?applicationName=microblog&amp;viewName=userGroup&amp;orgTypes=unit" hide="noPrivilege(application_manager) and isNotOrgManager(unit)" pageRows="20" openFeatures="mode=dialog,width=430,height=200">
+		<data>
+			<pojo>com.yuanluesoft.microblog.pojo.MicroblogUserGroup</pojo>
+			<orderBy>MicroblogUserGroup.name</orderBy>
+			<quickFilter>MicroblogUserGroup.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建分组" execute="PageUtils.newrecord('microblog', 'userGroup', 'mode=dialog,width=430,height=200', 'unitId={PARAMETER:orgId}')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name" width="100"/>
+		</columns>
+	</view -->
+	
+	<!-- view name="selectMyUnitUserGroup" title="微信用户组选择" hide="noMyUnitPopedom(microblogMessageManager)" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.microblog.pojo.MicroblogUserGroup</pojo>
+			<where>MicroblogUserGroup.unitId={UNITID}</where>
+			<orderBy>MicroblogUserGroup.name</orderBy>
+			<quickFilter>MicroblogUserGroup.name like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name" width="100"/>
+			<column title="成员" name="members.memberNickname" length="30" ellipsis="等"/>
+		</columns>
+	</view -->
+	
+	<view name="account" form="account" title="帐号配置" url="/jeaf/usermanage/admin/orgRelationConfigView.shtml?applicationName=microblog&amp;viewName=account&amp;orgTypes=unit" hide="noPrivilege(application_manager) and isNotOrgManager(unit)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.microblog.pojo.MicroblogAccount</pojo>
+			<quickFilter>MicroblogAccount.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加微博帐号" execute="PageUtils.newrecord('microblog', 'account', 'mode=fullscreen', 'unitId={PARAMETER:orgId}')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="微博平台" name="platform" width="100"/>
+			<column title="名称" name="name"/>
+		</columns>
+	</view>
+	
+	<view name="selectAccount" title="微博帐号选择" url="/jeaf/usermanage/admin/orgRelationConfigView.shtml?applicationName=microblog&amp;viewName=account&amp;orgTypes=unit" hide="noPrivilege(application_manager) and isNotOrgManager(unit)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.microblog.pojo.MicroblogAccount</pojo>
+			<where>MicroblogAccount.unitId={PARAMETER:unitId}</where>
+			<quickFilter>MicroblogAccount.name like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="微博平台" name="platform" width="100"/>
+			<column title="名称" name="name"/>
+		</columns>
+	</view>
+	
+	<view name="workflowConfig" form="workflowConfig" title="流程配置" url="/jeaf/usermanage/admin/orgRelationConfigView.shtml?applicationName=microblog&amp;viewName=workflowConfig&amp;orgTypes=root,category,area,unit" hide="noPrivilege(application_manager) and isNotOrgManager(root,category,area,unit)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.microblog.pojo.MicroblogWorkflowConfig</pojo>
+			<quickFilter>MicroblogWorkflowConfig.workflowName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="流程配置" execute="PageUtils.newrecord('microblog', 'workflowConfig', 'mode=fullscreen', 'orgId={PARAMETER:orgId}')"/>
+			<action title="刷新" execute="location.reload()"/>
+		</actions>
+		<links>
+			<link>javascript:PageUtils.newrecord('microblog', 'workflowConfig', 'mode=fullscreen', 'orgId={PARAMETER:orgId}')</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="workflowName"/>
+		</columns>
+	</view>
+</views>

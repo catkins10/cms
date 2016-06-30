@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="passportOrg" title="船员证申办单位">
+		<data>
+			<pojo>com.yuanluesoft.msa.seafarer.pojo.MsaSeafarerPassportOrg</pojo>
+			<orderBy>MsaSeafarerPassportOrg.name</orderBy>
+			<quickFilter>MsaSeafarerPassportOrg.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link title="记录链接">/msa/seafarer/passportOrg.shtml</link>
+		</links>
+	</view>
+	
+	<view name="serviceOrg" title="服务机构">
+		<data>
+			<pojo>com.yuanluesoft.msa.seafarer.pojo.MsaServiceOrg</pojo>
+			<where>'{PARAMETER:category}' is null or '{PARAMETER:category}'='' or  MsaServiceOrg.category='{PARAMETER:category}'</where>
+			<orderBy>MsaServiceOrg.name</orderBy>
+			<quickFilter>MsaServiceOrg.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link title="记录链接">/msa/seafarer/serviceOrg.shtml</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/msa/seafarer/templatemanage/insertServiceOrgs.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view name="trainOrg" title="培训机构">
+		<data>
+			<pojo>com.yuanluesoft.msa.seafarer.pojo.MsaTrainOrg</pojo>
+			<orderBy>MsaTrainOrg.name</orderBy>
+			<quickFilter>MsaTrainOrg.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link title="记录链接">/msa/seafarer/trainOrg.shtml</link>
+		</links>
+	</view>
+	
+	<view name="trainShip" title="培训船舶">
+		<data>
+			<pojo>com.yuanluesoft.msa.seafarer.pojo.MsaTrainShip</pojo>
+			<orderBy>MsaTrainShip.name</orderBy>
+			<quickFilter>MsaTrainShip.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link title="记录链接">/msa/seafarer/trainShip.shtml</link>
+		</links>
+	</view>
+	
+	<view name="certificationExam" title="合格证书:考试">
+		<data>
+			<pojo>com.yuanluesoft.msa.seafarer.pojo.MsaCertificationExam</pojo>
+			<orderBy>MsaCertificationExam.importTime DESC</orderBy>
+			<quickFilter>MsaTrainShip.speciality like '%{KEY}%' or MsaTrainShip.period like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link title="记录链接">/msa/seafarer/certificationExam.shtml</link>
+		</links>
+	</view>
+	
+	<view name="certificationExaminee" title="合格证书:合格的考生">
+		<data>
+			<pojo>com.yuanluesoft.msa.seafarer.pojo.MsaCertificationExaminee</pojo>
+			<orderBy>MsaCertificationExaminee.name</orderBy>
+			<quickFilter>MsaCertificationExaminee.name like '%{KEY}%' or MsaCertificationExaminee.permit like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link title="记录链接">/msa/seafarer/certificationExaminee.shtml</link>
+		</links>
+	</view>
+	
+	<view name="admin/passportOrg" form="admin/passportOrg" title="船员证申办单位" pageRows="20" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.msa.seafarer.pojo.MsaSeafarerPassportOrg</pojo>
+			<orderBy>MsaSeafarerPassportOrg.name</orderBy>
+			<quickFilter>MsaSeafarerPassportOrg.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新增单位" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_regist)" execute="PageUtils.newrecord('msa/seafarer','admin/passportOrg','width=760,height=520')"/>
+			<action title="导入船员证申办单位列表" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_regist)" execute="DialogUtils.openDialog('{CONTEXTPATH}/msa/seafarer/admin/importData.shtml?act=create&amp;dataType=passportOrg', 430, 180)"/>
+			<action title="导出为Excel" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="单位名称" name="name"/>
+			<column title="单位编号" name="unitNo" align="center" width="120"/>
+			<column title="联系地址" name="address"/>
+			<column title="法定代表人" name="legalRepresentative" align="center" width="66"/>
+			<column title="联系电话" name="tel" align="center" width="90"/>
+		</columns>
+	</view>
+	
+	<view name="admin/serviceOrg" form="admin/serviceOrg" title="服务机构" pageRows="25" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.msa.seafarer.pojo.MsaServiceOrg</pojo>
+			<orderBy>MsaServiceOrg.name</orderBy>
+			<quickFilter>MsaServiceOrg.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新增机构" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_regist)" execute="PageUtils.newrecord('msa/seafarer','admin/serviceOrg','width=760,height=520')"/>
+			<action title="导入服务机构列表" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_regist)" execute="DialogUtils.openDialog('{CONTEXTPATH}/msa/seafarer/admin/importData.shtml?act=create&amp;dataType=serviceOrg', 430, 180)"/>
+			<action title="导出为Excel" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="机构名称" name="name"/>
+			<column title="服务内容" name="serviceContent"/>
+			<column title="联系地址" name="address"/>
+			<column title="机构类型" name="category" width="160"/>
+			<column title="法定代表人" name="legalRepresentative" align="center" width="66"/>
+			<column title="联系电话" name="tel" align="center" width="100"/>
+			<column title="许可证号" name="licenseNumber" align="center" width="80"/>
+		</columns>
+	</view>
+	
+	<view name="admin/trainOrg" form="admin/trainOrg" title="培训机构" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.msa.seafarer.pojo.MsaTrainOrg</pojo>
+			<orderBy>MsaTrainOrg.name</orderBy>
+			<quickFilter>MsaTrainOrg.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新增机构" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_regist)" execute="PageUtils.newrecord('msa/seafarer','admin/trainOrg','mode=fullscreen')"/>
+			<action title="导入培训机构列表" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_regist)" execute="DialogUtils.openDialog('{CONTEXTPATH}/msa/seafarer/admin/importData.shtml?act=create&amp;dataType=trainOrg', 430, 180)"/>
+			<action title="导出为Excel" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="机构名称" name="name"/>
+			<column title="地址" name="address"/>
+			<column title="联系电话" name="tel" align="center" width="90"/>
+			<column title="传真" name="fax" align="center" width="90"/>
+			<column title="邮编" name="postalcode" align="center" width="50"/>
+			<column title="性质" name="kind" width="180"/>
+			<column title="法定代表人" name="legalRepresentative" align="center" width="66"/>
+			<column title="许可证号" name="licenseNumber" align="center" width="80"/>
+		</columns>
+	</view>
+	
+	<view name="admin/trainShip" form="admin/trainShip" title="培训船舶" pageRows="25" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.msa.seafarer.pojo.MsaTrainShip</pojo>
+			<orderBy>MsaTrainShip.name</orderBy>
+			<quickFilter>MsaTrainShip.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加船舶" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_regist)" execute="PageUtils.newrecord('msa/seafarer','admin/trainShip','width=760,height=520')"/>
+			<action title="导入培训船舶列表" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_regist)" execute="DialogUtils.openDialog('{CONTEXTPATH}/msa/seafarer/admin/importData.shtml?act=create&amp;dataType=trainShip', 430, 180)"/>
+			<action title="导出为Excel" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name"/>
+			<column title="船籍港" name="port" width="80"/>
+			<column title="船舶种类" name="category" align="center" width="100"/>
+			<column title="总吨位" name="tonnage" width="60"/>
+			<column title="功率" name="power" width="60"/>
+			<column title="船舶所有人" name="shipBelong" align="center" width="80"/>
+			<column title="船上培训/见习单位" name="practiceOrg"/>
+			<column title="所属海事机构" name="orgBelong" width="90"/>
+		</columns>
+	</view>
+	
+	<view name="admin/certificationExam" form="admin/certificationExam" title="合格证书" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.msa.seafarer.pojo.MsaCertificationExam</pojo>
+			<orderBy>MsaCertificationExam.importTime DESC</orderBy>
+			<quickFilter>MsaTrainShip.speciality like '%{KEY}%' or MsaTrainShip.period like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加考试" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_regist)" execute="PageUtils.newrecord('msa/seafarer','admin/certificationExam','mode=fullscreen')"/>
+			<action title="导入合格证书" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_regist)" execute="DialogUtils.openDialog('{CONTEXTPATH}/msa/seafarer/admin/importData.shtml?act=create&amp;dataType=certification', 430, 180)"/>
+			<action title="导出为Excel" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="专业" name="speciality" width="100"/>
+			<column title="类别" name="category" align="center" width="100"/>
+			<column title="期数" name="period"/>
+			<column title="考场" name="examAddress"/>
+			<column title="导入时间" name="importTime" align="center" width="120"/>
+		</columns>
+	</view>
+	
+	<view name="admin/importLog" form="admin/importData" title="数据导入日志" pageRows="20" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.msa.seafarer.pojo.MsaImportLog</pojo>
+			<orderBy>MsaImportLog.importTime DESC</orderBy>
+			<quickFilter>MsaImportLog.fileName like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link title="记录链接">javascript:DialogUtils.openDialog('{CONTEXTPATH}/msa/seafarer/admin/importData.shtml?act=edit&amp;id={PARAMETER:id}', 430, 180)</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="文件名" name="fileName"/>
+			<column title="操作者" name="personName" align="center" width="100"/>
+			<column title="导入时间" name="importTime" align="center" width="150"/>
+		</columns>
+	</view>
+</views>

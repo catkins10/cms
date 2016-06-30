@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 投标服务 -->
+	<bean id="biddingService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.bidding.project.signup.service.spring.BiddingServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="cryptService"><ref bean="cryptService"/></property>
+				<property name="biddingProjectParameterService"><ref bean="biddingProjectParameterService"/></property>
+				<property name="paymentService"><ref bean="paymentService"/></property>
+				<property name="biddingProjectService"><ref bean="biddingProjectService"/></property>
+				<property name="enterpriseService"><ref bean="enterpriseService"/></property>
+				<property name="attachmentService"><ref bean="attachmentService"/></property>
+				<property name="temporaryFileManageService"><ref bean="temporaryFileManageService"/></property>
+				<property name="fileDownloadService"><ref bean="fileDownloadService"/></property>
+				<property name="accessControlService"><ref bean="accessControlService"/></property>
+				<property name="recordControlService"><ref bean="recordControlService"/></property>
+				<property name="bidUploadPaddingMinutes"><value>0</value></property> <!-- 标书上传缓冲时间,以分钟为单位 -->
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="complete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="loadSignUp*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="totalSignUp*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="receivePaperDocuments">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="process*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="accountComplement">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="accountsComplement">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="write*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="bankTransactionsQuery">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="pledgeReturnTransfer">PROPAGATION_NEVER,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 招标视图服务 -->
+	<bean id="biddingEnterpriseViewService" class="com.yuanluesoft.bidding.project.signup.service.spring.BiddingEnterpriseViewServiceImpl">
+		<property name="biddingService"><ref bean="biddingService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+	</bean>
+	
+	<!--****************** 页面元素处理器 ****************** -->
+	<!-- 报名历史 -->
+	<bean id="biddingSignUpHistoryProcessor" class="com.yuanluesoft.bidding.project.signup.processor.BiddingSignUpHistoryProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+	</bean>
+
+	<!--****************** 页面列表 ****************** -->
+	<!-- 投标报名页面 -->
+	<bean id="biddingSignUpPageService" class="com.yuanluesoft.bidding.project.signup.pages.SignUpPageService">
+		<property name="biddingProjectService"><ref bean="biddingProjectService"/></property>
+		<property name="biddingService"><ref bean="biddingService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+	</bean>
+	
+	<!-- 投标报名号打印页面 -->
+	<bean id="biddingSignUpPrintPageService" class="com.yuanluesoft.bidding.project.signup.pages.SignUpPrintPageService">
+		<property name="biddingService"><ref bean="biddingService"/></property>
+		<property name="biddingProjectService"><ref bean="biddingProjectService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+	</bean>
+	
+	<!-- 报名查询页面 -->
+	<bean id="biddingSignUpQueryPageService" class="com.yuanluesoft.bidding.project.signup.pages.SignUpQueryPageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+	</bean>
+	
+	<!-- 报名查询结果页面 -->
+	<bean id="biddingSignUpQueryResultPageService" class="com.yuanluesoft.bidding.project.signup.pages.SignUpQueryResultPageService">
+		<property name="biddingService"><ref bean="biddingService"/></property>
+		<property name="biddingProjectService"><ref bean="biddingProjectService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+		<property name="attachmentService"><ref bean="attachmentService"/></property>
+	</bean>
+</beans>

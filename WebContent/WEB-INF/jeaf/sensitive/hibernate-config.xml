@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--敏感词-->
+	<class name="com.yuanluesoft.jeaf.sensitive.pojo.SensitiveWord" table="sensitive_word">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="words" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--敏感词,每个一行,允许使用正则表达式,TEXT-->
+	</class>
+</hibernate-mapping>

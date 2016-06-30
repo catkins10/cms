@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form title="目录" class="com.yuanluesoft.jeaf.directorymanage.forms.DirectoryForm">
+		<formFields>
+			<field title="上级目录名称" name="parentDirectoryName"/>
+			<field title="引用的目录ID列表" name="linkedDirectoryIds" type="string" inputMode="hidden"/>
+			<field title="引用的目录名称列表" name="linkedDirectoryNames" type="string" inputMode="select"/>
+		</formFields>
+	</form>
+	
+	<form title="目录" class="com.yuanluesoft.jeaf.directorymanage.forms.CopyDirectory">
+		<formFields>
+			<field title="源目录ID" name="fromDirectoryId" type="number" inputMode="hidden"/>
+			<field title="源目录名称" name="fromDirectoryName" type="string" inputMode="readonly"/>
+			<field title="目标目录ID" name="toDirectoryId" type="number" inputMode="hidden"/>
+			<field title="目标目录名称" name="toDirectoryName" type="string" inputMode="select" required="true"/>
+			<field title="源目录类型" name="toDirectoryTypes" type="string" inputMode="hidden"/>
+			<field title="新目录名称" name="newDirectoryName" type="string" inputMode="text" required="true"/>
+		</formFields>
+	</form>
+</forms>

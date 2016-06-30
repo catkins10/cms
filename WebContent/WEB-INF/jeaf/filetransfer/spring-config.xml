@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 文件下载服务 -->
+	<bean id="fileDownloadService" class="com.yuanluesoft.jeaf.filetransfer.services.spring.FileDownloadServiceImpl">
+		<property name="statService"><ref bean="statService"/></property>
+	</bean>
+
+	<!-- 文件上传服务 -->
+	<bean id="fileUploadService" class="com.yuanluesoft.jeaf.filetransfer.services.spring.FileUploadServiceImpl" init-method="startup">
+		<property name="fileUploadCache"><ref bean="fileUploadCache"/></property>
+		<property name="maxUploadFiles"><value>1000</value></property> <!-- 最大并发上传数量 -->
+		<property name="maxUploadThreads"><value>3</value></property> <!-- 每用户最大并发线程数 -->
+	</bean>
+</beans>

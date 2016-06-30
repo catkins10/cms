@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--采矿权-->
+	<class name="com.yuanluesoft.land.declare.pojo.MiningRights" table="land_miningrights">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="applicant"/> <!--申请人,VARCHAR(150)-->
+		<property name="subject"/> <!--标题,VARCHAR(150)-->
+		<property name="mineName"/> <!--矿山名称,VARCHAR(150)-->
+		<property name="address"/> <!--地址,VARCHAR(200)-->
+		<property name="licenseNum"/> <!--许可证号,VARCHAR(150)-->
+		<property name="mainMinerals"/> <!--开采主矿种,VARCHAR(50)-->
+		<property name="validFrom"/> <!--有效期起,DATE-->
+		<property name="validEnd"/> <!--有效期止,DATE-->
+		<property name="miningArea"/> <!--矿区面积,NUMERIC(6,4)-->
+		<property name="caps"/> <!--采深上限,NUMERIC(6,2)-->
+		<property name="lower"/> <!--采深下限,NUMERIC(6,2)-->
+		<property name="projectType"/> <!--项目类型,VARCHAR(50)-->
+		<property name="coordinate"/> <!--坐标,VARCHAR(4000)-->
+		<property name="approvalTime"/> <!--审批时间,DATE-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+	</class>
+	
+	<!--探矿权-->
+	<class name="com.yuanluesoft.land.declare.pojo.ExplorationRights" table="land_explorationright">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="licenseNum"/> <!--许可证号,VARCHAR(150)-->
+		<property name="projectName"/> <!--项目名称,VARCHAR(150)-->
+		<property name="issueDate"/> <!--发证日期,DATE-->
+		<property name="applicant"/> <!--申请人,VARCHAR(150)-->
+		<property name="investigationUnit"/> <!--勘察单位,VARCHAR(150)-->
+		<property name="minerals"/> <!--勘察矿种,VARCHAR(50)-->
+		<property name="location"/> <!--地理位置,VARCHAR(200)-->
+		<property name="validFrom"/> <!--有效期起,DATE-->
+		<property name="validEnd"/> <!--有效期止,DATE-->
+		<property name="area"/> <!--总面积,NUMERIC(6,4)-->
+		<property name="projectType"/> <!--项目类型,VARCHAR(50)-->
+		<property name="coordinate"/> <!--坐标,VARCHAR(4000)-->
+		<property name="approvalTime"/> <!--审批时间,DATE-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+	</class>
+	
+	<!--地质灾害单位-->
+	<class name="com.yuanluesoft.land.declare.pojo.DisastersUnit" table="land_disasters_unit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="investigationUnit"/> <!--勘察单位,VARCHAR(150)-->
+		<property name="qualificationType"/> <!--资质类型,VARCHAR(150)-->
+		<property name="qualificationLevel"/> <!--资质等级,VARCHAR(100)-->
+		<property name="approvalTime"/> <!--审批时间,DATE-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+	</class>
+	
+	<!--地址勘察单位资质-->
+	<class name="com.yuanluesoft.land.declare.pojo.InvestigateUnit" table="land_investigate_unit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="certificateNum"/> <!--证书编号,VARCHAR(150)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(150)-->
+		<property name="applyType"/> <!--申请类型,VARCHAR(50)-->
+		<property name="validFrom"/> <!--有效期起,DATE-->
+		<property name="validEnd"/> <!--有效期止,DATE-->
+		<property name="residence"/> <!--住所,VARCHAR(200)-->
+		<property name="leader"/> <!--法定代表人,VARCHAR(100)-->
+		<property name="postal"/> <!--邮编,VARCHAR(50)-->
+		<property name="tel"/> <!--联系电话,VARCHAR(100)-->
+		<property name="qualificationTypeLeve"/> <!--资质类别和等级,VARCHAR(200)-->
+		<property name="issuingUnit"/> <!--发证机关,VARCHAR(100)-->
+		<property name="provinces"/> <!--所属省份,VARCHAR(50)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+	</class>
+	
+	<!--地质公园登记-->
+	<class name="com.yuanluesoft.land.declare.pojo.Geopark" table="land_geopark">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="parkName"/> <!--地质公园名称,VARCHAR(150)-->
+		<property name="level"/> <!--级别,VARCHAR(100)-->
+		<property name="location"/> <!--公园位置,VARCHAR(150)-->
+		<property name="area"/> <!--面积,NUMERIC(8,3)-->
+		<property name="approvalTime"/> <!--批准时间,年份,NUMERIC(4)-->
+		<property name="enableTime"/> <!--开元时间,年份,NUMERIC(4)-->
+		<property name="geologicalHeritage"/> <!--地质遗迹,VARCHAR(300)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+	</class>
+	
+	<!--土地登记-->
+	<class name="com.yuanluesoft.land.declare.pojo.LandRegister" table="land_landregister">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="personName"/> <!--权利人名称,VARCHAR(150)-->
+		<property name="location"/> <!--土地坐落,VARCHAR(200)-->
+		<property name="registerType"/> <!--登记类型,VARCHAR(100)-->
+		<property name="certificateNum"/> <!--土地证号,VARCHAR(100)-->
+		<property name="oldCertificateNum"/> <!--变更前土地证号,VARCHAR(100)-->
+		<property name="area"/> <!--使用权面积,NUMERIC(8,3)-->
+		<property name="userType"/> <!--使用权类型,VARCHAR(100)-->
+		<property name="registerDate"/> <!--登记日期,DATE-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+	</class>
+</hibernate-mapping>

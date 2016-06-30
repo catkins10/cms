@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="webimChat" title="对话" method="get" action="/im/webim/chat.shtml" pojo="com.yuanluesoft.im.webim.model.WebimChat">
+		<formFields>
+			<field title="发言内容" name="content" type="string" inputMode="text"/>
+			<field title="字体名称" name="fontName" type="string" inputMode="dropdown">
+				<parameter name="itemsText">宋体\0黑体\0楷体\0仿宋\0新宋体\0微软雅黑</parameter>
+				<parameter name="onchange">window.webimChat.setChatFontName(value);</parameter>
+			</field>
+			<field title="字体大小" name="fontSize" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">特大|84\0特号|72\0初号|56\0小初|48\0大一|42\0一号|38\0二号|28\0小二|25\0三号|22\0四号|18\0小四|16\0五号|14\0小五|12\0六号|10\0小六|8\0七号|7\0八号|6</parameter>
+				<parameter name="onchange">window.webimChat.setChatFontSize(document.getElementsByName('fontSize')[0].value);</parameter>
+			</field>
+			<field title="字体颜色" name="fontColor" type="string" inputMode="dropdown">
+				<parameter name="itemsText">&lt;font color="#000000"&gt;黑色&lt;/font&gt;|#000000\0 &lt;font color="#ff0000"&gt;红色&lt;/font&gt;|#ff0000\0 &lt;font color="#0000ff"&gt;蓝色&lt;/font&gt;|#0000ff\0 &lt;font color="#00ff00"&gt;绿色&lt;/font&gt;|#00ff00\0 &lt;font color="#808080"&gt;灰色&lt;/font&gt;|#808080\0 &lt;font color="#696969"&gt;深灰&lt;/font&gt;|#696969\0 &lt;font color="#00008b"&gt;深蓝&lt;/font&gt;|#00008b\0 &lt;font color="#ffff00"&gt;黄色&lt;/font&gt;|#ffff00\0 &lt;font color="#ffa500"&gt;橙色&lt;/font&gt;|#ffa500\0 &lt;font color="#8b0000"&gt;暗红&lt;/font&gt;|#8b0000</parameter>
+				<parameter name="valueField">fontColor</parameter>
+				<parameter name="titleField"></parameter>
+				<parameter name="onchange">window.webimChat.setChatFontColor(value)</parameter>
+			</field>
+			<field name="oftenUsedReply" title="常用答复(客服)" type="string" inputMode="dropdown">
+				<parameter name="itemsName">oftenUsedReply</parameter>
+				<parameter name="itemsServiceName">csService</parameter>
+				<parameter name="listPickerWidth">150</parameter>
+				<parameter name="onchange">window.webimChat.setTalkContent(value)</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form name="imPersonalSetting" title="个人设置" method="get" action="/im/webim/personalSetting.shtml" pojo="com.yuanluesoft.im.pojo.IMPersonalSetting"/>
+	
+	<form class="com.yuanluesoft.im.webim.forms.WebcsAddon" title="加载WEB客服">
+		<formFields>
+			<field title="隶属站点ID" name="siteId" type="string" inputMode="hidden"/>
+			<field title="隶属站点名称" name="siteName" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 300, false, 'siteId{id},siteName{name}', '', '', '', 'site')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field title="客服窗口对齐方式" name="webcsAlign" type="string" inputMode="dropdown">
+				<parameter name="itemsText">右上角|right_top\0右下角|right_bottom\0左上角|left_top\0左下角|left_bottom\0居中|center</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">right_top</parameter>
+			</field>
+			<field title="客服窗口水平边距" name="horizontalMargin" type="string" inputMode="text">
+				<parameter name="defaultValue">10</parameter>
+			</field>
+			<field title="客服窗口垂直边距" name="verticalMargin" type="string" inputMode="text">
+				<parameter name="defaultValue">100</parameter>
+			</field>
+			<field title="对话窗口宽度" name="chatDialogWidth" type="string" inputMode="text">
+				<parameter name="defaultValue">500</parameter>
+			</field>
+			<field title="对话窗口高度" name="chatDialogHeight" type="string" inputMode="text">
+				<parameter name="defaultValue">300</parameter>
+			</field>
+			<field title="留言窗口宽度" name="messageDialogWidth" type="string" inputMode="text">
+				<parameter name="defaultValue">600</parameter>
+			</field>
+			<field title="留言窗口高度" name="messageDialogHeight" type="string" inputMode="text">
+				<parameter name="defaultValue">400</parameter>
+			</field>
+			<field title="评价窗口宽度" name="evaluationDialogWidth" type="string" inputMode="text">
+				<parameter name="defaultValue">500</parameter>
+			</field>
+			<field title="评价窗口高度" name="evaluationDialogHeight" type="string" inputMode="text">
+				<parameter name="defaultValue">300</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.im.webim.forms.InsertWebimAction" title="插入WEBIM操作">
+		<formFields>
+			<field title="操作类型" name="action" type="string" inputMode="hidden"/>
+			<field title="对话框宽度" name="dialogWidth" type="string" inputMode="text"/>
+			<field title="对话框高度" name="dialogHeight" type="string" inputMode="text"/>
+			<field title="对话框对齐方式" name="dialogAlign" type="string" inputMode="radio">
+				<parameter name="itemsText">左对齐|left\0右对齐|right</parameter>
+				<parameter name="defaultValue">left</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

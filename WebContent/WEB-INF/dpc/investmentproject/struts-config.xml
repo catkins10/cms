@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminParameter" type="com.yuanluesoft.dpc.investmentproject.forms.admin.Parameter"/>
+  <form-bean name="adminIndustry" type="com.yuanluesoft.dpc.investmentproject.forms.admin.Industry"/>
+  <form-bean name="adminProject" type="com.yuanluesoft.dpc.investmentproject.forms.admin.Project"/>
+  <form-bean name="selectIndustry" type="com.yuanluesoft.dpc.investmentproject.forms.SelectIndustry"/>
+  <form-bean name="adminProjectReport" type="com.yuanluesoft.dpc.investmentproject.forms.admin.ProjectReport"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminParameter" path="/admin/parameter" scope="request"
+   type="com.yuanluesoft.dpc.investmentproject.actions.parameter.admin.Load" validate="false">
+   <forward name="load" path="/admin/parameter.jsp"/>
+  </action>
+  <action input="/admin/parameter.jsp" name="adminParameter"
+   path="/admin/saveParameter" scope="request"
+   type="com.yuanluesoft.dpc.investmentproject.actions.parameter.admin.Save" validate="false"/>
+  <action input="/admin/parameter.jsp" name="adminParameter"
+   path="/admin/refreshParameter" scope="request"
+   type="com.yuanluesoft.dpc.investmentproject.actions.parameter.admin.Refresh" validate="false"/>
+  <action name="adminIndustry" path="/admin/industry" scope="request"
+   type="com.yuanluesoft.dpc.investmentproject.actions.parameter.industry.admin.Load" validate="false">
+   <forward name="load" path="/admin/industry.jsp"/>
+  </action>
+  <action input="/admin/industry.jsp" name="adminIndustry"
+   path="/admin/saveIndustry" scope="request"
+   type="com.yuanluesoft.dpc.investmentproject.actions.parameter.industry.admin.Save" validate="false"/>
+  <action input="/admin/industry.jsp" name="adminIndustry"
+   path="/admin/deleteIndustry" scope="request"
+   type="com.yuanluesoft.dpc.investmentproject.actions.parameter.industry.admin.Delete" validate="false"/>
+  <action name="adminProject" path="/admin/project" scope="request"
+   type="com.yuanluesoft.dpc.investmentproject.actions.project.admin.Load" validate="false">
+   <forward name="load" path="/admin/project.jsp"/>
+  </action>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/saveProject" scope="request"
+   type="com.yuanluesoft.dpc.investmentproject.actions.project.admin.Save" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/deleteProject" scope="request"
+   type="com.yuanluesoft.dpc.investmentproject.actions.project.admin.Delete" validate="false"/>
+  <action name="selectIndustry" path="/selectIndustry" scope="request"
+   type="com.yuanluesoft.dpc.investmentproject.actions.selectindustry.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="adminProjectReport" path="/admin/projectReport"
+   scope="request"
+   type="com.yuanluesoft.dpc.investmentproject.actions.projectreport.admin.Load" validate="false">
+   <forward name="load" path="/admin/projectReport.jsp"/>
+  </action>
+  <action input="/admin/projectReport.jsp" name="adminProjectReport"
+   path="/admin/writeProjectReport" scope="request"
+   type="com.yuanluesoft.dpc.investmentproject.actions.projectreport.admin.Write" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

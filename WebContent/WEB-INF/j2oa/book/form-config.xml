@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.j2oa.book.forms.Book" title="图书" pojo="com.yuanluesoft.j2oa.book.pojo.Book">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteBook')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.book.forms.Borrow" title="借阅信息" pojo="com.yuanluesoft.j2oa.book.pojo.Book">
+		<formFields>
+			<field name="borrow" title="借阅信息" type="component">
+				<parameter name="class">com.yuanluesoft.j2oa.book.pojo.BookBorrow</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="借阅" hide="isRead()" execute="FormUtils.doAction('completeBorrow')"/>
+			<action title="归还" hide="isRead()" execute="FormUtils.doAction('completeReturn')"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteBorrow')"/>
+		</actions>
+	</form>
+</forms>

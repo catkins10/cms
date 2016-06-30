@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<application>
+	<viewLink local="admin/toApprovalCompany" title="待审核企业"/>
+	<viewLink local="admin/approvaledCompany" title="已审核企业"/>
+	<viewLink local="admin/job" title="招聘岗位"/>
+	<viewLink local="admin/jobPush" title="职位推送"/>
+	<link title="行业配置" hide="noPrivilege(application_manager)">
+		javascript:DialogUtils.openDialog('{CONTEXTPATH}/job/company/selectParameter.shtml?act=edit&amp;parentNodeId=1', 600, 360);
+	</link>
+	<link title="专业配置" hide="noPrivilege(application_manager)">
+		javascript:DialogUtils.openDialog('{CONTEXTPATH}/job/company/selectParameter.shtml?act=edit&amp;parentNodeId=2', 600, 360);
+	</link>
+	<link title="审核设置" hide="noPrivilege(application_manager)">
+		javascript:DialogUtils.openDialog('{CONTEXTPATH}/job/company/admin/companyApproval.shtml', 720, 360);
+	</link>
+	<link title="邮件模板" hide="noPrivilege(application_manager)">
+		javascript:DialogUtils.openDialog('{CONTEXTPATH}/job/company/mailTemplate.shtml', 720, 360);
+	</link>
+</application>

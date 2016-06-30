@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 招投标:工程管理 -->
+<application>
+	<pages>
+		<page name="biddingAsk" title="提问" url="/bidding/project/ask/ask.shtml" systemLink="false">
+			<field title="项目名称" name="projectName"/>
+			<field title="内容" name="question"/>
+			<field title="答复" name="reply"/>
+			<field title="招标方式" name="biddingMode"/>
+			<field title="企业名称" name="enterpriseName"/>
+			<field title="提问用户名称" name="askPersonName"/>
+			<field title="提问时间" name="askTime" type="timestamp"/>
+			<field title="流程状态" name="workflowStatus"/>
+			<subPage name="base" title="提问"/>
+		</page>
+		<page title="问题列表" name="biddingAsks" url="/bidding/project/ask/listAsks.shtml"/>
+		<page title="我提的问题列表" name="myBiddingAsks" url="/bidding/project/ask/listAsks.shtml?type=myBiddingAsks"/>
+		<page title="待处理问题列表" name="todoBiddingAsks" url="/bidding/project/ask/listAsks.shtml?type=todoBiddingAsks"/>
+		<page title="在处理问题列表" name="processingBiddingAsks" url="/bidding/project/ask/listAsks.shtml?type=processingBiddingAsks"/>
+		<page title="已办结问题列表" name="completedBiddingAsks" url="/bidding/project/ask/listAsks.shtml?type=completedBiddingAsks"/>
+		<page title="参与处理的问题列表" name="readabledBiddingAsks" url="/bidding/project/ask/listAsks.shtml?type=readabledBiddingAsks"/>
+	</pages>
+	
+	<recordLists>
+		<recordList title="已公开的问题列表" name="biddingAsks" rssSupport="false" recordPage="biddingAsk"/>
+		<recordList title="我提的问题列表" name="myBiddingAsks" rssSupport="false" recordPage="biddingAsk"/>
+		<recordList title="待处理问题列表" name="todoBiddingAsks" rssSupport="false" recordPage="biddingAsk"/>
+		<recordList title="在处理问题列表" name="processingBiddingAsks" rssSupport="false" recordPage="biddingAsk"/>
+		<recordList title="已办结问题列表" name="completedBiddingAsks" rssSupport="false" recordPage="biddingAsk"/>
+		<recordList title="参与处理的问题列表" name="readabledBiddingAsks" rssSupport="false" recordPage="biddingAsk"/>
+	</recordLists>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="biddingAsks" processor="biddingAsksProcessor"/> <!-- 提问列表处理器 -->
+		<pageElement name="myBiddingAsks" processor="biddingAsksProcessor"/> <!-- 提问列表处理器 -->
+		<pageElement name="todoBiddingAsks" processor="biddingAsksProcessor"/> <!-- 提问列表处理器 -->
+		<pageElement name="processingBiddingAsks" processor="biddingAsksProcessor"/> <!-- 提问列表处理器 -->
+		<pageElement name="completedBiddingAsks" processor="biddingAsksProcessor"/> <!-- 提问列表处理器 -->
+		<pageElement name="readabledBiddingAsks" processor="biddingAsksProcessor"/> <!-- 提问列表处理器 -->
+	</pageElements>
+</application>

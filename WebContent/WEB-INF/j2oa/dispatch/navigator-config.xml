@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<application name="j2oa/dispatch" title="发文管理">
+	<viewLink local="todoDispatch" title="待办发文"/>
+	<viewLink local="inProcessDispatch" title="在办发文"/>
+	<viewLink local="allDispatchByMonth" title="按年月查询"/>
+	<viewLink local="allDispatchByType" title="按文种查询"/>
+	<viewLink local="allDispatchByDepartment" title="按部门查询"/>
+	<viewLink local="docWordConfig" title="文件字配置"/>
+	<viewLink local="templateConfig" title="模板配置"/>
+	<link name="filingConfig" title="归档配置" hide="noPrivilege(application_manager)">
+		javascript:PageUtils.openurl('{WEBAPPLICATIONURL}/j2oa/dispatch/filingConfig.shtml', 'width=640,height=480', 'filingConfig')
+	</link>
+	<link title="意见类型配置" hide="noPrivilege(application_manager)">
+		/jeaf/application/applicationView.shtml?applicationName=jeaf/opinionmanage&amp;viewName=opinionType&amp;businessClassName=com.yuanluesoft.j2oa.dispatch.pojo.Dispatch
+	</link>
+</application>

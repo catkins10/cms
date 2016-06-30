@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="application" type="com.yuanluesoft.jeaf.application.builder.forms.Application"/>
+  <form-bean name="applicationForm" type="com.yuanluesoft.jeaf.application.builder.forms.ApplicationForm"/>
+  <form-bean name="field" type="com.yuanluesoft.jeaf.application.builder.forms.Field"/>
+  <form-bean name="index" type="com.yuanluesoft.jeaf.application.builder.forms.Index"/>
+  <form-bean name="view" type="com.yuanluesoft.jeaf.application.builder.forms.View"/>
+  <form-bean name="applicationNavigator" type="com.yuanluesoft.jeaf.application.builder.forms.ApplicationNavigator"/>
+  <form-bean name="createViews" type="com.yuanluesoft.jeaf.application.builder.forms.CreateViews"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="application" path="/application" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.application.Load" validate="false">
+   <forward name="load" path="/application.jsp"/>
+  </action>
+  <action input="/application.jsp" name="application"
+   path="/saveApplication" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.application.Save" validate="false"/>
+  <action input="/application.jsp" name="application"
+   path="/deleteApplication" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.application.Delete" validate="false"/>
+  <action input="/application.jsp" name="application"
+   path="/buildApplication" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.application.Build" validate="false"/>
+  <action name="field" path="/field" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.applicationform.field.Load" validate="false">
+   <forward name="load" path="/field.jsp"/>
+  </action>
+  <action input="/field.jsp" name="field" path="/saveField"
+   scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.applicationform.field.Save" validate="false"/>
+  <action input="/field.jsp" name="field" path="/deleteField"
+   scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.applicationform.field.Delete" validate="false"/>
+  <action input="/application.jsp" name="application"
+   path="/refreshApplication" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.application.Refresh" validate="false"/>
+  <action name="applicationForm" path="/applicationForm" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.applicationform.Load" validate="false">
+   <forward name="load" path="/applicationForm.jsp"/>
+  </action>
+  <action input="/applicationForm.jsp" name="applicationForm"
+   path="/saveApplicationForm" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.applicationform.Save" validate="false"/>
+  <action input="/applicationForm.jsp" name="applicationForm"
+   path="/deleteApplicationForm" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.applicationform.Delete" validate="false"/>
+  <action input="/applicationForm.jsp" name="applicationForm"
+   path="/refreshApplicationForm" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.applicationform.Refresh" validate="false"/>
+  <action name="index" path="/index" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.applicationform.index.Load" validate="false">
+   <forward name="load" path="/index.jsp"/>
+  </action>
+  <action input="/index.jsp" name="index" path="/saveIndex"
+   scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.applicationform.index.Save" validate="false"/>
+  <action input="/index.jsp" name="index" path="/deleteIndex"
+   scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.applicationform.index.Delete" validate="false"/>
+  <action name="view" path="/view" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.applicationform.view.Load" validate="false">
+   <forward name="load" path="/view.jsp"/>
+  </action>
+  <action input="/view.jsp" name="view" path="/saveView" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.applicationform.view.Save" validate="false"/>
+  <action input="/view.jsp" name="view" path="/deleteView"
+   scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.applicationform.view.Delete" validate="false"/>
+  <action name="applicationNavigator" path="/applicationNavigator"
+   scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.application.navigator.Load" validate="false">
+   <forward name="load" path="/applicationNavigator.jsp"/>
+  </action>
+  <action input="/applicationNavigator.jsp" name="applicationNavigator"
+   path="/saveApplicationNavigator" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.application.navigator.Save" validate="false"/>
+  <action input="/applicationNavigator.jsp" name="applicationNavigator"
+   path="/deleteApplicationNavigator" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.application.navigator.Delete" validate="false"/>
+  <action name="createViews" path="/createViews" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.applicationform.createviews.Load" validate="false">
+   <forward name="load" path="/createViews.jsp"/>
+  </action>
+  <action input="/createViews.jsp" name="createViews"
+   path="/doCreateViews" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.applicationform.createviews.DoCreate" validate="false"/>
+  <action name="applicationForm" path="/selectFormAttachment"
+   scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.applicationform.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action input="/application.jsp" name="application"
+   path="/createApplicationNavigators" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.application.CreateNavigators" validate="false"/>
+  <action path="/redeployment" scope="request"
+   type="com.yuanluesoft.jeaf.application.builder.actions.redeployment.Deployment" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="employee" type="com.yuanluesoft.emp.forms.Employeea"/>
+  <form-bean name="department" type="com.yuanluesoft.emp.forms.Department"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="employee" path="/employee" scope="request"
+   type="com.yuanluesoft.emp.actions.employee.Load" validate="false">
+   <forward name="load" path="/employee.jsp"/>
+  </action>
+  <action input="/employee.jsp" name="employee"
+   path="/saveEmployeea" scope="request"
+   type="com.yuanluesoft.emp.actions.employee.Save" validate="false"/>
+  <action input="/employee.jsp" name="employee"
+   path="/deleteEmployeea" scope="request"
+   type="com.yuanluesoft.emp.actions.employee.Delete" validate="false"/>
+  
+  <action name="department" path="/department" scope="request"
+   type="com.yuanluesoft.emp.actions.depart.Load" validate="false">
+   <forward name="load" path="/department.jsp"/>
+  </action>
+  <action input="/department.jsp" name="department"
+   path="/saveDepartment" scope="request"
+   type="com.yuanluesoft.emp.actions.depart.Save" validate="false"/>
+  <action input="/department.jsp" name="department"
+   path="/deleteDepartment" scope="request"
+   type="com.yuanluesoft.emp.actions.depart.Delete" validate="false"/>
+   <action input="/department.jsp" name="department" path="/refreshDepartment"
+   scope="request" type="com.yuanluesoft.emp.actions.depart.Refresh" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

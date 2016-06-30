@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 诉求件服务 -->
+	<bean id="complaintService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.cms.complaint.service.spring.ComplaintServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="siteService"><ref bean="siteService"/></property>
+				<property name="sessionService"><ref bean="sessionService"/></property>
+				<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+				<property name="smsService"><ref bean="smsService"/></property>
+				<property name="exchangeClient"><ref bean="exchangeClient"/></property>
+				<property name="pageService"><ref bean="pageService"/></property>
+				<property name="timetableService"><ref bean="timetableService"/></property>
+				<property name="recordControlService"><ref bean="recordControlService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="getSN">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="publish*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="unPublish*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="getSmsReplyContent">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="process*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 投诉列表处理器 -->
+	<bean id="complaintsProcessor" class="com.yuanluesoft.cms.complaint.processor.ComplaintsProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="siteService"><ref bean="siteService"/></property>
+	</bean>
+</beans>

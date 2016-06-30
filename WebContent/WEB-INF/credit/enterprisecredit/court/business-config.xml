@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="法院失信被执行人名单" class="com.yuanluesoft.credit.enterprisecredit.court.pojo.Court" >
+		<field name="name" title="姓名／名称" required="true" length="100" type="string" inputMode="text"/>
+		<field name="type" title="类型" required="true" length="50" type="string" inputMode="text"/>
+		<field name="code" title="执行案号" required="true" length="100" type="string" inputMode="text"/>
+		<field name="court" title="执行法院" required="true" length="100" type="string" inputMode="text"/>
+		<field name="issueTime" title="发布时间" required="true"   type="date" inputMode="date"/>
+		<field name="updateTime" title="最后更新时间" required="true"  type="date" inputMode="date"/>
+		<field name="status" title="状态" required="true" length="20" type="string" inputMode="text"/>
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	
+</businessObjects>

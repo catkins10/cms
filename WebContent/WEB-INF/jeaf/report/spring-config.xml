@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 电子表格报表服务 -->
+	<bean id="excelReportService" class="com.yuanluesoft.jeaf.report.excel.jxl.ExcelReportServiceImpl">
+		<property name="imageService"><ref bean="imageService"/></property>
+		<property name="temporaryFileManageService"><ref bean="temporaryFileManageService"/></property>
+	</bean>
+	
+	<!-- PDF报表 -->
+	<bean id="pdfReportService" class="com.yuanluesoft.jeaf.report.pdf.itext.PdfReportServiceImpl">
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="temporaryFileManageService"><ref bean="temporaryFileManageService"/></property>
+	</bean>
+	
+	<!-- 图形报表 -->
+	<bean id="graphReportService" class="com.yuanluesoft.jeaf.report.graph.jfreechart.GraphReportServiceImpl"/>
+</beans>

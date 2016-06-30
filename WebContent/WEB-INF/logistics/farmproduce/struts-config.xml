@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminFarmProduce" type="com.yuanluesoft.logistics.farmproduce.forms.admin.FarmProduce"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminFarmProduce" path="/admin/farmProduce"
+   scope="request"
+   type="com.yuanluesoft.logistics.farmproduce.actions.farmproduce.admin.Load" validate="false">
+   <forward name="load" path="/admin/farmProduce.jsp"/>
+  </action>
+  <action input="/admin/farmProduce.jsp" name="adminFarmProduce"
+   path="/admin/saveFarmProduce" scope="request"
+   type="com.yuanluesoft.logistics.farmproduce.actions.farmproduce.admin.Save" validate="false"/>
+  <action input="/admin/farmProduce.jsp" name="adminFarmProduce"
+   path="/admin/deleteFarmProduce" scope="request"
+   type="com.yuanluesoft.logistics.farmproduce.actions.farmproduce.admin.Delete" validate="false"/>
+  <action path="/farmProduce" scope="request"
+   type="com.yuanluesoft.logistics.farmproduce.actions.farmproduce.Load" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

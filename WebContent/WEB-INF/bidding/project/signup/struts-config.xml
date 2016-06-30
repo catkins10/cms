@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="biddingSignUp" type="com.yuanluesoft.bidding.project.signup.forms.BiddingSignUp"/>
+  <form-bean name="adminSignUp" type="com.yuanluesoft.bidding.project.signup.forms.admin.SignUp"/>
+  <form-bean name="adminUploadTransactions" type="com.yuanluesoft.bidding.project.signup.forms.admin.UploadTransactions"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action path="/signUp" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.signup.Load" validate="false"/>
+  <action path="/completeSignUp" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.signup.Complete" validate="false"/>
+  <action path="/signUpQueryResult" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.signupquery.Result" validate="false"/>
+  <action path="/payment" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.payment.Load" validate="false"/>
+  <action path="/completePayment" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.payment.Complete" validate="false">
+   <forward name="paymentFailed" path="/paymentFailed.jsp"/>
+  </action>
+  <action path="/listSignUpProjects" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.listsignupprojects.Load" validate="false"/>
+  <action name="adminSignUp" path="/admin/signUp" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.admin.signup.Load" validate="false">
+   <forward name="load" path="/admin/signUp.jsp"/>
+  </action>
+  <action input="/admin/signUp.jsp" name="adminSignUp"
+   path="/admin/signUpQuery" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.admin.signup.Query" validate="false"/>
+  <action input="/admin/signUp.jsp" name="adminSignUp"
+   path="/admin/saveSignUp" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.admin.signup.Save" validate="false"/>
+  <action path="/signUpAnonymous" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.signup.AnonymousPrompt" validate="false"/>
+  <action path="/signUpQuery" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.signupquery.Load" validate="false"/>
+  <action path="/signUpPrint" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.signup.Print" validate="false"/>
+  <action name="biddingSignUp" path="/uploadBid" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.uploadbid.Load" validate="false">
+   <forward name="load" path="/uploadBid.jsp"/>
+  </action>
+  <action input="/uploadBid.jsp" name="biddingSignUp"
+   path="/doUploadBid" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.uploadbid.CompleteUpload" validate="false">
+   <forward name="result" path="/bidUploaded.jsp"/>
+  </action>
+  <action name="biddingSignUp" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.uploadbid.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action path="/signUpHistory" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.signuphistory.Load" validate="false"/>
+  <action path="/receivePaperDocuments" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.signupquery.ReceivePaperDocuments" validate="false"/>
+  <action name="adminUploadTransactions"
+   path="/admin/uploadTransactions" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.admin.uploadtransactions.Load" validate="false">
+   <forward name="load" path="/admin/uploadTransactions.jsp"/>
+  </action>
+  <action input="/admin/uploadTransactions.jsp"
+   name="adminUploadTransactions" path="/admin/processTransactions"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.admin.uploadtransactions.Process" validate="false"/>
+  <action name="adminUploadTransactions" path="/admin/attachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.admin.uploadtransactions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action path="/enterpriseInvalidPrompt" scope="request"
+   type="com.yuanluesoft.bidding.project.signup.actions.signup.EnterpriseInvalidPrompt" validate="false"/>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="20M"/>
+</struts-config>

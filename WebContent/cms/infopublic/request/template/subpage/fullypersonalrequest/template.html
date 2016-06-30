@@ -1,0 +1,78 @@
+<table class="readonlyTable">
+	<colgroup>
+		<col align="right"/>
+		<col width="50%"/>
+		<col align="right"/>
+		<col width="50%"/>
+	</colgroup>
+	<tr>
+		<td class="label">申请人类型</td>
+		<td class="content" colspan="3"><a id="field" urn="name=proposerType">&lt;申请人类型&gt;</a></td>
+	</tr>
+	<tr>
+		<td class="label">姓名</td>
+		<td class="content"><a id="field" urn="name=creator">&lt;姓名&gt;</a></td>
+		<td class="label">工作单位</td>
+		<td class="content"><a id="field" urn="name=creatorUnit">&lt;工作单位&gt;</a></td>
+	</tr>
+	<tr>
+		<td class="label" nowrap="nowrap">联系电话</td>
+		<td class="content"><a id="field" urn="name=creatorTel">&lt;联系人电话&gt;</a></td>
+		<td class="label" nowrap="nowrap">传真</td>
+		<td class="content"><a id="field" urn="name=creatorFax">&lt;传真&gt;</a></td>
+	</tr>
+	<tr>
+		<td class="label">联系地址</td>
+		<td class="content" colspan="3"><a id="field" urn="name=creatorAddress">&lt;联系地址&gt;</a></td>
+	</tr>
+	<tr>
+		<td class="label" nowrap="nowrap">邮政编码</td>
+		<td class="content"><a id="field" urn="name=creatorPostalcode">&lt;邮政编码&gt;</a></td>
+		<td class="label" nowrap="nowrap">电子邮箱</td>
+		<td class="content"><a id="field" urn="name=creatorMail">&lt;电子邮箱&gt;</a></td>
+	</tr>
+	<tr>
+		<td class="label" nowrap="nowrap">申请时间</td>
+		<td colspan="3" class="content"><a id="field" urn="name=created&amp;fieldFormat=yyyy-MM-dd HH:mm">&lt;创建时间&gt;</a></td>
+	</tr>
+	<tr>
+		<td class="label">内容描述</td>
+		<td class="content" colspan="3"><a id="field" urn="name=subject">&lt;内容描述&gt;</a></td>
+	</tr>
+	<tr>
+		<td class="label">用途</td>
+		<td class="content" colspan="3"><a id="field" urn="name=purpose">&lt;用途&gt;</a></td>
+	</tr>
+	<tr>
+		<td class="label">介质</td>
+		<td class="content"><a id="field" urn="name=medium">&lt;介质&gt;</a></td>
+		<td class="label" nowrap="nowrap">获取方式</td>
+		<td class="content"><a id="field" urn="name=receiveMode">&lt;获取方式&gt;</a></td>
+	</tr>
+	<tr>
+		<td class="label" nowrap="nowrap">审批结果</td>
+		<td class="content" colspan="3" id="approvalResult"><a id="field" urn="name=approvalResult">&lt;审批结果&gt;</a></td>
+	</tr>
+	<tr id="trNotPublicType" style="display:none">
+		<td class="label">不公开原因</td>
+		<td class="content" colspan="3" id="notPublicType"><a id="field" urn="name=notPublicType">&lt;不公开原因&gt;</a></td>
+	</tr>
+	<tr id="trNotPublicReason" style="display:none">
+		<td class="label" nowrap="nowrap">其他原因说明</td>
+		<td class="content" colspan="3"><a id="field" urn="name=notPublicReason">&lt;其他原因说明&gt;</a></td>
+	</tr>
+	<tr>
+		<td class="label" nowrap="nowrap">实际提供介质</td>
+		<td class="content"><a id="field" urn="name=doneMedium">&lt;实际提供介质&gt;</a></td>
+		<td class="label" nowrap="nowrap">实际提供方式</td>
+		<td class="content"><a id="field" urn="name=doneReceiveMode">&lt;获取方式&gt;</a></td>
+	</tr>
+</table>
+<script>
+	if(document.getElementById("approvalResult").innerHTML=="不公开") {
+		document.getElementById("trNotPublicType").style.display = "";
+		if(document.getElementById("notPublicType").innerHTML=="其他原因") {
+			document.getElementById("trNotPublicReason").style.display = "";
+		}
+	}
+</script>

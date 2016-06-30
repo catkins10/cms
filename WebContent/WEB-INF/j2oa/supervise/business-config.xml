@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="督办" class="com.yuanluesoft.j2oa.supervise.pojo.Supervise">
+		<field name="sn" title="督办号" length="10" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="content" title="工作内容" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="departmentIds" title="责任部门ID" length="500" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="departmentNames" title="责任部门" length="500" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(600, 400, true, 'departmentIds{id},departmentNames{name|责任部门|100%}', '', 'unitDepartment')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="departmentSupervisors" title="分管领导" length="200" type="string" inputMode="readonly"/>
+		<field name="transactorIds" title="经办人ID" length="500" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="transactorNames" title="经办人" length="500" type="string" inputMode="hidden"/>
+		<field name="result" title="落实情况" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="completeTime" title="落实时间" type="timestamp" inputMode="readonly"/>
+		<field name="status" title="状态" length="1" type="number" inputMode="hidden"/>
+		<field name="statusTitle" title="状态说明" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">status</parameter>
+		</field>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="创建人" length="60" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+		<field name="timeLimits" title="完成时限" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.supervise.pojo.SuperviseTimeLimit</parameter>
+		</field>
+		<field name="timeLimit" title="完成时限(全部)" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">timeLimits</parameter>
+		</field>
+		<field name="lastTimeLimit" title="完成时限" required="true" persistence="false" type="timestamp" inputMode="datetime">
+			<parameter name="referenceFields">timeLimits</parameter>
+		</field>
+		<field name="attachment" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">500000000</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="完成时限" class="com.yuanluesoft.j2oa.supervise.pojo.SuperviseTimeLimit">
+		<field name="superviseId" title="督办ID" length="20" type="number" inputMode="hidden"/>
+		<field name="timeLimit" title="时限,timestamp" type="timestamp" inputMode="datetime"/>
+		<field name="created" title="设置时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

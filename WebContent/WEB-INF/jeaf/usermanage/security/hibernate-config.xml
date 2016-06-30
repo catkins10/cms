@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<class name="com.yuanluesoft.jeaf.usermanage.security.pojo.UserLoginPolicy" table="user_login_policy">
+        <id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--策略名称-->
+		<property name="ips"/> <!--IP地址列表-->
+		<property name="mac"/> <!--MAC地址-->
+    </class>
+    
+    <class name="com.yuanluesoft.jeaf.usermanage.security.pojo.UserLoginPolicyPrivilege" table="user_login_policy_user">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--密码策略-->
+	<class name="com.yuanluesoft.jeaf.usermanage.security.pojo.UserPasswordPolicy" table="user_password_policy">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="orgId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="orgName"/> <!--单位名称,VARCHAR(100)-->
+		<property name="internalPasswordStrength"/> <!--内部用户密码强度,低/1,中/2,高/3,NUMERIC(1)-->
+		<property name="externalPasswordStrength"/> <!--外部用户密码强度,低/1,中/2,高/3,NUMERIC(1)-->
+		<property name="internalPasswordDays"/> <!--内部用户密码修改周期,NUMERIC(3)-->
+		<property name="externalPasswordDays"/> <!--外部用户密码修改周期,NUMERIC(3)-->
+		<property name="passwordWrong"/> <!--密码输错次数控制,针对内部用户,超出后自动停用,NUMERIC(3)-->
+		<property name="resetPasswordMailSubject"/> <!--密码重置邮件标题,VARCHAR(200)-->
+		<property name="resetPasswordMailContent"/> <!--密码重置邮件内容,VARCHAR(2000)-->
+		<property name="resetPasswordCodeExpire"/> <!--密码重置验证码有效期,以分钟为单位,NUMERIC(4)-->
+	</class>
+	
+	<!--用户安全-->
+	<class name="com.yuanluesoft.jeaf.usermanage.security.pojo.UserSecurity" table="user_security">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="userId"/> <!--用户ID,NUMERIC(20)-->
+		<property name="passwordWrong"/> <!--密码输错次数,NUMERIC(3)-->
+		<property name="lastSetPassword"/> <!--密码修改时间,上次设置密码的时间,timestamp null-->
+		<property name="resetCode"/> <!--重置验证码,VARCHAR(8)-->
+		<property name="resetCodeCreated"/> <!--重置验证码生成时间,TIMESTAMP-->
+		<property name="halt"/> <!--是否停用,CHAR(1)-->
+	</class>
+</hibernate-mapping>

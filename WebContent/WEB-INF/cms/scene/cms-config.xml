@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/scene"/>
+		
+		<page name="sceneService" title="场景服务" systemLink="false" url="/cms/scene/sceneService.shtml">
+			<templateView name="admin/template" application="cms/scene"/>
+			<templatePlugin path="/cms/scene/templatemanage/sceneplugins" private="true">
+				<templateActions>scene_select_scene</templateActions> <!-- 扩展的模板操作 -->
+			</templatePlugin>
+					
+			<field title="服务名称" name="name"/>
+			<field title="创建时间" name="created" type="timestamp"/>
+			
+			<recordList title="选项列表" name="sceneDirectories" recordPage="scene">
+				<field title="选项名称" name="directoryName"/>
+			</recordList>
+			
+			<link title="场景链接" dialogURL="/cms/scene/admin/insertSceneLink.shtml"/>
+		</page>
+		
+		<page name="scene" title="场景" systemLink="false" url="/cms/scene/scene.shtml">
+			<templateView name="admin/template" application="cms/scene"/>
+			<templatePlugin path="/cms/scene/templatemanage/sceneplugins" private="true">
+				<templateActions>scene_select_scene</templateActions> <!-- 扩展的模板操作 -->
+				<pageElementActions>scene_location</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			
+			<field title="服务名称" name="sceneService.name"/>
+			<field title="场景名称" name="directoryName"/>
+			
+			<recordList title="选项列表" name="sceneDirectories" recordPage="scene">
+				<field title="选项名称" name="directoryName"/>
+			</recordList>
+			
+			<link title="场景链接" dialogURL="/cms/scene/admin/insertSceneLink.shtml"/>
+		</page>
+		
+		<page name="sceneContent" title="内容" systemLink="false" url="/cms/scene/scene.shtml">
+			<templateView name="admin/template" application="cms/scene"/>
+			<templatePlugin path="/cms/scene/templatemanage/sceneplugins" private="true">
+				<templateActions>scene_select_scene_content</templateActions> <!-- 扩展的模板操作 -->
+				<pageElementActions>scene_location</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			
+			<field title="服务名称" name="sceneService.name"/>
+			<field title="场景名称" name="directoryName"/>
+			<field title="正文" name="body" type="html"/>
+		</page>
+	</pages>
+	
+	<links>
+		<link title="场景服务链接" dialogURL="/cms/scene/templatemanage/insertSceneServiceLink.jsp"/>
+	</links>
+	
+	<recordLists>
+		<recordList title="场景服务列表" name="sceneServices" recordPage="sceneService" rssSupport="false" hostPage="index"/>
+	</recordLists>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="sceneServices" processor="sceneServicesProcessor"/> <!-- 场景服务列表处理器 -->
+		<pageElement name="sceneServiceLink" processor="sceneServiceLinkProcessor"/> <!-- 场景服务链接处理器 -->
+		<pageElement name="sceneDirectories" processor="sceneDirectoriesProcessor"/> <!-- 场景选项列表处理器 -->
+		<pageElement name="sceneLink" processor="sceneLinkProcessor"/> <!-- 场景选项链接处理器 -->
+		<pageElement name="sceneLocation" processor="sceneLocationProcessor"/> <!-- 场景位置处理器 -->
+	</pageElements>
+</application>

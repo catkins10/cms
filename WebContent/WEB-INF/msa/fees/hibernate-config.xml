@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--规费征缴：基本信息-->
+	<class name="com.yuanluesoft.msa.fees.pojo.MsaFees" table="msa_fees">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--名称,varchar(100)-->
+		<property name="creatorId"/> <!--创建者ID,numeric(20)-->
+		<property name="creator"/> <!--创建者,varchar(50)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID,varchar(32)-->
+		<set name="items" table="msa_fees_item" lazy="true" inverse="true" cascade="delete">
+			<key column="feesId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.msa.fees.pojo.MsaFeesItem" />
+		</set>
+		<set name="opinions" table="msa_fees_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.msa.fees.pojo.MsaFeesOpinion"/>
+		</set>
+		<set name="visitors" table="msa_fees_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.msa.fees.pojo.MsaFeesPrivilege"/>
+		</set>
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+	</class>
+	
+	<!--规费征缴：收费细项-->
+	<class name="com.yuanluesoft.msa.fees.pojo.MsaFeesItem" table="msa_fees_item">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="feesId"/> <!--收费基本信息ID,numeric(20)-->
+		<property name="examCategory"/> <!--考试类别,varchar(50)-->
+		<property name="address"/> <!--院校,varchar(50)-->
+		<property name="examTime"/> <!--考试时间,date-->
+		<property name="examineeNumber"/> <!--考生人数,numeric(6,0)-->
+		<property name="charge"/> <!--费用,numeric(8,2)-->
+		<property name="period"/> <!--期数,varchar(30)-->
+		<property name="paymentMode"/> <!--缴费方式,varchar(30)-->
+		<property name="unitId"/> <!--负责单位ID,numeric(20)-->
+		<property name="unitName"/> <!--负责单位,varchar(30)-->
+		<property name="completeTime"/> <!--完成时间,timestamp null-->
+		<property name="transactorId"/> <!--经办人ID,numeric(20)-->
+		<property name="transactor"/> <!--经办人姓名,varchar(30)-->
+		<property name="feedback"/> <!--完成情况说明,varchar(2000)-->
+		<property name="remark"/> <!--备注,varchar(2000)-->
+	</class>
+	
+	<!--规费征缴：权限控制-->
+	<class name="com.yuanluesoft.msa.fees.pojo.MsaFeesPrivilege" table="msa_fees_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,numeric(20)-->
+		<property name="accessLevel"/> <!--访问级别,char(1)-->
+		<property name="recordId"/> <!--记录ID,numeric(20)-->
+	</class>
+	
+	<!--规费征缴：审核意见-->
+	<class name="com.yuanluesoft.msa.fees.pojo.MsaFeesOpinion" table="msa_fees_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID,numeric(20)-->
+		<property name="workItemId"/> <!--工作项ID,varchar(32)-->
+		<property name="activityName"/> <!--环节名称,varchar(50)-->
+		<property name="activityId"/> <!--环节ID,varchar(32)-->
+		<property name="personId"/> <!--填写人ID,numeric(20)-->
+		<property name="personName"/> <!--填写人姓名,varchar(32)-->
+		<property name="agentId"/> <!--代理人ID,numeric(20)-->
+		<property name="agentName"/> <!--代理人姓名,varchar(32)-->
+		<property name="opinion"/> <!--意见内容,varchar(2000)-->
+		<property name="opinionType"/> <!--意见类型,varchar(20)-->
+		<property name="created"/> <!--填写时间,timestamp null-->
+	</class>
+</hibernate-mapping>

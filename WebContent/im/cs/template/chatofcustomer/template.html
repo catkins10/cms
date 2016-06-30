@@ -1,0 +1,98 @@
+﻿<html>
+    <head>
+        <title>对话</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <link href="{CONTEXTPATH}/im/cs/template/css/csdialog.css" rel="stylesheet" type="text/css">
+        <link href="{CONTEXTPATH}/im/webim/template/chat/css/chat.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+			.td_chat_speaks {
+				border: #cccccc 1 solid;
+			}
+			.td_expression { /*表情栏*/
+				border: #dddddd 1 solid;
+				border-top-style: none;
+			}
+			.chat_input { /*输入框*/
+				border-style: none;
+			}
+			.td_chat_input { /*输入框单元格*/
+				height: 22px;
+				border: #dddddd 1 solid;
+				border-top-style: none;
+			}
+		</style>
+		<script>
+			function onPageLoaded() {
+				var mainTable = document.getElementById('mainTable');
+				mainTable.style.height = mainTable.parentElement.offsetHeight + "px";
+				var divScroll = document.getElementById('divScroll');
+				divScroll.style.height = divScroll.offsetHeight + "px";
+			}
+		</script>
+    </head>
+    <body onselectstart="return false;"> <!--  onload="onPageLoaded()" -->
+        <table border="0" cellspacing="0" cellpadding="0" width="100%" height="100%" style="table-layout: fixed">
+            <tr>
+                <td class="leftTop">&nbsp;</td>
+                <td class="centerTop">&nbsp;</td>
+                <td class="rightTop">&nbsp;</td>
+            </tr>
+            <tr>
+                <td class="leftMiddle">&nbsp;</td>
+                <td class="centerMiddle" valign="top">
+           	    	<table id="mainTable" border="0" cellspacing="0" cellpadding="0" width="100%" height="100%">
+                        <tr>
+                            <td>
+                            <div class="title"><a id="field" urn="name=chatPersonNames">&lt;对话用户姓名&gt;</a>&nbsp;- 对话</div>
+                            <div class="closeButton" onmouseover="className='closeButton closeButtonMouseover';" onmouseout="className='closeButton';" onclick="parent.frames['frameWebim'].webim.closeWebimDialog(false)" style="float: right">&nbsp;</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="100%">
+                                <form id="webimChat" class="form" title="表单:对话" action="applicationName=im/webim" style="border-bottom: #ffc0c0 1px dotted; border-left: #ffc0c0 1px dotted; margin: 0px; border-top: #ffc0c0 1px dotted; border-right: #ffc0c0 1px dotted">
+                                    <table border="0" cellspacing="0" cellpadding="0" width="100%" height="100%" style="background-color: #f2f2f2">
+                                        <tbody>
+                                            <tr>
+                                                <td class="td_chat_speaks" valign="top">
+                                                <div id="divScroll" class="divScroll"><a id="recordList" urn="recordListName=talks&amp;privateRecordList=true&amp;recordClassName=com.yuanluesoft.im.webim.model.WebimChat&amp;applicationName=im/webim&amp;recordCount=6&amp;recordFormat=&lt;DIV style%3D&quot;COLOR: #666666&quot;&gt;&lt;A id%3Dfield urn%3Dname%3Dcreator%26amp;link%3Dtrue&gt;%26lt;发言人姓名%26gt;&lt;/A&gt;%26nbsp;&lt;A id%3Dfield urn%3D&quot;name%3Dcreated%26amp;link%3Dtrue%26amp;fieldFormat%3DMM-dd HH:mm&quot;&gt;%26lt;发言时间%26gt;&lt;/A&gt;&lt;/DIV&gt;                                     &lt;div style%3D&quot;padding: 3px 0 8px 0&quot;&gt;&lt;A id%3Dfield urn%3Dname%3Dcontent%26amp;link%3Dtrue&gt;%26lt;内容%26gt;&lt;/A&gt;&lt;/div&gt;&amp;separatorMode=newLine&amp;separatorHeight=5&amp;linkOpenMode=_blank&amp;emptyPrompt=&amp;extendProperties=">&lt;对话记录&gt;</a></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td id="expressionBox" class="td_expression" title="表情"><img title="微笑" alt="微笑" src="/cms/im/expression/weixiao.gif" /> <img title="傲慢" alt="傲慢" src="/cms/im/expression/aomang.gif" /> <img title="白眼" alt="白眼" src="{CONTEXTPATH}/im/expression/baiyan.gif" /> <img title="别嘴" alt="别嘴" src="{CONTEXTPATH}/im/expression/biezui.gif" /> <img title="闭嘴" alt="闭嘴" src="{CONTEXTPATH}/im/expression/bizui.gif" /> <img title="擦汗" alt="擦汗" src="{CONTEXTPATH}/im/expression/cahan.gif" /> <img title="大兵" alt="大兵" src="{CONTEXTPATH}/im/expression/dabing.gif" /> <img title="大哭" alt="大哭" src="{CONTEXTPATH}/im/expression/daku.gif" /> <img title="得意" alt="得意" src="{CONTEXTPATH}/im/expression/deyi.gif" /> <img title="发呆" alt="发呆" src="{CONTEXTPATH}/im/expression/fadai.gif" /> <img title="发怒" alt="发怒" src="{CONTEXTPATH}/im/expression/fanu.gif" /> <img title="尴尬" alt="尴尬" src="{CONTEXTPATH}/im/expression/ganga.gif" /> <img title="害羞" alt="害羞" src="{CONTEXTPATH}/im/expression/haixiu.gif" /> <img title="憨笑" alt="憨笑" src="{CONTEXTPATH}/im/expression/hanxiao.gif" /> <img title="饥饿" alt="饥饿" src="{CONTEXTPATH}/im/expression/jie.gif" /> <img title="惊恐" alt="惊恐" src="{CONTEXTPATH}/im/expression/jingkong.gif" /> <img title="惊讶" alt="惊讶" src="{CONTEXTPATH}/im/expression/jingya.gif" /> <img title="可爱" alt="可爱" src="{CONTEXTPATH}/im/expression/keai.gif" /> <img title="扣鼻" alt="扣鼻" src="{CONTEXTPATH}/im/expression/koubi.gif" /> <img title="酷" alt="酷" src="{CONTEXTPATH}/im/expression/ku.gif" /> <img title="困" alt="困" src="{CONTEXTPATH}/im/expression/kun.gif" /> <img title="冷汗" alt="冷汗" src="{CONTEXTPATH}/im/expression/lenghan.gif" /> <img title="咧牙" alt="咧牙" src="{CONTEXTPATH}/im/expression/lieya.gif" /> <img title="流汗" alt="流汗" src="{CONTEXTPATH}/im/expression/liuhan.gif" /> <img title="流泪" alt="流泪" src="{CONTEXTPATH}/im/expression/liulei.gif" /> <img title="难过" alt="难过" src="{CONTEXTPATH}/im/expression/nanguo.gif" /> <img title="色" alt="色" src="{CONTEXTPATH}/im/expression/se.gif" /> <img title="衰" alt="衰" src="{CONTEXTPATH}/im/expression/shuai.gif" /> <img title="睡" alt="睡" src="{CONTEXTPATH}/im/expression/shui.gif" /> <img title="调皮" alt="调皮" src="{CONTEXTPATH}/im/expression/tiaopi.gif" /> <img title="偷笑" alt="偷笑" src="{CONTEXTPATH}/im/expression/touxiao.gif" /> <img title="吐" alt="吐" src="{CONTEXTPATH}/im/expression/tu.gif" /> <img title="敲打" alt="敲打" src="{CONTEXTPATH}/im/expression/qiaoda.gif" /> <img title="再见" alt="再见" src="{CONTEXTPATH}/im/expression/zaijian.gif" /> <img title="抓狂" alt="抓狂" src="{CONTEXTPATH}/im/expression/zhuakuang.gif" /> </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td_chat_action_bar" valign="middle">
+                                                <table border="0" cellspacing="0" cellpadding="1" width="100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="insertExpressionAction" class="chat_action_normal" title="插入表情" onmouseover="className='chat_action_normal chat_action_over';" onmouseout="className='chat_action_normal';"><img title="表情" alt="表情" src="{CONTEXTPATH}/im/webim/template/chat/images/im_smile.gif" width="13" height="13" /></td>
+                                                            <td id="sendFileAction" class="chat_action_normal" title="发送文件" onmouseover="className='chat_action_normal chat_action_over';" onmouseout="className='chat_action_normal';"><img title="发送文件" alt="发送文件" src="{CONTEXTPATH}/im/webim/template/chat/images/im_send_file.gif" width="13" height="13" /></td>
+                                                            <td id="sendImageAction" class="chat_action_normal" title="发送图片" onmouseover="className='chat_action_normal chat_action_over';" onmouseout="className='chat_action_normal';"><img title="发送图片" alt="发送图片" src="{CONTEXTPATH}/im/webim/template/chat/images/im_send_image.gif" width="13" height="13" /></td>
+                                                            <td width="100%"></td>
+                                                            <td id="fileUploadingBox" title="正在上传..."><img alt="" src="{CONTEXTPATH}/im/webim/template/chat/images/loading.gif" width="16" height="11" />&nbsp;</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td_chat_input"><input id="field" class="chat_input" title="发言" name="content" type="text" /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div></div>
+                                </form>
+                            </td>
+                        </tr>
+                	</table>
+                </td>
+                <td class="rightMiddle">&nbsp;</td>
+            </tr>
+            <tr>
+                <td class="leftBottom">&nbsp;</td>
+                <td class="centerBottom">&nbsp;</td>
+                <td class="rightBottom">&nbsp;</td>
+            </tr>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 信息公开意见箱 -->
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/infopublic/opinion"/>
+		
+		<page name="publicOpinion" title="意见填写" url="/cms/infopublic/opinion/opinion.shtml">
+			<field title="主题" name="subject"/>
+			<field title="正文" name="body"/>
+			<field title="编号" name="sn"/>
+			<field title="创建人姓名" name="creator"/>
+			<field title="邮箱" name="creatorMail"/>
+			<field title="证件号码" name="creatorIdentityCard"/>
+			<field title="创建时间" name="created" type="timestamp"/>
+			<subPage name="base" title="意见填写"/>
+		</page>
+		
+		<page name="publicOpinionSearch" title="搜索" searchPage="true" searchResults="publicOpinions" url="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/infopublic/opinion&amp;pageName=publicOpinionSearch"/>
+	</pages>
+	
+	<recordLists>
+		<recordList title="信息公开意见列表" name="publicOpinions" recordPage="publicOpinion" hostPage="index"/>
+	</recordLists>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="publicOpinions" processor="publicServicesProcessor"/> <!-- 信息公开意见列表处理器 -->
+	</pageElements>
+</application>

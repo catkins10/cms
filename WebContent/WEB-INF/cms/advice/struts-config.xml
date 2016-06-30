@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="advice" type="com.yuanluesoft.cms.advice.forms.Advice"/>
+  <form-bean name="adminAdvice" type="com.yuanluesoft.cms.advice.forms.admin.Advice"/>
+  <form-bean name="adminAdviceTopic" type="com.yuanluesoft.cms.advice.forms.admin.AdviceTopic"/>
+  <form-bean name="adminAdviceFeedback" type="com.yuanluesoft.cms.advice.forms.admin.AdviceFeedback"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action input="/adviceTopic.shtml" name="advice" path="/submitAdvice"
+   scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advice.Submit" validate="false">
+   <forward name="result" path="/adviceSubmitted.jsp"/>
+  </action>
+  <action name="adminAdvice" path="/admin/advice" scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advice.admin.Load" validate="false">
+   <forward name="load" path="/admin/advice.jsp"/>
+  </action>
+  <action input="/admin/advice.jsp" name="adminAdvice"
+   path="/admin/saveAdvice" scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advice.admin.Save" validate="false"/>
+  <action input="/admin/advice.jsp" name="adminAdvice"
+   path="/admin/runAdvice" scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advice.admin.Run" validate="false"/>
+  <action input="/admin/advice.jsp" name="adminAdvice"
+   path="/admin/deleteAdvice" scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advice.admin.Delete" validate="false"/>
+  <action input="/admin/advice.jsp" name="adminAdvice"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advice.admin.WriteOpinion" validate="false"/>
+  <action input="/admin/advice.jsp" name="adminAdvice"
+   path="/admin/setPublishOption" scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advice.admin.SetPublishOption" validate="false"/>
+  <action input="/admin/advice.jsp" name="adminAdvice"
+   path="/admin/publish" scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advice.admin.Publish" validate="false"/>
+  <action name="advice" path="/selectAttachment" scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advice.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="adminAdviceTopic" path="/admin/adviceTopic"
+   scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advicetopic.admin.Load" validate="false">
+   <forward name="load" path="/admin/adviceTopic.jsp"/>
+  </action>
+  <action input="/admin/adviceTopic.jsp" name="adminAdviceTopic"
+   path="/admin/saveAdviceTopic" scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advicetopic.admin.Save" validate="false"/>
+  <action input="/admin/adviceTopic.jsp" name="adminAdviceTopic"
+   path="/admin/deleteAdviceTopic" scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advicetopic.admin.Delete" validate="false"/>
+  <action name="adminAdviceTopic" path="/admin/selectAttachment"
+   scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advicetopic.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="advice" path="/adviceTopic" scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advicetopic.Load" validate="false"/>
+  <action path="/advice" scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advice.Load" validate="false"/>
+  <action name="adminAdviceFeedback" path="/admin/adviceFeedback"
+   scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advicefeedback.admin.Load" validate="false">
+   <forward name="load" path="/admin/adviceFeedback.jsp"/>
+  </action>
+  <action input="/admin/adviceFeedback.jsp" name="adminAdviceFeedback"
+   path="/admin/saveAdviceFeedback" scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advicefeedback.admin.Save" validate="false"/>
+  <action input="/admin/adviceFeedback.jsp" name="adminAdviceFeedback"
+   path="/admin/deleteAdviceFeedback" scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advicefeedback.admin.Delete" validate="false"/>
+  <action path="/adviceFeedback" scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advicefeedback.Load" validate="false"/>
+  <action input="/admin/adviceTopic.jsp" name="adminAdviceTopic"
+   path="/admin/refreshAdviceTopic" scope="request"
+   type="com.yuanluesoft.cms.advice.actions.advicetopic.admin.Refresh" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

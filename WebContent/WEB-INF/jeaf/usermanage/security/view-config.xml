@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views>
+	<view name="userLoginPolicy" form="admin/userLoginPolicy" title="用户登录策略" pageRows="30" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.usermanage.security.pojo.UserLoginPolicy</pojo>
+			<quickFilter>UserLogin.ips like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action name="create" title="添加策略" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('jeaf/usermanage/security','admin/userLoginPolicy','width=760,height=520')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="策略名称" name="name" width="160"/>
+			<column title="IP地址" name="ips"/>
+		</columns>
+	</view>
+	
+	<view name="userPasswordPolicy" form="admin/userPasswordPolicy" title="用户密码策略" url="/jeaf/usermanage/admin/orgRelationConfigView.shtml?applicationName=jeaf/usermanage/security&amp;viewName=userPasswordPolicy&amp;orgTypes=root,unit" hide="noPrivilege(application_manager) and isNotOrgManager(unit)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.usermanage.security.pojo.UserPasswordPolicy</pojo>
+			<quickFilter>UserPasswordPolicy.orgName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="配置用户密码策略" execute="PageUtils.newrecord('jeaf/usermanage/security', 'admin/userPasswordPolicy', 'mode=fullscreen', 'orgId={PARAMETER:orgId}')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="内部用户密码强度" name="internalPasswordStrength" align="center"/>
+			<column title="外部用户密码强度" name="externalPasswordStrength" align="center"/>
+			<column title="内部用户密码修改周期" name="internalPasswordDays" align="center"/>
+			<column title="外部用户密码修改周期" name="externalPasswordDays" align="center"/>
+			<column title="密码输错次数控制" name="passwordWrong" align="center"/>
+		</columns>
+	</view>
+</views>

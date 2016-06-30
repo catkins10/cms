@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,32,177,21" TARGET="page6" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,96,177,21" TARGET="page3"
+  TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#receival" NAME="action1"
+  PATH="/receival" SHAPE="32,208,177,41" TITLE="receival" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/receival.jsp" TARGET="page1" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#save" NAME="action2"
+  PATH="/save" SHAPE="544,240,193,25" TITLE="receival" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#run" NAME="action3"
+  PATH="/run" SHAPE="544,288,193,25" TITLE="receival" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#delete" NAME="action4"
+  PATH="/delete" SHAPE="544,336,193,25" TITLE="receival" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#writeOpinion"
+  NAME="action11" PATH="/writeOpinion" SHAPE="544,392,193,25"
+  TITLE="receival" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#appendReaders"
+  NAME="action0" PATH="/appendReaders" SHAPE="544,448,193,25"
+  TITLE="receival" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/receival.jsp" SHAPE="320,224,56,205" SUBTYPE="jsp"
+  TITLE="receival.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/save" TARGET="action2" TITLE="save" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/run" TARGET="action3" TITLE="run" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/delete" TARGET="action4" TITLE="delete" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link9"
+   PATH="/writeOpinion" TARGET="action11" TITLE="saveOpinion" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link12"
+   PATH="/appendReaders" TARGET="action0" TITLE="appendReaders" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/setFilingOption" TARGET="action8" TITLE="setFilingOption" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link4"
+   PATH="/filing" TARGET="action9" TITLE="filing" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#setFilingOption"
+  NAME="action8" PATH="/setFilingOption" SHAPE="544,504,193,25"
+  TITLE="receival" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#filing" NAME="action9"
+  PATH="/filing" SHAPE="544,560,193,25" TITLE="receival" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#templateConfig"
+  NAME="action10" PATH="/templateConfig" SHAPE="32,816,193,41"
+  TITLE="templateConfig" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templateConfig.jsp" TARGET="page2"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/templateConfig.jsp" SHAPE="320,832,56,40" SUBTYPE="jsp"
+  TITLE="handlingTemplateConfig.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveTemplateConfig" TARGET="action14"
+   TITLE="createUploadTemplatePassport" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveTemplateConfig"
+  NAME="action14" PATH="/saveTemplateConfig" SHAPE="544,848,193,25"
+  TITLE="templateConfig" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#filingConfig"
+  NAME="action17" PATH="/filingConfig" SHAPE="32,1080,193,41"
+  TITLE="filingConfig" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/filingConfig.jsp" TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/filingConfig.jsp" SHAPE="320,1096,56,25" SUBTYPE="jsp"
+  TITLE="filingConfig.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveFilingConfig"
+  NAME="action18" PATH="/saveFilingConfig" SHAPE="544,1112,197,25"
+  TITLE="filingConfig" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#attachmentEditor"
+  NAME="action5" PATH="/attachmentEditor" SHAPE="32,704,193,41"
+  TITLE="receival" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/attachment.jsp"
+   TARGET="page5" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/../../jeaf/attachment/attachment.jsp" SHAPE="320,720,50,25"
+  SUBTYPE="jsp" TITLE="attachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectTemplateAttachment"
+  NAME="action6" PATH="/selectTemplateAttachment" SHAPE="32,912,193,41"
+  TITLE="templateConfig" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/selectAttachment.jsp"
+   TARGET="page0" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="320,32,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="320,96,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/attachment/selectAttachment.jsp"
+  SHAPE="320,928,50,25" SUBTYPE="jsp" TITLE="selectAttachment.jsp" TYPE="page"/>
+</PROCESS>

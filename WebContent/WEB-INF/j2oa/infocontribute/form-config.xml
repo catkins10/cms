@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.j2oa.infocontribute.forms.Info" title="投稿" pojo="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContribute">
+		<formFields>
+			<field title="预选刊型" name="presetMagazineIds" type="number[]" inputMode="multibox">
+				<parameter name="itemsServiceName">infoContributeService</parameter>
+				<parameter name="itemsName">presetMagazines</parameter>
+			</field>
+			<field title="接收单位" name="receiveUnitNames" type="string[]" inputMode="multibox" required="true">
+				<parameter name="itemsServiceName">infoContributeService</parameter>
+				<parameter name="itemsName">receiveUnitNames</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteInfo')"/>
+			<action title="投稿" hide="isRead()" execute="if(confirm('是否确定投稿？'))FormUtils.doAction('contributeInfo')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.infocontribute.forms.ReviseInfo" title="退改稿" pojo="com.yuanluesoft.j2oa.infocontribute.pojo.InfoContributeRevise">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="完成修改" hide="isRead()" execute="if(confirm('是否确定修改完成？'))FormUtils.submitForm()"/>
+		</actions>
+	</form>
+</forms>

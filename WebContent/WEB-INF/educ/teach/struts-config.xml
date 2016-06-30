@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="teach" type="com.yuanluesoft.educ.teach.forms.Teach"/>
+  <form-bean name="teachImportData" type="com.yuanluesoft.educ.teach.forms.ImportDateExcel"/>
+  <form-bean name="applicationView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="teach" path="/teach" scope="request"
+   type="com.yuanluesoft.educ.teach.actions.Load" validate="false">
+   <forward name="load" path="/teach.jsp"/>
+  </action>
+  <action input="/teach.jsp" name="teach" path="/save" scope="request"
+   type="com.yuanluesoft.educ.teach.actions.Save" validate="false"/>
+  <action input="/teach.jsp" name="teach" path="/delete" scope="request"
+   type="com.yuanluesoft.educ.teach.actions.Delete" validate="false"/>
+   
+   <!-- 附件选择处理。页面的data标签加载时跳转该path调用相应action处理附件页面 -->
+  <action name="teachImportData" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.educ.teach.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <!-- excel数据导入页面加载 -->
+   <action name="teachImportData" path="/teachImportData" scope="request" validate="false"
+   type="com.yuanluesoft.educ.teach.actions.excelimport.Load">
+   <forward name="load" path="/importData.jsp"/>
+   </action>
+   <action name="teachImportData" path="/doImportData" scope="request" validate="false" input="/importData.jsp"
+   type="com.yuanluesoft.educ.teach.actions.excelimport.DoImportData"/>
+   
+   <!-- 批量删除操作 -->
+   <action input="/../../jeaf/application/applicationView.jsp" name="applicationView" 
+   path="/batchOperate" scope="request" 
+   type="com.yuanluesoft.educ.batchoperate.BatchOperate" validate="false" />
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="200M"/>
+</struts-config>

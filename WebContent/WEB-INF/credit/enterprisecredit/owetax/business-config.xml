@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="龙海市国家税务局年辖区企业欠税情况" class="com.yuanluesoft.credit.enterprisecredit.owetax.pojo.OweTax" >
+		<field name="number" title="纳税人识别号" required="true" length="20" type="string" inputMode="text"/>
+		<field name="name" title="纳税人名称" required="true" length="200" type="string" inputMode="text"/>
+		<field name="project" title="征收项目" required="true" length="100" type="string" inputMode="text"/>
+		<field name="totalTaxes" title="累计欠税(元)" length="50" required="true"  type="string" inputMode="text"/>
+
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	
+</businessObjects>

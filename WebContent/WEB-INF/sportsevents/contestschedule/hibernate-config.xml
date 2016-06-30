@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--体育赛程安排-->
+	<class name="com.yuanluesoft.sportsevents.contestschedule.pojo.ContestSchedule" table="sportsevents_schedule">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="gameName"/> <!--比赛名称-->
+		<property name="beginTime"/> <!--开始时间-->
+		<property name="endTime"/> <!--结束时间-->
+		<property name="address"/> <!--比赛地点-->
+		<property name="creatorId"/> <!--发布人ID-->
+		<property name="creator"/> <!--发布人-->
+		<property name="created"/> <!--发布时间-->
+		<property name="remark"/> <!--备注-->
+	</class>
+	
+	<!--体育成绩分数 -->
+	<class name="com.yuanluesoft.sportsevents.contestschedule.pojo.Score" table="sportsevents_score">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="player"/> <!--参赛代表团-->
+		<property name="gameName"/> <!--比赛项目名称-->
+		<property name="gameId"/> <!--比赛项目ID-->
+		<property name="score"/> <!--分数-->
+		<property name="goldMedalCount"/> <!--金牌数-->
+		<property name="silverMedalCount"/> <!--银牌数-->
+		<property name="bronzeMedalCount"/> <!--铜牌数-->
+	</class>
+</hibernate-mapping>

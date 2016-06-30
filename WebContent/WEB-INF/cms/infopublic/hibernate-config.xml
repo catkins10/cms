@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--信息公开:目录-->
+	<class name="com.yuanluesoft.cms.infopublic.pojo.PublicDirectory" table="public_directory">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryName"/> <!--目录名称-->
+		<property name="parentDirectoryId"/> <!--上级目录ID-->
+		<property name="priority"/> <!--优先级-->
+		<property name="directoryType"/> <!--目录类型-->
+		<property name="creator"/> <!--创建人-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="created"/> <!--创建时间-->
+		<property name="remark"/> <!--备注-->
+		<property name="code"/> <!--类目代码-->
+		<property name="description"/> <!--描述-->
+		<property name="synchSiteIds"/> <!--同步更新到网站栏目列表-->
+		<property name="workflowId"/> <!--绑定的流程ID-->
+		<property name="workflowName"/> <!--绑定的流程名称-->
+		<property name="editorDeleteable"/> <!--允许编辑删除,0/从上级继承,1/允许,2/不允许-->
+		<property name="editorReissueable"/> <!--允许编辑撤销,0/从上级继承,1/允许,2/不允许-->
+		<set cascade="delete" inverse="true" lazy="true" name="directoryPopedoms" table="public_directory_popedom" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.cms.infopublic.pojo.PublicDirectoryPopedom" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="subjections" table="public_directory_subjection" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.cms.infopublic.pojo.PublicDirectorySubjection" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="childSubjections" table="public_directory_subjection">
+			<key column="parentDirectoryId" />
+			<one-to-many class="com.yuanluesoft.cms.infopublic.pojo.PublicDirectorySubjection" />
+		</set>
+		<!--信息公开:主目录-->
+		<joined-subclass name="com.yuanluesoft.cms.infopublic.pojo.PublicMainDirectory" table="public_main_directory">
+            <key>
+                <column name="id" />
+            </key>
+			<property name="siteId"/> <!--隶属站点ID-->
+			<property name="siteName"/> <!--隶属站点名称-->
+			<property name="manualCodeEnabled"/> <!--允许手工编制索引号-->
+			<property name="recodeEnabled"/> <!--信息删除后重新编号-->
+			<property name="sequenceByDirectory"/> <!--按目录分类号编制流水号-->
+			<set cascade="delete" inverse="true" lazy="true" name="guides" table="public_guide">
+				<key column="directoryId"/>
+				<one-to-many class="com.yuanluesoft.cms.infopublic.pojo.PublicGuide"/>
+			</set>
+			<set cascade="delete" inverse="true" lazy="true" name="unitCodes" table="public_unit_code" order-by="unitId">
+				<key column="directoryId"/>
+				<one-to-many class="com.yuanluesoft.cms.infopublic.pojo.PublicUnitCode"/>
+			</set>
+        </joined-subclass>
+		<!--信息公开:目录分类-->
+		<joined-subclass name="com.yuanluesoft.cms.infopublic.pojo.PublicDirectoryCategory" table="public_directory_category">
+            <key>
+                <column name="id" />
+            </key>
+        </joined-subclass>
+        <!--信息公开:信息目录-->
+		<joined-subclass name="com.yuanluesoft.cms.infopublic.pojo.PublicInfoDirectory" table="public_info_directory">
+            <key>
+                <column name="id" />
+            </key>
+         </joined-subclass>
+         <!--信息公开:文章目录-->
+		<joined-subclass name="com.yuanluesoft.cms.infopublic.pojo.PublicArticleDirectory" table="public_article_directory">
+            <key>
+                <column name="id" />
+            </key>
+            <property name="redirectUrl"/> <!--重定向URL,varchar(800)-->
+        </joined-subclass>
+	</class>
+	
+	<!--信息公开:目录隶属关系-->
+	<class name="com.yuanluesoft.cms.infopublic.pojo.PublicDirectorySubjection" table="public_directory_subjection">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID-->
+		<property name="parentDirectoryId"/> <!--上级目录ID-->
+	</class>
+	
+	<!--信息公开:目录权限-->
+	<class name="com.yuanluesoft.cms.infopublic.pojo.PublicDirectoryPopedom" table="public_directory_popedom">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID-->
+		<property name="userId"/> <!--用户ID-->
+		<property name="userName"/> <!--用户名-->
+		<property name="popedomName"/> <!--权限-->
+		<property name="isInherit"/> <!--是否从上级目录继承-->
+	</class>
+	
+	<!--信息公开:信息公开指南-->
+	<class name="com.yuanluesoft.cms.infopublic.pojo.PublicGuide" table="public_guide">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--主目录ID-->
+		<property name="guide"/> <!--信息公开指南-->
+	</class>
+	
+	<!--信息公开:机构代码-->
+	<class name="com.yuanluesoft.cms.infopublic.pojo.PublicUnitCode" table="public_unit_code">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--信息公开目录ID,numeric(20,0)-->
+		<property name="unitId"/> <!--发布机构ID,numeric(20,0)-->
+		<property name="unitName"/> <!--发布机构名称,varchar(100)-->
+		<property name="code"/> <!--编号,varchar(20)-->
+	</class>
+	
+	<!--信息公开:流水号-->
+	<class name="com.yuanluesoft.cms.infopublic.pojo.PublicInfoSequence" table="public_info_sequence">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="year"/> <!--年度-->
+		<property name="category"/> <!--信息类目代码-->
+		<property name="sequence"/> <!--序号-->
+	</class>
+	
+	<!--信息公开:政府信息-->
+	<class name="com.yuanluesoft.cms.infopublic.pojo.PublicInfo" table="public_info">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="type"/> <!--类型-->
+		<property name="infoIndex"/> <!--索引号-->
+		<property name="infoYear"/> <!--年度-->
+		<property name="infoSequence"/> <!--顺序号-->
+		<property name="infoFrom"/> <!--发布机构-->
+		<property name="infoFromUnitId"/> <!--发布机构ID-->
+		<property name="mark"/> <!--文号-->
+		<property name="generateDate"/> <!--生成日期-->
+		<property name="subject"/> <!--标题-->
+		<property name="creator"/> <!--创建人-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="created"/> <!--创建时间-->
+		<property name="issueTime"/> <!--发布时间-->
+		<property name="orgId"/> <!--创建者所在部门ID-->
+		<property name="orgName"/> <!--创建者所在部门名称-->
+		<property name="unitId"/> <!-- 创建者所在单位ID -->
+		<property name="unitName"/> <!-- 创建者所在单位名称 -->
+		<property name="issuePersonId"/> <!--发布人ID-->
+		<property name="issueSite"/> <!--是否同步到网站-->
+		<property name="issueSiteIds"/> <!--同步的网站ID列表-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<property name="summarize"/> <!--内容概述-->
+		<property name="category"/> <!--主题分类	-->
+		<property name="keywords"/> <!--主题词-->
+		<property name="sourceRecordId"/> <!--源记录ID-->
+		<property name="sourceRecordUrl"/> <!--源记录URL-->
+		<property name="directoryName"/> <!--所在目录名称-->
+		<property name="status"/> <!--状态-->
+		<set cascade="delete" inverse="true" lazy="true" name="subjections" table="public_info_subjection" order-by="id">
+			<key column="infoId"/>
+			<one-to-many class="com.yuanluesoft.cms.infopublic.pojo.PublicInfoSubjection"/>
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="lazyBody" table="public_info_body">
+			<key column="id"/>
+			<one-to-many class="com.yuanluesoft.cms.infopublic.pojo.PublicInfoBody"/>
+		</set>
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+   			<key column="recordId"/>
+   			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem"/>
+  		</set>
+		<set name="opinions" table="public_info_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.cms.infopublic.pojo.PublicInfoOpinion"/>
+		</set>
+		<set name="visitors" table="public_info_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.cms.infopublic.pojo.PublicInfoPrivilege"/>
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="accessStats" table="stat_access" where="pageName='info'">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.stat.pojo.AccessStat"/>
+		</set>
+	</class>
+	
+	<!--信息公开:政府信息正文-->
+	<class name="com.yuanluesoft.cms.infopublic.pojo.PublicInfoBody" table="public_info_body">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文-->
+	</class>
+	
+	<!--信息公开:政府信息权限控制-->
+	<class name="com.yuanluesoft.cms.infopublic.pojo.PublicInfoPrivilege" table="public_info_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--信息公开:政府信息审核意见-->
+	<class name="com.yuanluesoft.cms.infopublic.pojo.PublicInfoOpinion" table="public_info_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="created"/> <!--填写时间-->
+	</class>
+	
+	<!--信息公开:信息所在目录-->
+	<class name="com.yuanluesoft.cms.infopublic.pojo.PublicInfoSubjection" table="public_info_subjection">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="infoId"/> <!--信息ID-->
+		<property name="directoryId"/> <!--目录ID-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/appraiser" form="admin/appraiser" title="基础库评议员" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.appraise.appraiser.pojo.Appraiser</pojo>
+			<where>Appraiser.type=0 and Appraiser.status=1</where>
+			<quickFilter>Appraiser.name like '%{KEY}%' or Appraiser.mobileNumber like '%{KEY}%'</quickFilter>
+			<orderBy>Appraiser.status, Appraiser.name</orderBy>
+		</data>
+		<categories root="所有评议员" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.appraise.appraiser.pojo.Appraiser</pojo>
+			</data>
+			<category value="job"> <!--value必须有-->
+				<orderBy>Appraiser.job</orderBy>
+				<where>Appraiser.type=0</where>
+				<data>Appraiser.job={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" width="60"/>
+			<column title="工作单位或地址" name="unit"/>
+			<column title="身份类别" name="job" width="60"/>
+			<column title="居住地类型" name="areaType" width="135"/>
+			<column title="移动电话号码" name="mobileNumber" width="100"/>
+		</columns>
+	</view>
+	
+	<view name="admin/delegate" form="admin/appraiser" title="评议代表" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.appraise.appraiser.pojo.Appraiser</pojo>
+			<where>Appraiser.type=2 and Appraiser.status=1</where>
+			<quickFilter>Appraiser.name like '%{KEY}%' or Appraiser.mobileNumber like '%{KEY}%'</quickFilter>
+			<orderBy>Appraiser.status, Appraiser.name</orderBy>
+		</data>
+		<categories root="所有评议代表" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.appraise.appraiser.pojo.Appraiser</pojo>
+			</data>
+			<category value="job"> <!--value必须有-->
+				<orderBy>Appraiser.job</orderBy>
+				<where>Appraiser.type=2</where>
+				<data>Appraiser.job={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" width="60"/>
+			<column title="工作单位或地址" name="unit"/>
+			<column title="身份类别" name="job" width="60"/>
+			<column title="居住地类型" name="areaType" width="135"/>
+			<column title="移动电话号码" name="mobileNumber" width="100"/>
+		</columns>
+	</view>
+	
+	<view name="admin/recipient" form="admin/appraiser" title="管理服务对象" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.appraise.appraiser.pojo.Appraiser</pojo>
+			<where>Appraiser.type=1 and Appraiser.status=1 and Appraiser.orgId={PARAMETER:orgId}</where>
+			<quickFilter>Appraiser.name like '%{KEY}%' or Appraiser.mobileNumber like '%{KEY}%'</quickFilter>
+			<orderBy>Appraiser.name, Appraiser.status</orderBy>
+		</data>
+		<categories root="所有评议员" beginCategory="FIRST" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.appraise.appraiser.pojo.Appraiser</pojo>
+			</data>
+			<category value="year(Appraiser.expire)"> <!--value必须有-->
+				<where>Appraiser.type=1 and Appraiser.status=1</where>
+				<orderBy>year(Appraiser.expire) DESC</orderBy>
+				<data>year(Appraiser.expire)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(Appraiser.expire)"> <!--value必须有-->
+				<where>Appraiser.type=1 and Appraiser.status=1 and year(Appraiser.expire)={PARENTVALUE}</where>
+				<orderBy>month(Appraiser.expire) DESC</orderBy>
+				<data>year(Appraiser.expire)={CATEGORY1VALUE} and month(Appraiser.expire)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" width="60"/>
+			<column title="工作单位或地址" name="unit"/>
+			<column title="身份类别" name="job" width="60"/>
+			<column title="居住地类型" name="areaType" width="135"/>
+			<column title="移动电话号码" name="mobileNumber" width="100"/>
+			<column title="提供服务或管理单位" name="serviceUnit" width="120"/>
+			<column title="服务或管理的项目、内容" name="serviceContent"/>
+		</columns>
+	</view>
+	
+	<view name="admin/recipientByArea" form="admin/appraiser" title="管理服务对象" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.appraise.appraiser.pojo.Appraiser</pojo>
+			<where>Appraiser.type=1 and Appraiser.status=1</where>
+			<quickFilter>Appraiser.name like '%{KEY}%' or Appraiser.mobileNumber like '%{KEY}%'</quickFilter>
+			<orderBy>Appraiser.name, Appraiser.status</orderBy>
+		</data>
+		<categories root="所有评议员" beginCategory="FIRST" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.appraise.appraiser.pojo.Appraiser</pojo>
+			</data>
+			<category value="year(Appraiser.expire)"> <!--value必须有-->
+				<where>Appraiser.type=1 and Appraiser.status=1</where>
+				<orderBy>year(Appraiser.expire) DESC</orderBy>
+				<data>year(Appraiser.expire)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(Appraiser.expire)"> <!--value必须有-->
+				<where>Appraiser.type=1 and Appraiser.status=1 and year(Appraiser.expire)={PARENTVALUE}</where>
+				<orderBy>month(Appraiser.expire) DESC</orderBy>
+				<data>year(Appraiser.expire)={CATEGORY1VALUE} and month(Appraiser.expire)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" width="60"/>
+			<column title="工作单位或地址" name="unit"/>
+			<column title="身份类别" name="job" width="60"/>
+			<column title="居住地类型" name="areaType" width="135"/>
+			<column title="移动电话号码" name="mobileNumber" width="100"/>
+			<column title="提供服务或管理单位" name="serviceUnit" width="120"/>
+			<column title="服务或管理的项目、内容" name="serviceContent"/>
+		</columns>
+	</view>
+	
+	<view name="admin/todoImportRecipient" form="admin/importRecipient" title="待处理服务对象导入任务" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.appraise.appraiser.pojo.AppraiserImport</pojo>
+			<orderBy>AppraiserImport.created DESC</orderBy>
+			<quickFilter>AppraiserImport.areaName like '%{KEY}%' or AppraiserImport.unitName like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="单位" name="unitName"/>
+			<column title="导入时间" name="created" width="110" align="center"/>
+			<column title="导入人数" name="approverCount" width="100" align="center"/>
+			<column title="是否超时" name="isTimtout" width="80" align="center" type="formula" formula="(timeout==1 ? &quot;√&quot; : null)" formulaFields="timeout" />
+			<column title="流程状态" name="workflowStatus" width="80" align="center" displayExcept="portlet"/>
+		</columns>
+	</view>
+	
+	<view name="admin/processingImportRecipient" form="admin/importRecipient" title="在处理服务对象导入任务" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.appraise.appraiser.pojo.AppraiserImport</pojo>
+			<orderBy>AppraiserImport.created DESC</orderBy>
+			<quickFilter>AppraiserImport.areaName like '%{KEY}%' or AppraiserImport.unitName like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<categories root="所有任务" beginCategory="FIRST" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.appraise.appraiser.pojo.AppraiserImport</pojo>
+			</data>
+			<category value="year(AppraiserImport.created)"> <!--value必须有-->
+				<orderBy>year(AppraiserImport.created) DESC</orderBy>
+				<data>year(AppraiserImport.created)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(AppraiserImport.created)"> <!--value必须有-->
+				<where>year(AppraiserImport.created)={PARENTVALUE}</where>
+				<orderBy>month(AppraiserImport.created) DESC</orderBy>
+				<data>year(AppraiserImport.created)={CATEGORY1VALUE} and month(AppraiserImport.created)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="单位" name="unitName"/>
+			<column title="导入时间" name="created" width="110" align="center"/>
+			<column title="导入人数" name="approverCount" width="100" align="center"/>
+			<column title="是否超时" name="isTimtout" width="80" align="center" type="formula" formula="(timeout==1 ? &quot;√&quot; : null)" formulaFields="timeout" />
+			<column title="流程状态" name="workflowStatus" width="80" align="center" displayExcept="portlet"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedImportRecipient" form="admin/importRecipient" title="已处理服务对象导入任务" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.appraise.appraiser.pojo.AppraiserImport</pojo>
+			<orderBy>AppraiserImport.created DESC</orderBy>
+			<quickFilter>AppraiserImport.areaName like '%{KEY}%' or AppraiserImport.unitName like '%{KEY}%'</quickFilter>
+			<filter>COMPLETED</filter>
+		</data>
+		<categories root="所有任务" beginCategory="FIRST" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.appraise.appraiser.pojo.AppraiserImport</pojo>
+			</data>
+			<category value="year(AppraiserImport.created)"> <!--value必须有-->
+				<orderBy>year(AppraiserImport.created) DESC</orderBy>
+				<data>year(AppraiserImport.created)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(AppraiserImport.created)"> <!--value必须有-->
+				<where>year(AppraiserImport.created)={PARENTVALUE}</where>
+				<orderBy>month(AppraiserImport.created) DESC</orderBy>
+				<data>year(AppraiserImport.created)={CATEGORY1VALUE} and month(AppraiserImport.created)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="单位" name="unitName"/>
+			<column title="导入时间" name="created" width="110" align="center"/>
+			<column title="导入人数" name="approverCount" width="100" align="center"/>
+			<column title="是否超时" name="isTimtout" width="80" align="center" type="formula" formula="(timeout==1 ? &quot;√&quot; : null)" formulaFields="timeout" />
+		</columns>
+	</view>
+	
+	<view name="admin/timeoutImportRecipient" form="admin/importRecipient" title="超时服务对象导入任务" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.appraise.appraiser.pojo.AppraiserImport</pojo>
+			<where>AppraiserImport.timeout=1</where>
+			<orderBy>AppraiserImport.created DESC</orderBy>
+			<quickFilter>AppraiserImport.areaName like '%{KEY}%' or AppraiserImport.unitName like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="单位" name="unitName"/>
+			<column title="导入时间" name="created" width="110" align="center"/>
+			<column title="导入人数" name="approverCount" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/importTask" title="管理服务对象导入任务" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.appraise.appraiser.pojo.AppraiserImportTask</pojo>
+			<orderBy>AppraiserImportTask.created DESC</orderBy>
+			<quickFilter>AppraiserImportTask.unitName like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="单位" name="unitName"/>
+			<column title="年度" name="taskYear" width="50" align="center"/>
+			<column title="月份" name="taskMonth" width="50" align="center"/>
+		</columns>
+	</view>
+</views>

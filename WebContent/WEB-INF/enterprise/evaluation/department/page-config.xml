@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=enterprise/evaluation/department&amp;anonymous=false"/>
+		
+		<page name="evaluation" title="部门考核" url="/enterprise/evaluation/department/evaluation.shtml" systemLink="false">
+			<subPage name="base" title="部门考核"/>
+		</page>
+
+		<page name="evaluationSubmitted" title="部门考核完成提示" systemLink="false"/>
+
+		<page name="departmentEvaluations" title="已完成部门考核" url="/cms/sitemanage/applicationIndex.shtml?applicationName=enterprise/evaluation/department&amp;pageName=departmentEvaluations&amp;anonymous=false"/>
+	</pages>
+	
+	<links>
+		<link title="部门考核" dialogURL="/enterprise/evaluation/department/templatemanage/insertEvaluationLink.shtml"/>
+	</links>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="departmentEvaluationLink" processor="departmentEvaluationLinkProcessor"/> <!-- 部门考核链接 -->
+	</pageElements>
+</application>

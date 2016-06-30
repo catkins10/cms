@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="myRailwayEvents" title="我的问题记录">
+	    <data>
+			<pojo>com.yuanluesoft.railway.event.pojo.RailwayEvent</pojo>
+			<where>RailwayEvent.personId={USERID}</where>
+			<orderBy>RailwayEvent.checkTime DESC</orderBy>
+		</data>
+	</view>
+
+	<view name="admin/importData" form="admin/importData" title="问题导入日志" pageRows="20" openFeatures="mode=dialog,width=390,height=180">
+	    <data>
+			<pojo>com.yuanluesoft.railway.event.pojo.RailwayEventImport</pojo>
+			<orderBy>RailwayEventImport.created DESC</orderBy>
+		</data>
+		<actions>
+			<action title="问题导入" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importEvents)" execute="PageUtils.newrecord('railway/event', 'admin/importData', 'mode=dialog,width=390,height=180')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="操作者" name="creator"/>
+			<column title="导入时间" name="created" align="center" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="admin/railwayEvent" title="问题记录" pageRows="20" openFeatures="mode=dialog,width=390,height=180">
+	    <data>
+			<pojo>com.yuanluesoft.railway.event.pojo.RailwayEvent</pojo>
+			<orderBy>RailwayEvent.checkTime DESC, RailwayEvent.personName</orderBy>
+			<quickFilter>RailwayEvent.personName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="问题导入" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importEvents)" execute="PageUtils.newrecord('railway/event', 'admin/importData', 'mode=dialog,width=390,height=180')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="责任人" name="personName" width="60"/>
+			<column title="问题代码" name="code" width="60"/>
+			<column title="检查内容" name="description"/>
+			<column title="检查时间" name="checkTime" align="center" width="110"/>
+		</columns>
+	</view>
+</views>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="admin/project" form="admin/project" title="外商投资项目" pageRows="25" openFeatures="width=800,height=600">
+		<data>
+			<pojo>com.yuanluesoft.fet.project.pojo.FetProject</pojo>
+			<orderBy>FetProject.created DESC</orderBy>
+		</data>
+		<actions>
+			<action title="新建项目"  execute="PageUtils.newrecord('fet/project', 'admin/project', 'width=800,height=600')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="name"/>
+			<column title="项目进展情况" name="status" width="100" align="center"/>
+			<column title="填报日期" name="created" format="yyyy-MM-dd" align="center" width="80" />
+		</columns>
+	</view>
+	
+	<view name="admin/fair" form="admin/fair" title="活动" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.fet.project.pojo.FetProjectFair</pojo>
+			<orderBy>FetProjectFair.name</orderBy>
+		</data>
+		<actions>
+			<action title="添加活动" hide="noPrivilege(application_manager)"  execute="PageUtils.newrecord('fet/project', 'admin/fair', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="活动名称" name="name"/>
+			<column title="当前界别" name="fairNumber" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/target" form="admin/target" title="目标任务" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.fet.project.pojo.FetProjectTarget</pojo>
+			<orderBy>FetProjectTarget.id DESC</orderBy>
+		</data>
+		<actions>
+			<action title="添加" hide="noPrivilege(application_manager)"  execute="PageUtils.newrecord('fet/project', 'admin/target', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="县别" name="county" width="60" align="center"/>
+			<column title="活动名称" name="fairName"/>
+			<column title="界别" name="fairNumber" width="80" align="center"/>
+			<column title="总签约目标" name="signTarget" width="80" align="center"/>
+			<column title="合同项目目标" name="contractTarget" width="80" align="center"/>
+			<column title="意向项目目标" name="orderTarget" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/merchant" form="admin/merchant" title="客商" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.fet.project.pojo.FetMerchant</pojo>
+			<orderBy>FetMerchant.company</orderBy>
+		</data>
+		<actions>
+			<action title="添加客商" hide="noPrivilege(application_manager)"  execute="PageUtils.newrecord('fet/project', 'admin/merchant', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="客商姓名" name="name" width="80" align="center"/>
+			<column title="公司名称" name="company"/>
+			<column title="联系电话" name="tel" width="120" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/plan" form="admin/plan" title="利用外资计划" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.fet.project.pojo.FetPlan</pojo>
+			<orderBy>FetPlan.county, FetPlan.planYear desc, FetPlan.planMonth</orderBy>
+		</data>
+		<actions>
+			<action title="添加" hide="noPrivilege(application_manager)"  execute="PageUtils.newrecord('fet/project', 'admin/plan', 'width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="县别" name="county" width="60"/>
+			<column title="年度" name="planYear" width="60" align="center"/>
+			<column title="月份" name="planMonth" width="60" align="center"/>
+			<column title="合同外资计划(验资口径)" name="contractCheckPlan" align="center"/>
+			<column title="实际到资计划(验资口径)" name="receiveCheckPlan" align="center"/>
+			<column title="合同外资计划(可比口径)" name="contractPlan" align="center"/>
+			<column title="实际到资计划(可比口径)" name="receivePlan" align="center"/>
+		</columns>
+	</view>
+</views>

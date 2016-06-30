@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="reimburse" type="com.yuanluesoft.j2oa.reimburse.forms.ReimburseForm"/>
+  <form-bean name="chargeCategory" type="com.yuanluesoft.j2oa.reimburse.forms.ChargeCategoryForm"/>
+  <form-bean name="chargeStandard" type="com.yuanluesoft.j2oa.reimburse.forms.ChargeStandardForm"/>
+  <form-bean name="reimburseConfig" type="com.yuanluesoft.j2oa.reimburse.forms.ReimburseConfigForm"/>
+  <form-bean name="charge" type="com.yuanluesoft.j2oa.reimburse.forms.Charge"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="reimburse" path="/reimburse" scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.reimburse.Load" validate="false">
+   <forward name="load" path="/reimburse.jsp"/>
+  </action>
+  <action input="/reimburse.jsp" name="reimburse" path="/save"
+   scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.reimburse.Save" validate="false"/>
+  <action input="/reimburse.jsp" name="reimburse" path="/delete"
+   scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.reimburse.Delete" validate="false"/>
+  <action input="/reimburse.jsp" name="reimburse" path="/run"
+   scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.reimburse.Run" validate="false"/>
+  <action input="/reimburse.jsp" name="reimburse" path="/pay"
+   scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.reimburse.Pay" validate="false"/>
+  <action name="chargeCategory" path="/chargeCategory" scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.chargecategory.Load" validate="false">
+   <forward name="load" path="/chargeCategory.jsp"/>
+  </action>
+  <action input="/chargeCategory.jsp" name="chargeCategory"
+   path="/saveChargeCategory" scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.chargecategory.Save" validate="false"/>
+  <action input="/chargeCategory.jsp" name="chargeCategory"
+   path="/deleteChargeCategory" scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.chargecategory.Delete" validate="false"/>
+  <action name="chargeStandard" path="/chargeStandard" scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.chargestandard.Load" validate="false">
+   <forward name="load" path="/chargeStandard.jsp"/>
+  </action>
+  <action input="/chargeStandard.jsp" name="chargeStandard"
+   path="/saveChargeStandard" scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.chargestandard.Save" validate="false"/>
+  <action input="/chargeStandard.jsp" name="chargeStandard"
+   path="/deleteChargeStandard" scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.chargestandard.Delete" validate="false"/>
+  <action input="/charge.jsp" name="charge" path="/saveCharge"
+   scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.reimburse.charge.Save" validate="false"/>
+  <action input="/charge.jsp" name="charge" path="/deleteCharge"
+   scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.reimburse.charge.Delete" validate="false"/>
+  <action input="/charge.jsp" name="charge" path="/charge"
+   scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.reimburse.charge.Load" validate="false">
+   <forward name="load" path="/charge.jsp"/>
+  </action>
+  <action input="/chargeCategory.jsp" name="chargeCategory"
+   path="/createNextChargeCategory" scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.chargecategory.CreateNext" validate="false"/>
+  <action input="/chargeStandard.jsp" name="chargeStandard"
+   path="/createNextChargeStandard" scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.chargestandard.CreateNext" validate="false"/>
+  <action path="/getChargeStandard" scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.chargestandard.GetChargeStandard" validate="false"/>
+  <action name="reimburseConfig" path="/reimburseConfig" scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.reimburseconfig.Load" validate="false">
+   <forward name="load" path="/reimburseConfig.jsp"/>
+  </action>
+  <action input="/reimburseConfig.jsp" name="reimburseConfig"
+   path="/saveReimburseConfig" scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.reimburseconfig.Save" validate="false"/>
+  <action name="charge" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.reimburse.charge.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action input="/reimburse.jsp" name="reimburse"
+   path="/refreshReimburse" scope="request"
+   type="com.yuanluesoft.j2oa.reimburse.actions.reimburse.Refresh" validate="false"/>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="200M"/>
+</struts-config>

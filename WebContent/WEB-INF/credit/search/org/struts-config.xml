@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminServiceorg" type="com.yuanluesoft.credit.serviceorg.searchorg.forms.ServiceOrg"/>
+  <form-bean name="adminServiceitem" type="com.yuanluesoft.credit.serviceorg.searchitem.forms.ServiceItem"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+ 
+  <action name="adminServiceorg" path="/admin/org" scope="request"
+   type="com.yuanluesoft.credit.serviceorg.searchorg.actions.Load" validate="false">
+   <forward name="load" path="/serviceorg.jsp"/>
+  </action>
+ 
+   <!-- 办事事项 -->
+   <action name="adminServiceitem" path="/admin/item" scope="request"
+   type="com.yuanluesoft.credit.serviceorg.searchitem.actions.Load" validate="false">
+   <forward name="load" path="/serviceitem.jsp"/>
+  </action>
+  
+  
+ </action-mappings>
+ <controller/>
+</struts-config>

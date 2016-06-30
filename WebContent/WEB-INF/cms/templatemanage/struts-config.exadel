@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,161,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="304,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,112,161,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="304,112,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#templateView"
+  NAME="action0" PATH="/templateView" SHAPE="32,208,161,41"
+  TITLE="templateView" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templateView.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/templateView.jsp" SHAPE="304,224,50,40" SUBTYPE="jsp"
+  TITLE="templateView.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/displayTemplateView" TARGET="action1"
+   TITLE="displayTemplateView" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#displayTemplateView"
+  NAME="action1" PATH="/displayTemplateView" SHAPE="480,240,161,25"
+  TITLE="templateView" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#uploadTemplate"
+  NAME="action5" PATH="/dialog/uploadTemplate" SHAPE="32,448,161,41"
+  TITLE="uploadTemplate" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/template/uploadTemplate.jsp"
+   TARGET="page21" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveTemplate"
+  NAME="action20" PATH="/saveTemplate" SHAPE="480,336,161,25"
+  TITLE="template" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteTemplate"
+  NAME="action22" PATH="/deleteTemplate" SHAPE="480,392,161,25"
+  TITLE="template" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#template" NAME="action25"
+  PATH="/template" SHAPE="32,304,161,41" TITLE="template" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/template.jsp" TARGET="page8" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page8"
+  PATH="/template.jsp" SHAPE="304,320,50,55" SUBTYPE="jsp"
+  TITLE="applicationTemplate.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/saveTemplate" TARGET="action20" TITLE="deleteTemplate" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/deleteTemplate" TARGET="action22" TITLE="deleteTemplate" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectTemplateAttachment"
+  NAME="action7" PATH="/selectTemplateAttachment" SHAPE="32,696,161,41"
+  TITLE="template" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/selectAttachment.jsp"
+   TARGET="page13" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page13"
+  PATH="/../../jeaf/attachment/selectAttachment.jsp"
+  SHAPE="304,712,50,25" SUBTYPE="jsp" TITLE="selectAttachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#exportTemplate"
+  NAME="action16" PATH="/exportTemplate" SHAPE="32,528,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertSubPage"
+  NAME="action10" PATH="/dialog/insertSubPage" SHAPE="32,2544,161,41"
+  TITLE="insertSubPage" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/template/insertSubPage.jsp"
+   TARGET="page6" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/dialog/template/insertSubPage.jsp" SHAPE="304,2560,50,40"
+  SUBTYPE="jsp" TITLE="insertApplicationPage.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectSubTemplate"
+  NAME="action21" PATH="/selectSubTemplate" SHAPE="32,1288,161,41"
+  TITLE="selectSubTemplate" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/dialog/treedialog/treeDialog.jsp"
+   TARGET="page15" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listSubTemplates"
+  NAME="action24" PATH="/listSubTemplates" SHAPE="32,1368,161,41"
+  TITLE="selectSubTemplate" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/tree/listChildNodes.jsp"
+   TARGET="page10" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#retrieveSubTemplate"
+  NAME="action27" PATH="/retrieveSubTemplate" SHAPE="32,1472,161,41"
+  TITLE="retrieveSubTemplate" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertField"
+  NAME="action3" PATH="/dialog/insertField" SHAPE="32,1568,161,41"
+  TITLE="insertField" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/field/insertField.jsp" TARGET="page14"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page14"
+  PATH="/dialog/field/insertField.jsp" SHAPE="304,1584,50,25"
+  SUBTYPE="jsp" TITLE="insertField.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertFormFields"
+  NAME="action12" PATH="/dialog/insertFormFields" SHAPE="32,2048,161,41"
+  TITLE="insertFormFields" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/form/insertFormFields.jsp"
+   TARGET="page33" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertRecordLink"
+  NAME="action8" PATH="/dialog/insertRecordLink" SHAPE="32,1648,161,41"
+  TITLE="insertRecordLink" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/link/insertRecordLink.jsp"
+   TARGET="page5" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/dialog/link/insertRecordLink.jsp" SHAPE="304,1664,50,25"
+  SUBTYPE="jsp" TITLE="insertRecordLink.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page15"
+  PATH="/../../jeaf/dialog/treedialog/treeDialog.jsp"
+  SHAPE="304,1304,50,25" SUBTYPE="jsp" TITLE="treeDialog.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page10"
+  PATH="/../../jeaf/tree/listChildNodes.jsp" SHAPE="304,1384,50,25"
+  SUBTYPE="jsp" TITLE="listChildNodes.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertRecordList"
+  NAME="action15" PATH="/dialog/insertRecordList" SHAPE="32,1728,161,41"
+  TITLE="insertRecordList" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/recordlist/insertRecordList.jsp"
+   TARGET="page7" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page7"
+  PATH="/dialog/recordlist/insertRecordList.jsp" SHAPE="304,1744,50,25"
+  SUBTYPE="jsp" TITLE="insertRecordList.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#insertTabstripButtonList" NAME="action30"
+  PATH="/dialog/insertTabstripButtonList" SHAPE="32,4544,161,41"
+  TITLE="insertTabstripButtonList" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/tabstrip/insertTabstripButtonList.jsp"
+   TARGET="page17" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page17"
+  PATH="/dialog/tabstrip/insertTabstripButtonList.jsp"
+  SHAPE="304,4560,50,25" SUBTYPE="jsp"
+  TITLE="insertTabstripButtonList.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertNormalForm"
+  NAME="action34" PATH="/dialog/insertNormalForm" SHAPE="32,2432,161,41"
+  TITLE="insertNormalForm" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/form/insertNormalForm.jsp"
+   TARGET="page18" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page18"
+  PATH="/dialog/form/insertNormalForm.jsp" SHAPE="304,2448,50,40"
+  SUBTYPE="jsp" TITLE="insertNormalForm.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#customCssFile"
+  NAME="action36" PATH="/dialog/customCssFile" SHAPE="32,1112,161,41"
+  TITLE="customCssFile" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/template/customCssFile.jsp"
+   TARGET="page19" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page19"
+  PATH="/dialog/template/customCssFile.jsp" SHAPE="304,1128,50,55"
+  SUBTYPE="jsp" TITLE="customCssFile.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/dialog/saveCssFile" TARGET="action37" TITLE="deleteCssFile" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/dialog/deleteCssFile" TARGET="action38" TITLE="deleteCssFile" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#saveCssFile"
+  NAME="action37" PATH="/dialog/saveCssFile" SHAPE="480,1144,161,25"
+  TITLE="customCssFile" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#deleteCssFile"
+  NAME="action38" PATH="/dialog/deleteCssFile" SHAPE="480,1208,161,25"
+  TITLE="customCssFile" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#templateAttachmentEditor"
+  NAME="action13" PATH="/templateAttachmentEditor" SHAPE="32,888,161,41"
+  TITLE="template" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/attachment.jsp"
+   TARGET="page20" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page20"
+  PATH="/../../jeaf/attachment/attachment.jsp" SHAPE="304,904,50,25"
+  SUBTYPE="jsp" TITLE="attachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page21"
+  PATH="/dialog/template/uploadTemplate.jsp" SHAPE="304,464,50,25"
+  SUBTYPE="jsp" TITLE="uploadTemplate.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#insertNavigatorItemList" NAME="action6"
+  PATH="/dialog/insertNavigatorItemList" SHAPE="32,4784,161,41"
+  TITLE="insertNavigatorItemList" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/navigator/insertNavigatorItemList.jsp"
+   TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/dialog/navigator/insertNavigatorItemList.jsp"
+  SHAPE="304,4800,50,25" SUBTYPE="jsp"
+  TITLE="insertNavigatorItemList.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertNavigator"
+  NAME="action32" PATH="/dialog/insertNavigator" SHAPE="32,4704,161,41"
+  TITLE="insertNavigator" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/navigator/insertNavigator.jsp"
+   TARGET="page22" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page22"
+  PATH="/dialog/navigator/insertNavigator.jsp" SHAPE="304,4720,50,25"
+  SUBTYPE="jsp" TITLE="insertNavigator.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#templateCssFile"
+  NAME="action33" PATH="/dialog/templateCssFile" SHAPE="32,2760,161,41"
+  TITLE="templateCssFile" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/template/templateCssFile.jsp"
+   TARGET="page23" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page23"
+  PATH="/dialog/template/templateCssFile.jsp" SHAPE="304,2776,50,40"
+  SUBTYPE="jsp" TITLE="cssEditor.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/dialog/saveTemplateCssFile" TARGET="action39"
+   TITLE="saveTemplateCssFile" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#saveTemplateCssFile" NAME="action39"
+  PATH="/dialog/saveTemplateCssFile" SHAPE="480,2792,161,41"
+  TITLE="templateCssFile" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="saved"
+   NAME="forward0" PATH="/dialog/templateCssFileSaved.jsp"
+   TARGET="page24" TITLE="saved" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page24"
+  PATH="/dialog/templateCssFileSaved.jsp" SHAPE="816,2808,50,25"
+  SUBTYPE="jsp" TITLE="templateCssFileSaved.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectCssFileAttachment"
+  NAME="action40" PATH="/selectCssFileAttachment" SHAPE="32,776,161,41"
+  TITLE="customCssFile" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/selectAttachment.jsp"
+   TARGET="page13" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#redirectToNewView.js" NAME="action41"
+  PATH="/dialog/redirectToNewView.js" SHAPE="32,1808,161,25"
+  TITLE="insertRecordList" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#batchCopyTemplate"
+  NAME="action42" PATH="/batchCopyTemplate" SHAPE="32,600,161,41"
+  TITLE="batchCopyTemplate" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/batchCopyTemplate.jsp" TARGET="page26"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page26"
+  PATH="/batchCopyTemplate.jsp" SHAPE="304,616,50,25" SUBTYPE="jsp"
+  TITLE="batchCopyTemplate.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#editElementHtml"
+  NAME="action19" PATH="/dialog/editElementHtml" SHAPE="32,2656,161,41"
+  TITLE="editElementHtml" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/template/editElementHtml.jsp"
+   TARGET="page27" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page27"
+  PATH="/dialog/template/editElementHtml.jsp" SHAPE="304,2672,50,25"
+  SUBTYPE="jsp" TITLE="editElementHtml.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertSubTemplate"
+  NAME="action26" PATH="/dialog/insertSubTemplate"
+  SHAPE="32,2872,161,41" TITLE="insertSubTemplate" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/template/insertSubTemplate.jsp"
+   TARGET="page28" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page28"
+  PATH="/dialog/template/insertSubTemplate.jsp" SHAPE="304,2888,50,25"
+  SUBTYPE="jsp" TITLE="insertSubTemplate.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertNewestImage"
+  NAME="action4" PATH="/dialog/insertNewestImage" SHAPE="32,1864,161,41"
+  TITLE="insertNewestImage" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/recordlist/insertNewestImage.jsp"
+   TARGET="page12" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page12"
+  PATH="/dialog/recordlist/insertNewestImage.jsp" SHAPE="304,1880,50,25"
+  SUBTYPE="jsp" TITLE="insertNewestImage.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#total#insertTotals" NAME="action9"
+  PATH="/dialog/total/insertTotals" SHAPE="32,2960,161,41"
+  TITLE="insertTotals" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/total/insertTotals.jsp" TARGET="page25"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page25"
+  PATH="/dialog/total/insertTotals.jsp" SHAPE="304,2976,50,25"
+  SUBTYPE="jsp" TITLE="insertTotals.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#total#insertAccessTotals" NAME="action17"
+  PATH="/dialog/total/insertAccessTotals" SHAPE="32,3056,161,41"
+  TITLE="insertAccessTotals" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/total/insertAccessTotals.jsp"
+   TARGET="page29" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page29"
+  PATH="/dialog/total/insertAccessTotals.jsp" SHAPE="304,3072,50,25"
+  SUBTYPE="jsp" TITLE="insertAccessTotals.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#total#insertIssueTotals" NAME="action28"
+  PATH="/dialog/total/insertIssueTotals" SHAPE="32,3152,161,41"
+  TITLE="insertIssueTotals" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/total/insertIssueTotals.jsp"
+   TARGET="page30" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page30"
+  PATH="/dialog/total/insertIssueTotals.jsp" SHAPE="304,3168,50,25"
+  SUBTYPE="jsp" TITLE="insertIssueTotals.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#total#insertAccessTotalPage" NAME="action29"
+  PATH="/dialog/total/insertAccessTotalPage" SHAPE="32,3248,161,41"
+  TITLE="insertAccessTotalPage" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/total/insertAccessTotalPage.jsp"
+   TARGET="page31" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page31"
+  PATH="/dialog/total/insertAccessTotalPage.jsp" SHAPE="304,3264,50,25"
+  SUBTYPE="jsp" TITLE="insertAccessTotalPage.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#total#insertTotalColumn" NAME="action31"
+  PATH="/dialog/total/insertTotalColumn" SHAPE="32,3344,161,41"
+  TITLE="insertTotalColumn" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/total/insertTotalColumn.jsp"
+   TARGET="page32" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page32"
+  PATH="/dialog/total/insertTotalColumn.jsp" SHAPE="304,3360,50,25"
+  SUBTYPE="jsp" TITLE="insertTotalColumn.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertFormField"
+  NAME="action18" PATH="/dialog/insertFormField" SHAPE="32,2120,161,41"
+  TITLE="insertFormField" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/form/insertFormField.jsp"
+   TARGET="page9" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertFormButton"
+  NAME="action23" PATH="/dialog/insertFormButton" SHAPE="32,2192,161,41"
+  TITLE="insertFormButton" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/form/insertFormButton.jsp"
+   TARGET="page11" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page33"
+  PATH="/dialog/form/insertFormFields.jsp" SHAPE="304,2064,50,25"
+  SUBTYPE="jsp" TITLE="insertFormFields.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page9"
+  PATH="/dialog/form/insertFormField.jsp" SHAPE="304,2136,50,25"
+  SUBTYPE="jsp" TITLE="insertFormField.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page11"
+  PATH="/dialog/form/insertFormButton.jsp" SHAPE="304,2208,50,25"
+  SUBTYPE="jsp" TITLE="insertFormButton.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#insertSystemPrompt" NAME="action35"
+  PATH="/dialog/insertSystemPrompt" SHAPE="32,2264,161,41"
+  TITLE="insertSystemPrompt" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/form/insertSystemPrompt.jsp"
+   TARGET="page16" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page16"
+  PATH="/dialog/form/insertSystemPrompt.jsp" SHAPE="304,2280,50,25"
+  SUBTYPE="jsp" TITLE="insertSystemPrompt.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page34"
+  PATH="/dialog/form/insertSmsValidateCode.jsp" SHAPE="304,2352,50,25"
+  SUBTYPE="jsp" TITLE="insertSmsValidateCode.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#insertSmsValidateCode" NAME="action43"
+  PATH="/dialog/insertSmsValidateCode" SHAPE="32,2336,161,41"
+  TITLE="insertSmsValidateCode" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/form/insertSmsValidateCode.jsp"
+   TARGET="page34" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertLink"
+  NAME="action44" PATH="/dialog/insertLink" SHAPE="32,3424,161,41"
+  TITLE="insertLink" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/link/insertLink.jsp" TARGET="page40"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertSetHomePage"
+  NAME="action45" PATH="/dialog/insertSetHomePage"
+  SHAPE="32,3504,161,41" TITLE="insertSetHomePage" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/link/insertSetHomePage.jsp"
+   TARGET="page36" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page36"
+  PATH="/dialog/link/insertSetHomePage.jsp" SHAPE="304,3520,50,25"
+  SUBTYPE="jsp" TITLE="insertSetHomePage.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertAddFavorite"
+  NAME="action46" PATH="/dialog/insertAddFavorite"
+  SHAPE="32,3584,161,41" TITLE="insertAddFavorite" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/link/insertAddFavorite.jsp"
+   TARGET="page37" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page37"
+  PATH="/dialog/link/insertAddFavorite.jsp" SHAPE="304,3600,50,25"
+  SUBTYPE="jsp" TITLE="insertAddFavorite.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#insertChineseConvert" NAME="action47"
+  PATH="/dialog/insertChineseConvert" SHAPE="32,3664,161,41"
+  TITLE="insertChineseConvert" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/link/insertChineseConvert.jsp"
+   TARGET="page38" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page38"
+  PATH="/dialog/link/insertChineseConvert.jsp" SHAPE="304,3680,50,25"
+  SUBTYPE="jsp" TITLE="insertChineseConvert.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#insertApplicationLink" NAME="action48"
+  PATH="/dialog/insertApplicationLink" SHAPE="32,3744,161,41"
+  TITLE="insertApplicationLink" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/link/insertApplicationLink.jsp"
+   TARGET="page39" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page39"
+  PATH="/dialog/link/insertApplicationLink.jsp" SHAPE="304,3760,50,25"
+  SUBTYPE="jsp" TITLE="insertApplicationLink.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page40"
+  PATH="/dialog/link/insertLink.jsp" SHAPE="304,3440,50,25"
+  SUBTYPE="jsp" TITLE="insertLink.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertPageLink"
+  NAME="action49" PATH="/dialog/insertPageLink" SHAPE="32,3824,161,41"
+  TITLE="insertPageLink" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/link/insertPageLink.jsp"
+   TARGET="page35" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page35"
+  PATH="/dialog/link/insertPageLink.jsp" SHAPE="304,3840,50,25"
+  SUBTYPE="jsp" TITLE="insertPageLink.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#insertNavigatorLink" NAME="action50"
+  PATH="/dialog/insertNavigatorLink" SHAPE="32,3904,161,41"
+  TITLE="insertNavigatorLink" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/link/insertNavigatorLink.jsp"
+   TARGET="page41" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#insertRecordPagingLink" NAME="action51"
+  PATH="/dialog/insertRecordPagingLink" SHAPE="32,3984,161,41"
+  TITLE="insertRecordPagingLink" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/link/insertRecordPagingLink.jsp"
+   TARGET="page42" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertSystemLink"
+  NAME="action52" PATH="/dialog/insertSystemLink" SHAPE="32,4064,161,41"
+  TITLE="insertSystemLink" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/link/insertSystemLink.jsp"
+   TARGET="page43" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page41"
+  PATH="/dialog/link/insertNavigatorLink.jsp" SHAPE="304,3920,50,25"
+  SUBTYPE="jsp" TITLE="insertNavigatorLink.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page42"
+  PATH="/dialog/link/insertRecordPagingLink.jsp" SHAPE="304,4000,50,25"
+  SUBTYPE="jsp" TITLE="insertRecordPagingLink.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page43"
+  PATH="/dialog/link/insertSystemLink.jsp" SHAPE="304,4080,50,25"
+  SUBTYPE="jsp" TITLE="insertSystemLink.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertViewAction"
+  NAME="action53" PATH="/dialog/insertViewAction" SHAPE="32,4144,161,41"
+  TITLE="insertViewAction" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/link/insertViewAction.jsp"
+   TARGET="page44" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page44"
+  PATH="/dialog/link/insertViewAction.jsp" SHAPE="304,4160,50,25"
+  SUBTYPE="jsp" TITLE="insertViewAction.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#insertRssSubscribeLink" NAME="action54"
+  PATH="/dialog/insertRssSubscribeLink" SHAPE="32,4224,161,41"
+  TITLE="insertRssSubscribeLink" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/rss/insertRssSubscribeLink.jsp"
+   TARGET="page45" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page45"
+  PATH="/dialog/rss/insertRssSubscribeLink.jsp" SHAPE="304,4240,50,25"
+  SUBTYPE="jsp" TITLE="insertRssSubscribeLink.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertRssChannel"
+  NAME="action55" PATH="/dialog/insertRssChannel" SHAPE="32,4304,161,41"
+  TITLE="insertRssChannel" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/rss/insertRssChannel.jsp"
+   TARGET="page46" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page46"
+  PATH="/dialog/rss/insertRssChannel.jsp" SHAPE="304,4320,50,25"
+  SUBTYPE="jsp" TITLE="insertRssChannel.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#insertTabstripBody" NAME="action56"
+  PATH="/dialog/insertTabstripBody" SHAPE="32,4384,161,41"
+  TITLE="insertTabstripBody" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/tabstrip/insertTabstripBody.jsp"
+   TARGET="page47" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page47"
+  PATH="/dialog/tabstrip/insertTabstripBody.jsp" SHAPE="304,4400,50,25"
+  SUBTYPE="jsp" TITLE="insertTabstripBody.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#insertTabstripButton" NAME="action57"
+  PATH="/dialog/insertTabstripButton" SHAPE="32,4464,161,41"
+  TITLE="insertTabstripButton" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/tabstrip/insertTabstripButton.jsp"
+   TARGET="page48" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page48"
+  PATH="/dialog/tabstrip/insertTabstripButton.jsp"
+  SHAPE="304,4480,50,25" SUBTYPE="jsp" TITLE="insertTabstripButton.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#insertTabstripMoreLink" NAME="action58"
+  PATH="/dialog/insertTabstripMoreLink" SHAPE="32,4624,161,41"
+  TITLE="insertTabstripMoreLink" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/tabstrip/insertTabstripMoreLink.jsp"
+   TARGET="page49" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page49"
+  PATH="/dialog/tabstrip/insertTabstripMoreLink.jsp"
+  SHAPE="304,4640,50,25" SUBTYPE="jsp"
+  TITLE="insertTabstripMoreLink.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#insertNavigatorLinkItem" NAME="action14"
+  PATH="/dialog/insertNavigatorLinkItem" SHAPE="32,4864,161,25"
+  TITLE="insertNavigatorLinkItem" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/navigator/insertNavigatorLinkItem.jsp"
+   TARGET="page50" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#insertNavigatorMenuItem" NAME="action59"
+  PATH="/dialog/insertNavigatorMenuItem" SHAPE="32,4944,161,25"
+  TITLE="insertNavigatorMenuItem" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/navigator/insertNavigatorMenuItem.jsp"
+   TARGET="page51" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page50"
+  PATH="/dialog/navigator/insertNavigatorLinkItem.jsp"
+  SHAPE="304,4880,50,25" SUBTYPE="jsp"
+  TITLE="insertNavigatorLinkItem.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page51"
+  PATH="/dialog/navigator/insertNavigatorMenuItem.jsp"
+  SHAPE="304,4960,50,25" SUBTYPE="jsp"
+  TITLE="insertNavigatorMenuItem.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertPageNo"
+  NAME="action60" PATH="/dialog/insertPageNo" SHAPE="32,5024,161,25"
+  TITLE="insertPageNo" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/paging/insertPageNo.jsp"
+   TARGET="page52" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page52"
+  PATH="/dialog/paging/insertPageNo.jsp" SHAPE="304,5040,50,25"
+  SUBTYPE="jsp" TITLE="insertPageNo.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#insertDate"
+  NAME="action61" PATH="/dialog/insertDate" SHAPE="32,5104,161,25"
+  TITLE="insertDate" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/date/insertDate.jsp" TARGET="page53"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page53"
+  PATH="/dialog/date/insertDate.jsp" SHAPE="304,5120,50,25"
+  SUBTYPE="jsp" TITLE="insertDate.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#dialog#recordListControlBar" NAME="action2"
+  PATH="/dialog/recordListControlBar" SHAPE="32,1936,161,41"
+  TITLE="recordListControlBar" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/recordlist/recordListControlBar.jsp"
+   TARGET="page3" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/dialog/recordlist/recordListControlBar.jsp"
+  SHAPE="304,1952,50,25" SUBTYPE="jsp" TITLE="recordListControlBar.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#dialog#styleDefine"
+  NAME="action11" PATH="/dialog/styleDefine" SHAPE="32,5184,161,41"
+  TITLE="styleDefine" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/dialog/template/styleDefine.jsp"
+   TARGET="page56" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page56"
+  PATH="/dialog/template/styleDefine.jsp" SHAPE="304,5200,50,25"
+  SUBTYPE="jsp" TITLE="styleDefine.jsp" TYPE="page"/>
+</PROCESS>

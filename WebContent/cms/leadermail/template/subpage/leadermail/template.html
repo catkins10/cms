@@ -1,0 +1,80 @@
+<form id="leaderMail" class="form" title="表单:撰写邮件" action="applicationName=cms/leadermail" style="border-bottom: #ffc0c0 1px dotted; border-left: #ffc0c0 1px dotted; margin: 0px; border-top: #ffc0c0 1px dotted; border-right: #ffc0c0 1px dotted">
+<span class="systemPrompt"><a id="systemPrompt" urn="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;IMG src=&quot;{CONTEXTPATH}/cms/image/warn.gif&quot; align=absMiddle&gt;&amp;nbsp;&amp;lt;提示信息&amp;gt;">&lt;系统提示&gt;</a></span>
+<table class="editabledTable">
+	<colgroup><col/><col width="50%" /><col/><col width="50%"/></colgroup>
+	<tbody>
+		<tr>
+			<td align="right">信件类型：</td>
+			<td><input class="field required" id="field" title="事件类型" name="type" type="text" /></td>
+			<td align="right">&nbsp;发送部门：</td>
+            <td colspan="3"><input id="field" class="field" title="受理部门" name="department" type="text" /></td>
+		</tr>
+		<tr>
+			<td align="right">主题：</td>
+			<td colspan="3"><input class="field" id="field" title="主题" name="subject" type="text" /></td>
+		</tr>
+		<tr>
+			<td align="right">编号：</td>
+			<td colspan="3" style="color: #ff0000"><span id="hiddenField" title="sn" style="font-size: 12px; color: #000000; font-family: 宋体">&lt;编号&gt;</span> (提示:输入编号和查询密码可以查询办理情况)</td>
+		</tr>
+		<tr>
+			<td align="right">查询密码：</td>
+			<td><input class="field" id="field" title="查询密码" name="queryPassword" type="text" /></td>
+			<td align="right" nowrap="nowrap">&nbsp;公开信件：</td>
+			<td><span id="fieldSpan" title="是否允许公开"><input id="field" type="radio" name="isPublic" value="1" checked="checked"/>&nbsp;允许&nbsp;<input id="field" type="radio" name="isPublic" value="0" />&nbsp;禁止</span></td>
+		</tr>
+		<tr>
+			<td align="right" valign="top">内容：</td>
+			<td colspan="3"><textarea class="field" id="field" title="正文" style="height: 120px" name="content"></textarea></td>
+		</tr>
+		<tr>
+			<td align="right">附件：</td>
+			<td colspan="3"><input class="field" id="field" title="附件" name="attachment" type="text" /></td>
+		</tr>
+		<tr>
+			<td align="right">事件辖区：</td>
+			<td><input class="field" id="field" title="事件辖区" name="popedom" type="text" /></td>
+			<td align="right">事件地点：</td>
+			<td><input class="field" id="field" title="事件地点" name="area" type="text" /></td>
+		</tr>
+		<tr>
+			<td align="right">事件时间：</td>
+			<td><input class="field" id="field" title="事件时间" name="happenTime" type="text" /></td>
+			<td align="right">您的姓名：</td>
+			<td align="right"><input class="field" id="field" title="写信人" name="creator" type="text" /></td>
+		</tr>
+		<tr>
+			<td align="right">手机：</td>
+			<td><input class="field" id="field" title="写信人手机" name="creatorMobile" type="text" /></td>
+			<td align="right">电话：</td>
+			<td><input class="field" id="field" title="联系电话" name="creatorTel" type="text" /></td>
+		</tr>
+		<tr>
+			<td align="right">传真：</td>
+			<td><input class="field" id="field" title="传真" name="creatorFax" type="text" /></td>
+			<td align="right">邮箱：</td>
+			<td><input class="field" id="field" title="写信人邮箱" name="creatorMail" type="text" /></td>
+		</tr>
+		<tr>
+			<td align="right">所在单位：</td>
+			<td><input class="field" id="field" title="所在单位" name="creatorUnit" type="text" /></td>
+			<td align="right">职业：</td>
+			<td><input class="field" id="field" title="职业" name="creatorJob" type="text" /></td>
+		</tr>
+		<tr>
+			<td align="right" valign="bottom" nowrap="nowrap">验证码：</td>
+			<td colspan="3"><img id="validateCodeImage" title="验证码" alt="" src="{CONTEXTPATH}/jeaf/validatecode/generateValidateCodeImage.shtml" /> <a onclick="document.getElementById('validateCodeImage').src=document.getElementById('validateCodeImage').src.split('?')[0] + '?reload=true&amp;seq=' + Math.random();return false;" href="#">看不清，换一张</a> </td>
+		</tr>
+		<tr>
+			<td align="right" nowrap="nowrap">输入验证码：</td>
+			<td colspan="3"><input class="field" name="validateCode" type="text" /></td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap"></td>
+			<td align="center" colspan="3">
+				<br />
+				<input class="submitButton" id="button" title="提交" tabindex="0" type="button" value="提交" />
+			</td>
+		</tr>
+	</tbody>
+</table>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--部门考核-->
+	<class name="com.yuanluesoft.enterprise.evaluation.department.pojo.DepartmentEvaluation" table="evaluation_department">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="evaluationMonth"/> <!--月份,NUMERIC(2)-->
+		<property name="evaluationYear"/> <!--年度,NUMERIC(4)-->
+		<property name="created"/> <!--考核时间,TIMESTAMP-->
+		<property name="creator"/> <!--考核人,VARCHAR(60)-->
+		<property name="creatorId"/> <!--考核人ID,NUMERIC(20)-->
+		<set name="results" table="evaluation_department_result" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="evaluationId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.evaluation.department.pojo.DepartmentEvaluationResult"/>
+		</set>
+	</class>
+	
+	<!--部门考核:结果-->
+	<class name="com.yuanluesoft.enterprise.evaluation.department.pojo.DepartmentEvaluationResult" table="evaluation_department_result">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="evaluationId"/> <!--考核ID,NUMERIC(20)-->
+		<property name="departmentId"/> <!--部门ID,NUMERIC(20)-->
+		<property name="departmentName"/> <!--部门名称,VARCHAR(60)-->
+		<property name="result"/> <!--权重,NUMERIC(5,2)-->
+		<property name="remark"/> <!--考核说明,VARCHAR(2000)-->
+		<!-- 部门考核 -->
+		<many-to-one name="evaluation" class="com.yuanluesoft.enterprise.evaluation.department.pojo.DepartmentEvaluation" column="evaluationId" update="false" insert="false"/>
+	</class>
+	
+	<!--部门考核:参数配置-->
+	<class name="com.yuanluesoft.enterprise.evaluation.department.pojo.DepartmentEvaluationParameter" table="evaluation_department_param">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="dropoutDepartmentIds"/> <!--不参与的部门ID,VARCHAR(4000)-->
+		<property name="dropoutDepartments"/> <!--不参与的部门,VARCHAR(4000)-->
+	</class>
+</hibernate-mapping>

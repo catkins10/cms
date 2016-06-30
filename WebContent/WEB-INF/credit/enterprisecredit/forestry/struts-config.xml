@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+ <form-bean name="applicationView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/>
+ <form-bean name="forestryImportData" type="com.yuanluesoft.credit.enterprisecredit.forestry.forms.ImportDateExcel"/>
+  <form-bean name="adminForestry" type="com.yuanluesoft.credit.enterprisecredit.forestry.forms.Forestry"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminForestry" path="/admin/forestry" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.forestry.actions.Load" validate="false">
+   <forward name="load" path="/forestry.jsp"/>
+  </action>
+  <action input="/forestry.jsp" name="adminForestry" path="/admin/saveForestry" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.forestry.actions.Save" validate="false"/>
+  <action input="/forestry.jsp" name="adminForestry" path="/admin/deleteForestry"
+   scope="request" type="com.yuanluesoft.credit.enterprisecredit.forestry.actions.Delete" validate="false"/>
+  
+  
+  
+
+  <!-- 附件选择处理。页面的data标签加载时跳转该path调用相应action处理附件页面 -->
+  <action name="forestryImportData" path="/admin/attachmentEditor" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.localtax.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <!-- excel数据导入页面加载 -->
+   <action name="forestryImportData" path="/admin/forestryImportData" scope="request" validate="false"
+   type="com.yuanluesoft.credit.enterprisecredit.forestry.actions.excelimport.Load">
+   <forward name="load" path="/importData.jsp"/>
+   </action>
+   
+   <action name="forestryImportData" path="/admin/doImportData" scope="request" validate="false" input="/importData.jsp"
+   type="com.yuanluesoft.credit.enterprisecredit.forestry.actions.excelimport.DoImportData"/>
+   <!-- 批量删除操作 -->
+   <action input="/../../../jeaf/application/applicationView.jsp" name="applicationView" 
+   path="/batchOperate" scope="request" 
+   type="com.yuanluesoft.credit.enterprisecredit.batchoperate.BatchOperate" validate="false" />
+ </action-mappings>
+ <controller/>
+</struts-config>

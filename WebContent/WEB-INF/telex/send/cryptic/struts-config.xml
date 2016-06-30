@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="sendTelegram" type="com.yuanluesoft.telex.send.cryptic.forms.SendCrypticTelegram"/>
+  <form-bean name="exportListing" type="com.yuanluesoft.telex.send.cryptic.forms.ExportListing"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="sendTelegram" path="/sendTelegram" scope="request"
+   type="com.yuanluesoft.telex.send.cryptic.actions.sendcryptictelegram.Load" validate="false">
+   <forward name="load" path="/sendTelegram.jsp"/>
+  </action>
+  <action input="/sendTelegram.jsp" name="sendTelegram"
+   path="/saveSendTelegram" scope="request"
+   type="com.yuanluesoft.telex.send.cryptic.actions.sendcryptictelegram.Save" validate="false"/>
+  <action input="/sendTelegram.jsp" name="sendTelegram"
+   path="/deleteSendTelegram" scope="request"
+   type="com.yuanluesoft.telex.send.cryptic.actions.sendcryptictelegram.Delete" validate="false"/>
+  <action name="exportListing" path="/exportListing" scope="request"
+   type="com.yuanluesoft.telex.send.cryptic.actions.exportlisting.Load" validate="false">
+   <forward name="load" path="/exportListing.jsp"/>
+  </action>
+  <action name="exportListing" path="/doExportListing" scope="request"
+   type="com.yuanluesoft.telex.send.cryptic.actions.exportlisting.Export" validate="false"/>
+  <action name="sendTelegram" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.telex.send.cryptic.actions.sendcryptictelegram.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

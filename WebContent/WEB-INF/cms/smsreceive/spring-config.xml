@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 短信接收服务 -->
+	<bean id="smsReceiveService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.cms.smsreceive.service.spring.SmsReceiveServiceImpl" init-method="init">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="smsService"><ref bean="smsService"/></property>
+				<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+				<property name="sessionService"><ref bean="sessionService"/></property>
+				<property name="recordControlService"><ref bean="recordControlService"/></property>
+				<property name="smsTypes"><value>党务、村务公开,农政通</value></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="reply*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="processWorkflow*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="onShortMessageReceived">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 短信接收视图服务 -->
+	<bean id="smsReceiveViewService" class="com.yuanluesoft.cms.smsreceive.service.spring.SmsReceiveViewServiceImpl">
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="orgService"><ref bean="orgService"/></property>
+	</bean>
+</beans>

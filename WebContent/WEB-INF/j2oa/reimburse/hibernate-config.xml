@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--报销单-->
+	<class name="com.yuanluesoft.j2oa.reimburse.pojo.Reimburse" table="reimburse_reimburse">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="projectName"/> <!--项目名称-->
+		<property name="personName"/> <!--报销人姓名-->
+		<property name="personId"/> <!--报销人ID-->
+		<property name="departmentName"/> <!--部门名称-->
+		<property name="departmentId"/> <!--部门ID-->
+		<property name="type" column="reimburseType"/> <!--报销类别-->
+		<property name="reimburseDate"/> <!--报销时间-->
+		<property name="journey"/> <!--出差路线-->
+		<property name="dayCount"/> <!--总天数-->
+		<property name="beginTime"/> <!--开始时间-->
+		<property name="endTime"/> <!--结束时间-->
+		<property name="description"/> <!--事件描述-->
+		<property name="billCount"/> <!--票据张数-->
+		<property name="money"/> <!--总金额-->
+		<property name="payMoney"/> <!--实际支付金额-->
+		<property name="prepaid"/> <!--是否已支付-->
+		<property name="payDate"/> <!--支付时间-->
+		<property name="remark"/> <!--备注-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<set name="opinions" table="reimburse_reimburse_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseOpinion" />
+		</set>
+		<set name="visitors" table="reimburse_reimburse_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.reimburse.pojo.ReimbursePrivilege"/>
+		</set>
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+		<set name="charges" table="reimburse_charge" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="reimburseId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseCharge" />
+		</set>
+		<set name="reimburseLoans" table="reimburse_loan" lazy="true" cascade="delete" order-by="id">
+			<key column="reimburseId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseLoan" />
+		</set>
+	</class>
+	
+	<!--费用清单-->
+	<class name="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseCharge" table="reimburse_charge">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="reimburseId"/> <!--报销单ID-->
+		<property name="projectId"/> <!--所属项目ID-->
+		<property name="projectName"/> <!--所属项目名称-->
+		<property name="chargeCategory"/> <!--费用类别-->
+		<property name="chargeStandard"/> <!--费用标准-->
+		<property name="time" column="chargeTime"/> <!--费用产生时间-->
+		<property name="money"/> <!--金额-->
+		<property name="purpose"/> <!--用途-->
+		<property name="remark"/> <!--备注-->
+	</class>
+	
+	<!--费用类别-->
+	<class name="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseChargeCategory" table="reimburse_charge_category">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="category"/> <!--费用类别-->
+		<property name="money"/> <!--默认标准-->
+		<property name="unit"/> <!--单位-->
+		<set name="standards" table="reimburse_charge_standard" lazy="true" cascade="delete" order-by="money desc">
+			<key column="chargeCategoryId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseChargeStandard" />
+		</set>
+	</class>
+	
+	<!--费用标准-->
+	<class name="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseChargeStandard"
+		table="reimburse_charge_standard">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userName"/> <!--用户名称-->
+		<property name="userId"/> <!--用户ID-->
+		<property name="chargeCategoryId"/> <!--费用类别ID-->
+		<property name="money"/> <!--金额-->
+		<many-to-one name="chargeCategory" class="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseChargeCategory" column="chargeCategoryId" update="false" insert="false" />
+	</class>
+	
+	<!--借款核销-->
+	<class name="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseLoan"
+		table="reimburse_loan">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="reimburseId"/> <!--报销单ID-->
+		<property name="loanId"/> <!--借款单ID-->
+		<property name="reimburseMoney"/> <!--核销金额-->
+		<property name="reimbursed"/> <!--是否已核销-->
+		<property name="reimburseTime"/> <!--核销时间-->
+		<many-to-one name="loan" class="com.yuanluesoft.j2oa.loan.pojo.Loan" column="loanId" update="false" insert="false" foreign-key="id" />
+		<many-to-one name="reimburse" class="com.yuanluesoft.j2oa.reimburse.pojo.Reimburse" column="reimburseId" update="false" insert="false" />
+	</class>
+	
+	<!--报销配置-->
+	<class name="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseConfig" table="reimburse_config">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="types"/> <!--报销类别-->
+	</class>
+	
+	<!--报销单权限控制-->
+	<class name="com.yuanluesoft.j2oa.reimburse.pojo.ReimbursePrivilege" table="reimburse_reimburse_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--报销单办理意见-->
+	<class name="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseOpinion"
+		table="reimburse_reimburse_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="created"/> <!--填写时间-->
+	</class>
+</hibernate-mapping>

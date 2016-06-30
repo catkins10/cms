@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!-- 工程类别/招标内容/地区 -->
+<beans>
+	<!-- 工程服务 -->
+	<bean id="biddingProjectService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.bidding.project.service.spring.BiddingProjectServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="attachmentService"><ref bean="attachmentService"/></property>
+				<property name="temporaryFileManageService"><ref bean="temporaryFileManageService"/></property>
+				<property name="biddingProjectParameterService"><ref bean="biddingProjectParameterService"/></property>
+				<property name="biddingRoomService"><ref bean="biddingRoomService"/></property>
+				<property name="pageService"><ref bean="pageService"/></property>
+				<!-- property name="jinrunIp"><value>127.0.0.1</value></property -->
+				<!-- 评标系统中招标文件存放路径,不允许有文件名 -->
+				<property name="jinrunBiddingDocumentsPath"><value>e:\招标文件\{projectNumber}\</value></property>
+				<!-- 评标系统中投标报名清单存放路径 -->
+				<property name="jinrunSignUpsPath"><value>e:\招标文件\报名号验证\{projectNumber}.xml</value></property>
+				<!-- 评标系统中开标xml路径和文件名称 -->
+				<property name="jinrunBidopeningPath"><value>e:\评标\{projectNumber}\Inviter\rt\OpenReport.xml</value></property>
+				<!-- 评标系统中投标文件路径 -->
+				<property name="jinrunBidPath"><value>e:\评标\{projectNumber}\{signUpNo}.fzt</value></property>
+				<!-- 评标系统中中标结果xml路径和文件名称 -->
+				<property name="jinrunPitchonPath"><value>e:\评标\{projectNumber}\Inviter\InviteResult\InviteResult.xml</value></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="remove*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="public*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="upload*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="generate*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="export*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 工程参数服务 -->
+	<bean id="biddingProjectParameterService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.bidding.project.service.spring.BiddingProjectParameterServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="numerationService"><ref bean="numerationService"/></property>
+				<property name="cache"><ref bean="modelCache"/></property>
+				<!-- 工程类别 -->
+				<property name="projectCategories"><value>建安|建安|building,市政|市政|publicworks,水利|水利|irrigation,其他|其他|other</value></property>
+				<!-- 招标内容 -->
+				<property name="projectProcedures"><value>施工|construct,设计|design,监理|supervision,专业工程|professional,公用项目|communal,水利|irrigation,房屋建筑|house,土石方|earthwork,土地平整|level,建筑装修装饰|decorate,园林古建筑|gardens,公路|road,机电安装|electromechanical,消防设施|prevention,体育场所设施|sport,电力|power,桥梁|bridge,工程设备采购|device,场地借用|place</value></property>
+				<!-- 地区 -->
+				<property name="cities"><value>南平|npztb/nanping,延平|npztb/yanping,顺昌|npztb/shunchang,邵武|npztb/shaowu,光泽|npztb/guangze,武夷山|npztb/wuyishang,建阳|npztb/jianyang,建瓯|npztb/jianou,政和|npztb/zhenghe,松溪|npztb/songxi,浦城|npztb/pucheng</value></property>
+				<!-- 实名报名的工程类别和环节 -->
+				<property name="realNameProjectProcedures"><value>福州/南平|建安/市政|施工/设计/监理</value></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="generate*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="processWorkflowConfigureNotify">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 工程视图服务 -->
+	<bean id="biddingProjectViewService" class="com.yuanluesoft.bidding.project.service.spring.BiddingProjectViewServiceImpl">
+		<property name="biddingProjectParameterService"><ref bean="biddingProjectParameterService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+	</bean>
+	
+	<!-- 项目模板服务 -->
+	<bean id="biddingProjectTemplateService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.bidding.project.service.spring.BiddingProjectTemplateServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="siteTemplateThemeService"><ref bean="siteTemplateThemeServiceImpl"/></property>
+				<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+				<property name="templatePath"><ref bean="tempatePath"/></property>
+				<property name="templateUrl"><ref bean="tempateUrl"/></property>
+				<property name="fileDownloadService"><ref bean="fileDownloadService"/></property>
+				<property name="htmlParser"><ref bean="htmlParser"/></property>
+				<property name="cache"><ref bean="templateCache"/></property>
+				<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+				<property name="templateAttachmentService"><ref bean="templateAttachmentService"/></property>
+				<property name="exchangeClient"><ref bean="exchangeClient"/></property>
+				<property name="siteService"><ref bean="siteService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="setDefaultTemplate">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="restore*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="loadNormalTemplate">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="copy*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="upload*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!--****************** 页面处理器列表 ****************** -->
+	<!-- 记录列表处理器 -->
+	<bean id="biddingRecordListProcessor" class="com.yuanluesoft.bidding.project.processor.BiddingRecordListProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+	</bean>
+	
+	<!--****************** 页面列表 ****************** -->
+	<!-- 项目登记页面 -->
+	<bean id="biddingProjectInfoPageService" class="com.yuanluesoft.bidding.project.pages.ProjectInfoPageService">
+		<property name="biddingProjectService"><ref bean="biddingProjectService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="biddingProjectTemplateService"/></property>
+	</bean>
+
+	<!-- 项目组成部分页面 -->
+	<bean id="biddingProjectComponentPageService" class="com.yuanluesoft.bidding.project.pages.ProjectComponentPageService">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="biddingProjectService"><ref bean="biddingProjectService"/></property>
+		<property name="attachmentService"><ref bean="attachmentService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="biddingProjectTemplateService"/></property>
+		<property name="biddingService"><ref bean="biddingService"/></property>
+	</bean>
+</beans>

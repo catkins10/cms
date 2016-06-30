@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="在线投诉" class="com.yuanluesoft.cms.onlineservice.interactive.complaint.pojo.OnlineServiceComplaint" businessServiceName="onlineserviceInteractiveService">
+		<field name="itemId" title="办理事项ID" length="20" type="number" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="itemName" title="办理事项名称" length="200" required="true" type="string" inputMode="select">
+			<parameter name="execute">selectOnlineServiceItem(550, 360, false, 'itemId{id},itemName{name}', '', '', '', '', '{PARAMETER:directoryId}', false, true, false, false, true)</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="js">/cms/onlineservice/js/onlineservice.js</parameter>
+		</field>
+		<field name="content" title="详细内容" persistence="false" type="string" inputMode="textarea">
+			<parameter name="referenceFields">lazyBody</parameter>
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="attachment" title="附件" type="attachment" inputMode="attachment"/>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">办公室,批转,部门办理|required,部门审核,回复审核,领导批示</parameter>
+			<parameter name="class">com.yuanluesoft.cms.publicservice.pojo.PublicServiceOpinion</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

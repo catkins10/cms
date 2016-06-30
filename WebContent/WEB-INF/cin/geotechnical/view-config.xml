@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<recordList title="岩土工程勘察项目" name="geotechnicals">
+		<data>
+			<pojo>com.yuanluesoft.cin.geotechnical.pojo.Geotechnical</pojo>
+			<where>Geotechnical.siteId={PARAMETER:siteId} and Geotechnical.publicPass='1'</where>
+			<orderBy>Geotechnical.created DESC</orderBy>
+			<quickFilter>Geotechnical.subject like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="岩土工程勘察项目">/cin/geotechnical/geotechnical.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cin/geotechnical</link>
+		</links>
+	</recordList>
+
+	<view name="admin/todoGeotechnical" form="admin/geotechnical" title="待办项目" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cin.geotechnical.pojo.Geotechnical</pojo>
+			<orderBy>Geotechnical.created DESC</orderBy>
+			<quickFilter>Geotechnical.subject like '%{KEY}%' or Geotechnical.creator like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="projectName"/>
+			<column title="建设单位" name="constructionUnit" displayExcept="portlet"/>
+			<column title="勘察单位" name="surveyUnit" displayExcept="portlet"/>
+			<column title="建设地点" name="constructionPlace" displayExcept="portlet"/>
+			<column title="拟进场时间" name="approachTime" align="center" width="80" displayExcept="portlet"/>
+			<column title="提交时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessGeotechnical" form="admin/geotechnical" title="在办项目" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cin.geotechnical.pojo.Geotechnical</pojo>
+			<orderBy>Geotechnical.created DESC</orderBy>
+			<quickFilter>Geotechnical.subject like '%{KEY}%' or Geotechnical.creator like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="projectName"/>
+			<column title="建设单位" name="constructionUnit" displayExcept="portlet"/>
+			<column title="勘察单位" name="surveyUnit" displayExcept="portlet"/>
+			<column title="建设地点" name="constructionPlace" displayExcept="portlet"/>
+			<column title="拟进场时间" name="approachTime" align="center" width="80" displayExcept="portlet"/>
+			<column title="提交时间" name="created" align="center" width="108"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedGeotechnical" form="admin/geotechnical" title="办结项目" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cin.geotechnical.pojo.Geotechnical</pojo>
+			<filter>COMPLETED</filter>
+			<orderBy>Geotechnical.created DESC</orderBy>
+			<quickFilter>Geotechnical.subject like '%{KEY}%' or Geotechnical.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="projectName"/>
+			<column title="建设单位" name="constructionUnit" displayExcept="portlet"/>
+			<column title="勘察单位" name="surveyUnit" displayExcept="portlet"/>
+			<column title="建设地点" name="constructionPlace" displayExcept="portlet"/>
+			<column title="拟进场时间" name="approachTime" align="center" width="80" displayExcept="portlet"/>
+			<column title="提交时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allGeotechnical" form="admin/geotechnical" title="所有项目" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cin.geotechnical.pojo.Geotechnical</pojo>
+			<filter>READABLE</filter>
+			<orderBy>Geotechnical.created DESC</orderBy>
+			<quickFilter>Geotechnical.subject like '%{KEY}%' or Geotechnical.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="projectName"/>
+			<column title="建设单位" name="constructionUnit" displayExcept="portlet"/>
+			<column title="勘察单位" name="surveyUnit" displayExcept="portlet"/>
+			<column title="建设地点" name="constructionPlace" displayExcept="portlet"/>
+			<column title="拟进场时间" name="approachTime" align="center" width="80" displayExcept="portlet"/>
+			<column title="提交时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+</views>

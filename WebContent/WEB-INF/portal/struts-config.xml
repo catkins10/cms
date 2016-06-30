@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="selectPortlet" type="com.yuanluesoft.portal.container.forms.SelectPortlet"/>
+  <form-bean name="portletEntityView" type="com.yuanluesoft.portal.container.forms.PortletEntityView"/>
+  <form-bean name="portletEntity" type="com.yuanluesoft.portal.container.forms.PortletEntity"/>
+  <form-bean name="portletEntityTemplate" type="com.yuanluesoft.portal.container.forms.PortletEntityTemplate"/>
+  <form-bean name="portalStyleDefine" type="com.yuanluesoft.portal.server.forms.PortalStyleDefine"/>
+  <form-bean name="portalPage" type="com.yuanluesoft.portal.server.forms.PortalPage"/>
+  <form-bean name="addPortlet" type="com.yuanluesoft.portal.server.forms.AddPortlet"/>
+  <form-bean name="portletJs" type="com.yuanluesoft.portal.server.forms.PortletJs"/>
+  <form-bean name="portlet" type="com.yuanluesoft.portal.server.forms.Portlet"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="selectPortlet" path="/selectPortlet" scope="request"
+   type="com.yuanluesoft.portal.container.actions.selectportlet.Load" validate="false">
+   <forward name="load" path="/../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="portletEntityView" path="/portletEntityView"
+   scope="request"
+   type="com.yuanluesoft.portal.container.actions.portletentityview.PortletEntityViewAction" validate="false">
+   <forward name="load" path="/../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action name="portletEntity" path="/portletEntity" scope="request"
+   type="com.yuanluesoft.portal.container.actions.portletentity.Load" validate="false">
+   <forward name="load" path="/portletEntity.jsp"/>
+  </action>
+  <action input="/portletEntity.jsp" name="portletEntity"
+   path="/savePortletEntity" scope="request"
+   type="com.yuanluesoft.portal.container.actions.portletentity.Save" validate="false"/>
+  <action input="/portletEntity.jsp" name="portletEntity"
+   path="/deletePortletEntity" scope="request"
+   type="com.yuanluesoft.portal.container.actions.portletentity.Delete" validate="false"/>
+  <action name="portletEntityTemplate" path="/template" scope="request"
+   type="com.yuanluesoft.portal.container.actions.portletentity.template.Load" validate="false">
+   <forward name="load" path="/../cms/templatemanage/template.jsp"/>
+  </action>
+  <action input="/../cms/templatemanage/template.jsp"
+   name="portletEntityTemplate" path="/saveTemplate" scope="request"
+   type="com.yuanluesoft.portal.container.actions.portletentity.template.Save" validate="false"/>
+  <action input="/../cms/templatemanage/template.jsp"
+   name="portletEntityTemplate" path="/deleteTemplate" scope="request"
+   type="com.yuanluesoft.portal.container.actions.portletentity.template.Delete" validate="false"/>
+  <action name="portalPage" path="/portalPage" scope="request"
+   type="com.yuanluesoft.portal.server.actions.portalpage.Load" validate="false">
+   <forward name="load" path="/portalPage.jsp"/>
+  </action>
+  <action input="/portalPage.jsp" name="portalPage"
+   path="/savePortalPage" scope="request"
+   type="com.yuanluesoft.portal.server.actions.portalpage.Save" validate="false"/>
+  <action input="/portalPage.jsp" name="portalPage"
+   path="/deletePortalPage" scope="request"
+   type="com.yuanluesoft.portal.server.actions.portalpage.Delete" validate="false"/>
+  <action name="addPortlet" path="/addPortlet" scope="request"
+   type="com.yuanluesoft.portal.server.actions.addportlet.Load" validate="false">
+   <forward name="load" path="/addPortlet.jsp"/>
+  </action>
+  <action input="/addPortlet.jsp" name="addPortlet" path="/doAddPortlet"
+   scope="request"
+   type="com.yuanluesoft.portal.server.actions.addportlet.Submit" validate="false"/>
+  <action name="portletJs" path="/portlet.js" scope="request"
+   type="com.yuanluesoft.portal.server.actions.portletjs.Load" validate="false"/>
+  <action name="portlet" path="/portlet" scope="request"
+   type="com.yuanluesoft.portal.server.actions.portlet.Load" validate="false"/>
+  <action input="/portalPage.jsp" name="portalPage"
+   path="/restoreDefaultPortal" scope="request"
+   type="com.yuanluesoft.portal.server.actions.portalpage.RestoreDefaultPortal" validate="false"/>
+  <action path="/exportPortletEntity" scope="request"
+   type="com.yuanluesoft.portal.container.actions.exportportletentity.Export" validate="false"/>
+  <action input="/../jeaf/application/applicationView.jsp"
+   name="portletEntityView" path="/deletePortletEntities"
+   scope="request"
+   type="com.yuanluesoft.portal.container.actions.portletentityview.DeletePortletEntities" validate="false"/>
+  <action input="/../jeaf/application/applicationView.jsp"
+   name="portletEntityView" path="/modifyCategory" scope="request"
+   type="com.yuanluesoft.portal.container.actions.portletentityview.ModifyCategory" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,75 @@
+<project basedir="../" default="build">
+
+    <!-- Local system paths -->
+    <property file="${basedir}/ant/build.properties"/>
+    <property name="webroot.dir" value="${basedir}/WebContent"/>
+    <property name="webinf.dir" value="${webroot.dir}/WEB-INF"/>
+    <property name="build.dir" value="build"/>
+
+    <!-- Project settings -->
+    <property name="project.distname" value="empty"/>
+
+    <!-- classpath -->
+    <path id="compile.classpath">
+	    <pathelement path ="${webinf.dir}/classes"/>
+        <pathelement path ="${classpath.external}"/>
+        <pathelement path ="${classpath}"/>
+    </path>
+
+    <!-- Check timestamp on files -->
+    <target name="prepare">
+        <tstamp/>
+    </target>
+
+    <!-- Copy any resource or configuration files -->
+    <target name="resources">
+        <copy todir="${webinf.dir}/classes" includeemptydirs="no">
+            <fileset dir="JavaSource">
+            <patternset>
+                <include name="**/*.conf"/>
+                <include name="**/*.properties"/>
+                <include name="**/*.xml"/>
+            </patternset>
+            </fileset>
+        </copy>
+    </target>
+    
+	<!-- Remove classes directory for clean build -->
+    <target name="clean" description="Prepare for clean build"/>
+	
+    <!-- Normal build of application -->
+    <target name="compile" depends="prepare,resources">
+		<!-- eai configure classes -->
+		<jar jarfile="/yuanlueexchange.jar" basedir="${webinf.dir}/classes">
+			<include name="com/yuanluesoft/exchange/client/**"/>
+			<include name="com/yuanluesoft/jeaf/database/Record.class"/>
+			<include name="com/yuanluesoft/jeaf/exception/ServiceException.class"/>
+			<include name="com/yuanluesoft/jeaf/util/CloneUtils.class"/>
+			<include name="com/yuanluesoft/jeaf/util/DateTimeUtils.class"/>
+			<include name="com/yuanluesoft/jeaf/util/Environment.class"/>
+			<include name="com/yuanluesoft/jeaf/util/ObjectSerializer.class"/>
+			<include name="com/yuanluesoft/jeaf/util/UUIDLongGenerator.class"/>
+			<include name="com/yuanluesoft/jeaf/util/StringUtils.class"/>
+			<include name="com/yuanluesoft/jeaf/util/ListUtils.class"/>
+			<include name="com/yuanluesoft/jeaf/util/NetworkUtils.class"/>
+			<include name="com/yuanluesoft/jeaf/logger/Logger.class"/>
+			<include name="com/yuanluesoft/jeaf/logger/pojo/ActionLog.class"/>
+			<include name="com/yuanluesoft/cms/siteresource/model/Article.class"/>
+			<include name="com/yuanluesoft/cms/siteresource/exchange/**"/>
+			<include name="com/yuanluesoft/cms/infopublic/model/Info.class"/>
+			<include name="com/yuanluesoft/cms/infopublic/exchange/**"/>
+			<!--include name="com/yuanluesoft/jeaf/attachmentmanage/model/Attachment.class"/>
+			<include name="com/yuanluesoft/jeaf/attachmentmanage/service/AttachmentService.class"/>
+			<include name="com/yuanluesoft/jeaf/business/model/BusinessObject.class"/>
+			<include name="com/yuanluesoft/jeaf/business/model/Field.class"/>
+			<include name="com/yuanluesoft/jeaf/business/service/BusinessDefineService.class"/>
+			<include name="com/yuanluesoft/jeaf/business/service/BusinessService.class"/>
+			<include name="com/yuanluesoft/jeaf/sessionmanage/model/SessionInfo.class"/>
+			<include name="com/yuanluesoft/jeaf/database/dialect/DatabaseDialect.class"/-->
+		</jar>
+    </target>
+
+    <!-- Build entire project -->
+    <target name="build" depends="clean,prepare,compile"/>
+    <target name="rebuild" depends="clean,prepare,compile"/>
+</project>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/smsSend" title="短信发送记录" hide="noPrivilege(application_manager)" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.sms.pojo.SmsSend</pojo>
+			<orderBy>SmsSend.created DESC</orderBy>
+			<quickFilter>SmsSend.senderName like '%{KEY}%' or SmsSend.receiverName like '%{KEY}%' or SmsSend.receiverName like '%{KEY}%' or SmsSend.message like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50" displayExcept="portlet"/>
+			<column title="发送人" name="senderName" width="100"/>
+			<column title="接收人号码" name="receiverNumber" width="100"/>
+			<column title="接收人" name="receiverName" width="80"/>
+			<column title="短信内容" name="message"/>
+			<column title="短信业务" name="businessName" width="80"/>
+			<column title="创建时间" name="created" align="center" width="110"/>
+			<column title="到达时间" name="arriveTime" align="center" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="admin/smsSendBySourceRecord" title="短信发送记录" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.sms.pojo.SmsSend</pojo>
+			<where>SmsSend.sourceRecordId={PARAMETER:sourceRecordId|-1}</where>
+			<orderBy>SmsSend.created DESC</orderBy>
+			<quickFilter>SmsSend.receiverNumber like '%{KEY}%' or SmsSend.senderName like '%{KEY}%' or SmsSend.receiverName like '%{KEY}%' or SmsSend.receiverName like '%{KEY}%' or SmsSend.message like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50" displayExcept="portlet"/>
+			<column title="发送人" name="senderName" width="100"/>
+			<column title="接收人号码" name="receiverNumber" width="100"/>
+			<column title="接收人" name="receiverName" width="80"/>
+			<column title="短信内容" name="message"/>
+			<column title="创建时间" name="created" align="center" width="110"/>
+			<column title="到达时间" name="arriveTime" align="center" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="admin/smsReceive" title="短信接收记录" hide="noPrivilege(application_manager)" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.sms.pojo.SmsReceive</pojo>
+			<orderBy>SmsReceive.receiveTime DESC</orderBy>
+			<quickFilter>SmsReceive.senderNumber like '%{KEY}%' or SmsReceive.message like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50" displayExcept="portlet"/>
+			<column title="发送人号码" name="senderNumber" width="100"/>
+			<column title="短信内容" name="message"/>
+			<column title="接收时间" name="receiveTime" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/smsBusiness" form="admin/smsBusiness" title="短信业务配置" hide="noPrivilege(application_manager)" pageRows="20" openFeatures="mode=dialog,width=500,height=350">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.sms.pojo.SmsBusiness</pojo>
+			<orderBy>SmsBusiness.name</orderBy>
+			<quickFilter>SmsBusiness.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建短信业务" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('jeaf/sms', 'admin/smsBusiness', 'mode=dialog,width=500,height=350')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50" displayExcept="portlet"/>
+			<column title="业务名称" name="name"/>
+			<column title="价格" name="price" align="center" width="50"/>
+		</columns>
+	</view>
+	
+	<view name="admin/selectSmsBusiness" title="短信业务选择" pageRows="20" openFeatures="mode=dialog,width=500,height=350">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.sms.pojo.SmsBusiness</pojo>
+			<orderBy>SmsBusiness.name</orderBy>
+			<quickFilter>SmsBusiness.name like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50" displayExcept="portlet"/>
+			<column title="业务名称" name="name"/>
+			<column title="价格" name="price" align="center" width="50"/>
+		</columns>
+	</view>
+	
+	<view name="admin/smsUnitConfig" form="admin/smsUnitConfig" title="单位配置" hide="privilege(application_manager) or noPrivilege(manageUnit_unitManage)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.sms.pojo.SmsUnitConfig</pojo>
+			<join>, OrgSubjection OrgSubjection</join>
+			<where>SmsUnitConfig.unitId=OrgSubjection.directoryId and OrgSubjection.parentDirectoryId={UNITID}</where>
+			<orderBy>SmsUnitConfig.unitName</orderBy>
+			<quickFilter>SmsUnitConfig.unitName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加单位" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_unitManage)" execute="PageUtils.newrecord('jeaf/sms', 'admin/smsUnitConfig', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50" displayExcept="portlet"/>
+			<column title="单位名称" name="unitName"/>
+			<column title="短信号码" name="businessConfigs.smsNumber" width="80" align="center"/>
+			<column title="是否启用" type="formula" formula="enabled==1 ? &quot;√&quot; : &quot;&quot;" formulaFields="enabled" align="center" width="60px"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allSmsUnitConfig" form="admin/smsUnitConfig" title="单位配置" hide="noPrivilege(application_manager)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.sms.pojo.SmsUnitConfig</pojo>
+			<orderBy>SmsUnitConfig.unitName</orderBy>
+			<quickFilter>SmsUnitConfig.unitName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加单位" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_unitManage)" execute="PageUtils.newrecord('jeaf/sms', 'admin/smsUnitConfig', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50" displayExcept="portlet"/>
+			<column title="单位名称" name="unitName"/>
+			<column title="短信号码" name="businessConfigs.smsNumber" width="80" align="center"/>
+			<column title="是否启用" type="formula" formula="enabled==1 ? &quot;√&quot; : &quot;&quot;" formulaFields="enabled" align="center" width="60px"/>
+		</columns>
+	</view>
+	
+	<view name="admin/myUnitSmsBusiness" title="短信业务" hide="isNotMyUnitManager()" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.sms.pojo.SmsUnitBusiness</pojo>
+			<where>unitConfig.unitId={UNITID}</where>
+			<orderBy>SmsUnitBusiness.businessName</orderBy>
+			<quickFilter>SmsUnitBusiness.businessName like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>javascript:DialogUtils.openDialog('{CONTEXTPATH}/jeaf/sms/admin/smsUnitBusiness.shtml?id={PARAMETER:unitConfigId}&amp;unitBusiness.id={PARAMETER:id}&amp;directOpenComponent=true', 600, 400);</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50" displayExcept="portlet"/>
+			<column title="业务名称" name="businessName"/>
+			<column title="单位名称" name="unitConfig.unitName"/>
+			<column title="价格(元)" name="price" align="center" width="80"/>
+			<column title="折扣" name="discount" align="center" width="80"/>
+			<column title="短信号码" name="smsNumber" align="center" width="80"/>
+			<column title="是否启用" type="formula" formula="enabled==1 ? &quot;√&quot; : &quot;&quot;" formulaFields="enabled" align="center" width="60px"/>
+		</columns>
+	</view>
+	
+	<statisticView name="admin/smsCharge" title="短信计费" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_unitManage)" pageRows="30" viewServiceName="smsChargeViewService">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.sms.pojo.SmsSend</pojo>
+			<where>SmsSend.arriveTime is not null</where>
+		</data>
+		<categories root="全部" beginCategory="FIRST" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.jeaf.sms.pojo.SmsSend</pojo>
+			</data>
+			<category value="year(SmsSend.arriveTime)"> <!--value必须有-->
+				<orderBy>year(SmsSend.arriveTime) DESC</orderBy>
+				<where>SmsSend.arriveTime is not null</where>
+				<data>year(SmsSend.arriveTime)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(SmsSend.arriveTime)"> <!--value必须有-->
+				<where>year(SmsSend.arriveTime)={CATEGORY1VALUE}</where>
+				<orderBy>month(SmsSend.arriveTime) DESC</orderBy>
+				<data>year(SmsSend.arriveTime)={CATEGORY1VALUE} and month(SmsSend.arriveTime)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<statistics hideDetail="true"> <!--  detailTitle="　　{PARAMETER:rowIndex}、{orgName}", hideDetail=false时有效 -->
+			<statistic title="　{PARAMETER:rowIndex}) {PARAMETER:businessName}"> <!-- 短信业务统计 -->
+				<groupFields>
+					<groupField name="senderUnitId"/>
+					<groupField name="businessName"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="sendCount" function="sum(SmsSend.splitCount)"/> <!-- 短信数 -->
+				</statisticColumns>
+			</statistic>
+			<statistic title="{PARAMETER:rowIndex}.{PARAMETER:senderUnit}"> <!-- 单位合计 -->
+				<groupFields>
+					<groupField name="senderUnitId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="sendCount" function="sum(SmsSend.splitCount)"/> <!-- 短信数 -->
+				</statisticColumns>
+			</statistic>
+			<statistic statisticAll="true" title="合计">
+				<statisticColumns>
+					<statisticColumn name="sendCount" function="sum(SmsSend.splitCount)"/> <!-- 短信数 -->
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位名称" name="senderUnit"/>
+			<column title="短信数量" name="sendCount" type="statistic" align="center" width="100"/>
+			<column title="单价" name="price" type="statistic" align="center" width="100"/>
+			<column title="折扣" name="discount" type="statistic" align="center" width="100"/>
+			<column title="费用" name="charge" type="statistic" align="center" width="100" format="#.##"/>
+		</columns>
+	</statisticView>
+</views>

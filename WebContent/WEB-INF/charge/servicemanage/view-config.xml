@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views>
+	<view name="admin/servicePolicy" form="admin/servicePolicy" title="服务策略" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.servicemanage.pojo.ServicePolicy</pojo>
+			<orderBy>ServicePolicy.serviceItem</orderBy>
+			<quickFilter>ServicePolicy.serviceItem like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action name="create" title="新建策略" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('charge/servicemanage','admin/servicePolicy','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="项目" name="serviceItem" width="100"/>
+			<column title="策略" name="ploicyTitle"/>
+			<column title="创建时间" name="created" format="yyyy-MM-dd"  align="center" width="80"/>
+			<column title="创建人" name="creator"  align="center" width="100"/>
+		</columns>
+	</view>
+	<view name="admin/serviceTry" form="admin/serviceTry" title="服务试用记录" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.servicemanage.pojo.ServiceTry</pojo>
+			<orderBy>ServiceTry.beginTime DESC</orderBy>
+			<quickFilter>ServiceTry.serviceItem like '%{KEY}%' or ServiceTry.personName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="项目" name="serviceItem"/>
+			<column title="用户名" name="personName" width="100px"/>
+			<column title="首次使用时间" name="beginTime"  align="center" width="110"/>
+		</columns>
+	</view>
+	<view name="admin/service" form="admin/service" title="付费服务" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.servicemanage.pojo.Service</pojo>
+			<orderBy>Service.serviceName</orderBy>
+			<quickFilter>Service.serviceName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action name="create" title="新建收费服务" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('charge/servicemanage','admin/service','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="服务名称" name="serviceName" width="200"/>
+			<column title="价格" name="servicePrices.price" length="5" separator="、" ellipsis="..."/>
+			<column title="创建时间" name="created" format="yyyy-MM-dd" align="center" width="80"/>
+			<column title="创建人" name="creator"  align="center" width="100"/>
+		</columns>
+	</view>
+	<view name="selectServicePrice" title="服务(报价)选择" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.servicemanage.pojo.ServicePrice</pojo>
+			<orderBy>ServicePrice.service.serviceName</orderBy>
+			<quickFilter>ServicePrice.service.serviceName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="服务名称" name="title"/>
+		</columns>
+	</view>
+</views>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 招投标企业管理 -->
+<application>
+	<pages>
+		<page name="index" title="企业首页" url="/bidding/enterprise/index.shtml" recordClass="com.yuanluesoft.bidding.enterprise.pojo.BiddingEmployee">
+			<link title="领取纸质标书和图纸" url="/bidding/project/signup/signUpQuery.shtml?queryFor=receivePaperDocuments"/>
+			<link title="企业变更" url="/bidding/enterprise/alterEnterprise.shtml"/>
+		</page>
+		
+		<page name="enterpriseRegist" title="企业注册" url="/bidding/enterprise/enterprise.shtml">
+			<subPage name="base" title="企业资料"/>
+		</page>
+		
+		<page name="enterpriseRegistPrompt" title="企业注册提示信息" systemLink="false"/>
+	
+		<!--page name="enterprise" title="企业查看" url="/bidding/enterprise/enterprise.shtml" recordClass="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprise"/-->
+		
+		<page name="login" title="企业用户登录"/>
+		
+		<page name="employee" title="企业用户信息" url="/bidding/enterprise/employee.shtml" recordClass="com.yuanluesoft.bidding.enterprise.pojo.BiddingEmployee"/>
+		
+		<page name="agentLib" title="招标代理名录库" url="/bidding/enterprise/listAgents.shtml" systemLink="false" realtimeStaticPage="true" recordClass="com.yuanluesoft.bidding.enterprise.pojo.BiddingAgentLib"/>
+	</pages>
+	
+	<links>
+		<link title="招标代理名录库" dialogURL="/bidding/enterprise/templatemanage/insertAgentLibLink.shtml"/>
+	</links>
+</application>

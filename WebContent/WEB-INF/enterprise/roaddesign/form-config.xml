@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="project" title="项目" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=project" method="get">
+		<formFields>
+			<field name="name" title="项目名称" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="保存" execute="saveProject()" default="true"/>
+			<action title="删除" execute="deleteProject()"/>
+			<action title="路段管理" execute="listSections()"/>
+		</actions>
+	</form>
+	
+	<form name="section" title="路段" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=section" method="get">
+		<formFields>
+			<field name="name" title="路段名称" type="string" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="保存" execute="saveSection()" default="true"/>
+			<action title="删除" execute="deleteSection()"/>
+			<action title="设为当前路段" execute="setAsCurrentSection()"/>
+		</actions>
+	</form>
+
+	<form name="traverseNormal" title="导线测量:一般测量" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=traverseNormal" method="get">
+		<formFields>
+			<field name="surveyStation" title="测站名" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="backsightSurveyStation" title="后视测站" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="horizontalAngle" title="水平角" type="number" length="20" inputMode="text"/>
+			<field name="horizontalDistance" title="水平距离" type="number" length="20" inputMode="text"/>
+			<field name="backHeight" title="后高度值" type="number" length="20" inputMode="text"/>
+			<field name="backMirrorHeight" title="后镜高" type="number" length="20" inputMode="text">
+				<parameter name="defaultValue">1.3</parameter>
+			</field>
+			<field name="frontHeight" title="前高度值" type="number" length="20" inputMode="text"/>
+			<field name="frontMirrorHeight" title="前镜高" type="number" length="20" inputMode="text">
+				<parameter name="defaultValue">1.3</parameter>
+			</field>
+			<field name="traverseName" title="导线点" type="string" length="20" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="计算" execute="computeNormalTraverse()"/>
+		</actions>
+	</form>
+	
+	<form name="traverseFrontCross" title="导线测量:前方交会测量" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=traverseFrontCross" method="get">
+		<formFields>
+			<field name="backsightPointA" title="后视点A" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="backsightPointADistance" title="后视点A距离" type="number" length="20" inputMode="text"/>
+			<field name="backsightPointB" title="后视点B" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="backsightPointBDistance" title="后视点B距离" type="number" length="20" inputMode="text"/>
+			<field name="includedAngle" title="夹角(A→B)" type="number" length="20" inputMode="text"/>
+			<field name="traverseName" title="导线点" type="string" length="20" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="计算" execute="computeFrontCrossTraverse()"/>
+		</actions>
+	</form>
+	
+	<form name="traverseBackCross" title="导线测量:后方交会测量" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=traverseBackCross" method="get">
+		<formFields>
+			<field name="backsightPointA" title="后视点A" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="includedAngleα" title="夹角α" type="number" length="20" inputMode="text"/>
+			<field name="backsightPointB1" title="后视点B1" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="includedAngleβ" title="夹角β" type="number" length="20" inputMode="text"/>
+			<field name="backsightPointB2" title="后视点B2" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="includedAngleγ" title="夹角γ" type="number" length="20" inputMode="text"/>
+			<field name="traverseName" title="导线点" type="string" length="20" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="计算" execute="computeBackCrossTraverse()"/>
+		</actions>
+	</form>
+	
+	<form name="loftingPile" title="放样:桩号放样" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=lineSurvey" method="get">
+		<formFields>
+			<field name="pile" title="中桩桩号" type="number" inputMode="text"/>
+			<field name="edgeDistance" title="边距" type="number" length="20" inputMode="text"/>
+			<field name="leftOrRight" title="左/右侧" type="string" inputMode="radio">
+				<parameter name="itemsText">左侧\0右侧</parameter>
+				<parameter name="defaultValue">左侧</parameter>
+			</field>
+			<field name="horizontalAngle" title="水平角" type="number" length="20" inputMode="text"/>
+			<field name="horizontalDistance" title="水平值" type="number" length="20" inputMode="text"/>
+			<field name="x" title="X" type="number" length="20" inputMode="text"/>
+			<field name="y" title="Y" type="number" length="20" inputMode="text"/>
+			<field name="actualHorizontalDistance" title="实测水平值" type="number" length="20" inputMode="text">
+				<parameter name="onchange">resetLoftingResult()</parameter>
+			</field>
+			<field name="loftingResult" title="放样结果" type="string" inputMode="text">
+				<parameter name="readonly">true</parameter>
+			</field>
+			<field name="height" title="高度值" type="number" length="20" inputMode="text"/>
+			<field name="mirrorHeight" title="镜高" type="number" length="20" inputMode="text">
+				<parameter name="defaultValue">1.3</parameter>
+			</field>
+			<field name="z" title="Z" type="number" length="20" inputMode="text">
+				<parameter name="readonly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="上一桩号" execute="switchPile(false)"/>
+			<action title="下一桩号" execute="switchPile(true)"/>
+			<action title="计算" execute="compute()" default="true"/>
+			<action title="查看曲线要素" execute="showCurveIngredients()"/>
+		</actions>
+	</form>
+	
+	<form name="loftingCoordinate" title="放样:坐标法放样" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=lineCoordinateConstruction" method="get">
+		<formFields>
+			<field name="pile" title="桩号" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="x" title="X" type="number" length="20" inputMode="text"/>
+			<field name="y" title="Y" type="number" length="20" inputMode="text"/>
+			<field name="horizontalAngle" title="水平角" type="number" length="20" inputMode="text"/>
+			<field name="horizontalDistance" title="水平值" type="number" length="20" inputMode="text"/>
+			<field name="actualHorizontalDistance" title="实测水平值" type="number" length="20" inputMode="text">
+				<parameter name="onchange">resetLoftingResult()</parameter>
+			</field>
+			<field name="loftingResult" title="放样结果" type="string" inputMode="text">
+				<parameter name="readonly">true</parameter>
+			</field>
+			<field name="height" title="高度值" type="number" length="20" inputMode="text"/>
+			<field name="mirrorHeight" title="镜高" type="number" length="20" inputMode="text">
+				<parameter name="defaultValue">1.3</parameter>
+			</field>
+			<field name="z" title="Z" type="number" length="20" inputMode="text">
+				<parameter name="readonly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="读取坐标文件" execute="readCoordinateFile()"/>
+			<action title="上一桩号" execute="switchPile(false)"/>
+			<action title="下一桩号" execute="switchPile(true)"/>
+			<action title="计算" execute="compute()" default="true"/>
+		</actions>
+	</form>
+	
+	<form name="loftingBlock" title="放样:积木法放样" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=lineBlockConstruction" method="get">
+		<formFields>
+			<field name="pile" title="桩号" type="number" inputMode="text"/>
+			<field name="edgeDistance" title="边距" type="number" length="20" inputMode="text"/>
+			<field name="leftOrRight" title="左/右侧" type="string" inputMode="radio">
+				<parameter name="itemsText">左侧\0右侧</parameter>
+				<parameter name="defaultValue">左侧</parameter>
+			</field>
+			<field name="horizontalAngle" title="水平角" type="number" length="20" inputMode="text"/>
+			<field name="horizontalDistance" title="水平值" type="number" length="20" inputMode="text"/>
+			<field name="x" title="X" type="number" length="20" inputMode="text"/>
+			<field name="y" title="Y" type="number" length="20" inputMode="text"/>
+			<field name="actualHorizontalDistance" title="实测水平值" type="number" length="20" inputMode="text">
+				<parameter name="onchange">resetLoftingResult()</parameter>
+			</field>
+			<field name="loftingResult" title="放样结果" type="string" inputMode="text">
+				<parameter name="readonly">true</parameter>
+			</field>
+			<field name="height" title="高度值" type="number" length="20" inputMode="text"/>
+			<field name="mirrorHeight" title="镜高" type="number" length="20" inputMode="text">
+				<parameter name="defaultValue">1.3</parameter>
+			</field>
+			<field name="z" title="Z" type="number" length="20" inputMode="text">
+				<parameter name="readonly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="上一桩号" execute="switchPile(false)"/>
+			<action title="下一桩号" execute="switchPile(true)"/>
+			<action title="计算" execute="compute()" default="true"/>
+		</actions>
+	</form>
+	
+	<form name="baseStation" title="放样:基站" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=baseStation" method="get">
+		<formFields>
+			<field name="surveyStation" title="测站名" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="backsightSurveyStation" title="后视测站" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="backHeight" title="后视高程" type="number" length="20" inputMode="text"/>
+			<field name="backMirrorHeight" title="后镜高" type="number" length="20" inputMode="text">
+				<parameter name="defaultValue">1.3</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="setBaseStation()"/>
+		</actions>
+	</form>
+	
+	<form name="dataCurve" title="数据管理:曲线资料" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=dataCurve" method="get">
+		<formFields>
+			<field name="name" title="编号" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="pile" title="桩号" type="number" length="20" inputMode="text"/>
+			<field name="pj" title="左偏角" type="number" length="20" inputMode="text"/>
+			<field name="ly" title="LY" type="number" length="20" inputMode="text">
+				<parameter name="readonly">true</parameter>
+			</field>
+			<field name="r" title="R" type="number" length="20" inputMode="text"/>
+			<field name="lsa" title="LSa" type="number" length="20" inputMode="text"/>
+			<field name="ta" title="Ta" type="number" length="20" inputMode="text">
+				<parameter name="readonly">true</parameter>
+			</field>
+			<field name="lsb" title="LSb" type="number" length="20" inputMode="text"/>
+			<field name="tb" title="Tb" type="number" length="20" inputMode="text">
+				<parameter name="readonly">true</parameter>
+			</field>
+			<field name="lx" title="类型" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">单圆曲线(0)\0切基双交点曲线(11)\0切基双交点曲线(12)\0与基线不相切双交点复曲线(21)\0与基线不相切双交点复曲线(22)\0卵型曲线(31)\0卵型曲线(32)</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="上传" execute="updateCurve()"/>
+		</actions>
+	</form>
+	
+	<form name="assistTangent" title="辅助设计:切线支距计算" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=assistTangent" method="get">
+		<formFields>
+			<field name="driftAngle" title="路线偏角" type="number" length="20" inputMode="text"/>
+			<field name="radius" title="半径" type="number" length="20" inputMode="text"/>
+			<field name="ls" title="LS" type="number" length="20" inputMode="text"/>
+			<field name="t0" title="T0" type="number" length="20" inputMode="text"/>
+			<field name="y0" title="y0" type="number" length="20" inputMode="text">
+				<parameter name="readonly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="计算" execute="compute()"/>
+		</actions>
+	</form>
+	
+	<form name="assistHigh" title="辅助设计:超高加宽计算" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=assistHigh" method="get">
+		<formFields>
+			<field name="pile" title="桩号" type="number" length="20" inputMode="text"/>
+			<field name="hz" title="HZ" type="number" length="20" inputMode="text"/>
+			<field name="b" title="b" type="number" length="20" inputMode="text"/>
+			<field name="a" title="a" type="number" length="20" inputMode="text"/>
+			<field name="widen" title="弯道最大加宽" type="number" length="20" inputMode="text"/>
+			<field name="slope" title="弯道超高坡度" type="number" length="20" inputMode="text"/>
+			<field name="length" title="超高缓和段长" type="number" length="20" inputMode="text"/>
+			<field name="ic" title="ic%" type="number" length="20" inputMode="text"/>
+			<field name="ij" title="ij%" type="number" length="20" inputMode="text"/>
+			<field name="rotateMode" title="旋转方式" type="string" inputMode="radio">
+				<parameter name="itemsText">内外轴旋转\0中轴旋转</parameter>
+				<parameter name="defaultValue">内外轴旋转</parameter>
+			</field>
+			<field name="widenMode" title="加宽方式" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">直线比例加宽\0高次抛物线加宽</parameter>
+				<parameter name="defaultValue">直线比例加宽</parameter>
+			</field>
+			<field name="l" title="弯道内中桩桩号L" type="number" length="20" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="compute()"/>
+		</actions>
+	</form>
+	
+	<form name="assistClearDistance" title="辅助设计:横净距计算" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=assistClearDistance" method="get">
+		<formFields>
+			<field name="driftAngle" title="偏角" type="number" length="20" inputMode="text"/>
+			<field name="radius" title="路中线半径" type="number" length="20" inputMode="text"/>
+			<field name="curveLength" title="缓和曲线长" type="number" length="20" inputMode="text"/>
+			<field name="crossPointPile" title="交点桩号" type="number" length="20" inputMode="text"/>
+			<field name="width" title="路面宽度" type="number" length="20" inputMode="text"/>
+			<field name="visibilityRange" title="视距长度" type="number" length="20" inputMode="text"/>
+			<field name="pile" title="中桩桩号" type="number" length="20" inputMode="text"/>
+			<field name="clearDistance" title="横净距" type="number" length="20" inputMode="text">
+				<parameter name="readonly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="compute()" default="true"/>
+			<action title="查看曲线要素" execute="showCurveIngredients()"/>
+		</actions>
+	</form>
+	
+	<form name="singleCurve" title="工具:单交点平曲线" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=singleCurve" method="get">
+		<formFields>
+			<field name="driftAngle" title="路线偏角" type="number" length="20" inputMode="text"/>
+			<field name="option" title="控制选项" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">外距控制\0切线长控制\0曲线长控制\0支距控制\0半径控制</parameter>
+				<parameter name="defaultValue">外距控制</parameter>
+				<parameter name="onchange">onOptionChange()</parameter>
+			</field>
+			<field name="curveLengthEnabled" title="缓和曲线长是否有效" type="string" inputMode="checkbox">
+				<parameter name="value">1</parameter>
+				<parameter name="label">缓和曲线长</parameter>
+			</field>
+			<field name="curveLength" title="缓和曲线长" type="number" length="20" inputMode="text"/>
+			<field name="value" title="控制的切线长" type="number" length="20" inputMode="text"/>
+			<field name="y0" title="法向支距" type="number" length="20" inputMode="text"/>
+			<field name="lsa" title="缓和曲线长LSa" type="number" length="20" inputMode="text"/>
+			<field name="lsb" title="缓和曲线长LSb" type="number" length="20" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="compute()"/>
+		</actions>
+	</form>
+	
+	<form name="cutBaselineDoubleCurve" title="工具:切基线双交点平曲线" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=cutBaselineDoubleCurve" method="get">
+		<formFields>
+			<field name="driftAngleA" title="交点A偏角" type="number" length="20" inputMode="text"/>
+			<field name="driftAngleB" title="交点B偏角" type="number" length="20" inputMode="text"/>
+			<field name="baseLineLength" title="基线边长" type="number" length="20" inputMode="text"/>
+			<field name="curveLengthEnabled" title="缓和曲线长是否有效" type="string" inputMode="checkbox">
+				<parameter name="value">1</parameter>
+				<parameter name="label">缓和曲线长</parameter>
+			</field>
+			<field name="curveLength" title="缓和曲线长" type="number" length="20" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="compute()"/>
+		</actions>
+	</form>
+	
+	<form name="baselineTangentDoubleCurve" title="工具:与基线相切双交点复曲线" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=baselineTangentDoubleCurve" method="get">
+		<formFields>
+			<field name="driftAngleA" title="交点A偏角" type="number" length="20" inputMode="text"/>
+			<field name="driftAngleB" title="交点B偏角" type="number" length="20" inputMode="text"/>
+			<field name="baseLineLength" title="基线边长" type="number" length="20" inputMode="text"/>
+			<field name="radiusA" title="Ra" type="number" length="20" inputMode="text"/>
+			<field name="adjustEnabled" title="是否可调整" type="string" inputMode="checkbox">
+				<parameter name="value">1</parameter>
+				<parameter name="label">可调整</parameter>
+			</field>
+			<field name="lsa" title="LSa" type="number" length="20" inputMode="text"/>
+			<field name="lsb" title="LSb" type="number" length="20" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="compute()"/>
+		</actions>
+	</form>
+	
+	<form name="baselineNotTangentDoubleCurve" title="工具:与基线不相切双交点复曲线" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=baselineNotTangentDoubleCurve" method="get">
+		<formFields>
+			<field name="driftAngleA" title="交点A偏角" type="number" length="20" inputMode="text"/>
+			<field name="driftAngleB" title="交点B偏角" type="number" length="20" inputMode="text"/>
+			<field name="baseLineLength" title="基线边长" type="number" length="20" inputMode="text"/>
+			<field name="radiusA" title="Ra" type="number" length="20" inputMode="text"/>
+			<field name="lsa" title="LSa" type="number" length="20" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="compute()"/>
+		</actions>
+	</form>
+	
+	<form name="sTypeCurve" title="工具:S型曲线设计" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=sTypeCurve" method="get">
+		<formFields>
+			<field name="driftAngleA" title="交点A偏角" type="number" length="20" inputMode="text"/>
+			<field name="driftAngleB" title="交点B偏角" type="number" length="20" inputMode="text"/>
+			<field name="baseLineLength" title="基线边长" type="number" length="20" inputMode="text"/>
+			<field name="radiusA" title="Ra" type="number" length="20" inputMode="text"/>
+			<field name="adjustEnabled" title="是否可调整" type="number" length="20" inputMode="checkbox">
+				<parameter name="value">1</parameter>
+				<parameter name="label">可调整</parameter>
+			</field>
+			<field name="lsa" title="LSa" type="number" length="20" inputMode="text"/>
+			<field name="lsb" title="LSb" type="number" length="20" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="compute()"/>
+		</actions>
+	</form>
+	
+	<form name="convexCurve" title="工具:凸型曲线设计" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=convexCurve" method="get">
+		<formFields>
+			<field name="driftAngle" title="路线偏角" type="number" length="20" inputMode="text"/>
+			<field name="option" title="控制选项" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">切线长控制\0外距控制</parameter>
+				<parameter name="defaultValue">切线长控制</parameter>
+			</field>
+			<field name="length" title="切线长/外距" type="number" length="20" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="compute()"/>
+		</actions>
+	</form>
+	
+	<form name="ovalCurve" title="工具:卵型曲线设计" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=ovalCurve" method="get">
+		<formFields>
+			<field name="driftAngleA" title="交点A偏角" type="number" length="20" inputMode="text"/>
+			<field name="driftAngleB" title="交点B偏角" type="number" length="20" inputMode="text"/>
+			<field name="baseLineLength" title="基线边长" type="number" length="20" inputMode="text"/>
+			<field name="radiusA" title="Ra" type="number" length="20" inputMode="text"/>
+			<field name="lsa" title="LSa" type="number" length="20" inputMode="text"/>
+			<field name="lsb" title="LSb" type="number" length="20" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="compute()"/>
+		</actions>
+	</form>
+	
+	<form name="technicalData" title="工具:常用技术指标" action="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=technicalData" method="get">
+		<formFields>
+			<field name="driftAngle" title="偏角" type="number" length="20" inputMode="text"/>
+			<field name="radius" title="路中线半径" type="number" length="20" inputMode="text"/>
+			<field name="curveLength" title="缓和曲线长" type="number" length="20" inputMode="text"/>
+			<field name="pile" title="交点桩号" type="number" length="20" inputMode="text"/>
+			<field name="width" title="路面宽度" type="number" length="20" inputMode="text"/>
+			<field name="visibilityRange" title="视距长度" type="number" length="20" inputMode="text"/>
+			<field name="pile" title="中桩桩号L" type="number" length="20" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="compute()"/>
+		</actions>
+	</form>
+</forms>

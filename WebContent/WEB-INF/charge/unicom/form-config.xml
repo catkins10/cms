@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/serviceMapping" class="com.yuanluesoft.charge.thirdparty.unicom.forms.admin.ServiceMapping" title="服务映射" pojo="com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomServiceMapping">
+		<formFields>
+			<field depends="required" property="servicePriceName">
+				<arg0 key="服务报价" resource="false" />
+			</field>
+			<field depends="required" property="unicomServiceId">
+				<arg0 key="联通套餐编码" resource="false" />
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('是否确定删除?')FormUtils.doAction('deleteServiceMapping')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/telNumber" class="com.yuanluesoft.charge.thirdparty.unicom.forms.admin.TelNumber" title="号码段" pojo="com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomTelNumber">
+		<formFields>
+			<field depends="required" property="area">
+		  		<arg0 key="地区" resource="false" />
+		  	</field>
+		  	<field depends="required" property="beginNumber">
+		  		<arg0 key="起始号码" resource="false" />
+		  	</field>
+		  	<field depends="required" property="endNumber">
+		  		<arg0 key="结束号码" resource="false" />
+		  	</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('是否确定删除?')FormUtils.doAction('deleteTelNumber')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.charge.thirdparty.unicom.forms.RegistUnicomPerson" title="注册用户(联通)" pojo="com.yuanluesoft.jeai.usermanage.pojo.RegistPerson">
+		<formFields>
+			 <field depends="required" property="orgFullName">
+			 	<arg0 key="区域名称" resource="false" />
+			 </field>
+			 <field depends="required,mask" property="name">
+			 	<arg0 key="姓名" resource="false" />
+			 	<var>
+			 		<var-name>mask</var-name>
+			 		<var-value>${userName}</var-value>
+			 	</var>
+			 </field>
+			 <field depends="required,mask" property="loginName">
+			 	<arg0 key="登录用户名" resource="false" />
+			 	<var>
+			 		<var-name>mask</var-name>
+			 		<var-value>${loginName}</var-value>
+			 	</var>
+			 </field>
+			 <field depends="required,mask" property="password">
+			 	<arg0 key="口令" resource="false" />
+			 	<var>
+			 		<var-name>mask</var-name>
+			 		<var-value>${password}</var-value>
+			 	</var>
+			 </field>
+			 <field depends="required,email" property="mailAddress">
+			 	<arg0 key="电子邮箱" resource="false" />
+			 </field>
+			 <field depends="required" property="identityCard">
+			 	<arg0 key="身份证号码" resource="false" />
+			 </field>
+			 <field depends="required" property="validateCode">
+			 	<arg0 key="验证码" resource="false" />
+			 </field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.charge.thirdparty.unicom.forms.PersonalData" title="个人资料" pojo="com.yuanluesoft.jeaf.usermanage.pojo.BasePerson">
+		<service>personService</service>
+		<actions/>
+	</form>
+	
+	<form name="admin/cardOrder" class="com.yuanluesoft.charge.thirdparty.unicom.forms.admin.CardOrder" title="账号卡订单" pojo="com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomCardOrder">
+		<formFields>
+			<field property="area" depends="required">
+				<arg0 key="地区名称" resource="false" />
+			</field>
+			<field property="areaCode" depends="required">
+				<arg0 key="区号" resource="false" />
+			</field>
+			<field property="beginNumber" depends="required">
+				<arg0 key="起始号码" resource="false" />
+			</field>
+			<field property="endNumber" depends="required">
+				<arg0 key="结束号码" resource="false" />
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="创建账号卡" hide="isOld()" execute="if(confirm('是否确定要创建账号卡？'))FormUtils.submitForm()"/>
+			<action title="保存" hide="isNew()" execute="FormUtils.submitForm()"/>
+			<action title="下载账号卡列表" hide="isNew()" execute="window.open('exportUnicomCards.shtml?orderId=' + document.getElementsByName('id')[0].value)"/>
+		</actions>
+	</form>
+	
+	<form name="admin/cardGroup" class="com.yuanluesoft.charge.thirdparty.unicom.forms.admin.CardGroup" title="计费组代码" pojo="com.yuanluesoft.charge.thirdparty.unicom.pojo.UnicomCardGroup">
+		<formFields>
+			<field property="areaCode" depends="required">
+				<arg0 key="区号" resource="false" />
+			</field>
+			<field property="beginNumber" depends="required">
+				<arg0 key="起始号码" resource="false" />
+			</field>
+			<field property="endNumber" depends="required">
+				<arg0 key="结束号码" resource="false" />
+			</field>
+			<field property="groupCode" depends="required">
+				<arg0 key="计费组代码" resource="false" />
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('是否确定删除?')FormUtils.doAction('deleteCardGroup')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.charge.thirdparty.unicom.forms.EffectUnicomCard" title="注册用户(联通)" pojo="com.yuanluesoft.jeai.usermanage.pojo.RegistPerson">
+		<formFields>
+			<field depends="required" property="orgFullName">
+				<arg0 key="区域名称" resource="false" />
+			</field>
+			<field depends="required,mask" property="name">
+				<arg0 key="姓名" resource="false" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${userName}</var-value>
+				</var>
+			</field>
+			<field depends="required,mask" property="loginName">
+				<arg0 key="登录用户名" resource="false" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${loginName}</var-value>
+				</var>
+			</field>
+			<field depends="required,mask" property="password">
+				<arg0 key="口令" resource="false" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${password}</var-value>
+				</var>
+			</field>
+			<field depends="required,email" property="mailAddress">
+				<arg0 key="电子邮箱" resource="false" />
+			</field>
+			<field depends="required" property="identityCard">
+				<arg0 key="身份证号码" resource="false" />
+			</field>
+			<field depends="required" property="validateCode">
+				<arg0 key="验证码" resource="false" />
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="注册" hide="isOld()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+</forms>

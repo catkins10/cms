@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="信息公开申请" name="publicRequests">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest</pojo>
+			<where>PublicRequest.publicPass='1' and PublicRequest.isDeleted=0</where>
+			<orderBy>PublicRequest.created DESC</orderBy>
+			<quickFilter>PublicRequest.subject like '%{KEY}%' or PublicRequest.creator like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="信息公开申请">/cms/infopublic/request/{PARAMETER:proposerTypeName}Request.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/infopublic/request</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSiteRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view title="已受理申请" name="processedPublicRequests">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest</pojo>
+			<where>PublicRequest.approvalTime is not null and PublicRequest.publicPass='1' and PublicRequest.isDeleted=0</where>
+			<orderBy>PublicRequest.created DESC</orderBy>
+			<quickFilter>PublicRequest.subject like '%{KEY}%' or PublicRequest.creator like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="信息公开申请">/cms/infopublic/request/{PARAMETER:proposerTypeName}Request.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/infopublic/request</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSiteRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view title="个人信息公开申请" name="personalPublicRequests">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest</pojo>
+			<where>PublicRequest.publicPass='1' and PublicRequest.proposerType='1' and PublicRequest.isDeleted=0</where>
+			<orderBy>PublicRequest.created DESC</orderBy>
+			<quickFilter>PublicRequest.subject like '%{KEY}%' or PublicRequest.creator like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="信息公开申请">/cms/infopublic/request/{PARAMETER:proposerTypeName}Request.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/infopublic/request</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSiteRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view title="企业信息公开申请" name="companyPublicRequests">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest</pojo>
+			<where>PublicRequest.publicPass='1' and PublicRequest.proposerType='2' and PublicRequest.isDeleted=0</where>
+			<orderBy>PublicRequest.created DESC</orderBy>
+			<quickFilter>PublicRequest.subject like '%{KEY}%' or PublicRequest.creator like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="信息公开申请">/cms/infopublic/request/{PARAMETER:proposerTypeName}Request.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/infopublic/request</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSiteRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view title="信息公开申请统计" name="publicRequestStatistic">
+		<data>
+			<pojo>com.yuanluesoft.cms.publicservice.model.PublicServiceStatistic</pojo>
+		</data>
+		<extendParameters>
+			<parameter name="pojoClassName">com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest</parameter>
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSiteRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+
+	<view name="admin/todoRequest" form="admin/request" title="待办" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest</pojo>
+			<where>PublicRequest.isDeleted=0</where>
+			<orderBy>PublicRequest.created DESC</orderBy>
+			<filter>TODO</filter>
+			<quickFilter>PublicRequest.subject like '%{KEY}%' or PublicRequest.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="登记申请" hide="isNotSiteManager() and isNotSiteEditor()" execute="PageUtils.newrecord('cms/infopublic/request','admin/request','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="申请人/单位" name="from" width="150" displayExcept="portlet"/>
+			<column title="内容描述" name="subject"/>
+			<column title="申请时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessRequest" form="admin/request" title="在办" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest</pojo>
+			<where>PublicRequest.isDeleted=0</where>
+			<orderBy>PublicRequest.created DESC</orderBy>
+			<filter>INPROCESS</filter>
+			<quickFilter>PublicRequest.subject like '%{KEY}%' or PublicRequest.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="登记申请" hide="isNotSiteManager() and isNotSiteEditor()" execute="PageUtils.newrecord('cms/infopublic/request','admin/request','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="申请人/单位" name="from" width="150" displayExcept="portlet"/>
+			<column title="内容描述" name="subject"/>
+			<column title="申请时间" name="created" align="center" width="108"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedRequest" form="admin/request" title="已办" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest</pojo>
+			<where>PublicRequest.isDeleted=0</where>
+			<filter>COMPLETED</filter>
+			<orderBy>PublicRequest.created DESC</orderBy>
+			<quickFilter>PublicRequest.subject like '%{KEY}%' or PublicRequest.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="登记申请" hide="isNotSiteManager() and isNotSiteEditor()" execute="PageUtils.newrecord('cms/infopublic/request','admin/request','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="申请人/单位" name="from" width="150"/>
+			<column title="内容描述" name="subject"/>
+			<column title="申请时间" name="created" align="center" width="108"/>
+			<column title="审核通过否" name="approvalResult" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allRequest" form="admin/request" title="所有" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest</pojo>
+			<where>PublicRequest.isDeleted=0</where>
+			<filter>READABLE</filter>
+			<orderBy>PublicRequest.created DESC</orderBy>
+			<quickFilter>PublicRequest.subject like '%{KEY}%' or PublicRequest.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="登记申请" hide="isNotSiteManager() and isNotSiteEditor()" execute="PageUtils.newrecord('cms/infopublic/request','admin/request','mode=fullscreen')"/>
+			<action title="申请授权" hide="noPrivilege(application_manager)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/publicservice/admin/readersModifyOption.shtml?applicationName={PARAMETER:applicationName}', 430, 200)"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="申请人/单位" name="from" width="150"/>
+			<column title="内容描述" name="subject"/>
+			<column title="申请时间" name="created" align="center" width="108"/>
+			<column title="审核通过否" name="approvalResult" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/deleted" form="admin/request" title="已删除" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest</pojo>
+			<where>PublicRequest.isDeleted=1</where>
+			<filter>READABLE</filter>
+			<orderBy>PublicRequest.created DESC</orderBy>
+			<quickFilter>PublicRequest.subject like '%{KEY}%' or PublicRequest.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="申请人/单位" name="from" width="150"/>
+			<column title="内容描述" name="subject"/>
+			<column title="申请时间" name="created" align="center" width="108"/>
+			<column title="审核通过否" name="approvalResult" width="80" align="center"/>
+		</columns>
+	</view>
+</views>

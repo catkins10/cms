@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="客服参数设置" class="com.yuanluesoft.im.cs.pojo.CSParameter">
+		<field name="siteId" title="站点ID" length="20" type="number" inputMode="hidden"/>
+		<field name="welcome" title="欢迎辞" length="200" required="true" type="string" inputMode="text"/>
+		<field name="chatTimeout" title="客服对话超时时限" length="2" type="number" inputMode="text"/>
+		<field name="evaluateLevels" title="评价等级" length="200" required="true" type="string" inputMode="text">
+			<parameter name="defaultValue">非常满意,满意,一般,不满意</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="客服:常用回复" class="com.yuanluesoft.im.cs.pojo.CSReply">
+		<field name="siteId" title="站点ID" length="20" type="number" inputMode="hidden"/>
+		<field name="specialistId" title="客服ID" length="20" type="number" inputMode="hidden"/>
+		<field name="reply" title="回复内容" length="200" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="客服人员" class="com.yuanluesoft.im.cs.pojo.CSSpecialist">
+		<field name="siteId" title="站点ID" length="20" type="number" inputMode="hidden"/>
+		<field name="personId" title="用户ID" length="20" type="number" inputMode="hidden"/>
+		<field name="personName" title="用户名" length="50" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(600, 400, false, 'personId{id},personName{name}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="externalName" title="对外显示的用户名" length="50" type="string" inputMode="text"/>
+		<field name="maxChat" title="最大并发对话数量" length="2" type="number" inputMode="text"/>
+	</businessObject>
+	<businessObject title="服务评价" class="com.yuanluesoft.im.cs.pojo.CSEvaluation">
+		<field name="siteId" title="站点ID" length="20" type="number" inputMode="hidden"/>
+		<field name="specialistId" title="客服人员ID" length="20" type="number" inputMode="hidden"/>
+		<field name="specialistName" title="客服人员姓名" length="50" type="string" inputMode="readonly"/>
+		<field name="level" title="评价等级" length="50" required="true" type="string" inputMode="radio">
+			<parameter name="itemsServiceName">csService</parameter>
+			<parameter name="itemsName">evaluateLevels</parameter>
+		</field>
+		<field name="evaluateIP" title="评价人IP" length="50" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="evaluateTime" title="评价时间" type="timesatmp" inputMode="readonly"/>
+		<field name="remark" title="补充说明" length="200" type="string" inputMode="textarea"/>
+	</businessObject>
+</businessObjects>

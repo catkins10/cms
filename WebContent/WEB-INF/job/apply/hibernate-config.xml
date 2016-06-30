@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--应聘-->
+	<class name="com.yuanluesoft.job.apply.pojo.JobApply" table="job_apply">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="jobId"/> <!--职位ID,NUMERIC(20)-->
+		<property name="jobName"/> <!--职位名称,VARCHAR(100)-->
+		<property name="companyId"/> <!--公司ID,NUMERIC(20)-->
+		<property name="company"/> <!--公司名称,VARCHAR(100)-->
+		<property name="talentId"/> <!--求职人ID,NUMERIC(20)-->
+		<property name="talentName"/> <!--求职人姓名,VARCHAR(50)-->
+		<property name="sex"/> <!--性别,CHAR(1)-->
+		<property name="school"/> <!--毕业院校,VARCHAR(100)-->
+		<property name="specialty"/> <!--专业,VARCHAR(50)-->
+		<property name="qualification"/> <!--学历,NUMERIC(2)-->
+		<property name="workYear"/> <!--工作年限,NUMERIC(2)-->
+		<property name="created"/> <!--求职时间,TIMESTAMP-->
+		<property name="status"/> <!--状态,0/申请,1/删除,2/拟面试,3/面试通过,4/录用,NUMERIC(1)-->
+		<!-- 邀请函 -->
+		<set cascade="delete" inverse="true" lazy="true" name="invitations" table="job_apply_invitation" order-by="sent DESC">
+			<key column="applyId" />
+			<one-to-many class="com.yuanluesoft.job.apply.pojo.JobApplyInvitation" />
+		</set>
+		<!--面试情况-->
+		<set cascade="delete" inverse="true" lazy="true" name="interviews" table="job_apply_interview" order-by="interviewTime DESC">
+			<key column="applyId" />
+			<one-to-many class="com.yuanluesoft.job.apply.pojo.JobApplyInterview" />
+		</set>
+		<!--录用通知书-->
+		<set cascade="delete" inverse="true" lazy="true" name="offers" table="job_apply_offer" order-by="sent DESC">
+			<key column="applyId" />
+			<one-to-many class="com.yuanluesoft.job.apply.pojo.JobApplyOffer" />
+		</set>
+	</class>
+
+	<!--邀请函-->
+	<class name="com.yuanluesoft.job.apply.pojo.JobApplyInvitation" table="job_apply_invitation">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="applyId"/> <!--应聘ID,NUMERIC(20)-->
+		<property name="body"/> <!--正文,VARCHAR(4000)-->
+		<property name="sent"/> <!--发送时间,TIMESTAMP-->
+		<!-- 求职申请 -->
+		<many-to-one name="apply" class="com.yuanluesoft.job.apply.pojo.JobApply" column="applyId" update="false" insert="false"/>
+	</class>
+	
+	<!--面试情况-->
+	<class name="com.yuanluesoft.job.apply.pojo.JobApplyInterview" table="job_apply_interview">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="applyId"/> <!--应聘ID,NUMERIC(20)-->
+		<property name="interviewer"/> <!--面试官,面试邀请函,录用通知书,VARCHAR(50)-->
+		<property name="interviewTime"/> <!--面试时间,TIMESTAMP-->
+		<property name="description"/> <!--面试情况,VARCHAR(2000)-->
+		<property name="opinion"/> <!--面试意见,VARCHAR(100)-->
+	</class>
+	
+	<!--录用通知书-->
+	<class name="com.yuanluesoft.job.apply.pojo.JobApplyOffer" table="job_apply_offer">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="applyId"/> <!--应聘ID,NUMERIC(20)-->
+		<property name="body"/> <!--正文,VARCHAR(4000)-->
+		<property name="sent"/> <!--发送时间,TIMESTAMP-->
+		<!-- 求职申请 -->
+		<many-to-one name="apply" class="com.yuanluesoft.job.apply.pojo.JobApply" column="applyId" update="false" insert="false"/>
+	</class>
+	
+	<!--应聘:职位收藏-->
+	<class name="com.yuanluesoft.job.apply.pojo.JobFavorite" table="job_favorite">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="talentId"/> <!--人才ID,NUMERIC(20)-->
+		<property name="jobId"/> <!--职位ID,NUMERIC(20)-->
+		<property name="jobName"/> <!--职位名称,VARCHAR(100)-->
+		<property name="companyId"/> <!--公司ID,NUMERIC(20)-->
+		<property name="company"/> <!--公司名称,VARCHAR(100)-->
+		<property name="department"/> <!--招聘部门,VARCHAR(100)-->
+		<property name="recruitNumber"/> <!--招聘人数,NUMERIC(4)-->
+		<property name="post"/> <!--职能类别名称,VARCHAR(200)-->
+		<property name="language"/> <!--语言要求,如:英语熟练,VARCHAR(100)-->
+		<property name="monthlyPayRange"/> <!--月薪,VARCHAR(100)-->
+		<property name="target"/> <!--招聘对象,社会人士、应届毕业生、实习生、劳务工,VARCHAR(100)-->
+		<property name="qualification"/> <!--学历要求,初中,高中,职业高中,职业中专,中专,大专,本科,MBA,硕士,博士,NUMERIC(2)-->
+		<property name="workYear"/> <!--工作年限,在读学生/-1,应届毕业生/0,1年,2年,3年,4年,5年,6年,7年,8年,9年,10年以上,不限,NUMERIC(2)-->
+		<property name="ageRange"/> <!--年龄范围,VARCHAR(100)-->
+		<property name="sex"/> <!--性别要求,不限制/A,男/M,女/F,CHAR(1)-->
+		<property name="rank"/> <!--职称要求,不限,初级职称,中级职称,副高级职称,高级职称,VARCHAR(10)-->
+		<property name="endDate"/> <!--到期时间,DATE-->
+		<property name="created"/> <!--收藏时间,TIMESTAMP-->
+	</class>
+</hibernate-mapping>

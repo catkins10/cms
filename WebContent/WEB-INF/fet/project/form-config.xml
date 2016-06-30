@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/project" class="com.yuanluesoft.fet.project.forms.admin.Project" title="外商投资项目" pojo="com.yuanluesoft.fet.project.pojo.FetProject">
+		<formFields>
+			<field name="investmentReceiveTime" title="资金到达时间" type="date" inputMode="date"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('删除后不可恢复，是否确定删除？')FormUtils.doAction('deleteProject')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/fair" class="com.yuanluesoft.fet.project.forms.admin.Fair" title="活动" pojo="com.yuanluesoft.fet.project.pojo.FetProjectFair">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('删除后不可恢复，是否确定删除？')FormUtils.doAction('deleteFair')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/target" class="com.yuanluesoft.fet.project.forms.admin.Target" title="目标任务" pojo="com.yuanluesoft.fet.project.pojo.FetProjectTarget">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('删除后不可恢复，是否确定删除？')FormUtils.doAction('deleteTarget')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/merchant" class="com.yuanluesoft.fet.project.forms.admin.Merchant" title="客商资料" pojo="com.yuanluesoft.fet.project.pojo.FetMerchant">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('删除后不可恢复，是否确定删除？')FormUtils.doAction('deleteMerchant')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/plan" class="com.yuanluesoft.fet.project.forms.admin.Plan" title="利用外资计划" pojo="com.yuanluesoft.fet.project.pojo.FetPlan">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('删除后不可恢复，是否确定删除？')FormUtils.doAction('deletePlan')"/>
+		</actions>
+	</form>
+	
+	
+	<form class="com.yuanluesoft.fet.project.forms.admin.FairProjectReport" title="可望签约项目情况表">
+		<formFields>
+			<field name="fairName" title="活动名称" type="string" inputMode="dropdown">
+				<parameter name="valueField">fairNumber</parameter>
+				<parameter name="titleField">fairName</parameter>
+				<parameter name="itemsServiceName">fetProjectService</parameter>
+				<parameter name="itemsName">fairs</parameter>
+			</field>
+			<field name="fairNumber" title="界别" type="string" inputMode="text"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.fet.project.forms.admin.ProjectEvolveReport" title="项目进展情况表">
+		<formFields>
+			<field name="fairName" title="活动名称" type="string" inputMode="dropdown">
+				<parameter name="valueField">fairNumber</parameter>
+				<parameter name="titleField">fairName</parameter>
+				<parameter name="itemsServiceName">fetProjectService</parameter>
+				<parameter name="itemsName">fairs</parameter>
+			</field>
+			<field name="fairNumber" title="界别" type="string" inputMode="text"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.fet.project.forms.admin.ProjectInvestmentReport" title="利用外资进度表">
+		<formFields>
+			<field name="year" title="年度" length="4" type="number" inputMode="dropdown">
+				<parameter name="itemsText">{YEARS}</parameter>
+			</field>
+			<field name="month" title="月份" length="2" type="number" inputMode="dropdown">
+				<parameter name="itemsText">{MONTHS}</parameter>
+			</field>
+		</formFields>
+	</form>
+</forms>

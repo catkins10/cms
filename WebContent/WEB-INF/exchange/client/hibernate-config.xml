@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--数据交换任务-->
+	<class name="com.yuanluesoft.exchange.client.pojo.ExchangeTask" table="exchange_task">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="receivers"/> <!--接收者,varchar(1000)-->
+		<property name="completedReceivers"/> <!--完成交换的接收者,varchar(1000)-->
+		<property name="created"/> <!--任务创建时间,timestamp null-->
+		<property name="startupTime"/> <!--任务启动时间,重试5次后,传输时间加10分钟,超过30次失败加1小时,超过100次,任务终止,避免占用过多的资源,timestamp null-->
+		<property name="taskType"/> <!--任务类型,updateRecord/deleteRecord/sendFile/deleteFile,varchar(20)-->
+		<property name="recordTitle"/> <!--记录类型,如：文章、政府信息,varchar(200)-->
+		<property name="recordClassName"/> <!--记录类名称,varchar(200)-->
+		<property name="recordId"/> <!--记录ID,numeric(20)-->
+		<property name="recordEncoded" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--记录详情,mediumtext-->
+		<property name="filePath"/> <!--文件路径,varchar(600)-->
+		<property name="createDirectoryIfNeed"/> <!--目录不存在是否创建,char(1)-->
+		<property name="failedCount"/> <!--交换失败次数,numeric(3)-->
+		<property name="failedReason" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--交换失败原因,mediumtext-->
+	</class>
+</hibernate-mapping>

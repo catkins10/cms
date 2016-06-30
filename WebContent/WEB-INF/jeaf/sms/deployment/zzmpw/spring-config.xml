@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 短信服务 -->
+	<bean id="smsService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.jeaf.sms.service.spring.SmsServiceImpl" init-method="startup" destroy-method="showdown">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="memberServiceList"><ref bean="memberServiceList"/></property>
+				<property name="orgService"><ref bean="orgService"/></property>
+				<property name="roleService"><ref bean="roleService"/></property>
+				<property name="businessMode"><value>true</value></property>
+				<property name="smsServiceListenerNames"><value>smsSubscriptionService,smsReceiveService,appraiseService,smsSender</value></property> <!-- 短信接收侦听器,按处理的优先级排列 -->
+				<property name="smsClients">
+					<list>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳州市纠风办</value></property>
+							<property name="smsNumber"><value>10657306882004</value></property>
+							<property name="apiCode"><value>zzjfb</value></property>
+							<property name="masSign"><value>【漳州市纠风办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>芗城区纠风办</value></property>
+							<property name="smsNumber"><value>10657306007608004</value></property>
+							<property name="apiCode"><value>xcqjfb</value></property>
+							<property name="masSign"><value>【芗城区纠风办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙文区纠风办</value></property>
+							<property name="smsNumber"><value>106573067064004</value></property>
+							<property name="apiCode"><value>lwqjfb</value></property>
+							<property name="masSign"><value>【龙文区纠风办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>龙海市纠风办</value></property>
+							<property name="smsNumber"><value>10657306024454004</value></property>
+							<property name="apiCode"><value>lhsjfb</value></property>
+							<property name="masSign"><value>【龙海市纠风办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>漳浦县纠风办</value></property>
+							<property name="smsNumber"><value>10657306010794004</value></property>
+							<property name="apiCode"><value>zpxjfb</value></property>
+							<property name="masSign"><value>【漳浦县纠风办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>云霄县纠风办</value></property>
+							<property name="smsNumber"><value>10657306020558004</value></property>
+							<property name="apiCode"><value>yxxjfb</value></property>
+							<property name="masSign"><value>【云霄县纠风办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>诏安县纠风办</value></property>
+							<property name="smsNumber"><value>10657306696004</value></property>
+							<property name="apiCode"><value>jfb</value></property>
+							<property name="masSign"><value>【诏安县纠风办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>东山县纠风办</value></property>
+							<property name="smsNumber"><value>106573060001199203</value></property>
+							<property name="apiCode"><value>dsxjfb</value></property>
+							<property name="masSign"><value>【东山县纠风办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+							<property name="userID"><value>15</value></property>
+							<property name="cpKey"><value>0AD6EE8019DDDD883B59E8878DDDA8A9</value></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>平和县纠风办</value></property>
+							<property name="smsNumber"><value>1065730629555004</value></property>
+							<property name="apiCode"><value>phxjfb</value></property>
+							<property name="masSign"><value>【平和县纠风办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+						</bean> 
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>南靖县纠风办</value></property>
+							<property name="smsNumber"><value>10657306027605004</value></property>
+							<property name="apiCode"><value>njjjb</value></property>
+							<property name="masSign"><value>【南靖县纠风办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>华安县纠风办</value></property>
+							<property name="smsNumber"><value>106573060013197004</value></property>
+							<property name="apiCode"><value>haxjfb</value></property>
+							<property name="masSign"><value>【华安县纠风办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>长泰县纠风办</value></property>
+							<property name="smsNumber"><value>10657306029566004</value></property>
+							<property name="apiCode"><value>ctjfb</value></property>
+							<property name="masSign"><value>【长泰县纠风办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+						</bean>
+						<bean class="com.yuanluesoft.jeaf.sms.client.mas.SmsClientImpl">
+							<property name="name"><value>台商区纠风办</value></property>
+							<property name="smsNumber"><value>1065730610927004</value></property>
+							<property name="apiCode"><value>tsqjfb</value></property>
+							<property name="masSign"><value>【台商区纠风办】</value></property>
+							<property name="smsCache"><ref bean="smsCache"/></property>
+						</bean>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="receive*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="send*">PROPAGATION_NOT_SUPPORTED,-Exception</prop>
+				<prop key="startup">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="registSmsBusiness">PROPAGATION_NEVER,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 短信计费视图服务 -->
+	<bean id="smsChargeViewService" class="com.yuanluesoft.jeaf.sms.service.spring.SmsChargeViewServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+	</bean>
+</beans>

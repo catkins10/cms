@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/marketPerson" form="admin/marketPerson" title="个体信用" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.market.pojo.MarketPerson</pojo>
+			<orderBy>MarketPerson.created DESC</orderBy>
+			<quickFilter>MarketPerson.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_market)" execute="PageUtils.newrecord('credit/enterprisecredit/market', 'admin/marketPersonImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_market)" execute="PageUtils.newrecord('credit/enterprisecredit/market','admin/marketPerson','mode=fullscreen')"/>
+			<action title="批量删除" hide="noPrivilege(manageUnit_market)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/market/batchOperate.shtml?pojoName=MarketPerson')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="字号名称"/>
+			<column name="registCode" title="注册号"  align="center"/>
+			<column name="creditType" title="信用类别" align="center"/>
+			<column name="creditScore" title="信用分值" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/marketEnterprise" form="admin/marketEnterprise" title="企业信用" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.market.pojo.MarketEnterprise</pojo>
+			<orderBy>MarketEnterprise.created DESC</orderBy>
+			<quickFilter>MarketEnterprise.name like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_market)" execute="PageUtils.newrecord('credit/enterprisecredit/market', 'admin/marketEnterpriseImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_market)" execute="PageUtils.newrecord('credit/enterprisecredit/market','admin/marketEnterprise','mode=fullscreen')"/>
+			<action title="批量删除" hide="noPrivilege(manageUnit_market)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/market/batchOperate.shtml?pojoName=MarketEnterprise')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="name" title="企业名称"/>
+			<column name="registCode" title="注册号"  align="center"/>
+			<column name="creditType" title="信用类别" align="center"/>
+			<column name="creditScore" title="信用分值" align="center"/>
+		</columns>
+	</view>
+	
+	
+</views>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 充值卡服务 -->
+	<bean id="cardService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.charge.topup.service.spring.CardServiceImpl">
+				<property name="cardNumberLength"><value>10</value></property>
+				<property name="cardPasswordLength"><value>6</value></property>
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="cryptService"><ref bean="cryptService"/></property>
+				<property name="personalFinanceService"><ref bean="personalFinanceService"/></property>
+				<property name="personalOrderService"><ref bean="personalOrderService"/></property>
+				<property name="distributionService"><ref bean="distributionService"/></property>
+				<property name="serviceManage"><ref bean="serviceManage"/></property>
+				<property name="serviceSoapPassport"><ref bean="chargeSoapPassport"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="create*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="topUp">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="import*">PROPAGATION_NEVER,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

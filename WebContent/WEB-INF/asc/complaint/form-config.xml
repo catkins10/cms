@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="ascComplaint" title="96123在线投诉" method="post" action="/asc/complaint/saveComplaint.shtml" class="com.yuanluesoft.asc.complaint.forms.Complaint" pojo="com.yuanluesoft.asc.complaint.pojo.AscComplaint">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="dialogURL">/cms/onlineservice/templatemanage/insertInteractiveForm.shtml?applicationName=asc/complaint&amp;formName=ascComplaint&amp;formTitle=96123%E5%9C%A8%E7%BA%BF%E6%8A%95%E8%AF%89</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="approvalQuery" title="办理情况查询" method="post" action="/asc/complaint/complaint.shtml?id={PARAMETER:id}">
+		<formFields>
+			<field title="编号" name="approvalQuerySN"/>
+			<field title="密码" name="approvalQueryPassword" inputMode="password"/>
+		</formFields>
+		<actions>
+			<action title="查询" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="ascComplaintSearch" title="在线投诉搜索" method="get" action="/cms/sitemanage/applicationSearch.shtml?applicationName=asc/complaint&amp;pageName=search&amp;directoryId={PARAMETER:directoryId}">
+		<formFields>
+			<field title="关键字" name="key"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="admin/complaint" class="com.yuanluesoft.asc.complaint.forms.admin.Complaint" title="在线投诉" pojo="com.yuanluesoft.asc.complaint.pojo.AscComplaint">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="批转" hide="workflow()" execute="FormUtils.doAction('runComplaint', 'workflowAction=send')"/>
+			<action title="公布到网站" hide="workflow() and noPrivilege(application_manager) and noPrivilege(site_manager)  and noPrivilege(publish)" execute="FormUtils.doAction('setPublishOption')"/>
+			<action title="设为常见问题" hide="workflow() and noPrivilege(application_manager) and noPrivilege(site_manager)" execute="PageUtils.newrecord('cms/onlineservice/faq', 'admin/faq', 'mode=fullscreen', 'sourceRecordClass=AscComplaint&amp;sourceRecordId={PARAMETER:id}')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteComplaint')"/>
+			<action title="打印办理单" execute="window.open('printComplaint.shtml?id={PARAMETER:id}&amp;siteId={PARAMETER:siteId}')"/>
+		</actions>
+	</form>
+</forms>

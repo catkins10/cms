@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="人员基本信息" class="com.yuanluesoft.j2oa.personnel.pojo.PersonnelEmployee">
+		<field name="serialNumber" title="编号" length="50" type="string" inputMode="text"/>
+		<field name="name" title="姓名" length="30" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(500, 330, false, 'name{name}')</parameter>
+		</field>
+		<field name="sex" title="性别,M/F,char(1)" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">男|M\0女|F</parameter>
+		</field>
+		<field name="birthday" title="出生日期" type="date" inputMode="date"/>
+		<field name="nativePlace" title="籍贯" length="50" type="string" inputMode="text"/>
+		<field name="nation" title="民族" length="20" type="string" inputMode="text"/>
+		<field name="bloodType" title="血型" length="20" type="string" inputMode="text"/>
+		<field name="identityCard" title="身份证号" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="maritalStatus" title="婚姻状况" length="4" type="string" inputMode="radio">
+			<parameter name="itemsText">已婚\0未婚</parameter>
+		</field>
+		<field name="health" title="健康状况" length="30" type="string" inputMode="text"/>
+		<field name="politicalStatus" title="政治面貌" length="30" type="string" inputMode="dropdown">
+			<parameter name="itemsText">党员\0团员\0清白</parameter>
+		</field>
+		<field name="joinedDate" title="入司时间" type="date" inputMode="date"/>
+		<field name="employedDate" title="参加工作时间" type="date" inputMode="date"/>
+		<field name="address" title="家庭住址" length="200" type="string" inputMode="text"/>
+		<field name="tel" title="联系电话" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="email" title="E-mail地址" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="level" title="技术职称或等级" length="30" type="string" inputMode="text"/>
+		<field name="department" title="所在部门" length="50" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(500, 330, false, 'department{name}')</parameter>
+		</field>
+		<field name="duty" title="职务" length="50" type="string" inputMode="text"/>
+		<field name="school" title="毕业院校" length="100" type="string" inputMode="text"/>
+		<field name="graduationDate" title="毕业时间" type="date" inputMode="date"/>
+		<field name="education" title="学历" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsText">博士\0硕士\0本科\0专科\0中专\0高中\0初中\0小学</parameter>
+		</field>
+		<field name="specialty" title="学习专业" length="100" type="string" inputMode="text"/>
+		<field name="dutyStatus" title="工作状态" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsText">试用\0在岗\0退休\0离职</parameter>
+		</field>
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none"/>
+		<field name="creator" title="登记人" length="30" type="string" inputMode="readonly"/>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly"/>
+		<field name="dutyChanges" title="岗位变动情况" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.personnel.pojo.PersonnelDutyChange</parameter>
+		</field>
+		<field name="rewardsPunishments" title="奖惩情况" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.personnel.pojo.PersonnelRewardsPunishment</parameter>
+		</field>
+		<field name="educations" title="学习经历" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.personnel.pojo.PersonnelEducation</parameter>
+		</field>
+		<field name="employments" title="工作经历" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.personnel.pojo.PersonnelEmployment</parameter>
+		</field>
+		<field name="trainings" title="培训经历" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.personnel.pojo.PersonnelTraining</parameter>
+		</field>
+		<field name="certificates" title="持有证书和资质情况" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.personnel.pojo.PersonnelCertificate</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="岗位变动情况" class="com.yuanluesoft.j2oa.personnel.pojo.PersonnelDutyChange">
+		<field name="employeeId" title="人员ID" type="number" inputMode="hidden"/>
+		<field name="changeDate" title="时间" required="true" type="date" inputMode="date"/>
+		<field name="previousDuty" title="历史岗位" length="50" type="string" inputMode="text"/>
+		<field name="newDuty" title="现在岗位" length="50" required="true" type="string" inputMode="text"/>
+		<field name="changeReason" title="岗位变动原因" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="remark" title="备注" length="500" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="奖惩情况" class="com.yuanluesoft.j2oa.personnel.pojo.PersonnelRewardsPunishment">
+		<field name="employeeId" title="人员ID" type="number" inputMode="hidden"/>
+		<field name="happenDate" title="时间" required="true" type="date" inputMode="date"/>
+		<field name="content" title="奖惩内容" length="300" required="true" type="string" inputMode="text"/>
+		<field name="reason" title="奖惩原因" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="remark" title="备注" length="500" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="学习经历" class="com.yuanluesoft.j2oa.personnel.pojo.PersonnelEducation">
+		<field name="employeeId" title="人员ID" type="number" inputMode="hidden"/>
+		<field name="beginDate" title="开始时间" required="true" type="date" inputMode="date"/>
+		<field name="endDate" title="结束时间" type="date" inputMode="date"/>
+		<field name="school" title="所在学校" length="100" required="true" type="string" inputMode="text"/>
+		<field name="description" title="学习内容" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="remark" title="备注" length="500" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="工作经历" class="com.yuanluesoft.j2oa.personnel.pojo.PersonnelEmployment">
+		<field name="employeeId" title="人员ID" type="number" inputMode="hidden"/>
+		<field name="beginDate" title="开始时间" required="true" type="date" inputMode="date"/>
+		<field name="endDate" title="结束时间" type="date" inputMode="date"/>
+		<field name="company" title="所在单位" length="200" required="true" type="string" inputMode="text"/>
+		<field name="duty" title="职务" length="50" type="string" inputMode="text"/>
+		<field name="description" title="工作情况概述" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="remark" title="备注" length="500" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="培训经历" class="com.yuanluesoft.j2oa.personnel.pojo.PersonnelTraining">
+		<field name="employeeId" title="人员ID" type="number" inputMode="hidden"/>
+		<field name="beginDate" title="开始时间" required="true" type="date" inputMode="date"/>
+		<field name="endDate" title="结束时间" type="date" inputMode="date"/>
+		<field name="description" title="培训内容" length="2000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="remark" title="备注" length="500" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="持有证书和资质情况" class="com.yuanluesoft.j2oa.personnel.pojo.PersonnelCertificate">
+		<field name="employeeId" title="人员ID" type="number" inputMode="hidden"/>
+		<field name="issueDate" title="时间" type="date" inputMode="date"/>
+		<field name="name" title="证书或者资质名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="remark" title="备注" length="500" type="string" inputMode="text"/>
+	</businessObject>
+</businessObjects>

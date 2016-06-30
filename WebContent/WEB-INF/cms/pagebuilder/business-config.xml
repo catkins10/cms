@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="静态页面" class="com.yuanluesoft.cms.pagebuilder.pojo.StaticPage" businessServiceName="staticPageBuilder">
+		<field name="dynamicUrl" title="动态页面URL" length="1000" type="string" inputMode="readonly"/>
+		<field name="staticUrl" title="静态页面URL" length="300" type="string" inputMode="readonly"/>
+		<field name="dynamicUrlHash" title="动态页面URL哈希编码" length="10" type="number" inputMode="readonly"/>
+		<field name="realtimeStaticPage" title="是否实时生成静态页面" length="1" type="char" inputMode="readonly"/>
+		<field name="recordId" title="记录ID" type="number" inputMode="readonly"/>
+		<field name="recordClassName" title="记录类名称" length="100" type="string" inputMode="readonly"/>
+		<field name="applicationName" title="应用名称" length="50" type="string" inputMode="readonly"/>
+		<field name="pageName" title="页面名称" length="30" type="string" inputMode="readonly"/>
+		<field name="siteId" title="隶属站点ID" type="number" inputMode="readonly"/>
+		<field name="columnId" title="隶属栏目ID" type="number" inputMode="readonly"/>
+		<field name="created" title="生成日期" type="timestamp" inputMode="readonly"/>
+		<field name="expiresTime" title="有效期,不为空时，由定时器自动更新" type="timestamp" inputMode="readonly"/>
+		<field name="templates" title="引用的模板" type="components">
+			<parameter name="class">com.yuanluesoft.cms.pagebuilder.pojo.StaticPageTemplate</parameter>
+		</field>
+		<field name="elements" title="引用的页面元素" type="components">
+			<parameter name="class">com.yuanluesoft.cms.pagebuilder.pojo.StaticPageElement</parameter>
+		</field>
+		<field name="recordLists" title="引用的记录列表" type="components">
+			<parameter name="class">com.yuanluesoft.cms.pagebuilder.pojo.StaticPageRecordList</parameter>
+		</field>
+		<field name="jsElements" title="需要由JS生成的页面元素" type="components">
+			<parameter name="class">com.yuanluesoft.cms.pagebuilder.pojo.StaticPageJsElement</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="静态页面:使用到的模板" class="com.yuanluesoft.cms.pagebuilder.pojo.StaticPageTemplate" businessServiceName="staticPageBuilder">
+		<field name="pageId" title="静态页面ID" type="string" inputMode="readonly"/>
+		<field name="templateId" title="使用的模板ID" type="number" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="静态页面:使用到的页面元素(不含记录列表)" class="com.yuanluesoft.cms.pagebuilder.pojo.StaticPageElement" businessServiceName="staticPageBuilder">
+		<field name="pageId" title="页面ID" type="number" inputMode="hidden"/>
+		<field name="elementName" title="页面元素名称" length="300" type="string" inputMode="readonly"/>
+		<field name="siteId" title="隶属的站点/栏目ID" type="number" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="静态页面:使用到的记录列表" class="com.yuanluesoft.cms.pagebuilder.pojo.StaticPageRecordList" businessServiceName="staticPageBuilder">
+		<field name="pageId" title="页面ID" type="number" inputMode="hidden"/>
+		<field name="recordClassName" title="记录类名称" length="100" type="string" inputMode="readonly"/>
+		<field name="processorClassName" title="处理器类名称" length="100" type="string" inputMode="readonly"/>
+		<field name="siteId" title="隶属的站点/栏目ID" type="number" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="静态页面:用JS输出的页面元素" class="com.yuanluesoft.cms.pagebuilder.pojo.StaticPageJsElement" businessServiceName="staticPageBuilder">
+		<field name="pageId" title="静态页面ID" length="20" type="number" inputMode="none"/>
+		<field name="elementHtml" title="页面元素HTML" type="string" inputMode="readonly"/>
+		<field name="queryString" title="请求参数" length="2000" type="string" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="创建所有的静态页面" class="com.yuanluesoft.cms.pagebuilder.model.staticpage.ReduildAllStaticPages" businessServiceName="staticPageBuilder"/>
+</businessObjects>

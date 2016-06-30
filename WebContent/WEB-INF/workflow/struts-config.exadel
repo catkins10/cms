@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../jeaf/form/error.jsp" SHAPE="32,48,193,21"
+  TARGET="page1" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward1"
+  PATH="/../jeaf/form/result.jsp" SHAPE="32,112,193,21" TARGET="page2"
+  TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveWorkflowConfigure"
+  NAME="action6" PATH="/saveWorkflowConfigure" SHAPE="528,240,176,25"
+  TITLE="workflowConfigure" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#workflowConfigure"
+  NAME="action7" PATH="/workflowConfigure" SHAPE="32,208,193,41"
+  TITLE="workflowConfigure" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../jeaf/graphicseditor/graphicsEditor.jsp"
+   TARGET="page8" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page8"
+  PATH="/../jeaf/graphicseditor/graphicsEditor.jsp"
+  SHAPE="352,224,56,55" SUBTYPE="jsp" TITLE="workflowConfigure.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveWorkflowConfigure" TARGET="action6"
+   TITLE="workflowConfigure.jsp" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteWorkflowConfigure" TARGET="action2"
+   TITLE="deleteWorkflowConfigure" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../jeaf/form/error.jsp" SHAPE="352,48,56,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/../jeaf/form/result.jsp" SHAPE="352,112,56,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteWorkflowConfigure"
+  NAME="action2" PATH="/deleteWorkflowConfigure" SHAPE="528,304,176,25"
+  TITLE="workflowConfigure" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#configure#setMessageFormat" NAME="action0"
+  PATH="/configure/setMessageFormat" SHAPE="32,368,194,41"
+  TITLE="workflowConfigure" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/configure/setMessageFormat.jsp" TARGET="page3"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#configure#condition"
+  NAME="action1" PATH="/configure/condition" SHAPE="32,464,194,41"
+  TITLE="workflowConfigure" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/configure/condition.jsp" TARGET="page0"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/configure/condition.jsp" SHAPE="352,480,50,25" SUBTYPE="jsp"
+  TITLE="condition.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/configure/setMessageFormat.jsp" SHAPE="352,384,50,25"
+  SUBTYPE="jsp" TITLE="setMessageFormat.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#workflowInstanceViewer"
+  NAME="action3" PATH="/workflowInstanceViewer" SHAPE="32,568,193,41"
+  TITLE="workflowInstanceViewer" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/viewer/workflowInstanceViewer.jsp"
+   TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/viewer/workflowInstanceViewer.jsp" SHAPE="352,584,50,25"
+  SUBTYPE="jsp" TITLE="processGraph.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#writeProcessInstanceImage" NAME="action4"
+  PATH="/writeProcessInstanceImage" SHAPE="32,672,193,25"
+  TITLE="workflowInstanceViewer" TYPE="action"/>
+</PROCESS>

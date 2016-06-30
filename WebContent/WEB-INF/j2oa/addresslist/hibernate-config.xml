@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<class name="com.yuanluesoft.j2oa.addresslist.pojo.AddressList" table="address_list">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="category"/> <!--分类-->
+		<property name="name"/> <!--名称(姓名)-->
+		<property name="birthday"/> <!--生日-->
+		<property name="mobile"/> <!--手机-->
+		<property name="email"/> <!--E-Mail-->
+		<property name="homeAddress"/> <!--住宅地址-->
+		<property name="homePostalcode"/> <!--邮编-->
+		<property name="homeTel"/> <!--住宅电话-->
+		<property name="qq"/> <!--QQ-->
+		<property name="msn"/> <!--MSN-->
+		<property name="fax"/> <!--传真-->
+		<property name="homepage"/> <!--网址-->
+		<property name="companyName"/> <!--单位名称-->
+		<property name="companyAddress"/> <!--单位地址-->
+		<property name="companyPostalcode"/> <!--单位邮编-->
+		<property name="department"/> <!--所在部门-->
+		<property name="companyTel"/> <!--办公室电话-->
+		<property name="job"/> <!--职务-->
+		<property name="remark"/> <!--备注-->
+		<property name="isPersonal"/> <!--是否个人通讯录-->
+		<property name="creatorId"/> <!--登记人ID-->
+		<set name="logs" table="address_log" lazy="true" order-by="logTime desc">
+			<key column="personId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.j2oa.addresslist.pojo.AddressLog" />
+		</set>
+	</class>
+	<class name="com.yuanluesoft.j2oa.addresslist.pojo.AddressLog" table="address_log">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="personId"/> <!--联系人ID-->
+		<property name="time" column="logTime"/> <!--发生时间-->
+		<property name="content" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--事件描述-->
+	</class>
+</hibernate-mapping>

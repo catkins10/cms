@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--工商银行:支付记录-->
+	<class name="com.yuanluesoft.jeaf.payment.paymentmethod.icbcbank.pojo.IcbcbankOrder" table="payment_icbcbank_order">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="paymentId"/> <!--支付单ID,NUMERIC(20)-->
+		<property name="orderNum"/> <!--订单号,VARCHAR(100)-->
+		<property name="tranDate"/> <!--交易日期,TIMESTAMP null-->
+		<property name="shopCode"/> <!--商家号码,VARCHAR(100)-->
+		<property name="shopAccount"/> <!--商城账号,VARCHAR(100)-->
+		<property name="tranSerialNum"/> <!--指令序号,VARCHAR(100)-->
+		<property name="tranStat"/> <!--订单处理状态,VARCHAR(20)-->
+		<property name="bankRem"/> <!--指令错误信息,VARCHAR(100)-->
+		<property name="amount"/> <!--订单总金额,NUMERIC(13,2)-->
+		<property name="currType"/> <!--支付币种,VARCHAR(10)-->
+		<property name="tranTime"/> <!--返回通知日期时间,TIMESTAMP null-->
+		<property name="payeeAcct"/> <!--收款人账号,VARCHAR(100)-->
+		<property name="payeeName"/> <!--收款人户名,VARCHAR(100)-->
+		<property name="joinFlag"/> <!--校验联名标志,VARCHAR(20)-->
+		<property name="merJoinFlag"/> <!--商城联名标志,VARCHAR(20)-->
+		<property name="custJoinFlag"/> <!--客户联名标志,VARCHAR(20)-->
+		<property name="custJoinNum"/> <!--联名会员号,VARCHAR(20)-->
+		<property name="certId"/> <!--商户签名证书ID,VARCHAR(200)-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="insertWeathers" type="com.yuanluesoft.jeaf.weather.forms.InsertWeathers"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../form/error.jsp" scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="insertWeathers" path="/templatemanage/insertWeathers"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertWeathers.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

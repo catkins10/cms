@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form title="数据库浏览" class="com.yuanluesoft.jeaf.tools.databasebrowse.forms.DatabaseBrowse">
+		<formFields>
+			<field name="jdbcURL" title="JDBC URL" length="1000" type="string" inputMode="dropdown">
+				<parameter name="itemsText">Access|jdbc:odbc:Driver={MicroSoft Access Driver (*.mdb)};DBQ=[文件路径]\0Sybase|jdbc:sybase:Tds:[IP]:5000/[数据库名称]?CharSet=cp936\0SqlServer|jdbc:jtds:sqlserver://[IP]:1433;DatabaseName=[数据库名称]\0Mysql|jdbc:mysql://[服务器IP]/[数据库名称]?useUnicode=true&amp;characterEncoding=gbk\0Postgres|jdbc:postgresql://[服务器IP]:5432/[数据库名称]\0Oracle|jdbc:oracle:thin:@[服务器IP]:1521:[数据库名称]</parameter>
+			</field>
+			<field name="jdbcUserName" title="数据库用户名" length="200" type="string" inputMode="text"/>
+			<field name="jdbcPassword" title="数据库密码" length="200" type="string" inputMode="password"/>
+			<field name="sql" title="SQL" type="string" inputMode="textarea"/>
+			<field name="limit" title="记录数" type="number" length="4" inputMode="dropdown">
+				<parameter name="itemsText">20\0 50\0 100\0 200\0 500\0 1000</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form title="文件浏览" class="com.yuanluesoft.jeaf.tools.filebrowse.forms.FileBrowse">
+		<formFields>
+			<field name="file" title="文件" type="attachment" inputMode="attachment">
+				<parameter name="fileExtension">所有文件|*.*|</parameter>
+				<parameter name="maxUploadSize">2000000000</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form title="重建静态页面" class="com.yuanluesoft.jeaf.tools.regeneratestaticpages.forms.RegenerateStaticPages">
+		<formFields>
+			<field name="regenerateMode" title="模式" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">重建全部站点和栏目页面\0按URL重建\0按记录类名称</parameter>
+			</field>
+			<field name="dynamicUrl" title="动态页面的URL" type="string" inputMode="text"/>
+			<field name="recordClassName" title="记录类名称" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">文章|SiteResource\0政府信息|PublicInfo\0信箱|LeaderMail\0投诉|Complaint</parameter>
+			</field>
+		</formFields>
+	</form>
+</forms>

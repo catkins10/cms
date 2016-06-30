@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<application title="留言板">
+	<viewLink local="admin/todo" title="待办留言"/>
+	<viewLink local="admin/inProcess" title="在办留言"/>
+	<viewLink local="admin/completed" title="已办留言"/>
+	<viewLink local="admin/all" title="所有留言"/>
+	<viewLink local="admin/deleted" title="回收站"/>
+	<viewLink local="admin/faq" title="常见问题"/>
+	<viewLink local="admin/timeoutStatistics" title="办理统计"/>
+	<link title="办理流程" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/messageboard&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/workflowSetting
+	</link>
+	<link title="办结短信格式" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/messageboard&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/smsFormat
+	</link>
+</application>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="beauty" form="beauty" title="美容、化妆证书信息" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.qualification.beauty.pojo.Beauty</pojo>
+		</data>
+		<actions>
+			<action title="导入Excel文件" execute="PageUtils.newrecord('qualification/beauty', 'beautyImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" execute="PageUtils.newrecord('qualification/beauty', 'beauty', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column name="name" title="姓名"/>
+			<column name="sex" title="性别" width="40" align="center"/>
+			<column name="profession" title="鉴定职业" width="90" align="center"/>
+			<column name="subject" title="鉴定科目" width="80" align="center"/>
+			<column name="mark" title="评定成绩" width="80" align="center"/>
+			<column name="sendDate" title="发证日期" width="80" align="center"/>
+		</columns>
+	</view>
+	
+</views>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- MSN消息发送 -->
+	<bean id="msnSender" class="com.yuanluesoft.jeaf.messagecenter.sender.msn.MsnSender">
+		<property name="name"><value>msn</value></property>
+		<property name="description"><value>MSN</value></property>
+		<property name="feedback"><value>true</value></property>
+		<property name="messageService"><ref bean="messageService"/></property>
+		<property name="msnLoginName"><value>kd9191edu@hotmail.com</value></property>
+		<property name="msnPassword"><value>yuanluesoft</value></property>
+		<property name="msnFriendlyName"><value>中国互动教育网消息中心</value></property>
+		<property name="autoReply"><value>{USERNAME}，欢迎访问中国互动教育网消息中心！</value></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+	</bean>
+</beans>

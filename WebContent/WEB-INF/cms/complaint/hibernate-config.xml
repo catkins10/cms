@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--诉求件:诉求类型配置-->
+	<class name="com.yuanluesoft.cms.complaint.pojo.ComplaintType" table="cms_complaint_type">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="type"/> <!--类型-->
+		<property name="workingDay"/> <!--指定工作日-->
+		<property name="siteId"/> <!--绑定的站点ID-->
+	</class>
+</hibernate-mapping>

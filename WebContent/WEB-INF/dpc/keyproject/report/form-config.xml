@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.dpc.keyproject.report.forms.ZzfetProgressReport" title="战役项目报表">
+		<formFields>
+			<field name="year" title="年度" type="number" inputMode="text"/>
+			<field name="month" title="月份" type="number" inputMode="text"/>
+			<field name="developmentArea" title="开发区" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsServiceName">keyProjectService</parameter>
+				<parameter name="itemsName">developmentAreaAndCategory</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.report.forms.ZzfetAccountableReport" title="目标责任制报表">
+		<formFields>
+			<field name="year" title="年度" type="number" inputMode="text"/>
+			<field name="month" title="月份" type="number" inputMode="text"/>
+			<field name="developmentArea" title="开发区" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsServiceName">keyProjectService</parameter>
+				<parameter name="itemsName">developmentAreaAndCategory</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.report.forms.ZzfetPillarReport" title="重大支撑项目表">
+		<formFields>
+			<field name="year" title="年度" type="number" inputMode="text"/>
+			<field name="month" title="月份" type="number" inputMode="text"/>
+			<field name="developmentArea" title="开发区" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsServiceName">keyProjectService</parameter>
+				<parameter name="itemsName">developmentAreaAndCategory</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.report.forms.ZzfetYearReport" title="年度项目明细表">
+		<formFields>
+			<field name="year" title="年度" type="number" inputMode="text"/>
+			<field name="month" title="月份" type="number" inputMode="text"/>
+			<field name="developmentArea" title="开发区" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsServiceName">keyProjectService</parameter>
+				<parameter name="itemsName">developmentAreaAndCategory</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.report.forms.ZzfetTenDayReport" title="旬报表">
+		<formFields>
+			<field name="year" title="年度" type="number" inputMode="text"/>
+			<field name="month" title="月份" type="number" inputMode="text"/>
+			<field name="tenDay" title="旬" type="string" inputMode="radio" required="true">
+				<parameter name="itemsText">上旬|1\0中旬|2\0下旬|3</parameter>
+			</field>
+			<field name="developmentArea" title="开发区" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsServiceName">keyProjectService</parameter>
+				<parameter name="itemsName">developmentAreaAndCategory</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.report.forms.ZzfetDetailReport" title="项目台帐">
+		<formFields>
+			<field name="projectId" title="项目ID" type="number" inputMode="hidden"/>
+			<field name="year" title="年度" type="number" inputMode="text"/>
+			<field name="month" title="月份" type="number" inputMode="text"/>
+			<field name="reportType" title="台帐类型" type="string" inputMode="radio" required="true">
+				<parameter name="itemsText">前期工作台帐\0在建、新开工台账</parameter>
+			</field>
+			<field name="width" title="图片宽度" type="number" inputMode="none"/>
+			<field name="height" title="图片高度" type="number" inputMode="none"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="distributeGraph" title="重点项目全年分布情况" class="com.yuanluesoft.dpc.keyproject.report.forms.DistributeGraph">
+		<formFields>
+			<field title="年度" name="year" type="number"/>
+			<field title="报表类型" name="graphBy" type="string" inputMode="hidden"/>
+			<field title="报表类型描述" name="graphByTitle" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">按行业|industry\0建设地|area\0项目级别|level\0投资主体|investmentSubject</parameter>
+				<parameter name="valueField">graphBy</parameter>
+			</field>
+			<field title="项目类别" name="classify" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">拟建（预备）\0在建</parameter>
+			</field>
+			<field name="width" title="图片宽度" type="number" inputMode="none"/>
+			<field name="height" title="图片高度" type="number" inputMode="none"/>
+		</formFields>
+	</form>
+	
+	<form name="investGraph" title="重点项目投资情况分析" class="com.yuanluesoft.dpc.keyproject.report.forms.InvestGraph">
+		<formFields>
+			<field title="年度" name="year" type="number"/>
+			<field title="报表类型" name="graphBy" type="string" inputMode="hidden"/>
+			<field title="报表类型描述" name="graphByTitle" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">按行业|industry\0建设地|area\0项目级别|level\0投资主体|investmentSubject</parameter>
+				<parameter name="valueField">graphBy</parameter>
+			</field>
+			<field title="数据类型" name="graphType" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">总体投资分析\0年度计划投资分析\0投资完成分析</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form name="monthReport" title="重点项目月报表" class="com.yuanluesoft.dpc.keyproject.report.forms.MonthReport">
+		<formFields>
+			<field title="年度" name="year" type="number"/>
+			<field title="月份" name="month" type="number"/>
+			<field title="项目级别" name="projectLevels" type="string[]" inputMode="multibox">
+				<parameter name="itemsText">省级重点\0市级重点\0县级重点</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="yearReport" title="年度目标及形象进度完成情况汇总表" class="com.yuanluesoft.dpc.keyproject.report.forms.YearReport">
+		<formFields>
+			<field title="年度" name="year" type="number"/>
+			<field title="月份" name="month" type="number"/>
+			<field title="项目级别" name="projectLevels" type="string[]" inputMode="multibox">
+				<parameter name="itemsText">省级重点\0市级重点\0县级重点</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="unitReport" title="项目参建单位汇总表" class="com.yuanluesoft.dpc.keyproject.report.forms.UnitReport">
+		<formFields>
+			<field title="年度" name="year" type="number"/>
+			<field title="单位类型" name="unitType" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">施工单位\0监理单位\0设计单位</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="investReport" title="项目资金拼盘及到位汇总表" class="com.yuanluesoft.dpc.keyproject.report.forms.InvestReport">
+		<formFields>
+			<field title="年度" name="year" type="number"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="fiveYearPlanReport" title="“十二五”规划重点项目报表" class="com.yuanluesoft.dpc.keyproject.report.forms.FiveYearPlanReport">
+		<formFields>
+			<field title="第几个五年计划" name="fiveYearPlanNumber" type="number"/>
+			<field title="年度" name="year" type="number"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

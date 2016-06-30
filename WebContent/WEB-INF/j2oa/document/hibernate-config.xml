@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--公文配置:主题词类别-->
+	<class name="com.yuanluesoft.j2oa.document.pojo.KeywordCategory" table="document_keyword_category">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainTable"/> <!--是否主表-->
+		<property name="district"/> <!--区域分类-->
+		<property name="category"/> <!--类别词-->
+		<set name="keywords" table="document_keyword" lazy="true" inverse="true" cascade="delete" order-by="keywordIndex">
+			<key column="categoryId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.document.pojo.Keyword"/>
+		</set>
+	</class>
+	
+	<!--公文配置:主题词-->
+	<class name="com.yuanluesoft.j2oa.document.pojo.Keyword" table="document_keyword">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="categoryId"/> <!--分类ID-->
+		<property name="keyword"/> <!--主题词-->
+		<property name="keywordIndex"/> <!--序号-->
+	</class>
+	
+	<!--公文配置:选项配置-->
+	<class name="com.yuanluesoft.j2oa.document.pojo.DocumentOption" table="document_option">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="secureLevel"/> <!--秘密等级-->
+		<property name="secureTerm"/> <!--保密期限-->
+		<property name="priority"/> <!--紧急程度-->
+		<property name="docType"/> <!--公文种类-->
+	</class>
+</hibernate-mapping>

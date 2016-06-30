@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="图片征集" name="photoCollects">
+		<data>
+			<pojo>com.yuanluesoft.cms.photocollect.pojo.PhotoCollect</pojo>
+			<where>PhotoCollect.publicPass='1' and PhotoCollect.isDeleted=0</where>
+			<orderBy>PhotoCollect.created DESC</orderBy>
+			<quickFilter>PhotoCollect.subject like '%{KEY}%' or PhotoCollect.creator like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<!-- link title="图片征集">/cms/photocollect/photoCollect.shtml</link -->
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/photocollect</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/photocollect/templatemanage/insertPhotoCollects.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+
+	<view name="admin/todoPhotoCollect" form="admin/photoCollect" title="待办图片" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.photocollect.pojo.PhotoCollect</pojo>
+			<where>PhotoCollect.isDeleted=0</where>
+			<orderBy>PhotoCollect.created DESC</orderBy>
+			<quickFilter>PhotoCollect.subject like '%{KEY}%' or PhotoCollect.creator like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.photocollect.pojo.PhotoCollectCategory</pojo>
+				<orderBy>PhotoCollectCategory.category</orderBy>
+			</data>
+			<category value="PhotoCollectCategory.category"> <!--value必须有-->
+				<data>PhotoCollect.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="分类" name="category" align="center" width="80" displayExcept="portlet"/>
+			<column title="提交人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="提交时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessPhotoCollect" form="admin/photoCollect" title="在办图片" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.photocollect.pojo.PhotoCollect</pojo>
+			<where>PhotoCollect.isDeleted=0</where>
+			<orderBy>PhotoCollect.created DESC</orderBy>
+			<quickFilter>PhotoCollect.subject like '%{KEY}%' or PhotoCollect.creator like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.photocollect.pojo.PhotoCollectCategory</pojo>
+				<orderBy>PhotoCollectCategory.category</orderBy>
+			</data>
+			<category value="PhotoCollectCategory.category"> <!--value必须有-->
+				<data>PhotoCollect.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="分类" name="category" align="center" width="80" displayExcept="portlet"/>
+			<column title="提交人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="提交时间" name="created" align="center" width="108"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedPhotoCollect" form="admin/photoCollect" title="办结图片" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.photocollect.pojo.PhotoCollect</pojo>
+			<where>PhotoCollect.isDeleted=0</where>
+			<filter>COMPLETED</filter>
+			<quickFilter>PhotoCollect.subject like '%{KEY}%' or PhotoCollect.creator like '%{KEY}%'</quickFilter>
+			<orderBy>PhotoCollect.created DESC</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.photocollect.pojo.PhotoCollectCategory</pojo>
+				<orderBy>PhotoCollectCategory.category</orderBy>
+			</data>
+			<category value="PhotoCollectCategory.category"> <!--value必须有-->
+				<data>PhotoCollect.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="分类" name="category" align="center" width="80"/>
+			<column title="提交人" name="creator" align="center" width="80"/>
+			<column title="提交时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allPhotoCollect" form="admin/photoCollect" title="所有图片" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.photocollect.pojo.PhotoCollect</pojo>
+			<where>PhotoCollect.isDeleted=0</where>
+			<filter>READABLE</filter>
+			<quickFilter>PhotoCollect.subject like '%{KEY}%' or PhotoCollect.creator like '%{KEY}%'</quickFilter>
+			<orderBy>PhotoCollect.created DESC</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.photocollect.pojo.PhotoCollectCategory</pojo>
+				<orderBy>PhotoCollectCategory.category</orderBy>
+			</data>
+			<category value="PhotoCollectCategory.category"> <!--value必须有-->
+				<data>PhotoCollect.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="图片征集授权" hide="noPrivilege(application_manager)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/publicservice/admin/readersModifyOption.shtml?applicationName={PARAMETER:applicationName}', 430, 200)"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="分类" name="category" align="center" width="80"/>
+			<column title="提交人" name="creator" align="center" width="80"/>
+			<column title="提交时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/deleted" form="admin/photoCollect" hide="noPrivilege(application_manager) and isNotSiteManager()" title="已删除图片" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.photocollect.pojo.PhotoCollect</pojo>
+			<where>PhotoCollect.isDeleted=1</where>
+			<filter>READABLE</filter>
+			<quickFilter>PhotoCollect.subject like '%{KEY}%' or PhotoCollect.creator like '%{KEY}%'</quickFilter>
+			<orderBy>PhotoCollect.created DESC</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="分类" name="category" align="center" width="80"/>
+			<column title="提交人" name="creator" align="center" width="80"/>
+			<column title="提交时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/photoCollectCategory" form="admin/photoCollectCategory" title="图片分类" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/photocollect&amp;viewName=admin/photoCollectCategory" hide="noPrivilege(application_manager) and isNotSiteManager()" pageRows="20" openFeatures="mode=dialog,width=430,height=200">
+		<data>
+			<pojo>com.yuanluesoft.cms.photocollect.pojo.PhotoCollectCategory</pojo>
+			<orderBy>PhotoCollectCategory.category</orderBy>
+			<quickFilter>PhotoCollectCategory.category like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加分类" execute="PageUtils.openurl('{WEBAPPLICATIONURL}/cms/photocollect/admin/photoCollectCategory.shtml?siteId={PARAMETER:siteId}', 'mode=dialog,width=430,height=200')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="分类" name="category"/>
+		</columns>
+	</view>
+	
+	<view name="selectPhotoCollectCategory" title="图片分类选择">
+		<data>
+			<pojo>com.yuanluesoft.cms.photocollect.pojo.PhotoCollectCategory</pojo>
+			<where>PhotoCollectCategory.siteId={PARAMETER:siteId}</where>
+			<orderBy>PhotoCollectCategory.category</orderBy>
+			<quickFilter>PhotoCollectCategory.category like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="分类" name="category"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+</views>

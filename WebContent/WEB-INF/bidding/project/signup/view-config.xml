@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view title="报名历史" name="biddingSignUpHistory">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUp</pojo>
+			<orderBy>BiddingSignUp.signUpTime DESC</orderBy>
+		</data>
+		<links>
+			<link title="项目">/bidding/project/signup/signUpQueryResult.shtml?signUpNo={PARAMETER:signUpNo}&amp;projectId={PARAMETER:projectId}</link>
+		</links>
+	</view>
+	
+	<view title="投标企业选择" name="selectBiddingEnterprise" viewServiceName="biddingEnterpriseViewService">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUp</pojo>
+			<where>BiddingSignUp.projectId={PARAMETER:projectId} and not BiddingSignUp.enterpriseName is null and BiddingSignUp.pledgeConfirm='1'</where>
+			<orderBy>BiddingSignUp.enterpriseName</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="企业名称" name="enterpriseName"/>
+			<column title="报名号" name="signUpNo" width="80" align="center"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view title="交易记录" name="admin/biddingSignUpHistory" hide="noPrivilege(manageUnit_paymentRecord)">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.signup.pojo.BiddingSignUp</pojo>
+			<where>BiddingSignUp.id=0</where>
+			<orderBy>BiddingSignUp.signUpTime DESC</orderBy>
+		</data>
+		<actions>
+			<action title="上传交易记录" hide="noPrivilege(manageUnit_paymentRecord)" execute="PageUtils.openurl('{WEBAPPLICATIONURL}/bidding/project/signup/admin/uploadTransactions.shtml', 'mode=dialog,width=430,height=220', 'uploadTransactions')"/>
+		</actions>
+		<links>
+			<link title="项目">/bidding/project/signup/signUpQueryResult.shtml?signUpNo={PARAMETER:signUpNo}&amp;projectId={PARAMETER:projectId}</link>
+		</links>
+	</view>
+</views>

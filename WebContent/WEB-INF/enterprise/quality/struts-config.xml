@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="documentTemplate" type="com.yuanluesoft.enterprise.quality.forms.DocumentTemplate"/>
+  <form-bean name="qualityDocument" type="com.yuanluesoft.enterprise.quality.forms.Document"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="documentTemplate" path="/documentTemplate"
+   scope="request"
+   type="com.yuanluesoft.enterprise.quality.actions.documenttemplate.Load" validate="false">
+   <forward name="load" path="/documentTemplate.jsp"/>
+  </action>
+  <action input="/documentTemplate.jsp" name="documentTemplate"
+   path="/saveDocumentTemplate" scope="request"
+   type="com.yuanluesoft.enterprise.quality.actions.documenttemplate.Save" validate="false"/>
+  <action input="/documentTemplate.jsp" name="documentTemplate"
+   path="/deleteDocumentTemplate" scope="request"
+   type="com.yuanluesoft.enterprise.quality.actions.documenttemplate.Delete" validate="false"/>
+  <action name="qualityDocument" path="/document" scope="request"
+   type="com.yuanluesoft.enterprise.quality.actions.document.Load" validate="false">
+   <forward name="load" path="/document.jsp"/>
+  </action>
+  <action input="/document.jsp" name="qualityDocument"
+   path="/saveDocument" scope="request"
+   type="com.yuanluesoft.enterprise.quality.actions.document.Save" validate="false"/>
+  <action input="/document.jsp" name="qualityDocument"
+   path="/deleteDocument" scope="request"
+   type="com.yuanluesoft.enterprise.quality.actions.document.Delete" validate="false"/>
+  <action input="/document.jsp" name="qualityDocument"
+   path="/runDocument" scope="request"
+   type="com.yuanluesoft.enterprise.quality.actions.document.Run" validate="false"/>
+  <action input="/document.jsp" name="qualityDocument"
+   path="/writeOpinion" scope="request"
+   type="com.yuanluesoft.enterprise.quality.actions.document.WriteOpinion" validate="false"/>
+  <action input="/document.jsp" name="qualityDocument"
+   path="/appendDocument" scope="request"
+   type="com.yuanluesoft.enterprise.quality.actions.document.AppendDocument" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="situation" type="com.yuanluesoft.cms.situation.forms.Situation"/>
+  <form-bean name="adminSituation" type="com.yuanluesoft.cms.situation.forms.admin.Situation"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminSituation" path="/admin/situation" scope="request"
+   type="com.yuanluesoft.cms.situation.actions.situation.admin.Load" validate="false">
+   <forward name="load" path="/admin/situation.jsp"/>
+  </action>
+  <action name="situation" path="/situation" scope="request"
+   type="com.yuanluesoft.cms.situation.actions.situation.Load" validate="false">
+   <forward name="load" path="/situation.jsp"/>
+  </action>
+  <action input="/situation.jsp" name="situation" path="/saveSituation"
+   scope="request"
+   type="com.yuanluesoft.cms.situation.actions.situation.Save" validate="false">
+   <forward name="result" path="/situationSubmitted.jsp"/>
+  </action>
+  <action input="/admin/situation.jsp" name="adminSituation"
+   path="/admin/saveSituation" scope="request"
+   type="com.yuanluesoft.cms.situation.actions.situation.admin.Save" validate="false"/>
+  <action input="/admin/situation.jsp" name="adminSituation"
+   path="/admin/deleteSituation" scope="request"
+   type="com.yuanluesoft.cms.situation.actions.situation.admin.Delete" validate="false"/>
+  <action input="/admin/situation.jsp" name="adminSituation"
+   path="/admin/runSituation" scope="request"
+   type="com.yuanluesoft.cms.situation.actions.situation.admin.Run" validate="false"/>
+  <action input="/admin/situation.jsp" name="adminSituation"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.cms.situation.actions.situation.admin.WriteOpinion" validate="false"/>
+  <action input="/admin/situation.jsp" name="adminSituation"
+   path="/admin/setPublishOption" scope="request"
+   type="com.yuanluesoft.cms.situation.actions.situation.admin.SetPublishOption" validate="false"/>
+  <action input="/admin/situation.jsp" name="adminSituation"
+   path="/admin/publish" scope="request"
+   type="com.yuanluesoft.cms.situation.actions.situation.admin.Publish" validate="false"/>
+  <action input="/admin/situation.jsp" name="adminSituation"
+   path="/admin/switchPage" scope="request"
+   type="com.yuanluesoft.cms.situation.actions.situation.admin.SwitchPage" validate="false"/>
+  <action input="/admin/situation.jsp" name="adminSituation"
+   path="/admin/feedback" scope="request"
+   type="com.yuanluesoft.cms.situation.actions.situation.admin.Feedback" validate="false"/>
+  <action input="/admin/message.jsp" name="adminMessage"
+   path="/admin/undeleteMessage" scope="request"
+   type="com.yuanluesoft.cms.situation.actions.situation.admin.Undelete" validate="false"/>
+  <action input="/admin/situation.jsp" name="adminSituation"
+   path="/admin/coordinate" scope="request"
+   type="com.yuanluesoft.cms.situation.actions.situation.admin.Coordinate" validate="false"/>
+  <action input="/admin/situation.jsp" name="adminSituation"
+   path="/admin/feedbackLetter" scope="request"
+   type="com.yuanluesoft.cms.situation.actions.situation.admin.FeedbackLetter" validate="false"/>
+  <action name="situation" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.cms.situation.actions.situation.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action input="/admin/situation.jsp" name="adminSituation"
+   path="/admin/transact" scope="request"
+   type="com.yuanluesoft.cms.situation.actions.situation.admin.Transact" validate="false"/>
+  <action name="adminSituation" path="/admin/attachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.cms.situation.actions.situation.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="account" title="个人账户">
+	    <data>
+			<pojo>com.yuanluesoft.lss.insurance.pojo.InsuranceAccount</pojo>
+			<where>InsuranceAccount.identityCardNumber='{LOGINNAME}'</where>
+		 	<orderBy>InsuranceAccount.year DESC</orderBy>
+		</data>
+	</view>
+	
+	<view name="parameter" title="记账利率、缴纳比例">
+	    <data>
+			<pojo>com.yuanluesoft.lss.insurance.pojo.InsuranceParameter</pojo>
+			<orderBy>InsuranceParameter.year DESC</orderBy>
+		</data>
+	</view>
+	
+	<view name="admin/account" title="个人账户" pageRows="20">
+	    <data>
+			<pojo>com.yuanluesoft.lss.insurance.pojo.InsuranceAccount</pojo>
+			<orderBy>InsuranceAccount.year DESC, InsuranceAccount.name</orderBy>
+			<quickFilter>InsuranceAccount.identityCardNumber like '%{KEY}%' or InsuranceAccount.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="数据导入" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)" execute="PageUtils.newrecord('lss/insurance', 'admin/importData', 'mode=dialog,width=390,height=180')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="身份证号码" name="identityCardNumber" width="130"/>
+			<column title="姓名" name="name" width="55"/>
+			<column title="年度" name="year" width="40" align="center"/>
+			<column title="个人账户本金" name="accountCapital" align="center"/>
+			<column title="个人缴纳本金" name="payCapital" align="center"/>
+			<column title="缴费月数" name="monthNumber" align="center"/>
+			<column title="本息累计" name="yearTotal" align="center"/>
+			<column title="人缴纳本息" name="yearPayTotal" align="center"/>
+			<column title="缴费基数" name="cardinalNumber" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/parameter" title="记账利率、缴纳比例" pageRows="20">
+	    <data>
+			<pojo>com.yuanluesoft.lss.insurance.pojo.InsuranceParameter</pojo>
+			<orderBy>InsuranceParameter.year DESC</orderBy>
+		</data>
+		<actions>
+			<action title="数据导入" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)" execute="PageUtils.newrecord('lss/insurance', 'admin/importData', 'mode=dialog,width=390,height=180')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="年度" name="year" width="80" align="center"/>
+			<column title="年记账利率" name="rate" align="center"/>
+			<column title="个人账户比例" name="accountRatio" align="center"/>
+			<column title="个人缴纳比例" name="payRatio" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/user" form="admin/user" title="注册用户" pageRows="20" openFeatures="mode=dialog,width=360,height=120">
+	    <data>
+			<pojo>com.yuanluesoft.lss.insurance.pojo.InsuranceUser</pojo>
+			<orderBy>InsuranceUser.identityCardNumber</orderBy>
+			<quickFilter>InsuranceUser.identityCardNumber like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="数据导入" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_importData)" execute="PageUtils.newrecord('lss/insurance', 'admin/importData', 'mode=dialog,width=390,height=180')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="身份证号码" name="identityCardNumber"/>
+		</columns>
+	</view>
+</views>

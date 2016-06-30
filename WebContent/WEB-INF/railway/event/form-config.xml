@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/importData" class="com.yuanluesoft.railway.event.forms.admin.ImportData" title="问题导入" pojo="com.yuanluesoft.railway.event.pojo.RailwayEventImport">
+	   <actions>
+			<action title="导入" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="删除日志" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteImportData')"/>
+			<action title="删除日志和数据" hide="deleteDisable()" execute="if(confirm('同时删除导入日志和数据，且删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteImportData', 'deleteData=true')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

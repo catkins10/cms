@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="出差申请单" class="com.yuanluesoft.j2oa.businesstrip.pojo.Businesstrip" businessServiceName="businesstripService">
+		<field name="proposerName" title="申请人" length="20" type="string" inputMode="readonly"/>
+		<field name="departmentId" title="部门ID" type="number" inputMode="hidden"/>
+		<field name="departmentName" title="部门名称" length="32" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(500,300,false,'departmentName{name},departmentId{id}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="address" title="出差地点" length="100" required="true" type="string" inputMode="text"/>
+		<field name="beginTime" title="开始时间" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="endTime" title="结束时间" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="reason" title="出差事由" length="250" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="vehicle" title="使用的交通工具" length="30" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">汽车\0火车\0飞机\0轮船</parameter>
+		</field>
+		<field name="remark" title="备注" length="250" type="string" inputMode="text"/>
+		<parameter name="fillOpinionByActivity">false</parameter> <!-- 是否按环节来保存意见,默认true -->
+	</businessObject>
+</businessObjects>

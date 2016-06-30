@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="投诉单" class="com.yuanluesoft.customise.complaint.pojo.CustomiseComplaint">
+		<field name="attachment" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">0</parameter>
+			<parameter name="dynamicUrl">false</parameter>
+			<parameter name="attachmentEditor">complaintAttachmentEditor.shtml</parameter>
+			<parameter name="simpleMode">false</parameter>
+		</field>
+		<field name="TEST" title="TEST" length="18" type="string" inputMode="checkbox">
+			<parameter name="value">12123</parameter>
+			<parameter name="label">aaaaaaaa</parameter>
+		</field>
+		<field name="complaintTime" title="投诉时间" required="true" type="date" inputMode="date">
+			<parameter name="displayFormat">yyyy-MM-dd</parameter>
+			<parameter name="defaultValue">{TODAY}</parameter>
+		</field>
+		<field name="workDay" title="办理时间" length="3" type="number" inputMode="text">
+			<parameter name="minValue">1</parameter>
+			<parameter name="displayFormat">#天</parameter>
+		</field>
+		<field name="unit" title="投诉人单位" length="200" type="string" inputMode="text"/>
+		<field name="name" title="投诉人姓名" length="30" type="string" inputMode="text"/>
+		<field name="address" title="地点" length="200" type="string" inputMode="text"/>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">领导|required|您尚未填写意见,片区负责人反馈|required|您尚未填写意见,部门负责人审核||您尚未填写意见</parameter>
+			<parameter name="class">com.yuanluesoft.customise.complaint.pojo.CustomiseComplaintOpinion</parameter>
+		</field>
+		<field name="returnContent" title="回访内容" type="html" inputMode="htmleditor">
+			<parameter name="height">300px</parameter>
+			<parameter name="attachmentSelector">selectComplaintAttachment.shtml</parameter>
+		</field>
+		<field name="returnPerson" title="回访人" length="30" type="string" inputMode="text"/>
+		<field name="returnTime" title="回访时间" type="timestamp" inputMode="datetime"/>
+		<field name="a" title="a" length="1" type="string" inputMode="text"/>
+		<field name="b" title="b" length="20" type="string" inputMode="text"/>
+		<field name="attachments" title="附件" persistence="false" type="attachment"/>
+		<field name="images" title="图片" persistence="false" type="image"/>
+		<field name="flashs" title="FLASH" persistence="false" type="attachment">
+			<parameter name="fileExtension">FLASH文件|*.swf|</parameter>
+			<parameter name="maxUploadSize">2000000</parameter>
+		</field>
+		<field name="videos" title="视频" persistence="false" type="video">
+			<parameter name="maxUploadSize">500000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="参数配置" class="com.yuanluesoft.customise.complaint.pojo.CustomiseParameter">
+		<field name="type" title="投诉类型" length="50" type="string" inputMode="text"/>
+	</businessObject>
+</businessObjects>

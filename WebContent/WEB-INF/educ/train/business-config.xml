@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="培训基本信息管理" class="com.yuanluesoft.educ.train.pojo.TrainInfo">
+		<field name="name" title="课程名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="simpleIntro" title="简介" length="600" type="string" inputMode="textarea"/>
+		<field name="personType" title="培训人员" length="1" type="char" inputMode="radio">
+ 			<parameter name="itemsText">学生|S\0教师|T</parameter>
+		</field>
+		<field name="signupStart" title="报名开始日期" type="timestamp" inputMode="datetime"/>
+		<field name="signupStop" title="报名截止日期" type="timestamp" inputMode="datetime"/>
+		<field name="trainStart" title="培训开始日期" type="timestamp" inputMode="datetime"/>
+		<field name="trainStop" title="培训结束日期" type="timestamp" inputMode="datetime"/>
+		<field name="profession" title="鉴定职业" length="100" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">trainService</parameter>
+		</field>
+		<field name="type" title="鉴定类别" length="20" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">trainService</parameter>
+		</field>
+		<field name="level" title="鉴定级别" length="20" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">trainService</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="培训参数配置" class="com.yuanluesoft.educ.train.pojo.TrainConfig">
+		<field name="types" title="鉴定职业" length="100" required="true" type="string" inputMode="text"/>
+		<field name="types" title="鉴定类型" length="20" required="true" type="string" inputMode="text"/>
+		<field name="types" title="鉴定级别" length="20" required="true" type="string" inputMode="text"/>
+	</businessObject>
+</businessObjects>

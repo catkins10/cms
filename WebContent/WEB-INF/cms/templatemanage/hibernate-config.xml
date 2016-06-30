@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--模板管理:模板主题-->
+	<class name="com.yuanluesoft.cms.templatemanage.pojo.TemplateTheme" table="cms_template_theme">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--名称,如：节假日、手机,varchar(50)-->
+		<property name="type"/> <!--类型,电脑|0/智能手机或平板电脑|1/WAP|2,numeric(1)-->
+		<property name="pageWidth"/> <!--页面宽度,类型为“智能手机或平板电脑”时有效,numeric(4,0)-->
+		<property name="flashSupport"/> <!--是否含Flash,iphine、ipad不支持flash,numeric(1)-->
+		<property name="lastModified"/> <!--最后修改时间,timestamp null-->
+		<property name="lastModifierId"/> <!--最后修改人ID,numeric(20,0)-->
+		<property name="lastModifier"/> <!--最后修改人姓名,varchar(30)-->
+		<!-- 使用情况 -->
+		<set inverse="true" lazy="true" name="usages" table="cms_template_theme_usage" cascade="delete">
+			<key column="themeId" />
+			<one-to-many class="com.yuanluesoft.cms.templatemanage.pojo.TemplateThemeUsage" />
+		</set>
+	
+		<!--模板管理:站点模板主题-->
+		<joined-subclass name="com.yuanluesoft.cms.sitemanage.pojo.SiteTemplateTheme" table="cms_site_template_theme">
+			<key><column name="id" /></key>
+			<property name="siteId"/> <!--站点ID,如果站点没有配置自己主题,则使用父站点的配置,numeric(20,0)-->
+        </joined-subclass>
+    
+		<!--模板管理:用户模板主题-->
+		<joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.UserPageTemplateTheme" table="user_template_theme">
+			<key><column name="id" /></key>
+			<property name="userId"/> <!--组织机构/用户ID,numeric(20)-->
+        </joined-subclass>
+	</class>
+	
+	<!--模板主题:使用-->
+	<class name="com.yuanluesoft.cms.templatemanage.pojo.TemplateThemeUsage" table="cms_template_theme_usage">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="siteId"/> <!--站点/用户ID,如果站点没有配置自己主题,则使用父站点的配置,NUMERIC(20,0)-->
+		<property name="themeId"/> <!--主题ID,iphine、ipad不支持flash,NUMERIC(20)-->
+		<property name="isDefault"/> <!--是否默认主题,默认主题修改后重新生成本站的全部静态页面,NUMERIC(1)-->
+		<property name="temporaryOpening"/> <!--是否临时启用,NUMERIC(1)-->
+	</class>
+
+	<class name="com.yuanluesoft.cms.templatemanage.pojo.Template" table="cms_template">
+		<id name="id">
+			<generator class="assigned"/>
+		</id>
+		<property name="themeId"/> <!--主题ID,numeric(20,0)-->
+		<property name="templateName"/> <!--模板名称-->
+		<property name="applicationName"/> <!--应用名称-->
+		<property name="pageName"/> <!--页面名称-->
+		<property name="siteId"/> <!--站点/栏目ID-->
+		<property name="isSelected"/> <!--是否选中-->
+		<property name="lastModified"/> <!--最后修改时间-->
+		<property name="lastModifierId"/> <!--最后修改人ID-->
+		<property name="lastModifier"/> <!--最后修改人姓名-->
+		
+		<!--站点模板-->
+		<joined-subclass name="com.yuanluesoft.cms.sitemanage.pojo.SiteTemplate" table="cms_site_template">
+			<key><column name="id" /></key>
+			<property name="columnNames"/> <!--适用的栏目,配置子栏目模板时有效,varchar(1000)-->
+			<property name="columnIds"/> <!--适用的栏目ID,varchar(1000)-->
+			<property name="matchByName"/> <!--按栏目名称匹配栏目,numeric(1)-->
+        </joined-subclass>
+        
+        <!--PORTLET实体:模板-->
+		<joined-subclass name="com.yuanluesoft.portal.container.pojo.PortletEntityTemplate" table="portlet_entity_template">
+			<key><column name="id" /></key>
+			<property name="entityId"/> <!--PORTLET实体ID,NUMERIC(20)-->
+		</joined-subclass>
+        
+        <!--BBS模板-->
+		<joined-subclass name="com.yuanluesoft.bbs.templatemanage.pojo.BbsTemplate" table="bbs_template">
+			<key><column name="id" /></key>
+           	<property name="directoryId"/> <!--论坛目录ID-->
+			<property name="directoryName"/> <!--论坛目录名称-->
+        </joined-subclass>
+        
+        <!--场景服务:模板配置-->
+        <joined-subclass name="com.yuanluesoft.cms.scene.pojo.SceneTemplate" table="scene_template">
+			<key><column name="id" /></key>
+			<property name="directoryId"/> <!--模板作用范围ID-->
+			<property name="directoryName"/> <!--模板作用范围-->
+		</joined-subclass>
+		
+		<!--网上办事:模板配置-->
+        <joined-subclass name="com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceTemplate" table="onlineservice_template">
+			<key><column name="id" /></key>
+			<property name="directoryId"/> <!--目录ID-->
+			<property name="directoryName"/> <!--目录名称-->
+			<property name="itemTypes"/> <!--事项类型,VARCHAR(300)-->
+		</joined-subclass>
+		
+		<!--在线调查:模板配置-->
+        <joined-subclass name="com.yuanluesoft.cms.inquiry.pojo.InquiryTemplate" table="cms_inquiry_template">
+			<key><column name="id" /></key>
+			<property name="subjectId"/> <!--隶属调查主题ID,numeric(20)-->
+			<property name="subject"/> <!--隶属调查主题,varchar(200)-->
+		</joined-subclass>
+		
+		<!--用户管理:模板配置-->
+        <joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.UserPageTemplate" table="user_page_template">
+			<key><column name="id" /></key>
+			<property name="userId"/> <!--用户/机构ID-->
+			<property name="applicationNames"/> <!--适用的应用名称-->
+			<property name="applicationTitles"/> <!--适用的应用标题-->
+		</joined-subclass>
+		
+		<!--用户管理:登录模板-->
+        <joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.UserLoginTemplate" table="user_login_template">
+			<key><column name="id" /></key>
+			<property name="hostNames"/> <!--域名,VARCHAR(1000)-->
+		</joined-subclass>
+		
+		<!-- 招投标模板 -->
+		<joined-subclass name="com.yuanluesoft.bidding.project.pojo.BiddingProjectTemplate" table="bidding_project_template">
+			<key><column name="id" /></key>
+           	<property name="categories"/> <!--适用的工程分类列表-->
+			<property name="procedures"/> <!--适用的招标内容列表-->
+			<property name="cities"/> <!--适用的地区列表-->
+			<property name="biddingModes"/> <!--适用的招标方式-->
+        </joined-subclass>
+        
+        <!--质量管理:文档模板-->
+        <joined-subclass name="com.yuanluesoft.enterprise.quality.pojo.QualityDocumentTemplate" table="quality_document_template">
+			<key><column name="id" /></key>
+		</joined-subclass>
+    </class>
+	
+	<!--CSS样式表文件-->
+	<class name="com.yuanluesoft.cms.templatemanage.pojo.CssFile" table="cms_css_file">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="cssName"/> <!--名称-->
+		<property name="cssUrl"/> <!--URL-->
+		<property name="fromCssFile"/> <!--源文件-->
+		<property name="siteId"/> <!--隶属站点ID-->
+	</class>
+</hibernate-mapping>

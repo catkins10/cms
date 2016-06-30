@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!-- 手工设置切换图片 -->
+<beans>
+	<!-- 站点资源服务 -->
+	<bean id="siteResourceService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref local="siteResourceServiceImpl"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="deleteResourceBySourceRecordId">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="issue*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="unissue*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="process*">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+				<prop key="modifyReaders">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="unissueTimeoutResources">PROPAGATION_NEVER,-Exception</prop>
+				<prop key="setTop">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="siteResourceServiceImpl" class="com.yuanluesoft.cms.siteresource.service.spring.SiteResourceServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="siteService"><ref bean="siteServiceImpl"/></property>
+		<property name="smsSubscriptionService"><ref bean="smsSubscriptionService"/></property>
+		<property name="exchangeClient"><ref bean="exchangeClient"/></property>
+		<property name="attachmentService"><ref bean="siteAttachmentService"/></property>
+		<property name="pageService"><ref bean="siteResourcePageService"/></property>
+		<property name="sessionService"><ref bean="sessionService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+		<property name="personService"><ref bean="personService"/></property>
+		<property name="recordControlService"><ref bean="recordControlService"/></property>
+		<property name="logicalDelete"><value>true</value></property>
+		<property name="firstImageSelectMode"><value>manuallyFirst</value></property>
+	</bean>
+	
+	<!-- 站点资源视图服务 -->
+	<bean id="siteResourceViewService" class="com.yuanluesoft.cms.siteresource.service.spring.SiteResourceViewServiceImpl">
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+	</bean>
+	
+	<!-- 海事局统计视图数据服务 -->
+	<bean id="fjmsaResourceStatisticViewService" class="com.yuanluesoft.cms.siteresource.fjmsa.service.ResourceStatisticViewServiceImpl">
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+	</bean>
+	
+	<!-- 站点资源报表服务 -->
+	<bean id="siteResourceStatService" class="com.yuanluesoft.cms.siteresource.report.service.spring.SiteResourceStatServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="siteService"><ref bean="siteServiceImpl"/></property>
+	</bean>
+	
+	<!-- 文章页面服务 -->
+	<bean id="siteResourcePageService" class="com.yuanluesoft.cms.siteresource.pages.SiteResourcePageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="siteService"><ref bean="siteServiceImpl"/></property>
+		<property name="templateService"><ref bean="siteTemplateServiceImpl"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+	</bean>
+	
+	<!-- 站点/栏目搜索页面服务 -->
+	<bean id="siteSearchPageService" class="com.yuanluesoft.cms.siteresource.pages.SiteSearchPageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="siteTemplateService"/></property>
+	</bean>
+	
+	<!-- 站点资源列表处理器 -->
+	<bean id="siteResourcesProcessor" class="com.yuanluesoft.cms.siteresource.processor.SiteResourcesProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="siteService"><ref bean="siteService"/></property>
+		<property name="viewDefineService"><ref bean="viewDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+	</bean>
+	
+	<!-- 资源链接处理器 -->
+	<bean id="resourceLinkProcessor" class="com.yuanluesoft.cms.siteresource.processor.SiteResourceLinkProcessor"/>
+	
+	<!-- 搜索处理器,保持和旧系统兼容 -->
+	<bean id="searchProcessor" class="com.yuanluesoft.cms.siteresource.processor.SiteSearchProcessor">
+		<property name="siteService"><ref bean="siteService"/></property>
+	</bean>
+	
+	<!-- 站点搜索表单处理器 -->
+	<bean id="siteSearchFormProcessor" class="com.yuanluesoft.cms.siteresource.processor.SiteSearchFormProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="formFieldService"><ref bean="formFieldService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="formSecurityService"><ref bean="formSecurityService"/></property>
+		<property name="siteService"><ref bean="siteService"/></property>
+	</bean>
+	
+	<!-- 站点资源字段处理器 -->
+	<bean id="siteResourceFieldProcessor" class="com.yuanluesoft.cms.siteresource.processor.SiteResourceFieldProcessor">
+		<property name="siteService"><ref bean="siteService"/></property>
+	</bean>
+</beans>

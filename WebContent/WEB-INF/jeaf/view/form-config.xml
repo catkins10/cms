@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form title="视图定制" class="com.yuanluesoft.jeaf.view.viewcustomize.forms.ViewCustomize">
+		<formFields>
+			<field title="应用名称" name="applicationName" type="string" inputMode="hidden"/>
+			<field title="视图名称" name="viewName" type="string" inputMode="hidden"/>
+			<field title="视图定制" name="viewCustom" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.view.viewcustomize.model.ViewCustom</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="确定" execute="saveViewCustom()"/>
+			<action title="应用" execute="saveViewCustom(true)"/>
+			<action title="恢复默认设置" execute="FormUtils.doAction('resetViewCustom');"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.view.forms.ViewForm" title="视图表单">
+		<formFields>
+			<field name="viewPackage" title="视图包" type="component" inputMode="readonly">
+				<parameter name="class">com.yuanluesoft.jeaf.view.model.ViewPackage</parameter>
+			</field>
+		</formFields>
+	</form>
+</forms>

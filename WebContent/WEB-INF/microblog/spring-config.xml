@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>	
+	<!-- 微博服务 -->
+	<bean id="microblogService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.microblog.service.spring.MicroblogServiceImpl" init-method="init">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="orgService"><ref bean="orgService"/></property>
+				<property name="cryptService"><ref bean="cryptService"/></property>
+				<property name="cache"><ref bean="microblogCache"/></property>
+				<property name="cacheSeconds"><value>300</value></property>
+				<property name="platforms">
+					<bean class="com.yuanluesoft.microblog.platform.sina.MicroblogPlatformSinaImpl"> <!-- 新浪微博 -->
+						<property name="imageCountLimit"><value>1</value></property> <!-- 只允许上传1张图片 -->
+						<property name="imageSizeLimit"><value>5000000</value></property> <!-- 图片最大5M -->
+						<property name="shortUrlMaxLength"><value>20</value></property> <!-- 图片最大5M -->
+					</bean>
+				</property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-MailException</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="process*">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="issue*">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="unissue*">PROPAGATION_REQUIRED,-MailException</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 微博列表处理器 -->
+	<bean id="microblogsProcessor" class="com.yuanluesoft.microblog.processor.MicroblogsProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="microblogService"><ref bean="microblogService"/></property>
+	</bean>
+</beans>

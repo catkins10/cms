@@ -1,0 +1,43 @@
+<form class="form" id="publicRequestQuery" title="办理情况查询" action="applicationName=cms/infopublic/request" style="border-right: #ffc0c0 1px dotted; border-top: #ffc0c0 1px dotted; margin: 0px; border-left: #ffc0c0 1px dotted; border-bottom: #ffc0c0 1px dotted">
+	<table class="editabledTable">
+		<tr>
+		    <td>获取详情请输入查询密码：</td>
+		    <td><input class="field" id="field" title="查询密码" style="width: 80px" name="approvalQueryPassword" type="text" /></td>
+		    <td align="center" colspan="3">&nbsp;<input class="submitButton" id="button" title="查询" tabindex="0" type="button" value="查询" /> </td>
+		</tr>
+	</table>
+</form>
+<table class="readonlyTable">
+	<colgroup>
+		<col align="right"/>
+		<col width="100%"/>
+	</colgroup>
+	<tr>
+		<td class="label" nowrap="nowrap">审批结果</td>
+		<td class="content" id="approvalResult"><a id="field" urn="name=approvalResult">&lt;审批结果&gt;</a></td>
+	</tr>
+	<tr id="trNotPublicType" style="display:none">
+		<td class="label">不公开原因</td>
+		<td class="content" id="notPublicType"><a id="field" urn="name=notPublicType">&lt;不公开原因&gt;</a></td>
+	</tr>
+	<tr id="trNotPublicReason" style="display:none">
+		<td class="label" nowrap="nowrap">其他原因说明</td>
+		<td class="content"><a id="field" urn="name=notPublicReason">&lt;其他原因说明&gt;</a></td>
+	</tr>
+	<tr>
+		<td class="label" nowrap="nowrap">实际提供介质</td>
+		<td class="content"><a id="field" urn="name=doneMedium">&lt;实际提供介质&gt;</a></td>
+	</tr>
+	<tr>
+		<td class="label" nowrap="nowrap">实际提供方式</td>
+		<td class="content"><a id="field" urn="name=doneReceiveMode">&lt;获取方式&gt;</a></td>
+	</tr>
+</table>
+<script>
+	if(document.getElementById("approvalResult").innerHTML=="不公开") {
+		document.getElementById("trNotPublicType").style.display = "";
+		if(document.getElementById("notPublicType").innerHTML=="其他原因") {
+			document.getElementById("trNotPublicReason").style.display = "";
+		}
+	}
+</script>

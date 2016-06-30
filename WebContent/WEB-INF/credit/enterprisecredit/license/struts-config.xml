@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+ 	<form-bean name="applicationView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/>
+ 	<form-bean name="licenseImportData" type="com.yuanluesoft.credit.enterprisecredit.license.forms.ImportDateExcel"/>
+ 	<form-bean name="adminLicense" type="com.yuanluesoft.credit.enterprisecredit.license.forms.License"/>
+ 	<form-bean name="adminMunicipal" type="com.yuanluesoft.credit.enterprisecredit.municipal.forms.Municipal"/>
+  <form-bean name="municipalImportData" type="com.yuanluesoft.credit.enterprisecredit.municipal.forms.ImportDateExcel"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminLicense" path="/admin/license" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.license.actions.Load" validate="false">
+   <forward name="load" path="/license.jsp"/>
+  </action>
+  <action input="/license.jsp" name="adminLicense" path="/admin/saveLicense" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.license.actions.Save" validate="false"/>
+  <action input="/license.jsp" name="adminLicense" path="/admin/deleteLicense"
+   scope="request" type="com.yuanluesoft.credit.enterprisecredit.license.actions.Delete" validate="false"/>
+   
+   <action name="adminMunicipal" path="/admin/municipal" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.municipal.actions.Load" validate="false">
+   <forward name="load" path="/municipal.jsp"/>
+  </action>
+  <action input="/municipal.jsp" name="adminMunicipal" path="/admin/saveMunicipal" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.municipal.actions.Save" validate="false"/>
+  <action input="/municipal.jsp" name="adminMunicipal" path="/admin/deleteMunicipal"
+   scope="request" type="com.yuanluesoft.credit.enterprisecredit.municipal.actions.Delete" validate="false"/>
+  
+  <!-- 附件选择处理。页面的data标签加载时跳转该path调用相应action处理附件页面 -->
+  <action name="licenseImportData" path="/admin/attachmentEditor" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.localtax.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <!-- excel数据导入页面加载 -->
+   <action name="licenseImportData" path="/admin/licenseImportData" scope="request" validate="false"
+   type="com.yuanluesoft.credit.enterprisecredit.license.actions.excelimport.Load">
+   <forward name="load" path="/importData.jsp"/>
+   </action>
+   <action name="licenseImportData" path="/admin/doImportData" scope="request" validate="false" input="/importData.jsp"
+   type="com.yuanluesoft.credit.enterprisecredit.license.actions.excelimport.DoImportData"/>
+   
+   
+   <!-- 附件选择处理。页面的data标签加载时跳转该path调用相应action处理附件页面 -->
+  <action name="municipalImportData" path="/admin/attachmentmEditor" scope="request"
+   type="com.yuanluesoft.credit.enterprisecredit.localtax.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <!-- excel数据导入页面加载 -->
+   <action name="municipalImportData" path="/admin/municipalImportData" scope="request" validate="false"
+   type="com.yuanluesoft.credit.enterprisecredit.municipal.actions.excelimport.Load">
+   <forward name="load" path="/importDataMunicipal.jsp"/>
+   </action>
+   
+   <action name="municipalImportData" path="/admin/doImportDataMunicipal" scope="request" validate="false" input="/importDataMunicipal.jsp"
+   type="com.yuanluesoft.credit.enterprisecredit.municipal.actions.excelimport.DoImportData"/>
+   
+   <!-- 批量删除操作 -->
+   <action input="/../../../jeaf/application/applicationView.jsp" name="applicationView" 
+   path="/batchOperate" scope="request" 
+   type="com.yuanluesoft.credit.enterprisecredit.batchoperate.BatchOperate" validate="false" />
+ </action-mappings>
+ <controller/>
+</struts-config>

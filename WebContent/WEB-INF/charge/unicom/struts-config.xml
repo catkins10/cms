@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminServiceMapping" type="com.yuanluesoft.charge.thirdparty.unicom.forms.admin.ServiceMapping"/>
+  <form-bean name="adminTelNumber" type="com.yuanluesoft.charge.thirdparty.unicom.forms.admin.TelNumber"/>
+  <form-bean name="registUnicomPerson" type="com.yuanluesoft.charge.thirdparty.unicom.forms.RegistUnicomPerson"/>
+  <form-bean name="personalData" type="com.yuanluesoft.charge.thirdparty.unicom.forms.PersonalData"/>
+  <form-bean name="cardOrder" type="com.yuanluesoft.charge.thirdparty.unicom.forms.admin.CardOrder"/>
+  <form-bean name="cardGroup" type="com.yuanluesoft.charge.thirdparty.unicom.forms.admin.CardGroup"/>
+  <form-bean name="effectUnicomCard" type="com.yuanluesoft.charge.thirdparty.unicom.forms.EffectUnicomCard"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminServiceMapping" path="/admin/serviceMapping"
+   scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.servicemapping.admin.Load" validate="false">
+   <forward name="load" path="/admin/serviceMapping.jsp"/>
+  </action>
+  <action name="adminTelNumber" path="/admin/telNumber" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.telnumber.admin.Load" validate="false">
+   <forward name="load" path="/admin/telNumber.jsp"/>
+  </action>
+  <action input="/admin/serviceMapping.jsp" name="adminServiceMapping"
+   path="/admin/saveServiceMapping" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.servicemapping.admin.Save" validate="false"/>
+  <action input="/admin/telNumber.jsp" name="adminTelNumber"
+   path="/admin/saveTelNumber" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.telnumber.admin.Save" validate="false"/>
+  <action input="/admin/serviceMapping.jsp" name="adminServiceMapping"
+   path="/admin/deleteServiceMapping" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.servicemapping.admin.Delete" validate="false"/>
+  <action input="/admin/telNumber.jsp" name="adminTelNumber"
+   path="/admin/deleteTelNumber" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.telnumber.admin.Delete" validate="false"/>
+  <action name="registUnicomPerson" path="/registUnicomPerson"
+   scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.registunicomperson.Load" validate="false">
+   <forward name="load" path="/registUnicomPerson.jsp"/>
+  </action>
+  <action input="/registUnicomPerson.jsp" name="registUnicomPerson"
+   path="/doRegistUnicomPerson" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.registunicomperson.Regist" validate="false">
+   <forward name="result" path="/unicomPersonRegisted.jsp"/>
+  </action>
+  <action name="personalData" path="/personalData" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.personaldata.Load" validate="false">
+   <forward name="load" path="/personalData.jsp"/>
+  </action>
+  <action input="/personalData.jsp" name="personalData"
+   path="/savePersonalData" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.personaldata.Save" validate="false">
+   <forward name="result" path="/actionResultSimple.jsp"/>
+  </action>
+  <action input="/personalData.jsp" name="personalData"
+   path="/uploadPortrait" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.personaldata.UploadPortrait" validate="false"/>
+  <action path="/topupMethod" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.topupmethod.Load" validate="false">
+   <forward name="load" path="/topupMethod.jsp"/>
+  </action>
+  <action name="cardOrder" path="/admin/cardOrder" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.cardorder.admin.Load" validate="false">
+   <forward name="load" path="/admin/cardOrder.jsp"/>
+  </action>
+  <action input="/admin/cardOrder.jsp" name="cardOrder"
+   path="/admin/submitCardOrder" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.cardorder.admin.Submit" validate="false"/>
+  <action path="/admin/exportUnicomCards" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.cardorder.admin.ExportAsTxt" validate="false"/>
+  <action name="cardGroup" path="/admin/cardGroup" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.cardgroup.admin.Load" validate="false">
+   <forward name="load" path="/admin/cardGroup.jsp"/>
+  </action>
+  <action input="/admin/cardGroup.jsp" name="cardGroup"
+   path="/admin/saveCardGroup" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.cardgroup.admin.Save" validate="false"/>
+  <action name="cardGroup" path="/admin/deleteCardGroup" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.cardgroup.admin.Delete" validate="false"/>
+  <action name="effectUnicomCard" path="/effectUnicomCard"
+   scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.effectcard.Load" validate="false">
+   <forward name="load" path="/effectUnicomCard.jsp"/>
+  </action>
+  <action input="/effectUnicomCard.jsp" name="effectUnicomCard"
+   path="/doEffectUnicomCard" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.unicom.actions.effectcard.Effect" validate="false">
+   <forward name="result" path="/cardEffectted.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/preapproval"/>
+		
+		<page name="preapproval" title="提交预审件" recordClass="com.yuanluesoft.cms.preapproval.pojo.Preapproval" url="/cms/preapproval/preapproval.shtml">
+			<subPage title="提交预审件" name="preapproval" type="template"/>
+		</page>
+		
+		<page name="preapprovalSubmitted" title="预审件提交完成">
+			<subPage title="预审件提交完成" name="preapprovalSubmitted" type="template"/>
+		</page>
+		
+		<page name="preapprovalFailed" title="预审件查询失败">
+			<subPage title="预审件查询失败" name="preapprovalFailed" type="template"/>
+		</page>
+		
+		<page name="poorPreapproval" title="预审件查看(公开主题)" recordClass="com.yuanluesoft.cms.preapproval.pojo.Preapproval">
+			<subPage title="预审件查看(公开主题)" name="poorPreapproval" type="template"/>
+		</page>
+		
+		<page name="originalPreapproval" title="预审件查看(公开正文)" recordClass="com.yuanluesoft.cms.preapproval.pojo.Preapproval">
+			<subPage title="预审件查看(公开正文)" name="originalPreapproval" type="template"/>
+		</page>
+		
+		<page name="processingPreapproval" title="预审件查看(公开办理情况)" recordClass="com.yuanluesoft.cms.preapproval.pojo.Preapproval">
+			<subPage title="预审件查看(公开办理情况)" name="processingPreapproval" type="template"/>
+		</page>
+		
+		<page name="fullyPreapproval" title="预审件查看(完全公开)" recordClass="com.yuanluesoft.cms.preapproval.pojo.Preapproval">
+			<subPage title="预审件查看(完全公开)" name="fullyPreapproval" type="template"/>
+		</page>
+		
+		<page name="preapprovalSearch" title="搜索" searchPage="true" searchResults="preapprovals" url="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/preapproval&amp;pageName=preapprovalSearch"/>
+	</pages>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="preapprovals" processor="publicServicesProcessor"/> <!-- 预审件 -->
+	</pageElements>
+</application>

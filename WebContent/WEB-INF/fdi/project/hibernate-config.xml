@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--意向项目-->
+	<class name="com.yuanluesoft.fdi.project.pojo.FdiProject" table="fdi_project">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="chinaCompanyName"/> <!--中方单位名称,VARCHAR(300)-->
+		<property name="chinaCompanyAddress"/> <!--中方单位地址,VARCHAR(300)-->
+		<property name="chinaCompanyPostal"/> <!--中方单位邮编,VARCHAR(30)-->
+		<property name="chinaCompanySite"/> <!--中方单位网址,VARCHAR(300)-->
+		<property name="chinaContactName"/> <!--中方联系人姓名,VARCHAR(100)-->
+		<property name="chinaContactSex"/> <!--中方联系人性别,CHAR(1)-->
+		<property name="chinaContactTel"/> <!--中方联系人电话,含地区号,VARCHAR(100)-->
+		<property name="chinaContactMobile"/> <!--中方联系人手机,VARCHAR(100)-->
+		<property name="chinaContactFax"/> <!--中方联系人传真,含地区号,VARCHAR(100)-->
+		<property name="chinaContactEmail"/> <!--中方联系人E-mail,VARCHAR(100)-->
+		<property name="chinaContactIm"/> <!--中方联系人QQ\MSN,VARCHAR(100)-->
+		<property name="chinaContactPost"/> <!--中方联系人所在部门及职务,VARCHAR(300)-->
+		<property name="fdiContact1"/> <!--招商办联系人1,VARCHAR(100)-->
+		<property name="fdiContact2"/> <!--招商办联系人2,VARCHAR(100)-->
+		<property name="foreignCompanyName"/> <!--外方单位中文名称,VARCHAR(300)-->
+		<property name="foreignCompanyEnglishName"/> <!--外方单位英文名称,VARCHAR(300)-->
+		<property name="foreignCompanyAddress"/> <!--外方单位地址,含国别,VARCHAR(300)-->
+		<property name="foreignCompanyPostal"/> <!--外方单位邮编,VARCHAR(30)-->
+		<property name="foreignCompanyIntroduction"/> <!--外方单位简介,包括战略布局、核心行业与产品优势、竞争力分析等,VARCHAR(4000)-->
+		<property name="foreignCompanySite"/> <!--外方单位网址,VARCHAR(300)-->
+		<property name="foreignContactName"/> <!--外方洽谈人姓名,中英文,VARCHAR(100)-->
+		<property name="foreignContactPost"/> <!--外方洽谈人职务,VARCHAR(100)-->
+		<property name="foreignContactSex"/> <!--外方洽谈人性别,CHAR(1)-->
+		<property name="foreignContactTel"/> <!--外方洽谈人电话,含地区号,VARCHAR(100)-->
+		<property name="foreignContactMobile"/> <!--外方洽谈人手机,VARCHAR(100)-->
+		<property name="foreignContactFax"/> <!--外方洽谈人传真,含地区号,VARCHAR(100)-->
+		<property name="foreignContactEmail"/> <!--外方洽谈人E-mail,VARCHAR(100)-->
+		<property name="foreignContactIm"/> <!--外方洽谈人QQ\MSN,VARCHAR(100)-->
+		<property name="projectName"/> <!--项目名称,VARCHAR(300)-->
+		<property name="projectCategory"/> <!--项目归类,电子信息,机械装备,石油化工,生物医药,闽台合作,侨商项目, 基础设施、服务业、农林牧渔、纺织轻工、其他,VARCHAR(100)-->
+		<property name="industryId"/> <!--行业分类ID,NUMERIC(20)-->
+		<property name="industry"/> <!--行业分类名称,VARCHAR(200)-->
+		<property name="cooperateMode"/> <!--拟合作方式,合资,独资,合作,技术引进,设备引进,补偿贸易,其他,VARCHAR(100)-->
+		<property name="summary" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--项目概述,包括项目建设理由和条件、市场情况、建设内容、规模与目标等,TEXT-->
+		<property name="totalInvestment"/> <!--项目总投资,万元,NUMERIC(12,4)-->
+		<property name="creatorId"/> <!--登记人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--登记人,VARCHAR(100)-->
+		<property name="created"/> <!--登记时间,TIMESTAMP-->
+		<set name="pushs" table="fdi_project_push" lazy="true" inverse="true" cascade="delete" order-by="pushTime DESC">
+			<key column="projectId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.fdi.project.pojo.FdiProjectPush" />
+		</set>
+	</class>
+	
+	<!--意向项目:推进情况-->
+	<class name="com.yuanluesoft.fdi.project.pojo.FdiProjectPush" table="fdi_project_push">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID,NUMERIC(20)-->
+		<property name="pushTime"/> <!--时间,TIMESTAMP-->
+		<property name="transactor"/> <!--经办人,VARCHAR(100)-->
+		<property name="content" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--洽谈与推进内容,TEXT-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="webcs" title="主窗口">
+			<templatePlugin path="/im/webim/templatemanage/plugins" private="true">
+				<pageElementActions>webcs</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<link title="在线交谈" url="javascript:window.webim.createCustomerServiceChat('0', '{PARAMETER:siteId}')"/>
+			<link title="留言" url="javascript:window.webim.leaveMessage()"/>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="chatOfCustomer" title="客服对话" recordClass="com.yuanluesoft.im.webim.model.WebimChat">
+			<templatePlugin path="/im/webim/templatemanage/plugins" private="true">
+				<pageElementActions>webimDialog,webimChat</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+
+		<page name="message" title="留言" url="/cms/messageboard/message.shtml?forApplication=im/cs" systemLink="false">
+			<templatePlugin path="/im/webim/templatemanage/plugins" private="true">
+				<pageElementActions>webimDialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="messageFaq" title="常见问题">
+			<templatePlugin path="/im/webim/templatemanage/plugins" private="true">
+				<pageElementActions>webimDialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="messageSubmitted" title="留言提交完成">
+			<templatePlugin path="/im/webim/templatemanage/plugins" private="true">
+				<pageElementActions>webimDialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="evaluation" title="服务评价" url="/cms/messageboard/message.shtml?forApplication=im/cs">
+			<templatePlugin path="/im/webim/templatemanage/plugins" private="true">
+				<pageElementActions>webimDialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="evaluationSubmitted" title="服务评价提交完成">
+			<templatePlugin path="/im/webim/templatemanage/plugins" private="true">
+				<pageElementActions>webimDialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+	</pages>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="customerServiceSpecialists" processor="customerServiceSpecialistsProcessor"/> <!-- 客服列表 -->
+	</pageElements>
+</application>

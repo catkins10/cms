@@ -1,0 +1,1057 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 招投标:工程管理 -->
+<application>
+	<!-- 模板视图,page也可以有自己的配置 -->
+	<templateView name="admin/template" application="bidding/project"/>
+	
+	<!-- 模板插件,page也可以有自己的配置 -->
+	<templatePlugins>
+		<templatePlugin path="/bidding/project/admin/templateplugins" private="true">
+			<templateActions>project_template_range</templateActions> <!-- 扩展的模板操作 -->
+			<pageElementActions></pageElementActions> <!-- 扩展的页面元素操作 -->
+		</templatePlugin>
+	</templatePlugins>
+	
+	<pages>
+		<page name="biddingProject" title="工程招标" url="/bidding/project/project.shtml" businessObject="com.yuanluesoft.bidding.project.pojo.BiddingProject">
+			<field title="项目名称" name="projectName"/>
+			<field title="项目类别" name="projectCategory"/>
+			<field title="招标内容" name="projectProcedure"/>
+			<field title="所属地区" name="city"/>
+			<field title="招标编号" name="projectNumber"/>
+			<field title="是否委托招标代理" name="agentEnable"/>
+			<field title="招标方式" name="biddingMode"/>
+			<field title="资格审查方式" name="approvalMode"/>
+			<field title="代理产生方式" name="agentMode"/>
+			<field title="建设单位" name="owner"/>
+			<field title="建设单位性质" name="ownerType"/>
+			<field title="建设单位法人代表" name="ownerRepresentative"/>
+			<field title="建设单位联系人" name="ownerLinkman"/>
+			<field title="建设单位联系人身份证" name="ownerLinkmanIdCard"/>
+			<field title="建设单位联系电话" name="ownerTel"/>
+			<field title="建设单位传真" name="ownerFax"/>
+			<field title="建设单位电子邮件" name="ownerMail"/>
+			<field title="建设地点" name="projectAddress"/>
+			<field title="建设规模" name="scale"/>
+			<field title="登记时间" name="registTime" type="timestamp"/>
+			<field title="流程状态" name="workflowStatus"/>
+			<subPage name="base" title="项目资料"/>
+		</page>
+		
+		<page name="biddingProjectPrompt" title="提示信息" systemLink="false">
+			<subPage name="base" title="提示信息"/>
+		</page>
+		
+		<page name="biddingProjectInfo" title="项目信息" url="/bidding/project/projectInfo.shtml" systemLink="false" businessObject="com.yuanluesoft.bidding.project.pojo.BiddingProject">
+			<field title="项目名称" name="projectName"/>
+			<field title="项目类别" name="projectCategory"/>
+			<field title="招标内容" name="projectProcedure"/>
+			<field title="所属地区" name="city"/>
+			<field title="招标编号" name="projectNumber"/>
+			<field title="是否委托招标代理" name="agentEnable"/>
+			<field title="招标方式" name="biddingMode"/>
+			<field title="资格审查方式" name="approvalMode"/>
+			<field title="代理产生方式" name="agentMode"/>
+			<field title="建设单位" name="owner"/>
+			<field title="建设单位性质" name="ownerType"/>
+			<field title="建设单位法人代表" name="ownerRepresentative"/>
+			<field title="建设单位联系人" name="ownerLinkman"/>
+			<field title="建设单位联系人身份证" name="ownerLinkmanIdCard"/>
+			<field title="建设单位联系电话" name="ownerTel"/>
+			<field title="建设单位传真" name="ownerFax"/>
+			<field title="建设单位电子邮件" name="ownerMail"/>
+			<field title="建设地点" name="projectAddress"/>
+			<field title="建设规模" name="scale"/>
+			<field title="登记时间" name="registTime" type="timestamp"/>
+			<field title="项目进度" name="projectStatus"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:id}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:id}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:id}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:id}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:id}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:id}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:id}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:id}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:id}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:id}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:id}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingProjectProgress" title="项目进度" url="/bidding/project/projectProgress.shtml" systemLink="false" businessObject="com.yuanluesoft.bidding.project.pojo.BiddingProject">
+			<field title="项目名称" name="projectName"/>
+			<field title="项目类别" name="projectCategory"/>
+			<field title="招标内容" name="projectProcedure"/>
+			<field title="所属地区" name="city"/>
+			<field title="招标编号" name="projectNumber"/>
+			<field title="是否委托招标代理" name="agentEnable"/>
+			<field title="招标方式" name="biddingMode"/>
+			<field title="资格审查方式" name="approvalMode"/>
+			<field title="代理产生方式" name="agentMode"/>
+			<field title="建设单位" name="owner"/>
+			<field title="建设单位性质" name="ownerType"/>
+			<field title="建设单位法人代表" name="ownerRepresentative"/>
+			<field title="建设单位联系人" name="ownerLinkman"/>
+			<field title="建设单位联系人身份证" name="ownerLinkmanIdCard"/>
+			<field title="建设单位联系电话" name="ownerTel"/>
+			<field title="建设单位传真" name="ownerFax"/>
+			<field title="建设单位电子邮件" name="ownerMail"/>
+			<field title="建设地点" name="projectAddress"/>
+			<field title="建设规模" name="scale"/>
+			<field title="登记时间" name="registTime" type="timestamp"/>
+			<field title="项目进度" name="projectStatus"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:id}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:id}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:id}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:id}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:id}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:id}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:id}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:id}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:id}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:id}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:id}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingProjectInfoSearch" title="项目搜索" searchPage="true" searchResults="biddingProjectInfos" url="/bidding/project/search.shtml?type=biddingProjectInfoSearch"/>
+		<page name="biddingProjectProgressQuery" title="项目进度查询" searchPage="true" searchResults="biddingProjectProgresses" url="/bidding/project/search.shtml?type=biddingProjectProgressQuery"/>
+		
+		<page name="biddingAgentDraw" title="代理抽签公告" url="/bidding/project/agentDraw.shtml" systemLink="false" businessObject="com.yuanluesoft.bidding.project.pojo.BiddingProjectAgentDraw">
+			<field name="projectName" title="项目名称"/>
+			<field title="招标方式" name="biddingMode"/>
+			<field name="drawMode" title="代理申请方式"/>
+			<field name="agentLevel" title="代理资格条件"/>
+			<field name="content" title="委托代理内容"/>
+			<field name="agentSignup" title="代理机构报名时间" type="timestamp"/>
+			<field name="agentSignupEnd" title="代理机构报名截止时间" type="timestamp"/>
+			<field name="drawTime" title="抽选时间" type="timestamp"/>
+			<field name="publicLimit" title="公示期限"/>
+			<field name="drawAddress" title="抽选地点"/>
+			<field name="money" title="代理取费标准"/>
+			<field name="remark" title="备注"/>
+			
+			<field title="项目类别" name="project.projectCategory"/>
+			<field title="招标内容" name="project.projectProcedure"/>
+			<field title="所属地区" name="project.city"/>
+			<field title="招标编号" name="project.projectNumber"/>
+			<field title="是否委托招标代理" name="project.agentEnable"/>
+			<field title="招标方式" name="project.biddingMode"/>
+			<field title="资格审查方式" name="project.approvalMode"/>
+			<field title="代理产生方式" name="project.agentMode"/>
+			<field title="建设单位" name="project.owner"/>
+			<field title="建设单位性质" name="project.ownerType"/>
+			<field title="建设单位法人代表" name="project.ownerRepresentative"/>
+			<field title="建设单位联系人" name="project.ownerLinkman"/>
+			<field title="建设单位联系人身份证" name="project.ownerLinkmanIdCard"/>
+			<field title="建设单位联系电话" name="project.ownerTel"/>
+			<field title="建设单位传真" name="project.ownerFax"/>
+			<field title="建设单位电子邮件" name="project.ownerMail"/>
+			<field title="建设地点" name="project.projectAddress"/>
+			<field title="建设规模" name="project.scale"/>
+			
+			<field title="中选代理" name="agent.agentName"/>
+			<field title="中选代理联系人" name="agent.agentLinkman"/>
+			<field title="中选代理电话" name="agent.agentTel"/>
+			<field title="中选代理资格证书号" name="agent.agentCertificateNumber"/>
+			<field title="中选代理资质等级" name="agent.agentLevel"/>
+			<field title="中选代理法人代表" name="agent.agentRepresentative"/>
+			
+			<field title="发布时间" name="publicBeginTime" type="timestamp"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingAgent" title="中选代理公示" url="/bidding/project/agent.shtml" systemLink="false" businessObject="com.yuanluesoft.bidding.project.pojo.BiddingProjectAgent">
+			<field title="项目名称" name="projectName"/>
+			<field title="招标方式" name="biddingMode"/>
+			<field title="中选代理" name="agentName"/>
+			<field title="联系人" name="agentLinkman"/>
+			<field title="电话" name="agentTel"/>
+			<field title="资格证书号" name="agentCertificateNumber"/>
+			<field title="资质等级" name="agentLevel"/>
+			<field title="法人代表" name="agentRepresentative"/>
+			<field title="公示时间" name="publicBeginTime"/>
+			
+			<field title="项目类别" name="project.projectCategory"/>
+			<field title="招标内容" name="project.projectProcedure"/>
+			<field title="所属地区" name="project.city"/>
+			<field title="招标编号" name="project.projectNumber"/>
+			<field title="是否委托招标代理" name="project.agentEnable"/>
+			<field title="招标方式" name="project.biddingMode"/>
+			<field title="资格审查方式" name="project.approvalMode"/>
+			<field title="代理产生方式" name="project.agentMode"/>
+			<field title="建设单位" name="project.owner"/>
+			<field title="建设单位性质" name="project.ownerType"/>
+			<field title="建设单位法人代表" name="project.ownerRepresentative"/>
+			<field title="建设单位联系人" name="project.ownerLinkman"/>
+			<field title="建设单位联系人身份证" name="project.ownerLinkmanIdCard"/>
+			<field title="建设单位联系电话" name="project.ownerTel"/>
+			<field title="建设单位传真" name="project.ownerFax"/>
+			<field title="建设单位电子邮件" name="project.ownerMail"/>
+			<field title="建设地点" name="project.projectAddress"/>
+			<field title="建设规模" name="project.scale"/>
+			
+			<field name="agentDraw.drawMode" title="代理申请方式"/>
+			<field name="agentDraw.agentLevel" title="代理资格条件"/>
+			<field name="agentDraw.content" title="委托代理内容"/>
+			<field name="agentDraw.agentSignup" title="代理机构报名时间" type="timestamp"/>
+			<field name="agentDraw.drawTime" title="抽选时间" type="timestamp"/>
+			<field name="agentDraw.publicLimit" title="公示期限"/>
+			<field name="agentDraw.drawAddress" title="抽选地点"/>
+			<field name="agentDraw.money" title="代理取费标准"/>
+			<field name="agentDraw.remark" title="备注"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingTender" title="招标公告" url="/bidding/project/tender.shtml" systemLink="false" businessObject="com.yuanluesoft.bidding.project.pojo.BiddingProjectTender">
+			<field title="项目名称" name="projectName"/>
+			<field title="招标方式" name="biddingMode"/>
+			<field title="发布时间" name="publicBeginTime" type="timestamp"/>
+			<field title="公告截止时间" name="publicEndTime" type="timestamp"/>
+			
+			<field title="项目审批机关" name="approvalUnit"/>
+			<field title="批文名称及编号" name="projectSn"/>
+			<field title="项目业主" name="owner"/>
+			<field title="资金来源" name="investSource"/>
+			<field title="招标人" name="tenderee"/>
+			<field title="招标代理" name="agent"/>
+			<field title="招标方式" name="biddingMode"/>
+			<field title="建设地点" name="projectAddress"/>
+			<field title="建设规模" name="projectScale"/>
+			<field title="招标范围和内容" name="biddingContent"/>
+			<field title="总工期" name="timeLimit"/>
+			<field title="关键节点的工期要求" name="keysTimeLimit"/>
+			<field title="工程质量要求" name="quality"/>
+			<field title="咨询单位" name="consultationUnit"/>
+			<field title="设计单位" name="designUnit"/>
+			<field title="代建单位" name="fillinUnit"/>
+			<field title="监理单位" name="supervisorUnit"/>
+			<field title="资质类别及等级" name="bidderLevel"/>
+			<field title="项目经理等级" name="managerLevel"/>
+			<field title="项目经理专业" name="managerSubject"/>
+			<field title="接受/不接受联合体投标" name="unionBid"/>
+			<field title="联合体投标主办方" name="majorBidder"/>
+			<field title="项目经理“类似工程业绩”要求" name="managerAchievement"/>
+			<field title="类似工程业绩" name="similarityProject"/>
+			<field title="资格审查采用的方式" name="approvalMode"/>
+			<field title="购买招标文件地址" name="buyDocumentAddress"/>
+			<field title="购买招标文件开始时间" name="buyDocumentBegin" type="timestamp"/>
+			<field title="购买招标文件结束时间" name="buyDocumentEnd" type="timestamp"/>
+			<field title="招标文件每份售价" name="documentPrice"/>
+			<field title="招标图纸每份售价" name="drawingPrice"/>
+			<field title="采用的评标办法" name="evaluateMethod"/>
+			<field title="保证金提交的时间" name="pledgeTime" type="timestamp"/>
+			<field title="保证金提交的方式" name="pledgeMode"/>
+			<field title="保证金提交的金额" name="pledgeMoneyText"/>
+			<field title="投标文件的递交截止时间" name="submitTime" type="timestamp"/>
+			<field title="投标文件的递交地点" name="submitAddress"/>
+			<field title="发布公告的媒体名称" name="media"/>
+			<field title="招标人地址" name="tendereeAddress"/>
+			<field title="招标人邮编" name="tendereePostalCode"/>
+			<field title="招标人电话" name="tendereeTel"/>
+			<field title="招标人传真" name="tendereeFax"/>
+			<field title="招标人联系人" name="tendereeLinkman"/>
+			<field title="招标代理机构地址" name="agentAddress"/>
+			<field title="招标代理机构邮编" name="agentPostalCode"/>
+			<field title="招标代理机构电话" name="agentTel"/>
+			<field title="招标代理机构传真" name="agentFax"/>
+			<field title="招标代理机构联系人" name="agentLinkman"/>
+			<field title="开户银行" name="bank"/>
+			<field title="帐户名称" name="accountName"/>
+			<field title="帐号" name="accounts"/>
+			<field title="交易中心名称" name="tradingName"/>
+			<field title="地址" name="tradingAddress"/>
+			
+			<field title="项目类别" name="project.projectCategory"/>
+			<field title="招标内容" name="project.projectProcedure"/>
+			<field title="所属地区" name="project.city"/>
+			<field title="招标编号" name="project.projectNumber"/>
+			<field title="是否委托招标代理" name="project.agentEnable"/>
+			<field title="招标方式" name="project.biddingMode"/>
+			<field title="资格审查方式" name="project.approvalMode"/>
+			<field title="代理产生方式" name="project.agentMode"/>
+			<field title="建设单位" name="project.owner"/>
+			<field title="建设单位性质" name="project.ownerType"/>
+			<field title="建设单位法人代表" name="project.ownerRepresentative"/>
+			<field title="建设单位联系人" name="project.ownerLinkman"/>
+			<field title="建设单位联系人身份证" name="project.ownerLinkmanIdCard"/>
+			<field title="建设单位联系电话" name="project.ownerTel"/>
+			<field title="建设单位传真" name="project.ownerFax"/>
+			<field title="建设单位电子邮件" name="project.ownerMail"/>
+			<field title="建设地点" name="project.projectAddress"/>
+			<field title="建设规模" name="project.scale"/>
+			
+			<field title="邀请函" name="invitation"/>
+			<field title="公告正文" name="body" type="html"/>
+			
+			<field title="备注3.1" name="remark31"/>
+			<field title="备注3.2" name="remark32"/>
+			<field title="备注3.7" name="remark1"/>
+			<field title="备注3.8" name="remark2"/>
+			<field title="备注3.9" name="remark3"/>
+			<field title="备注3.10" name="remark4"/>
+			<field title="备注3.11" name="remark311"/>
+			<field title="备注3.12" name="remark312"/>
+			<field title="备注4.3" name="remark43"/>
+			<field title="备注6.2" name="remark62"/>
+			<field title="备注7.1" name="remark71"/>
+			
+			<link title="提问" url="/bidding/project/ask/ask.shtml?projectId={PARAMETER:projectId}&amp;askFrom=tender"/>
+			<link title="问题列表" url="/bidding/project/ask/liskAsks.shtml?projectId={PARAMETER:projectId}&amp;askFrom=tender"/>
+			<link title="投标报名" url="/bidding/project/signup/signUp.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="提交标书" url="/bidding/project/signup/signUpQuery.shtml?pageName=biddingSignUpVerify"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<!-- page name="biddingMaterial" title="招标文件实质性内容" url="/bidding/project/material.shtml" systemLink="false">
+			<field title="项目名称" name="tenderProjectName"/>
+			<field title="发布时间" name="publicBeginTime" type="timestamp"/>
+			<field title="正文" name="body"/>
+			
+			<field title="项目审批机关" name="tender.approvalUnit"/>
+			<field title="批文名称及编号" name="tender.projectSn"/>
+			<field title="项目业主" name="tender.owner"/>
+			<field title="资金来源" name="tender.investSource"/>
+			<field title="招标人" name="tender.tenderee"/>
+			<field title="招标代理" name="tender.agent"/>
+			<field title="招标方式" name="tender.biddingMode"/>
+			<field title="建设地点" name="tender.projectAddress"/>
+			<field title="建设规模" name="tender.projectScale"/>
+			<field title="招标范围和内容" name="tender.biddingContent"/>
+			<field title="总工期" name="tender.timeLimit"/>
+			<field title="关键节点的工期要求" name="tender.keysTimeLimit"/>
+			<field title="工程质量要求" name="tender.quality"/>
+			<field title="咨询单位" name="tender.consultationUnit"/>
+			<field title="设计单位" name="tender.designUnit"/>
+			<field title="代建单位" name="tender.fillinUnit"/>
+			<field title="监理单位" name="tender.supervisorUnit"/>
+			<field title="资质类别及等级" name="tender.bidderLevel"/>
+			<field title="项目经理等级" name="tender.managerLevel"/>
+			<field title="项目经理专业" name="tender.managerSubject"/>
+			<field title="接受/不接受联合体投标" name="tender.unionBid"/>
+			<field title="联合体投标主办方" name="tender.majorBidder"/>
+			<field title="项目经理“类似工程业绩”要求" name="tender.managerAchievement"/>
+			<field title="类似工程业绩" name="tender.similarityProject"/>
+			<field title="资格审查采用的方式" name="tender.approvalMode"/>
+			<field title="购买招标文件地址" name="tender.buyDocumentAddress"/>
+			<field title="购买招标文件开始时间" name="tender.buyDocumentBegin" type="timestamp"/>
+			<field title="购买招标文件结束时间" name="tender.buyDocumentEnd" type="timestamp"/>
+			<field title="招标文件每份售价" name="tender.documentPrice"/>
+			<field title="招标图纸每份售价" name="tender.drawingPrice"/>
+			<field title="采用的评标办法" name="tender.evaluateMethod"/>
+			<field title="保证金提交的时间" name="tender.pledgeTime" type="timestamp"/>
+			<field title="保证金提交的方式" name="tender.pledgeMode"/>
+			<field title="保证金提交的金额" name="tender.pledgeMoneyText"/>
+			<field title="投标文件的递交截止时间" name="tender.submitTime" type="timestamp"/>
+			<field title="投标文件的递交地点" name="tender.submitAddress"/>
+			<field title="发布公告的媒体名称" name="tender.media"/>
+			<field title="招标人地址" name="tender.tendereeAddress"/>
+			<field title="招标人邮编" name="tender.tendereePostalCode"/>
+			<field title="招标人电话" name="tender.tendereeTel"/>
+			<field title="招标人传真" name="tender.tendereeFax"/>
+			<field title="招标人联系人" name="tender.tendereeLinkman"/>
+			<field title="招标代理机构地址" name="tender.agentAddress"/>
+			<field title="招标代理机构邮编" name="tender.agentPostalCode"/>
+			<field title="招标代理机构电话" name="tender.agentTel"/>
+			<field title="招标代理机构传真" name="tender.agentFax"/>
+			<field title="招标代理机构联系人" name="tender.agentLinkman"/>
+			<field title="开户银行" name="tender.bank"/>
+			<field title="帐户名称" name="tender.accountName"/>
+			<field title="帐号" name="tender.accounts"/>
+			<field title="交易中心名称" name="tender.tradingName"/>
+			<field title="地址" name="tender.tradingAddress"/>
+			<field title="招标控制价" name="tender.controlPrice"/>
+			<field title="代理单位产生方式" name="tender.agentGenerate"/>
+			<field title="招标编号" name="tender.biddingNumber"/>
+			<field title="发布招标邀请书时间" name="tender.inviteDate" type="date"/>
+			<field title="发布招标邀请书媒体" name="tender.inviteMedia"/>
+			<field title="招标文件质疑时限" name="tender.askEnd" type="timestamp"/>
+			<field title="招标文件质疑地点" name="tender.askMedia"/>
+			<field title="开标、评标时间" name="tender.bidopeningTime" type="timestamp"/>
+			<field title="开标、评标地点" name="tender.bidopeningAddress"/>
+			<field title="确定中标人" name="tender.pitchonTime"/>
+			<field title="中标结果公示" name="tender.publicPitchonTime"/>
+			<field title="发放中标通知书" name="tender.noticeTime"/>
+			<field title="招投标情况书面报告备案" name="tender.archiveTime"/>
+			
+			<link title="提问" url="/bidding/project/ask/ask.shtml?projectId={PARAMETER:projectId}&amp;askFrom=material"/>
+		</page-->
+		
+		<page name="biddingPlan" title="招标时间安排" url="/bidding/project/plan.shtml" systemLink="false" businessObject="com.yuanluesoft.bidding.project.pojo.BiddingProjectPlan">
+			<field title="项目名称" name="projectName"/>
+			<field title="招标方式" name="biddingMode"/>
+			<field title="发布时间" name="publicBeginTime" type="timestamp"/>
+			<field title="公示截止时间" name="publicEndTime" type="timestamp"/>
+			<field title="发布招标邀请书时间" name="inviteDate" type="date"/>
+			<field title="发布招标邀请书媒体" name="inviteMedia"/>
+			<field title="购买招标文件开始时间" name="buyDocumentBegin" type="timestamp"/>
+			<field title="购买招标文件结束时间" name="buyDocumentEnd" type="timestamp"/>
+			<field title="购买招标文件地址" name="buyDocumentAddress"/>
+			<field title="招标文件质疑时限" name="askEnd" type="timestamp"/>
+			<field title="招标文件质疑地点" name="askMedia"/>
+			<field title="投标文件的递交截止时间" name="submitTime" type="timestamp"/>
+			<field title="投标文件的递交地点" name="submitAddress"/>
+			<field title="开标、评标时间" name="bidopeningTime" type="timestamp"/>
+			<field title="开标、评标地点" name="bidopeningAddress"/>
+			<field title="确定中标人时间" name="pitchonDate" type="date"/>
+			<field title="确定中标人地点" name="pitchonAddress"/>
+			<field title="中标结果公示时间" name="publicPitchonDays"/>
+			<field title="中标结果公示媒体" name="publicPitchonMedia"/>
+			<field title="发放中标通知书时间" name="noticeDays"/>
+			<field title="发放中标通知书地点" name="noticeAddress"/>
+			<field title="书面报告备案时间" name="archiveDays"/>
+			<field title="书面报告备案地点" name="archiveAddress"/>
+			
+			<field title="项目类别" name="project.projectCategory"/>
+			<field title="招标内容" name="project.projectProcedure"/>
+			<field title="所属地区" name="project.city"/>
+			<field title="招标编号" name="project.projectNumber"/>
+			<field title="是否委托招标代理" name="project.agentEnable"/>
+			<field title="招标方式" name="project.biddingMode"/>
+			<field title="资格审查方式" name="project.approvalMode"/>
+			<field title="代理产生方式" name="project.agentMode"/>
+			<field title="建设单位" name="project.owner"/>
+			<field title="建设单位性质" name="project.ownerType"/>
+			<field title="建设单位法人代表" name="project.ownerRepresentative"/>
+			<field title="建设单位联系人" name="project.ownerLinkman"/>
+			<field title="建设单位联系人身份证" name="project.ownerLinkmanIdCard"/>
+			<field title="建设单位联系电话" name="project.ownerTel"/>
+			<field title="建设单位传真" name="project.ownerFax"/>
+			<field title="建设单位电子邮件" name="project.ownerMail"/>
+			<field title="建设地点" name="project.projectAddress"/>
+			<field title="建设规模" name="project.scale"/>
+			
+			<field title="项目审批机关" name="tender.approvalUnit"/>
+			<field title="批名称及编号" name="tender.projectSn"/>
+			<field title="项目业主" name="tender.owner"/>
+			<field title="资金来源" name="tender.investSource"/>
+			<field title="招标人" name="tender.tenderee"/>
+			<field title="招标代理" name="tender.agent"/>
+			<field title="招标方式" name="tender.biddingMode"/>
+			<field title="建设地点" name="tender.projectAddress"/>
+			<field title="建设规模" name="tender.projectScale"/>
+			<field title="招标范围和内容" name="tender.biddingContent"/>
+			<field title="总工期" name="tender.timeLimit"/>
+			<field title="关键节点的工期要求" name="tender.keysTimeLimit"/>
+			<field title="工程质量要求" name="tender.quality"/>
+			<field title="咨询单位" name="tender.consultationUnit"/>
+			<field title="设计单位" name="tender.designUnit"/>
+			<field title="代建单位" name="tender.fillinUnit"/>
+			<field title="监理单位" name="tender.supervisorUnit"/>
+			<field title="资质类别及等级" name="tender.bidderLevel"/>
+			<field title="项目经理等级" name="tender.managerLevel"/>
+			<field title="项目经理专业" name="tender.managerSubject"/>
+			<field title="接受/不接受联合体投标" name="tender.unionBid"/>
+			<field title="联合体投标主办方" name="tender.majorBidder"/>
+			<field title="项目经理“类似工程业绩”要求" name="tender.managerAchievement"/>
+			<field title="类似工程业绩" name="tender.similarityProject"/>
+			<field title="资格审查采用的方式" name="tender.approvalMode"/>
+			<field title="招标文件每份售价" name="tender.documentPrice"/>
+			<field title="招标图纸每份售价" name="tender.drawingPrice"/>
+			<field title="采用的评标办法" name="tender.evaluateMethod"/>
+			<field title="保证金提交的时间" name="tender.pledgeTime" type="timestamp"/>
+			<field title="保证金提交的方式" name="tender.pledgeMode"/>
+			<field title="保证金提交的金额" name="tender.pledgeMoneyText"/>
+			<field title="发布公告的媒体名称" name="tender.media"/>
+			<field title="招标人地址" name="tender.tendereeAddress"/>
+			<field title="招标人邮编" name="tender.tendereePostalCode"/>
+			<field title="招标人电话" name="tender.tendereeTel"/>
+			<field title="招标人传真" name="tender.tendereeFax"/>
+			<field title="招标人联系人" name="tender.tendereeLinkman"/>
+			<field title="招标代理机构地址" name="tender.agentAddress"/>
+			<field title="招标代理机构邮编" name="tender.agentPostalCode"/>
+			<field title="招标代理机构电话" name="tender.agentTel"/>
+			<field title="招标代理机构传真" name="tender.agentFax"/>
+			<field title="招标代理机构联系人" name="tender.agentLinkman"/>
+			<field title="开户银行" name="tender.bank"/>
+			<field title="帐户名称" name="tender.accountName"/>
+			<field title="帐号" name="tender.accounts"/>
+			<field title="交易中心名称" name="tender.tradingName"/>
+			<field title="地址" name="tender.tradingAddress"/>
+			
+			<!-- link title="提问" url="/bidding/project/ask/ask.shtml?projectId={PARAMETER:projectId}&amp;askFrom=plan"/-->
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingPreapproval" title="预审公示" url="/bidding/project/preapproval.shtml" systemLink="false" businessObject="com.yuanluesoft.bidding.project.pojo.BiddingProjectPreapproval">
+			<field title="项目名称" name="projectName"/>
+			<field title="招标方式" name="biddingMode"/>
+			<field title="发布时间" name="publicBeginTime" type="timestamp"/>
+			<field title="公示截止时间" name="publicEndTime" type="timestamp"/>
+			
+			<field title="项目类别" name="project.projectCategory"/>
+			<field title="招标内容" name="project.projectProcedure"/>
+			<field title="所属地区" name="project.city"/>
+			<field title="招标编号" name="project.projectNumber"/>
+			<field title="是否委托招标代理" name="project.agentEnable"/>
+			<field title="招标方式" name="project.biddingMode"/>
+			<field title="资格审查方式" name="project.approvalMode"/>
+			<field title="代理产生方式" name="project.agentMode"/>
+			<field title="建设单位" name="project.owner"/>
+			<field title="建设单位性质" name="project.ownerType"/>
+			<field title="建设单位法人代表" name="project.ownerRepresentative"/>
+			<field title="建设单位联系人" name="project.ownerLinkman"/>
+			<field title="建设单位联系人身份证" name="project.ownerLinkmanIdCard"/>
+			<field title="建设单位联系电话" name="project.ownerTel"/>
+			<field title="建设单位传真" name="project.ownerFax"/>
+			<field title="建设单位电子邮件" name="project.ownerMail"/>
+			<field title="建设地点" name="project.projectAddress"/>
+			<field title="建设规模" name="project.scale"/>
+			
+			<field title="公示正文" name="body" type="html"/>
+			
+			<link title="提问" url="/bidding/project/ask/ask.shtml?projectId={PARAMETER:projectId}&amp;askFrom=preapproval"/>
+			<link title="问题列表" url="/bidding/project/ask/liskAsks.shtml?projectId={PARAMETER:projectId}&amp;askFrom=preapproval"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingAnswer" title="答疑会议纪要" url="/bidding/project/answer.shtml" systemLink="false" businessObject="com.yuanluesoft.bidding.project.pojo.BiddingProjectAnswer">
+			<field title="项目名称" name="projectName"/>
+			<field title="招标方式" name="biddingMode"/>
+			<field title="发布时间" name="publicBeginTime" type="timestamp"/>
+			
+			<field title="项目类别" name="project.projectCategory"/>
+			<field title="招标内容" name="project.projectProcedure"/>
+			<field title="所属地区" name="project.city"/>
+			<field title="招标编号" name="project.projectNumber"/>
+			<field title="是否委托招标代理" name="project.agentEnable"/>
+			<field title="招标方式" name="project.biddingMode"/>
+			<field title="资格审查方式" name="project.approvalMode"/>
+			<field title="代理产生方式" name="project.agentMode"/>
+			<field title="建设单位" name="project.owner"/>
+			<field title="建设单位性质" name="project.ownerType"/>
+			<field title="建设单位法人代表" name="project.ownerRepresentative"/>
+			<field title="建设单位联系人" name="project.ownerLinkman"/>
+			<field title="建设单位联系人身份证" name="project.ownerLinkmanIdCard"/>
+			<field title="建设单位联系电话" name="project.ownerTel"/>
+			<field title="建设单位传真" name="project.ownerFax"/>
+			<field title="建设单位电子邮件" name="project.ownerMail"/>
+			<field title="建设地点" name="project.projectAddress"/>
+			<field title="建设规模" name="project.scale"/>
+			
+			<field title="公告正文" name="body" type="html"/>
+			
+			<link title="提问" url="/bidding/project/ask/ask.shtml?projectId={PARAMETER:projectId}&amp;askFrom=answer"/>
+			<link title="问题列表" url="/bidding/project/ask/liskAsks.shtml?projectId={PARAMETER:projectId}&amp;askFrom=answer"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingSupplement" title="补充通知" url="/bidding/project/supplement.shtml" systemLink="false" businessObject="com.yuanluesoft.bidding.project.pojo.BiddingProjectSupplement">
+			<field title="项目名称" name="projectName"/>
+			<field title="招标方式" name="biddingMode"/>
+			<field title="发布时间" name="publicBeginTime" type="timestamp"/>
+			
+			<field title="项目类别" name="project.projectCategory"/>
+			<field title="招标内容" name="project.projectProcedure"/>
+			<field title="所属地区" name="project.city"/>
+			<field title="招标编号" name="project.projectNumber"/>
+			<field title="是否委托招标代理" name="project.agentEnable"/>
+			<field title="招标方式" name="project.biddingMode"/>
+			<field title="资格审查方式" name="project.approvalMode"/>
+			<field title="代理产生方式" name="project.agentMode"/>
+			<field title="建设单位" name="project.owner"/>
+			<field title="建设单位性质" name="project.ownerType"/>
+			<field title="建设单位法人代表" name="project.ownerRepresentative"/>
+			<field title="建设单位联系人" name="project.ownerLinkman"/>
+			<field title="建设单位联系人身份证" name="project.ownerLinkmanIdCard"/>
+			<field title="建设单位联系电话" name="project.ownerTel"/>
+			<field title="建设单位传真" name="project.ownerFax"/>
+			<field title="建设单位电子邮件" name="project.ownerMail"/>
+			<field title="建设地点" name="project.projectAddress"/>
+			<field title="建设规模" name="project.scale"/>
+			
+			<field title="公告正文" name="body" type="html"/>
+			
+			<link title="提问" url="/bidding/project/ask/ask.shtml?projectId={PARAMETER:projectId}&amp;askFrom=supplement"/>
+			<link title="问题列表" url="/bidding/project/ask/liskAsks.shtml?projectId={PARAMETER:projectId}&amp;askFrom=supplement"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+			
+			<recordList title="其它补充通知列表" name="otherBiddingSupplements" recordPage="biddingSupplement" hostPage="biddingSupplements"/>
+		</page>
+		
+		<page name="bidopening" title="开标公示" url="/bidding/project/bidopening.shtml" systemLink="false" businessObject="com.yuanluesoft.bidding.project.pojo.BiddingProjectBidopening">
+			<field title="项目名称" name="projectName"/>
+			<field title="发布时间" name="publicBeginTime" type="timestamp"/>
+			<field title="公示截止时间" name="publicEndTime" type="timestamp"/>
+			<field title="单位编码" name="unitCode"/>
+			<field title="单位名称" name="unitName"/>
+			<field title="开标室" name="room"/>
+			<field title="开标时间" name="beginTime" type="timestamp"/>
+			<field title="截标时间" name="endTime" type="timestamp"/>
+			<field title="联系人" name="linkman"/>
+			<field title="联系电话" name="tel"/>
+			<field title="工期" name="timeLimit"/>
+			<field title="服务人员" name="serviceMan"/>
+			<field title="开标状态" name="status"/>
+			<field title="开标情况描述" name="description"/>
+			<field title="主持人" name="compere"/>
+			<field title="唱标人" name="callouter"/>
+			<field title="记录人" name="recorder"/>
+			<field title="监标人" name="surverllant"/>
+			
+			<field title="项目类别" name="project.projectCategory"/>
+			<field title="招标内容" name="project.projectProcedure"/>
+			<field title="所属地区" name="project.city"/>
+			<field title="招标编号" name="project.projectNumber"/>
+			<field title="是否委托招标代理" name="project.agentEnable"/>
+			<field title="招标方式" name="project.biddingMode"/>
+			<field title="资格审查方式" name="project.approvalMode"/>
+			<field title="代理产生方式" name="project.agentMode"/>
+			<field title="建设单位" name="project.owner"/>
+			<field title="建设单位性质" name="project.ownerType"/>
+			<field title="建设单位法人代表" name="project.ownerRepresentative"/>
+			<field title="建设单位联系人" name="project.ownerLinkman"/>
+			<field title="建设单位联系人身份证" name="project.ownerLinkmanIdCard"/>
+			<field title="建设单位联系电话" name="project.ownerTel"/>
+			<field title="建设单位传真" name="project.ownerFax"/>
+			<field title="建设单位电子邮件" name="project.ownerMail"/>
+			<field title="建设地点" name="project.projectAddress"/>
+			<field title="建设规模" name="project.scale"/>
+			
+			<field title="公示正文" name="body" type="html"/>
+			
+			<recordList title="投标单位开标评分" name="bidopeningGrades">
+				<field title="序号" name="serial"/>
+				<field title="投标人" name="enterpriseName"/>
+				<field title="密封情况" name="seal"/>
+				<field title="投标报价" name="price" type="number"/>
+				<field title="项目经理" name="manager"/>
+				<field title="执业证书编号" name="certificate"/>
+				<field title="工期" name="timeLimit"/>
+				<field title="保证金" name="pledge"/>
+				<field title="质量目标" name="quality"/>
+				<field title="签名" name="sign"/>
+			</recordList>
+			
+			<link title="提问" url="/bidding/project/ask/ask.shtml?projectId={PARAMETER:projectId}&amp;askFrom=bidopening"/>
+			<link title="问题列表" url="/bidding/project/ask/liskAsks.shtml?projectId={PARAMETER:projectId}&amp;askFrom=bidopening"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingPitchon" title="中标公示" url="/bidding/project/pitchon.shtml" systemLink="false" businessObject="com.yuanluesoft.bidding.project.pojo.BiddingProjectPitchon">
+			<field title="项目名称" name="projectName"/>
+			<field title="招标方式" name="biddingMode"/>
+			<field title="公示时间" name="publicBeginTime" type="timestamp"/>
+			<field title="公示截止时间" name="publicEndTime" type="timestamp"/>
+			<field title="开标时间" name="bidopeningTime" type="timestamp"/>
+			<field title="中标人" name="pitchonEnterprise"/>
+			<field title="项目经理" name="manager"/>
+			<field title="中标金额" name="pitchonMoney" type="number"/>
+			<field title="业主评委" name="ownerRater"/>
+			<field title="评标专家" name="raters"/>
+			<field title="招标人" name="tenderee"/>
+			<field title="招标人地址" name="tendereeAddress"/>
+			<field title="招标人邮政编码" name="tendereePostalCode"/>
+			<field title="招标人电子邮件" name="tendereeMail"/>
+			<field title="招标人联系人" name="tendereeLinkman"/>
+			<field title="招标人联系电话" name="tendereeTel"/>
+			<field title="招标人传真" name="tendereeFax"/>
+			<field title="招标代理机构" name="agent"/>
+			<field title="代理办公地址" name="agentAddress"/>
+			<field title="代理邮政编码" name="agentPostalCode"/>
+			<field title="代理传真" name="agentFax"/>
+			<field title="代理电话" name="agentTel"/>
+			<field title="代理联系人" name="agentLinkman"/>
+			<field title="代理电子邮件" name="agentMail"/>
+			<field title="招投标监督机构" name="supervision"/>
+			<field title="监督机构地址" name="supervisionAddress"/>
+			<field title="监督电话" name="supervisionTel"/>
+			<field title="备注" name="remark"/>
+			
+			<field title="项目类别" name="project.projectCategory"/>
+			<field title="招标内容" name="project.projectProcedure"/>
+			<field title="所属地区" name="project.city"/>
+			<field title="招标编号" name="project.projectNumber"/>
+			<field title="是否委托招标代理" name="project.agentEnable"/>
+			<field title="招标方式" name="project.biddingMode"/>
+			<field title="资格审查方式" name="project.approvalMode"/>
+			<field title="代理产生方式" name="project.agentMode"/>
+			<field title="建设单位" name="project.owner"/>
+			<field title="建设单位性质" name="project.ownerType"/>
+			<field title="建设单位法人代表" name="project.ownerRepresentative"/>
+			<field title="建设单位联系人" name="project.ownerLinkman"/>
+			<field title="建设单位联系人身份证" name="project.ownerLinkmanIdCard"/>
+			<field title="建设单位联系电话" name="project.ownerTel"/>
+			<field title="建设单位传真" name="project.ownerFax"/>
+			<field title="建设单位电子邮件" name="project.ownerMail"/>
+			<field title="建设地点" name="project.projectAddress"/>
+			<field title="建设规模" name="project.scale"/>
+			
+			<field title="公示正文" name="body" type="html"/>
+			
+			<recordList title="不合格投标人" name="biddingPitchouts">
+				<field title="投标人名称" name="enterpriseName"/>
+				<field title="评审结果" name="result"/>
+				<field title="原因" name="reason"/>
+				<field title="依据及理由" name="basis"/>
+				<field title="备注" name="remark"/>
+			</recordList>
+			
+			<link title="提问" url="/bidding/project/ask/ask.shtml?projectId={PARAMETER:projectId}&amp;askFrom=pitchon"/>
+			<link title="问题列表" url="/bidding/project/ask/liskAsks.shtml?projectId={PARAMETER:projectId}&amp;askFrom=pitchon"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingNotice" title="中标通知书" url="/bidding/project/notice.shtml" systemLink="false" businessObject="com.yuanluesoft.bidding.project.pojo.BiddingProjectNotice">
+			<field title="项目名称" name="projectName"/>
+			<field title="招标方式" name="biddingMode"/>
+			<field title="发布时间" name="publicBeginTime" type="timestamp"/>
+			<field title="通知书编号" name="noticeNumber"/>
+			<field title="标段" name="stage"/>
+			<field title="中标人" name="pitchonEnterprise"/>
+			<field title="中标价" name="pitchonPrice" type="number"/>
+			<field title="总工期" name="timeLimit"/>
+			<field title="关键节点工期要求" name="keysTimeLimit"/>
+			<field title="签订合同时限" name="contractDays"/>
+			<field title="签订合同地点" name="contractAddress"/>
+			<field title="工程质量" name="quality"/>
+			<field title="投标日期" name="biddingDate" type="date"/>
+			<field title="项目经理" name="manager"/>
+			<field title="招标人" name="tenderee"/>
+			<field title="法定代表人" name="tendereeRepresentative"/>
+			<field title="通知时间" name="noticeDate" type="date"/>
+			<field title="备注" name="remark"/>
+			
+			<field title="项目类别" name="project.projectCategory"/>
+			<field title="招标内容" name="project.projectProcedure"/>
+			<field title="所属地区" name="project.city"/>
+			<field title="招标编号" name="project.projectNumber"/>
+			<field title="是否委托招标代理" name="project.agentEnable"/>
+			<field title="招标方式" name="project.biddingMode"/>
+			<field title="资格审查方式" name="project.approvalMode"/>
+			<field title="代理产生方式" name="project.agentMode"/>
+			<field title="建设单位" name="project.owner"/>
+			<field title="建设单位性质" name="project.ownerType"/>
+			<field title="建设单位法人代表" name="project.ownerRepresentative"/>
+			<field title="建设单位联系人" name="project.ownerLinkman"/>
+			<field title="建设单位联系人身份证" name="project.ownerLinkmanIdCard"/>
+			<field title="建设单位联系电话" name="project.ownerTel"/>
+			<field title="建设单位传真" name="project.ownerFax"/>
+			<field title="建设单位电子邮件" name="project.ownerMail"/>
+			<field title="建设地点" name="project.projectAddress"/>
+			<field title="建设规模" name="project.scale"/>
+			
+			<field title="公示正文" name="body" type="html"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingNoticePrint" title="中标通知书打印" url="/bidding/project/printNotice.shtml" systemLink="false" businessObject="com.yuanluesoft.bidding.project.pojo.BiddingProjectNotice">
+			<field title="项目名称" name="projectName"/>
+			<field title="招标方式" name="biddingMode"/>
+			<field title="发布时间" name="publicBeginTime" type="timestamp"/>
+			<field title="通知书编号" name="noticeNumber"/>
+			<field title="标段" name="stage"/>
+			<field title="中标人" name="pitchonEnterprise"/>
+			<field title="中标价" name="pitchonPrice" type="number"/>
+			<field title="总工期" name="timeLimit"/>
+			<field title="关键节点工期要求" name="keysTimeLimit"/>
+			<field title="签订合同时限" name="contractDays"/>
+			<field title="签订合同地点" name="contractAddress"/>
+			<field title="工程质量" name="quality"/>
+			<field title="投标日期" name="biddingDate" type="date"/>
+			<field title="项目经理" name="manager"/>
+			<field title="招标人" name="tenderee"/>
+			<field title="法定代表人" name="tendereeRepresentative"/>
+			<field title="通知时间" name="noticeDate" type="date"/>
+			<field title="备注" name="remark"/>
+			
+			<field title="项目类别" name="project.projectCategory"/>
+			<field title="招标内容" name="project.projectProcedure"/>
+			<field title="所属地区" name="project.city"/>
+			<field title="招标编号" name="project.projectNumber"/>
+			<field title="是否委托招标代理" name="project.agentEnable"/>
+			<field title="招标方式" name="project.biddingMode"/>
+			<field title="资格审查方式" name="project.approvalMode"/>
+			<field title="代理产生方式" name="project.agentMode"/>
+			<field title="建设单位" name="project.owner"/>
+			<field title="建设单位性质" name="project.ownerType"/>
+			<field title="建设单位法人代表" name="project.ownerRepresentative"/>
+			<field title="建设单位联系人" name="project.ownerLinkman"/>
+			<field title="建设单位联系人身份证" name="project.ownerLinkmanIdCard"/>
+			<field title="建设单位联系电话" name="project.ownerTel"/>
+			<field title="建设单位传真" name="project.ownerFax"/>
+			<field title="建设单位电子邮件" name="project.ownerMail"/>
+			<field title="建设地点" name="project.projectAddress"/>
+			<field title="建设规模" name="project.scale"/>
+			
+			<field title="公示正文" name="body" type="html"/>
+		</page>
+
+		<page title="待办项目列表" name="todoBiddingProjects" url="/bidding/project/listProjects.shtml?type=todoBiddingProjects"/>
+		<page title="参与招标项目列表" name="agentBiddingProjects" url="/bidding/project/listProjects.shtml?type=agentBiddingProjects"/>
+		
+		<page title="代理抽签公告列表" name="biddingAgentDraws" url="/bidding/project/listNotices.shtml?type=biddingAgentDraws"/>
+		<page title="中选代理公示列表" name="biddingAgents" url="/bidding/project/listNotices.shtml?type=biddingAgents"/>
+		<page title="招标公告列表" name="biddingTenders" url="/bidding/project/listNotices.shtml?type=biddingTenders"/>
+		<page title="允许报名的招标公告列表" name="toSignUpBiddingTenders" url="/bidding/project/listNotices.shtml?type=toSignUpBiddingTenders"/>
+		<page title="招标时间安排列表" name="biddingPlans" url="/bidding/project/listNotices.shtml?type=biddingPlans"/>
+		<!-- page title="招标文件实质性内容列表" name="biddingMaterials" url="/bidding/project/listNotices.shtml?type=biddingMaterials"/-->
+		<page title="招标答疑列表" name="biddingAnswers" url="/bidding/project/listNotices.shtml?type=biddingAnswers"/>
+		<page title="补充通知列表" name="biddingSupplements" url="/bidding/project/listNotices.shtml?type=biddingSupplements"/>
+		<page title="预审公示列表" name="biddingPreapprovals" url="/bidding/project/listNotices.shtml?type=biddingPreapprovals"/>
+		<page title="开标公示列表" name="bidopenings" url="/bidding/project/listNotices.shtml?type=bidopenings"/>
+		<page title="中标公示列表" name="biddingPitchons" url="/bidding/project/listNotices.shtml?type=biddingPitchons"/>
+		<page title="中标通知书列表" name="biddingNotices" url="/bidding/project/listNotices.shtml?type=biddingNotices"/>
+		<page title="项目信息列表" name="prepareBiddingProjects" url="/bidding/project/listNotices.shtml?type=prepareBiddingProjects"/>
+	</pages>
+	
+	<recordLists>
+		<recordList title="待办项目列表" name="todoBiddingProjects" hostPage="todoBiddingProjects" rssSupport="false" recordPage="biddingProject">
+			<data>
+				<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProject</pojo>
+				<orderBy>created</orderBy>
+				<filter>TODO</filter>
+				<lazyLoad>workItems</lazyLoad>
+			</data>
+		</recordList>
+		<recordList title="参与招标项目列表" name="agentBiddingProjects" hostPage="agentBiddingProjects" rssSupport="false" recordPage="biddingProject">
+			<data>
+				<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProject</pojo>
+				<orderBy>created</orderBy>
+				<where></where>
+				<lazyLoad>workItems</lazyLoad>
+			</data>
+		</recordList>
+		<recordList title="提问列表" name="biddingAsks" rssSupport="false" recordPage="biddingAsk">
+			<data>
+				<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectAsk</pojo>
+				<orderBy>created</orderBy>
+				<lazyLoad>TODO</lazyLoad>
+			</data>
+		</recordList>
+		
+		<recordList title="代理抽签公告列表" name="biddingAgentDraws" recordPage="biddingAgentDraw" hostPage="biddingAgentDraws" dialogExtendURL="/bidding/project/templatemanage/dialog/insertRecordList.jsp"/>
+		<recordList title="中选代理公示列表" name="biddingAgents" recordPage="biddingAgent" hostPage="biddingAgents" dialogExtendURL="/bidding/project/templatemanage/dialog/insertRecordList.jsp"/>
+		<recordList title="招标公告列表" name="biddingTenders" recordPage="biddingTender" hostPage="biddingTenders" dialogExtendURL="/bidding/project/templatemanage/dialog/insertRecordList.jsp"/>
+		<recordList title="允许报名的招标公告列表" name="toSignUpBiddingTenders" recordPage="biddingTender" hostPage="toSignUpBiddingTenders" dialogExtendURL="/bidding/project/templatemanage/dialog/insertRecordList.jsp"/>
+		<recordList title="招标时间安排列表" name="biddingPlans" recordPage="biddingPlan" hostPage="biddingPlans" dialogExtendURL="/bidding/project/templatemanage/dialog/insertRecordList.jsp"/>
+		<recordList title="招标文件实质性内容列表" name="biddingMaterials" recordPage="biddingMaterial" hostPage="biddingMaterials" dialogExtendURL="/bidding/project/templatemanage/dialog/insertRecordList.jsp"/>
+		<recordList title="答疑会议纪要列表" name="biddingAnswers" recordPage="biddingAnswer" hostPage="biddingAnswers" dialogExtendURL="/bidding/project/templatemanage/dialog/insertRecordList.jsp"/>
+		<recordList title="补充通知列表" name="biddingSupplements" recordPage="biddingSupplement" hostPage="biddingSupplements" dialogExtendURL="/bidding/project/templatemanage/dialog/insertRecordList.jsp"/>
+		<recordList title="预审公示列表" name="biddingPreapprovals" recordPage="biddingPreapproval" hostPage="biddingPreapprovals" dialogExtendURL="/bidding/project/templatemanage/dialog/insertRecordList.jsp"/>
+		<recordList title="开标公示列表" name="bidopenings" recordPage="bidopening" hostPage="bidopenings" dialogExtendURL="/bidding/project/templatemanage/dialog/insertRecordList.jsp"/>
+		<recordList title="中标结果公示列表" name="biddingPitchons" recordPage="biddingPitchon" hostPage="biddingPitchons" dialogExtendURL="/bidding/project/templatemanage/dialog/insertRecordList.jsp"/>
+		<recordList title="中标通知书列表" name="biddingNotices" recordPage="biddingNotice" hostPage="biddingNotices" dialogExtendURL="/bidding/project/templatemanage/dialog/insertRecordList.jsp"/>
+		<recordList title="项目信息列表" name="biddingProjectInfos" recordPage="biddingProjectInfo" hostPage="prepareBiddingProjects" dialogExtendURL="/bidding/project/templatemanage/dialog/insertRecordList.jsp"/>
+		<recordList title="项目信息列表(进度查询)" name="biddingProjectProgresses" rssSupport="false" hostPage="biddingProjectProgressQuery" recordPage="biddingProjectProgress" dialogExtendURL="/bidding/project/templatemanage/dialog/insertRecordList.jsp"/>
+	</recordLists>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="todoBiddingProjects" processor="biddingProjectsProcessor"/> <!-- 待办项目列表处理器 -->
+		<pageElement name="agentBiddingProjects" processor="biddingProjectsProcessor"/> <!--代理参与项目列表处理器 -->
+		<pageElement name="biddingProjectInfos" processor="biddingProjectsProcessor"/> <!-- 项目信息列表处理器 -->
+		<pageElement name="biddingProjectProgresses" processor="biddingProjectsProcessor"/> <!-- 项目信息(进度)列表处理器 -->
+		<pageElement name="bidopeningGrades" processor="bidopeningGradesProcessor"/> <!-- 投标单位开标评分列表处理器 -->
+		<pageElement name="biddingPitchouts" processor="biddingPitchoutsProcessor"/> <!-- 不合格投标人列表处理器 -->
+		
+		<pageElement name="biddingAgentDraws" processor="biddingNoticesProcessor"/> <!-- 代理抽签公告列表处理器 -->
+		<pageElement name="biddingAgents" processor="biddingNoticesProcessor"/> <!-- 中选代理公示列表处理器 -->
+		<pageElement name="biddingTenders" processor="biddingNoticesProcessor"/> <!-- 招标公告列表处理器 -->
+		<pageElement name="toSignUpBiddingTenders" processor="biddingNoticesProcessor"/> <!-- 允许报名的招标公告列表处理器 -->
+		<pageElement name="biddingPlans" processor="biddingNoticesProcessor"/> <!-- 时间安排列表处理器 -->
+		<pageElement name="biddingMaterials" processor="biddingNoticesProcessor"/> <!-- 实质性内容列表处理器 -->
+		<pageElement name="biddingAnswers" processor="biddingNoticesProcessor"/> <!-- 答疑纪要列表处理器 -->
+		<pageElement name="biddingSupplements" processor="biddingNoticesProcessor"/> <!-- 补充通知列表处理器 -->
+		<pageElement name="otherBiddingSupplements" processor="biddingNoticesProcessor"/> <!-- 其他补充通知列表处理器 -->
+		<pageElement name="biddingPreapprovals" processor="biddingNoticesProcessor"/> <!-- 预审公示列表 -->
+		<pageElement name="bidopenings" processor="biddingNoticesProcessor"/> <!-- 开标公示列表处理器 -->
+		<pageElement name="biddingPitchons" processor="biddingNoticesProcessor"/> <!-- 中标结果公示列表处理器 -->
+		<pageElement name="biddingNotices" processor="biddingNoticesProcessor"/> <!-- 中标通知书列表处理器 -->
+	</pageElements>
+</application>

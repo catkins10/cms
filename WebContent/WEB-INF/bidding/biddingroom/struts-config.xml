@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminBiddingroom" type="com.yuanluesoft.bidding.biddingroom.forms.admin.BiddingRoom"/>
+  <form-bean name="select" type="com.yuanluesoft.bidding.biddingroom.forms.Select"/>
+  <form-bean name="scheduleCalendar" type="com.yuanluesoft.bidding.biddingroom.forms.ScheduleCalendar"/>
+  <form-bean name="adminSchedule" type="com.yuanluesoft.bidding.biddingroom.forms.admin.Schedule"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminBiddingroom" path="/admin/biddingroom"
+   scope="request"
+   type="com.yuanluesoft.bidding.biddingroom.actions.biddingroom.admin.Load" validate="false">
+   <forward name="load" path="/admin/biddingroom.jsp"/>
+  </action>
+  <action input="/admin/biddingroom.jsp" name="adminBiddingroom"
+   path="/admin/saveBiddingroom" scope="request"
+   type="com.yuanluesoft.bidding.biddingroom.actions.biddingroom.admin.Save" validate="false"/>
+  <action input="/admin/biddingroom.jsp" name="adminBiddingroom"
+   path="/admin/deleteBiddingroom" scope="request"
+   type="com.yuanluesoft.bidding.biddingroom.actions.biddingroom.admin.Delete" validate="false"/>
+  <action name="select" path="/select" scope="request"
+   type="com.yuanluesoft.bidding.biddingroom.actions.select.Load" validate="false">
+   <forward name="load" path="/select.jsp"/>
+  </action>
+  <action name="select" path="/openDialog" scope="request" validate="false"/>
+  <action name="scheduleCalendar" path="/scheduleCalendar"
+   scope="request"
+   type="com.yuanluesoft.bidding.biddingroom.actions.schedulecalendar.Load" validate="false">
+   <forward name="load" path="/scheduleCalendar.jsp"/>
+  </action>
+  <action name="scheduleCalendar" path="/showScheduleCalendar"
+   scope="request" validate="false"/>
+  <action path="/schedule" scope="request"
+   type="com.yuanluesoft.bidding.biddingroom.actions.schedule.Load" validate="false"/>
+  <action path="/listSchedules" scope="request"
+   type="com.yuanluesoft.bidding.biddingroom.actions.listschedules.Load" validate="false"/>
+  <action name="adminSchedule" path="/admin/schedule" scope="request"
+   type="com.yuanluesoft.bidding.biddingroom.actions.schedule.admin.Load" validate="false">
+   <forward name="load" path="/admin/schedule.jsp"/>
+  </action>
+  <action input="/admin/schedule.jsp" name="adminSchedule"
+   path="/admin/saveSchedule" scope="request"
+   type="com.yuanluesoft.bidding.biddingroom.actions.schedule.admin.Save" validate="false"/>
+  <action input="/admin/schedule.jsp" name="adminSchedule"
+   path="/admin/deleteSchedule" scope="request"
+   type="com.yuanluesoft.bidding.biddingroom.actions.schedule.admin.Delete" validate="false"/>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="20M"/>
+</struts-config>

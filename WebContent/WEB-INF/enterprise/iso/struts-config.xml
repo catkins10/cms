@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="directory" type="com.yuanluesoft.enterprise.iso.forms.Directory"/>
+  <form-bean name="isoDocument" type="com.yuanluesoft.enterprise.iso.forms.Document"/>
+  <form-bean name="documentView" type="com.yuanluesoft.enterprise.iso.forms.DocumentView"/>
+  <form-bean name="selectDirectory" type="com.yuanluesoft.enterprise.iso.forms.SelectDirectory"/>
+  <form-bean name="adjustPriority" type="com.yuanluesoft.jeaf.dialog.forms.AdjustPriority"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="directory" path="/directory" scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.directory.Load" validate="false">
+   <forward name="load" path="/directory.jsp"/>
+  </action>
+  <action input="/directory.jsp" name="directory" path="/saveDirectory"
+   scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.directory.Save" validate="false"/>
+  <action input="/directory.jsp" name="directory"
+   path="/deleteDirectory" scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.directory.Delete" validate="false"/>
+  <action input="/directory.jsp" name="directory"
+   path="/createNextDirectory" scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.directory.CreateNext" validate="false"/>
+  <action input="/directory.jsp" name="directory"
+   path="/directoryWorkflowConfig" scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.directory.WorkflowConfig" validate="false"/>
+  <action name="isoDocument" path="/document" scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.document.Load" validate="false">
+   <forward name="load" path="/document.jsp"/>
+  </action>
+  <action input="/document.jsp" name="isoDocument"
+   path="/modifyDocument" scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.document.Modify" validate="false">
+   <forward name="load" path="/document.jsp"/>
+  </action>
+  <action input="/document.jsp" name="isoDocument"
+   path="/destroyDocument" scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.document.Destroy" validate="false">
+   <forward name="load" path="/document.jsp"/>
+  </action>
+  <action input="/document.jsp" name="isoDocument" path="/saveDocument"
+   scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.document.Save" validate="false"/>
+  <action input="/document.jsp" name="isoDocument"
+   path="/completeCreate" scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.document.CompleteCreate" validate="false"/>
+  <action input="/document.jsp" name="isoDocument" path="/runDocument"
+   scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.document.Run" validate="false"/>
+  <action input="/document.jsp" name="isoDocument"
+   path="/deleteDocument" scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.document.Delete" validate="false"/>
+  <action input="/document.jsp" name="isoDocument" path="/writeOpinion"
+   scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.document.WriteOpinion" validate="false"/>
+  <action input="/document.jsp" name="isoDocument"
+   path="/completeModify" scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.document.CompleteModify" validate="false"/>
+  <action input="/document.jsp" name="isoDocument"
+   path="/completeDestroy" scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.document.CompleteDestroy" validate="false"/>
+  <action name="documentView" path="/documentView" scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.documentview.DocumentViewAction" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action name="adjustPriority" path="/adjustDirectoryPriority"
+   scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.adjustdirectorypriority.AdjustDirectoryPriorityAction" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/adjustpriority/adjustPriority.jsp"/>
+  </action>
+  <action name="isoDocument" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.document.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="isoDocument" path="/selectAttachment" scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.document.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="selectDirectory" path="/selectDirectory" scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.selectdirectory.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="selectDirectory" path="/listChildDirectories"
+   scope="request"
+   type="com.yuanluesoft.enterprise.iso.actions.selectdirectory.ListChildDirectories" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

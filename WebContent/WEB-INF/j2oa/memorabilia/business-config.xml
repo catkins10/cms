@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="大事记" class="com.yuanluesoft.j2oa.memorabilia.pojo.Memorabilia">
+		<field name="time" title="发生时间" required="true" type="date" inputMode="date"/>
+		<field name="creatorName" title="录入人姓名" length="30" type="string" inputMode="readonly"/>
+		<field name="created" title="录入时间" type="timestamp" inputMode="readonly"/>
+		<field name="subject" title="主题" length="100" required="true" type="string" inputMode="text"/>
+		<field name="content" title="详细内容" length="5000" type="html" inputMode="htmleditor">
+			<parameter name="height">260</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment"/>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment"/>
+		<field name="images" title="图片" type="image" inputMode="attachment"/>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">1000000</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment"/>
+	</businessObject>
+</businessObjects>

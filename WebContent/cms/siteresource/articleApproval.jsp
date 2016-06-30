@@ -1,0 +1,1 @@
+<jsp:include flush="true" page="articleEdit.jsp"/>

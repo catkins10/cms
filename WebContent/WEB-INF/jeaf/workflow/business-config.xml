@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="工作流数据对象" class="com.yuanluesoft.jeaf.workflow.pojo.WorkflowData">
+		<field name="workflowInstanceId" title="流程实例ID" length="30" type="string" inputMode="hidden"/>
+		<field name="workItems" title="工作项列表" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="foreignKey">recordId</parameter> <!-- 供ApplicationBuilder使用 -->
+			<parameter name="class">com.yuanluesoft.jeaf.workflow.pojo.WorkItem</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="foreignKey">mainRecordId</parameter> <!-- 供ApplicationBuilder使用 -->
+			<parameter name="orderBy">created DESC</parameter> <!-- 供ApplicationBuilder使用 -->
+			<parameter name="class">com.yuanluesoft.jeaf.opinionmanage.pojo.Opinion</parameter>
+			<parameter name="templateExtendURL">/jeaf/opinionmanage/templatemanage/insertOpinions.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</field>
+		<field name="visitors" title="访问者" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="lazyLoad">false</parameter>
+			<parameter name="foreignKey">recordId</parameter>
+			<parameter name="orderBy">id</parameter>
+			<parameter name="class">com.yuanluesoft.jeaf.base.pojo.RecordPrivilege</parameter>
+		</field>
+		<field name="workflowStatus" title="流程状态" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">workItems</parameter>
+		</field>
+		<field name="timeLeft" title="剩余办理时间(毫秒数)" persistence="false" type="number" inputMode="readonly">
+			<parameter name="referenceFields">workItems</parameter>
+		</field>
+		<field name="timeLeftTitle" title="剩余办理时间" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">workItems</parameter>
+		</field>
+		<field name="timeLeftPercent" title="剩余办理时间百分比" persistence="false" type="number" inputMode="readonly">
+			<parameter name="referenceFields">workItems</parameter>
+		</field>
+		<field name="deadline" title="办理期限(天)" persistence="false" type="number" inputMode="readonly">
+			<parameter name="referenceFields">workItems</parameter>
+		</field>
+		<field name="workflowSendTime" title="发送时间" persistence="false" type="timestamp" inputMode="readonly">
+			<parameter name="referenceFields">workItems</parameter>
+		</field>
+		<field name="workflowName" title="流程名称" length="10" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">workItems</parameter>
+		</field>
+		<field name="workflowSender" title="发送人" length="6" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">workItems</parameter>
+		</field>
+		<field name="workflowParticipants" title="办理人" length="12" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">workItems</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="工作项" class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem">
+		<field name="workItemId" title="工作项ID" length="32" type="string" inputMode="none"/>
+		<field name="workflowName" title="流程名称" length="32" type="string" inputMode="none"/>
+		<field name="activityName" title="环节名称" length="50" type="string" inputMode="readonly"/>
+		<field name="participantId" title="办理人ID" type="number" inputMode="none"/>
+		<field name="participantName" title="办理人姓名" length="100" type="string" inputMode="readonly"/>
+		<field name="participantType" title="办理人类型" length="1" type="char" inputMode="none"/>
+		<field name="previousParticipantName" title="上一办理人姓名" length="100" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="recordId" title="主记录ID" type="number" inputMode="none"/>
+		<field name="deadline" title="办理期限" type="string" inputMode="none"/>
+		<field name="isReverse" title="是否被回退" length="1" type="char" inputMode="none"/>
+		<field name="isUndo" title="是否是取回" length="1" type="char" inputMode="none"/>
+		<parameter name="tableName">workflow_workitem</parameter> <!-- 供ApplicationBuilder使用,表名称不为空时,所有的继承者都共享本表 -->
+	</businessObject>
+	
+	<businessObject title="超时工作项" class="com.yuanluesoft.jeaf.workflow.pojo.WorkItemTimeout">
+		<field name="recordListClassName" title="主记录类" length="100" type="string" inputMode="none"/>
+		<field name="workItemId" title="工作项ID" length="32" type="string" inputMode="none"/>
+		<field name="workflowName" title="流程名称" length="32" type="string" inputMode="none"/>
+		<field name="activityName" title="环节名称" length="20" type="string" inputMode="readonly"/>
+		<field name="participantId" title="办理人ID" type="number" inputMode="none"/>
+		<field name="participantName" title="办理人姓名" length="20" type="string" inputMode="readonly"/>
+		<field name="participantType" title="办理人类型" length="1" type="char" inputMode="none"/>
+		<field name="previousParticipantName" title="上一办理人姓名" length="20" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="string" inputMode="readonly"/>
+		<field name="recordId" title="主记录ID" type="number" inputMode="none"/>
+		<field name="deadline" title="办理期限" type="string" inputMode="none"/>
+		<field name="unitId" title="单位ID" type="number" inputMode="none"/>
+		<field name="completed" title="完成时间" type="timestamp" inputMode="readonly"/>
+		<field name="workDays" title="办理用时" type="number" length="6,2" inputMode="readonly"/>
+		<field name="timeout" title="是否超时" type="number" length="1" inputMode="readonly"/>
+		<field name="record" title="主记录" type="component" persistence="false">
+			<parameter name="class">com.yuanluesoft.jeaf.workflow.pojo.WorkflowData</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

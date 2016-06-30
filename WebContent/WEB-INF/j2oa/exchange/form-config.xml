@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/document" class="com.yuanluesoft.j2oa.exchange.forms.admin.ExchangeDocument" title="公文" pojo="com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocument">
+		<formFields>
+			<field name="undoReason" title="撤销发布的原因" length="300" type="string" inputMode="textarea">
+				<parameter name="rows">5</parameter>
+			</field>
+			<field name="resign" title="是否重新签收" length="1" type="char" inputMode="radio">
+				<parameter name="itemsText">重新签收|1\0不重新签收|0</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead() or privilege(undo)" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteDocument')"/>
+			<action title="发布" hide="noPrivilege(issue)" execute="if(confirm('是否确定发布？'))FormUtils.doAction('issueDocument')"/>
+			<action title="撤销发布" hide="noPrivilege(undo)" execute="location='document.shtml?id={PARAMETER:id}&amp;undo=true'"/>
+			<action title="签收" hide="noPrivilege(sign)" execute="FormUtils.doAction('signDocument')"/>
+			<action title="消息反馈" hide="noPrivilege(sign) and noPrivilege(signed)" execute="PageUtils.newrecord('j2oa/exchange', 'admin/message', 'width=500,height=400,mode=dialog', 'documentId={PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/message" class="com.yuanluesoft.j2oa.exchange.forms.admin.ExchangeMessage" title="反馈" pojo="com.yuanluesoft.j2oa.exchange.pojo.ExchangeMessage">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteMessage', 'tabSelected=exchangeMessageList')"/>
+			<action title="答复" execute="PageUtils.newrecord('j2oa/exchange', 'admin/message', 'width=500,height=400,mode=dialog', 'documentId={PARAMETER:documentId}&amp;replyMessageId={PARAMETER:id}')"/>
+		</actions>
+	</form>
+</forms>

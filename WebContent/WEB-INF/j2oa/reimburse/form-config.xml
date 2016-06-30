@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.j2oa.reimburse.forms.ReimburseForm" title="报销单" pojo="com.yuanluesoft.j2oa.reimburse.pojo.Reimburse">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="打印" hide="isNew()" execute="window.print()"/>
+			<action title="审批报销单" hide="workflow()" execute="FormUtils.doAction('run', 'workflowAction=approval')"/>
+			<action title="支付报销款" hide="workflow()" execute="pay()"/>
+			<action title="作废" hide="isNew() or workflow()" execute="if(confirm('是否确定要作废？'))FormUtils.doAction('delete')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.reimburse.forms.Charge" title="费用清单" pojo="com.yuanluesoft.j2oa.reimburse.pojo.Reimburse">
+		<formFields>
+			<field name="charge" title="费用清单" type="component">
+				<parameter name="class">com.yuanluesoft.j2oa.reimburse.pojo.ReimburseCharge</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteCharge')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.reimburse.forms.ChargeCategoryForm" title="费用类别" pojo="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseChargeCategory">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="新建下一个" hide="isRead() or isOld()" execute="FormUtils.doAction('createNextChargeCategory')"/>
+			<action title="删除" hide="isNew()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteChargeCategory')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.reimburse.forms.ChargeStandardForm" title="费用标准" pojo="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseChargeStandard">
+		<formFields>
+			<field name="selectedCategory" title="费用类别" type="string" inputMode="dropdown" length="50" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="valueField">chargeCategoryId</parameter>
+				<parameter name="itemsServiceName">chargeCategoryService</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="新建下一个" hide="isRead() or isOld()" execute="FormUtils.doAction('createNextChargeStandard')"/>
+			<action title="删除" hide="isNew()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteChargeStandard')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.reimburse.forms.ReimburseConfigForm" title="报销配置" pojo="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseConfig">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+</forms>

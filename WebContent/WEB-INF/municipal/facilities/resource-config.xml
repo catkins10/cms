@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Application>
+	<Actions>
+		<Action Name="立案" Send="true"/>
+		<Action Name="任务派遣" Send="true"/>
+		<Action Name="作废" DeleteAction="true"/>
+	</Actions>
+	<ProgrammingParticipants>
+		<ProgrammingParticipant Id="pdaUser" Name="PDA使用者"/>
+	</ProgrammingParticipants>
+	<SubForms>
+		<SubForm Id="Edit" Name="登记"/>
+		<SubForm Id="Approval" Name="审核"/>
+		<SubForm Id="Process" Name="办理"/>
+		<SubForm Id="Read" Name="只读"/>
+	</SubForms>
+	<TypeDeclarations/>
+	<DataFields>
+		<DataField Id="source" Name="案件来源">
+			<DataType><BasicType Type="STRING"/></DataType>
+		</DataField>
+		<DataField Id="level" Name="案件等级">
+			<DataType><BasicType Type="STRING"/></DataType>
+		</DataField>
+		<DataField Id="childCategory" Name="案件分类">
+			<DataType><BasicType Type="STRING"/></DataType>
+		</DataField>
+		<DataField Id="childCategory" Name="案件子分类">
+			<DataType><BasicType Type="STRING"/></DataType>
+		</DataField>
+	</DataFields>
+	<Applications/>
+</Application>

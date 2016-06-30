@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 招投标:工程管理 -->
+<application>
+	<!-- 模板视图,page也可以有自己的配置 -->
+	<templateView name="admin/template" application="bidding/project"/>
+	
+	<!-- 模板插件,page也可以有自己的配置 -->
+	<templatePlugins>
+		<templatePlugin path="/bidding/project/templatemanage/plugin.js" private="true">
+			<templateActions>biddingTemplateRange</templateActions> <!-- 扩展的模板操作 -->
+			<pageElementActions></pageElementActions> <!-- 扩展的页面元素操作 -->
+		</templatePlugin>
+	</templatePlugins>
+	
+	<pages>
+		<page name="biddingProject" title="工程招标" url="/bidding/project/project.shtml" recordClass="com.yuanluesoft.bidding.project.pojo.BiddingProject">
+			<subPage name="base" title="项目资料"/>
+		</page>
+		
+		<page name="biddingProjectPrompt" title="提示信息" systemLink="false">
+			<subPage name="base" title="提示信息"/>
+		</page>
+		
+		<page name="biddingProjectInfo" title="项目信息" url="/bidding/project/projectInfo.shtml" systemLink="false" staticPageSupport="false" recordClass="com.yuanluesoft.bidding.project.pojo.BiddingProject">
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:id}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:id}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:id}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:id}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:id}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:id}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:id}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:id}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:id}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:id}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:id}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingProjectProgress" title="项目进度" url="/bidding/project/projectProgress.shtml" systemLink="false" staticPageSupport="false" recordClass="com.yuanluesoft.bidding.project.pojo.BiddingProject">
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:id}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:id}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:id}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:id}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:id}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:id}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:id}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:id}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:id}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:id}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:id}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingProjectInfoSearch" title="项目搜索" searchPage="true" searchResults="biddingProjectInfos" url="/bidding/project/search.shtml?type=biddingProjectInfoSearch"/>
+		<page name="biddingProjectProgressQuery" title="项目进度查询" searchPage="true" searchResults="biddingProjectProgresses" url="/bidding/project/search.shtml?type=biddingProjectProgressQuery"/>
+		
+		<page name="biddingAgentDraw" title="代理抽签公告" url="/bidding/project/agentDraw.shtml" systemLink="false" staticPageSupport="false" recordClass="com.yuanluesoft.bidding.project.pojo.BiddingProjectAgentDraw">
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingAgent" title="中选代理公示" url="/bidding/project/agent.shtml" systemLink="false" staticPageSupport="false" recordClass="com.yuanluesoft.bidding.project.pojo.BiddingProjectAgent">
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingTender" title="招标公告" url="/bidding/project/tender.shtml" systemLink="false" staticPageSupport="false" recordClass="com.yuanluesoft.bidding.project.pojo.BiddingProjectTender">
+			<link title="提问" url="/bidding/project/ask/ask.shtml?projectId={PARAMETER:projectId}&amp;askFrom=tender"/>
+			<link title="问题列表" url="/bidding/project/ask/liskAsks.shtml?projectId={PARAMETER:projectId}&amp;askFrom=tender"/>
+			<link title="投标报名" url="/bidding/project/signup/signUp.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="提交标书" url="/bidding/project/signup/signUpQuery.shtml?pageName=biddingSignUpVerify"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<!-- page name="biddingMaterial" title="招标文件实质性内容" url="/bidding/project/material.shtml" systemLink="false">
+			<link title="提问" url="/bidding/project/ask/ask.shtml?projectId={PARAMETER:projectId}&amp;askFrom=material"/>
+		</page-->
+		
+		<page name="biddingPlan" title="招标时间安排" url="/bidding/project/plan.shtml" systemLink="false" staticPageSupport="false" recordClass="com.yuanluesoft.bidding.project.pojo.BiddingProjectPlan">
+			<!-- link title="提问" url="/bidding/project/ask/ask.shtml?projectId={PARAMETER:projectId}&amp;askFrom=plan"/-->
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingPreapproval" title="预审公示" url="/bidding/project/preapproval.shtml" systemLink="false" staticPageSupport="false" recordClass="com.yuanluesoft.bidding.project.pojo.BiddingProjectPreapproval">
+			<link title="提问" url="/bidding/project/ask/ask.shtml?projectId={PARAMETER:projectId}&amp;askFrom=preapproval"/>
+			<link title="问题列表" url="/bidding/project/ask/liskAsks.shtml?projectId={PARAMETER:projectId}&amp;askFrom=preapproval"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingAnswer" title="答疑会议纪要" url="/bidding/project/answer.shtml" systemLink="false" staticPageSupport="false" recordClass="com.yuanluesoft.bidding.project.pojo.BiddingProjectAnswer">
+			<link title="提问" url="/bidding/project/ask/ask.shtml?projectId={PARAMETER:projectId}&amp;askFrom=answer"/>
+			<link title="问题列表" url="/bidding/project/ask/liskAsks.shtml?projectId={PARAMETER:projectId}&amp;askFrom=answer"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingSupplement" title="补充通知" url="/bidding/project/supplement.shtml" systemLink="false" staticPageSupport="false" recordClass="com.yuanluesoft.bidding.project.pojo.BiddingProjectSupplement">
+			<link title="提问" url="/bidding/project/ask/ask.shtml?projectId={PARAMETER:projectId}&amp;askFrom=supplement"/>
+			<link title="问题列表" url="/bidding/project/ask/liskAsks.shtml?projectId={PARAMETER:projectId}&amp;askFrom=supplement"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="bidopening" title="开标公示" url="/bidding/project/bidopening.shtml" systemLink="false" staticPageSupport="false" recordClass="com.yuanluesoft.bidding.project.pojo.BiddingProjectBidopening">
+			<link title="提问" url="/bidding/project/ask/ask.shtml?projectId={PARAMETER:projectId}&amp;askFrom=bidopening"/>
+			<link title="问题列表" url="/bidding/project/ask/liskAsks.shtml?projectId={PARAMETER:projectId}&amp;askFrom=bidopening"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingPitchon" title="中标公示" url="/bidding/project/pitchon.shtml" systemLink="false" staticPageSupport="false" recordClass="com.yuanluesoft.bidding.project.pojo.BiddingProjectPitchon">
+			<link title="提问" url="/bidding/project/ask/ask.shtml?projectId={PARAMETER:projectId}&amp;askFrom=pitchon"/>
+			<link title="问题列表" url="/bidding/project/ask/liskAsks.shtml?projectId={PARAMETER:projectId}&amp;askFrom=pitchon"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingNotice" title="中标通知书" url="/bidding/project/notice.shtml" systemLink="false" staticPageSupport="false" recordClass="com.yuanluesoft.bidding.project.pojo.BiddingProjectNotice">
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		
+		<page name="biddingNoticePrint" title="中标通知书打印" url="/bidding/project/printNotice.shtml" systemLink="false" recordPage="false" recordClass="com.yuanluesoft.bidding.project.pojo.BiddingProjectNotice"/>
+	
+		<page title="待办项目列表" name="todoBiddingProjects" url="/bidding/project/listProjects.shtml?type=todoBiddingProjects"/>
+		<page title="参与招标项目列表" name="agentBiddingProjects" url="/bidding/project/listProjects.shtml?type=agentBiddingProjects"/>
+		
+		<page title="代理抽签公告列表" name="biddingAgentDraws" url="/bidding/project/listNotices.shtml?type=biddingAgentDraws"/>
+		<page title="中选代理公示列表" name="biddingAgents" url="/bidding/project/listNotices.shtml?type=biddingAgents"/>
+		<page title="招标公告列表" name="biddingTenders" url="/bidding/project/listNotices.shtml?type=biddingTenders"/>
+		<page title="允许报名的招标公告列表" name="toSignUpBiddingTenders" url="/bidding/project/listNotices.shtml?type=toSignUpBiddingTenders"/>
+		<page title="招标时间安排列表" name="biddingPlans" url="/bidding/project/listNotices.shtml?type=biddingPlans"/>
+		<!-- page title="招标文件实质性内容列表" name="biddingMaterials" url="/bidding/project/listNotices.shtml?type=biddingMaterials"/-->
+		<page title="招标答疑列表" name="biddingAnswers" url="/bidding/project/listNotices.shtml?type=biddingAnswers"/>
+		<page title="补充通知列表" name="biddingSupplements" url="/bidding/project/listNotices.shtml?type=biddingSupplements"/>
+		<page title="预审公示列表" name="biddingPreapprovals" url="/bidding/project/listNotices.shtml?type=biddingPreapprovals"/>
+		<page title="开标公示列表" name="bidopenings" url="/bidding/project/listNotices.shtml?type=bidopenings"/>
+		<page title="中标公示列表" name="biddingPitchons" url="/bidding/project/listNotices.shtml?type=biddingPitchons"/>
+		<page title="中标通知书列表" name="biddingNotices" url="/bidding/project/listNotices.shtml?type=biddingNotices"/>
+		<page title="项目信息列表" name="prepareBiddingProjects" url="/bidding/project/listNotices.shtml?type=prepareBiddingProjects"/>
+	</pages>
+	
+	<pageElements>
+		<pageElement name="biddingProjectInfos" processor="biddingRecordListProcessor"/> <!-- 项目信息 -->
+		<pageElement name="biddingProjectProgresses" processor="biddingRecordListProcessor"/> <!-- 项目信息(进度查询) -->
+		<pageElement name="biddingAgentDraws" processor="biddingRecordListProcessor"/> <!-- 代理抽签公告 -->
+		<pageElement name="biddingAgents" processor="biddingRecordListProcessor"/> <!-- 中选代理公示 -->
+		<pageElement name="biddingTenders" processor="biddingRecordListProcessor"/> <!-- 招标公告 -->
+		<pageElement name="toSignUpBiddingTenders" staticPageSupport="false" processor="biddingRecordListProcessor"/> <!-- 允许报名的招标公告 -->
+		<pageElement name="biddingPlans" processor="biddingRecordListProcessor"/> <!-- 招标时间安排 -->
+		<pageElement name="biddingAnswers" processor="biddingRecordListProcessor"/> <!-- 答疑会议纪要 -->
+		<pageElement name="biddingSupplements" processor="biddingRecordListProcessor"/> <!-- 补充通知 -->
+		<pageElement name="biddingPreapprovals" processor="biddingRecordListProcessor"/> <!-- 预审公示 -->
+		<pageElement name="bidopenings" processor="biddingRecordListProcessor"/> <!-- 开标公示 -->
+		<pageElement name="biddingPitchons" processor="biddingRecordListProcessor"/> <!-- 中标结果公示 -->
+		<pageElement name="biddingNotices" processor="biddingRecordListProcessor"/> <!-- 中标通知书 -->
+	</pageElements>
+</application>

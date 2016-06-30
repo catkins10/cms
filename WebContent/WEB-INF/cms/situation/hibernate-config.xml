@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--民情回应:上报或协调其它单位-->
+	<class name="com.yuanluesoft.cms.situation.pojo.SituationCoordinate" table="cms_situation_coordinate">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="situationId"/> <!--民情ID,NUMERIC(20)-->
+		<property name="isHigher"/> <!--是否上报,NUMERIC(1)-->
+		<property name="unitId"/> <!--单位ID,NUMERIC(20)-->
+		<property name="unitName"/> <!--单位名称,VARCHAR(100)-->
+		<property name="coordinateTime"/> <!--协调时间,TIMESTAMP-->
+		<property name="coordinateReason"/> <!--协调原因,VARCHAR(4000)-->
+		<property name="coordinateUnitId"/> <!--协调单位ID,NUMERIC(20)-->
+		<property name="coordinateUnitName"/> <!--协调单位名称,VARCHAR(100)-->
+	</class>
+</hibernate-mapping>

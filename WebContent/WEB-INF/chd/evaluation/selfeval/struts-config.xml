@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="selfEval" type="com.yuanluesoft.chd.evaluation.selfeval.forms.SelfEval"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="selfEval" path="/selfEval" scope="request"
+   type="com.yuanluesoft.chd.evaluation.selfeval.actions.selfeval.Load" validate="false">
+   <forward name="load" path="/selfEval.jsp"/>
+  </action>
+  <action input="/selfEval.jsp" name="selfEval" path="/saveSelfEval"
+   scope="request"
+   type="com.yuanluesoft.chd.evaluation.selfeval.actions.selfeval.Save" validate="false">
+   <forward name="result" path="/result.jsp"/>
+  </action>
+  <action input="/selfEval.jsp" name="selfEval" path="/deleteSelfEval"
+   scope="request"
+   type="com.yuanluesoft.chd.evaluation.selfeval.actions.selfeval.Delete" validate="false">
+   <forward name="result" path="/result.jsp"/>
+  </action>
+  <action input="/selfEval.jsp" name="selfEval" path="/runSelfEval"
+   scope="request"
+   type="com.yuanluesoft.chd.evaluation.selfeval.actions.selfeval.Run" validate="false">
+   <forward name="result" path="/result.jsp"/>
+  </action>
+  <action input="/data.jsp" name="selfEval" path="/writeSelfEvalOpinion"
+   scope="request"
+   type="com.yuanluesoft.chd.evaluation.selfeval.actions.selfeval.WriteOpinion" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

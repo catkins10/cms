@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="busLines" title="公交线路">
+		<data>
+			<pojo>com.yuanluesoft.traffic.busline.pojo.BusLine</pojo>
+			<orderBy>BusLine.name</orderBy>
+		</data>
+		<links>
+			<link>/traffic/busline/busLine.shtml</link>
+		</links>
+	</view>
+	
+	<view name="admin/busLine" form="admin/busLine" title="公交线路" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.traffic.busline.pojo.BusLine</pojo>
+			<orderBy>BusLine.name</orderBy>
+			<quickFilter>BusLine.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加公交线路"  execute="PageUtils.newrecord('traffic/busline','admin/busLine','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name" width="100"/>
+			<column title="上行主要线路" name="uplinkLine"/>
+			<column title="下行主要线路" name="downlinkLine"/>
+		</columns>
+	</view>
+	
+	<view name="station" title="公交站点" >
+		<data>
+			<pojo>com.yuanluesoft.traffic.busline.pojo.BusLineStation</pojo>
+			<where>BusLineStation.busLineId={PARAMETER:busLineId}</where>
+			<orderBy>BusLineStation.priority DESC, BusLineStation.id</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="站点名称" name="name"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+</views>

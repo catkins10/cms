@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--问题记录-->
+	<class name="com.yuanluesoft.railway.event.pojo.RailwayEvent" table="railway_event">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="importId"/> <!--导入日志ID,NUMERIC(20)-->
+		<property name="sn"/> <!--信息单号,VARCHAR(20)-->
+		<property name="code"/> <!--问题代码,VARCHAR(20)-->
+		<property name="personId"/> <!--责任人ID,NUMERIC(20)-->
+		<property name="personName"/> <!--责任人,VARCHAR(60)-->
+		<property name="checker"/> <!--检查人,VARCHAR(60)-->
+		<property name="checkTime"/> <!--检查时间,TIMESTAMP null-->
+		<property name="checkAddress"/> <!--检查地点,VARCHAR(100)-->
+		<property name="eventLevel"/> <!--问题层级,VARCHAR(10)-->
+		<property name="eventCategory"/> <!--问题类别,VARCHAR(30)-->
+		<property name="description"/> <!--检查内容,VARCHAR(4000)-->
+		<property name="deduct"/> <!--扣款,NUMERIC(7,2)-->
+	</class>
+	
+	<!--问题导入日志-->
+	<class name="com.yuanluesoft.railway.event.pojo.RailwayEventImport" table="railway_event_import">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+		<property name="creatorId"/> <!--创建人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--创建人,VARCHAR(60)-->
+	</class>
+</hibernate-mapping>

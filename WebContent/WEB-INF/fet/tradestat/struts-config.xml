@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminUploadData" type="com.yuanluesoft.fet.tradestat.forms.admin.UploadData"/>
+  <form-bean name="adminCompany" type="com.yuanluesoft.fet.tradestat.forms.admin.Company"/>
+  <form-bean name="adminCounty" type="com.yuanluesoft.fet.tradestat.forms.admin.County"/>
+  <form-bean name="adminDevelopmentArea" type="com.yuanluesoft.fet.tradestat.forms.admin.DevelopmentArea"/>
+  <form-bean name="company" type="com.yuanluesoft.fet.tradestat.forms.Company"/>
+  <form-bean name="importQuery" type="com.yuanluesoft.fet.tradestat.forms.ImportQuery"/>
+  <form-bean name="statLogin" type="com.yuanluesoft.fet.tradestat.forms.StatLogin"/>
+  <form-bean name="exportQuery" type="com.yuanluesoft.fet.tradestat.forms.ExportQuery"/>
+  <form-bean name="companyQuery" type="com.yuanluesoft.fet.tradestat.forms.CompanyQuery"/>
+  <form-bean name="changePassword" type="com.yuanluesoft.fet.tradestat.forms.ChangePassword"/>
+  <form-bean name="adminImportQuery" type="com.yuanluesoft.fet.tradestat.forms.admin.ImportQuery"/>
+  <form-bean name="adminExportQuery" type="com.yuanluesoft.fet.tradestat.forms.admin.ExportQuery"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminUploadData" path="/admin/uploadData"
+   scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.uploaddata.Load" validate="false">
+   <forward name="load" path="/admin/uploadData.jsp"/>
+  </action>
+  <action input="/admin/uploadData.jsp" name="adminUploadData"
+   path="/admin/doUploadData" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.uploaddata.Upload" validate="false"/>
+  <action name="adminCompany" path="/admin/company" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.company.Load" validate="false">
+   <forward name="load" path="/admin/company.jsp"/>
+  </action>
+  <action input="/admin/company.jsp" name="adminCompany"
+   path="/admin/saveCompany" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.company.Save" validate="false"/>
+  <action name="adminCounty" path="/admin/county" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.county.Load" validate="false">
+   <forward name="load" path="/admin/county.jsp"/>
+  </action>
+  <action input="/admin/company.jsp" name="adminCompany"
+   path="/admin/deleteCompany" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.company.Delete" validate="false"/>
+  <action input="/admin/county.jsp" name="adminCounty"
+   path="/admin/saveCounty" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.county.Save" validate="false"/>
+  <action input="/admin/county.jsp" name="adminCounty"
+   path="/admin/deleteCounty" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.county.Delete" validate="false"/>
+  <action name="adminDevelopmentArea" path="/admin/developmentArea"
+   scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.developmentarea.Load" validate="false">
+   <forward name="load" path="/admin/developmentArea.jsp"/>
+  </action>
+  <action input="/admin/developmentArea.jsp" name="adminDevelopmentArea"
+   path="/admin/saveDevelopmentArea" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.developmentarea.Save" validate="false"/>
+  <action input="/admin/developmentArea.jsp" name="adminDevelopmentArea"
+   path="/admin/deleteDevelopmentArea" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.developmentarea.Delete" validate="false"/>
+  <action name="statLogin" path="/statLogin" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.statlogin.Load" validate="false">
+   <forward name="load" path="/statLogin.jsp"/>
+  </action>
+  <action name="company" path="/company" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.company.Load" validate="false">
+   <forward name="load" path="/company.jsp"/>
+  </action>
+  <action name="importQuery" path="/importQuery" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.importquery.Query" validate="false">
+   <forward name="load" path="/importQuery.jsp"/>
+  </action>
+  <action input="/company.jsp" name="company" path="/saveCompany"
+   scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.company.Save" validate="false">
+   <forward name="result" path="/result.jsp"/>
+  </action>
+  <action name="importQuery" path="/displayImportQuery" scope="request" validate="false"/>
+  <action name="exportQuery" path="/exportQuery" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.exportquery.Query" validate="false">
+   <forward name="load" path="/exportQuery.jsp"/>
+  </action>
+  <action name="exportQuery" path="/displayExportQuery" scope="request" validate="false"/>
+  <action name="companyQuery" path="/companyQuery" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.companyquery.Query" validate="false">
+   <forward name="load" path="/companyQuery.jsp"/>
+  </action>
+  <action name="companyQuery" path="/dispalyCompanyQuery"
+   scope="request" validate="false"/>
+  <action input="/exportQuery.jsp" name="exportQuery"
+   path="/downloadExportData" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.exportquery.Download" validate="false"/>
+  <action input="/importQuery.jsp" name="importQuery"
+   path="/downloadImportData" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.importquery.Download" validate="false"/>
+  <action path="/admin/initData" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.initdata.Init" validate="false"/>
+  <action input="/admin/company.jsp" name="adminCompany"
+   path="/admin/approvalCompany" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.company.Approval" validate="false"/>
+  <action name="adminImportQuery" path="/admin/importQuery"
+   scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.importquery.Query" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="adminImportQuery" path="/admin/downloadImportData"
+   scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.importquery.Download" validate="false"/>
+  <action name="adminExportQuery" path="/admin/exportQuery"
+   scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.exportquery.Query" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="adminExportQuery" path="/admin/downloadExportData"
+   scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.exportquery.Download" validate="false"/>
+  <action input="/admin/uploadData.jsp" name="adminUploadData"
+   path="/admin/deleteUploadData" scope="request"
+   type="com.yuanluesoft.fet.tradestat.actions.admin.uploaddata.Delete" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

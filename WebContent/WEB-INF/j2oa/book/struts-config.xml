@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="book" type="com.yuanluesoft.j2oa.book.forms.Book"/>
+  <form-bean name="borrow" type="com.yuanluesoft.j2oa.book.forms.Borrow"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="book" path="/book" scope="request"
+   type="com.yuanluesoft.j2oa.book.actions.book.Load" validate="false">
+   <forward name="load" path="/book.jsp"/>
+  </action>
+  <action input="/book.jsp" name="book" path="/saveBook" scope="request"
+   type="com.yuanluesoft.j2oa.book.actions.book.Save" validate="false"/>
+  <action input="/book.jsp" name="book" path="/deleteBook"
+   scope="request" type="com.yuanluesoft.j2oa.book.actions.book.Delete" validate="false"/>
+  <action name="borrow" path="/borrow" scope="request"
+   type="com.yuanluesoft.j2oa.book.actions.book.borrow.Load" validate="false">
+   <forward name="load" path="/borrow.jsp"/>
+  </action>
+  <action input="/borrow.jsp" name="borrow" path="/completeBorrow"
+   scope="request"
+   type="com.yuanluesoft.j2oa.book.actions.book.borrow.CompleteBorrow" validate="false"/>
+  <action input="/borrow.jsp" name="borrow" path="/saveBorrow"
+   scope="request"
+   type="com.yuanluesoft.j2oa.book.actions.book.borrow.Save" validate="false"/>
+  <action input="/borrow.jsp" name="borrow" path="/deleteBorrow"
+   scope="request"
+   type="com.yuanluesoft.j2oa.book.actions.book.borrow.Delete" validate="false"/>
+  <action input="/borrow.jsp" name="borrow" path="/completeReturn"
+   scope="request"
+   type="com.yuanluesoft.j2oa.book.actions.book.borrow.CompleteReturn" validate="false"/>
+  <action input="/book.jsp" name="book" path="/refreshBook"
+   scope="request" type="com.yuanluesoft.j2oa.book.actions.book.Refresh" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

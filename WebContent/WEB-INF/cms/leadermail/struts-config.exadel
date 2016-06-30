@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,40,161,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="288,40,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,161,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="288,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#leaderMailType"
+  NAME="action0" PATH="/admin/leaderMailType" SHAPE="32,440,161,41"
+  TITLE="leaderMailType" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/leaderMailType.jsp" TARGET="page4"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#leaderMail"
+  NAME="action1" PATH="/admin/leaderMail" SHAPE="32,768,161,41"
+  TITLE="adminLeaderMail" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/leaderMail.jsp" TARGET="page5"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveLeaderMail"
+  NAME="action2" PATH="/saveLeaderMail" SHAPE="480,240,161,41"
+  TITLE="leaderMail" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/leaderMailSubmitted.jsp" TARGET="page9"
+   TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#deleteLeaderMailType" NAME="action3"
+  PATH="/admin/deleteLeaderMailType" SHAPE="480,536,161,25"
+  TITLE="leaderMailType" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveLeaderMailType"
+  NAME="action4" PATH="/admin/saveLeaderMailType" SHAPE="480,472,161,25"
+  TITLE="leaderMailType" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#runLeaderMail"
+  NAME="action5" PATH="/admin/runLeaderMail" SHAPE="480,920,161,25"
+  TITLE="adminLeaderMail" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#writeOpinion"
+  NAME="action6" PATH="/admin/writeOpinion" SHAPE="480,976,161,25"
+  TITLE="adminLeaderMail" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#leaderMail"
+  NAME="action11" PATH="/leaderMail" SHAPE="32,208,161,41"
+  TITLE="leaderMail" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/leaderMail.jsp" TARGET="page6" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteLeaderMail"
+  NAME="action12" PATH="/admin/deleteLeaderMail" SHAPE="480,856,161,25"
+  TITLE="adminLeaderMail" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveLeaderMail"
+  NAME="action13" PATH="/admin/saveLeaderMail" SHAPE="480,800,161,25"
+  TITLE="adminLeaderMail" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/leaderMail.jsp" SHAPE="288,224,50,40" SUBTYPE="jsp"
+  TITLE="leaderMail.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveLeaderMail" TARGET="action2" TITLE="saveLeaderMail" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/admin/leaderMail.jsp" SHAPE="272,784,50,130" SUBTYPE="jsp"
+  TITLE="leaderMail.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveLeaderMail" TARGET="action13" TITLE="saveLeaderMail" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteLeaderMail" TARGET="action12"
+   TITLE="deleteLeaderMail" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/runLeaderMail" TARGET="action5" TITLE="runLeaderMail" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/admin/writeOpinion" TARGET="action6" TITLE="saveOpinion" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link7"
+   PATH="/admin/setPublishOption" TARGET="action15"
+   TITLE="publishOption" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link6"
+   PATH="/admin/publish" TARGET="action14" TITLE="publish" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link4"
+   PATH="/admin/undeleteLeaderMail" TARGET="action7"
+   TITLE="leaderMail.jsp" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/admin/leaderMailType.jsp" SHAPE="288,456,50,25" SUBTYPE="jsp"
+  TITLE="leaderMailType.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveLeaderMailType.shtml" TARGET="action4"
+   TITLE="saveLeaderMailType.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteLeaderMailType" TARGET="action3"
+   TITLE="deleteLeaderMailType" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#publish"
+  NAME="action14" PATH="/admin/publish" SHAPE="480,1096,161,25"
+  TITLE="adminLeaderMail" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#setPublishOption"
+  NAME="action15" PATH="/admin/setPublishOption" SHAPE="480,1040,161,25"
+  TITLE="adminLeaderMail" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#printLeaderMail"
+  NAME="action16" PATH="/admin/printLeaderMail" SHAPE="32,856,161,41"
+  TITLE="adminLeaderMail" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/leaderMail.jsp" TARGET="page5"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#attachmentEditor"
+  NAME="action9" PATH="/attachmentEditor" SHAPE="32,320,161,41"
+  TITLE="leaderMail" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/attachment.jsp"
+   TARGET="page7" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page7"
+  PATH="/../../jeaf/attachment/attachment.jsp" SHAPE="288,336,50,25"
+  SUBTYPE="jsp" TITLE="attachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#undeleteLeaderMail"
+  NAME="action7" PATH="/admin/undeleteLeaderMail"
+  SHAPE="480,1152,161,25" TITLE="adminLeaderMail" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#leaderMailDepartment" NAME="action8"
+  PATH="/admin/leaderMailDepartment" SHAPE="32,608,161,41"
+  TITLE="leaderMailDepartment" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/leaderMailDepartment.jsp" TARGET="page2"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/admin/leaderMailDepartment.jsp" SHAPE="288,624,50,25"
+  SUBTYPE="jsp" TITLE="leaderMailDepartment.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveLeaderMailDepartment.shtml" TARGET="action10"
+   TITLE="saveLeaderMailDepartment.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteLeaderMailDepartment.shtml" TARGET="action17"
+   TITLE="deleteLeaderMailDepartment.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#saveLeaderMailDepartment" NAME="action10"
+  PATH="/admin/saveLeaderMailDepartment" SHAPE="480,640,161,25"
+  TITLE="leaderMailDepartment" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#deleteLeaderMailDepartment" NAME="action17"
+  PATH="/admin/deleteLeaderMailDepartment" SHAPE="480,696,161,25"
+  TITLE="leaderMailDepartment" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#templatemanage#insertLeaderMails" NAME="action18"
+  PATH="/templatemanage/insertLeaderMails" SHAPE="32,1200,161,25"
+  TITLE="insertLeaderMails" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templatemanage/insertLeaderMails.jsp"
+   TARGET="page8" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page8"
+  PATH="/templatemanage/insertLeaderMails.jsp" SHAPE="272,1216,50,25"
+  SUBTYPE="jsp" TITLE="insertLeaderMails.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#templatemanage#insertLink" NAME="action19"
+  PATH="/templatemanage/insertLink" SHAPE="32,1296,161,25"
+  TITLE="insertLink" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/templatemanage/insertLink.jsp" TARGET="page11"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page11"
+  PATH="/templatemanage/insertLink.jsp" SHAPE="272,1312,50,25"
+  SUBTYPE="jsp" TITLE="insertLink.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page9"
+  PATH="/leaderMailSubmitted.jsp" SHAPE="736,256,50,25" SUBTYPE="jsp"
+  TITLE="leaderMailSubmitted.jsp" TYPE="page"/>
+</PROCESS>

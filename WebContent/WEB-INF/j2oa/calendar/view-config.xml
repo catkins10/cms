@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<calendarView name="calendar" form="calendar" title="领导日程" pageRows="20" openFeatures="width=720,height=480" defaultMode="week">
+		<calendarAction hide="noPrivilege(manageUnit_create)" execute="PageUtils.newrecord('j2oa/calendar','calendar','width=720,height=480', 'beginTime={CALENDAR_TIMESTAMP}')"/>
+		<data>
+			<pojo>com.yuanluesoft.j2oa.calendar.pojo.Calendar</pojo>
+			<filter>READABLE</filter>
+			<orderBy>Calendar.beginTime</orderBy>
+			<where>Calendar.publish='1'</where>
+			<quickFilter>Calendar.subject like '%{KEY}%' or Calendar.description like '%{KEY}%'</quickFilter>
+			<calendarColumn>Calendar.beginTime</calendarColumn>
+		</data>
+		<actions>
+			<action title="安排日程" hide="noPrivilege(manageUnit_create)"  execute="PageUtils.newrecord('j2oa/calendar','calendar','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="主题" name="subject"/>
+		</columns>
+	</calendarView>
+	
+	<view name="published" form="calendar" title="已发布日程" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.calendar.pojo.Calendar</pojo>
+			<orderBy>Calendar.beginTime</orderBy>
+			<where>Calendar.publish='1' and Calendar.creatorId={USERID}</where>
+			<quickFilter>Calendar.subject like '%{KEY}%' or Calendar.description like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="安排日程" hide="noPrivilege(manageUnit_create)"  execute="PageUtils.newrecord('j2oa/calendar','calendar','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50" displayExcept="portlet"/>
+			<column title="主题" name="subject"/>
+			<column title="开始时间" name="beginTime" width="110" format='yyyy-MM-dd HH:mm' align="center" displayExcept="portlet"/>
+			<column title="结束时间" name="endTime" width="110" format='yyyy-MM-dd HH:mm' align="center" displayExcept="portlet"/>
+			<column title="开始时间" name="beginTime" width="110" format='M月d日H时' align="center" display="portlet"/>
+		</columns>
+	</view>
+	
+	<view name="toPublish" form="calendar" title="待发布日程" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.calendar.pojo.Calendar</pojo>
+			<orderBy>Calendar.beginTime</orderBy>
+			<where>Calendar.publish!='1' and Calendar.creatorId={USERID}</where>
+			<quickFilter>Calendar.subject like '%{KEY}%' or Calendar.description like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="安排日程" hide="noPrivilege(manageUnit_create)"  execute="PageUtils.newrecord('j2oa/calendar','calendar','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50" displayExcept="portlet"/>
+			<column title="主题" name="subject"/>
+			<column title="开始时间" name="beginTime" width="110" format='yyyy-MM-dd HH:mm' align="center" displayExcept="portlet"/>
+			<column title="结束时间" name="endTime" width="110" format='yyyy-MM-dd HH:mm' align="center" displayExcept="portlet"/>
+			<column title="开始时间" name="beginTime" width="110" format='M月d日H时' align="center" display="portlet"/>
+		</columns>
+	</view>
+</views>

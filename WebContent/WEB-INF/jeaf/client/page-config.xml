@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<!-- 
+		<page name="startup" title="启动界面" systemLink="false">
+			<extendedParameters>
+				<parameter name="clientCacheMinutes">600</parameter> 10小时内不检查新页面
+			</extendedParameters>
+		</page>
+		-->
+		
+		<page name="pilot" title="引导页面" systemLink="false">
+			<templatePlugin path="/jeaf/client/templatemanage/plugin.js" private="false">
+				<pageElementActions>clientPilotPage</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+		</page>
+		
+		<page name="main" title="客户端主页" systemLink="false">
+			<templatePlugin path="/jeaf/client/templatemanage/plugin.js" private="false">
+				<pageElementActions>client</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="clientCacheMinutes">10</parameter> <!-- 10分钟内不检查新页面 -->
+			</extendedParameters>
+		</page>
+		
+		<page name="mainHint" title="客户端主页操作提示" systemLink="false"> <!-- 首页打开后,蒙在页面上,告诉用户如何操作 -->
+			<templatePlugin path="/jeaf/client/templatemanage/plugin.js" private="false">
+				<pageElementActions>clientHintPage</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+		</page>
+		
+		<!--page name="subscribe" title="订阅" systemLink="false"/-->
+		
+		<page name="selectFile" title="选择文件" systemLink="false">
+			<templatePlugin path="/jeaf/client/templatemanage/plugin.js" private="false">
+				<pageElementActions>selectFile</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="clientCacheMinutes">600</parameter> <!-- 10小时内不检查新页面 -->
+			</extendedParameters>
+		</page>
+		
+		<page name="saveFile" title="保存文件" systemLink="false">
+			<templatePlugin path="/jeaf/client/templatemanage/plugin.js" private="false">
+				<pageElementActions>saveFile</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="clientCacheMinutes">600</parameter> <!-- 10小时内不检查新页面 -->
+			</extendedParameters>
+		</page>
+		
+		<page name="preference" title="参数设置" url="/jeaf/client/preference.shtml">
+			帐号/字体大小/夜间|白天模式/缓存清理/关于
+		</page>
+		
+		<page name="about" title="关于"/>
+	</pages>
+	
+	<templatePlugins>
+		<templatePlugin path="/jeaf/client/templatemanage/plugin.js" private="false">
+			<pageElementActions>clientPage</pageElementActions> <!-- 页面元素操作 -->
+		</templatePlugin>
+	</templatePlugins>
+</application>

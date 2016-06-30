@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="龙海市场监督管理局个体信用" class="com.yuanluesoft.credit.enterprisecredit.market.pojo.MarketPerson" >
+		<field name="registCode" title="注册号" required="true" length="100" type="string" inputMode="text"/>
+		<field name="name" title="字号名称" required="true" length="100" type="string" inputMode="text"/>
+		<field name="person" title="经营者" required="true" length="100" type="string" inputMode="text"/>
+		<field name="addr" title="经营场所" required="true" length="100" type="string" inputMode="text"/>
+		<field name="buildDate" title="成立日期" required="true"   type="date" inputMode="date"/>
+		<field name="registrar" title="登记机关" required="true" length="100" type="string" inputMode="text"/>
+		<field name="aic" title="工商所" required="true" length="100" type="string" inputMode="text"/>
+		<field name="area" title="片区" required="true" length="100" type="string" inputMode="text"/>
+		<field name="creditType" title="信用类别" required="true"  length="100" type="string" inputMode="text"/>
+		<field name="creditScore" title="信用分值" required="true"  type="number" inputMode="text"/>
+		<field name="tel" title="电话"  length="100" type="string" inputMode="text"/>
+		<field name="businessScope" title="经营范围" required="true" length="500" type="string" inputMode="text"/>
+		<field name="startDate" title="经营期限起" required="true"  type="date" inputMode="date"/>
+		<field name="endDate" title="经营期限止"   type="date" inputMode="date"/>
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="龙海市场监督管理局企业信用" class="com.yuanluesoft.credit.enterprisecredit.market.pojo.MarketEnterprise" >
+		<field name="registCode" title="注册号" required="true" length="100" type="string" inputMode="text"/>
+		<field name="name" title="企业名称" required="true" length="100" type="string" inputMode="text"/>
+		<field name="type" title="企业类型"  length="100" type="string" inputMode="text"/>
+		<field name="addr" title="住所" required="true" length="100" type="string" inputMode="text"/>
+		<field name="buildDate" title="成立日期" required="true"   type="date" inputMode="date"/>
+		<field name="registrar" title="登记机关" required="true" length="100" type="string" inputMode="text"/>
+		<field name="aic" title="工商所"  length="100" type="string" inputMode="text"/>
+		<field name="area" title="片区"  length="100" type="string" inputMode="text"/>
+		<field name="creditType" title="信用类别" required="true"  length="100" type="string" inputMode="text"/>
+		<field name="creditScore" title="信用分值"   type="number" inputMode="text"/>
+		<field name="person" title="负责人"  length="100" type="string" inputMode="text"/>
+		<field name="tel" title="电话"  length="100" type="string" inputMode="text"/>
+		<field name="businessScope" title="经营范围"  length="500" type="string" inputMode="text"/>
+		<field name="startDate" title="经营期限起" required="true"  type="date" inputMode="date"/>
+		<field name="endDate" title="经营期限止"   type="date" inputMode="date"/>
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	
+</businessObjects>

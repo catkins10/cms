@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 评论引用页面服务 -->
+	<bean id="citationCommentPageService" class="com.yuanluesoft.cms.comment.pages.CitationCommentPageService">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+	</bean>
+	
+	<!-- 评论列表处理器 -->
+	<bean id="commentsProcessor" class="com.yuanluesoft.cms.comment.processor.CommentsProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+	</bean>
+
+	<!-- 评论链接处理器 -->
+	<bean id="commentLinkProcessor" class="com.yuanluesoft.cms.comment.processor.CommentLinkProcessor"/>
+	
+	<!-- 评论表单处理器 -->
+	<bean id="commentFormProcessor" class="com.yuanluesoft.cms.comment.processor.CommentFormProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="formFieldService"><ref bean="formFieldService"/></property>
+		<property name="formSecurityService"><ref bean="formSecurityService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+	</bean>
+</beans>

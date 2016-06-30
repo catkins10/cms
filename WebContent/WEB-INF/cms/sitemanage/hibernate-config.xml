@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--站点管理:目录-->
+	<class name="com.yuanluesoft.cms.sitemanage.pojo.WebDirectory" table="cms_directory">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryName"/> <!--目录名称-->
+		<property name="parentDirectoryId"/> <!--上级目录ID-->
+		<property name="priority"/> <!--优先级-->
+		<property name="directoryType"/> <!--目录类型-->
+		<property name="creator"/> <!--创建人-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="created"/> <!--创建时间-->
+		<property name="remark"/> <!--备注-->
+		<property name="shortName"/> <!--目录简称(英文)-->
+		<property name="description"/> <!--描述-->
+		<property name="workflowId"/> <!--绑定的流程ID-->
+		<property name="workflowName"/> <!--绑定的流程名称-->
+		<property name="editorDeleteable"/> <!--允许编辑删除,0/从上级继承,1/允许,2/不允许-->
+		<property name="editorReissueable"/> <!--允许编辑撤销,0/从上级继承,1/允许,2/不允许-->
+		<property name="anonymousLevel"/> <!--匿名用户访问级别,0/不能访问,1/仅标题,2/完全访问-->
+		<property name="synchIssue"/> <!--同步的文章发布,0/从上级继承,1/直接发布,2/相同站点的直接发布,3/不直接发布,char(1)-->
+		<property name="halt"/> <!--是否停用,对外不展现,char(1)-->
+		<property name="redirectUrl"/> <!--重定向URL,varchar(800)-->
+		<set cascade="delete" inverse="true" lazy="true" name="directoryPopedoms" table="cms_directory_popedom" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.cms.sitemanage.pojo.WebDirectoryPopedom" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="subjections" table="cms_directory_subjection" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.cms.sitemanage.pojo.WebDirectorySubjection" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="childSubjections" table="cms_directory_subjection">
+			<key column="parentDirectoryId" />
+			<one-to-many class="com.yuanluesoft.cms.sitemanage.pojo.WebDirectorySubjection" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="accessStats" table="stat_access" where="pageName='index' and applicationName='cms/sitemanage'">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.stat.pojo.AccessStat"/>
+		</set>
+		<!-- 同步到其他栏目 -->
+		<set cascade="delete" inverse="true" lazy="true" name="synchToDirectories" table="cms_directory_synch" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.cms.sitemanage.pojo.WebDirectorySynch" />
+		</set>
+		<!-- 被指定的栏目所同步 -->
+		<set cascade="delete" inverse="true" lazy="true" name="synchFromDirectories" table="cms_directory_synch" order-by="id">
+			<key column="synchDirectoryId" />
+			<one-to-many class="com.yuanluesoft.cms.sitemanage.pojo.WebDirectorySynch" />
+		</set>
+		<!-- 站点 -->
+		<joined-subclass name="com.yuanluesoft.cms.sitemanage.pojo.WebSite" table="cms_site">
+            <key>
+                <column name="id" />
+            </key>
+            <property name="hostName"/> <!--域名-->
+			<property name="useSiteTemplate"/> <!--是否使用本站的文章模板-->
+			<property name="waterMarkAlign"/> <!--水印显示位置	-->
+			<property name="waterMarkXMargin"/> <!--水印图片水平边距-->
+			<property name="waterMarkYMargin"/> <!--水印图片垂直边距-->
+			<property name="isInternal"/> <!--是否内部网站-->
+			<property name="ownerUnitId"/> <!--隶属单位ID-->
+			<property name="ownerUnitName"/> <!--隶属单位名称-->
+        </joined-subclass>
+        <!-- 栏目 -->
+		<joined-subclass name="com.yuanluesoft.cms.sitemanage.pojo.WebColumn" table="cms_column">
+            <key>
+                <column name="id" />
+            </key>
+            <set name="relationLinks" table="cms_column_relation_link" lazy="true" inverse="true" cascade="delete" order-by="priority desc">
+				<key column="columnId" />
+				<one-to-many class="com.yuanluesoft.cms.sitemanage.pojo.WebColumnRelationLink" />
+			</set>
+			<set name="relatedLinks" table="cms_column_relation_link" lazy="true" inverse="true" cascade="delete">
+				<key column="relationColumnId" />
+				<one-to-many class="com.yuanluesoft.cms.sitemanage.pojo.WebColumnRelationLink" />
+			</set>
+		</joined-subclass>
+		
+		<!--站点管理:视图引用-->
+		<joined-subclass name="com.yuanluesoft.cms.sitemanage.pojo.WebViewReference" table="cms_reference">
+            <key>
+                <column name="id" />
+            </key>
+			<property name="viewTitle"/> <!--引用的视图描述,varchar(100)-->
+			<property name="applicationName"/> <!--引用的视图所在应用,varchar(100)-->
+			<property name="viewName"/> <!--引用的视图名称,varchar(50)-->
+			<property name="referenceParameter"/> <!--参数,varchar(500)-->
+			<property name="referenceDescription"/> <!--参数说明,varchar(500)-->
+		</joined-subclass>
+	</class>
+	
+	<!--站点管理:目录隶属关系-->
+	<class name="com.yuanluesoft.cms.sitemanage.pojo.WebDirectorySubjection" table="cms_directory_subjection">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID-->
+		<property name="parentDirectoryId"/> <!--上级目录ID-->
+	</class>
+	
+	<!--站点管理:目录权限-->
+	<class name="com.yuanluesoft.cms.sitemanage.pojo.WebDirectoryPopedom" table="cms_directory_popedom">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID-->
+		<property name="userId"/> <!--用户ID-->
+		<property name="userName"/> <!--用户名-->
+		<property name="popedomName"/> <!--权限-->
+		<property name="isInherit"/> <!--是否从上级目录继承-->
+	</class>
+	
+	<!--站点管理:同步设置-->
+	<class name="com.yuanluesoft.cms.sitemanage.pojo.WebDirectorySynch" table="cms_directory_synch">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID-->
+		<property name="synchDirectoryId"/> <!--同步的目录ID-->
+	</class>
+	 
+	 <!--站点管理:头版头条-->
+	<class name="com.yuanluesoft.cms.sitemanage.pojo.Headline" table="cms_headline">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID-->
+		<property name="headlineName"/> <!--名称-->
+		<property name="headlineURL"/> <!--链接地址-->
+		<property name="summarize"/> <!--概述-->
+		<property name="lastModified"/> <!--最后修改时间-->
+	</class>
+	
+	<!--栏目:相关链接-->
+	<class name="com.yuanluesoft.cms.sitemanage.pojo.WebColumnRelationLink" table="cms_column_relation_link">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="columnId"/> <!--栏目ID,NUMERIC(20,0)-->
+		<property name="relationColumnId"/> <!--关联栏目ID,NUMERIC(20,0)-->
+		<property name="linkName"/> <!--链接名称,VARCHAR(300)-->
+		<property name="linkUrl"/> <!--链接地址,VARCHAR(300)-->
+		<property name="linkTime"/> <!--发布时间,TIMESTAMP null-->
+		<property name="priority"/> <!--优先级,NUMERIC(7,4)-->
+		<property name="halt"/> <!--是否停用,NUMERIC(1)-->
+	</class>
+</hibernate-mapping>

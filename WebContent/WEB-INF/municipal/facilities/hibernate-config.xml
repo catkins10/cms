@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--设施监控案件-->
+	<class name="com.yuanluesoft.municipal.facilities.pojo.FacilitiesEvent" table="facilities_event">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="eventNumber"/> <!--案件编号-->
+		<property name="source"/> <!--案件来源-->
+		<property name="zone"/> <!--区域-->
+		<property name="observer"/> <!--上报人-->
+		<property name="observerNumber"/> <!--上报号码-->
+		<property name="reporter"/> <!--举报人-->
+		<property name="contect"/> <!--联系方式-->
+		<property name="isReceipt"/> <!--是否需回复-->
+		<property name="receiptMode"/> <!--回复方式-->
+		<property name="receiptTo"/> <!--回复对象-->
+		<property name="recorder"/> <!--接线员-->
+		<property name="partCode"/> <!--部件编号-->
+		<property name="timeLimit"/> <!--处理时限-->
+		<property name="level"/> <!--案件等级-->
+		<property name="category"/> <!--案件分类-->
+		<property name="childCategory"/> <!--案件子分类-->
+		<property name="duplicate"/> <!--重复案件-->
+		<property name="XPos"/> <!--定位结果X-->
+		<property name="YPos"/> <!--定位结果Y-->
+		<property name="position"/> <!--事发位置-->
+		<property name="description"/> <!--案件描述-->
+		<property name="remark"/> <!--备注-->
+		<property name="creator"/> <!--登记人-->
+		<property name="creatorId"/> <!--登记人ID-->
+		<property name="created"/> <!--登记时间-->
+		<property name="isTruly"/> <!--事件是否真实-->
+		<property name="truthDescription"/> <!--真实性检查情况-->
+		<property name="fixed"/> <!--是否处理完毕	-->
+		<property name="fixDescription"/> <!--处理情况说明-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+		<set name="opinions" table="facilities_event_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.municipal.facilities.pojo.FacilitiesEventOpinion" />
+		</set>
+		<set name="visitors" table="facilities_event_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.municipal.facilities.pojo.FacilitiesEventPrivilege" />
+		</set>
+	</class>
+	
+	<!--设施监控案件:资源权限控制-->
+	<class name="com.yuanluesoft.municipal.facilities.pojo.FacilitiesEventPrivilege" table="facilities_event_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--设施监控案件:审核意见-->
+	<class name="com.yuanluesoft.municipal.facilities.pojo.FacilitiesEventOpinion" table="facilities_event_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="created"/> <!--填写时间-->
+	</class>
+	
+	<!--PDA使用者-->
+	<class name="com.yuanluesoft.municipal.facilities.pojo.PdaUser" table="pda_user">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--使用者姓名-->
+		<property name="code"/> <!--工号-->
+		<property name="pdaNumber"/> <!--PDA号码-->
+		<property name="orgId"/> <!--所在组织机构ID-->
+		<property name="orgName"/> <!--所在组织机构名称-->
+	</class>
+	
+	<!--参数配置-->
+	<class name="com.yuanluesoft.municipal.facilities.pojo.FacilitiesEventParameter" table="facilities_event_parameter">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="eventNumberFormat"/> <!--编号规则-->
+	</class>
+</hibernate-mapping>

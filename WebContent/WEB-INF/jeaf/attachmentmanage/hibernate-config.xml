@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--临时附件-->
+	<class name="com.yuanluesoft.jeaf.attachmentmanage.pojo.TemporaryFile" table="attachment_temporary">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="filePath"/> <!--临时文件路径-->
+		<property name="expires"/> <!--过期时间-->
+	</class>
+</hibernate-mapping>

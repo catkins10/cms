@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 车源服务 -->
+	<bean id="logisticsVehicleService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.logistics.vehicle.service.spring.LogisticsVehicleServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="gpsService"><ref bean="gpsService"/></property>
+				<property name="pageService"><ref bean="pageService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="upload*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="change*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 车辆字段处理器 -->
+	<bean id="vehicleFieldProcessor" class="com.yuanluesoft.logistics.vehicle.processor.VehicleFieldProcessor">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+	</bean>
+	
+	<!-- 车源列表处理器 -->
+	<bean id="vehicleSuppliesProcessor" class="com.yuanluesoft.logistics.vehicle.processor.VehicleSuppliesProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="orgService"><ref bean="orgService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+	</bean>
+</beans>

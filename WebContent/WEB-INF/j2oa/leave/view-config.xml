@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views>
+	<view name="todoLeave" form="leave" title="待处理请假条" pageRows="25" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.leave.pojo.Leave</pojo>
+			<quickFilter>Leave.reason like '%{KEY}%' 
+				or Leave.remark like '%{KEY}%' 
+				or Leave.personName like '%{KEY}%'
+				or Leave.departmentName like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="新建请假条" type="workflow" module="leave"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="请假原因" name="reason"/>
+			<column title="开始时间" name="beginTime" align="center" width="80" format="yyyy-MM-dd"/>
+			<column title="结束时间" name="endTime" align="center" width="80" format="yyyy-MM-dd"/>
+			<column title="请假人" name="personName" align="center" width="70"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="80" display="normal,print,portlet" format="yyyy-MM-dd"/>
+			<column title="发送人" name="workflowSender" align="center" width="70" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="120" display="normal,print"/>
+		</columns>
+	</view>
+	<view name="inProcessLeave" form="leave" title="在办请假条" pageRows="25" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.leave.pojo.Leave</pojo>
+			<orderBy>Leave.beginTime</orderBy>
+			<quickFilter>Leave.reason like '%{KEY}%' 
+				or Leave.remark like '%{KEY}%' 
+				or Leave.personName like '%{KEY}%'
+				or Leave.departmentName like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="新建请假条" type="workflow" module="leave"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="请假原因" name="reason"/>
+			<column title="开始时间" name="beginTime" align="center" width="80" format="yyyy-MM-dd"/>
+			<column title="结束时间" name="endTime" align="center" width="80" format="yyyy-MM-dd"/>
+			<column title="请假人" name="personName" align="center" width="70"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="80" display="normal,print,portlet" format="yyyy-MM-dd"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	<view name="allLeave" form="leave" title="所有请假条" pageRows="25" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.leave.pojo.Leave</pojo>
+			<orderBy>Leave.beginTime</orderBy>
+			<quickFilter>Leave.reason like '%{KEY}%' 
+				or Leave.remark like '%{KEY}%' 
+				or Leave.personName like '%{KEY}%'
+				or Leave.departmentName like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="新建请假条" type="workflow" module="leave"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="请假原因" name="reason"/>
+			<column title="开始时间" name="beginTime" align="center" width="80" format="yyyy-MM-dd"/>
+			<column title="结束时间" name="endTime" align="center" width="80" format="yyyy-MM-dd"/>
+			<column title="请假人" name="personName" align="center" width="70"/>
+			<column title="销假时间" name="terminateTime" align="center" width="80" format="yyyy-MM-dd"/>
+		</columns>
+	</view>
+</views>

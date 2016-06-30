@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/smsFormat" class="com.yuanluesoft.cms.publicservice.forms.admin.SmsFormat" title="办结短信格式设置" pojo="com.yuanluesoft.cms.publicservice.pojo.PublicServiceSms">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.publicservice.forms.PublicServiceAdminForm" title="公众服务">
+		<formFields>
+			<field title="访问者" name="readers" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field title="站点" name="siteName" type="string" inputMode="readonly"/>
+			<field title="是否总是发布所有的内容" name="alwaysPublishAll" type="boolean" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.publicservice.forms.admin.ModifyReaders" title="修改访问者">
+		<formFields>
+			<field name="applicationName" title="应用名称" type="number" inputMode="hidden"/>
+			<field name="mode" title="修改方式" type="string" inputMode="dropdown">
+				<parameter name="itemsText">同步站点访问者|synchSiteVisitor\0添加用户|addUser\0删除用户|deleteUser</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">addUser</parameter>
+				<parameter name="onchange">var value=document.getElementsByName('mode')[0].value;document.getElementById('trUser').style.display=(value=='synchSiteVisitor' ? 'none' : '');</parameter>
+			</field>
+			<field title="用户" name="readers" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field name="selectedOnly" title="只处理选中的记录" type="string" inputMode="radio">
+				<parameter name="itemsText">仅选中的记录|true\0全部|false</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.publicservice.forms.admin.ReplyStatisticView" title="办理统计">
+		<formFields>
+			<field title="开始时间" name="beginDate" type="date" inputMode="date">
+				<parameter name="defaultValue">{FIRSTDAYOFMONTH}</parameter>
+			</field>
+			<field title="结束时间" name="endDate" type="date" inputMode="date"/>
+			<field title="类别" name="category" type="string" inputMode="dropdown">
+				<parameter name="defaultValue">ontime</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">按时答复|ontime\0超时答复|timeout\0没有答复|noreply</parameter>
+			</field>
+		</formFields>
+	</form>
+</forms>

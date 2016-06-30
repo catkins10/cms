@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="企业" class="com.yuanluesoft.job.company.pojo.JobCompany" businessServiceName="jobCompanyService">
+		<field name="name" title="企业名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="loginName" title="登录用户名" length="50" required="true" type="string" inputMode="text"/>
+		<field name="password" title="登录密码" length="200" required="true" type="string" inputMode="text"/>
+		<field name="type" title="公司性质" length="30" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">外资（欧美）\0外资（非欧美）\0合资\0国企\0民营公司\0国内上市公司\0外企代表处\0政府机关\0事业单位\0非营利机构\0其它性质</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="areaId" title="所在地区ID" length="20" type="number" inputMode="hidden"/>
+		<field name="area" title="所在地区名称" length="30" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(600, 360, false, 'areaId{id},area{name}', '', 'area')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="introduction" title="单位简介" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">12</parameter>
+		</field>
+		<field name="representative" title="法人代表" length="30" required="true" type="string" inputMode="text"/>
+		<field name="licenseNo" title="营业执照号" length="100" required="true" type="string" inputMode="text"/>
+		<field name="scale" title="企业规模" length="1" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">1~49人|1\0 50~99人|2\0 100~499人|3\0 500~999人|4\0 1000人以上|5</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="address" title="单位地址" length="200" type="string" inputMode="text"/>
+		<field name="postalcode" title="邮政编码" length="10" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="linkman" title="联系人" length="30" required="true" type="string" inputMode="text"/>
+		<field name="linkmanJob" title="联系人职务" length="30" type="string" inputMode="text"/>
+		<field name="linkmanPublic" title="联系人是否公开" length="1" type="number" inputMode="checkbox">
+			<parameter name="label">允许公开</parameter>
+			<parameter name="singleByteCharacters">1</parameter>
+		</field>
+		<field name="linkmanTel" title="联系电话" length="50" required="true" type="string" inputMode="text"/>
+		<field name="linkmanTelPublic" title="联系电话是否公开" length="1" type="number" inputMode="checkbox">
+			<parameter name="label">允许公开</parameter>
+			<parameter name="singleByteCharacters">1</parameter>
+		</field>
+		<field name="fax" title="传真号码" length="50" type="string" inputMode="text"/>
+		<field name="faxPublic" title="传真号码是否公开" length="1" type="number" inputMode="checkbox">
+			<parameter name="label">允许公开</parameter>
+			<parameter name="singleByteCharacters">1</parameter>
+		</field>
+		<field name="email" title="电子邮箱" length="100" required="true" type="email" inputMode="text"/>
+		<field name="emailPublic" title="电子邮箱是否公开" length="1" type="number" inputMode="checkbox">
+			<parameter name="label">允许公开</parameter>
+			<parameter name="singleByteCharacters">1</parameter>
+		</field>
+		<field name="webSite" title="网址" length="100" type="string" inputMode="text"/>
+		<field name="collegeBuddy" title="是否校友企业" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+		<field name="created" title="注册时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="ip" title="注册IP" length="100" type="string" inputMode="readonly"/>
+		<field name="status" title="状态" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">注册|0\0审核通过|1\0审核未通过|2</parameter>
+		</field>
+		<field name="approverId" title="审核人ID" length="20" type="number" inputMode="none"/>
+		<field name="approver" title="审核人" length="50" type="string" inputMode="readonly"/>
+		<field name="approvalTime" title="审核时间" type="timestamp" inputMode="readonly"/>
+		<field name="failedReason" title="审核未通过原因" length="2000" type="string" inputMode="hidden"/>
+		<field name="industries" title="所在行业" type="components">
+			<parameter name="class">com.yuanluesoft.job.company.pojo.JobCompanyIndustry</parameter>
+		</field>
+		<field name="mailTemplates" title="邮件模板" type="components">
+			<parameter name="class">com.yuanluesoft.job.company.pojo.JobCompanyMailTemplate</parameter>
+		</field>
+		<field name="jobs" title="职位" type="components">
+			<parameter name="class">com.yuanluesoft.job.company.pojo.Job</parameter>
+			<parameter name="recordList">false</parameter>
+		</field>
+		<field name="logo" title="企业LOGO" type="image" inputMode="attachment" length="1">
+			<parameter name="attachmentEditor">/job/company/attachmentEditor.shtml</parameter>
+		</field>
+		<field name="images" title="企业资质" type="image" inputMode="attachment">
+			<parameter name="attachmentEditor">/job/company/attachmentEditor.shtml</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="企业所在行业" class="com.yuanluesoft.job.company.pojo.JobCompanyIndustry" businessServiceName="jobCompanyService">
+		<field name="companyId" title="企业ID" length="20" type="number" inputMode="hidden"/>
+		<field name="industryId" title="行业ID" length="20" type="number" inputMode="hidden"/>
+		<field name="industry" title="行业" length="100" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="邮件模板" class="com.yuanluesoft.job.company.pojo.JobCompanyMailTemplate" businessServiceName="jobCompanyService">
+		<field name="companyId" title="企业ID" length="20" type="number" inputMode="hidden"/>
+		<field name="invitationMailSubject" title="面试邀请函邮件标题" length="200" required="true" type="string" inputMode="text"/>
+		<field name="invitationMailTemplate" title="面试邀请函邮件模板" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="offerMailSubject" title="录用通知书邮件标题" length="200" required="true" type="string" inputMode="text"/>
+		<field name="offerMailTemplate" title="录用通知书邮件模板" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="pushMailSubject" title="职位推送邮件标题" length="200" required="true" type="string" inputMode="text"/>
+		<field name="pushMailTemplate" title="职位推送邮件模板" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="职位" class="com.yuanluesoft.job.company.pojo.Job" businessServiceName="jobCompanyService">
+		<field name="companyId" title="企业ID" length="20" type="number" inputMode="hidden"/>
+		<field name="name" title="职位名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="department" title="招聘部门" length="100" type="string" inputMode="text"/>
+		<field name="recruitNumber" title="招聘人数" length="4" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">若干|0\0 1|1\0 2|2\0 3|3\0 4|4\0 5|5\0 6|6\0 7|7\0 8|8\0 9|9\0 10|10\0 20|20\0 30|30\0 50|50\0 100|100</parameter>
+		</field>
+		<field name="description" title="职位描述" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">8</parameter>
+		</field>
+		<field name="requirement" title="职位要求" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">8</parameter>
+		</field>
+		<field name="postId" title="职能类别ID" length="20" type="number" inputMode="hidden"/>
+		<field name="post" title="职能类别名称" length="200" required="true" type="string" inputMode="select">
+			<parameter name="js">/job/company/js/job.js</parameter>
+			<parameter name="execute">selectPost(600, 360, false, 'postId{id},post{name}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="language" title="语言要求" length="100" type="string" inputMode="text"/>
+		<field name="monthlyPayRange" title="月薪范围" type="string" persistence="false" inputMode="readonly">
+			<parameter name="referenceFields">minMonthlyPay,maxMonthlyPay</parameter>
+		</field>
+		<field name="minMonthlyPay" title="最低月薪" length="8" type="number" inputMode="text"/>
+		<field name="maxMonthlyPay" title="最高月薪" length="8" type="number" inputMode="text"/>
+		<field name="target" title="招聘对象" length="100" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">社会人士\0应届毕业生\0实习生\0劳务工\0不限</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="qualification" title="学历要求" length="2" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">不限|-1\0小学|0\0初中|1\0高中|2\0职业高中|3\0职业中专|4\0中专|5\0大专|6\0本科|7\0硕士研究生|8\0博士研究生|9\0</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="workYear" title="工作年限" length="2" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">在读学生|-1\0应届毕业生|0\0 1年|1\0 2年|2\0 3年|3\0 4年|4\0 5年|5\0 6年|6\0 7年|7\0 8年|8\0 9年|9\0 10年以上|10\0不限|-2</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="ageRange" title="年龄范围" type="string" persistence="false" inputMode="readonly">
+			<parameter name="referenceFields">minAge,maxAge</parameter>
+		</field>
+		<field name="minAge" title="年龄下限" length="2" type="number" inputMode="text"/>
+		<field name="maxAge" title="年龄上限" length="2" type="number" inputMode="text"/>
+		<field name="sex" title="性别要求" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">不限|A\0男|M\0女|F</parameter>
+			<parameter name="defaultValue">A</parameter>
+		</field>
+		<field name="rank" title="职称要求" length="10" type="string" inputMode="dropdown">
+			<parameter name="itemsText">不限\0初级职称\0中级职称\0副高级职称\0高级职称</parameter>
+			<parameter name="defaultValue">不限</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="endDate" title="到期时间" type="date" inputMode="date"/>
+		<field name="isPublic" title="是否公开" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">公开|1\0不公开|0</parameter>
+		</field>
+		<field name="urgent" title="是否紧急职位" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+		<field name="queryConnt" title="查询次数" length="8" type="number" inputMode="readonly"/>
+		<field name="applicantCount" title="投递次数" length="8" type="number" inputMode="readonly"/>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="publicTime" title="发布时间" type="timestamp" inputMode="readonly"/>
+		<field name="refreshTime" title="刷新时间" type="timestamp" inputMode="readonly"/>
+		<field name="todayRefreshTimes" title="当日刷新次数" length="8" type="number" inputMode="readonly"/>
+		<field name="areas" title="工作地点" type="components">
+			<parameter name="class">com.yuanluesoft.job.company.pojo.JobArea</parameter>
+		</field>
+		<field name="types" title="工作性质" type="components">
+			<parameter name="class">com.yuanluesoft.job.company.pojo.JobType</parameter>
+		</field>
+		<field name="pushes" title="推送" type="components">
+			<parameter name="class">com.yuanluesoft.job.company.pojo.JobPush</parameter>
+		</field>
+		<field name="company" title="企业" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.job.company.pojo.JobCompany</parameter>
+		</field>
+		<field name="typeArray" title="工作性质" required="true" persistence="false" type="number[]" inputMode="multibox">
+			<parameter name="itemsText">全职|0\0兼职|1\0实习|2\0暑期工|3</parameter>
+			<parameter name="referenceFields">types</parameter>
+		</field>
+		<field name="areaIds" title="工作地点ID" type="string" persistence="false" inputMode="hidden"/>
+   		<field name="areaNames" title="工作地点" type="string" persistence="false" required="true" inputMode="select">
+   			<parameter name="execute">DialogUtils.selectOrg(600, 360, true, 'areaIds{id},areaNames{name|工作地点|100%}', '', 'area')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="referenceFields">areas</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="工作地点" class="com.yuanluesoft.job.company.pojo.JobArea" businessServiceName="jobCompanyService">
+		<field name="jobId" title="职位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="areaId" title="工作地点ID" length="20" type="number" inputMode="hidden"/>
+		<field name="area" title="工作地点" length="50" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="工作性质" class="com.yuanluesoft.job.company.pojo.JobType" businessServiceName="jobCompanyService">
+		<field name="jobId" title="职位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="type" title="工作性质" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">全职|0\0兼职|1\0实习|2\0暑期工|3</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="推送" class="com.yuanluesoft.job.company.pojo.JobPush" businessServiceName="jobCompanyService">
+		<field name="jobId" title="职位ID" length="20" type="number" inputMode="none"/>
+		<field name="jobName" title="职位名称" length="100" type="string" inputMode="readonly"/>
+		<field name="companyId" title="企业ID" length="20" type="number" inputMode="none"/>
+		<field name="companyName" title="企业名称" length="200" type="string" inputMode="readonly"/>
+		<field name="pushTime" title="推送时间" type="timestamp" inputMode="readonly"/>
+		<field name="receiverIds" title="接收人ID" length="4000" type="string" inputMode="hidden"/>
+		<field name="receivers" title="接收人" length="4000" type="string" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.openSelectDialog('job/talent', 'pushTalent', 720, 480, true, 'jobPush.receiverIds{id},jobPush.receivers{name|姓名|100%|}', '', '', '', ',', true, 'jobId={PARAMETER:id}')</parameter>
+		</field>
+		<field name="pusherId" title="推送人ID" length="20" type="number" inputMode="none"/>
+		<field name="pusher" title="推送人" length="200" type="string" inputMode="hidden"/>
+	</businessObject>
+	
+	<businessObject title="企业审核设置" class="com.yuanluesoft.job.company.pojo.JobCompanyApproval" businessServiceName="jobParameterService">
+		<field name="approvalRequired" title="是否需要审核" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">需要|1\0不需要|0</parameter>
+		</field>
+		<field name="passMailSubject" title="审核通过邮件标题" length="200" required="true" type="string" inputMode="text"/>
+		<field name="passMailTemplate" title="审核通过邮件模板" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">10</parameter>
+		</field>
+		<field name="failedMailSubject" title="审核未通过邮件标题" length="200" required="true" type="string" inputMode="text"/>
+		<field name="failedMailTemplate" title="审核未通过邮件模板" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">10</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="参数配置目录" class="com.yuanluesoft.job.company.pojo.JobParameterDirectory" businessServiceName="jobParameterService"/>
+</businessObjects>

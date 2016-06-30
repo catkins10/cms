@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 短信订阅服务 -->
+	<bean id="smsSubscriptionService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.cms.smssubscription.service.spring.SmsSubscriptionServiceImpl" init-method="init">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="smsService"><ref bean="smsService"/></property>
+				<property name="siteService"><ref bean="siteServiceImpl"/></property>
+				<property name="contentServiceNames">
+					<value>siteResourceService,publicInfoService,publicService,leaderMailService,complaintService</value>
+				</property>
+				<property name="exchangeClient"><ref bean="exchangeClient"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="onShortMessageReceived">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="subscribe">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="unsubscribe">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

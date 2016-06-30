@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<application>
+	<viewLink local="admin/todoLeaderMailBySite" title="待办信件"/>
+	<viewLink local="admin/inProcessLeaderMail" title="在办信件"/>
+	<viewLink local="admin/completedLeaderMail" title="办结信件"/>
+	<viewLink local="admin/allLeaderMailBySite" title="所有信件"/>
+	<viewLink local="admin/deleted" title="回收站"/>
+	<viewLink local="admin/leaderMailType" title="信件类型"/>
+	<viewLink local="admin/leaderMailDepartment" title="受理部门"/>
+	<viewLink local="admin/leaderMailReply" title="答复统计"/>
+	<viewLink local="admin/warnLeaderMail" title="即将到期信件"/>
+	<viewLink local="admin/timeoutTodoLeaderMail" title="逾期未办理信件"/>
+	<viewLink local="admin/timeoutLeaderMail" title="逾期办理信件"/>
+	<link title="办理流程" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/leadermail&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/workflowSetting
+	</link>
+	<link title="办结短信格式" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/leadermail&amp;viewApplicationName=cms/publicservice&amp;viewName=admin/smsFormat
+	</link>
+</application>

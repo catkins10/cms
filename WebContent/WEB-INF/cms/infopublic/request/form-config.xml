@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="personalRequest" method="post" title="个人申请" action="/cms/infopublic/request/savePersonalRequest.shtml" class="com.yuanluesoft.cms.infopublic.request.forms.PersonalRequest" pojo="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest">
+		<formFields>
+			<field name="mediums" title="提供方式" type="string[]" inputMode="multibox" required="true">
+				<parameter name="itemsText">纸质\0电子邮件\0光盘\0磁盘</parameter>
+			</field>
+			<field name="receiveModes" title="获取信息的方式" type="string[]" inputMode="multibox" required="true">
+				<parameter name="itemsText">邮寄\0快递\0电子邮件\0传真\0自行领取/当场阅读、抄录</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="companyRequest" method="post" title="公司申请" action="/cms/infopublic/request/saveCompanyRequest.shtml" class="com.yuanluesoft.cms.infopublic.request.forms.CompanyRequest" pojo="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="publicRequestSearch" title="搜索" method="get" action="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/infopublic/request&amp;pageName=publicRequestSearch">
+		<formFields>
+			<field title="主题" name="subject">
+				<parameter name="searchCondition">PublicRequest.subject like '%{PARAMETER:subject}%' or PublicRequest.publicSubject like '%{PARAMETER:subject}%'</parameter> <!-- 搜索条件定义 -->
+			</field>
+			<field title="正文" name="lazyBody.content">
+				<parameter name="searchCondition">PublicRequest.publicBody='1' and lazyBody.body like '%{PARAMETER:lazyBody.content}%'</parameter> <!-- 搜索条件定义 -->
+			</field>
+			<field title="申请人" name="creator"/>
+			<field title="证件号码" name="creatorIdentityCard"/>
+			<field title="开始时间" name="createdBegin" type="date"/>
+			<field title="结束时间" name="createdEnd" type="date"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="publicRequestQuery" title="办理情况查询" method="post" action="/cms/infopublic/request/personalRequest.shtml?id={PARAMETER:id}">
+		<formFields>
+			<field title="编号" name="approvalQuerySN"/>
+			<field title="密码" name="approvalQueryPassword" inputMode="password"/>
+		</formFields>
+		<actions>
+			<action title="查询" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+
+	<form name="admin/request" class="com.yuanluesoft.cms.infopublic.request.forms.admin.Request" title="信息公开申请" pojo="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest">
+		<formFields>
+			<field name="proposerType" title="申请人类型" type="string" inputMode="radio">
+				<parameter name="itemsText">个人|1\0企业|2</parameter>
+			</field>
+			<field title="隶属站点" name="siteName" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 320, false, 'siteId{id},siteName{name}', '', '', '', 'site')</parameter>
+			</field>
+			<field name="mediums" title="提供方式" type="string[]" inputMode="multibox" required="true">
+				<parameter name="itemsText">纸质\0电子邮件\0光盘\0磁盘</parameter>
+			</field>
+			<field name="receiveModes" title="获取信息的方式" type="string[]" inputMode="multibox" required="true">
+				<parameter name="itemsText">邮寄\0快递\0电子邮件\0传真\0自行领取/当场阅读、抄录</parameter>
+			</field>
+			<field name="created" title="申请时间" type="timestamp" inputMode="datetime"/>
+			<field name="code" title="机构代码" type="string" length="100" inputMode="text"/>
+			<field name="legalRepresentative" title="法人代表" type="string" length="15" inputMode="text"/>
+			<field name="creatorCertificateName" title="申请人证件名称" type="string" length="10" inputMode="text"/>
+			<field name="creatorIdentityCard" title="申请人证件号码" type="string" length="30" inputMode="text">
+				<parameter name="singleByteCharacters">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteRequest')"/>
+			<action title="批转" hide="workflow()" execute="FormUtils.doAction('runRequest', 'workflowAction=send')"/>
+			<action title="审核申请" hide="workflow()" execute="FormUtils.doAction('approvalRequest')"/>
+			<action title="提供信息" hide="workflow()" execute="FormUtils.doAction('sendInfo')"/>
+			<action title="审核并提供信息" hide="workflow()" execute="FormUtils.doAction('approvalAndSend')"/>
+			<action title="告知" hide="workflow()" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/infopublic/request/admin/requestNotify.shtml?id={PARAMETER:id}', 640, 400)"/>
+			<action title="公布到网站" hide="isNew() or workflow() and noPrivilege(application_manager) and noPrivilege(site_manager)" execute="FormUtils.doAction('setPublishOption')"/>
+			<!-- action title="打印办理单" execute="window.open('printRequest.shtml?id={PARAMETER:id}&amp;siteId={PARAMETER:siteId}')"/-->
+			<action title="打印" execute="window.print()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/requestNotify" class="com.yuanluesoft.cms.infopublic.request.forms.admin.RequestNotify" title="告知书" pojo="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest">
+		<formFields>
+			<field name="requestNotify" title="告知书" type="component">
+				<parameter name="class">com.yuanluesoft.cms.infopublic.request.pojo.PublicRequestNotify</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="window.close()"/>
+		</actions>
+	</form>
+</forms>

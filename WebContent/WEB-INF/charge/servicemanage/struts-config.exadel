@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,32,177,21" TARGET="page1" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,96,177,21" TARGET="page3"
+  TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveService"
+  NAME="action0" PATH="/admin/saveService" SHAPE="560,496,177,25"
+  TITLE="adminService" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#service"
+  NAME="action1" PATH="/admin/service" SHAPE="32,464,177,41"
+  TITLE="adminService" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/service.jsp" TARGET="page5" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#service" NAME="action2"
+  PATH="/service" SHAPE="32,888,177,41" TITLE="service" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/service.jsp" TARGET="page6" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteService"
+  NAME="action3" PATH="/admin/deleteService" SHAPE="560,552,177,25"
+  TITLE="adminService" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#displayService"
+  NAME="action4" PATH="/displayService" SHAPE="560,920,177,25"
+  TITLE="service" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/admin/service.jsp" SHAPE="352,480,50,55" SUBTYPE="jsp"
+  TITLE="service.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteService" TARGET="action3"
+   TITLE="deleteService" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/service.jsp" SHAPE="352,904,50,40" SUBTYPE="jsp"
+  TITLE="service.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#appendDeductPolicy"
+  NAME="action8" PATH="/admin/appendDeductPolicy" SHAPE="560,760,177,25"
+  TITLE="adminServicePrice" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteDeductPolicy"
+  NAME="action9" PATH="/admin/deleteDeductPolicy" SHAPE="560,816,177,25"
+  TITLE="adminServicePrice" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#serviceDeductTransaction"
+  NAME="action10" PATH="/serviceDeductTransaction" SHAPE="32,992,177,41"
+  TITLE="serviceDeductTransaction" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/serviceDeductTransaction.jsp" TARGET="page2"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/serviceDeductTransaction.jsp" SHAPE="352,1008,50,40"
+  SUBTYPE="jsp" TITLE="serviceDeductTransaction.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#displayServiceDeductTransaction" NAME="action11"
+  PATH="/displayServiceDeductTransaction" SHAPE="560,1024,177,25"
+  TITLE="serviceDeductTransaction" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#servicePrice"
+  NAME="action6" PATH="/admin/servicePrice" SHAPE="32,616,177,41"
+  TITLE="adminServicePrice" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/servicePrice.jsp" TARGET="page12"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page12"
+  PATH="/admin/servicePrice.jsp" SHAPE="352,632,50,85" SUBTYPE="jsp"
+  TITLE="servicePrice.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteServicePrice" TARGET="action21"
+   TITLE="deleteServicePrice" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/appendDeductPolicy" TARGET="action8"
+   TITLE="appendDeductPolicy" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/admin/deleteDeductPolicy" TARGET="action9"
+   TITLE="deleteDeductPolicy" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveServicePrice"
+  NAME="action7" PATH="/admin/saveServicePrice" SHAPE="560,648,177,25"
+  TITLE="adminServicePrice" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteServicePrice"
+  NAME="action21" PATH="/admin/deleteServicePrice"
+  SHAPE="560,704,177,25" TITLE="adminServicePrice" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#servicePolicy"
+  NAME="action22" PATH="/admin/servicePolicy" SHAPE="32,176,177,41"
+  TITLE="adminServicePolicy" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/servicePolicy.jsp" TARGET="page13"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page13"
+  PATH="/admin/servicePolicy.jsp" SHAPE="352,192,50,55" SUBTYPE="jsp"
+  TITLE="servicePolicy.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteServicePolicy" TARGET="action24"
+   TITLE="deleteServicePolicy" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveServicePolicy"
+  NAME="action23" PATH="/admin/saveServicePolicy" SHAPE="560,208,177,25"
+  TITLE="adminServicePolicy" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem"
+  ID="#admin#deleteServicePolicy" NAME="action24"
+  PATH="/admin/deleteServicePolicy" SHAPE="560,264,177,25"
+  TITLE="adminServicePolicy" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#serviceTry"
+  NAME="action25" PATH="/admin/serviceTry" SHAPE="32,320,177,41"
+  TITLE="adminServiceTry" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/serviceTry.jsp" TARGET="page14"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page14"
+  PATH="/admin/serviceTry.jsp" SHAPE="352,336,50,40" SUBTYPE="jsp"
+  TITLE="serviceTry.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveServiceTry"
+  NAME="action26" PATH="/admin/saveServiceTry" SHAPE="560,352,177,25"
+  TITLE="adminServiceTry" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="352,96,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="352,32,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+</PROCESS>

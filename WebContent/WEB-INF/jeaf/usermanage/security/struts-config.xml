@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminUserLoginPolicy" type="com.yuanluesoft.jeaf.usermanage.security.forms.admin.UserLoginPolicy"/>
+  <form-bean name="adminUserPasswordPolicy" type="com.yuanluesoft.jeaf.usermanage.security.forms.admin.UserPasswordPolicy"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminUserLoginPolicy" path="/admin/userLoginPolicy"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.security.actions.admin.userloginpolicy.Load" validate="false">
+   <forward name="load" path="/admin/userLoginPolicy.jsp"/>
+  </action>
+  <action input="/admin/userLoginPolicy.jsp" name="adminUserLoginPolicy"
+   path="/admin/saveUserLoginPolicy" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.security.actions.admin.userloginpolicy.Save" validate="false"/>
+  <action input="/admin/userLoginPolicy.jsp" name="adminUserLoginPolicy"
+   path="/admin/deleteUserLoginPolicy" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.security.actions.admin.userloginpolicy.Delete" validate="false"/>
+  <action name="adminUserPasswordPolicy"
+   path="/admin/userPasswordPolicy" scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.security.actions.admin.userpasswordpolicy.Load" validate="false">
+   <forward name="load" path="/admin/userPasswordPolicy.jsp"/>
+  </action>
+  <action input="/admin/userPasswordPolicy.jsp"
+   name="adminUserPasswordPolicy" path="/admin/saveUserPasswordPolicy"
+   scope="request"
+   type="com.yuanluesoft.jeaf.usermanage.security.actions.admin.userpasswordpolicy.Save" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

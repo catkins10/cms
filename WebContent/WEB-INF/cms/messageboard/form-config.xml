@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/message" class="com.yuanluesoft.cms.messageboard.forms.admin.Message" title="留言" pojo="com.yuanluesoft.cms.messageboard.pojo.MessageBoard">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="批转" hide="workflow()" execute="FormUtils.doAction('runMessage', 'workflowAction=send')"/>
+			<action title="公布到网站" hide="workflow() and noPrivilege(application_manager) and noPrivilege(site_manager)  and noPrivilege(publish)" execute="FormUtils.doAction('setPublishOption')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteMessage')"/>
+			<action title="永久删除" hide="isNew()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteMessage', 'physical=true')"/>
+			<action title="撤销删除" hide="isNew()" execute="FormUtils.doAction('undeleteMessage')"/>
+			<action title="打印办理单" execute="window.open('printMessage.shtml?id={PARAMETER:id}&amp;siteId={PARAMETER:siteId}')"/>
+			<action title="打印" execute="window.print()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/faq" class="com.yuanluesoft.cms.messageboard.forms.admin.Faq" title="常见问题" pojo="com.yuanluesoft.cms.messageboard.pojo.MessageBoardFaq">
+		<formFields>
+			<field title="关键词" name="keywords" inputMode="text" length="200" required="true"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteFaq')"/>
+		</actions>
+	</form>
+	
+	<form name="message" title="留言" method="post" action="/cms/messageboard/saveMessage.shtml?forApplication={PARAMETER:forApplication}" class="com.yuanluesoft.cms.messageboard.forms.Message" pojo="com.yuanluesoft.cms.messageboard.pojo.MessageBoard">
+		<formFields>
+			<field title="是否继续提交" name="continueSubmit" type="boolean" inputMode="hidden"/>
+			<field title="序列化后的记录" name="serializableRecord" type="string" inputMode="hidden"/>
+			<field title="常见问题" name="faqQuestion" type="string" inputMode="readonly"/>
+			<field title="常见问题解答" name="faqAnswer" type="string" inputMode="readonly"/>
+		</formFields>
+		<actions>
+			<action title="提交" type="submit"/>
+			<action title="继续提交" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="messageBoardSearch" title="搜索" method="get" action="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/messageboard&amp;pageName=messageBoardSearch">
+		<formFields>
+			<field title="主题" name="subject">
+				<parameter name="searchCondition">MessageBoard.subject like '%{PARAMETER:subject}%' or MessageBoard.publicSubject like '%{PARAMETER:subject}%'</parameter> <!-- 搜索条件定义 -->
+			</field>
+			<field title="正文" name="lazyBody.content">
+				<parameter name="searchCondition">MessageBoard.publicBody='1' and lazyBody.body like '%{PARAMETER:lazyBody.content}%'</parameter> <!-- 搜索条件定义 -->
+			</field>
+			<field title="留言人姓名" name="creator"/>
+			<field title="开始时间" name="createdBegin" type="date"/>
+			<field title="结束时间" name="createdEnd" type="date"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+</forms>

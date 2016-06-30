@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="leaderMail" type="com.yuanluesoft.cms.leadermail.forms.LeaderMail"/>
+  <form-bean name="adminLeaderMail" type="com.yuanluesoft.cms.leadermail.forms.admin.LeaderMail"/>
+  <form-bean name="leaderMailType" type="com.yuanluesoft.cms.leadermail.forms.admin.LeaderMailType"/>
+  <form-bean name="leaderMailDepartment" type="com.yuanluesoft.cms.leadermail.forms.admin.LeaderMailDepartment"/>
+  <form-bean name="insertLeaderMails" type="com.yuanluesoft.cms.leadermail.forms.admin.InsertLeaderMails"/>
+  <form-bean name="insertLink" type="com.yuanluesoft.cms.leadermail.forms.admin.InsertLink"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="leaderMail" path="/leaderMail" scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermail.Load" validate="false">
+   <forward name="load" path="/leaderMail.jsp"/>
+  </action>
+  <action name="adminLeaderMail" path="/admin/leaderMail"
+   scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermail.admin.Load" validate="false">
+   <forward name="load" path="/admin/leaderMail.jsp"/>
+  </action>
+  <action input="/leaderMail.jsp" name="leaderMail"
+   path="/saveLeaderMail" scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermail.Save" validate="false">
+   <forward name="result" path="/leaderMailSubmitted.jsp"/>
+  </action>
+  <action input="/admin/leaderMail.jsp" name="adminLeaderMail"
+   path="/admin/saveLeaderMail" scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermail.admin.Save" validate="false"/>
+  <action input="/admin/leaderMail.jsp" name="adminLeaderMail"
+   path="/admin/runLeaderMail" scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermail.admin.Run" validate="false"/>
+  <action input="/admin/leaderMail.jsp" name="adminLeaderMail"
+   path="/admin/deleteLeaderMail" scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermail.admin.Delete" validate="false"/>
+  <action input="/admin/leaderMail.jsp" name="adminLeaderMail"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermail.admin.WriteOpinion" validate="false"/>
+  <action name="leaderMailType" path="/admin/leaderMailType"
+   scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermailtype.admin.Load" validate="false">
+   <forward name="load" path="/admin/leaderMailType.jsp"/>
+  </action>
+  <action input="/admin/leaderMailType.jsp" name="leaderMailType"
+   path="/admin/saveLeaderMailType" scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermailtype.admin.Save" validate="false"/>
+  <action input="/admin/leaderMailType.jsp" name="leaderMailType"
+   path="/admin/deleteLeaderMailType" scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermailtype.admin.Delete" validate="false"/>
+  <action input="/admin/leaderMail.jsp" name="adminLeaderMail"
+   path="/admin/publish" scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermail.admin.Publish" validate="false"/>
+  <action input="/admin/leaderMail.jsp" name="adminLeaderMail"
+   path="/admin/setPublishOption" scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermail.admin.SetPublishOption" validate="false"/>
+  <action name="adminLeaderMail" path="/admin/printLeaderMail"
+   scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermail.admin.Print" validate="false">
+   <forward name="load" path="/admin/leaderMail.jsp"/>
+  </action>
+  <action name="leaderMail" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermail.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action input="/admin/leaderMail.jsp" name="adminLeaderMail"
+   path="/admin/undeleteLeaderMail" scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermail.admin.Undelete" validate="false"/>
+  <action name="leaderMailDepartment" path="/admin/leaderMailDepartment"
+   scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermaildepartment.admin.Load" validate="false">
+   <forward name="load" path="/admin/leaderMailDepartment.jsp"/>
+  </action>
+  <action input="/admin/leaderMailDepartment.jsp"
+   name="leaderMailDepartment" path="/admin/saveLeaderMailDepartment"
+   scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermaildepartment.admin.Save" validate="false"/>
+  <action input="/admin/leaderMailDepartment.jsp"
+   name="leaderMailDepartment" path="/admin/deleteLeaderMailDepartment"
+   scope="request"
+   type="com.yuanluesoft.cms.leadermail.actions.leadermaildepartment.admin.Delete" validate="false"/>
+  <action name="insertLeaderMails"
+   path="/templatemanage/insertLeaderMails" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertLeaderMails.jsp"/>
+  </action>
+  <action name="insertLink" path="/templatemanage/insertLink"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertLink.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

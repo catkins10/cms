@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 内部用户登录URL -->
+	<bean id="internalLoginUrl" class="com.yuanluesoft.jeaf.base.model.Link">
+		<!-- 参数 forceLogin 是否强制登录
+			 参数 loginReason 登录的原因
+			 参数 anonymousEnable 是否允许匿名访问
+			 参数 redirect 登录完成后重定向的URL -->
+		<property name="url"><value>http://oa.fjmsa.gov.cn/sso.nsf/dominosessionservice?openagent&amp;action=login&amp;forceLogin={PARAMETER:forceLogin}&amp;loginReason={PARAMETER:loginReason}&amp;anonymousEnable={PARAMETER:anonymousEnable}&amp;redirect={PARAMETER:redirect}&amp;seq={RANDOMNUMBER}</value></property>
+		<property name="encoding"><value>gbk</value></property>
+		<!-- property name="url"><value>{WEBAPPLICATIONSAFEURL}/jeaf/sso/login.shtml</value></property -->
+	</bean>
+	
+	<!-- 内部用户注销URL -->
+	<bean id="internalLogoutUrl" class="com.yuanluesoft.jeaf.base.model.Link">
+		<!-- 参数 redirect 注销后重定向的URL -->
+		<property name="url"><value>javascript:window.setTimeout("location='http://oa.fjmsa.gov.cn/sso.nsf/dominosessionservice?openagent&amp;action=logout&amp;redirect={PARAMETER:redirect}&amp;seq={RANDOMNUMBER}'", 500)</value></property>
+		<property name="encoding"><value>gbk</value></property>
+		<!-- property name="url"><value>{WEBAPPLICATIONSAFEURL}/jeaf/sso/logout.shtml</value></property-->
+	</bean>
+	
+	<!-- 外部用户登录URL -->
+	<bean id="externalLoginUrl" class="com.yuanluesoft.jeaf.base.model.Link">
+		<!-- 参数 forceLogin 是否强制登录
+			 参数 loginReason 登录的原因
+			 参数 anonymousEnable 是否允许匿名访问
+			 参数 redirect 登录完成后重定向的URL -->
+		<property name="url"><value>http://oa.fjmsa.gov.cn/sso.nsf/dominosessionservice?openagent&amp;action=login&amp;forceLogin={PARAMETER:forceLogin}&amp;loginReason={PARAMETER:loginReason}&amp;anonymousEnable={PARAMETER:anonymousEnable}&amp;redirect={PARAMETER:redirect}&amp;seq={RANDOMNUMBER}</value></property>
+		<property name="encoding"><value>gbk</value></property>
+	</bean>
+
+	<!-- 外部用户注销URL -->
+	<bean id="externalLogoutUrl" class="com.yuanluesoft.jeaf.base.model.Link">
+		<!-- 参数 redirect 注销后重定向的URL -->
+		<property name="url"><value>javascript:window.setTimeout("location='http://oa.fjmsa.gov.cn/sso.nsf/dominosessionservice?openagent&amp;action=logout&amp;redirect={PARAMETER:redirect}&amp;seq={RANDOMNUMBER}'", 500)</value></property>
+		<property name="encoding"><value>gbk</value></property>
+	</bean>
+	
+	<!--内部用户登录对话框URL -->
+	<bean id="internalLoginDialogUrl" class="com.yuanluesoft.jeaf.base.model.Link">
+		<!-- 参数 redirect 登录后重定向的URL -->
+		<property name="url"><value>http://oa.fjmsa.gov.cn/sso.nsf/dominosessionservice?openagent&amp;action=loginDialog&amp;cssFile={WEBAPPLICATIONURL}/jeaf/dialog/css/dialog.css&amp;redirect={PARAMETER:redirect}</value></property>
+		<property name="encoding"><value>gbk</value></property>
+		<!-- property name="url"><value>{WEBAPPLICATIONSAFEURL}/jeaf/sso/loginDialog.shtml</value></property -->
+	</bean>
+	
+	<!--外部用户登录对话框URL -->
+	<bean id="externalLoginDialogUrl" class="com.yuanluesoft.jeaf.base.model.Link">
+		<!-- 参数 redirect 登录后重定向的URL -->
+		<property name="url"><value>http://oa.fjmsa.gov.cn/sso.nsf/dominosessionservice?openagent&amp;action=loginDialog&amp;cssFile={WEBAPPLICATIONURL}/jeaf/dialog/css/dialog.css&amp;redirect={PARAMETER:redirect}</value></property>
+		<property name="encoding"><value>gbk</value></property>
+		<!-- property name="url"><value>{WEBAPPLICATIONSAFEURL}/jeaf/sso/loginDialog.shtml</value></property -->
+	</bean>
+
+	<!-- 会话管理服务 -->
+	<bean id="sessionService" class="com.yuanluesoft.jeaf.sessionmanage.service.spring.SessionServiceImpl">
+		<property name="memberServiceList"><ref bean="memberServiceList"/></property>
+		<property name="cache"><ref bean="sessionInfoCache"/></property>
+		<property name="ssoSessionService"><ref bean="ssoSessionService"/></property>
+	</bean>
+</beans>

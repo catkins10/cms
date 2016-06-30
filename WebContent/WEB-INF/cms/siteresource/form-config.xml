@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/article" class="com.yuanluesoft.cms.siteresource.forms.Article" title="文章" pojo="com.yuanluesoft.cms.siteresource.pojo.SiteResource">
+		<formFields>
+			<field name="columnId" title="所属栏目ID" type="number" inputMode="hidden"/>
+			<field name="columnFullName" title="所属栏目" type="string" inputMode="select" required="true">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(600, 400, false, 'columnId{id},columnFullName{fullName/site}', '', '', '', 'column')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field title="访问者" name="readers" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field name="relationResourceIds" title="相关的资源ID" type="string" inputMode="hidden"/>
+			<field name="relationResourceSubjects" title="相关的资源标题" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead() or privilege(unissue)" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="deleteArticle()"/>
+			<action title="永久删除" hide="isNew() or noPrivilege(application_manager)" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteArticle', 'physical=true')"/>
+			<action title="撤销删除" hide="isNew() or noPrivilege(application_manager)" execute="FormUtils.doAction('undeleteArticle')"/>
+			<action title="送审核" hide="workflow()" execute="FormUtils.doAction('runArticleApproval', 'workflowAction=send')"/>
+			<action title="审核" hide="workflow()" execute="FormUtils.doAction('approvalArticle', 'workflowAction=approval')"/>
+			<action title="完成审核" hide="workflow()" execute="FormUtils.doAction('runArticleApproval', 'workflowAction=send')"/>
+			<action title="发布" hide="workflow()" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/siteresource/admin/issueOption.shtml', 380, 200)"/>
+			<action title="撤销发布" hide="noPrivilege(unissue)" execute="FormUtils.doAction('unissueArticle')"/>
+			<action title="重新发布" hide="noPrivilege(reissue)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/siteresource/admin/issueOption.shtml?reissue=true', 380, 200)"/>
+			<action title="置顶" hide="noPrivilege(setTop)" execute="setTop()"/>
+			<action title="设为头版头条" hide="isNew()" execute="setAsHeadline()"/>
+			<action title="预览" hide="isNew()" execute="preview()"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="sensitiveWordCheck">true</parameter> <!-- 启用敏感词校验 -->
+		</extendedParameters>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.siteresource.forms.IssueOption" title="发布">
+		<formFields>
+			<field name="option" title="发布选项" type="number" length="1" inputMode="radio">
+				<parameter name="itemsText">一直发布|0\0指定时间后自动撤销|1</parameter>
+			</field>
+			<field name="endTime" title="发布截止时间" type="timestamp" inputMode="datetime"/>
+			<field name="reissue" title="是否重新发布" type="boolean" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOK()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/relationLink" class="com.yuanluesoft.cms.siteresource.forms.RelationLink" title="相关链接" pojo="com.yuanluesoft.cms.siteresource.pojo.SiteResource">
+		<formFields>
+			<field title="相关链接" name="relationLink" type="component">
+				<parameter name="class">com.yuanluesoft.cms.siteresource.pojo.SiteResourceRelationLink</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead() or privilege(unissue)" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('删除后不可恢复，是否确定要删除？')FormUtils.doAction('deleteRelationLink');"/>
+		</actions>
+	</form>
+	
+	<form name="admin/photo" class="com.yuanluesoft.cms.siteresource.forms.Photo" title="图集" pojo="com.yuanluesoft.cms.siteresource.pojo.SiteResource">
+		<formFields>
+			<field title="图片" name="photo" type="component">
+				<parameter name="class">com.yuanluesoft.cms.siteresource.pojo.SiteResourcePhoto</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead() or privilege(unissue)" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('删除后不可恢复，是否确定要删除？')FormUtils.doAction('deletePhoto');"/>
+		</actions>
+	</form>
+	
+	<form name="admin/video" class="com.yuanluesoft.cms.siteresource.forms.Video" title="视频集" pojo="com.yuanluesoft.cms.siteresource.pojo.SiteResource">
+		<formFields>
+			<field title="视频" name="video" type="component">
+				<parameter name="class">com.yuanluesoft.cms.siteresource.pojo.SiteResourceVideo</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead() or privilege(unissue)" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if('删除后不可恢复，是否确定要删除？')FormUtils.doAction('deleteVideo');"/>
+		</actions>
+	</form>
+	
+	<form name="admin/link" class="com.yuanluesoft.cms.siteresource.forms.Link" title="链接" pojo="com.yuanluesoft.cms.siteresource.pojo.SiteResource">
+		<formFields>
+			<field name="columnId" title="所属栏目ID" type="number" inputMode="hidden"/>
+			<field name="columnFullName" title="所属栏目" type="string" inputMode="select" required="true">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(600, 400, false, 'columnId{id},columnFullName{name}', '', '', '', 'column')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field title="访问者" name="readers" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead() or privilege(unissue)" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteLink')"/>
+			<action title="永久删除" hide="noPrivilege(application_manager)" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteLink', 'physical=true')"/>
+			<action title="撤销删除" hide="noPrivilege(application_manager)" execute="FormUtils.doAction('undeleteLink')"/>
+			<action title="送审核" hide="workflow()" execute="FormUtils.doAction('runLinkApproval', 'workflowAction=send')"/>
+			<action title="审核" hide="workflow()" execute="FormUtils.doAction('approvalLink', 'workflowAction=approval')"/>
+			<action title="完成审核" hide="workflow()" execute="FormUtils.doAction('runLinkApproval', 'workflowAction=send')"/>
+			<action title="发布" hide="workflow()" execute="if(confirm('是否要发布？'))FormUtils.doAction('issueLink')"/>
+			<action title="撤销发布" hide="noPrivilege(unissue)" execute="FormUtils.doAction('unissueLink')"/>
+			<action title="重新发布" hide="noPrivilege(reissue)" execute="FormUtils.doAction('reissueLink')"/>
+			<action title="置顶" hide="noPrivilege(setTop)" execute="setTop()"/>
+			<action title="设为头版头条" hide="noPrivilege(setAsHeadline)" execute="setAsHeadline()"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="sensitiveWordCheck">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="admin/setTop" class="com.yuanluesoft.cms.siteresource.forms.SetTop" title="置顶">
+		<formFields>
+			<field title="资源ID" name="resourceId" type="number" inputMode="hidden"/>
+			<field title="所属栏目ID列表" name="columnIds" type="string" inputMode="hidden"/>
+			<field title="置顶的栏目或站点ID列表" name="selectedDirectoryIds" type="number[]" inputMode="multibox">
+				<parameter name="itemsServiceName">siteService</parameter>
+				<parameter name="itemsName">reissueableDirectories</parameter>
+			</field>
+			<field title="截止时间" name="expire" type="date" inputMode="date"/>
+		</formFields>
+		<actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/captureColumn" class="com.yuanluesoft.cms.siteresource.forms.CaptureColumn" title="栏目设置">
+		<formFields>
+			<field name="key" title="关键字" type="string" inputMode="text"/>
+			<field name="columnIds" title="栏目ID" type="string" inputMode="hidden"/>
+			<field name="columnNames" title="栏目名称" type="string" inputMode="select" required="true">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(600, 400, true, 'columnIds{id},columnNames{fullName/site|栏目|100%}', '', '', '', 'column')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="issue" title="直接发布" type="string" inputMode="radio">
+				<parameter name="itemsText">是|1\0否|0</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="删除" execute="doRemove()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.siteresource.report.forms.ColumnStat" title="栏目统计">
+		<formFields>
+			<field name="beginDate" title="开始日期" type="date" inputMode="date"/>
+			<field name="endDate" title="结束日期" type="date" inputMode="date"/>
+			<field name="siteId" title="站点ID" type="number" inputMode="hidden"/>
+			<field name="siteName" title="站点名称" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(600, 400, false, 'siteId{id},siteName{name}', '', '', '', 'site')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="unitIds" title="单位ID" type="string" inputMode="hidden"/>
+			<field name="unitNames" title="单位名称" type="string" inputMode="select">
+				<parameter name="execute">DialogUtils.selectOrg(600, 400, true, 'unitIds{id},unitNames{name|单位名称|100%}', '', 'unit')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.siteresource.forms.ResourceView" title="站点资源视图">
+		<formFields>
+			<field name="siteId" title="站点/栏目ID" type="number" inputMode="hidden"/>
+			<field name="searchChildren" title="是否搜索子栏目" type="string" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.siteresource.forms.ModifyReaders" title="修改访问者">
+		<formFields>
+			<field name="siteId" title="站点/栏目ID" type="number" inputMode="hidden"/>
+			<field name="mode" title="修改方式" type="string" inputMode="dropdown">
+				<parameter name="itemsText">同步栏目访问者|synchColumnVisitor\0添加用户|addUser\0删除用户|deleteUser</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="defaultValue">synchColumnVisitor</parameter>
+			</field>
+			<field name="deleteNotColumnVisitor" title="是否删除非栏目访问者" type="string" inputMode="radio">
+				<parameter name="itemsText">删除|true\0不删除|false</parameter>
+			</field>
+			<field title="用户" name="readers" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field name="selectedOnly" title="只处理选中的文章" type="string" inputMode="radio">
+				<parameter name="itemsText">仅选中的文章|true\0全部|false</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.siteresource.forms.IssueStat" title="发布统计">
+		<formFields>
+			<field name="siteIds" title="指定的站点/栏目ID" type="string" inputMode="hidden"/>
+			<field name="siteNames" title="指定的站点/栏目名称" type="string" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.siteresource.report.forms.EnsureReport" title="信息保障统计">
+		<formFields>
+			<field name="beginDate" title="开始日期" type="date" inputMode="date" required="true"/>
+			<field name="endDate" title="结束日期" type="date" inputMode="date" required="true"/>
+			<field name="siteId" title="站点ID" type="number" inputMode="hidden"/>
+			<field name="siteName" title="站点名称" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(600, 400, false, 'siteId{id},siteName{name}', '', '', '', 'site')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form name="report/listEnsureUnitCategories" class="com.yuanluesoft.cms.siteresource.report.forms.ListEnsureUnitCategories" title="单位分类列表">
+		<actions>
+			<action title="添加分类" execute="PageUtils.newrecord('cms/siteresource', 'report/ensureUnitCategory', 'mode=dialog,width=430,height=300', 'siteId={PARAMETER:siteId}')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="report/listEnsureColumnConfigs" class="com.yuanluesoft.cms.siteresource.report.forms.ListEnsureColumnConfigs" title="栏目配置列表">
+		<actions>
+			<action title="添加栏目" execute="PageUtils.newrecord('cms/siteresource', 'report/ensureColumnConfig', 'mode=dialog,width=500,height=300', 'siteId={PARAMETER:siteId}')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="report/ensureUnitCategory" class="com.yuanluesoft.cms.siteresource.report.forms.EnsureUnitCategory" title="单位配置" pojo="com.yuanluesoft.cms.siteresource.report.pojo.EnsureUnitCategory">
+		<actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteEnsureUnitCategory')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="report/ensureColumnConfig" class="com.yuanluesoft.cms.siteresource.report.forms.EnsureColumnConfig" title="栏目配置" pojo="com.yuanluesoft.cms.siteresource.report.pojo.EnsureColumnConfig">
+		<formFields>
+			<field name="columnType" title="栏目" type="number" inputMode="radio">
+				<parameter name="itemsText">自定义|3\0全部栏目|0\0政府信息公开|2\0其他应保障栏目|1</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteEnsureColumnConfig')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form name="portletEntity" class="com.yuanluesoft.cms.siteresource.forms.PortletEntity" title="PORTLET" pojo="com.yuanluesoft.portal.container.pojo.PortletEntity">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deletePortletEntity')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.siteresource.forms.InsertResources" title="插入文章列表">
+		<formFields>
+			<field name="siteSelect" title="栏目选择" type="string" inputMode="radio">
+				<parameter name="itemsText">当前栏目|current\0指定栏目|other\0指定栏目（按名称）|columnName</parameter>
+				<parameter name="defaultValue">current</parameter>
+			</field>
+			<field name="siteIds" title="栏目ID" type="string" inputMode="hidden"/>
+			<field name="siteNames" title="栏目名称" type="string" inputMode="select">
+				<parameter name="execute">selectRecordListSite()</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="containChildren" title="是否含子栏目资源" type="string" inputMode="checkbox">
+				<parameter name="label">含子栏目资源</parameter>
+				<parameter name="value">true</parameter>
+				<parameter name="defaultValue">true</parameter>
+			</field>
+			<field name="selectAllTypes" title="是否全部资源类型" type="string" inputMode="checkbox">
+				<parameter name="label">全部</parameter>
+				<parameter name="value">true</parameter>
+				<parameter name="defaultValue">true</parameter>
+			</field>
+			<field name="articleEnable" title="文章是否有效" type="string" inputMode="checkbox">
+				<parameter name="label">文章</parameter>
+				<parameter name="value">true</parameter>
+				<parameter name="defaultValue">true</parameter>
+			</field>
+			<field name="linkEnable" title="链接是否有效" type="string" inputMode="checkbox">
+				<parameter name="label">链接</parameter>
+				<parameter name="value">true</parameter>
+				<parameter name="defaultValue">true</parameter>
+			</field>
+			<field name="imageResourceOnly" title="是否仅图片资源" type="string" inputMode="checkbox">
+				<parameter name="label">仅图片资源</parameter>
+				<parameter name="value">true</parameter>
+			</field>
+			<field name="videoResourceOnly" title="是否仅视频资源" type="string" inputMode="checkbox">
+				<parameter name="label">仅视频资源</parameter>
+				<parameter name="value">true</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.siteresource.forms.InsertSiteSearchForm" title="插入搜索表单">
+		<formFields>
+			<field name="siteSelect" title="栏目选择" type="string" inputMode="radio">
+				<parameter name="itemsText">当前站点/栏目|current\0自定义|other</parameter>
+				<parameter name="defaultValue">current</parameter>
+			</field>
+			<field name="siteId" title="栏目ID" type="string" inputMode="hidden"/>
+			<field name="siteName" title="栏目名称" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 300, false, 'siteId{id},siteName{name}')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.siteresource.forms.InsertResourceLink" title="插入文章链接">
+		<formFields>
+			<field title="文章ID" name="resourceId" type="string" inputMode="hidden"/>
+			<field title="文章标题" name="resourceName" type="string" inputMode="select">
+				<parameter name="js">/cms/siteresource/js/siteresource.js</parameter>
+				<parameter name="execute">selectResource(500, 300, false, 'resourceId{id},resourceName{name}')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.siteresource.forms.InsertSearchSiteField" title="插入搜索站点字段">
+		<formFields>
+			<field title="上级目录ID" name="parentSiteIds" type="string" inputMode="hidden"/>
+			<field title="上级目录" name="parentSiteNames" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 350, true, 'parentSiteIds{id},parentSiteNames{name|上级目录|100%}')</parameter>
+			</field>
+		</formFields>
+	</form>
+</forms>

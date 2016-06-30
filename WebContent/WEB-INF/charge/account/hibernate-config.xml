@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--计费:个人账户-->
+	<class name="com.yuanluesoft.charge.account.pojo.PersonalAccount" table="charge_account_personal">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="accountName" /> <!--帐号名-->
+		<property name="balance" /> <!--包月服务费余额-->
+		<property name="remark" /> <!--备注-->
+	</class>
+</hibernate-mapping>

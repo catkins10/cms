@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="指纹采集" class="com.yuanluesoft.jeaf.fingerprint.pojo.FingerprintTemplate">
+		<field name="personId" title="用户ID" length="20" type="number" inputMode="hidden"/>
+		<field name="personName" title="用户名" length="60" required="true" type="string" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectPerson(520, 320, false, 'personId{id},personName{name}')</parameter>
+		</field>
+		<field name="finger" title="手指" length="20" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsText">右手拇指\0右手食指\0右手中指\0右手无名指\0右手小指\0左手拇指\0左手食指\0左手中指\0左手无名指\0左手小指</parameter>
+		</field>
+		<field name="template" title="指纹数据" length="4000" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="created" title="采集时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

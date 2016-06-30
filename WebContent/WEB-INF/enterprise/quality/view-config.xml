@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="todo" form="document" title="待处理文档" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.quality.pojo.QualityDocument</pojo>
+			<orderBy>QualityDocument.created DESC</orderBy>
+			<quickFilter>QualityDocument.projectName like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="新建" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="项目名称" name="projectName"/>
+			<column title="创建人" name="creator" width="110" align="center"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="100" display="normal,print,portlet"/>
+			<column title="创建时间" name="created" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="processing" form="document" title="在办文档" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.quality.pojo.QualityDocument</pojo>
+			<orderBy>QualityDocument.created DESC</orderBy>
+			<quickFilter>QualityDocument.projectName like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="新建" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="项目名称" name="projectName"/>
+			<column title="创建人" name="creator" width="110" align="center"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="100" display="normal,print,portlet"/>
+			<column title="创建时间" name="created" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="completed" form="document" title="办结文档" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.quality.pojo.QualityDocument</pojo>
+			<orderBy>QualityDocument.created DESC</orderBy>
+			<quickFilter>QualityDocument.projectName like '%{KEY}%'</quickFilter>
+			<filter>COMPLETED</filter>
+		</data>
+		<actions>
+			<action title="新建" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="项目名称" name="projectName"/>
+			<column title="创建人" name="creator" width="110" align="center"/>
+			<column title="创建时间" name="created" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="document" form="document" title="所有文档" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.quality.pojo.QualityDocument</pojo>
+			<orderBy>QualityDocument.created DESC</orderBy>
+			<quickFilter>QualityDocument.projectName like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="新建" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="项目名称" name="projectName"/>
+			<column title="创建人" name="creator" width="110" align="center"/>
+			<column title="创建时间" name="created" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="documentTemplate" form="documentTemplate" title="文档模板" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.quality.pojo.QualityDocumentTemplate</pojo>
+			<orderBy>QualityDocumentTemplate.templateName</orderBy>
+			<quickFilter>QualityDocumentTemplate.templateName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建模板" execute="PageUtils.newrecord('enterprise/quality', 'documentTemplate', 'mode=fullscreen', 'applicationName=enterprise/quality&amp;pageName=document')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="templateName"/>
+			<column title="最后修改时间" name="lastModified" align="center" width="110"/>
+			<column title="最后修改人" name="lastModifier" align="center" width="110"/>
+		</columns>
+	</view>
+</views>

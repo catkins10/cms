@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminQuestion" type="com.yuanluesoft.enterprise.exam.question.forms.admin.Question"/>
+  <form-bean name="adminQuestionImport" type="com.yuanluesoft.enterprise.exam.question.forms.admin.QuestionImport"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminQuestion" path="/admin/question" scope="request"
+   type="com.yuanluesoft.enterprise.exam.question.actions.question.admin.Load" validate="false">
+   <forward name="load" path="/admin/question.jsp"/>
+  </action>
+  <action input="/admin/question.jsp" name="adminQuestion"
+   path="/admin/saveQuestion" scope="request"
+   type="com.yuanluesoft.enterprise.exam.question.actions.question.admin.Save" validate="false"/>
+  <action input="/admin/question.jsp" name="adminQuestion"
+   path="/admin/deleteQuestion" scope="request"
+   type="com.yuanluesoft.enterprise.exam.question.actions.question.admin.Delete" validate="false"/>
+  <action input="/admin/question.jsp" name="adminQuestion"
+   path="/admin/createNextQuestion" scope="request"
+   type="com.yuanluesoft.enterprise.exam.question.actions.question.admin.CreateNext" validate="false"/>
+  <action name="adminQuestionImport" path="/admin/questionImport"
+   scope="request"
+   type="com.yuanluesoft.enterprise.exam.question.actions.questionimport.admin.Load" validate="false">
+   <forward name="load" path="/admin/questionImport.jsp"/>
+  </action>
+  <action input="/admin/questionImport.jsp" name="adminQuestionImport"
+   path="/admin/doQuestionImport" scope="request"
+   type="com.yuanluesoft.enterprise.exam.question.actions.questionimport.admin.DoImport" validate="false"/>
+  <action input="/admin/questionImport.jsp" name="adminQuestionImport"
+   path="/admin/deleteQuestionImport" scope="request"
+   type="com.yuanluesoft.enterprise.exam.question.actions.questionimport.admin.Delete" validate="false"/>
+  <action name="adminQuestionImport" path="/admin/attachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.enterprise.exam.question.actions.questionimport.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="adminQuestion" path="/admin/selectAttachment"
+   scope="request"
+   type="com.yuanluesoft.enterprise.exam.question.actions.question.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

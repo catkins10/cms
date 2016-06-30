@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.j2oa.bulletin.forms.Bulletin" title="电子公告" pojo="com.yuanluesoft.j2oa.bulletin.pojo.Bulletin">
+		<formFields>
+			<field title="发布范围" name="issueRange" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('delete')"/>
+			<action title="送审核" hide="workflow()" execute="FormUtils.doAction('run', 'workflowAction=send')"/>
+			<action title="审核" hide="workflow()" execute="FormUtils.doAction('approval', 'workflowAction=approval')"/>
+			<action title="发布" hide="workflow()" execute="if(confirm('是否确定要发布？'))FormUtils.doAction('issue')"/>
+			<action title="撤销发布" hide="noPrivilege(undoIssue)" execute="if(confirm('是否确定要撤销发布？'))FormUtils.doAction('undoIssue')"/>
+			<action title="重新发布" hide="noPrivilege(redoIssue)" execute="if(confirm('是否确定要重新发布？'))FormUtils.doAction('redoIssue')"/>
+		</actions>
+	</form>
+</forms>

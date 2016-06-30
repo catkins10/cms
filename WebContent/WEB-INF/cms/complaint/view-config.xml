@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="投诉" name="complaints">
+		<data>
+			<pojo>com.yuanluesoft.cms.complaint.pojo.Complaint</pojo>
+			<where>Complaint.publicPass='1' and Complaint.isDeleted=0</where>
+			<orderBy>Complaint.created DESC</orderBy>
+			<quickFilter>Complaint.subject like '%{KEY}%' or Complaint.creator like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="投诉">/cms/complaint/complaint.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/complaint</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/complaint/templatemanage/insertComplaints.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view title="我的投诉(客户端)" name="clientComplaints">
+		<data>
+			<pojo>com.yuanluesoft.cms.complaint.pojo.Complaint</pojo>
+			<where>Complaint.clientDeviceId='{PARAMETER:client.deviceId|-1}' and Complaint.isDeleted=0</where>
+			<orderBy>Complaint.created DESC</orderBy>
+			<quickFilter>Complaint.subject like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="投诉">/cms/complaint/complaint.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/complaint</link>
+		</links>
+		<extendParameters>
+			<parameter name="encryptRequired">true</parameter> <!-- 必须加密 -->
+		</extendParameters>
+	</view>
+
+	<view name="admin/todoComplaint" form="admin/complaint" title="待办投诉" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.complaint.pojo.Complaint</pojo>
+			<where>Complaint.isDeleted=0</where>
+			<orderBy>Complaint.created DESC</orderBy>
+			<quickFilter>Complaint.subject like '%{KEY}%' or Complaint.creator like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.complaint.pojo.ComplaintType</pojo>
+				<orderBy>ComplaintType.type</orderBy>
+			</data>
+			<category value="ComplaintType.type"> <!--value必须有-->
+				<data>Complaint.type={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="批量处理" execute="batchSend('../../cms/complaint/admin/runComplaint')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="投诉类型" name="type" align="center" width="80" displayExcept="portlet"/>
+			<column title="投诉人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="投诉时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessComplaint" form="admin/complaint" title="在办投诉" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.complaint.pojo.Complaint</pojo>
+			<where>Complaint.isDeleted=0</where>
+			<orderBy>Complaint.created DESC</orderBy>
+			<quickFilter>Complaint.subject like '%{KEY}%' or Complaint.creator like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.complaint.pojo.ComplaintType</pojo>
+				<orderBy>ComplaintType.type</orderBy>
+			</data>
+			<category value="ComplaintType.type"> <!--value必须有-->
+				<data>Complaint.type={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="投诉类型" name="type" align="center" width="80" displayExcept="portlet"/>
+			<column title="投诉人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="投诉时间" name="created" align="center" width="108"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedComplaint" form="admin/complaint" title="办结投诉" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.complaint.pojo.Complaint</pojo>
+			<where>Complaint.isDeleted=0</where>
+			<filter>COMPLETED</filter>
+			<quickFilter>Complaint.subject like '%{KEY}%' or Complaint.creator like '%{KEY}%'</quickFilter>
+			<orderBy>Complaint.created DESC</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.complaint.pojo.ComplaintType</pojo>
+				<orderBy>ComplaintType.type</orderBy>
+			</data>
+			<category value="ComplaintType.type"> <!--value必须有-->
+				<data>Complaint.type={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="投诉类型" name="type" align="center" width="80"/>
+			<column title="投诉人" name="creator" align="center" width="80"/>
+			<column title="投诉时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allComplaint" form="admin/complaint" title="所有投诉" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.complaint.pojo.Complaint</pojo>
+			<where>Complaint.isDeleted=0</where>
+			<filter>READABLE</filter>
+			<quickFilter>Complaint.subject like '%{KEY}%' or Complaint.creator like '%{KEY}%'</quickFilter>
+			<orderBy>Complaint.created DESC</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.complaint.pojo.ComplaintType</pojo>
+				<orderBy>ComplaintType.type</orderBy>
+			</data>
+			<category value="ComplaintType.type"> <!--value必须有-->
+				<data>Complaint.type={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="投诉授权" hide="noPrivilege(application_manager)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/publicservice/admin/readersModifyOption.shtml?applicationName={PARAMETER:applicationName}', 430, 200)"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="投诉类型" name="type" align="center" width="80"/>
+			<column title="投诉人" name="creator" align="center" width="80"/>
+			<column title="投诉时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/deleted" form="admin/complaint" hide="noPrivilege(application_manager) and isNotSiteManager()" title="已删除投诉" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.complaint.pojo.Complaint</pojo>
+			<where>Complaint.isDeleted=1</where>
+			<filter>READABLE</filter>
+			<quickFilter>Complaint.subject like '%{KEY}%' or Complaint.creator like '%{KEY}%'</quickFilter>
+			<orderBy>Complaint.created DESC</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="投诉类型" name="type" align="center" width="80"/>
+			<column title="投诉人" name="creator" align="center" width="80"/>
+			<column title="投诉时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/complaintType" form="admin/complaintType" title="投诉类型" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/complaint&amp;viewName=admin/complaintType" hide="noPrivilege(application_manager) and isNotSiteManager()" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.complaint.pojo.ComplaintType</pojo>
+			<orderBy>ComplaintType.type</orderBy>
+			<quickFilter>ComplaintType.type like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新增类型" execute="PageUtils.openurl('{WEBAPPLICATIONURL}/cms/complaint/admin/complaintType.shtml?siteId={PARAMETER:siteId}', 'width=720,height=480', 'complaintType')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="类型" name="type"/>
+			<column title="办理时限" name="workingDay" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="selectComplaintType" title="投诉类型选择">
+		<data>
+			<pojo>com.yuanluesoft.cms.complaint.pojo.ComplaintType</pojo>
+			<where>ComplaintType.siteId={PARAMETER:siteId}</where>
+			<orderBy>ComplaintType.type</orderBy>
+			<quickFilter>ComplaintType.type like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="类型" name="type"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+</views>

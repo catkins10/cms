@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="timetable" type="com.yuanluesoft.jeaf.timetable.forms.Timetable"/>
+  <form-bean name="offDay" type="com.yuanluesoft.jeaf.timetable.forms.OffDay"/>
+  <form-bean name="commuteTime" type="com.yuanluesoft.jeaf.timetable.forms.CommuteTime"/>
+  <form-bean name="overtime" type="com.yuanluesoft.jeaf.timetable.forms.Overtime"/>
+  <form-bean name="festival" type="com.yuanluesoft.jeaf.timetable.forms.Festival"/>
+  <form-bean name="festivalAdjust" type="com.yuanluesoft.jeaf.timetable.forms.FestivalAdjust"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="timetable" path="/timetable" scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.Load" validate="false">
+   <forward name="load" path="/timetable.jsp"/>
+  </action>
+  <action input="/timetable.jsp" name="timetable" path="/saveTimetable"
+   scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.Save" validate="false"/>
+  <action name="commuteTime" path="/commuteTime" scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.commutetime.Load" validate="false">
+   <forward name="load" path="/commuteTime.jsp"/>
+  </action>
+  <action input="/commuteTime.jsp" name="commuteTime"
+   path="/saveCommuteTime" scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.commutetime.Save" validate="false"/>
+  <action input="/commuteTime.jsp" name="commuteTime"
+   path="/deleteCommuteTime" scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.commutetime.Delete" validate="false"/>
+  <action name="overtime" path="/overtime" scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.overtime.Load" validate="false">
+   <forward name="load" path="/overtime.jsp"/>
+  </action>
+  <action input="/overtime.jsp" name="overtime" path="/saveOvertime"
+   scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.overtime.Save" validate="false"/>
+  <action input="/overtime.jsp" name="overtime" path="/deleteOvertime"
+   scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.overtime.Delete" validate="false"/>
+  <action input="/timetable.jsp" name="timetable"
+   path="/deleteTimetable" scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.Delete" validate="false"/>
+  <action name="offDay" path="/offDay" scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.offday.Load" validate="false">
+   <forward name="load" path="/offDay.jsp"/>
+  </action>
+  <action input="/offDay.jsp" name="offDay" path="/saveOffDay"
+   scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.offday.Save" validate="false"/>
+  <action input="/offDay.jsp" name="offDay" path="/deleteOffDay"
+   scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.offday.Delete" validate="false"/>
+  <action name="festival" path="/festival" scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.festival.Load" validate="false">
+   <forward name="load" path="/festival.jsp"/>
+  </action>
+  <action input="/festival.jsp" name="festival" path="/saveFestival"
+   scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.festival.Save" validate="false"/>
+  <action input="/festival.jsp" name="festival" path="/deleteFestival"
+   scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.festival.Delete" validate="false"/>
+  <action input="/timetable.jsp" name="timetable"
+   path="/refreshTimetable" scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.Refresh" validate="false"/>
+  <action name="festivalAdjust" path="/festivalAdjust" scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.festivaladjust.Load" validate="false">
+   <forward name="load" path="/festivalAdjust.jsp"/>
+  </action>
+  <action input="/festivalAdjust.jsp" name="festivalAdjust"
+   path="/saveFestivalAdjust" scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.festivaladjust.Save" validate="false"/>
+  <action input="/festivalAdjust.jsp" name="festivalAdjust"
+   path="/deleteFestivalAdjust" scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.festivaladjust.Delete" validate="false"/>
+  <action input="/festival.jsp" name="festival" path="/refreshFestival"
+   scope="request"
+   type="com.yuanluesoft.jeaf.timetable.actions.timetable.festival.Refresh" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

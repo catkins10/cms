@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="海事船舶(内河船舶)" class="STR_SHIPPING" businessServiceName="trafficSqlQueryService">
+		<field name="SHIPID" type="string" columnType="VARCHAR2(50)" title="船舶ID">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="ORGCODE" type="string" columnType="VARCHAR2(50)" title="机构代码"/>
+		<field name="PORTCHARGE_TYPE" type="string" columnType="VARCHAR2(50)" title="港务费规则"/>
+		<field name="SEAROUTE_TYPE" type="string" columnType="VARCHAR2(50)" title="航线类别"/>
+		<field name="PASSDIKE_AVE" type="string" columnType="VARCHAR2(20)" title="平均月过坝数"/>
+		<field name="LETTER_REGNO" type="string" columnType="VARCHAR2(20)" title="证书登记号码"/>
+		<field name="LETTER_FIRREGNO" type="string" columnType="VARCHAR2(20)" title="证书初次登记号码"/>
+		<field name="FRISTREG_PERSON" type="string" columnType="VARCHAR2(20)" title="初次档案登记人员"/>
+		<field name="FRISTREG_DATE" type="string" columnType="VARCHAR2(20)" title="初次档案登记时间"/>
+		<field name="STR_SHIP_STATUS" type="string" columnType="VARCHAR2(50)" title="海事船舶状态"/>
+		<field name="WHETHER" type="string" columnType="CHAR(1)" title="是否有效"/>
+		<field name="COM_TONS" type="string" columnType="VARCHAR2(20)" title="计费吨位"/>
+		<field name="PORT_DATE_STR" type="string" columnType="VARCHAR2(20)" title="开征日期"/>
+		<field name="PORT_TYPE" type="string" columnType="VARCHAR2(20)" title="缴费方式"/>
+		<field name="COLTOMONTH" type="string" columnType="VARCHAR2(20)" title="完费日期"/>
+		<field name="REQUEST_CLTID" type="string" columnType="VARCHAR2(50)" title="经营单位ID"/>
+		<field name="MSOPTION" type="string" columnType="VARCHAR2(50)" title="灭失人员"/>
+		<field name="MSBS" type="string" columnType="VARCHAR2(50)" title="灭失标示"/>
+		<field name="MSDATE" type="string" columnType="VARCHAR2(50)" title="灭失时间"/>
+		<field name="UPDATESTATC" type="string" columnType="VARCHAR2(10)" title="更新状态"/>
+		<!-- 
+			SELECT C.SHIP_REGNO AS 船舶登记号,
+			       C.SHIPNAME AS 船舶名称,
+			       C.COMPLETE_DATE AS 建成日期,
+				   UC.CODNAME AS船舶种类,
+			       C.SHIP_LONG AS 总长,
+			       C.COUNT_TONS AS 总吨位,
+			       C.SHIP_HOLDER AS 所有人,
+			       S.REQUEST_CLTID AS 经营单位 
+			FROM COM_SHIPPING C
+			JOIN STR_SHIPPING S ON C.SHIPID=S.SHIPID  AND S.WHETHER='1' 
+			JOIN UMS_CODMANAGE UC ON C.SHIP_TYPE = UC.CODMAGID
+			
+			SELECT CS.SHIPID ID, CS.SHIPNAME,SS.LETTER_FIRREGNO,CS.SHIP_CHE_REGNO,
+			CS.COMPLETE_DATE,UC1.CODNAME AS SHIP_TYPE,CS.SHIP_LONG,CS.COUNT_TONS,
+			CS.SHIP_REGNO,CS.SHIP_HOLDER,CS.GET_REAL_DATE,
+			UC3.CODNAME HOLDER_LETTER_STATUS,SSN.LETTER_REGNO AS NATLETTER_REGNO,
+			SSN.SENDLETTER_DATE AS NATLETTER_SENDLETTER_DATE,
+			UC2.CODNAME AS NATLETTER_LETTER_STATUS,SC.STR_CLIENT_NAME
+			FROM COM_SHIPPING CS
+			INNER JOIN UMS_CODMANAGE UC1 ON UC1.CODMAGID = CS.SHIP_TYPE
+			INNER JOIN STR_SHIPPING_NATLETTER SSN ON CS.SHIPID = SSN.SHIPID
+			INNER JOIN UMS_CODMANAGE UC2 ON UC2.CODMAGID = SSN.LETTER_STATUS 
+			INNER JOIN COM_SHIPPING CS2 ON CS2.SHIPID = SSN.SHIPID
+			INNER JOIN STR_SHIPPING SS ON CS.SHIPID = SS.SHIPID 
+			INNER JOIN STR_CLIENT SC ON SC.STR_CLIENT_ID = SS.REQUEST_CLTID
+			INNER JOIN STR_HOLDER_LETTER SHL ON SS.SHIPID = SHL.SHIPID
+			INNER JOIN UMS_CODMANAGE UC3 ON SHL.LETTER_STATUS = UC3.CODMAGID
+		 -->
+		<parameter name="sqlFrom">STR_SHIPPING S</parameter>
+		<field name="C" type="component" title="共用船舶信息">
+			<parameter name="class">COM_SHIPPING</parameter>
+			<parameter name="sqlJoin">JOIN COM_SHIPPING C ON C.SHIPID=S.SHIPID AND S.WHETHER='1'</parameter>
+		</field>
+		<field name="CLIENT" type="component" title="水运经营单位">
+			<parameter name="class">STR_CLIENT</parameter>
+			<parameter name="sqlJoin">LEFT JOIN STR_CLIENT CLIENT ON CLIENT.STR_CLIENT_ID=S.REQUEST_CLTID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="内河船员" class="CREW_INFORMATION_REGISTRATION" businessServiceName="trafficSqlQueryService">
+		<field name="CREW_REGISTRATIONID" type="string" columnType="varchar2(50)" title="登记ID">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="CREW_NAME" type="string" columnType="varchar2(50)" title="船员姓名"/>
+		<field name="GENDER" type="string" columnType="varchar2(50)" title="性别"/>
+		<field name="CARDID" type="string" columnType="varchar2(50)" title="身份证号码"/>
+		<field name="BOOK_NUMBER" type="string" columnType="varchar2(50)" title="服务簿号码"/>
+		<field name="CREW_DUTY" type="string" columnType="varchar2(50)" title="船员职务" inputMode="none"/>
+		<field name="CREW_DUTY_TITLE" type="string" title="船员职务">
+			<parameter name="sql">SELECT CODNAME FROM UMS_CODMANAGE WHERE CODMAGID={ALIAS}.CREW_DUTY</parameter>
+		</field>
+		<field name="BIRTHPLACE" type="string" columnType="varchar2(50)" title="出生地"/>
+		<field name="TELEPHONE" type="string" columnType="varchar2(50)" title="联系电话"/>
+		<field name="ADDRESSES" type="string" columnType="varchar2(50)" title="联系地址"/>
+		<field name="POSTCODE" type="string" columnType="varchar2(50)" title="邮政编码"/>
+		<field name="WORK_UNITS" type="string" columnType="varchar2(50)" title="工作单位" inputMode="none"/>
+		<field name="WORK_UNITS_TITLE" type="string" title="工作单位">
+			<parameter name="sql">SELECT CODNAME FROM UMS_CODMANAGE WHERE CODMAGID={ALIAS}.WORK_UNITS</parameter>
+		</field>
+		<field name="APPLY_TYPE" type="string" columnType="varchar2(50)" title="申请类型"/>
+		<field name="QUALIFICATIONS" type="string" columnType="varchar2(50)" title="学历"/>
+		<field name="PROFESSIONAL" type="string" columnType="varchar2(50)" title="专业"/>
+		<field name="GRADUSTION_LICENSE" type="string" columnType="varchar2(50)" title="毕业证号"/>
+		<field name="GRADUSTION_DATE" type="string" columnType="varchar2(50)" title="毕业日期"/>
+		<field name="REMARKDOC" type="string" columnType="varchar2(500" title="备注"/>
+		<!-- 
+			SELECT C.CREW_NAME AS 船舶姓名,
+			       C.CARDID AS 身份证,
+			       (SELECT CODNAME FROM UMS_CODMANAGE WHERE CODMAGID=C.WORK_UNITS) AS 服务单位,
+			       (SELECT CODNAME FROM UMS_CODMANAGE WHERE CODMAGID=C.CREW_DUTY) AS 职务
+			FROM CREW_INFORMATION_REGISTRATION C
+		 -->
+		<parameter name="sqlFrom">CREW_INFORMATION_REGISTRATION C</parameter>
+	</businessObject>
+	
+	<businessObject title="船舶港务费" class="COL_PORTCHARGE" businessServiceName="trafficSqlQueryService">
+		<field name="PROTCHARGEID" type="string" columnType="VARCHAR2(50)" title="港务费记录">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="ORGCODE" type="string" columnType="VARCHAR2(50)" title="机构代码"/>
+		<field name="SHIPPING_DOCTYPE" type="string" columnType="VARCHAR2(50)" title="船舶档案类别"/>
+		<field name="SHIPPINGID" type="string" columnType="VARCHAR2(50)" title="船舶ID(关连海事船舶信息和共有船舶信息表shipid)"/>
+		<field name="COLTOMONTH_STR" type="string" columnType="VARCHAR2(20)" title="完费日期_开始"/>
+		<field name="COLTOMONTH" type="string" columnType="VARCHAR2(20)" title="完费日期_结束"/>
+		<field name="FLIGHT_TIMES" type="string" columnType="VARCHAR2(4)" title="次数"/>
+		<field name="ISCURRENT" type="string" columnType="CHAR(1)" title="是否最新"/>
+		<field name="TRANSACTOR" type="string" columnType="VARCHAR2(20)" title="经办人"/>
+		<field name="TRANSACT_DATE" type="string" columnType="VARCHAR2(20)" title="经办日期"/>
+		<field name="REMARK" type="string" columnType="VARCHAR2(500" title="备注"/>
+		<field name="WHETHER" type="string" columnType="VARCHAR2(50)" title="是否有效"/>
+		<field name="STR_SHIP_STATUS" type="string" columnType="VARCHAR2(50)" title="海事船舶状态"/>
+		<field name="PRE" type="string" columnType="CHAR(1)" title="报停前一条记录标识"/>
+		<!--
+			SELECT A.SHIPNAME AS 船舶名称,
+			A.SHIP_REGNO AS 船舶登记号,
+			B.REQUEST_CLTID AS 经营单位,
+			CP.COLTOMONTH AS 完费日期, A.SHIP_REGNO AS 船舶登记号,A.COMPLETE_DATE AS 建成日期,
+			A.SHIP_LONG AS 总长,A.COUNT_TONS AS 总吨位,A.SHIP_HOLDER AS 所有人,
+		    FROM COM_SHIPPING A 
+		    INNER JOIN STR_SHIPPING B ON A.SHIPID = B.SHIPID 
+		    LEFT JOIN COL_PORTCHARGE CP ON A.SHIPID=CP.SHIPPINGID
+		 -->
+		<parameter name="sqlFrom">COL_PORTCHARGE CP</parameter>
+		<field name="CS" type="component" title="共用船舶信息">
+			<parameter name="class">COM_SHIPPING</parameter>
+			<parameter name="sqlJoin">LEFT JOIN COM_SHIPPING CS ON CS.SHIPID=CP.SHIPPINGID</parameter>
+		</field>
+		<field name="SS" type="component" title="内河船舶信息">
+			<parameter name="class">STR_SHIPPING</parameter>
+			<parameter name="sqlJoin">INNER JOIN STR_SHIPPING SS ON CS.SHIPID=SS.SHIPID </parameter>
+		</field>
+		<field name="CLIENT" type="component" title="水运经营单位">
+			<parameter name="class">STR_CLIENT</parameter>
+			<parameter name="sqlJoin">LEFT JOIN STR_CLIENT CLIENT ON CLIENT.STR_CLIENT_ID=SS.REQUEST_CLTID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="水路运输管理费" class="WTR_COL_PORTCHARGE" businessServiceName="trafficSqlQueryService"> <!-- 共用COL_PORTCHARGE表 -->
+		<field name="PROTCHARGEID" type="string" columnType="VARCHAR2(50)" title="港务费记录">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="ORGCODE" type="string" columnType="VARCHAR2(50)" title="机构代码"/>
+		<field name="SHIPPING_DOCTYPE" type="string" columnType="VARCHAR2(50)" title="船舶档案类别"/>
+		<field name="SHIPPINGID" type="string" columnType="VARCHAR2(50)" title="船舶ID(关连海事船舶信息和共有船舶信息表shipid)"/>
+		<field name="COLTOMONTH_STR" type="string" columnType="VARCHAR2(20)" title="完费日期_开始"/>
+		<field name="COLTOMONTH" type="string" columnType="VARCHAR2(20)" title="完费日期_结束"/>
+		<field name="FLIGHT_TIMES" type="string" columnType="VARCHAR2(4)" title="次数"/>
+		<field name="ISCURRENT" type="string" columnType="CHAR(1)" title="是否最新"/>
+		<field name="TRANSACTOR" type="string" columnType="VARCHAR2(20)" title="经办人"/>
+		<field name="TRANSACT_DATE" type="string" columnType="VARCHAR2(20)" title="经办日期"/>
+		<field name="REMARK" type="string" columnType="VARCHAR2(500" title="备注"/>
+		<field name="WHETHER" type="string" columnType="VARCHAR2(50)" title="是否有效"/>
+		<field name="STR_SHIP_STATUS" type="string" columnType="VARCHAR2(50)" title="海事船舶状态"/>
+		<field name="PRE" type="string" columnType="CHAR(1)" title="报停前一条记录标识"/>
+		<!--
+		    水路运输管理费
+		    SELECT CS.SHIPID ID, CS.SHIPNAME,CS.SHIP_REGNO,WC.CLIENTNAME,WS.END_DATE
+			FROM COM_SHIPPING CS 
+			INNER JOIN WTR_SHIPPING WS ON CS.SHIPID = WS.SHIPID
+			INNER JOIN WTR_SHIPBUSYLETTER WSP ON WS.SHIPID = WSP.SHIPID
+			INNER JOIN WTR_CLIENT_PRELETTER WCP ON WSP.PRELETTERID = WCP.PRELETTERID
+			INNER JOIN WTR_CLIENT WC ON WCP.CLIENTID = WC.CLIENTID
+		 -->
+		<parameter name="sqlFrom">COL_PORTCHARGE CP</parameter>
+		<field name="CS" type="component" title="共用船舶信息">
+			<parameter name="class">COM_SHIPPING</parameter>
+			<parameter name="sqlJoin">LEFT JOIN COM_SHIPPING CS ON CS.SHIPID=CP.SHIPPINGID</parameter>
+		</field>
+		<field name="WS" type="component" title="水运船舶信息">
+			<parameter name="class">WTR_SHIPPING</parameter>
+			<parameter name="sqlJoin">INNER JOIN WTR_SHIPPING WS ON CS.SHIPID = WS.SHIPID</parameter>
+		</field>
+		<field name="WSP" type="component" title="水运船舶营运证">
+			<parameter name="class">WTR_SHIPBUSYLETTER</parameter>
+			<parameter name="sqlJoin">INNER JOIN WTR_SHIPBUSYLETTER WSP ON WS.SHIPID = WSP.SHIPID</parameter>
+		</field>
+		<field name="WCP" type="component" title="水运业户许可证">
+			<parameter name="class">WTR_CLIENT_PRELETTER</parameter>
+			<parameter name="sqlJoin">INNER JOIN WTR_CLIENT_PRELETTER WCP ON WSP.PRELETTERID = WCP.PRELETTERID</parameter>
+		</field>
+		<field name="WC" type="component" title="水运船舶业户">
+			<parameter name="class">WTR_CLIENT</parameter>
+			<parameter name="sqlJoin">INNER JOIN WTR_CLIENT WC ON WCP.CLIENTID = WC.CLIENTID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="水运船舶业户" class="WTR_CLIENT" businessServiceName="trafficSqlQueryService">
+		<field name="CLIENTID" type="string" columnType="VARCHAR2(50)" title="业户ID">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="ORGCODE" type="string" columnType="VARCHAR2(50)" title="机构代码"/>
+		<field name="CLIENTNAME" type="string" columnType="VARCHAR2(80)" title="业户名称"/>
+		<field name="CLIENT_NAME_EN" type="string" columnType="VARCHAR2(200" title="企业名称英文"/>
+		<field name="ECONOMY_TYPE" type="string" columnType="VARCHAR2(10)" title="经济性质" inputMode="none"/>
+		<field name="ECONOMY_TYPE_TITLE" type="string" title="经济性质">
+			<parameter name="sql">SELECT CODNAME FROM UMS_CODMANAGE WHERE CODMAGID={ALIAS}.ECONOMY_TYPE</parameter>
+		</field>
+		<field name="MANAGE_NAME" type="string" columnType="VARCHAR2(40)" title="负责人姓名"/>
+		<field name="CLIENT_ADDRESS" type="string" columnType="VARCHAR2(80)" title="地址"/>
+		<field name="CLIENT_TEL" type="string" columnType="VARCHAR2(20)" title="联系电话"/>
+		<field name="CLIENT_BUSY_TYPE" type="string" columnType="VARCHAR2(50)" title="经营方式"/>
+		<field name="MAIN_MANG_ORG" type="string" columnType="VARCHAR2(50)" title="主管部门名称"/>
+		<field name="CAPTITAL_COUNT" type="string" columnType="VARCHAR2(20)" title="资金数额(万)"/>
+		<field name="CAPTITAL_FIXED" type="string" columnType="VARCHAR2(20)" title="固定资产"/>
+		<field name="CAPTITAL_CURRENT" type="string" columnType="VARCHAR2(20)" title="流动资产"/>
+		<field name="CAPTITAL_SOURCE" type="string" columnType="VARCHAR2(50)" title="资金来源"/>
+		<field name="CLIENT_STATUS" type="string" columnType="VARCHAR2(50)" title="营运状态"/>
+		<field name="LASTMONTH_INCOME" type="string" columnType="VARCHAR2(20)" title="上月营业收入"/>
+		<field name="CLIENT_HOLDER_LEGAL" type="string" columnType="VARCHAR2(50)" title="企业法人名称"/>
+		<field name="REGDOC_DATE" type="string" columnType="VARCHAR2(20)" title="建档日期"/>
+		<field name="TRANSACTOR" type="string" columnType="VARCHAR2(20)" title="经办人"/>
+		<field name="REMARKDOC" type="string" columnType="VARCHAR2(500" title="备注"/>
+		<field name="CLIENTSTATUS" type="string" columnType="VARCHAR2(50)" title="业户状态"/>
+		<field name="CLIENTFAX" type="string" columnType="VARCHAR2(50)" title="电报挂号"/>
+		<field name="FIRSTSENDDATE" type="string" columnType="VARCHAR2(50)" title="最初发证日期"/>
+		<field name="FIRSTSENDCODE" type="string" columnType="VARCHAR2(50)" title="最初批准文号"/>
+		<field name="CLIENTTYPE" type="string" columnType="VARCHAR2(50)" title="企业类型"/>
+		<field name="WORKADDRESS" type="string" columnType="VARCHAR2(50)" title="办公地址"/>
+		<field name="POSTCODE" type="string" columnType="VARCHAR2(50)" title="邮政编码"/>
+		<field name="OVERORGCODE" type="string" columnType="VARCHAR2(50)" title="所属业务区域"/>
+		<field name="UPDATESTATC" type="string" columnType="VARCHAR2(10)" title="更新状态"/>
+		<!-- 
+			SELECT 
+			    WC.CLIENTNAME AS 业户名称,
+			    UC.CODNAME AS 经营性质,
+			    WCP.PRELETTER_NO AS 许可证号,
+			    WC.CLIENT_HOLDER_LEGAL AS 所有权法人代表
+			FROM 
+			WTR_CLIENT_PRELETTER WCP 
+			LEFT JOIN WTR_CLIENT WC ON WCP.CLIENTID=WC.CLIENTID AND WCP.ORGCODE=WC.ORGCODE
+			LEFT OUTER JOIN UMS_CODMANAGE UC ON WC.ECONOMY_TYPE = UC.CODMAGID
+			
+			SELECT WC.CLIENTID ID, WC.CLIENTNAME ,WC.CLIENT_TEL,WC.MAIN_MANG_ORG,WCP.PRELETTER_NO,
+			WC.CLIENT_HOLDER_LEGAL,WCP.SENDLETTER_DATE,WCP.SENDLETTER_ORG,
+			WC.CLIENT_ADDRESS,WCP.MANAGE_SCOPE_MAIN
+			FROM WTR_CLIENT_PRELETTER WCP INNER JOIN WTR_CLIENT WC
+			ON WCP.CLIENTID = WC.CLIENTID
+		 -->
+		<parameter name="sqlFrom">WTR_CLIENT WC</parameter>
+		<field name="WCP" type="component" title="水运业户许可证">
+			<parameter name="class">WTR_CLIENT_PRELETTER</parameter>
+			<parameter name="sqlJoin">LEFT JOIN WTR_CLIENT_PRELETTER WCP ON WCP.CLIENTID=WC.CLIENTID AND WCP.ORGCODE=WC.ORGCODE</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="水运船舶" class="WTR_SHIPPING" businessServiceName="trafficSqlQueryService">
+		<field name="SHIPID" type="string" columnType="VARCHAR2(50)" title="船舶ID(关连海事船舶信息和共有船舶信息表shipid)">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="ORGCODE" type="string" columnType="VARCHAR2(50)" title="机构代码"/>
+		<field name="CLTID" type="string" columnType="VARCHAR2(50)" title="业户ID(关连水运业户许可证clientid)"/>
+		<field name="REQUEST_CLTID" type="string" columnType="VARCHAR2(50)" title="船舶委托单位ID"/>
+		<field name="TRANSFEE_TYPE" type="string" columnType="VARCHAR2(50)" title="运管费规则"/>
+		<field name="PASS_ACCIDENT_INS" type="string" columnType="VARCHAR2(50)" title="旅客意外伤害险"/>
+		<field name="FRISTREG_PERSON" type="string" columnType="VARCHAR2(20)" title="初次档案登记人员"/>
+		<field name="FRISTREG_DATE" type="string" columnType="VARCHAR2(20)" title="初次档案登记时间"/>
+		<field name="START_DATE" type="string" columnType="VARCHAR2(20)" title="开征日期"/>
+		<field name="BUSY_STATUS" type="string" columnType="VARCHAR2(50)" title="营运状态" inputMode="none"/>
+		<field name="BUSY_STATUS_TITLE" type="string" columnType="VARCHAR2(50)" title="营运状态">
+			<parameter name="sql">SELECT CODNAME FROM UMS_CODMANAGE WHERE CODMAGID={ALIAS}.BUSY_STATUS</parameter>
+		</field>
+		<field name="WHETHER" type="string" columnType="CHAR(1)" title="是否有效"/>
+		<field name="END_DATE" type="string" columnType="VARCHAR2(20)" title="完费日期"/>
+		<field name="COM_TONS" type="string" columnType="VARCHAR2(20)" title="计费吨位"/>
+		<field name="STERE" type="string" columnType="VARCHAR2(50)" title="立方米"/>
+		<field name="FILE_CHECK" type="string" columnType="VARCHAR2(50)" title="档案存放位置"/>
+		<field name="SHIPTYPE" type="string" columnType="VARCHAR2(50)" title="船舶类型"/>
+		<field name="PARKING" type="string" columnType="VARCHAR2(50)" title="车位"/>
+		<field name="OVERORGCODE" type="string" columnType="VARCHAR2(50)" title="所属业务区域"/>
+		<field name="UPDATESTATC" type="string" columnType="VARCHAR2(10)" title="更新状态"/>
+		<!-- 
+			SELECT CS.SHIPID ID, CS.SHIPNAME,UC1.CODNAME AS SHIP_TYPE,WSP.TRANSBUSY_NO,WSP.SENDLETTER_DATE,
+			WSP.SENDLETTER_ORG,UC2.CODNAME AS BUSY_STATUS,CS.SHIP_HOLDER,CS.SHIP_REGNO,
+			CS.SHIP_CHE_REGNO,CS.COMPLETE_DATE,CS.COUNT_TONS,CS.NATIVE_HARBOR,
+			WC.CLIENTNAME
+			FROM COM_SHIPPING CS
+			INNER JOIN UMS_CODMANAGE UC1 ON UC1.CODMAGID = CS.SHIP_TYPE 
+			INNER JOIN WTR_SHIPPING WS ON CS.SHIPID = WS.SHIPID 
+			INNER JOIN UMS_CODMANAGE UC2 ON UC2.CODMAGID = WS.BUSY_STATUS 
+			INNER JOIN WTR_SHIPBUSYLETTER WSP ON WS.SHIPID = WSP.SHIPID 
+			INNER JOIN WTR_CLIENT_PRELETTER WCP ON WSP.PRELETTERID = WCP.PRELETTERID
+			INNER JOIN WTR_CLIENT WC ON WCP.CLIENTID = WC.CLIENTID
+		 -->
+		<parameter name="sqlFrom">WTR_SHIPPING WS</parameter>
+		<field name="CS" type="component" title="共用船舶信息">
+			<parameter name="class">COM_SHIPPING</parameter>
+			<parameter name="sqlJoin">INNER JOIN COM_SHIPPING CS ON CS.SHIPID = WS.SHIPID</parameter>
+		</field>
+		<field name="WSP" type="component" title="水运船舶营运证">
+			<parameter name="class">WTR_SHIPBUSYLETTER</parameter>
+			<parameter name="sqlJoin">INNER JOIN WTR_SHIPBUSYLETTER WSP ON WS.SHIPID = WSP.SHIPID</parameter>
+		</field>
+		<field name="WCP" type="component" title="水运业户许可证">
+			<parameter name="class">WTR_CLIENT_PRELETTER</parameter>
+			<parameter name="sqlJoin">INNER JOIN WTR_CLIENT_PRELETTER WCP ON WSP.PRELETTERID = WCP.PRELETTERID</parameter>
+		</field>
+		<field name="WC" type="component" title="船舶业户">
+			<parameter name="class">WTR_CLIENT</parameter>
+			<parameter name="sqlJoin">INNER JOIN WTR_CLIENT WC ON WCP.CLIENTID = WC.CLIENTID</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="水运船舶营运证" class="WTR_SHIPBUSYLETTER" businessServiceName="trafficSqlQueryService">
+		<field name="SHIPBUSYLETTERID" type="string" columnType="VARCHAR2(50)" title="营运证ID">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="ORGCODE" type="string" columnType="VARCHAR2(50)" title="机构代码"/>
+		<field name="SHIPID" type="string" columnType="VARCHAR2(50)" title="船舶ID(关连水运船舶信息shipid)"/>
+		<field name="APP_MANAGE_SCOPE" type="string" columnType="VARCHAR2(500)" title="申请经营范围"/>
+		<field name="APPLY_STATUS" type="string" columnType="VARCHAR2(50)" title="申请状态"/>
+		<field name="APP_DATE" type="string" columnType="VARCHAR2(20)" title="申请营运证日期"/>
+		<field name="APP_TRANSACTOR" type="string" columnType="VARCHAR2(20)" title="申请营运经办人"/>
+		<field name="MANAGE_SCOPE" type="string" columnType="VARCHAR2(500)" title="批准经营范围"/>
+		<field name="TRANSBUSY_NO" type="string" columnType="VARCHAR2(20)" title="营运证号"/>
+		<field name="VAILD_DATE_STR" type="string" columnType="VARCHAR2(20)" title="营运证有效期起"/>
+		<field name="VAILD_DATE_END" type="string" columnType="VARCHAR2(20)" title="营运证有效期止"/>
+		<field name="SENDLETTER_ORG" type="string" columnType="VARCHAR2(50)" title="发证机关"/>
+		<field name="SENDLETTER_DATE" type="string" columnType="VARCHAR2(20)" title="发证日期"/>
+		<field name="LETTER_STATUS" type="string" columnType="VARCHAR2(50)" title="证件状态"/>
+		<field name="BUSY_STATUS" type="string" columnType="VARCHAR(50)" title="营运状态"/>
+		<field name="TRANSACTOR" type="string" columnType="VARCHAR2(20)" title="经办人"/>
+		<field name="TRANSACT_DATE" type="string" columnType="VARCHAR2(20)" title="经办日期"/>
+		<field name="REMARKDOC" type="string" columnType="VARCHAR2(500)" title="备注"/>
+		<field name="APP_NO" type="string" columnType="VARCHAR2(50)" title="申请编号"/>
+		<field name="RIVERTYPE" type="string" columnType="VARCHAR2(50)" title="企业申请类别"/>
+		<field name="PRELETTERID" type="string" columnType="VARCHAR2(50)" title="业户许可证ID"/>
+		<field name="INSHORT" type="string" columnType="VARCHAR2(50)" title="地区简称"/>
+		<field name="ENGLISHCODE" type="string" columnType="VARCHAR2(50)" title="英文代码"/>
+		<field name="AREACODE" type="string" columnType="VARCHAR2(50)" title="区域代码"/>
+		<field name="SEQUENCEID" type="string" columnType="VARCHAR2(50)" title="流水号"/>
+		<field name="CHECKDATE_STR" type="string" columnType="VARCHAR2(50)" title="核查通过时间起"/>
+		<field name="CHECKDATE_END" type="string" columnType="VARCHAR2(50)" title="核查通过时间止"/>
+		<field name="YEARNO" type="string" columnType="VARCHAR2(50)" title="年号"/>
+		<field name="REPORTED" type="string" columnType="VARCHAR(50)" title="上报"/>
+	</businessObject>
+
+	<businessObject title="共用船舶信息" class="COM_SHIPPING" businessServiceName="trafficSqlQueryService">
+		<field name="SHIPID" type="string" columnType="VARCHAR2(50)" title="船舶ID">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="SHIPNAME" type="string" columnType="VARCHAR2(40)" title="船名"/>
+		<field name="SHIP_PYNAME" type="string" columnType="VARCHAR2(20)" title="拼音"/>
+		<field name="SHIP_USEDNAME" type="string" columnType="VARCHAR2(40)" title="船舶曾用名"/>
+		<field name="SHIP_CALLLETTER" type="string" columnType="VARCHAR2(20)" title="船舶呼号"/>
+		<field name="NATIVE_HARBOR" type="string" columnType="VARCHAR2(20)" title="船籍港"/>
+		<field name="ORI_NATIVE_HARBOR" type="string" columnType="VARCHAR2(20)" title="原船籍港"/>
+		<field name="IMO_CODE" type="string" columnType="VARCHAR2(20)" title="IMO编号"/>
+		<field name="SHIPBODY_METERIAL" type="string" columnType="VARCHAR2(50)" title="船体材料"/>
+		<field name="SHIP_TYPE" type="string" columnType="VARCHAR2(10)" title="船舶种类" inputMode="none"/>
+		<field name="SHIP_TYPE_TITLE" type="string" title="船舶种类">
+			<parameter name="sql">SELECT CODNAME FROM UMS_CODMANAGE WHERE CODMAGID={ALIAS}.SHIP_TYPE</parameter>
+		</field>
+		<field name="SHIP_VALUES" type="string" columnType="VARCHAR2(20)" title="船舶价值"/>
+		<field name="COMPLETE_DATE" type="string" columnType="VARCHAR2(20)" title="建成日期"/>
+		<field name="COMPLETE_FACTORY" type="string" columnType="VARCHAR2(100)" title="造船厂名"/>
+		<field name="MODIFY_FACTORY" type="string" columnType="VARCHAR2(100)" title="改建船厂"/>
+		<field name="COMPLETE_PLACE" type="string" columnType="VARCHAR2(100" title="造船地点"/>
+		<field name="MODIFY_DATE" type="string" columnType="VARCHAR2(20)" title="改建日期"/>
+		<field name="MODIFY_PLACE" type="string" columnType="VARCHAR2(100" title="改建地点"/>
+		<field name="SHIP_LONG" type="string" columnType="VARCHAR2(20)" title="总长"/>
+		<field name="SHIP_WIDE" type="string" columnType="VARCHAR2(20)" title="型宽"/>
+		<field name="SHIP_DEPTH" type="string" columnType="VARCHAR2(20)" title="型深"/>
+		<field name="COUNT_TONS" type="string" columnType="VARCHAR2(20)" title="总吨位"/>
+		<field name="NET_TONS" type="string" columnType="VARCHAR2(20)" title="净吨位"/>
+		<field name="CARRY_TONS" type="string" columnType="VARCHAR2(20)" title="载重吨"/>
+		<field name="CONTAINER_NUM" type="string" columnType="VARCHAR2(20)" title="标准集装箱量"/>
+		<field name="FIXED_PASSENGERS" type="string" columnType="VARCHAR2(20)" title="乘客定额"/>
+		<field name="MAINENGINE_TYPE" type="string" columnType="VARCHAR2(50)" title="主机种类"/>
+		<field name="MAINENGINE_NUM" type="string" columnType="VARCHAR2(20)" title="主机数目"/>
+		<field name="MAINENGINE_POWER" type="string" columnType="VARCHAR2(20)" title="主机总功率"/>
+		<field name="PROPELLER_TYPE" type="string" columnType="VARCHAR2(50)" title="推进器种类"/>
+		<field name="PROPELLER_NUM" type="string" columnType="VARCHAR2(20)" title="推进器数目"/>
+		<field name="SEA_AREA" type="string" columnType="VARCHAR2(200)" title="海区"/>
+		<field name="NAVIGATION_AREA" type="string" columnType="VARCHAR2(200)" title="航区"/>
+		<field name="LIFEPERSERVER_NUM" type="string" columnType="VARCHAR2(20)" title="救生设备最大额定人数"/>
+		<field name="AUTOMATICITY" type="string" columnType="VARCHAR2(500)" title="机舱自动化程度"/>
+		<field name="GMDSSEQUIPMENT" type="string" columnType="VARCHAR2(500)" title="GMDSS设备情况"/>
+		<field name="DISPLACEMENT_BEF" type="string" columnType="VARCHAR2(20)" title="吃水前"/>
+		<field name="DISPLACEMENT_AFT" type="string" columnType="VARCHAR2(20)" title="吃水后"/>
+		<field name="DISPLACEMENT_AVE" type="string" columnType="VARCHAR2(20)" title="平均吃水"/>
+		<field name="SHIP_HOLDER" type="string" columnType="VARCHAR2(60)" title="船舶所有权人"/>
+		<field name="SHIP_HOLDER_TEL" type="string" columnType="VARCHAR2(40)" title="船舶所有权人联系电话"/>
+		<field name="SHIP_HOLDER_ADD" type="string" columnType="VARCHAR2(100)" title="所有人地址"/>
+		<field name="GET_REAL_DATE" type="string" columnType="VARCHAR2(20)" title="取得所有权日期"/>
+		<field name="SHIP_JOIN_SITUDATION" type="string" columnType="VARCHAR2(500" title="船舶共有情况"/>
+		<field name="SHIP_REGNO" type="string" columnType="VARCHAR2(40)" title="船舶登记号"/>
+		<field name="SHIP_CHE_REGNO" type="string" columnType="VARCHAR2(40)" title="船检登记号"/>
+		<field name="SHIP_STATUS" type="string" columnType="VARCHAR2(50)" title="船舶状态"/>
+		<field name="SHIP_GRADE" type="string" columnType="VARCHAR2(40)" title="船舶等级"/>
+		<field name="CONVEYANCE_CHARACTER" type="string" columnType="VARCHAR2(40)" title="运输性质"/>
+		<field name="SHIP_SOURCE" type="string" columnType="VARCHAR2(40)" title="船舶来源"/>
+		<field name="REMARK_DOC" type="string" columnType="VARCHAR2(500)" title="备注"/>
+		<field name="SHIP_HOLDER_LEGAL" type="string" columnType="VARCHAR2(60)" title="所有人法人"/>
+		<field name="UPDATESTATC" type="string" columnType="VARCHAR2(10)" title="更新状态"/>
+	</businessObject>
+	
+	<businessObject title="水运业户许可证" class="WTR_CLIENT_PRELETTER" businessServiceName="trafficSqlQueryService">
+		<field name="PRELETTERID" type="string" columnType="VARCHAR2(50)" title="许可证ID">
+			<parameter name="sqlPrimaryKey">true</parameter>
+		</field>
+		<field name="ORGCODE" type="string" columnType="VARCHAR2(50)" title="机构代码"/>
+		<field name="CLIENTID" type="string" columnType="VARCHAR2(50)" title="业户ID(关连水运船舶业户表)"/>
+		<field name="MANAGE_SCOPE_MAIN" type="string" columnType="VARCHAR2(500" title="经营范围"/>
+		<field name="MANAGE_SCOPE_PART" type="string" columnType="VARCHAR2(500" title="兼经营范围"/>
+		<field name="PRELETTER_NO" type="string" columnType="VARCHAR2(20)" title="许可证号"/>
+		<field name="VAILD_DATE_STR" type="string" columnType="VARCHAR2(20)" title="有效期起"/>
+		<field name="VAILD_DATE_END" type="string" columnType="VARCHAR2(20)" title="有效期止"/>
+		<field name="SENDLETTER_ORG" type="string" columnType="VARCHAR2(50)" title="发证机关"/>
+		<field name="SENDLETTER_DATE" type="string" columnType="VARCHAR2(20)" title="发证日期"/>
+		<field name="LETTER_STATUS" type="string" columnType="VARCHAR2(50)" title="证件状态"/>
+		<field name="TRANSACTOR" type="string" columnType="VARCHAR2(20)" title="经办人"/>
+		<field name="APPLYTYPE" type="string" columnType="VARCHAR2(50)" title="开业类型"/>
+		<field name="RIVERTYPE" type="string" columnType="VARCHAR2(50)" title="企业类型"/>
+		<field name="CONFIRMID" type="string" columnType="VARCHAR2(50)" title="批准文号"/>
+		<field name="MANAGE_SCOPE_MAIN_FARE" type="string" columnType="VARCHAR2(500)" title="主营旅客运输"/>
+		<field name="MANAGE_SCOPE_MAIN_FREIGHT" type="string" columnType="VARCHAR2(500)" title="主营货物运输"/>
+		<field name="INSHORT" type="string" columnType="VARCHAR2(50)" title="地区简称"/>
+		<field name="ENGLISHCODE" type="string" columnType="VARCHAR2(50)" title="英文代码"/>
+		<field name="AREACODE" type="string" columnType="VARCHAR2(50)" title="区域代码"/>
+		<field name="SEQUENCEID" type="string" columnType="VARCHAR2(50)" title="流水号"/>
+	</businessObject>
+	
+	<businessObject title="统一编码管理表" class="UMS_CODMANAGE" businessServiceName="trafficSqlQueryService">
+		<field name="CODMAGID" type="string" columnType="VARCHAR2(50)" title="编码ID"/>
+		<field name="ORGWHLID" type="string" columnType="VARCHAR2(50)" title="行政机构编号"/>
+		<field name="CODNAME" type="string" columnType="VARCHAR2(30)" title="编码名称"/>
+		<field name="CODVALUE" type="string" columnType="VARCHAR2(500)" title="编码值"/>
+		<field name="SHOWORDER" type="string" columnType="VARCHAR2(3)" title="显示顺序"/>
+		<field name="BEGCODMAGID" type="string" columnType="VARCHAR2(50)" title="隶属编码ID"/>
+		<field name="WHETHER" type="string" columnType="CHAR(1)" title="是否启用"/>
+		<field name="REMARKDOC" type="string" columnType="VARCHAR2(500)" title="备注"/>
+		<field name="UPDATESTATC" type="string" columnType="VARCHAR2(10)" title="更新状态"/>
+	</businessObject>
+	
+	<businessObject title="水运经营单位" class="STR_CLIENT" businessServiceName="trafficSqlQueryService">
+		<field name="STR_CLIENT_STATUS" type="string" title="单位状态"/>
+		<field name="STR_CLIENT_POST" type="string" title="单位邮编"/>
+		<field name="UPDATESTATC" type="string" title="更新状态"/>
+		<field name="STR_WATERS" type="string" title="水域性质"/>
+		<field name="SHIP_HOLDER_LEGAL" type="string" title="法人代表"/>
+		<field name="SHIP_MANAGER_ADD" type="string" title="经营人地址"/>
+		<field name="SHIP_MANAGER" type="string" title="经营人姓名"/>
+		<field name="STR_CLIENT_NAME" type="string" title="经营人（单位）名称"/>
+		<field name="STR_CLIENT_ID" type="string" title="经营单位ID"/>
+		<field name="SHIP_MANAGER_TEL" type="string" title="联系电话"/>
+		<field name="PRELETTER_NO" type="string" title="许可证号"/>
+		<field name="STR_TRANSPORT" type="string" title="运输性质"/>
+	</businessObject>
+</businessObjects>

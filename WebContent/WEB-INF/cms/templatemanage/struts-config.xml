@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="templateView" type="com.yuanluesoft.cms.templatemanage.forms.TemplateView"/>
+  <form-bean name="specialTemplate" type="com.yuanluesoft.cms.templatemanage.forms.SpecialTemplate"/>
+  <form-bean name="template" type="com.yuanluesoft.cms.templatemanage.forms.Template"/>
+  <form-bean name="selectSubTemplate" type="com.yuanluesoft.cms.templatemanage.forms.SelectSubTemplate"/>
+  <form-bean name="retrieveSubTemplate" type="com.yuanluesoft.cms.templatemanage.forms.RetrieveSubTemplate"/>
+  <form-bean name="insertSubPage" type="com.yuanluesoft.cms.templatemanage.forms.InsertSubPage"/>
+  <form-bean name="insertField" type="com.yuanluesoft.cms.templatemanage.forms.InsertField"/>
+  <form-bean name="insertRecordLink" type="com.yuanluesoft.cms.templatemanage.forms.InsertRecordLink"/>
+  <form-bean name="insertRecordList" type="com.yuanluesoft.cms.templatemanage.forms.InsertRecordList"/>
+  <form-bean name="insertNormalForm" type="com.yuanluesoft.cms.templatemanage.forms.InsertNormalForm"/>
+  <form-bean name="customCssFile" type="com.yuanluesoft.cms.templatemanage.forms.CustomCssFile"/>
+  <form-bean name="templateCssFile" type="com.yuanluesoft.cms.templatemanage.forms.TemplateCssFile"/>
+  <form-bean name="uploadTemplate" type="com.yuanluesoft.cms.templatemanage.forms.UploadTemplate"/>
+  <form-bean name="batchCopyTemplate" type="com.yuanluesoft.cms.templatemanage.forms.BatchCopyTemplate"/>
+  <form-bean name="editElementHtml" type="com.yuanluesoft.cms.templatemanage.forms.EditElementHtml"/>
+  <form-bean name="insertSubTemplate" type="com.yuanluesoft.cms.templatemanage.forms.InsertSubTemplate"/>
+  <form-bean name="insertNewestImage" type="com.yuanluesoft.cms.templatemanage.forms.InsertNewestImage"/>
+  <form-bean name="insertTotals" type="com.yuanluesoft.cms.templatemanage.forms.InsertTotals"/>
+  <form-bean name="insertAccessTotals" type="com.yuanluesoft.cms.templatemanage.forms.InsertAccessTotals"/>
+  <form-bean name="insertIssueTotals" type="com.yuanluesoft.cms.templatemanage.forms.InsertIssueTotals"/>
+  <form-bean name="insertAccessTotalPage" type="com.yuanluesoft.cms.templatemanage.forms.InsertAccessTotalPage"/>
+  <form-bean name="insertTotalColumn" type="com.yuanluesoft.cms.templatemanage.forms.InsertTotalColumn"/>
+  <form-bean name="insertFormFields" type="com.yuanluesoft.cms.templatemanage.forms.InsertFormFields"/>
+  <form-bean name="insertFormField" type="com.yuanluesoft.cms.templatemanage.forms.InsertFormField"/>
+  <form-bean name="insertFormButton" type="com.yuanluesoft.cms.templatemanage.forms.InsertFormButton"/>
+  <form-bean name="insertSystemPrompt" type="com.yuanluesoft.cms.templatemanage.forms.InsertSystemPrompt"/>
+  <form-bean name="insertSmsValidateCode" type="com.yuanluesoft.cms.templatemanage.forms.InsertSmsValidateCode"/>
+  <form-bean name="insertLink" type="com.yuanluesoft.cms.templatemanage.forms.InsertLink"/>
+  <form-bean name="insertSetHomePage" type="com.yuanluesoft.cms.templatemanage.forms.InsertSetHomePage"/>
+  <form-bean name="insertAddFavorite" type="com.yuanluesoft.cms.templatemanage.forms.InsertAddFavorite"/>
+  <form-bean name="insertChineseConvert" type="com.yuanluesoft.cms.templatemanage.forms.InsertChineseConvert"/>
+  <form-bean name="insertApplicationLink" type="com.yuanluesoft.cms.templatemanage.forms.InsertApplicationLink"/>
+  <form-bean name="insertPageLink" type="com.yuanluesoft.cms.templatemanage.forms.InsertPageLink"/>
+  <form-bean name="insertNavigatorLink" type="com.yuanluesoft.cms.templatemanage.forms.InsertNavigatorLink"/>
+  <form-bean name="insertRecordPagingLink" type="com.yuanluesoft.cms.templatemanage.forms.InsertRecordPagingLink"/>
+  <form-bean name="insertSystemLink" type="com.yuanluesoft.cms.templatemanage.forms.InsertSystemLink"/>
+  <form-bean name="insertViewAction" type="com.yuanluesoft.cms.templatemanage.forms.InsertViewAction"/>
+  <form-bean name="insertRssSubscribeLink" type="com.yuanluesoft.cms.templatemanage.forms.InsertRssSubscribeLink"/>
+  <form-bean name="insertRssChannel" type="com.yuanluesoft.cms.templatemanage.forms.InsertRssChannel"/>
+  <form-bean name="insertTabstripBody" type="com.yuanluesoft.cms.templatemanage.forms.InsertTabstripBody"/>
+  <form-bean name="insertTabstripButton" type="com.yuanluesoft.cms.templatemanage.forms.InsertTabstripButton"/>
+  <form-bean name="insertTabstripMoreLink" type="com.yuanluesoft.cms.templatemanage.forms.InsertTabstripMoreLink"/>
+  <form-bean name="insertTabstripButtonList" type="com.yuanluesoft.cms.templatemanage.forms.InsertTabstripButtonList"/>
+  <form-bean name="insertNavigator" type="com.yuanluesoft.cms.templatemanage.forms.InsertNavigator"/>
+  <form-bean name="insertNavigatorLinkItem" type="com.yuanluesoft.cms.templatemanage.forms.InsertNavigatorLinkItem"/>
+  <form-bean name="insertNavigatorMenuItem" type="com.yuanluesoft.cms.templatemanage.forms.InsertNavigatorMenuItem"/>
+  <form-bean name="insertNavigatorItemList" type="com.yuanluesoft.cms.templatemanage.forms.InsertNavigatorItemList"/>
+  <form-bean name="insertPageNo" type="com.yuanluesoft.cms.templatemanage.forms.InsertPageNo"/>
+  <form-bean name="insertDate" type="com.yuanluesoft.cms.templatemanage.forms.InsertDate"/>
+  <form-bean name="recordListControlBar" type="com.yuanluesoft.cms.templatemanage.forms.RecordListControlBar"/>
+  <form-bean name="styleDefine" type="com.yuanluesoft.cms.templatemanage.forms.StyleDefine"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="templateView" path="/templateView" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.templateview.TemplateViewAction" validate="false">
+   <forward name="load" path="/templateView.jsp"/>
+  </action>
+  <action name="templateView" path="/displayTemplateView"
+   scope="request" validate="false"/>
+  <action name="uploadTemplate" path="/dialog/uploadTemplate"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.UploadTemplate" validate="false">
+   <forward name="load" path="/dialog/template/uploadTemplate.jsp"/>
+  </action>
+  <action name="template" path="/template" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Load" validate="false">
+   <forward name="load" path="/template.jsp"/>
+  </action>
+  <action input="/template.jsp" name="template" path="/saveTemplate"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Save" validate="false"/>
+  <action input="/template.jsp" name="template" path="/deleteTemplate"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Delete" validate="false"/>
+  <action name="template" path="/selectTemplateAttachment"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action path="/exportTemplate" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.exporttemplate.Export" validate="false"/>
+  <action name="insertSubPage" path="/dialog/insertSubPage"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertsubpage.Load" validate="false">
+   <forward name="load" path="/dialog/template/insertSubPage.jsp"/>
+  </action>
+  <action name="selectSubTemplate" path="/selectSubTemplate"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.selectsubtemplate.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="selectSubTemplate" path="/listSubTemplates"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.selectsubtemplate.ListSubTemplates" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action name="retrieveSubTemplate" path="/retrieveSubTemplate"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.selectsubtemplate.RetrieveSubTemplate" validate="false"/>
+  <action name="insertField" path="/dialog/insertField" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/field/insertField.jsp"/>
+  </action>
+  <action name="insertFormFields" path="/dialog/insertFormFields"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/form/insertFormFields.jsp"/>
+  </action>
+  <action name="insertRecordLink" path="/dialog/insertRecordLink"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/link/insertRecordLink.jsp"/>
+  </action>
+  <action name="insertRecordList" path="/dialog/insertRecordList"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.Load" validate="false">
+   <forward name="load" path="/dialog/recordlist/insertRecordList.jsp"/>
+  </action>
+  <action name="insertTabstripButtonList"
+   path="/dialog/insertTabstripButtonList" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.Load" validate="false">
+   <forward name="load" path="/dialog/tabstrip/insertTabstripButtonList.jsp"/>
+  </action>
+  <action name="insertNormalForm" path="/dialog/insertNormalForm"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertnormalform.Load" validate="false">
+   <forward name="load" path="/dialog/form/insertNormalForm.jsp"/>
+  </action>
+  <action name="customCssFile" path="/dialog/customCssFile"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.customcssfile.Load" validate="false">
+   <forward name="load" path="/dialog/template/customCssFile.jsp"/>
+  </action>
+  <action input="/dialog/template/customCssFile.jsp"
+   name="customCssFile" path="/dialog/saveCssFile" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.customcssfile.Save" validate="false"/>
+  <action input="/dialog/template/customCssFile.jsp"
+   name="customCssFile" path="/dialog/deleteCssFile" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.customcssfile.Delete" validate="false"/>
+  <action name="template" path="/templateAttachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="insertNavigatorItemList"
+   path="/dialog/insertNavigatorItemList" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.Load" validate="false">
+   <forward name="load" path="/dialog/navigator/insertNavigatorItemList.jsp"/>
+  </action>
+  <action name="insertNavigator" path="/dialog/insertNavigator"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertnavigator.Load" validate="false">
+   <forward name="load" path="/dialog/navigator/insertNavigator.jsp"/>
+  </action>
+  <action name="templateCssFile" path="/dialog/templateCssFile"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.templatecssfile.Load" validate="false">
+   <forward name="load" path="/dialog/template/templateCssFile.jsp"/>
+  </action>
+  <action input="/dialog/template/templateCssFile.jsp"
+   name="templateCssFile" path="/dialog/saveTemplateCssFile"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.templatecssfile.Save" validate="false">
+   <forward name="saved" path="/dialog/templateCssFileSaved.jsp"/>
+  </action>
+  <action name="customCssFile" path="/selectCssFileAttachment"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.customcssfile.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="insertRecordList" path="/dialog/redirectToNewView.js"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.RedirectToNewView" validate="false"/>
+  <action name="batchCopyTemplate" path="/batchCopyTemplate"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.batchcopytemplate.Copy" validate="false">
+   <forward name="load" path="/batchCopyTemplate.jsp"/>
+  </action>
+  <action name="editElementHtml" path="/dialog/editElementHtml"
+   scope="request" type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load">
+   <forward name="load" path="/dialog/template/editElementHtml.jsp"/>
+  </action>
+  <action name="insertSubTemplate" path="/dialog/insertSubTemplate"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/template/insertSubTemplate.jsp"/>
+  </action>
+  <action name="insertNewestImage" path="/dialog/insertNewestImage"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/recordlist/insertNewestImage.jsp"/>
+  </action>
+  <action name="insertTotals" path="/dialog/total/insertTotals"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/dialog/total/insertTotals.jsp"/>
+  </action>
+  <action name="insertAccessTotals"
+   path="/dialog/total/insertAccessTotals" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/dialog/total/insertAccessTotals.jsp"/>
+  </action>
+  <action name="insertIssueTotals"
+   path="/dialog/total/insertIssueTotals" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/dialog/total/insertIssueTotals.jsp"/>
+  </action>
+  <action name="insertAccessTotalPage"
+   path="/dialog/total/insertAccessTotalPage" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/total/insertAccessTotalPage.jsp"/>
+  </action>
+  <action name="insertTotalColumn"
+   path="/dialog/total/insertTotalColumn" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/total/insertTotalColumn.jsp"/>
+  </action>
+  <action name="insertFormField" path="/dialog/insertFormField"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/form/insertFormField.jsp"/>
+  </action>
+  <action name="insertFormButton" path="/dialog/insertFormButton"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/form/insertFormButton.jsp"/>
+  </action>
+  <action name="insertSystemPrompt" path="/dialog/insertSystemPrompt"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/form/insertSystemPrompt.jsp"/>
+  </action>
+  <action name="insertSmsValidateCode"
+   path="/dialog/insertSmsValidateCode" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/form/insertSmsValidateCode.jsp"/>
+  </action>
+  <action name="insertLink" path="/dialog/insertLink" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/link/insertLink.jsp"/>
+  </action>
+  <action name="insertSetHomePage" path="/dialog/insertSetHomePage"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/link/insertSetHomePage.jsp"/>
+  </action>
+  <action name="insertAddFavorite" path="/dialog/insertAddFavorite"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/link/insertAddFavorite.jsp"/>
+  </action>
+  <action name="insertChineseConvert"
+   path="/dialog/insertChineseConvert" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/link/insertChineseConvert.jsp"/>
+  </action>
+  <action name="insertApplicationLink"
+   path="/dialog/insertApplicationLink" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/link/insertApplicationLink.jsp"/>
+  </action>
+  <action name="insertPageLink" path="/dialog/insertPageLink"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/link/insertPageLink.jsp"/>
+  </action>
+  <action name="insertNavigatorLink" path="/dialog/insertNavigatorLink"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/link/insertNavigatorLink.jsp"/>
+  </action>
+  <action name="insertRecordPagingLink"
+   path="/dialog/insertRecordPagingLink" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/link/insertRecordPagingLink.jsp"/>
+  </action>
+  <action name="insertSystemLink" path="/dialog/insertSystemLink"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/link/insertSystemLink.jsp"/>
+  </action>
+  <action name="insertViewAction" path="/dialog/insertViewAction"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/link/insertViewAction.jsp"/>
+  </action>
+  <action name="insertRssSubscribeLink"
+   path="/dialog/insertRssSubscribeLink" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/rss/insertRssSubscribeLink.jsp"/>
+  </action>
+  <action name="insertRssChannel" path="/dialog/insertRssChannel"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/rss/insertRssChannel.jsp"/>
+  </action>
+  <action name="insertTabstripBody" path="/dialog/insertTabstripBody"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/tabstrip/insertTabstripBody.jsp"/>
+  </action>
+  <action name="insertTabstripButton"
+   path="/dialog/insertTabstripButton" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/tabstrip/insertTabstripButton.jsp"/>
+  </action>
+  <action name="insertTabstripMoreLink"
+   path="/dialog/insertTabstripMoreLink" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/tabstrip/insertTabstripMoreLink.jsp"/>
+  </action>
+  <action name="insertNavigatorLinkItem"
+   path="/dialog/insertNavigatorLinkItem" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/navigator/insertNavigatorLinkItem.jsp"/>
+  </action>
+  <action name="insertNavigatorMenuItem"
+   path="/dialog/insertNavigatorMenuItem" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/navigator/insertNavigatorMenuItem.jsp"/>
+  </action>
+  <action name="insertPageNo" path="/dialog/insertPageNo"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/paging/insertPageNo.jsp"/>
+  </action>
+  <action name="insertDate" path="/dialog/insertDate" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/date/insertDate.jsp"/>
+  </action>
+  <action name="recordListControlBar"
+   path="/dialog/recordListControlBar" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadControlBar" validate="false">
+   <forward name="load" path="/dialog/recordlist/recordListControlBar.jsp"/>
+  </action>
+  <action name="styleDefine" path="/dialog/styleDefine" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/template/styleDefine.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 数据交换客户端 -->
+	<bean id="exchangeClient" class="com.yuanluesoft.exchange.client.spring.ExchangeClientImpl" init-method="startup" destroy-method="shutdown">
+		<property name="name"><value>海事局外网服务器</value></property>
+		<property name="attachmentBaseDirectory"><value>//192.168.0.22/fjmsacms_internet</value></property> <!-- 附件基准目录 -->
+		<property name="exchangeDataSenders">
+			<list>
+				<bean class="com.yuanluesoft.exchange.client.sender.tcp.ExchangeDataSenderImpl">
+					<property name="exchangeServerHost"><value>192.168.0.25</value></property> <!-- 服务器地址 -->
+					<property name="exchangeServerPort"><value>4444</value></property> <!-- 服务器端口 -->
+					<property name="receiverNames"><value>海事局内网服务器</value></property> <!-- 接收方名称列表,用逗号分隔 -->
+					<property name="realTimeExchange"><value>true</value></property> <!-- 是否实时交换 -->
+					<property name="fileExchangeByCopy"><value>false</value></property> <!-- 是否通过文件拷贝的方式来文件交换,如果部署了防篡改软件,设置为true -->
+				</bean>
+			</list>
+		</property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="distributionService"><ref bean="distributionService"/></property>
+		<property name="temporaryFileManageService"><ref bean="temporaryFileManageService"/></property>
+		<property name="permissibleHqls"> <!-- 允许执行的HQL -->
+			<map>
+				<entry key="databaseService"><list>
+					<value>from SiteResource SiteResource where</value>
+				</list></entry>
+			</map>
+		</property>
+		<property name="permissibleSqls"> <!-- 允许执行的SQL -->
+			<map>
+				<entry key="databaseService"><list>
+					<value>select * from cms_resource where</value>
+				</list></entry>
+			</map>
+		</property>
+	</bean>
+</beans>

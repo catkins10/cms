@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="自评" class="com.yuanluesoft.chd.evaluation.selfeval.pojo.ChdEvaluationSelf">
+		<field name="evalYear" title="年度" length="4" required="true" type="number" inputMode="text"/>
+		<field name="evalMonth" title="月份" length="2" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10\0 11\0 12</parameter>
+		</field>
+		<field name="evalResult" title="自查情况说明" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="created" title="提交时间" type="timestamp" inputMode="readonly"/>
+		<field name="department" title="部门名称" length="50" required="true" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="责任人ID" type="number" inputMode="none"/>
+		<field name="creator" title="责任人姓名" length="30" type="string" inputMode="readonly"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+		<field name="subjections" title="自评:所属目录" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.selfeval.pojo.ChdEvaluationSelfSubjection</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审核</parameter>
+			<parameter name="class">com.yuanluesoft.chd.evaluation.selfeval.pojo.ChdEvaluationSelfOpinion</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="自评:所属目录" class="com.yuanluesoft.chd.evaluation.selfeval.pojo.ChdEvaluationSelfSubjection">
+		<field name="evalId" title="自评ID" type="number" inputMode="hidden"/>
+		<field name="directoryId" title="目录ID" type="number" inputMode="hidden"/>
+	</businessObject>
+	<businessObject title="自评:按月分类" class="com.yuanluesoft.chd.evaluation.selfeval.model.SelfEvalByMonth">
+		<field name="month" title="月份" type="number" inputMode="text"/>
+		<field name="departments" title="部门列表" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.selfeval.model.SelfEvalByDepartment</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="自评:按部门分类" class="com.yuanluesoft.chd.evaluation.selfeval.model.SelfEvalByDepartment">
+		<field name="department" title="部门" type="string" inputMode="text"/>
+		<field name="selfEvalList" title="自查列表" type="components">
+			<parameter name="class">com.yuanluesoft.chd.evaluation.selfeval.pojo.ChdEvaluationSelf</parameter>
+			<parameter name="url">/chd/evaluation/selfeval/selfEval.shtml?act=edit</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

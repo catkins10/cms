@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="项目" class="com.yuanluesoft.fet.project.pojo.FetProject">
+		<field name="name" title="项目名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="status" title="项目进展情况" length="50" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">初步接洽\0意向\0可望签约\0已签约,拟报批\0已报批,筹建\0开工\0竣工\0转办内资企业</parameter>
+		</field>
+		<field name="manageUnit" title="项目主管单位" length="100" type="string" inputMode="text"/>
+		<field name="created" title="填报日期" type="timestamp" inputMode="datetime"/>
+		<field name="fairId" title="活动ID" type="number" inputMode="hidden"/>
+		<field name="fairName" title="活动名称" length="100" type="string" inputMode="dropdown">
+			<parameter name="valueField">fairNumber</parameter>
+			<parameter name="titleField">fairName</parameter>
+			<parameter name="itemsServiceName">fetProjectService</parameter>
+			<parameter name="itemsName">fairs</parameter>
+		</field>
+		<field name="fairNumber" title="届别" length="10" type="string" inputMode="text"/>
+		<field name="address" title="项目地址" length="200" type="string" inputMode="text"/>
+		<field name="linkman" title="联系人" length="30" type="string" inputMode="text"/>
+		<field name="tel" title="联系电话" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="fax" title="传真" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="country" title="外方国别地区" length="20" type="string" inputMode="text"/>
+		<field name="investmentType" title="投资方式" length="20" type="string" inputMode="dropdown">
+			<parameter name="itemsText">独资\0合资\0合作\0其它</parameter>
+		</field>
+		<field name="industry" title="行业" length="20" type="string" inputMode="text"/>
+		<field name="foreignCompany" title="外方单位" length="200" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">fetProjectService</parameter>
+			<parameter name="itemsName">merchants</parameter>
+		</field>
+		<field name="chineseCompany" title="中方单位" length="200" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">fetProjectService</parameter>
+			<parameter name="itemsName">merchants</parameter>
+		</field>
+		<field name="businessScope" title="经营范围" length="250" type="string" inputMode="text"/>
+		<field name="enterpriseScale" title="生产建设规模" length="100" type="string" inputMode="text"/>
+		<field name="sign" title="签约情况" length="50" type="string" inputMode="dropdown">
+			<parameter name="itemsText">初步接洽\0签订意向\0签订合同</parameter>
+		</field>
+		<field name="totalInvestment" title="总投资" length="12,4" type="number" inputMode="text"/>
+		<field name="bargainInvestment" title="合同外资" length="12,4" type="number" inputMode="text"/>
+		<field name="registInvestment" title="注册外资" length="12,4" type="number" inputMode="text"/>
+		<field name="toSubmitTime" title="拟报批时间" type="date" inputMode="date"/>
+		<field name="toSubmitType" title="拟报批类型" length="30" type="string" inputMode="text"/>
+		<field name="toSubmitEvolve" title="未报批项目进展说明" length="250" type="string" inputMode="text"/>
+		<field name="approvalTime" title="批准时间" type="date" inputMode="date"/>
+		<field name="approvalTotalInvestment" title="批准总投资" length="12,4" type="number" inputMode="text"/>
+		<field name="approvalBargainInvestment" title="批准合同外资" length="12,4" type="number" inputMode="text"/>
+		<field name="approvalRegistInvestment" title="批准注册外资" length="12,4" type="number" inputMode="text"/>
+		<field name="organizationCode" title="企业代码" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="companyName" title="企业名称" length="100" type="string" inputMode="text"/>
+		<field name="toBuildingDate" title="拟开工时间" type="date" inputMode="date"/>
+		<field name="getLicenseTime" title="领照时间" type="date" inputMode="date"/>
+		<field name="receivedInvestment" title="已到资金" length="12,4" type="number" inputMode="text"/>
+		<field name="buildingDate" title="开工时间" type="date" inputMode="date"/>
+		<field name="compeletTime" title="竣工时间" type="date" inputMode="date"/>
+		<field name="remark" title="备注" length="250" type="string" inputMode="text"/>
+		<field name="county" title="县别" length="10" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">fetCompanyService</parameter>
+			<parameter name="itemsName">counties</parameter>
+			<parameter name="valueField"></parameter>
+			<parameter name="titleField">county</parameter>
+		</field>
+		<field name="approvalUnit" title="审批单位" length="30" type="string" inputMode="text"/>
+		<field name="signCategory" title="签约种类" length="20" type="string" inputMode="text"/>
+		<field name="consult" title="对接洽谈情况" length="250" type="string" inputMode="text"/>
+		<field name="upgradeDate" title="升格时间" type="date" inputMode="date"/>
+		<field name="receivedChecked" title="已验资金" length="12,4" type="number" inputMode="text"/>
+		<field name="investments" title="资金到达情况" type="components"/>
+		<field name="problems" title="项目存在的问题" type="components"/>
+	</businessObject>
+	
+	<businessObject title="活动" class="com.yuanluesoft.fet.project.pojo.FetProjectFair">
+		<field name="name" title="活动名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="shortName" title="简写" length="50" type="string" inputMode="text"/>
+		<field name="fairNumber" title="当前第几届" length="10" required="true" type="string" inputMode="text"/>
+		<field name="category" title="类别" length="50" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">fetProjectService</parameter>
+			<parameter name="itemsName">fairCategories</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="参加活动目标任务" class="com.yuanluesoft.fet.project.pojo.FetProjectTarget">
+		<field name="fairId" title="活动ID" type="number" inputMode="hidden"/>
+		<field name="fairName" title="活动名称" length="100" required="true" type="string" inputMode="dropdown">
+			<parameter name="valueField">fairNumber</parameter>
+			<parameter name="titleField">fairName</parameter>
+			<parameter name="itemsServiceName">fetProjectService</parameter>
+			<parameter name="itemsName">fairs</parameter>
+		</field>
+		<field name="fairNumber" title="届别" length="10" required="true" type="string" inputMode="text"/>
+		<field name="county" title="区县" length="10" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">fetCompanyService</parameter>
+			<parameter name="itemsName">counties</parameter>
+			<parameter name="valueField"></parameter>
+			<parameter name="titleField">county</parameter>
+		</field>
+		<field name="signTarget" title="总签约目标" length="5" type="number" inputMode="text"/>
+		<field name="contractTarget" title="合同项目目标" length="5" type="number" inputMode="text"/>
+		<field name="orderTarget" title="意向项目目标" length="5" type="number" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="资金到达情况" class="com.yuanluesoft.fet.project.pojo.FetProjectInvestment">
+		<field name="projectId" title="项目ID" type="number" inputMode="hidden"/>
+		<field name="receiveTime" title="时间" type="date" inputMode="date"/>
+		<field name="money" title="金额" length="12,4" type="number" inputMode="text"/>
+		<field name="moneyChecked" title="已验资资金" length="12,4" type="number" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="项目存在的问题" class="com.yuanluesoft.fet.project.pojo.FetProjectProblem">
+		<field name="projectId" title="项目ID" type="number" inputMode="hidden"/>
+		<field name="problem" title="问题描述" length="250" type="string" inputMode="text"/>
+		<field name="created" title="录入时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="客商信息" class="com.yuanluesoft.fet.project.pojo.FetMerchant">
+		<field name="name" title="客商姓名" length="30" required="true" type="string" inputMode="text"/>
+		<field name="company" title="公司名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="duty" title="公司职务" length="30" type="string" inputMode="text"/>
+		<field name="otherDuties" title="其他职衔" length="200" type="string" inputMode="text"/>
+		<field name="country" title="所在国别或地区" length="20" required="true" type="string" inputMode="text"/>
+		<field name="industry" title="行业类别" length="20" type="string" inputMode="text"/>
+		<field name="businessScope" title="经营范围" length="250" type="string" inputMode="text"/>
+		<field name="address" title="公司地址" length="200" type="string" inputMode="text"/>
+		<field name="tel" title="电话" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="fax" title="传真" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="mail" title="电子邮件" length="100" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="mobile" title="手机" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="webSite" title="网址" length="200" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="investmentAreas" title="已投资区域" length="30" type="string" inputMode="dropdown">
+			<parameter name="itemsText">三明市内\0三明市外</parameter>
+		</field>
+		<field name="investmentPorjects" title="已投资项目" length="250" type="string" inputMode="text"/>
+		<field name="investmentOrder" title="投资意向" length="200" type="string" inputMode="text"/>
+		<field name="background" title="公司背景资料" length="250" type="string" inputMode="text"/>
+		<field name="enterpriseScale" title="规模" length="100" type="string" inputMode="text"/>
+		<field name="companyCreated" title="公司成立时间" type="date" inputMode="date"/>
+		<field name="created" title="录入时间" type="date" inputMode="readonly"/>
+		<field name="creator" title="录入人" length="30" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="录入人ID" type="number" inputMode="none"/>
+		<field name="linkman" title="联络人姓名" length="50" type="string" inputMode="text"/>
+		<field name="linkmanDuty" title="联络人公司职务" length="30" type="string" inputMode="text"/>
+		<field name="linkmanTel" title="联络人电话" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="linkmanFax" title="联络人传真" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="linkmanMobile" title="联络人手机" length="50" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="remark" title="备注" length="250" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="利用外资计划" class="com.yuanluesoft.fet.project.pojo.FetPlan">
+		<field name="county" title="区县" length="10" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">fetCompanyService</parameter>
+			<parameter name="itemsName">counties</parameter>
+			<parameter name="valueField"></parameter>
+			<parameter name="titleField">county</parameter>
+		</field>
+		<field name="planYear" title="年度" length="4" type="number" inputMode="dropdown">
+			<parameter name="itemsText">{YEARS}</parameter>
+		</field>
+		<field name="planMonth" title="月份" length="2" type="number" inputMode="dropdown">
+			<parameter name="itemsText">{MONTHS}</parameter>
+		</field>
+		<field name="contractCheckPlan" title="合同外资计划(验资口径)" length="5" type="number" inputMode="text"/>
+		<field name="receiveCheckPlan" title="实际到资计划(验资口径)" length="5" type="number" inputMode="text"/>
+		<field name="contractPlan" title="合同外资计划(可比口径)" length="5" type="number" inputMode="text"/>
+		<field name="receivePlan" title="实际到资计划(可比口径)" length="5" type="number" inputMode="text"/>
+	</businessObject>
+</businessObjects>

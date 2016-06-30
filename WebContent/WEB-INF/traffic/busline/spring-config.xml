@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 公交线路服务 -->
+	<bean id="busLineService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.traffic.busline.service.spring.BusLineServiceImpl">
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="pageService"><ref bean="pageService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 数据导入服务 -->
+	<bean id="busLineImporter" class="com.yuanluesoft.traffic.busline.dataimport.BusLineImporter">
+		<property name="captureService"><ref bean="captureService"/></property>
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="busLineService"><ref bean="busLineService"/></property>
+	</bean>
+	
+	<!-- 公交线路页面服务 -->
+	<bean id="busLinePageService" class="com.yuanluesoft.traffic.busline.pages.BusLinePageService">
+		<property name="busLineService"><ref bean="busLineService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+	</bean>
+	
+	<!-- 公交线路列表处理器 -->
+	<bean id="busLinesProcessor" class="com.yuanluesoft.traffic.busline.processor.BusLinesProcessor">
+		<property name="formDefineService"><ref bean="formDefineService"/></property>
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="busLineService"><ref bean="busLineService"/></property>
+	</bean>
+</beans>

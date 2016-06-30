@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--试题-->
+	<class name="com.yuanluesoft.enterprise.exam.question.pojo.Question" table="exam_question">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="no"/> <!--编号,VARCHAR(50)-->
+		<property name="difficulty"/> <!--难度系数,NUMERIC(3)-->
+		<property name="questionType"/> <!--题型,VARCHAR(20)-->
+		<property name="eachScore"/> <!--题目单项分值,NUMERIC(2)-->
+		<property name="score"/> <!--题目总分值,NUMERIC(3)-->
+		<property name="source"/> <!--试题来源,VARCHAR(50)-->
+		<property name="responseTime"/> <!--作答时间,以秒为单位,NUMERIC(4)-->
+		<property name="blankNumber"/> <!--答案个数,填空题、问答题时有效,NUMERIC(2)-->
+		<property name="optionNumber"/> <!--选项个数,选择题时有效,默认为4个,NUMERIC(2)-->
+		<property name="answerOnComputer"/> <!--计算机上可作答,NUMERIC(1)-->
+		<property name="computerMarking"/> <!--计算机可判卷,NUMERIC(1)-->
+		<property name="wrong"/> <!--题目有错误,收到举报并确认后置1,处理完毕后恢复,NUMERIC(1)-->
+		<property name="useTimes"/> <!--使用次数,NUMERIC(6)-->
+		<property name="failedTimes"/> <!--答错次数,NUMERIC(6)-->
+		<property name="failedRate"/> <!--答错率,如100,表示100%,NUMERIC(3)-->
+		<property name="created"/> <!--创建时间,timestamp-->
+		<property name="creatorId"/> <!--创建人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--创建人,VARCHAR(60)-->
+		<property name="importLogId"/> <!--导入日志ID,NUMERIC(20)-->
+		<property name="remark"/> <!--备注,VARCHAR(100)-->
+		<!-- 正文 -->
+		<set cascade="delete" inverse="true" lazy="true" name="questionContents" table="exam_question_content" order-by="id">
+			<key column="questionId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.question.pojo.QuestionContent" />
+		</set>
+		<!-- 答案 -->
+		<set cascade="delete" inverse="true" lazy="true" name="questionAnswers" table="exam_question_answer" order-by="id">
+			<key column="questionId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.question.pojo.QuestionAnswer" />
+		</set>
+		<!-- 提示 -->
+		<set cascade="delete" inverse="true" lazy="true" name="questionHints" table="exam_question_hint" order-by="id">
+			<key column="questionId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.question.pojo.QuestionHint" />
+		</set>
+		<!-- 分析 -->
+		<set cascade="delete" inverse="true" lazy="true" name="questionAnalysises" table="exam_question_analysis" order-by="id">
+			<key column="questionId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.question.pojo.QuestionAnalysis" />
+		</set>
+		<!-- 明细 -->
+		<set cascade="delete" inverse="true" lazy="true" name="questionDetails" table="exam_question_detail" order-by="id">
+			<key column="questionId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.question.pojo.QuestionDetail" />
+		</set>
+		<!-- 用户使用记录 -->
+		<set cascade="delete" inverse="true" lazy="true" name="questionUseds" table="exam_question_used" order-by="id">
+			<key column="questionId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.question.pojo.QuestionUsed" />
+		</set>
+		<!-- 适用的岗位 -->
+		<set cascade="delete" inverse="true" lazy="true" name="questionPosts" table="exam_question_post" order-by="id">
+			<key column="questionId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.question.pojo.QuestionPost" />
+		</set>
+		<!-- 知识分类 -->
+		<set cascade="delete" inverse="true" lazy="true" name="questionKnowledges" table="exam_question_knowledge" order-by="id">
+			<key column="questionId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.question.pojo.QuestionKnowledge" />
+		</set>
+		<!-- 项目分类 -->
+		<set cascade="delete" inverse="true" lazy="true" name="questionItems" table="exam_question_item" order-by="id">
+			<key column="questionId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.question.pojo.QuestionItem" />
+		</set>
+		<!-- 错题本 -->
+		<set cascade="delete" inverse="true" lazy="true" name="wrongQuestions" table="exam_wrong_question">
+			<key column="questionId" />
+			<one-to-many class="com.yuanluesoft.enterprise.exam.pojo.ExamWrongQuestion" />
+		</set>
+	</class>
+	
+	<!--试题:试题内容-->
+	<class name="com.yuanluesoft.enterprise.exam.question.pojo.QuestionContent" table="exam_question_content">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="questionId"/> <!--试题ID,NUMERIC(20)-->
+		<property name="questionContent" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--试题内容,TEXT-->
+	</class>
+	
+	<!--试题:试题答案-->
+	<class name="com.yuanluesoft.enterprise.exam.question.pojo.QuestionAnswer" table="exam_question_answer">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="questionId"/> <!--试题ID,NUMERIC(20)-->
+		<property name="questionAnswer" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--试题答案,多选题，答案用逗号分隔,TEXT-->
+		<property name="caseSensitive"/> <!--区分大小写,CHAR(1)-->
+	</class>
+	
+	<!--试题:解题提示-->
+	<class name="com.yuanluesoft.enterprise.exam.question.pojo.QuestionHint" table="exam_question_hint">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="questionId"/> <!--试题ID,NUMERIC(20)-->
+		<property name="questionHint" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--解题提示,TEXT-->
+	</class>
+	
+	<!--试题:试题分析-->
+	<class name="com.yuanluesoft.enterprise.exam.question.pojo.QuestionAnalysis" table="exam_question_analysis">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="questionId"/> <!--试题ID,NUMERIC(20)-->
+		<property name="questionAnalysis" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--错析内容,TEXT-->
+	</class>
+	
+	<!--试题:试题详解-->
+	<class name="com.yuanluesoft.enterprise.exam.question.pojo.QuestionDetail" table="exam_question_detail">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="questionId"/> <!--试题ID,NUMERIC(20)-->
+		<property name="questionDetail" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--详解内容,TEXT-->
+	</class>
+	
+	<!--试题:用户使用过的题目-->
+	<class name="com.yuanluesoft.enterprise.exam.question.pojo.QuestionUsed" table="exam_question_used">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="personId"/> <!--用户ID,NUMERIC(20)-->
+		<property name="questionId"/> <!--题目ID,NUMERIC(20)-->
+		<property name="useTime"/> <!--使用时间,TIMESTAMP-->
+	</class>
+	
+	<!--试题:适用的岗位-->
+	<class name="com.yuanluesoft.enterprise.exam.question.pojo.QuestionPost" table="exam_question_post">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="questionId"/> <!--试题ID,NUMERIC(20)-->
+		<property name="postId"/> <!--岗位ID,NUMERIC(20)-->
+		<property name="post"/> <!--岗位,VARCHAR(60)-->
+	</class>
+	
+	<!--试题:知识类别-->
+	<class name="com.yuanluesoft.enterprise.exam.question.pojo.QuestionKnowledge" table="exam_question_knowledge">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="questionId"/> <!--试题ID,NUMERIC(20)-->
+		<property name="knowledgeId"/> <!--知识类别ID,NUMERIC(20)-->
+		<property name="knowledge"/> <!--知识类别,VARCHAR(100)-->
+	</class>
+	
+	<!--试题:项目分类-->
+	<class name="com.yuanluesoft.enterprise.exam.question.pojo.QuestionItem" table="exam_question_item">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="questionId"/> <!--试题ID,NUMERIC(20)-->
+		<property name="itemId"/> <!--项目分类ID,NUMERIC(20)-->
+		<property name="item"/> <!--项目分类,VARCHAR(100)-->
+	</class>
+	
+	<!--题库:错题举报-->
+	<class name="com.yuanluesoft.enterprise.exam.question.pojo.QuestionWrong" table="exam_question_wrong">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="questionId"/> <!--试题ID,NUMERIC(20)-->
+		<property name="description"/> <!--描述,VARCHAR(2000)-->
+		<property name="informerId"/> <!--举报人ID,NUMERIC(20)-->
+		<property name="informerName"/> <!--举报人姓名,VARCHAR(30)-->
+		<property name="created"/> <!--举报时间,DATE-->
+		<property name="transact"/> <!--处理情况,VARCHAR(1000)-->
+		<property name="transactTime"/> <!--办理时间,DATE-->
+		<property name="transactorId"/> <!--办理人ID,NUMERIC(20)-->
+		<property name="transactorName"/> <!--办理人,VARCHAR(30)-->
+	</class>
+	
+	<!--试题:导入日志-->
+	<class name="com.yuanluesoft.enterprise.exam.question.pojo.QuestionImport" table="exam_question_import">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="source"/> <!--题库来源,如:南昌铁路局,VARCHAR(100)-->
+		<property name="description"/> <!--说明,从文件名提取,VARCHAR(100)-->
+		<property name="postIds" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--适用的岗位ID,TEXT-->
+		<property name="posts" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--适用的岗位,TEXT-->
+		<property name="knowledgeIds" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--知识类别ID,TEXT-->
+		<property name="knowledges" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--知识类别,TEXT-->
+		<property name="itemIds" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--项目分类ID,TEXT-->
+		<property name="items" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--项目分类,TEXT-->
+		<property name="creator"/> <!--创建人,VARCHAR(60)-->
+		<property name="creatorId"/> <!--创建人ID,NUMERIC(20)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+		<property name="remark"/> <!--备注,VARCHAR(100)-->
+	</class>
+</hibernate-mapping>

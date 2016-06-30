@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Application>
+	<Actions>
+		<!-- Action Name="申报重点项目" Send="true"/ -->
+		<!-- Action Name="列入重点项目" Send="true"/ --> <!-- Reverse="true" -->
+		<Action Name="汇报项目情况" Send="true"/>
+		<Action Name="审核汇报" Send="true" Reverse="true"/>
+		<Action Name="作废" DeleteAction="true"/>
+	</Actions>
+	<SubForms>
+		<SubForm Id="Edit" Name="登记"/>
+		<!-- SubForm Id="Approval" Name="申报审核"/-->
+		<SubForm Id="Debrief" Name="汇报"/>
+		<SubForm Id="ApprovalDebrief" Name="汇报审核"/>
+		<SubForm Id="Read" Name="只读"/>
+	</SubForms>
+	<TypeDeclarations>
+		<TypeDeclaration Id="result" Name="审批结果">
+			<SchemaType>
+				<xsd:schema 
+					xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+					elementFormDefault="qualified" 
+					attributeFormDefault="unqualified">
+					<xsd:element name="result">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="同意"/>
+								<xsd:enumeration value="不同意"/>
+								<xsd:enumeration value="通过"/>
+								<xsd:enumeration value="不通过"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+		<TypeDeclaration Id="declareOrDebrief" Name="申报/汇报">
+			<SchemaType>
+				<xsd:schema 
+					xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+					elementFormDefault="qualified" 
+					attributeFormDefault="unqualified">
+					<xsd:element name="result">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="申报"/>
+								<xsd:enumeration value="汇报"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+	</TypeDeclarations>
+	<DataFields>
+		<DataField Id="approvalResult" Name="审批结果">
+			<DataType>
+				<DeclaredType Id="result"/>
+			</DataType>
+		</DataField>
+		<DataField Id="declareOrDebrief" Name="申报/汇报">
+			<DataType>
+				<DeclaredType Id="declareOrDebrief"/>
+			</DataType>
+		</DataField>
+		<DataField Id="level" Name="项目级别">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="industry" Name="所属行业">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="childIndustry" Name="所属子行业">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="status" Name="项目状态">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="classify" Name="项目类别">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="area" Name="所属区域">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="category" Name="项目分类">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="leader" Name="项目挂点领导">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="investmentSubject" Name="投资主体">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="managementUnit" Name="项目管理部门">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="constructionType" Name="建设性质">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="accountableInvest" Name="项目总投资（责任制）">
+			<DataType><BasicType Type="INTEGER"/></DataType>
+		</DataField>
+		<DataField Id="invest" Name="项目总投资">
+			<DataType><BasicType Type="INTEGER"/></DataType>
+		</DataField>
+	</DataFields>
+	<Applications/>
+</Application>

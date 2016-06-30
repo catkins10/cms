@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="龙海市国土资源局违法案件结果公开" class="com.yuanluesoft.credit.enterprisecredit.landresources.pojo.LandResources" >
+		<field name="person" title="违法当事人" required="true" length="200" type="string" inputMode="text"/>
+		<field name="reason" title="案由" required="true" length="200" type="string" inputMode="text"/>
+		<field name="addr" title="违法地点" required="true" length="200" type="string" inputMode="text"/>
+		<field name="filingTime" title="批准立案时间" required="true" length="100" type="string" inputMode="text"/>
+		<field name="basis" title="处罚依据" required="true" length="200" type="string" inputMode="text"/>
+		<field name="result" title="处罚情况" required="true" length="100" type="string" inputMode="text"/>
+		<field name="punishTime" title="处罚时间" required="true" length="50" type="string" inputMode="text"/>
+
+
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	
+</businessObjects>

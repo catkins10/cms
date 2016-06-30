@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="leaderMail" title="撰写邮件" method="post" action="/cms/leadermail/saveLeaderMail.shtml?act=create" class="com.yuanluesoft.cms.leadermail.forms.LeaderMail" pojo="com.yuanluesoft.cms.leadermail.pojo.LeaderMail">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+		
+	<form name="leaderMailSearch" title="搜索" method="get" action="/cms/sitemanage/applicationSearch.shtml?applicationName=cms/leadermail&amp;pageName=leaderMailSearch">
+		<formFields>
+			<field title="主题" name="subject">
+				<parameter name="searchCondition">LeaderMail.subject like '%{PARAMETER:subject}%' or LeaderMail.publicSubject like '%{PARAMETER:subject}%'</parameter> <!-- 搜索条件定义 -->
+			</field>
+			<field title="正文" name="lazyBody.content">
+				<parameter name="searchCondition">LeaderMail.publicBody='1' and lazyBody.body like '%{PARAMETER:lazyBody.content}%'</parameter> <!-- 搜索条件定义 -->
+			</field>
+			<field name="type" title="类型" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">leaderMailService</parameter>
+			</field>
+			<field name="department" title="受理部门" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">leaderMailService</parameter>
+			</field>
+			<field title="写信人姓名" name="creator"/>
+			<field title="证件号码" name="creatorIdentityCard"/>
+			<field title="开始时间" name="createdBegin" type="date"/>
+			<field title="结束时间" name="createdEnd" type="date"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="approvalQuery" title="办理情况查询" method="post" action="/cms/leadermail/leaderMail.shtml?id={PARAMETER:id}">
+		<formFields>
+			<field title="编号" name="approvalQuerySN"/>
+			<field title="密码" name="approvalQueryPassword" inputMode="password"/>
+		</formFields>
+		<actions>
+			<action title="查询" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="admin/leaderMail" class="com.yuanluesoft.cms.leadermail.forms.admin.LeaderMail" title="信件" pojo="com.yuanluesoft.cms.leadermail.pojo.LeaderMail">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="批转" hide="workflow()" execute="FormUtils.doAction('runLeaderMail', 'workflowAction=send')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteLeaderMail')"/>
+			<action title="永久删除" hide="isNew()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteLeaderMail', 'physical=true')"/>
+			<action title="撤销删除" hide="isNew()" execute="FormUtils.doAction('undeleteLeaderMail')"/>
+			<action title="公布到网站" hide="workflow() and noPrivilege(application_manager) and noPrivilege(site_manager) and noPrivilege(publish)" execute="FormUtils.doAction('setPublishOption')"/>
+			<action title="打印办理单" execute="window.open('printLeaderMail.shtml?id={PARAMETER:id}&amp;siteId={PARAMETER:siteId}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/leaderMailType" class="com.yuanluesoft.cms.leadermail.forms.admin.LeaderMailType" title="信件类型" pojo="com.yuanluesoft.cms.leadermail.pojo.LeaderMailType">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteLeaderMailType')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/leaderMailDepartment" class="com.yuanluesoft.cms.leadermail.forms.admin.LeaderMailDepartment" title="受理部门" pojo="com.yuanluesoft.cms.leadermail.pojo.LeaderMailDepartment">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteLeaderMailDepartment')"/>
+		</actions>
+	</form>
+	
+	<form title="插入信件列表" class="com.yuanluesoft.cms.leadermail.forms.admin.InsertLeaderMails">
+		<formFields>
+			<field title="信件类型" name="leaderMailTypes" inputMode="select">
+				<parameter name="execute">selectMailTypes()</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.cms.leadermail.forms.admin.InsertLink" title="插入链接">
+		<formFields>
+			<field title="链接类型" name="type" type="string" inputMode="hidden"/>
+			<field title="隶属站点" name="relationSite" type="string" inputMode="radio">
+				<parameter name="itemsText">当前站点|currentSite\0指定站点|specialSite</parameter>
+				<parameter name="defaultValue">currentSite</parameter>
+			</field>		
+			<field title="隶属站点ID" name="relationSiteId" type="string" inputMode="hidden"/>
+			<field title="隶属站点名称" name="relationSiteName" type="string" inputMode="select">
+				<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+				<parameter name="execute">selectSite(500, 300, false, 'relationSiteId{id},relationSiteName{name}', '', '', '', 'site')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="leaderMailType" title="信件类型" length="30" type="string" inputMode="select">
+				<parameter name="execute">selectLeaderMailType()</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

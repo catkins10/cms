@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="track" type="com.yuanluesoft.jeaf.stat.forms.Track"/>
+  <form-bean name="statistics" type="com.yuanluesoft.jeaf.stat.forms.Statistics"/>
+ </form-beans>
+ <global-exceptions/>
+ <global-forwards/>
+ <action-mappings>
+  <action name="track" path="/track" scope="request"
+   type="com.yuanluesoft.jeaf.stat.actions.track.Track" validate="false"/>
+  <action name="statistics" path="/statistics" scope="request"
+   type="com.yuanluesoft.jeaf.stat.actions.statistics.Load" validate="false">
+   <forward name="load" path="/statistics.jsp"/>
+  </action>
+  <action name="statistics" path="/displayStatistics" scope="request" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

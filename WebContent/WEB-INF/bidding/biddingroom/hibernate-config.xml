@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--开标室-->
+	<class name="com.yuanluesoft.bidding.biddingroom.pojo.BiddingRoom" table="bidding_room">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--名称-->
+		<property name="type"/> <!--开标/评标-->
+		<property name="city"/> <!--地区-->
+		<property name="seat"/> <!--位置数-->
+		<property name="priority"/> <!--优先级-->
+		<property name="remark"/> <!--备注-->
+	</class>
+	
+	<!--开评标室安排-->
+	<class name="com.yuanluesoft.bidding.biddingroom.pojo.BiddingRoomSchedule" table="bidding_room_schedule">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="roomType"/> <!--开标/评标-->
+		<property name="roomId"/> <!--开标室ID-->
+		<property name="roomName"/> <!--开标室名称-->
+		<property name="beginTime"/> <!--使用开始时间-->
+		<property name="endTime"/> <!--使用结束时间-->
+		<property name="publicBeginTime"/> <!--公示时间-->
+		<property name="publicPersonId"/> <!--发布人ID-->
+		<property name="publicPersonName"/> <!--发布人-->
+		<property name="remark"/> <!--备注-->
+	</class>
+</hibernate-mapping>

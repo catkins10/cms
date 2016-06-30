@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 即时消息客户端消息发送 -->
+	<bean id="messengerSender" init-method="startMessengerServer" class="com.yuanluesoft.jeaf.messagecenter.sender.messenger.MessengerSender">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="name"><value>messenger</value></property>
+		<property name="description"><value>J2OA即时消息客户端</value></property>
+		<property name="feedback"><value>true</value></property>
+	</bean>
+</beans>

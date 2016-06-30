@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="consult" type="com.yuanluesoft.asc.consult.forms.Consult"/>
+  <form-bean name="adminConsult" type="com.yuanluesoft.asc.consult.forms.admin.Consult"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="consult" path="/consult" scope="request"
+   type="com.yuanluesoft.asc.consult.actions.consult.Load" validate="false">
+   <forward name="load" path="/consult.jsp"/>
+  </action>
+  <action name="adminConsult" path="/admin/consult" scope="request"
+   type="com.yuanluesoft.asc.consult.actions.consult.admin.Load" validate="false">
+   <forward name="load" path="/admin/consult.jsp"/>
+  </action>
+  <action input="/consult.jsp" name="consult" path="/saveConsult"
+   scope="request"
+   type="com.yuanluesoft.asc.consult.actions.consult.Save" validate="false">
+   <forward name="result" path="/consultSubmited.jsp"/>
+  </action>
+  <action input="/admin/consult.jsp" name="adminConsult"
+   path="/admin/saveConsult" scope="request"
+   type="com.yuanluesoft.asc.consult.actions.consult.admin.Save" validate="false"/>
+  <action input="/admin/consult.jsp" name="adminConsult"
+   path="/admin/runConsult" scope="request"
+   type="com.yuanluesoft.asc.consult.actions.consult.admin.Run" validate="false"/>
+  <action input="/admin/consult.jsp" name="adminConsult"
+   path="/admin/deleteConsult" scope="request"
+   type="com.yuanluesoft.asc.consult.actions.consult.admin.Delete" validate="false"/>
+  <action input="/admin/consult.jsp" name="adminConsult"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.asc.consult.actions.consult.admin.WriteOpinion" validate="false"/>
+  <action input="/admin/consult.jsp" name="adminConsult"
+   path="/admin/publish" scope="request"
+   type="com.yuanluesoft.asc.consult.actions.consult.admin.Publish" validate="false"/>
+  <action input="/admin/consult.jsp" name="adminConsult"
+   path="/admin/setPublishOption" scope="request"
+   type="com.yuanluesoft.asc.consult.actions.consult.admin.SetPublishOption" validate="false"/>
+  <action name="adminConsult" path="/admin/printConsult"
+   scope="request"
+   type="com.yuanluesoft.asc.consult.actions.consult.admin.Print" validate="false">
+   <forward name="load" path="/admin/consult.jsp"/>
+  </action>
+  <action name="consult" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.asc.consult.actions.consult.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action input="/admin/consult.jsp" name="adminConsult"
+   path="/admin/undeleteConsult" scope="request"
+   type="com.yuanluesoft.asc.consult.actions.consult.admin.Undelete" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

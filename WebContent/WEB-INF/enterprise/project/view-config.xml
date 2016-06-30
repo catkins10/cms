@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="todoContract" form="project" title="待办合同" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProject</pojo>
+			<where>EnterpriseProject.isContract='1'</where>
+			<orderBy>EnterpriseProject.created DESC</orderBy>
+			<quickFilter>EnterpriseProject.name like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="登记" execute="PageUtils.newrecord('enterprise/project', 'project', 'mode=fullscreen', 'isContract=1')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+			<column title="桥梁规模" name="bridgeScale" width="78"/>
+			<column title="公路等级" name="highwayLevel" width="78"/>
+			<column title="项目规模" name="scale" width="120"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="100" display="normal,print,portlet"/>
+			<column title="开始时间" name="beginDate" width="80" align="center"/>
+			<column title="结束时间" name="endDate" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="processingContract" form="project" title="在办合同" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProject</pojo>
+			<where>EnterpriseProject.isContract='1'</where>
+			<orderBy>EnterpriseProject.created DESC</orderBy>
+			<quickFilter>EnterpriseProject.name like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="登记" execute="PageUtils.newrecord('enterprise/project', 'project', 'mode=fullscreen', 'isContract=1')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+			<column title="桥梁规模" name="bridgeScale" width="78"/>
+			<column title="公路等级" name="highwayLevel" width="78"/>
+			<column title="项目规模" name="scale" width="120"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="100" display="normal,print,portlet"/>
+			<column title="开始时间" name="beginDate" width="80" align="center"/>
+			<column title="结束时间" name="endDate" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="completedContract" form="project" title="办结合同" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProject</pojo>
+			<where>EnterpriseProject.isContract='1'</where>
+			<orderBy>EnterpriseProject.created DESC</orderBy>
+			<quickFilter>EnterpriseProject.name like '%{KEY}%'</quickFilter>
+			<filter>COMPLETED</filter>
+		</data>
+		<actions>
+			<action title="登记" execute="PageUtils.newrecord('enterprise/project', 'project', 'mode=fullscreen', 'isContract=1')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+			<column title="桥梁规模" name="bridgeScale" width="78"/>
+			<column title="公路等级" name="highwayLevel" width="78"/>
+			<column title="项目规模" name="scale" width="120"/>
+			<column title="开始时间" name="beginDate" width="80" align="center"/>
+			<column title="结束时间" name="endDate" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="allContract" form="project" title="所有合同" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProject</pojo>
+			<where>EnterpriseProject.isContract='1'</where>
+			<orderBy>EnterpriseProject.created DESC</orderBy>
+			<quickFilter>EnterpriseProject.name like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="登记" execute="PageUtils.newrecord('enterprise/project', 'project', 'mode=fullscreen', 'isContract=1')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+			<column title="桥梁规模" name="bridgeScale" width="78"/>
+			<column title="公路等级" name="highwayLevel" width="78"/>
+			<column title="项目规模" name="scale" width="120"/>
+			<column title="开始时间" name="beginDate" width="80" align="center"/>
+			<column title="结束时间" name="endDate" width="80" align="center"/>
+		</columns>
+	</view>
+
+	<view name="todo" form="project" title="待办项目" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProject</pojo>
+			<where>EnterpriseProject.isContract!='1'</where>
+			<orderBy>EnterpriseProject.created DESC</orderBy>
+			<quickFilter>EnterpriseProject.name like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="登记" execute="PageUtils.newrecord('enterprise/project', 'project', 'mode=fullscreen', 'isContract=0')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+			<column title="桥梁规模" name="bridgeScale" width="78"/>
+			<column title="公路等级" name="highwayLevel" width="78"/>
+			<column title="项目规模" name="scale" width="120"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="100" display="normal,print,portlet"/>
+			<column title="开始时间" name="beginDate" width="80" align="center"/>
+			<column title="结束时间" name="endDate" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="processing" form="project" title="在办项目" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProject</pojo>
+			<where>EnterpriseProject.isContract!='1'</where>
+			<orderBy>EnterpriseProject.created DESC</orderBy>
+			<quickFilter>EnterpriseProject.name like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="登记" execute="PageUtils.newrecord('enterprise/project', 'project', 'mode=fullscreen', 'isContract=0')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+			<column title="桥梁规模" name="bridgeScale" width="78"/>
+			<column title="公路等级" name="highwayLevel" width="78"/>
+			<column title="项目规模" name="scale" width="120"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="100" display="normal,print,portlet"/>
+			<column title="开始时间" name="beginDate" width="80" align="center"/>
+			<column title="结束时间" name="endDate" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="completed" form="project" title="办结项目" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProject</pojo>
+			<where>EnterpriseProject.isContract!='1'</where>
+			<orderBy>EnterpriseProject.created DESC</orderBy>
+			<quickFilter>EnterpriseProject.name like '%{KEY}%'</quickFilter>
+			<filter>COMPLETED</filter>
+		</data>
+		<actions>
+			<action title="登记" execute="PageUtils.newrecord('enterprise/project', 'project', 'mode=fullscreen', 'isContract=0')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+			<column title="桥梁规模" name="bridgeScale" width="78"/>
+			<column title="公路等级" name="highwayLevel" width="78"/>
+			<column title="项目规模" name="scale" width="120"/>
+			<column title="开始时间" name="beginDate" width="80" align="center"/>
+			<column title="结束时间" name="endDate" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="project" form="project" title="所有项目" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProject</pojo>
+			<where>EnterpriseProject.isContract!='1'</where>
+			<orderBy>EnterpriseProject.created DESC</orderBy>
+			<quickFilter>EnterpriseProject.name like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="登记" execute="PageUtils.newrecord('enterprise/project', 'project', 'mode=fullscreen', 'isContract=0')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+			<column title="桥梁规模" name="bridgeScale" width="78"/>
+			<column title="公路等级" name="highwayLevel" width="78"/>
+			<column title="项目规模" name="scale" width="120"/>
+			<column title="开始时间" name="beginDate" width="80" align="center"/>
+			<column title="结束时间" name="endDate" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="myProject" form="project" title="我的项目" hide="noPrivilege(manageUnit_designer)" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectTeam</pojo>
+			<where>members.memberId={USERID}</where>
+			<orderBy>project.created DESC</orderBy>
+			<quickFilter>project.projectName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="登记" execute="PageUtils.newrecord('enterprise/project', 'project', 'mode=fullscreen', 'isContract=0')"/>
+		</actions>
+		<links>
+			<link>javascript:PageUtils.editrecord('enterprise/project', 'project', '{PARAMETER:projectId}', 'mode=fullscreen')</link>
+		</links>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="project.name"/>
+			<column title="桥梁规模" name="project.bridgeScale" width="78"/>
+			<column title="公路等级" name="project.highwayLevel" width="78"/>
+			<column title="项目规模" name="project.scale" width="120"/>
+			<column title="开始时间" name="project.beginDate" width="80" align="center"/>
+			<column title="结束时间" name="project.endDate" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="projectTeam" form="project" title="项目安排" hide="noPrivilege(manageUnit_teamQuery)" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectTeam</pojo>
+			<orderBy>project.created DESC</orderBy>
+			<quickFilter>project.projectName like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="FIRSTCATEGOEY" loop="false">
+			<data>
+				<pojo>om.yuanluesoft.enterprise.project.pojo.EnterpriseProjectTeamMember</pojo>
+				<orderBy>EnterpriseProjectTeamMember.memberName</orderBy>
+			</data>
+			<category value="EnterpriseProjectTeamMember.memberId" title="EnterpriseProjectTeamMember.memberName" valueType="number"> <!--value必须有-->
+				<data>members.memberId={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="登记" execute="PageUtils.newrecord('enterprise/project', 'project', 'mode=fullscreen', 'isContract=0')"/>
+		</actions>
+		<links>
+			<link>javascript:PageUtils.editrecord('enterprise/project', 'project', '{PARAMETER:projectId}', 'mode=fullscreen')</link>
+		</links>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="project.name"/>
+			<column title="桥梁规模" name="project.bridgeScale" width="78"/>
+			<column title="公路等级" name="project.highwayLevel" width="78"/>
+			<column title="项目规模" name="project.scale" width="120"/>
+			<column title="开始时间" name="project.beginDate" width="80" align="center"/>
+			<column title="结束时间" name="project.endDate" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="projectSelect"  title="项目选择" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProject</pojo>
+			<orderBy>EnterpriseProject.created DESC</orderBy>
+			<quickFilter>EnterpriseProject.name like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="name"/>
+			<column title="桥梁规模" name="bridgeScale" width="78"/>
+			<column title="隧道规模" name="tunnelScale" width="78"/>
+			<column title="公路等级" name="highwayLevel" width="78"/>
+			<column title="项目规模" name="scale" width="120"/>
+			<column title="开始时间" name="beginDate" width="0"/>
+			<column title="结束时间" name="endDate" width="0"/>
+			<column title="工程概况" name="overview" width="0"/>
+			<column title="桥宽" name="bridgeWidth" width="0"/>
+			<column title="桥长" name="bridgeLength" width="0"/>
+			<column title="隧道宽" name="tunnelWidth" width="0"/>
+			<column title="隧道长" name="tunnelLength" width="0"/>
+			<column title="公路时速" name="highwaySpeed" width="0"/>
+			<column title="公路里程" name="highwayMileage" width="0"/>
+			<column title="业主单位" name="owner" width="0"/>
+			<column title="所在地区" name="city" width="0"/>
+			<column title="项目类别" name="type" width="0"/>
+			<column title="施工单位" name="constructionUnit" width="0"/>
+			<column title="监理单位" name="surveillanceUnit" width="0"/>
+			<column title="项目负责人" name="projectLeader" width="0"/>
+			<column title="项目建成时间" name="completionDate" width="0"/>
+			<column title="招标编号" name="biddingNumber" width="0"/>
+			<column title="项目阶段" name="projectStage" width="0"/>
+			<column title="项目进展" name="projectProgress" width="0"/>
+		</columns>
+	</view>
+	
+	<view name="projectType" form="projectType" title="项目类型" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProjectType</pojo>
+			<quickFilter>EnterpriseProjectType.type like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新增类型" execute="PageUtils.newrecord('enterprise/project', 'projectType', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="项目类型" name="projectType" width="120"/>
+			<column title="处理流程" name="workflowName"/>
+		</columns>
+	</view>
+	
+	<view name="contractTemplate" form="contractTemplate" title="合同模板" pageRows="20" openFeatures="width=720,height=500" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseContractTemplate</pojo>
+			<quickFilter>EnterpriseContractTemplate.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加模板" execute="PageUtils.newrecord('enterprise/project', 'contractTemplate', 'width=720,height=500')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="模板名称" name="name" width="120"/>
+			<column title="适用的项目类型" name="displayAppliedProjectTypes"/>
+		</columns>
+	</view>
+	
+	<view name="designReport" title="项目报表" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseProjectViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.project.pojo.EnterpriseProject</pojo>
+			<orderBy>EnterpriseProject.created DESC</orderBy>
+			<where>not teams.id is null</where>
+			<quickFilter>EnterpriseProject.name like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="导出EXCEL" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="文件编号" name="sn" width="100"/>
+			<column title="项目名称" name="name"/>
+			<column title="设计阶段" name="designStage" width="78" align="center"/>
+			<column title="公路等级（含时速）" name="highwayLevel" width="130" align="center"/>
+			<column title="里程" name="highwayMileage" width="100" align="center"/>
+			<column title="项目负责人" name="projectLeader" width="80" align="center"/>
+			<column title="完成时间" name="completionDate" width="80" align="center"/>
+		</columns>
+	</view>
+</views>

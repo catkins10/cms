@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--资料库:目录-->
+	<class name="com.yuanluesoft.j2oa.databank.pojo.DatabankDirectory" table="databank_directory">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryName"/> <!--目录名称-->
+		<property name="parentDirectoryId"/> <!--上级目录ID-->
+		<property name="priority"/> <!--优先级-->
+		<property name="directoryType"/> <!--目录类型-->
+		<property name="creator"/> <!--创建人-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="created"/> <!--创建时间-->
+		<property name="remark"/> <!--备注-->
+		<set cascade="delete" inverse="true" lazy="true" name="directoryPopedoms" table="databank_directory_popedom" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.j2oa.databank.pojo.DatabankDirectoryPopedom" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="subjections" table="databank_directory_subjection" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.j2oa.databank.pojo.DatabankDirectorySubjection" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="childSubjections" table="databank_directory_subjection">
+			<key column="parentDirectoryId" />
+			<one-to-many class="com.yuanluesoft.j2oa.databank.pojo.DatabankDirectorySubjection" />
+		</set>
+	</class>
+	
+	<!--资料库:目录隶属关系-->
+	<class name="com.yuanluesoft.j2oa.databank.pojo.DatabankDirectorySubjection" table="databank_directory_subjection">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID-->
+		<property name="parentDirectoryId"/> <!--上级目录ID-->
+	</class>
+	
+	<!--资料库:目录权限-->
+	<class name="com.yuanluesoft.j2oa.databank.pojo.DatabankDirectoryPopedom" table="databank_directory_popedom">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID-->
+		<property name="userId"/> <!--用户ID-->
+		<property name="userName"/> <!--用户名-->
+		<property name="popedomName"/> <!--权限-->
+		<property name="isInherit"/> <!--是否从上级目录继承-->
+	</class>
+	
+	<!--资料库:资料-->
+	<class name="com.yuanluesoft.j2oa.databank.pojo.DatabankData" table="databank_data">
+		<id name="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="subject"/> <!--标题-->
+		<property name="docmark"/> <!--文件字号-->
+		<property name="dataType"/> <!--文件类型-->
+		<property name="secureLevel"/> <!--密级-->
+		<property name="fromUnit"/> <!--成文单位-->
+		<property name="generateDate"/> <!--成文日期-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="creator"/> <!--创建人-->
+		<property name="created"/> <!--创建时间-->
+		<property name="directoryId"/> <!--目录ID-->
+		<property name="remark"/> <!--附注-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文-->
+		<set cascade="delete" inverse="true" lazy="true" name="visitors" table="databank_data_privilege">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.j2oa.databank.pojo.DatabankDataPrivilege" />
+		</set>
+	</class>
+	
+	<!--资料库:资料权限控制-->
+	<class name="com.yuanluesoft.j2oa.databank.pojo.DatabankDataPrivilege" table="databank_data_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+</hibernate-mapping>

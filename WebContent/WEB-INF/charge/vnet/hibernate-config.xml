@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--计费:星空服务订购-->
+	<class name="com.yuanluesoft.charge.thirdparty.vnet.pojo.VnetOrder" table="charge_vnet_order">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="vnetUserId"/> <!--星空用户ID-->
+		<property name="transactionId"/> <!--交易号-->
+		<property name="spId"/> <!--服务供应商Id-->
+		<property name="serviceId"/> <!--服务ID-->
+		<property name="serviceItemId"/> <!--服务项ID-->
+		<property name="serviceItemName"/> <!--服务项名称-->
+		<property name="money"/> <!--交易金额-->
+		<property name="serviceBegin"/> <!--开始时间-->
+		<property name="serviceEnd"/> <!--结束时间-->
+		<property name="isExtend"/> <!--是否续订-->
+		<property name="orderId"/> <!--订单ID-->
+		<property name="created"/> <!--创建时间-->
+		<property name="cancelTime"/> <!--退订时间-->
+	</class>
+	
+	<!--计费:星空扣款记录-->
+	<class name="com.yuanluesoft.charge.thirdparty.vnet.pojo.VnetPay" table="charge_vnet_pay">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="vnetUserId"/> <!--星空用户ID-->
+		<property name="transactionId"/> <!--交易号-->
+		<property name="orderTransactionId"/> <!--订单交易号-->
+		<property name="spId"/> <!--服务供应商ID-->
+		<property name="serviceId"/> <!--服务ID-->
+		<property name="serviceItemId"/> <!--服务项ID-->
+		<property name="serviceItemName"/> <!--服务名称-->
+		<property name="money"/> <!--交易金额-->
+		<property name="serviceBegin"/> <!--服务开始时间-->
+		<property name="serviceEnd"/> <!--服务结束时间-->
+		<property name="isExtend"/> <!--是否续费-->
+		<property name="created"/> <!--创建时间-->
+	</class>
+</hibernate-mapping>

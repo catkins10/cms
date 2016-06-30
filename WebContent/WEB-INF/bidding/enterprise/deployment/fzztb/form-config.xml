@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 添加企业用户登录表单,用户表单增加写KEY按钮 -->
+<forms>
+	<form name="insertEnterprises" class="com.yuanluesoft.bidding.enterprise.forms.InsertEnterprises" title="插入企业列表">
+		<formFields>
+			<field name="enterpriseCategory" title="企业分类" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">enterpriseService</parameter>
+				<parameter name="itemsName">enterpriseCategory</parameter>
+			</field>
+		</formFields>
+	</form>
+
+	<form name="admin/enterprise" class="com.yuanluesoft.bidding.enterprise.forms.admin.Enterprise" title="企业" pojo="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprise">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="isNew() or workflow()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteEnterprise')"/>
+			<action title="完成注册" hide="workflow()" execute="if(confirm('是否确定完成注册？'))FormUtils.doAction('completeRegist')"/>
+			<action title="完成变更" hide="workflow()" execute="if(confirm('是否确定完成变更？'))FormUtils.doAction('completeAlter')"/>
+			<action title="完成注销" hide="workflow()" execute="if(confirm('是否确定完成注销？'))FormUtils.doAction('completeNullify')"/>
+			<action title="企业变更" execute="location.href='alterEnterprise.shtml?alterEnterpriseId={PARAMETER:id}'"/>
+			<action title="企业注销" execute="location.href='nullifyEnterprise.shtml?alterEnterpriseId={PARAMETER:id}'"/>
+		</actions>
+	</form>
+	
+	<form name="admin/enterpriseCert" class="com.yuanluesoft.bidding.enterprise.forms.admin.EnterpriseCert" title="企业资质" pojo="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprise">
+		<formFields>
+			<field name="cert" title="企业资质" type="component">
+				<parameter name="class">com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterpriseCert</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteEnterpriseCert')"/>
+		</actions>
+	</form>
+	
+	<form name="/admin/enterpriseCertSurvey" class="com.yuanluesoft.bidding.enterprise.forms.admin.EnterpriseCertSurvey" title="企业资质年检" pojo="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprise">
+		<formFields>
+			<field name="survey" title="企业资质" type="component">
+				<parameter name="class">com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterpriseCertSurvey</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteEnterpriseCertSurvey')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/jobholder" class="com.yuanluesoft.bidding.enterprise.forms.admin.Jobholder" title="从业人员" pojo="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprise">
+		<formFields>
+			<field name="jobholder" title="从业人员" type="component">
+				<parameter name="class">com.yuanluesoft.bidding.enterprise.pojo.BiddingJobholder</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteJobholder')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/employee" class="com.yuanluesoft.bidding.enterprise.forms.admin.Employee" title="用户" pojo="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprise">
+		<formFields>
+			<field name="employee" title="用户" type="component">
+				<parameter name="class">com.yuanluesoft.bidding.enterprise.pojo.BiddingEmployee</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteEmployee')"/>
+			<action title="写KEY" hide="isRead()" execute="writeKey()"/>
+			<action title="回收KEY" hide="isRead()" execute="reclaim()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/agentLib" class="com.yuanluesoft.bidding.enterprise.forms.admin.AgentLib" title="代理名录库" pojo="com.yuanluesoft.bidding.enterprise.pojo.BiddingAgentLib">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteAgentLib')"/>
+		</actions>
+	</form>
+	
+	<form name="employeeLogin" title="企业用户登录" method="post" action="/jeaf/sso/submitlogin.shtml" js="/jeaf/common/js/common.js,/jeaf/common/js/md5.js,/jeaf/sso/js/login.js,/bidding/enterprise/js/employeeLogin.js">
+		<formFields>
+			<field title="用户名" name="userName"/>
+			<field title="密码" name="password" type="string" inputMode="password"/>
+		</formFields>
+		<actions>
+			<action title="登录" execute="biddingLogin()"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+</forms>

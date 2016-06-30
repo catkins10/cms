@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="project" type="com.yuanluesoft.dpc.keyproject.forms.Project"/>
+  <form-bean name="officialDocument" type="com.yuanluesoft.dpc.keyproject.forms.OfficialDocument"/>
+  <form-bean name="unit" type="com.yuanluesoft.dpc.keyproject.forms.Unit"/>
+  <form-bean name="annualObjective" type="com.yuanluesoft.dpc.keyproject.forms.AnnualObjective"/>
+  <form-bean name="progress" type="com.yuanluesoft.dpc.keyproject.forms.Progress"/>
+  <form-bean name="accountableInvest" type="com.yuanluesoft.dpc.keyproject.forms.AccountableInvest"/>
+  <form-bean name="invest" type="com.yuanluesoft.dpc.keyproject.forms.Invest"/>
+  <form-bean name="investPaid" type="com.yuanluesoft.dpc.keyproject.forms.InvestPaid"/>
+  <form-bean name="investComplete" type="com.yuanluesoft.dpc.keyproject.forms.InvestComplete"/>
+  <form-bean name="problem" type="com.yuanluesoft.dpc.keyproject.forms.Problem"/>
+  <form-bean name="photo" type="com.yuanluesoft.dpc.keyproject.forms.Photo"/>
+  <form-bean name="plan" type="com.yuanluesoft.dpc.keyproject.forms.Plan"/>
+  <form-bean name="parameter" type="com.yuanluesoft.dpc.keyproject.forms.Parameter"/>
+  <form-bean name="investSource" type="com.yuanluesoft.dpc.keyproject.forms.InvestSource"/>
+  <form-bean name="industry" type="com.yuanluesoft.dpc.keyproject.forms.Industry"/>
+  <form-bean name="selectInvestSource" type="com.yuanluesoft.dpc.keyproject.forms.SelectInvestSource"/>
+  <form-bean name="selectIndustry" type="com.yuanluesoft.dpc.keyproject.forms.SelectIndustry"/>
+  <form-bean name="selectArea" type="com.yuanluesoft.dpc.keyproject.forms.SelectArea"/>
+  <form-bean name="fiveYearPlan" type="com.yuanluesoft.dpc.keyproject.forms.FiveYearPlan"/>
+  <form-bean name="developmentAreaCategory" type="com.yuanluesoft.dpc.keyproject.forms.DevelopmentAreaCategory"/>
+  <form-bean name="stageProgress" type="com.yuanluesoft.dpc.keyproject.forms.StageProgress"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="project" path="/project" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.Load" validate="false">
+   <forward name="load" path="/project.jsp"/>
+  </action>
+  <action input="/project.jsp" name="project" path="/saveProject"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.Save" validate="false"/>
+  <action input="/project.jsp" name="project" path="/deleteProject"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.Delete" validate="false"/>
+  <action input="/project.jsp" name="project" path="/runProject"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.Run" validate="false"/>
+  <action input="/project.jsp" name="project" path="/writeOpinion"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.WriteOpinion" validate="false"/>
+  <action input="/project.jsp" name="project" path="/refreshProject"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.Refresh" validate="false"/>
+  <action input="/project.jsp" name="project" path="/setAsKeyProject"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.SetAsKeyProject" validate="false"/>
+  <action name="officialDocument" path="/officialDocument"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.officialdocument.Load" validate="false">
+   <forward name="load" path="/officialDocument.jsp"/>
+  </action>
+  <action input="/officialDocument.jsp" name="officialDocument"
+   path="/saveOfficialDocument" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.officialdocument.Save" validate="false"/>
+  <action input="/officialDocument.jsp" name="officialDocument"
+   path="/deleteOfficialDocument" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.officialdocument.Delete" validate="false"/>
+  <action name="unit" path="/unit" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.unit.Load" validate="false">
+   <forward name="load" path="/unit.jsp"/>
+  </action>
+  <action input="/unit.jsp" name="unit" path="/saveUnit" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.unit.Save" validate="false"/>
+  <action input="/unit.jsp" name="unit" path="/deleteUnit"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.unit.Delete" validate="false"/>
+  <action name="annualObjective" path="/annualObjective" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.annualobjective.Load" validate="false">
+   <forward name="load" path="/annualObjective.jsp"/>
+  </action>
+  <action input="/annualObjective.jsp" name="annualObjective"
+   path="/saveAnnualObjective" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.annualobjective.Save" validate="false"/>
+  <action input="/annualObjective.jsp" name="annualObjective"
+   path="/deleteAnnualObjective" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.annualobjective.Delete" validate="false"/>
+  <action name="progress" path="/progress" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.progress.Load" validate="false">
+   <forward name="load" path="/progress.jsp"/>
+  </action>
+  <action name="accountableInvest" path="/accountableInvest"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.accountableinvest.Load" validate="false">
+   <forward name="load" path="/accountableInvest.jsp"/>
+  </action>
+  <action name="invest" path="/invest" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.invest.Load" validate="false">
+   <forward name="load" path="/invest.jsp"/>
+  </action>
+  <action name="investPaid" path="/investPaid" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.investpaid.Load" validate="false">
+   <forward name="load" path="/investPaid.jsp"/>
+  </action>
+  <action name="investComplete" path="/investComplete" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.investcomplete.Load" validate="false">
+   <forward name="load" path="/investComplete.jsp"/>
+  </action>
+  <action name="problem" path="/problem" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.problem.Load" validate="false">
+   <forward name="load" path="/problem.jsp"/>
+  </action>
+  <action name="photo" path="/photo" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.photo.Load" validate="false">
+   <forward name="load" path="/photo.jsp"/>
+  </action>
+  <action name="plan" path="/plan" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.plan.Load" validate="false">
+   <forward name="load" path="/plan.jsp"/>
+  </action>
+  <action input="/progress.jsp" name="progress" path="/saveProgress"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.progress.Save" validate="false"/>
+  <action input="/progress.jsp" name="progress" path="/deleteProgress"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.progress.Delete" validate="false"/>
+  <action input="/accountableInvest.jsp" name="accountableInvest"
+   path="/saveAccountableInvest" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.accountableinvest.Save" validate="false"/>
+  <action input="/accountableInvest.jsp" name="accountableInvest"
+   path="/deleteAccountableInvest" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.accountableinvest.Delete" validate="false"/>
+  <action input="/invest.jsp" name="invest" path="/saveInvest"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.invest.Save" validate="false"/>
+  <action input="/invest.jsp" name="invest" path="/deleteInvest"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.invest.Delete" validate="false"/>
+  <action input="/investPaid.jsp" name="investPaid"
+   path="/saveInvestPaid" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.investpaid.Save" validate="false"/>
+  <action input="/investPaid.jsp" name="investPaid"
+   path="/deleteInvestPaid" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.investpaid.Delete" validate="false"/>
+  <action input="/investComplete.jsp" name="investComplete"
+   path="/saveInvestComplete" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.investcomplete.Save" validate="false"/>
+  <action input="/investComplete.jsp" name="investComplete"
+   path="/deleteInvestComplete" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.investcomplete.Delete" validate="false"/>
+  <action input="/problem.jsp" name="problem" path="/saveProblem"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.problem.Save" validate="false"/>
+  <action input="/problem.jsp" name="problem" path="/deleteProblem"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.problem.Delete" validate="false"/>
+  <action input="/photo.jsp" name="photo" path="/savePhoto"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.photo.Save" validate="false"/>
+  <action input="/photo.jsp" name="photo" path="/deletePhoto"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.photo.Delete" validate="false"/>
+  <action input="/plan.jsp" name="plan" path="/savePlan" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.plan.Save" validate="false"/>
+  <action input="/plan.jsp" name="plan" path="/deletePlan"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.plan.Delete" validate="false"/>
+  <action name="officialDocument"
+   path="/officialDocumentAttachmentEditor" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.officialdocument.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="photo" path="/photoAttachmentEditor" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.photo.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action input="/project.jsp" name="project" path="/declare"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.Declare" validate="false"/>
+  <action name="parameter" path="/parameter" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.parameter.Load" validate="false">
+   <forward name="load" path="/parameter.jsp"/>
+  </action>
+  <action input="/parameter.jsp" name="parameter" path="/saveParameter"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.parameter.Save" validate="false"/>
+  <action name="industry" path="/industry" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.parameter.industry.Load" validate="false">
+   <forward name="load" path="/industry.jsp"/>
+  </action>
+  <action input="/industry.jsp" name="industry" path="/deleteIndustry"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.parameter.industry.Delete" validate="false"/>
+  <action input="/industry.jsp" name="industry" path="/saveIndustry"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.parameter.industry.Save" validate="false"/>
+  <action name="investSource" path="/investSource" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.parameter.investsource.Load" validate="false">
+   <forward name="load" path="/investSource.jsp"/>
+  </action>
+  <action input="/investSource.jsp" name="investSource"
+   path="/saveInvestSource" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.parameter.investsource.Save" validate="false"/>
+  <action input="/investSource.jsp" name="investSource"
+   path="/deleteInvestSource" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.parameter.investsource.Delete" validate="false"/>
+  <action name="selectIndustry" path="/selectIndustry" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.selectindustry.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="selectInvestSource" path="/selectInvestSource"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.selectinvestsource.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="selectArea" path="/selectArea" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.selectarea.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/listdialog/listDialog.jsp"/>
+  </action>
+  <action input="/parameter.jsp" name="parameter"
+   path="/refreshParameter" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.parameter.Refresh" validate="false"/>
+  <action input="/project.jsp" name="project" path="/approvalDeclare"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.ApprovalDeclare" validate="false"/>
+  <action input="/project.jsp" name="project" path="/approvalDebrief"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.ApprovalDebrief" validate="false"/>
+  <action input="/project.jsp" name="project" path="/submitDebrief"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.SubmitDebrief" validate="false"/>
+  <action name="fiveYearPlan" path="/fiveYearPlan" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.fiveyearplan.Load" validate="false">
+   <forward name="load" path="/fiveYearPlan.jsp"/>
+  </action>
+  <action input="/fiveYearPlan.jsp" name="fiveYearPlan"
+   path="/saveFiveYearPlan" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.fiveyearplan.Save" validate="false"/>
+  <action input="/fiveYearPlan.jsp" name="fiveYearPlan"
+   path="/deleteFiveYearPlan" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.fiveyearplan.Delete" validate="false"/>
+  <action name="developmentAreaCategory" path="/developmentAreaCategory"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.parameter.developmentareacategory.Load" validate="false">
+   <forward name="load" path="/developmentAreaCategory.jsp"/>
+  </action>
+  <action input="/developmentAreaCategory.jsp"
+   name="developmentAreaCategory" path="/saveDevelopmentAreaCategory"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.parameter.developmentareacategory.Save" validate="false"/>
+  <action input="/developmentAreaCategory.jsp"
+   name="developmentAreaCategory" path="/deleteDevelopmentAreaCategory"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.parameter.developmentareacategory.Delete" validate="false"/>
+  <action name="stageProgress" path="/stageProgress" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.stageprogress.Load" validate="false">
+   <forward name="load" path="/stageProgress.jsp"/>
+  </action>
+  <action input="/stageProgress.jsp" name="stageProgress"
+   path="/saveStageProgress" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.stageprogress.Save" validate="false"/>
+  <action input="/stageProgress.jsp" name="stageProgress"
+   path="/deleteStageProgress" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.stageprogress.Delete" validate="false"/>
+  <action name="project" path="/projectPrint" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.actions.project.Print" validate="false">
+   <forward name="load" path="/projectPrint.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--评价体系目录-->
+	<class name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationDirectory" table="chd_evaluation_directory">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryName"/> <!--目录名称,varchar(1000)-->
+		<property name="parentDirectoryId"/> <!--上级目录ID,numeric(20)-->
+		<property name="priority"/> <!--优先级,numeric(7,4)-->
+		<property name="directoryType"/> <!--目录类型,varchar(20)-->
+		<property name="creator"/> <!--创建人,varchar(30)-->
+		<property name="creatorId"/> <!--创建人ID,numeric(20)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="remark"/> <!--备注,"备注"以上从目录管理继承,varchar(200)-->
+		<property name="sourceDirectoryId"/> <!--源目录ID,自动从上级复制的目录，需要加上对应目录的ID,numeric(20)-->
+		<property name="dataWorkflowId"/> <!--资料上传流程ID,varchar(20)-->
+		<property name="dataWorkflowName"/> <!--资料上传流程名称,varchar(100)-->
+		<property name="selfEvalWorkflowId"/> <!--自评流程ID,varchar(20)-->
+		<property name="selfEvalWorkflowName"/> <!--自评流程名称,varchar(100)-->
+		<property name="dataCycle"/> <!--资料提交频率,按周/按月/按年/不定期,char(1)-->
+		<property name="dataCycleEnd"/> <!--资料提交时间点,星期/每月的几日/每年的哪一天,varchar(10)-->
+		<property name="dataUrgency"/> <!--资料提交催办时间点,星期/每月的几日/每年的哪一天,varchar(10)-->
+		<property name="selfEvalCurrentMonth"/> <!--当月自查,char(1)-->
+		<property name="selfEvalEnd"/> <!--自评时间点,每月的几日,varchar(10)-->
+		<property name="selfEvalUrgency"/> <!--自评时间点,每月的几日,varchar(10)-->
+		<set cascade="delete" inverse="true" lazy="true" name="directoryPopedoms" table="chd_eval_directory_popedom" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationDirectoryPopedom" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="subjections" table="chd_eval_directory_subjection" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationDirectorySubjection" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="childSubjections" table="chd_eval_directory_subjection">
+			<key column="parentDirectoryId" />
+			<one-to-many class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationDirectorySubjection" />
+		</set>
+		
+		<!--评价体系目录:公司-->
+		<joined-subclass name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationCompany" table="chd_evaluation_company">
+            <key>
+                <column name="id" />
+            </key>
+            <set cascade="delete" inverse="true" lazy="true" name="levels" table="chd_evaluation_level" order-by="priority DESC, created">
+				<key column="companyId" />
+				<one-to-many class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationLevel" />
+			</set>
+        </joined-subclass>
+	
+		<!--评价体系目录:发电企业类型-->
+		<joined-subclass name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlantType" table="chd_evaluation_plant_type">
+            <key>
+                <column name="id" />
+            </key>
+            <!--主要指标-->
+			<set cascade="delete" inverse="true" lazy="true" name="indicators" table="chd_evaluation_indicator" order-by="priority DESC, created">
+				<key column="plantTypeId" />
+				<one-to-many class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationIndicator" />
+			</set>
+            
+            <!--必备条件-->
+			<set cascade="delete" inverse="true" lazy="true" name="prerequisites" table="chd_evaluation_prerequisites" order-by="priority DESC, created">
+				<key column="plantTypeId" />
+				<one-to-many class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPrerequisites" />
+			</set>
+			
+			<!--机组综合数据表模板-->
+			<set cascade="delete" inverse="true" lazy="true" name="generators" table="chd_evaluation_generator">
+				<key column="plantTypeId" />
+				<one-to-many class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationGenerator" />
+			</set>
+        </joined-subclass>
+		
+		<!--评价体系目录:发电企业-->
+		<joined-subclass name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlant" table="chd_evaluation_plant">
+            <key>
+                <column name="id" />
+            </key>
+    		<property name="orgId"/> <!--组织机构ID,numeric(20)-->
+			<property name="address"/> <!--地址,varchar(200)-->
+			<property name="postalCode"/> <!--邮政编码,varchar(10)-->
+			<property name="installedCapacity"/> <!--全厂总装机容量构成,MW,varchar(1000)-->
+			<property name="constructionDate"/> <!--建厂时间,date-->
+			<property name="type"/> <!--企业类型,水电、火电、风电,varchar(10)-->
+			<property name="maxLevel"/> <!--获得最高星级档次,varchar(30)-->
+			<property name="maxLevelDate"/> <!--获得最高星级时间,date-->
+			<property name="saleProceeds"/> <!--企业年销售收入,万元,numeric(12,4)-->
+			<property name="employeeNumber"/> <!--年末在册职工人数,numeric(8)-->
+			<property name="contactDepartment"/> <!--联系部门,varchar(50)-->
+			<property name="contactPerson"/> <!--联系人,varchar(50)-->
+			<property name="tel"/> <!--电话,varchar(50)-->
+			<property name="mobile"/> <!--手机,varchar(50)-->
+			<!--评价体系目录:发电企业主要荣誉-->
+			<set cascade="delete" inverse="true" lazy="true" name="honors" table="chd_evaluation_plant_honor" order-by="honorYear DESC, honorDate DESC">
+				<key column="plantId" />
+				<one-to-many class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlantHonor" />
+			</set>
+			
+			<!--年度目标-->
+			<set cascade="delete" inverse="true" lazy="true" name="objectives" table="chd_eval_objective" order-by="objectiveYear DESC">
+				<key column="plantId" />
+				<one-to-many class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationObjective" />
+			</set>
+	    </joined-subclass>
+		
+		<!--评价体系目录:评价项目-->
+		<joined-subclass name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationRule" table="chd_evaluation_rule">
+            <key>
+                <column name="id" />
+            </key>
+     		<property name="score"/> <!--标准分,numeric(5)-->
+			<property name="provision"/> <!--评分规定,varchar(2000)-->
+			<property name="isIndicator"/> <!--是否指标评价,char(1)-->
+			<!--评价项目:评价等级对应的分数-->
+			<set cascade="delete" inverse="true" lazy="true" name="scores" table="chd_evaluation_rule_score" order-by="id">
+				<key column="ruleId" />
+				<one-to-many class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationRuleScore" />
+			</set>
+	   	</joined-subclass>
+	   	
+	   	<!--评价体系目录:评价细则-->
+		<joined-subclass name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationDetail" table="chd_evaluation_detail">
+            <key>
+                <column name="id" />
+            </key>
+     		<property name="objective"/> <!--目标要求,varchar(2000)-->
+			<property name="method"/> <!--评价方法,varchar(2000)-->
+			<property name="deduct"/> <!--扣分条款,varchar(2000)-->
+			<!--评价项目:评价要点列表-->
+			<set cascade="delete" inverse="true" lazy="true" name="points" table="chd_evaluation_point" order-by="priority desc, created">
+				<key column="detailId" />
+				<one-to-many class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPoint" />
+			</set>
+	   	</joined-subclass>
+	   
+	   	<!--评价体系目录:发电企业评价项目-->
+		<joined-subclass name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlantRule" table="chd_evaluation_plant_rule">
+            <key>
+                <column name="id" />
+            </key>
+            <property name="isIndicator"/> <!--是否指标评价,char(1)-->
+        </joined-subclass>
+        
+        <!--评价体系目录:发电企业评价细则-->
+		<joined-subclass name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlantDetail" table="chd_evaluation_plant_detail">
+            <key>
+                <column name="id" />
+            </key>
+        </joined-subclass>
+	</class>
+	
+	<!--评价体系目录:目录隶属关系-->
+	<class name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationDirectorySubjection" table="chd_eval_directory_subjection">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID,numeric(20)-->
+		<property name="parentDirectoryId"/> <!--上级目录ID,numeric(20)-->
+	</class>
+	
+	<!--评价体系目录:目录权限-->
+	<class name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationDirectoryPopedom" table="chd_eval_directory_popedom">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID,numeric(20)-->
+		<property name="userId"/> <!--用户ID,用户、部门、角色和网上注册用户,numeric(20)-->
+		<property name="userName"/> <!--用户名,varchar(50)-->
+		<property name="popedomName"/> <!--权限,varchar(50)-->
+		<property name="isInherit"/> <!--是否从上级目录继承,char(1)-->
+	</class>
+	
+	<!--评价体系目录:评价等级-->
+	<class name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationLevel" table="chd_evaluation_level">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="companyId"/> <!--公司ID,numeric(20)-->
+		<property name="level" column="evalLevel"/> <!--等级,varchar(30)-->
+		<property name="description"/> <!--描述,varchar(4000)-->
+		<property name="award"/> <!--奖励,varchar(4000)-->
+		<property name="priority"/> <!--优先级,numeric(7,4)-->
+		<property name="created"/> <!--创建时间,timestamp-->
+		<property name="remark"/> <!--备注,varchar(4000)-->
+	</class>
+	
+	<!--评价细则:评价要点-->
+	<class name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPoint" table="chd_evaluation_point">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="detailId"/> <!--评价细则ID,numeric(20)-->
+		<property name="point"/> <!--评价要点,从查评方法、细则中分解,varchar(2000)-->
+		<property name="priority"/> <!--优先级,numeric(7,4)-->
+		<property name="created"/> <!--创建时间,timestamp-->
+		<property name="sourceRecordId"/> <!--源记录ID,numeric(20)-->
+		<property name="remark"/> <!--备注,varchar(200)-->
+	</class>
+	
+	<!--评价项目:评价等级对应的分数-->
+	<class name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationRuleScore" table="chd_evaluation_rule_score">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="ruleId"/> <!--评价项目ID,numeric(20)-->
+		<property name="levelId"/> <!--评价等级ID,numeric(20)-->
+		<property name="level" column="evalLevel"/> <!--评价等级,一星级、二星级、三星级、四星级、五星级、省一星级...,varchar(20)-->
+		<property name="minScore"/> <!--最低分数,numeric(5)-->
+		<property name="maxScore"/> <!--最高分数,numeric(5)-->
+	</class>
+	
+	<!--评价体系目录:发电企业主要荣誉-->
+	<class name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPlantHonor" table="chd_evaluation_plant_honor">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="plantId"/> <!--发电企业ID,numeric(20)-->
+		<property name="honorYear"/> <!--年度,numeric(4)-->
+		<property name="honor"/> <!--荣誉名称,varchar(100)-->
+		<property name="honorAwarding"/> <!--授予单位,varchar(100)-->
+		<property name="honorDate"/> <!--授予时间,date-->
+	</class>
+	
+	<!--年度目标-->
+	<class name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationObjective" table="chd_eval_objective">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="plantId"/> <!--发电企业ID,numeric(20)-->
+		<property name="objectiveYear"/> <!--年度,numeric(4)-->
+		<property name="objective"/> <!--年度目标,varchar(200)-->
+		<property name="result"/> <!--完成情况,varchar(200)-->
+		<property name="created"/> <!--提交时间,timestamp null-->
+		<property name="creatorId"/> <!--提交人ID,numeric(20)-->
+		<property name="creator"/> <!--提交人姓名,varchar(30)-->
+		<property name="remark"/> <!--备注,varchar(200)-->
+	</class>
+	
+	<!--主要指标-->
+	<class name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationIndicator" table="chd_evaluation_indicator">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="plantTypeId"/> <!--发电企业类型ID,numeric(20)-->
+		<property name="name"/> <!--指标名称,varchar(200)-->
+		<property name="unit"/> <!--单位,varchar(20)-->
+		<property name="priority"/> <!--优先级,numeric(7,4)-->
+		<property name="created"/> <!--创建时间,timestamp-->
+		<property name="sourceRecordId"/> <!--源记录ID,numeric(20)-->
+		<property name="remark"/> <!--备注,varchar(200)-->
+	</class>
+	
+	<!--必备条件-->
+	<class name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPrerequisites" table="chd_evaluation_prerequisites">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="plantTypeId"/> <!--发电企业类型ID,numeric(20)-->
+		<property name="prerequisites"/> <!--条件,varchar(1000)-->
+		<property name="priority"/> <!--优先级,numeric(7,4)-->
+		<property name="created"/> <!--创建时间,timestamp-->
+		<property name="sourceRecordId"/> <!--源记录ID,numeric(20)-->
+		<property name="remark"/> <!--备注,varchar(200)-->
+		<!--必备条件:评价等级对应的结果-->
+		<set cascade="delete" inverse="true" lazy="false" name="scores" table="chd_eval_prerequisites_score" order-by="id">
+			<key column="prerequisitesId" />
+			<one-to-many class="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPrerequisitesScore" />
+		</set>
+	</class>
+	
+	<!--必备条件:评价等级对应的结果-->
+	<class name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationPrerequisitesScore" table="chd_eval_prerequisites_score">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="prerequisitesId"/> <!--必备条件ID,numeric(20)-->
+		<property name="levelId"/> <!--评价等级ID,numeric(20)-->
+		<property name="level" column="evalLevel"/> <!--评价等级,一星级、二星级、三星级、四星级、五星级、省一星级...,varchar(20)-->
+		<property name="score"/> <!--对应的结果,varchar(100)-->
+	</class>
+	
+	<!--机组综合数据表模板-->
+	<class name="com.yuanluesoft.chd.evaluation.pojo.ChdEvaluationGenerator" table="chd_evaluation_generator">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="plantTypeId"/> <!--发电企业类型ID,numeric(20)-->
+		<property name="body"/> <!--机组综合数据,text-->
+		<property name="sourceRecordId"/> <!--源记录ID,numeric(20)-->
+	</class>
+</hibernate-mapping>

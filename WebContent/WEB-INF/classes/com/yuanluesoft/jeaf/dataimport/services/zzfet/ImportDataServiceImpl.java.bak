@@ -1,0 +1,453 @@
+package com.yuanluesoft.cms.importdata.services.zzfet;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.yuanluesoft.cms.importdata.ImportDataService;
+import com.yuanluesoft.cms.sitemanage.service.SiteResourceService;
+import com.yuanluesoft.fet.tradestat.pojo.FetCompany;
+import com.yuanluesoft.fet.tradestat.pojo.FetCounty;
+import com.yuanluesoft.fet.tradestat.pojo.FetDevelopmentArea;
+import com.yuanluesoft.jeaf.base.exception.ServiceException;
+import com.yuanluesoft.jeaf.dao.BaseDAO;
+import com.yuanluesoft.jeaf.util.UUIDLongGenerator;
+
+/**
+ * 
+ * @author yuanluesoft
+ *
+ */
+public class ImportDataServiceImpl implements ImportDataService {
+	private BaseDAO baseDAO;
+	private SiteResourceService siteResourceService;
+	private String dbFileName = "C:/Documents and Settings/yuanluesoft/桌面/统计/zzfet.mdb";
+
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#listColumnsNotInNewCms()
+	 */
+	public List listColumnsNotInNewCms() throws ServiceException {
+		//Create a variable for the connection string.
+		String connectionUrl = "jdbc:sqlserver://218.66.101.145:2433;databaseName=zzfetDB;";
+
+		// Declare the JDBC objects.
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			// Establish the connection.
+			System.out.println("ImportData: connect to 218.66.101.145 ...");
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			con = DriverManager.getConnection(connectionUrl, "jkzzfet", "zzfet.gov.cn@2006");
+			System.out.println("ImportData: connectted.");
+			// Create and execute an SQL statement that returns some data.
+			String sql = "SELECT tbColumnInfo.columnName as columnName FROM tbColumnInfo";
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			List columnsNotInNewCms = new ArrayList();
+			while(rs.next()) {
+				String column = rs.getString("columnName");
+				if(baseDAO.findObjectByHql("select Site.id from Site Site where Site.name='" + column + "'")==null) {
+					columnsNotInNewCms.add(column);
+				}
+			}
+			return columnsNotInNewCms;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+		finally {
+			try { 
+				rs.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try { 
+				stmt.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try {
+				con.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#importData(java.lang.String, boolean)
+	 */
+	public void importArticles(String columnMappings, boolean autoCreateColumn) throws ServiceException {
+		//Create a variable for the connection string.
+		String connectionUrl = "jdbc:sqlserver://218.66.101.145:2433;databaseName=zzfetDB;";
+
+		// Declare the JDBC objects.
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		//String[] mapping = columnMappings.replaceAll(" ", "").split(",");
+		try {
+			// Establish the connection.
+			System.out.println("ImportData: connect to 218.66.101.145 ...");
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			con = DriverManager.getConnection(connectionUrl, "jkzzfet", "zzfet.gov.cn@2006");
+			System.out.println("ImportData: connectted.");
+			// Create and execute an SQL statement that returns some data.
+			String sql = "SELECT tbColumnInfo.columnName as columnName," +
+						 " tbMessageInfo.newsTitle as subject," +
+						 " tbMessageInfo.newsContent as body," +
+						 " tbMessageInfo.UserName as creator," +
+						 " tbMessageInfo.AddTime as issueTime" +
+						 " FROM tbMessageInfo left join tbColumnInfo on tbMessageInfo.columnId=tbColumnInfo.columnId" +
+						 " ORDER BY tbColumnInfo.columnId";
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			// Iterate through the data in the result set and display it.
+			//importData(rs, mapping);
+			rs.close();
+			sql = "SELECT tbColumnInfo.columnName as columnName," +
+				  " tbLHNewsInfo.newsTitle as subject," +
+				  " tbLHNewsInfo.newsContent as body," +
+				  " tbLHNewsInfo.UserName as creator," +
+				  " tbLHNewsInfo.AddTime as issueTime" +
+				  " FROM tbLHNewsInfo left join tbColumnInfo on tbLHNewsInfo.columnId=tbColumnInfo.columnId" +
+				  " ORDER BY tbColumnInfo.columnId";
+			rs = stmt.executeQuery(sql);
+			//importData(rs, mapping);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try { 
+				rs.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try { 
+				stmt.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try {
+				con.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+		}
+	}
+
+	/**
+	 * 从RS导入数据
+	 * @param rs
+	 * @throws ServiceException
+	 *
+	private void importData(ResultSet rs, String[] mapping) throws ServiceException {
+		try {
+			String previousColumn = "";
+			Site site = null;
+			while(rs.next()) {
+				try {
+					String column = rs.getString("columnName");
+					if(column==null) {
+						continue;
+					}
+					if(!previousColumn.equals(column)) {
+						previousColumn = column;
+						//查找对应的栏目
+						site = (Site)baseDAO.findObjectByHql("from Site Site where Site.name='" + column + "'");
+						if(site==null) {
+							//查找栏目映射表,找到匹配的栏目
+							for(int i=0; i<mapping.length; i++) {
+								if(mapping[i].startsWith(column + ">>")) {
+									site = (Site)baseDAO.findObjectByHql("from Site Site where Site.name='" + mapping[i].substring((column + ">>").length()) + "'");
+									break;
+								}
+							}
+						}
+					}
+					String subject = rs.getString("subject");
+					Timestamp issueTime = rs.getTimestamp("issueTime");
+					System.out.println("ImportData: read a article, subject is " + subject + ", column is " + column + ".");
+					if(site==null) {
+						continue;
+					}
+					//检查相同标题和发布时间打记录是否已经存在
+					String hql = "from Article Article" + 
+								 " where Article.subject='" + subject + "'" +
+								 " and Article.issueTime='" + DateTimeUtils.formatTimestamp(issueTime, null) + "'";
+					if(baseDAO.findObjectByHql(hql)!=null) {
+						continue;
+					}
+					Article article = new Article();
+					article.setId(UUIDLongGenerator.generateId()); //ID
+					//设置所在站点
+					SiteResourceSubjection subjection = new SiteResourceSubjection();
+					subjection.setId(UUIDLongGenerator.generateId());
+					subjection.setResourceId(article.getId());
+					subjection.setSiteId(site.getId());
+					baseDAO.saveObject(subjection);
+					//主题
+					article.setSubject(subject);
+					article.setAuthor(rs.getString("creator"));
+					article.setIssueTime(issueTime);
+					article.setCreated(issueTime);
+					article.setIssue('1');
+					article.setBody(rs.getString("body"));
+					baseDAO.saveObject(article); //保存
+					System.out.println("ImportData: importted.");
+				}
+				catch(Exception e) {
+					Logger.exception(e);
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#importStatData()
+	 */
+	public void importStatData() throws ServiceException {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+			con = DriverManager.getConnection("jdbc:odbc:Driver={MicroSoft Access Driver (*.mdb)};DBQ=" + dbFileName, "dba", "sql"); 
+			stmt = con.createStatement();
+			
+			//导入区县信息
+			rs = stmt.executeQuery("select tbCountyInfo.*, tbCountyFietInfo.UserName as UserName, tbCountyFietInfo.UserPWD as UserPWD from tbCountyInfo left join tbCountyFietInfo on tbCountyInfo.CountyID=tbCountyFietInfo.CountyID where tbCountyFietInfo.CType='1'");
+			importCounty(rs);
+			rs.close();
+			
+			//导入开发区信息
+			rs = stmt.executeQuery("select * from tbCountyFietInfo where not CCode is null");
+			importDevelopmentArea(rs);
+			rs.close();
+			
+			//导入企业信息
+			rs = stmt.executeQuery("select tbCompanyInfo.*, tbUserInfo.UserPWD as UserPWD from tbCompanyInfo left join tbUserInfo on tbCompanyInfo.CompanyID=tbUserInfo.CompanyID where tbUserInfo.levels=6");
+			importCompany(rs);
+			rs.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try { 
+				rs.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try { 
+				stmt.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try {
+				con.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+		}
+	}
+	
+	/**
+	 * 导入区县信息
+	 * @param rs
+	 * @throws Exception
+	 */
+	private void importCounty(ResultSet rs) throws Exception {
+		baseDAO.deleteObjectsByHql("from FetCounty FetCounty");
+		while(rs.next()) {
+			FetCounty county = new FetCounty();
+			//county.setId(UUIDLongGenerator.generateId());
+			county.setId(rs.getLong("CountyID"));
+			county.setCode(rs.getString("CCode"));
+			county.setLoginName(rs.getString("UserName"));
+			county.setName(rs.getString("CountyName"));
+			county.setPassword(rs.getString("UserPWD"));
+			System.out.println("***********county:" + county.getId() + "," + county.getCode() + "," + county.getName());
+			baseDAO.saveObject(county);
+		}
+	}
+	
+	/**
+	 * 导入开发区信息
+	 * @param rs
+	 * @throws Exception
+	 */
+	private void importDevelopmentArea(ResultSet rs) throws Exception {
+		baseDAO.deleteObjectsByHql("from FetDevelopmentArea FetDevelopmentArea");
+		while(rs.next()) {
+			FetDevelopmentArea area = new FetDevelopmentArea();
+			//area.setId(UUIDLongGenerator.generateId());
+			area.setId(rs.getLong("CountyFietID"));
+			area.setCode(rs.getString("CCode"));
+			area.setLoginName(rs.getString("UserName"));
+			area.setName(rs.getString("CountyFietName"));
+			area.setPassword(rs.getString("UserPWD"));
+			area.setWebSite(rs.getString("WebAddr"));
+			baseDAO.saveObject(area);
+		}
+	}
+	
+	/**
+	 * 导入企业信息
+	 * @param rs
+	 * @throws Exception
+	 */
+	private void importCompany(ResultSet rs) throws Exception {
+		baseDAO.deleteObjectsByHql("from FetCompany FetCompany");
+		while(rs.next()) {
+			FetCompany company = new FetCompany();
+			company.setId(UUIDLongGenerator.generateId());
+			company.setCode(rs.getString("CompanyCode"));
+			company.setLoginName("zz" + company.getCode());
+			company.setPassword(rs.getString("UserPWD"));
+			company.setName(rs.getString("CompanyCnName"));
+			company.setEnglishName(rs.getString("CompanyEnName"));
+			company.setCountyId(rs.getLong("CountyID"));
+			company.setCounty((String)baseDAO.findObjectByHql("select FetCounty.name from FetCounty FetCounty where FetCounty.id=" + company.getCountyId()));
+			company.setDevelopmentAreaId(rs.getLong("CountyFietID"));
+			company.setDevelopmentArea((String)baseDAO.findObjectByHql("select FetDevelopmentArea.name from FetDevelopmentArea FetDevelopmentArea where FetDevelopmentArea.id=" + company.getDevelopmentAreaId()));
+			company.setAddress(rs.getString("CompanyCnAddr"));
+			company.setEnglishAddress(rs.getString("CompanyEnAddr"));
+			String type = rs.getString("CompanyType");
+			if(type!=null) {
+				type = type.trim();
+				if(type.equals("1")) {
+					company.setBusinessType("制造商");
+				}
+				else if(type.equals("2")) {
+					company.setBusinessType("经销(贸易)商");
+				}
+				else {
+					company.setBusinessType("制造商、经销(贸易)商");
+				}
+			}
+			company.setHasPrivilege("1".equals(rs.getString("CompanyPower")) ? '1' : '0');
+			company.setCreated(rs.getDate("BuildDate"));
+			company.setEmployeeCount(rs.getInt("Persons"));
+			company.setRegisteredCapital(rs.getInt("RegisterFund"));
+			company.setTotalLastYear(rs.getInt("IaELast"));
+			company.setPrincipalName(rs.getString("LinkManCn"));
+			company.setPrincipalEnglishName(rs.getString("LinkManEn"));
+			company.setJob(rs.getString("DutyCn"));
+			company.setEnglishJob(rs.getString("DutyEn"));
+			company.setTel(rs.getString("Telephone"));
+			company.setPostalCode(rs.getString("PostCode"));
+			company.setFax(rs.getString("Fax"));
+			company.setEmail(rs.getString("Email"));
+			company.setWebSite(rs.getString("WebAddr"));
+			company.setForeignOfficeName(rs.getString("OverSeaOfficeCn"));
+			company.setForeignOfficeEnglishName(rs.getString("OverSeaOfficeEn"));
+			company.setForeignOfficeCityName(rs.getString("CityCn"));
+			company.setForeignOfficeCityEnglishName(rs.getString("CityEn"));
+			company.setMotherCompanyName(rs.getString("ParentCn"));
+			company.setMotherCompanyName(rs.getString("ParentEn"));
+			type = rs.getString("TypesId");
+			if(type!=null) {
+				type = type.trim();
+				if(type.equals("2")) {
+					company.setType("三资");
+				}
+				else {
+					company.setType("国有及民营");
+				}
+			}
+			baseDAO.saveObject(company);
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#importPublicInfos(java.lang.String, boolean)
+	 */
+	public void importPublicInfos(String directoryMappings, boolean autoCreateDirectory) throws ServiceException {
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#listPublicInfoDirectoriesNotInNewCms()
+	 */
+	public List listPublicInfoDirectoriesNotInNewCms() throws ServiceException {
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#importOtherData()
+	 */
+	public void importOtherData() throws ServiceException {
+		
+	}
+
+	/**
+	 * @return the baseDAO
+	 */
+	public BaseDAO getBaseDAO() {
+		return baseDAO;
+	}
+
+	/**
+	 * @param baseDAO the baseDAO to set
+	 */
+	public void setBaseDAO(BaseDAO baseDAO) {
+		this.baseDAO = baseDAO;
+	}
+
+	/**
+	 * @return the siteResourceService
+	 */
+	public SiteResourceService getSiteResourceService() {
+		return siteResourceService;
+	}
+
+	/**
+	 * @param siteResourceService the siteResourceService to set
+	 */
+	public void setSiteResourceService(SiteResourceService siteResourceService) {
+		this.siteResourceService = siteResourceService;
+	}
+	
+	public static void main(String[] args) {
+		try {
+			new ImportDataServiceImpl().importStatData();
+		} 
+		catch (ServiceException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @return the dbFileName
+	 */
+	public String getDbFileName() {
+		return dbFileName;
+	}
+
+	/**
+	 * @param dbFileName the dbFileName to set
+	 */
+	public void setDbFileName(String dbFileName) {
+		this.dbFileName = dbFileName;
+	}
+}

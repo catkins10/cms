@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--项目-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProject" table="keyproject_project">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--项目全称（子项目）,重点项目全称（又称为子项目）,varchar(200)-->
+		<property name="parentName"/> <!--父项目名称,项目可分父项目和子项目，子项目指具体的项目成，父项目只是项目分类，没有明细的信息。,varchar(200)-->
+		<property name="summary"/> <!--项目简介,概要描述项目的地点、规模、内容、总体安排、投资资金等信息。,varchar(4000)-->
+		<property name="level"/> <!--分级管理（项目级别）,省级重点、市级重点、县级重点,varchar(20)-->
+		<property name="industry"/> <!--所属行业,包括交通、能源、农林业、工业园区、工业、社会事业、城建环保、旅游业、商贸服务业,varchar(20)-->
+		<property name="childIndustry"/> <!--所属子行业,高速公路、铁路、热电、水利、石油化工、高新技术产业、电子信息技术、机械、传统产业等,varchar(20)-->
+		<property name="status"/> <!--项目状态,前期、在建、竣工、其他,varchar(20)-->
+		<property name="classify"/> <!--项目类别,储备、在建和续建,varchar(20)-->
+		<property name="category"/> <!--项目分类,考核类、跟踪服务类,varchar(40)-->
+		<property name="leader"/> <!--项目挂点领导,对本项目关注的领导以及挂点领导名单,varchar(60)-->
+		<property name="otherLeader"/> <!--其他项目挂点领导,varchar(60)-->
+		<property name="developmentArea"/> <!--所属开发区,varchar(60)-->
+		<property name="address"/> <!--建设地点,varchar(200)-->
+		<property name="investmentSubject"/> <!--投资主体,包括国有、国有控股与外资合股、国有控股与民营合股、民营、民营控股与国有合资、外资独资、外资控股与国有合资、外资控股与民营合资、其他,varchar(50)-->
+		<property name="managementUnit"/> <!--项目管理或责任部门,市经贸委、建设局、交通局、教育局、卫生局、水利局、商贸办、延平区、武夷山市、邵武市、建瓯市、建阳市、顺昌县、浦城县、光泽县、松溪县、政和县,varchar(20)-->
+		<property name="managementUnitResponsible"/> <!--管理部门责任人,varchar(50)-->
+		<property name="managementUnitLinkman"/> <!--管理部门联络人,varchar(50)-->
+		<property name="managementUnitTel"/> <!--管理部门电话,varchar(80)-->
+		<property name="unit"/> <!--法人机构或者筹建单位,项目建设法人机构或者负责筹建的单位名称,varchar(200)-->
+		<property name="lawPerson"/> <!--法人代表或者负责人,varchar(50)-->
+		<property name="linkman"/> <!--联系人,varchar(50)-->
+		<property name="unitTel"/> <!--单位电话,varchar(80)-->
+		<property name="unitFax"/> <!--单位传真,varchar(80)-->
+		<property name="unitAddress"/> <!--单位地址,varchar(200)-->
+		<property name="unitPostcode"/> <!--邮政编码,varchar(20)-->
+		<property name="constructionType"/> <!--建设性质,新建、扩建,varchar(20)-->
+		<property name="constructionBeginYear"/> <!--建设开始年限,numeric(4)-->
+		<property name="constructionEndYear"/> <!--建设结束年限,numeric(4)-->
+		<property name="estimateBeginDate"/> <!--预计开工时间,date-->
+		<property name="estimateEndDate"/> <!--预计竣工时间,date-->
+		<property name="beginDate"/> <!--开工时间,date-->
+		<property name="endDate"/> <!--竣工时间,date-->
+		<property name="accountableInvest"/> <!--项目总投资（责任制）,项目总投资=项目总投资资金（责任制）拼盘中投资列表的总和,numeric(15,4)-->
+		<property name="invest"/> <!--项目总投资,项目总投资=项目总投资资金拼盘中投资列表的总和,numeric(15,4)-->
+		<property name="investmentRemark"/> <!--总投资不一致备注,详细说明总投资不一致的原因,varchar(4000)-->
+		<property name="constructionScale"/> <!--建设规模及主要建设内容,varchar(4000)-->
+		<property name="constructionEffect"/> <!--建成投产后增生生产能力,项目建设投产的成果和产能,varchar(4000)-->
+		<property name="plan"/> <!--总体安排以及各年计划,varchar(4000)-->
+		<property name="created"/> <!--登记时间,timestamp null-->
+		<property name="creatorId"/> <!--登记人ID,bigint unsigned-->
+		<property name="creator"/> <!--登记人,varchar(100)-->
+		<property name="fiveYearPlan"/> <!--是否五年计划项目,char(1)-->
+		<property name="investPlan150"/> <!--150天力争完成投资,numeric(15,4)-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID,varchar(30)-->
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem"/>
+		</set>
+		<set name="opinions" table="keyproject_project_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId"/>
+			<one-to-many class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectOpinion"/>
+		</set>
+		<set name="visitors" table="keyproject_project_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectPrivilege"/>
+		</set>
+		<set name="areas" table="keyproject_area" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="projectId"/>
+			<one-to-many class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectArea"/>
+		</set>
+		<set name="declares" table="keyproject_declare" lazy="true" inverse="true" cascade="delete" order-by="declareYear DESC, id DESC">
+			<key column="projectId"/>
+			<one-to-many class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectDeclare"/>
+		</set>
+		<set name="accountableInvests" table="keyproject_accountable_invest" lazy="true" inverse="true" cascade="delete" order-by="source">
+			<key column="projectId"/>
+			<one-to-many class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectAccountableInvest"/>
+		</set>
+		<set name="annualObjectives" table="keyproject_annual_objective" lazy="true" inverse="true" cascade="delete" order-by="objectiveYear">
+			<key column="projectId"/>
+			<one-to-many class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectAnnualObjective"/>
+		</set>
+		<set name="invests" table="keyproject_invest" lazy="true" inverse="true" cascade="delete" order-by="source">
+			<key column="projectId"/>
+			<one-to-many class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvest"/>
+		</set>
+		<set name="investPaids" table="keyproject_invest_paid" lazy="true" inverse="true" cascade="delete" order-by="paidYear,paidMonth">
+			<key column="projectId"/>
+			<one-to-many class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvestPaid"/>
+		</set>
+		<set name="investCompletes" table="keyproject_invest_complete" lazy="true" inverse="true" cascade="delete" order-by="completeYear,completeMonth,completeTenDay">
+			<key column="projectId"/>
+			<one-to-many class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvestComplete"/>
+		</set>
+		<set name="units" table="keyproject_unit" lazy="true" inverse="true" cascade="delete" order-by="type">
+			<key column="projectId"/>
+			<one-to-many class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectUnit"/>
+		</set>
+		<set name="plans" table="keyproject_plan" lazy="true" inverse="true" cascade="delete" order-by="planYear,planMonth">
+			<key column="projectId"/>
+			<one-to-many class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectPlan"/>
+		</set>
+		<set name="progresses" table="keyproject_progress" lazy="true" inverse="true" cascade="delete" order-by="progressYear desc, progressMonth desc,progressTenDay desc">
+			<key column="projectId"/>
+			<one-to-many class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectProgress"/>
+		</set>
+		<set name="stageProgresses" table="keyproject_stage_progress" lazy="true" inverse="true" cascade="delete" order-by="timeLimit">
+			<key column="projectId"/>
+			<one-to-many class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectStageProgress"/>
+		</set>
+		<set name="problems" table="keyproject_problem" lazy="true" inverse="true" cascade="delete" order-by="problemYear desc, problemMonth desc, id desc">
+			<key column="projectId"/>
+			<one-to-many class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectProblem"/>
+		</set>
+		<set name="photos" table="keyproject_photo" lazy="true" inverse="true" cascade="delete" order-by="photoYear desc, photoMonth desc">
+			<key column="projectId"/>
+			<one-to-many class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectPhoto"/>
+		</set>
+		<set name="officialDocuments" table="keyproject_official_documents" lazy="true" inverse="true" cascade="delete" order-by="approvalDate">
+			<key column="projectId"/>
+			<one-to-many class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectOfficialDocuments"/>
+		</set>
+		<set name="fiveYearPlans" table="keyproject_five_year_plan" lazy="true" inverse="true" cascade="delete" order-by="fiveYearPlanNumber">
+			<key column="projectId"/>
+			<one-to-many class="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectFiveYearPlan"/>
+		</set>
+	</class>
+	
+	<!--项目:权限控制-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectPrivilege" table="keyproject_project_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--项目:审核意见-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectOpinion" table="keyproject_project_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="created"/> <!--填写时间-->
+	</class>
+	
+	<!--项目:所属区域-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectArea" table="keyproject_area">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="area"/> <!--所属区域-->
+	</class>
+	
+	<!--项目:重点项目申报-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectDeclare" table="keyproject_declare">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="declareYear"/> <!--申报年度-->
+		<property name="declareTime"/> <!--申报时间-->
+		<property name="isKeyProject"/> <!--是否列入重点项目-->
+		<property name="approvalTime"/> <!--批准日期-->
+		<property name="priority"/> <!--优先级-->
+		<many-to-one name="project" class="com.yuanluesoft.dpc.keyproject.pojo.KeyProject" column="projectId" update="false" insert="false"/>
+	</class>
+	
+	<!--项目总投资资金（责任制）-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectAccountableInvest" table="keyproject_accountable_invest">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="needApproval"/> <!--是否需要审核-->
+		<property name="approverId"/> <!--审核人ID-->
+		<property name="approvalTime"/> <!--审核时间-->
+		<property name="source"/> <!--资金来源-->
+		<property name="childSource"/> <!--资金子来源-->
+		<property name="amount"/> <!--资金金额-->
+		<property name="remark"/> <!--来源说明-->
+	</class>
+	
+	<!--项目总投资资金-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvest" table="keyproject_invest">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="needApproval"/> <!--是否需要审核-->
+		<property name="approverId"/> <!--审核人ID-->
+		<property name="approvalTime"/> <!--审核时间-->
+		<property name="source"/> <!--资金来源-->
+		<property name="childSource"/> <!--资金子来源-->
+		<property name="amount"/> <!--资金金额-->
+		<property name="remark"/> <!--来源说明-->
+	</class>
+	
+	<!--项目资金到位情况-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvestPaid" table="keyproject_invest_paid">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="needApproval"/> <!--是否需要审核-->
+		<property name="approverId"/> <!--审核人ID-->
+		<property name="approvalTime"/> <!--审核时间-->
+		<property name="paidYear"/> <!--年份-->
+		<property name="paidMonth"/> <!--月份-->
+		<property name="paidInvest"/> <!--当月到位资金金额-->
+		<property name="yearInvest"/> <!--年初至报告期累计到位资金（万元）-->
+		<property name="percentage"/> <!--占年计划（%）-->
+		<property name="source"/> <!--资金来源-->
+		<property name="childSource"/> <!--资金子来源-->
+		<property name="remark"/> <!--来源说明-->
+	</class>
+	
+	<!--项目投资完成情况-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvestComplete" table="keyproject_invest_complete">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="needApproval"/> <!--是否需要审核-->
+		<property name="approverId"/> <!--审核人ID-->
+		<property name="approvalTime"/> <!--审核时间-->
+		<property name="completeYear"/> <!--年份-->
+		<property name="completeMonth"/> <!--月份-->
+		<property name="completeTenDay"/> <!--旬,上旬/1、中旬/2、下旬/3,char(1)-->
+		<property name="investPlan"/> <!--计划完成投资（万元）-->
+		<property name="completed"/> <!--是否已提交完成情况-->
+		<property name="completeInvest"/> <!--当月完成投资（万元）-->
+		<property name="yearInvest"/> <!--年初至报告期累计完成投资（万元）-->
+		<property name="percentage"/> <!--占年计划（%）-->
+		<property name="totalComplete"/> <!--开工至报告期累计完成投资（万元）-->
+		<property name="completePercentage"/> <!--占总投资（%）-->
+	</class>
+	
+	<!--参建单位-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectUnit" table="keyproject_unit">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="needApproval"/> <!--是否需要审核-->
+		<property name="approverId"/> <!--审核人ID-->
+		<property name="approvalTime"/> <!--审核时间-->
+		<property name="type"/> <!--单位类型-->
+		<property name="name"/> <!--参建单位名称-->
+		<property name="qualificationLevel"/> <!--资质等级-->
+		<property name="partName"/> <!--承担合同段名称-->
+		<property name="contractAmount"/> <!--合同金额（万元）-->
+		<property name="contractBegin"/> <!--合同开始时间-->
+		<property name="contractEnd"/> <!--合同结束时间-->
+		<property name="projectManager"/> <!--项目经理（总监/设总）-->
+		<property name="tel"/> <!--联系电话-->
+		<property name="unitTel"/> <!--单位总部电话-->
+		<property name="unitPostcode"/> <!--参建单位总部邮编-->
+		<property name="unitAddress"/> <!--参建单位总部地址-->
+		<property name="workingPostcode"/> <!--参建单位现场邮编-->
+		<property name="workingAddress"/> <!--参建单位现场地址-->
+		<property name="reporter"/> <!--填报人-->
+		<property name="reportDate"/> <!--填报时间-->
+	</class>
+	
+	<!--工作安排-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectPlan" table="keyproject_plan">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="needApproval"/> <!--是否需要审核-->
+		<property name="approverId"/> <!--审核人ID-->
+		<property name="approvalTime"/> <!--审核时间-->
+		<property name="planYear"/> <!--年份-->
+		<property name="planMonth"/> <!--月份-->
+		<property name="enterUnit"/> <!--项目参建单位新进场-->
+		<property name="plan"/> <!--工作安排及需要调解决的意见-->
+	</class>
+	
+	<!--年度目标-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectAnnualObjective" table="keyproject_annual_objective">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="needApproval"/> <!--是否需要审核-->
+		<property name="approverId"/> <!--审核人ID-->
+		<property name="approvalTime"/> <!--审核时间-->
+		<property name="objectiveYear"/> <!--年度-->
+		<property name="objective"/> <!--目标-->
+		<property name="investPlan"/> <!--计划完成投资-->
+		<property name="investCompleted"/> <!--已完成投资,程序自动计算-->
+	</class>
+	
+	<!--进度-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectProgress" table="keyproject_progress">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="needApproval"/> <!--是否需要审核-->
+		<property name="approverId"/> <!--审核人ID-->
+		<property name="approvalTime"/> <!--审核时间-->
+		<property name="progressYear"/> <!--年份-->
+		<property name="progressMonth"/> <!--月份-->
+		<property name="progressTenDay"/> <!--旬,上旬/1、中旬/2、下旬/3,char(1)-->
+		<property name="plan"/> <!--安排-->
+		<property name="completed"/> <!--是否已汇报项目进度-->
+		<property name="progress"/> <!--进度-->
+	</class>
+	
+	<!--关键节点进度-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectStageProgress" table="keyproject_stage_progress">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID,bigint unsigned-->
+		<property name="needApproval"/> <!--是否需要审核,char(1)-->
+		<property name="approverId"/> <!--审核人ID,bigint unsigned-->
+		<property name="approvalTime"/> <!--审核时间,timestamp-->
+		<property name="stage"/> <!--节点名称,varchar(300)-->
+		<property name="timeLimit"/> <!--完成时限,date null-->
+		<property name="responsibleUnit"/> <!--责任单位,varchar(300)-->
+		<property name="responsiblePerson"/> <!--责任人,varchar(100)-->
+		<property name="plan"/> <!--安排,varchar(4000)-->
+		<property name="completed"/> <!--是否已提交完成情况,char(1)-->
+		<property name="progress"/> <!--完成进度,varchar(4000)-->
+	</class>
+	
+	<!--问题反映及措施建议-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectProblem" table="keyproject_problem">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="needApproval"/> <!--是否需要审核-->
+		<property name="approverId"/> <!--审核人ID-->
+		<property name="approvalTime"/> <!--审核时间-->
+		<property name="problemYear"/> <!--年份-->
+		<property name="problemMonth"/> <!--月份-->
+		<property name="problem"/> <!--问题描述-->
+		<property name="responsible"/> <!--责任单位或责任人-->
+		<property name="timeLimit"/> <!--解决时限-->
+		<property name="completed"/> <!--是否已提交解决情况	-->
+		<property name="result"/> <!--解决情况-->
+	</class>
+	
+	<!--项目进展实景-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectPhoto" table="keyproject_photo">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="needApproval"/> <!--是否需要审核-->
+		<property name="approverId"/> <!--审核人ID-->
+		<property name="approvalTime"/> <!--审核时间-->
+		<property name="photoYear"/> <!--年份-->
+		<property name="photoMonth"/> <!--月份-->
+		<property name="photoSubject"/> <!--图片标题-->
+		<property name="shotTime"/> <!--拍摄时间-->
+	</class>
+	
+	<!--项目审批文件-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectOfficialDocuments" table="keyproject_official_documents">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID-->
+		<property name="needApproval"/> <!--是否需要审核-->
+		<property name="approverId"/> <!--审核人ID-->
+		<property name="approvalTime"/> <!--审核时间-->
+		<property name="approvalDocuments"/> <!--报批文件-->
+		<property name="documentNumber"/> <!--批准文号-->
+		<property name="subject"/> <!--标题-->
+		<property name="body"/> <!--文件正文-->
+		<property name="approvalDate"/> <!--批准日期-->
+	</class>
+	
+	<!--项目:五年计划项目-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectFiveYearPlan" table="keyproject_five_year_plan">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--项目ID,bigint unsigned-->
+		<property name="needApproval"/> <!--是否需要审核,char(1)-->
+		<property name="approverId"/> <!--审核人ID,bigint unsigned-->
+		<property name="approvalTime"/> <!--审核时间,timestamp-->
+		<property name="fiveYearPlanNumber"/> <!--第几个五年计划项目,numeric(3)-->
+		<property name="previousFiveYearInvest"/> <!--上个五年计划完成投资,numeric(15,4)-->
+		<property name="currentFiveYearInvest"/> <!--当前五年计划规划投资,numeric(15,4)-->
+		<property name="currentFiveYearObjective"/> <!--当前五年计划工作目标,varchar(4000)-->
+	</class>
+	
+	<!--重点项目:参数配置-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectParameter" table="keyproject_parameter">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectStatus"/> <!--项目状态-->
+		<property name="projectLevel"/> <!--项目级别-->
+		<property name="projectClassify"/> <!--项目类别-->
+		<property name="area"/> <!--所属区域-->
+		<property name="projectCategory"/> <!--项目分类-->
+		<property name="investmentSubject"/> <!--投资主体-->
+		<property name="managementUnit"/> <!--项目管理部门-->
+		<property name="constructionType"/> <!--建设单位性质-->
+		<property name="developmentArea" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--开发区列表,mediumtext-->
+	</class>
+	
+	<!--开发区分类-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectDevelopmentAreaCategory" table="keyproject_dev_area_category">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="category"/> <!--分类名称,varchar(50)-->
+		<property name="developmentAreas" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--开发区列表,mediumtext-->
+	</class>
+	
+	<!--重点项目:行业配置-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectIndustry" table="keyproject_industry">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="industry"/> <!--行业-->
+		<property name="childIndustry"/> <!--子行业列表-->
+		<property name="priority"/> <!--优先级-->
+	</class>
+	
+	<!--重点项目:资金来源-->
+	<class name="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvestSource" table="keyproject_invest_source">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="source"/> <!--来源-->
+		<property name="childSource"/> <!--子来源-->
+		<property name="priority"/> <!--优先级-->
+	</class>
+</hibernate-mapping>

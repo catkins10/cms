@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="当前位置" class="com.yuanluesoft.jeaf.gps.pojo.GpsLocation">
+		<field name="recordId" title="主记录ID" type="number" inputMode="hidden"/>
+		<field name="placeName" title="位置" length="200" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(500, 300, false, 'gpsLocation.placeName{name}', '', 'area')</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="GPS定位" class="com.yuanluesoft.jeaf.gps.model.Location">
+		<field name="coordinate" title="坐标" type="component">
+			<parameter name="class">com.yuanluesoft.jeaf.gps.model.Coordinate</parameter>
+		</field>
+		<field name="speed" title="行驶速度" type="string" inputMode="text"/>
+		<field name="angle" title="行驶方向角度" type="string" inputMode="text"/>
+		<field name="altitude" title="海拔高度" type="number" inputMode="text"/>
+		<field name="placeName" title="地名" type="string" inputMode="text"/>
+		<field name="created" title="查询定位的时间" type="timestamp" inputMode="datetime"/>
+	</businessObject>
+	
+	<businessObject title="坐标" class="com.yuanluesoft.jeaf.gps.model.Coordinate">
+		<field name="latitude" title="纬度" type="number" inputMode="text"/>
+		<field name="longitude" title="经度" type="number" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="地理位置" class="com.yuanluesoft.jeaf.gps.model.Geo">
+		<field name="longitude" title="经度坐标 " type="string" inputMode="text"/>
+		<field name="latitude" title="维度坐标 " type="string" inputMode="text"/>
+		<field name="city" title="所在城市 " type="string" inputMode="text"/>
+		<field name="province" title="所在省份  " type="string" inputMode="text"/>
+		<field name="address" title="所在的实际地址  " type="string" inputMode="text"/>
+		<field name="more" title="更多信息 " type="string" inputMode="text"/>
+	</businessObject>
+</businessObjects>

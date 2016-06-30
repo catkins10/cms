@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="importData" type="com.yuanluesoft.land.declare.forms.ExcelImport"/>
+  <form-bean name="adminMiningRights" type="com.yuanluesoft.land.declare.forms.MiningRights"/>
+  <!-- 采矿权 -->
+  <form-bean name="adminExplorationRights" type="com.yuanluesoft.land.declare.forms.ExplorationRights"/>
+  <!-- 探矿权 -->
+  <form-bean name="adminDisastersUnit" type="com.yuanluesoft.land.declare.forms.DisastersUnit"/>
+  <!-- 地质灾害单位资质 -->
+  <form-bean name="adminInvestigateUnit" type="com.yuanluesoft.land.declare.forms.InvestigateUnit"/>
+  <!-- 地质勘察单位资质 -->
+  <form-bean name="adminGeopark" type="com.yuanluesoft.land.declare.forms.Geopark"/>
+  <!-- 地质公园 -->
+  <form-bean name="adminLandRegister" type="com.yuanluesoft.land.declare.forms.LandRegister"/>
+  <form-bean name="applicationView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/>
+  <!-- 土地登记 -->
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <!-- 采矿权 -->
+  <action name="adminMiningRights" path="/admin/miningRights"
+   scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.miningrights.Load" validate="false">
+   <forward name="load" path="/admin/miningrights/miningRights.jsp"/>
+  </action>
+  <action input="/admin/miningrights/miningRights.jsp"
+   name="adminMiningRights" path="/admin/saveMiningRights"
+   scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.miningrights.Save" validate="false"/>
+  <action input="/admin/miningrights/miningRights.jsp"
+   name="adminMiningRights" path="/admin/deleteMiningRights"
+   scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.miningrights.Delete" validate="false"/>
+  <!-- 探矿权 -->
+  <action name="adminExplorationRights" path="/admin/explorationRights"
+   scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.explorationrights.Load" validate="false">
+   <forward name="load" path="/admin/explorationrights/explorationRights.jsp"/>
+  </action>
+  <action input="/admin/explorationrights/explorationRights.jsp"
+   name="adminExplorationRights" path="/admin/saveExplorationRights"
+   scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.explorationrights.Save" validate="false"/>
+  <action input="/admin/explorationrights/explorationRights.jsp"
+   name="adminExplorationRights" path="/admin/deleteExplorationRights"
+   scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.explorationrights.Delete" validate="false"/>
+  <!-- 地址灾害单位资质 -->
+  <action name="adminDisastersUnit" path="/admin/disastersUnit"
+   scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.disastersunit.Load" validate="false">
+   <forward name="load" path="/admin/disastersunit/disastersUnit.jsp"/>
+  </action>
+  <action input="/admin/disastersunit/disastersUnit.jsp"
+   name="adminDisastersUnit" path="/admin/saveDisastersUnit"
+   scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.disastersunit.Save" validate="false"/>
+  <action input="/admin/disastersunit/disastersUnit.jsp"
+   name="adminDisastersUnit" path="/admin/deleteDisastersUnit"
+   scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.disastersunit.Delete" validate="false"/>
+  <!-- 地址勘察单位资质 -->
+  <action name="adminInvestigateUnit" path="/admin/investigateUnit"
+   scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.investigateunit.Load" validate="false">
+   <forward name="load" path="/admin/investigateunit/investigateUnit.jsp"/>
+  </action>
+  <action input="/admin/investigateunit/investigateUnit.jsp"
+   name="adminInvestigateUnit" path="/admin/saveInvestigateUnit"
+   scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.investigateunit.Save" validate="false"/>
+  <action input="/admin/investigateunit/investigateUnit.jsp"
+   name="adminInvestigateUnit" path="/admin/deleteInvestigateUnit"
+   scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.investigateunit.Delete" validate="false"/>
+  <!-- 地质公园 -->
+  <action name="adminGeopark" path="/admin/geopark" scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.geopark.Load" validate="false">
+   <forward name="load" path="/admin/geopark/geopark.jsp"/>
+  </action>
+  <action input="/admin/geopark/geopark.jsp" name="adminGeopark"
+   path="/admin/saveGeopark" scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.geopark.Save" validate="false"/>
+  <action input="/admin/geopark/geopark.jsp" name="adminGeopark"
+   path="/admin/deleteGeopark" scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.geopark.Delete" validate="false"/>
+  <!-- 土地登记 -->
+  <action name="adminLandRegister" path="/admin/landRegister"
+   scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.landregister.Load" validate="false">
+   <forward name="load" path="/admin/landregister/landRegister.jsp"/>
+  </action>
+  <action input="/admin/landregister/landRegister.jsp"
+   name="adminLandRegister" path="/admin/saveLandRegister"
+   scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.landregister.Save" validate="false"/>
+  <action input="/admin/landregister/landRegister.jsp"
+   name="adminLandRegister" path="/admin/deleteLandRegister"
+   scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.landregister.Delete" validate="false"/>
+  <!-- excel数据导入页面加载 -->
+  <action name="importData" path="/admin/attachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.excelimport.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="importData" path="/admin/importData" scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.excelimport.Load" validate="false">
+   <forward name="load" path="/admin/importData.jsp"/>
+  </action>
+  <action input="/admin/importData.jsp" name="importData"
+   path="/admin/doImportData" scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.excelimport.DoImportData" validate="false"/>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="applicationView" path="/admin/deleteDeclares" scope="request"
+   type="com.yuanluesoft.land.declare.actions.admin.declareview.DeleteDeclares" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

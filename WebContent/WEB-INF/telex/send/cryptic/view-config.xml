@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="sendTelegram" form="sendTelegram" title="发报记录" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(application_visitor)">
+		<data>
+			<pojo>com.yuanluesoft.telex.send.base.pojo.SendTelegram</pojo>
+			<where>SendTelegram.isCryptic='1'</where>
+			<orderBy>SendTelegram.sendTime DESC</orderBy>
+			<quickFilter>SendTelegram.subject like '%{KEY}%' or SendTelegram.summary like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action name="create" title="发报登记(密文)" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create)" execute="PageUtils.newrecord('telex/send/cryptic', 'sendTelegram', 'mode=fullscreen')"/>
+			<action title="打印核对清单" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/telex/send/cryptic/exportListing.shtml', 280, 200)" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="榕机密发" name="sequence" width="60" align="center"/>
+			<column title="主题" name="subject"/>
+			<column title="发报时间" name="sendTime" fieldType="date" width="120" format="yyyy-MM-dd HH:mm" align="center"/>
+			<column title="收电单位" name="toUnitNames" width="160" align="center"/>
+			<column title="等级" name="telegramLevel" width="80" align="center"/>
+			<column title="密级" name="securityLevel" width="80" align="center"/>
+		</columns>
+	</view>
+</views>

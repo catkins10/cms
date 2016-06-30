@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--视图定制-->
+	<class name="com.yuanluesoft.jeaf.view.viewcustomize.pojo.ViewCustom" table="view_custom">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="userId"/> <!--用户ID,numeric(20)-->
+		<property name="applicationName"/> <!--应用名称,varchar(20)-->
+		<property name="viewName"/> <!--视图名称,varchar(20)-->
+		<property name="custom"/> <!--定制XML,mediumtext-->
+	</class>
+</hibernate-mapping>

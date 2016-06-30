@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="receiveTelegram" type="com.yuanluesoft.telex.receive.plain.forms.ReceivePlainTelegram"/>
+  <form-bean name="printTransactionSheet" type="com.yuanluesoft.telex.base.forms.PrintTransactionSheet"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="receiveTelegram" path="/receiveTelegram" scope="request"
+   type="com.yuanluesoft.telex.receive.plain.actions.receiveplaintelegram.Load" validate="false">
+   <forward name="load" path="/receiveTelegram.jsp"/>
+  </action>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/saveReceiveTelegram" scope="request"
+   type="com.yuanluesoft.telex.receive.plain.actions.receiveplaintelegram.Save" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/deleteReceiveTelegram" scope="request"
+   type="com.yuanluesoft.telex.receive.plain.actions.receiveplaintelegram.Delete" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/appendSigns" scope="request"
+   type="com.yuanluesoft.telex.receive.plain.actions.receiveplaintelegram.AppendSigns" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/deleteSigns" scope="request"
+   type="com.yuanluesoft.telex.receive.plain.actions.receiveplaintelegram.DeleteSigns" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/saveOpinion" scope="request"
+   type="com.yuanluesoft.telex.receive.plain.actions.receiveplaintelegram.SaveOpinion" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/deleteOpinion" scope="request"
+   type="com.yuanluesoft.telex.receive.plain.actions.receiveplaintelegram.DeleteOpinion" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/editOpinion" scope="request"
+   type="com.yuanluesoft.telex.receive.plain.actions.receiveplaintelegram.EditOpinion" validate="false"/>
+  <action name="printTransactionSheet" path="/printTransactionSheet"
+   scope="request"
+   type="com.yuanluesoft.telex.receive.plain.actions.receiveplaintelegram.PrintTransactionSheet" validate="false">
+   <forward name="load" path="/printTransactionSheet.jsp"/>
+  </action>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/archive" scope="request"
+   type="com.yuanluesoft.telex.receive.plain.actions.receiveplaintelegram.Archive" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/sign" scope="request"
+   type="com.yuanluesoft.telex.receive.plain.actions.receiveplaintelegram.Sign" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/doSign" scope="request"
+   type="com.yuanluesoft.telex.receive.plain.actions.receiveplaintelegram.DoSign" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/synchSigns" scope="request"
+   type="com.yuanluesoft.telex.receive.plain.actions.receiveplaintelegram.SynchSigns" validate="false"/>
+  <action input="/receiveTelegram.jsp" name="receiveTelegram"
+   path="/unarchive" scope="request"
+   type="com.yuanluesoft.telex.receive.plain.actions.receiveplaintelegram.Unarchive" validate="false"/>
+  <action name="receiveTelegram" path="/attachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.telex.receive.plain.actions.receiveplaintelegram.SelectAttachment" validate="false">
+   <forward name="load" path="/../../../jeaf/attachment/attachment.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

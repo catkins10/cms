@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/quartertax" form="admin/quartertax" title="龙海市纳税人欠税情况季报表(企业或单位类)" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.quartertax.pojo.QuarterTax</pojo>
+			<orderBy>QuarterTax.created</orderBy>
+			<quickFilter>QuarterTax.enterprise like '%{KEY}%' or QuarterTax.number like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_quartertax)" execute="PageUtils.newrecord('credit/enterprisecredit/quartertax', 'admin/quarterImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_quartertax)" execute="PageUtils.newrecord('credit/enterprisecredit/quartertax','admin/quartertax','mode=fullscreen')"/>
+			<action title="批量删除" hide="noPrivilege(manageUnit_quartertax)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/quartertax/batchOperate.shtml?pojoName=QuarterTax')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="enterprise" title="企业或单位名称"/>
+			<column name="number" title="纳税人识别号"  align="center"/>
+			<column name="person" title="法定代表人或负责人姓名" align="center"/>
+			<column name="oweTime" title="欠税时间" align="center"/>
+		</columns>
+		
+	</view>
+	
+	
+</views>

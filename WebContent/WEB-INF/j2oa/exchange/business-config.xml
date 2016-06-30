@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="公文" class="com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocument" businessServiceName="exchangeDocumentService">
+		<field name="sourceRecordId" title="源记录ID" length="100" type="string" inputMode="none"/>
+		<field name="subject" title="标题" length="200" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="documentUnit" title="发文单位" length="100" required="true" type="string" inputMode="text">
+			<parameter name="defaultValue">{UNITNAME}</parameter>
+		</field>
+		<field name="sign" title="签发人" length="30" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsName">unitLeaders</parameter>
+			<parameter name="itemsServiceName">orgService</parameter>
+		</field>
+		<field name="docWord" title="发文字号" length="100" required="true" type="string" inputMode="text"/>
+		<field name="generateDate" title="成文日期" required="true" type="date" inputMode="date"/>
+		<field name="docType" title="发文种类" length="50" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">documentService</parameter>
+		</field>
+		<field name="secureLevel" title="秘密等级" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">documentService</parameter>
+		</field>
+		<field name="secureTerm" title="保密期限" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">documentService</parameter>
+		</field>
+		<field name="priority" title="紧急程度" length="20" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">documentService</parameter>
+		</field>
+		<field name="keyword" title="主题词" length="100" type="string" inputMode="text"/>
+		<field name="printNumber" title="印发份数" length="4" type="number" inputMode="text"/>
+		<field name="distributeDate" title="印发日期" type="date" inputMode="date"/>
+		<field name="mainSend" title="主送单位" length="2000" required="true" type="string" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectOrg(640, 400, true, 'mainSend{name},mainSend{name|主送单位|100%}', '', 'unit,category', '', '，')</parameter>
+		</field>
+		<field name="copySend" title="抄送单位" length="2000" type="string" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectOrg(640, 400, true, 'copySend{name},copySend{name|抄送单位|100%}', '', 'unit,category', '', '，')</parameter>
+		</field>
+		<field name="otherSend" title="其他接收单位" length="2000" type="string" inputMode="select">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectOrg(640, 400, true, 'otherSend{name},otherSend{name|主送单位|100%}', '', 'unit,category', '', '，')</parameter>
+		</field>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="creatorId" title="创建人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="creatorUnit" title="创建人所在单位" length="100" type="string" inputMode="text">
+			<parameter name="defaultValue">{UNITNAME}</parameter>
+		</field>
+		<field name="creatorUnitId" title="创建人所在单位ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{UNITID}</parameter>
+		</field>
+		<field name="issue" title="是否发布" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">发布|1\0不发布|0</parameter>
+		</field>
+		<field name="issuePersonId" title="最后发布人Id" type="number" inputMode="none"/>
+		<field name="issuePerson" title="最后发布人" length="30" type="string" inputMode="readonly"/>
+		<field name="issueTime" title="最后发布时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="备注" length="250" type="string" inputMode="text"/>
+		<field name="exchangeUnits" title="接收单位" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocumentUnit</parameter>
+		</field>
+		<field name="exchangeUndos" title="撤销记录" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocumentUndo</parameter>
+		</field>
+		<field name="exchangeMessages" title="反馈" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.exchange.pojo.ExchangeMessage</parameter>
+		</field>
+		<field name="body" title="正文" type="attachment" inputMode="attachment">
+			<parameter name="dynamicUrl">true</parameter>
+			<parameter name="attachmentEditor">/j2oa/exchange/attachmentEditor.shtml</parameter>
+		</field>
+		<field name="attachment" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="dynamicUrl">true</parameter>
+			<parameter name="attachmentEditor">/j2oa/exchange/attachmentEditor.shtml</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="接收单位" class="com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocumentUnit">
+		<field name="documentId" title="公文ID" type="number" inputMode="hidden"/>
+		<field name="unitId" title="单位ID" type="number" inputMode="hidden"/>
+		<field name="unitName" title="单位名称" length="100" type="string" inputMode="select"/>
+		<field name="unitType" title="单位类别" length="10" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="signTime" title="签收时间" type="timestamp" inputMode="readonly"/>
+		<field name="signPerson" title="签收人" length="30" type="string" inputMode="readonly"/>
+		<field name="signPersonId" title="签收人ID" type="number" inputMode="none"/>
+	</businessObject>
+	
+	<businessObject title="撤销记录" class="com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocumentUndo">
+		<field name="documentId" title="公文ID" type="number" inputMode="hidden"/>
+		<field name="undoReason" title="撤销发布的原因" length="300" type="string" inputMode="text"/>
+		<field name="resign" title="是否重新签收" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">重新签收|1\0不重新签收|0</parameter>
+		</field>
+		<field name="undoTime" title="撤销时间" type="timestamp" inputMode="readonly"/>
+		<field name="undoPerson" title="撤销人" length="30" type="string" inputMode="readonly"/>
+		<field name="undoPersonId" title="撤销人ID" type="number" inputMode="none"/>
+	</businessObject>
+	
+	<businessObject title="消息反馈" class="com.yuanluesoft.j2oa.exchange.pojo.ExchangeMessage" businessServiceName="exchangeDocumentService">
+		<field name="documentId" title="公文ID" type="number" inputMode="hidden"/>
+		<field name="replyMessageId" title="被答复的消息ID" type="number" inputMode="hidden"/>
+		<field name="subject" title="标题" length="100" required="true" type="string" inputMode="text"/>
+		<field name="body" title="正文" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="creatorId" title="创建人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creatorUnit" title="创建所在单位" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{UNITNAME}</parameter>
+		</field>
+		<field name="creatorUnitId" title="创建人所在单位ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{UNITID}</parameter>
+		</field>
+		<field name="document" title="公文" type="component">
+			<parameter name="class">com.yuanluesoft.j2oa.exchange.pojo.ExchangeDocument</parameter>
+		</field>
+		<field name="replies" title="答复" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.exchange.pojo.ExchangeMessage</parameter>
+			<parameter name="lazyLoad">false</parameter>
+		</field>
+		<field name="reply" title="答复" type="component" persistence="false">
+			<parameter name="class">com.yuanluesoft.j2oa.exchange.pojo.ExchangeMessage</parameter>
+			<parameter name="referenceFields">replies</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

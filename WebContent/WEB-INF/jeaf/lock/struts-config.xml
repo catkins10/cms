@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="unlock" type="com.yuanluesoft.jeaf.workflow.form.WorkflowForm"/>
+ </form-beans>
+ <global-exceptions/>
+ <global-forwards/>
+ <action-mappings>
+  <action path="/unlock" scope="request"
+   type="com.yuanluesoft.jeaf.lock.actions.Unlock" validate="false"/>
+  <action name="unlock" path="/unlockWorkflowInstance" scope="request"
+   type="com.yuanluesoft.jeaf.workflow.actions.unlock.UnlockWorkflowInstance" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

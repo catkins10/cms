@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#login" NAME="action0"
+  PATH="/login" SHAPE="32,176,161,41" TITLE="login" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/login.jsp" TARGET="page0" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0" PATH="/login.jsp"
+  SHAPE="320,192,56,40" SUBTYPE="jsp" TITLE="login.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/submitlogin" TARGET="action1" TITLE="submitlogin" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#submitlogin"
+  NAME="action1" PATH="/submitlogin" SHAPE="496,208,145,25"
+  TITLE="login" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#logout" NAME="action2"
+  PATH="/logout" SHAPE="32,256,161,25" TITLE="login" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#changePassword"
+  NAME="action5" PATH="/changePassword" SHAPE="32,464,161,41"
+  TITLE="changePassword" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/changePassword.jsp" TARGET="page2"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/changePassword.jsp" SHAPE="320,480,50,40" SUBTYPE="jsp"
+  TITLE="changePassword.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/submitNewPassword.shtml" TARGET="action6"
+   TITLE="submitNewPassword.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#submitNewPassword"
+  NAME="action6" PATH="/submitNewPassword" SHAPE="496,496,145,25"
+  TITLE="changePassword" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,32,161,21" TARGET="page3" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="320,32,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,96,161,21" TARGET="page4"
+  TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="320,96,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#forgetPassword"
+  NAME="action7" PATH="/forgetPassword" SHAPE="32,576,161,41"
+  TITLE="forgetPassword" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/forgetPassword.jsp" TARGET="page5"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/forgetPassword.jsp" SHAPE="320,592,50,25" SUBTYPE="jsp"
+  TITLE="forgetPassword.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/resetPassword.shtml" TARGET="action8"
+   TITLE="resetPassword.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#resetPassword"
+  NAME="action8" PATH="/resetPassword" SHAPE="496,608,145,25"
+  TITLE="forgetPassword" TYPE="action"/>
+</PROCESS>

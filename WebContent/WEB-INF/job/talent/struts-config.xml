@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="talent" type="com.yuanluesoft.job.talent.forms.Talent"/>
+  <form-bean name="intention" type="com.yuanluesoft.job.talent.forms.Intention"/>
+  <form-bean name="schooling" type="com.yuanluesoft.job.talent.forms.Schooling"/>
+  <form-bean name="training" type="com.yuanluesoft.job.talent.forms.Training"/>
+  <form-bean name="speech" type="com.yuanluesoft.job.talent.forms.Speech"/>
+  <form-bean name="career" type="com.yuanluesoft.job.talent.forms.Career"/>
+  <form-bean name="project" type="com.yuanluesoft.job.talent.forms.Project"/>
+  <form-bean name="certificate" type="com.yuanluesoft.job.talent.forms.Certificate"/>
+  <form-bean name="ability" type="com.yuanluesoft.job.talent.forms.Ability"/>
+  <form-bean name="adminTalentApproval" type="com.yuanluesoft.job.talent.forms.admin.TalentApproval"/>
+  <form-bean name="adminTalent" type="com.yuanluesoft.job.talent.forms.admin.Talent"/>
+  <form-bean name="adminTalentView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/>
+  <form-bean name="employment" type="com.yuanluesoft.job.talent.forms.Employment"/>
+  <form-bean name="adminSchoolClassReports" type="com.yuanluesoft.job.talent.forms.admin.SchoolClassReports"/>
+  <form-bean name="adminTalentReport" type="com.yuanluesoft.job.talent.forms.admin.TalentReport"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="talent" path="/talent" scope="request"
+   type="com.yuanluesoft.job.talent.actions.talent.Load" validate="false">
+   <forward name="load" path="/talent.jsp"/>
+  </action>
+  <action input="/talent.jsp" name="talent" path="/saveTalent"
+   scope="request" type="com.yuanluesoft.job.talent.actions.talent.Save" validate="false">
+   <forward name="result" path="/talentSubmitted.jsp"/>
+  </action>
+  <action path="/talentIndex" scope="request"
+   type="com.yuanluesoft.job.talent.actions.talentindex.Load" validate="false"/>
+  <action name="intention" path="/intention" scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Load" validate="false">
+   <forward name="load" path="/intention.jsp"/>
+  </action>
+  <action input="/intention.jsp" name="intention" path="/saveIntention"
+   scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Save" validate="false"/>
+  <action input="/intention.jsp" name="intention"
+   path="/deleteIntention" scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Delete" validate="false"/>
+  <action name="schooling" path="/schooling" scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Load" validate="false">
+   <forward name="load" path="/schooling.jsp"/>
+  </action>
+  <action input="/schooling.jsp" name="schooling" path="/saveSchooling"
+   scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Save" validate="false"/>
+  <action input="/schooling.jsp" name="schooling"
+   path="/deleteSchooling" scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Delete" validate="false"/>
+  <action name="training" path="/training" scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Load" validate="false">
+   <forward name="load" path="/training.jsp"/>
+  </action>
+  <action input="/training.jsp" name="training" path="/saveTraining"
+   scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Save" validate="false"/>
+  <action input="/training.jsp" name="training" path="/deleteTraining"
+   scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Delete" validate="false"/>
+  <action name="speech" path="/speech" scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Load" validate="false">
+   <forward name="load" path="/speech.jsp"/>
+  </action>
+  <action input="/speech.jsp" name="speech" path="/saveSpeech"
+   scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Save" validate="false"/>
+  <action input="/speech.jsp" name="speech" path="/deleteSpeech"
+   scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Delete" validate="false"/>
+  <action name="career" path="/career" scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Load" validate="false">
+   <forward name="load" path="/career.jsp"/>
+  </action>
+  <action input="/career.jsp" name="career" path="/saveCareer"
+   scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Save" validate="false"/>
+  <action input="/career.jsp" name="career" path="/deleteCareer"
+   scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Delete" validate="false"/>
+  <action name="project" path="/project" scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Load" validate="false">
+   <forward name="load" path="/project.jsp"/>
+  </action>
+  <action input="/project.jsp" name="project" path="/saveProject"
+   scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Save" validate="false"/>
+  <action input="/project.jsp" name="project" path="/deleteProject"
+   scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Delete" validate="false"/>
+  <action name="certificate" path="/certificate" scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Load" validate="false">
+   <forward name="load" path="/certificate.jsp"/>
+  </action>
+  <action input="/certificate.jsp" name="certificate"
+   path="/saveCertificate" scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Save" validate="false"/>
+  <action input="/certificate.jsp" name="certificate"
+   path="/deleteCertificate" scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Delete" validate="false"/>
+  <action name="ability" path="/ability" scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Load" validate="false">
+   <forward name="load" path="/ability.jsp"/>
+  </action>
+  <action input="/ability.jsp" name="ability" path="/saveAbility"
+   scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Save" validate="false"/>
+  <action input="/ability.jsp" name="ability" path="/deleteAbility"
+   scope="request"
+   type="com.yuanluesoft.job.talent.actions.component.Delete" validate="false"/>
+  <action name="talent" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.job.talent.actions.talent.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="adminTalentApproval" path="/admin/talentApproval"
+   scope="request"
+   type="com.yuanluesoft.job.talent.actions.talentapproval.admin.Load" validate="false">
+   <forward name="load" path="/admin/talentApproval.jsp"/>
+  </action>
+  <action input="/admin/talentApproval.jsp" name="adminTalentApproval"
+   path="/admin/saveTalentApproval" scope="request"
+   type="com.yuanluesoft.job.talent.actions.talentapproval.admin.Save" validate="false"/>
+  <action name="adminTalent" path="/admin/talent" scope="request"
+   type="com.yuanluesoft.job.talent.actions.talent.admin.Load" validate="false">
+   <forward name="load" path="/admin/talent.jsp"/>
+  </action>
+  <action input="/admin/talent.jsp" name="adminTalent"
+   path="/admin/saveTalent" scope="request"
+   type="com.yuanluesoft.job.talent.actions.talent.admin.Save" validate="false"/>
+  <action input="/admin/talent.jsp" name="adminTalent"
+   path="/admin/deleteTalent" scope="request"
+   type="com.yuanluesoft.job.talent.actions.talent.admin.Delete" validate="false"/>
+  <action input="/admin/talent.jsp" name="adminTalent"
+   path="/admin/approvalTalent" scope="request"
+   type="com.yuanluesoft.job.talent.actions.talent.admin.Approval" validate="false"/>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="adminTalentView" path="/admin/approvalTalents" scope="request"
+   type="com.yuanluesoft.job.talent.actions.talentview.admin.Approval" validate="false"/>
+  <action name="employment" path="/employment" scope="request"
+   type="com.yuanluesoft.job.talent.actions.employment.Load" validate="false">
+   <forward name="load" path="/employment.jsp"/>
+  </action>
+  <action input="/employment.jsp" name="employment"
+   path="/saveEmployment" scope="request"
+   type="com.yuanluesoft.job.talent.actions.employment.Save" validate="false"/>
+  <action input="/employment.jsp" name="employment"
+   path="/deleteEmployment" scope="request"
+   type="com.yuanluesoft.job.talent.actions.employment.Delete" validate="false"/>
+  <action path="/cancelPush" scope="request"
+   type="com.yuanluesoft.job.talent.actions.cancelpush.Load" validate="false"/>
+  <action name="adminSchoolClassReports"
+   path="/admin/schoolClassReports" scope="request"
+   type="com.yuanluesoft.job.talent.actions.schoolclassreports.admin.Load" validate="false">
+   <forward name="load" path="/admin/schoolClassReports.jsp"/>
+  </action>
+  <action input="/admin/schoolClassReports.jsp"
+   name="adminSchoolClassReports" path="/admin/saveSchoolClassReports"
+   scope="request"
+   type="com.yuanluesoft.job.talent.actions.schoolclassreports.admin.Save" validate="false"/>
+  <action path="/admin/printReports" scope="request"
+   type="com.yuanluesoft.job.talent.actions.printreports.admin.Load" validate="false"/>
+  <action name="adminTalentReport" path="/admin/talentReport"
+   scope="request"
+   type="com.yuanluesoft.job.talent.actions.talentreport.admin.Load" validate="false">
+   <forward name="load" path="/admin/talentReport.jsp"/>
+  </action>
+  <action input="/admin/talentReport.jsp" name="adminTalentReport"
+   path="/admin/saveTalentReport" scope="request"
+   type="com.yuanluesoft.job.talent.actions.talentreport.admin.Save" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

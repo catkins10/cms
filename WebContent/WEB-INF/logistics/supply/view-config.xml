@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="货源列表(全部)" name="supplies">
+		<data>
+			<pojo>com.yuanluesoft.logistics.supply.pojo.LogisticsSupply</pojo>
+			<where>LogisticsSupply.issue=1 and (LogisticsSupply.validityEnd is null or LogisticsSupply.validityEnd>=DATE({TODAY}))</where>
+			<orderBy>LogisticsSupply.created DESC</orderBy>
+			<quickFilter>LogisticsSupply.linkman like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link>/logistics/supply/supply.shtml</link>
+		</links>
+	</view>
+	
+	<view title="我的货源列表" name="mySupplies">
+		<data>
+			<pojo>com.yuanluesoft.logistics.supply.pojo.LogisticsSupply</pojo>
+			<where>LogisticsSupply.userId={USERID}</where>
+			<orderBy>LogisticsSupply.created DESC</orderBy>
+			<quickFilter>LogisticsSupply.linkman like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link>/logistics/supply/supply.shtml</link>
+		</links>
+	</view>
+
+	<view name="admin/supply" form="admin/supply" title="已发布货源" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.logistics.supply.pojo.LogisticsSupply</pojo>
+			<where>LogisticsSupply.issue=1</where>
+			<orderBy>LogisticsSupply.created DESC</orderBy>
+			<quickFilter>LogisticsSupply.linkman like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action hide="noPrivilege(manageUnit_regist) and noPrivilege(manageUnit_superintend)" title="登记货源" execute="DialogUtils.openSelectDialog('logistics/usermanage', 'admin/userCheck', 550, 350, false, '', 'PageUtils.newrecord(\'logistics/supply\', \'admin/supply\', \'mode=fullscreen\', \'userId={id}\')', '', '', '', true)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="货物名称" name="goodsName" width="40%"/>
+			<column title="出发地点" name="departures.departure" width="30%"/>
+			<column title="目的地点" name="destinations.destination" width="30%"/>
+			<column title="有效期开始" name="validityBegin" align="center" width="70"/>
+			<column title="有效期结束" name="validityEnd" align="center" width="70"/>
+			<column title="联系人" name="linkman" width="110"/>
+			<column title="联系电话" name="linkmanTel" align="center" width="100"/>
+		</columns>
+	</view>
+	
+	<view name="admin/todoSupply" form="admin/supply" title="待发布货源" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.logistics.supply.pojo.LogisticsSupply</pojo>
+			<where>LogisticsSupply.issue=0</where>
+			<orderBy>LogisticsSupply.created DESC</orderBy>
+			<quickFilter>LogisticsSupply.linkman like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action hide="noPrivilege(manageUnit_regist) and noPrivilege(manageUnit_superintend)" title="登记货源" execute="DialogUtils.openSelectDialog('logistics/usermanage', 'admin/userCheck', 550, 350, false, '', 'PageUtils.newrecord(\'logistics/supply\', \'admin/supply\', \'mode=fullscreen\', \'userId={id}\')', '', '', '', true)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="货物名称" name="goodsName" width="40%"/>
+			<column title="出发地点" name="departures.departure" width="30%"/>
+			<column title="目的地点" name="destinations.destination" width="30%"/>
+			<column title="有效期开始" name="validityBegin" align="center" width="70"/>
+			<column title="有效期结束" name="validityEnd" align="center" width="70"/>
+			<column title="联系人" name="linkman" width="110"/>
+			<column title="联系电话" name="linkmanTel" align="center" width="100"/>
+		</columns>
+	</view>
+</views>

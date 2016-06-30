@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 积分服务 -->
+	<bean id="pointService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean id="opinionServiceTarget" class="com.yuanluesoft.jeaf.point.service.spring.PointServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="pointItemDefinitions">
+					<map>
+						<entry key="登录">
+							<bean class="com.yuanluesoft.jeaf.point.model.PointItemDefinition">
+								<property name="itemPoint"><value>10</value></property>
+							</bean>
+						</entry>
+						<entry key="答题">
+							<bean class="com.yuanluesoft.jeaf.point.model.PointItemDefinition">
+								<property name="itemPoint"><value>10</value></property>
+							</bean>
+						</entry>
+						<entry key="正确答题">
+							<bean class="com.yuanluesoft.jeaf.point.model.PointItemDefinition">
+								<property name="itemPoint"><value>30</value></property>
+							</bean>
+						</entry>
+					</map>
+				</property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

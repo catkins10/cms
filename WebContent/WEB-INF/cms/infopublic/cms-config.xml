@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<!-- 模板插件,page也可以有自己的配置 -->
+	<templatePlugins>
+		<templatePlugin path="/cms/infopublic/templatemanage/infoplugins" private="true">
+			<templateActions/> <!-- 模板操作 -->
+			<pageElementActions>cms_insert_info_directory_location</pageElementActions> <!-- 页面元素操作 -->
+		</templatePlugin>
+	</templatePlugins>
+
+	<pages>
+		<page name="index" title="信息公开目录" url="/cms/infopublic/index.shtml">
+			<subPage name="publicInfoDirectory" title="信息公开目录" type="iframe" iframeUrl="/cms/infopublic/directoryTree.shtml"/> <!-- 子表单,显示在系统预置页面中,采用iframe模式显示-->
+			<subPage name="publicInfoList" title="信息列表" type="iframe" iframeUrl="/cms/infopublic/publicInfoView.shtml"/> <!-- 子表单,显示在系统预置页面中,采用iframe模式显示 -->
+		</page>
+		
+		<page name="info" title="政务信息" systemLink="false" url="/cms/infopublic/publicInfo.shtml">
+			<field title="名称" name="subject"/>
+			<field title="索引号" name="infoIndex"/>
+			<field title="发布机构" name="infoFrom"/>
+			<field title="文号" name="mark"/>
+			<field title="生成日期" name="generateDate" type="date"/>
+			<field title="内容概述" name="summarize"/>
+			<field title="主题分类" name="category"/>
+			<field title="主题词" name="keywords"/>
+			<field title="创建时间" name="created" type="timestamp"/>
+			<field title="发布时间" name="issueTime" type="timestamp"/>
+			<field title="创建者所在部门" name="orgName"/>
+			<field title="创建者所在单位" name="unitName"/>
+			<field title="内容" name="body" type="html"/>
+		</page>
+		
+		<page name="publicInfoQuery" title="信息公开查询" url="/cms/infopublic/publicInfoQuery.shtml">
+			<subPage name="publicInfoQueryCondition" title="信息公开查询条件"/>
+			<subPage name="publicInfoQueryResult" title="信息公开查询结果"/>
+		</page>
+		
+		<page name="guide" title="信息公开指南" url="/cms/infopublic/guide.shtml">
+			<templatePlugin path="/cms/infopublic/templatemanage/infoplugins/guide">
+				<templateActions/> <!-- 扩展的模板操作 -->
+				<pageElementActions>cms_insert_guide_body</pageElementActions> <!-- 扩展的页面元素操作 -->
+			</templatePlugin>
+		</page>
+		
+		<page name="relationColumn" systemLink="false" title="关联的网站栏目"/>
+		
+		<page name="relationResource" url="/cms/infopublic/relationArticle.shtml" systemLink="false" title="关联的网站文章">
+			<field title="标题" name="subject"/>
+			<field title="正文" name="body" type="html"/>
+			<field title="副标题" name="subhead"/>
+			<field title="来源" name="source"/>
+			<field title="作者" name="author"/>
+			<field title="创建者所在部门" name="orgName"/>
+			<field title="创建者所在单位" name="unitName"/>
+			<field title="发布时间" type="timestamp" name="issueTime"/>
+			<field title="关键字" name="keyword"/>
+			<field title="是否有图" name="hasImages"/>
+		</page>
+	</pages>
+	
+	<recordLists>
+		<recordList title="政务信息列表" name="infos" recordPage="info" hostPage="index" dialogExtendURL="/cms/infopublic/templatemanage/dialog/insertInfos.jsp"/>
+		<recordList title="信息公开关联栏目文章列表" totalSupport="false" name="publicRelationResources" rssSupport="false" recordPage="relationResource" dialogExtendURL="/cms/infopublic/templatemanage/dialog/insertRelationArticles.jsp" hostPage="index"/>
+	</recordLists>
+	
+	<!-- 链接 -->
+	<links>
+		<link title="信息公开目录链接" dialogURL="/cms/infopublic/templatemanage/dialog/insertInfoDirectoryLink.jsp"/>
+		<link title="信息公开关联栏目链接" dialogURL="/cms/infopublic/templatemanage/dialog/insertPublicRelationColumnLink.jsp"/>
+	</links>
+	
+	<!-- 页面元素,name必须在所有的应用中唯一 -->
+	<pageElements>
+		<pageElement name="infoField" processor="recordFieldProcessor"/> <!-- 信息字段,和旧系统兼容 -->
+		<pageElement name="infos" processor="publicInfosProcessor"/> <!-- 投诉列表列表处理器 -->
+		<pageElement name="publicRelationResources" processor="publicRelationResourcesProcessor"/> <!-- 投诉列表列表处理器 -->
+		<pageElement name="guideBody" processor="publicGuideBodyProcessor"/> <!-- 信息公开指南正文处理器 -->
+		<pageElement name="infoDirectoryLocation" processor="infoDirectoryLocationProcessor"/> <!-- 信息公开目录位置处理器 -->
+		<pageElement name="infoDirectoryLink" processor="infoDirectoryLinkProcessor"/> <!-- 信息公开目录链接 -->
+		<pageElement name="publicRelationColumnLink" processor="publicRelationColumnLinkProcessor"/> <!-- 信息公开关联栏目链接 -->
+	</pageElements>
+</application>

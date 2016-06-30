@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="projectList" title="项目列表" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=projectList" js="/enterprise/roaddesign/js/projectList.js">
+			<link title="新建项目" url="javascript:newProject()"/>
+		</page>
+		<page name="project" title="项目" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=project" js="/enterprise/roaddesign/js/project.js"/>
+		<page name="sectionList" title="路段列表" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=sectionList" js="/enterprise/roaddesign/js/sectionList.js">
+			<link title="新建路段" url="javascript:newSection()"/>
+		</page>
+		<page name="section" title="路段" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=section" js="/enterprise/roaddesign/js/section.js"/>
+		
+		<page name="traverseIndex" title="导线测量首页" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=traverseIndex"/>
+		<page name="traverseNormal" title="导线测量:一般测量" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=traverseNormal" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/traverseCommon.js,/enterprise/roaddesign/js/traverseNormal.js"/>
+		<page name="traverseFrontCross" title="导线测量:前方交会测量" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=traverseFrontCross" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/traverseCommon.js,/enterprise/roaddesign/js/traverseFrontCross.js">
+			<link title="示意图" url="/enterprise/roaddesign/image/qfjh.bmp"/>
+		</page>
+		<page name="traverseBackCross" title="导线测量:后方交会测量" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=traverseBackCross" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/traverseCommon.js,/enterprise/roaddesign/js/traverseBackCross.js">
+			<link title="示意图" url="/enterprise/roaddesign/image/hfjh.bmp"/>
+		</page>
+		
+		<page name="loftingIndex" title="放样首页" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=loftingIndex"/>
+		<page name="loftingPile" title="放样:桩号放样" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=loftingPile" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/crossPointCommon.js,/enterprise/roaddesign/js/curveCommon.js,/enterprise/roaddesign/js/loftingCommon.js,/enterprise/roaddesign/js/loftingPile.js">
+			<link title="基站" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=baseStation"/>
+		</page>
+		<page name="loftingCoordinate" title="放样:坐标法放样" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=loftingCoordinate" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/crossPointCommon.js,/enterprise/roaddesign/js/curveCommon.js,/enterprise/roaddesign/js/loftingCommon.js,/enterprise/roaddesign/js/loftingCoordinate.js">
+			<link title="基站" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=baseStation"/>
+		</page>
+		<page name="loftingBlock" title="放样:积木法放样" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=loftingBlock" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/crossPointCommon.js,/enterprise/roaddesign/js/curveCommon.js,/enterprise/roaddesign/js/loftingCommon.js,/enterprise/roaddesign/js/loftingBlock.js">
+			<link title="基站" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=baseStation"/>
+		</page>
+		<page name="baseStation" title="放样:基站" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=baseStation" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/traverseCommon.js,/enterprise/roaddesign/js/baseStation.js"/>
+		
+		<page name="assistIndex" title="辅助设计首页" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=assistIndex"/>
+		<page name="assistTangent" title="辅助设计:切线支距计算" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=assistTangent" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/assistTangent.js">
+			<link title="示意图" url="/enterprise/roaddesign/image/qxzj.bmp"/>
+		</page>
+		<page name="assistHigh" title="辅助设计:超高加宽计算" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=assistHigh" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/assistHigh.js"/>
+		<page name="assistClearDistance" title="辅助设计:横净距计算" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=assistClearDistance" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/assistClearDistance.js"/>
+
+		<page name="dataIndex" title="数据管理首页" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=dataIndex" js="/enterprise/roaddesign/js/dataExport.js">
+			<link title="成果输出:导线" url="javascript:exportTraverse()"/>
+			<link title="成果输出:交点" url="javascript:exportCrossPoint()"/>
+			<link title="成果输出:地面高" url="javascript:exportHeightData()"/>
+		</page>
+		<page name="dataTraverse" title="数据管理:导线资料" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=dataTraverse" js="/enterprise/roaddesign/js/dataTraverse.js">
+			<link title="添加导线点" url="javascript:newTraverse()"/>
+		</page>
+		<page name="dataCrossPoint" title="数据管理:交点坐标" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=dataCrossPoint" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/curveCommon.js,/enterprise/roaddesign/js/crossPointCommon.js,/enterprise/roaddesign/js/dataCrossPoint.js">
+			<link title="添加交点" url="javascript:newCrossPoint()"/>
+			<link title="导入" url="javascript:importCrossPoint()"/>
+		</page>
+		<page name="dataCurve" title="数据管理:曲线资料" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=dataCurve" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/curveCommon.js,/enterprise/roaddesign/js/crossPointCommon.js,/enterprise/roaddesign/js/dataCurve.js"/>
+		<page name="dataBlock" title="数据管理:积木法资料" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=dataBlock" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/dataBlock.js">
+			<link title="添加资料" url="javascript:newBlock()"/>
+		</page>
+		
+		<page name="toolsIndex" title="工具首页" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=toolsIndex"/>
+		<page name="singleCurve" title="工具:单交点平曲线" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=singleCurve" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/curveSingle.js">
+			<link title="示意图" url="/enterprise/roaddesign/image/djd.bmp"/>
+		</page>
+		<page name="cutBaselineDoubleCurve" title="工具:切基线双交点平曲线" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=cutBaselineDoubleCurve" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/curveCutBaselineDouble.js">
+			<link title="示意图" url="/enterprise/roaddesign/image/qjx.bmp"/>
+		</page>
+		<page name="baselineTangentDoubleCurve" title="工具:与基线相切双交点复曲线" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=baselineTangentDoubleCurve" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/curveBaselineTangentDouble.js">
+			<link title="示意图" url="/enterprise/roaddesign/image/xqfqx.bmp"/>
+		</page>
+		<page name="baselineNotTangentDoubleCurve" title="工具:与基线不相切双交点复曲线" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=baselineNotTangentDoubleCurve" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/curveBaselineNotTangentDouble.js">
+			<link title="示意图" url="/enterprise/roaddesign/image/bxqfqx.bmp"/>
+		</page>
+		<page name="sTypeCurve" title="工具:S型曲线设计" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=sTypeCurve" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/curveSType.js">
+			<link title="示意图" url="/enterprise/roaddesign/image/sx.bmp"/>
+		</page>
+		<page name="convexCurve" title="工具:凸型曲线设计" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=convexCurve" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/curveConvex.js">
+			<link title="示意图" url="/enterprise/roaddesign/image/tx.bmp"/>
+		</page>
+		<page name="ovalCurve" title="工具:卵型曲线设计" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=ovalCurve" js="/enterprise/roaddesign/js/utils.js,/enterprise/roaddesign/js/curveOval.js">
+			<link title="示意图" url="/enterprise/roaddesign/image/lx.bmp"/>
+		</page>
+		<page name="technicalData" title="工具:常用技术指标" url="/cms/sitemanage/applicationPage.shtml?applicationName=enterprise/roaddesign&amp;pageName=technicalData">
+			<link title="高速公路路基宽度" url="/enterprise/roaddesign/documents/高速公路路基宽度.xls"/>
+			<link title="公路平面技术" url="/enterprise/roaddesign/documents/公路平面技术.xls"/>
+			<link title="公路纵面技术" url="/enterprise/roaddesign/documents/公路纵面技术.xls"/>
+			<link title="一般公路路基宽度" url="/enterprise/roaddesign/documents/一般公路路基宽度.xls"/>
+			<link title="其他常用技术标准" url="/enterprise/roaddesign/documents/其他常用技术标准.xls"/>
+			<link title="其他常用技术说明" url="/enterprise/roaddesign/documents/其他常用技术说明.xls"/>
+		</page>
+	</pages>
+</application>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="货源列表" name="mobileSupplies">
+		<data>
+			<pojo>com.yuanluesoft.logistics.supply.pojo.LogisticsSupply</pojo>
+			<where>LogisticsSupply.validityEnd is null or LogisticsSupply.validityEnd>=TIMESTAMP({NOW})</where>
+			<orderBy>LogisticsSupply.created DESC</orderBy>
+			<quickFilter>LogisticsSupply.linkman like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link>/logistics/mobile/supply.shtml?mobileNumber={PARAMETER:mobileNumber}</link>
+		</links>
+	</view>
+</views>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="目录" class="com.yuanluesoft.jeaf.directorymanage.pojo.Directory" businessServiceName="directoryService">
+		<field name="directoryName" title="名称" type="string" inputMode="text" length="50" required="true"/>
+		<field name="parentDirectoryId" title="上级ID" type="number" inputMode="hidden"/>
+		<field name="priority" title="优先级" type="number" inputMode="none" length="7,4"/>
+		<field name="directoryType" title="类型" type="string" inputMode="none" length="20"/>
+		<field name="creator" title="创建人" type="string" inputMode="readonly" length="15"/>
+		<field name="creatorId" title="创建人ID" type="string" inputMode="none"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="备注" type="string" inputMode="text" length="100"/>
+		<field name="directoryPopedoms" title="目录权限" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.directorymanage.pojo.DirectoryPopedom</parameter>
+			<parameter name="recordList">false</parameter>
+		</field>
+		<field name="subjections" title="父目录" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.directorymanage.pojo.DirectorySubjection</parameter>
+			<parameter name="recordList">false</parameter>
+		</field>
+		<field name="childSubjections" title="子目录" type="components">
+			<parameter name="class">com.yuanluesoft.jeaf.directorymanage.pojo.DirectorySubjection</parameter>
+			<parameter name="lazyLoad">false</parameter>
+			<parameter name="recordList">false</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="目录隶属关系" class="com.yuanluesoft.jeaf.directorymanage.pojo.DirectorySubjection">
+		<field name="directoryId" title="目录ID" type="number" inputMode="none"/>
+		<field name="parentDirectoryId" title="上级目录ID" type="number" inputMode="none"/>
+	</businessObject>
+	
+	<businessObject title="目录权限" class="com.yuanluesoft.jeaf.directorymanage.pojo.DirectoryPopedom">
+		<field name="directoryId" title="目录ID" type="number" inputMode="none"/>
+		<field name="userId" title="用户ID" type="number" inputMode="none"/>
+		<field name="userName" title="用户名" type="string" inputMode="none" length="25"/>
+		<field name="popedomName" title="权限" type="string" inputMode="none" length="50"/>
+		<field name="isInherit" title="是否从上级目录继承" type="string" inputMode="none"/>
+	</businessObject>
+</businessObjects>

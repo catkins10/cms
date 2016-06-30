@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+
+	<statisticView name="signUpStat" title="统计" pageRows="100" width="100%" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.onlinesignup.pojo.admin.SignUp</pojo>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.onlinesignup.pojo.admin.SignUp</pojo>
+			</data>
+			<category value="SignUp.province"> <!--value必须有-->
+				<data>SignUp.province={CATEGORYVALUE}</data>
+			</category>
+			<category value="SignUp.city"> <!--value必须有-->
+				<where>SignUp.province={CATEGORY1VALUE}</where> <!--  and SiteResource.orgId>0 -->
+				<data>SignUp.province={CATEGORY1VALUE} and SignUp.city={CATEGORYVALUE}</data>
+			</category>
+			<category value="SignUp.country"> <!--value必须有-->
+				<where>SignUp.province={CATEGORY1VALUE} and SignUp.city={CATEGORY2VALUE}</where> <!--  and SiteResource.orgId>0 -->
+				<data>SignUp.province={CATEGORY1VALUE} and SignUp.city={CATEGORY2VALUE} and SignUp.country={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<extendParameters>
+			<parameter name="extendPage">/onlinesignup/issuedEvaluation.jsp</parameter> <!-- 扩展页面 -->
+		</extendParameters>
+		<statistics hideDetail="true"> <!--  detailTitle="　　{PARAMETER:rowIndex}、{orgName}", hideDetail=false时有效 -->
+			
+			<statistic title="　　{PARAMETER:rowIndex}){PARAMETER:country}"> <!-- 区县统计 -->
+				<groupFields>
+					<groupField name="province" />
+					<groupField name="city" />
+					<groupField name="country" />
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="todoCount" function="count(distinct SignUp.id)" whereExtend="SignUp.status=4"/> <!-- 待审数 -->
+					<statisticColumn name="passCount" function="count(distinct SignUp.id)" whereExtend="SignUp.status=1"/> <!-- 通过数量 -->
+					<statisticColumn name="nopassCount" function="count(distinct SignUp.id)" whereExtend="SignUp.status=2"/> <!-- 未通过数量 -->
+				</statisticColumns>
+			</statistic>
+			
+			<statistic title="　{PARAMETER:city}"> <!-- 市统计 -->
+				<groupFields>
+					<groupField name="province" />
+					<groupField name="city" />
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="todoCount" function="count(distinct SignUp.id)" whereExtend="SignUp.status=4"/> <!-- 待审数 -->
+					<statisticColumn name="passCount" function="count(distinct SignUp.id)" whereExtend="SignUp.status=1"/> <!-- 通过数量 -->
+					<statisticColumn name="nopassCount" function="count(distinct SignUp.id)" whereExtend="SignUp.status=2"/> <!-- 未通过数量 -->
+				</statisticColumns>
+			</statistic>
+			
+			<statistic title="{PARAMETER:rowIndex}.{PARAMETER:province}"> <!-- 省份统计 -->
+				<groupFields>
+					<groupField name="province" />
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="todoCount" function="count(distinct SignUp.id)" whereExtend="SignUp.status=4"/> <!-- 待审数 -->
+					<statisticColumn name="passCount" function="count(distinct SignUp.id)" whereExtend="SignUp.status=1"/> <!-- 通过数量 -->
+					<statisticColumn name="nopassCount" function="count(distinct SignUp.id)" whereExtend="SignUp.status=2"/> <!-- 未通过数量 -->
+				</statisticColumns>
+			</statistic>
+			
+			<statistic  statisticAll="true" title="合计">
+				<statisticColumns>
+					<statisticColumn name="todoCount" function="count(distinct SignUp.id)" whereExtend="SignUp.status=4"/> <!-- 待审数 -->
+					<statisticColumn name="passCount" function="count(distinct SignUp.id)" whereExtend="SignUp.status=1"/> <!-- 通过数量 -->
+					<statisticColumn name="nopassCount" function="count(distinct SignUp.id)" whereExtend="SignUp.status=2"/> <!-- 未通过数量 -->
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		
+		<columns>
+			<column title="地区" name="addr"/>
+			<column title="待审数量" name="todoCount" type="statistic" align="center" >
+			</column>
+			<column title="审核通过数量" name="passCount" type="statistic" align="center" >
+			</column>
+			<column title="未审核通过数量" name="nopassCount" type="statistic" align="center" >
+			</column>
+		</columns>
+	</statisticView>
+	
+	<view name="admin/signUp" form="admin/signUp" title="在线报名" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.onlinesignup.pojo.admin.SignUp</pojo>
+			<orderBy>SignUp.created DESC</orderBy>
+			<quickFilter>SignUp.name like '%{KEY}%'</quickFilter>
+			<filter>COMPLETED</filter>
+		</data>
+		<actions>
+			<action title="报名"  type="workflow" module="onlinesignup" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_signup)"/>
+			<action title="批量删除" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_signup)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/onlinesignup/batchOperate.shtml')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" align="center"/>
+			<column title="联系方式" name="phone" align="center"/>
+			<column title="性别" name="sex" align="center" width="80"/>
+			<column title="毕业院校" name="school" align="center"/>
+			<column title="报读专业" name="major" align="center"/>
+			<column title="状态" name="status" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/todoSignUp" form="admin/signUp" title="待办在线报名" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.onlinesignup.pojo.admin.SignUp</pojo>
+			<orderBy>SignUp.created DESC</orderBy>
+			<quickFilter>SignUp.name like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="报名"  execute="PageUtils.newrecord('onlinesignup','admin/signUp','mode=fullscreen')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_signup)"/>
+			<action title="批量审核"  execute="batchSend('admin/runSignUp')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_signup)"/>
+			<action title="批量删除" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_signup)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/onlinesignup/batchOperate.shtml')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" align="center"/>
+			<column title="联系方式" name="phone" align="center"/>
+			<column title="性别" name="sex" align="center" width="80"/>
+			<column title="毕业院校" name="school" align="center"/>
+			<column title="报读专业" name="major" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inSignUp" form="admin/signUp" title="在办在线报名" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.onlinesignup.pojo.admin.SignUp</pojo>
+			<orderBy>SignUp.created DESC</orderBy>
+			<quickFilter>SignUp.name like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="报名"  execute="PageUtils.newrecord('onlinesignup','admin/signUp','mode=fullscreen')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_signup)"/>
+			<action title="批量删除" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_signup)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/onlinesignup/batchOperate.shtml')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" align="center"/>
+			<column title="联系方式" name="phone" align="center"/>
+			<column title="性别" name="sex" align="center" width="80"/>
+			<column title="毕业院校" name="school" align="center"/>
+			<column title="报读专业" name="major" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/signUpSuccess" form="admin/signUp" title="已通过报名" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.onlinesignup.pojo.admin.SignUp</pojo>
+			<where>SignUp.status = 1</where>
+			<orderBy>SignUp.created DESC</orderBy>
+			<quickFilter>SignUp.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="报名"  execute="PageUtils.newrecord('onlinesignup','admin/signUp','mode=fullscreen')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_signup)"/>
+			<action title="批量删除" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_signup)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/onlinesignup/batchOperate.shtml')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" align="center"/>
+			<column title="联系方式" name="phone" align="center"/>
+			<column title="性别" name="sex" align="center" width="80"/>
+			<column title="毕业院校" name="school" align="center"/>
+			<column title="报读专业" name="major" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/signUpFail" form="admin/signUp" title="未通过报名" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.onlinesignup.pojo.admin.SignUp</pojo>
+			<where>SignUp.status = 2</where>
+			<orderBy>SignUp.created DESC</orderBy>
+			<quickFilter>SignUp.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="报名"  execute="PageUtils.newrecord('onlinesignup','admin/signUp','mode=fullscreen')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_signup)"/>
+			<action title="批量删除" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_signup)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/onlinesignup/batchOperate.shtml')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" align="center"/>
+			<column title="联系方式" name="phone" align="center"/>
+			<column title="性别" name="sex" align="center" width="80"/>
+			<column title="毕业院校" name="school" align="center"/>
+			<column title="报读专业" name="major" align="center"/>
+		</columns>
+	</view>
+	
+	<!-- 记录列表。用于前台和page配置文件关联的视图.name匹配page中的searchResults -->
+	<recordList name="onlineSignupQueryResults" title="报名信息查询结果列表"  >
+		<data>
+			<pojo>com.yuanluesoft.onlinesignup.pojo.admin.SignUp</pojo>
+		</data>
+	</recordList>
+	
+</views>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="applicationNavigator" type="com.yuanluesoft.jeaf.application.forms.ApplicationNavigator"/>
+  <form-bean name="applicationView" type="com.yuanluesoft.jeaf.application.forms.ApplicationView"/>
+  <form-bean name="listApplicationNavigatorTreeNodes" type="com.yuanluesoft.jeaf.application.forms.ListApplicationNavigatorTreeNodes"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action path="/application" scope="request"
+   type="com.yuanluesoft.jeaf.application.action.application.Load" validate="false"/>
+  <action name="applicationNavigator" path="/applicationNavigator"
+   scope="request"
+   type="com.yuanluesoft.jeaf.application.action.applicationnavigator.Load" validate="false">
+   <forward name="load" path="/applicationNavigator.jsp"/>
+  </action>
+  <action name="applicationView" path="/applicationView" scope="request"
+   type="com.yuanluesoft.jeaf.application.action.applicationview.ApplicationViewAction" validate="false">
+   <forward name="load" path="/applicationView.jsp"/>
+  </action>
+  <action name="listApplicationNavigatorTreeNodes"
+   path="/listApplicationNavigatorTreeNodes" scope="request"
+   type="com.yuanluesoft.jeaf.application.action.applicationnavigator.ListTreeNodes" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

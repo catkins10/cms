@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--公众服务-->
+ 	<class name="com.yuanluesoft.cms.publicservice.pojo.PublicService" table="cms_publicservice">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="sn"/> <!--编号,VARCHAR(20)-->
+		<property name="queryPassword"/> <!--查询密码,VARCHAR(30)-->
+		<property name="subject"/> <!--主题,VARCHAR(2000)-->
+		<property name="workingDay"/> <!--指定工作日,NUMERIC(3,0)-->
+		<property name="workingDate"/> <!--办理截止时间,timestamp null-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="creator"/> <!--创建人姓名,VARCHAR(20)-->
+		<property name="creatorSex"/> <!--创建人性别,CHAR(1)-->
+		<property name="creatorTel"/> <!--联系电话,VARCHAR(100)-->
+		<property name="creatorCertificateName"/> <!--创建人证件名称,VARCHAR(20)-->
+		<property name="creatorIdentityCard"/> <!--创建人证件号码,VARCHAR(30)-->
+		<property name="creatorMail"/> <!--邮箱,VARCHAR(100)-->
+		<property name="creatorIP"/> <!--创建人IP,VARCHAR(30)-->
+		<property name="creatorMobile"/> <!--创建人手机,VARCHAR(100)-->
+		<property name="creatorFax"/> <!--创建人传真,VARCHAR(100)-->
+		<property name="creatorUnit"/> <!--创建人所在单位,VARCHAR(200)-->
+		<property name="creatorJob"/> <!--创建人职业,VARCHAR(100)-->
+		<property name="creatorAddress"/> <!--创建人地址,VARCHAR(100)-->
+		<property name="creatorPostalcode"/> <!--邮政编码,VARCHAR(10)-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID,VARCHAR(32)-->
+		<property name="isPublic"/> <!--是否公开,CHAR(1)-->
+		<property name="remark"/> <!--附注,VARCHAR(250)-->
+		<property name="siteId"/> <!--隶属站点ID,NUMERIC(20,0)-->
+		<property name="publicPass"/> <!--同意公开,CHAR(1)-->
+		<property name="publicBody"/> <!--公开正文,CHAR(1)-->
+		<property name="publicWorkflow"/> <!--公开办理流程,CHAR(1)-->
+		<property name="publicSubject"/> <!--公开的主题,VARCHAR(200)-->
+		<property name="publicEnd"/> <!--公开截止时间,TIMESTAMP-->
+		<property name="publicPersonName"/> <!--公开经办人,VARCHAR(100)-->
+		<property name="publicPersonId"/> <!--公开经办人ID,NUMERIC(20,0)-->
+		<property name="completeTime"/> <!--办结时间,timestamp null-->
+		<property name="isDeleted"/> <!--是否删除,逻辑删除,NUMERIC(1)-->
+		<property name="clientDeviceId"/> <!--客户端设备ID,VARCHAR(100)-->
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+		<set name="visitors" table="cms_publicservice_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.cms.publicservice.pojo.PublicServicePrivilege" />
+		</set>
+		<set name="opinions" table="cms_publicservice_opinion" lazy="true" inverse="true" cascade="delete" order-by="created">
+			<key column="mainRecordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.cms.publicservice.pojo.PublicServiceOpinion" />
+		</set>
+		<set name="lazyBody" table="cms_publicservice_body" lazy="true" inverse="true" cascade="delete">
+			<key column="id" />
+			<one-to-many class="com.yuanluesoft.cms.publicservice.pojo.PublicServiceBody" />
+		</set>
+		
+		<!-- 在线报名 -->
+		<joined-subclass name="com.yuanluesoft.onlinesignup.pojo.admin.SignUp" table="signup_signup">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="name"/> <!--姓名-->
+			<property name="sex"/> <!--性别-->
+			<property name="school"/> <!--毕业学校-->
+			<property name="idCard"/> <!--身份证号-->
+			<property name="score"/> <!--中考成绩（应届生填）-->
+			<property name="candidateNo"/> <!--准考证号（应届生填）-->
+			<property name="province"/><!-- 省-->
+			<property name="city"/> <!--市-->
+			<property name="country"/> <!--县-->
+			<property name="addr"/> <!--家庭住址-->
+			<property name="postalCode"/> <!--邮政编码-->
+			<property name="phone"/> <!--联系电话-->
+			<property name="major"/> <!--报读专业-->
+			<property name="status"/> <!--状态-->
+			<property name="creator"/> <!--创建者-->
+			<property name="created"/> <!--创建时间-->
+		</joined-subclass>
+		
+		<!-- 学生注册/修改资料 -->
+		<joined-subclass name="com.yuanluesoft.educ.student.pojo.Stude" table="educ_student">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="name"/>
+			<property name="sex"/>
+			<property name="idcardNumber"/>
+			<property name="nation"/>
+			<property name="studentId"/>
+			<property name="department"/>
+			<property name="speciality"/>
+			<property name="stuclass"/>
+			<property name="grade"/>
+			<property name="idcardAddress"/>
+			<property name="houseAddress"/>
+			<property name="phone"/>
+			<property name="isOurStudent"/>
+			<property name="loginId"/>
+			<property name="password"/>
+			<property name="remark"/>
+			<property name="created"/>
+			<property name="isValid"/>
+			<property name="isAlter"/>
+			<property name="alterDescription"/>
+			<property name="alterStudentId"/>
+		</joined-subclass>
+		
+		<!--网上投诉-->
+		<joined-subclass name="com.yuanluesoft.cms.complaint.pojo.Complaint" table="cms_complaint">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="popedom"/> <!--事件辖区-->
+			<property name="area"/> <!--事件地点-->
+			<property name="type"/> <!--诉求类型-->
+			<property name="happenTime"/> <!--事件时间-->
+		</joined-subclass>
+		
+		<!--领导信箱-->
+		<joined-subclass name="com.yuanluesoft.cms.leadermail.pojo.LeaderMail" table="cms_leader_mail">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="popedom"/> <!--事件辖区-->
+			<property name="area"/> <!--事件地点-->
+			<property name="type"/> <!--类型-->
+			<property name="department"/> <!--受理部门-->
+			<property name="happenTime"/> <!--事件时间-->
+		</joined-subclass>
+		
+		<!--预审件-->
+		<joined-subclass name="com.yuanluesoft.cms.preapproval.pojo.Preapproval" table="cms_pre_approval">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="projectName"/> <!--预审项目名称-->
+		</joined-subclass>
+		
+		<!--效能监督-->
+		<joined-subclass name="com.yuanluesoft.cms.supervision.pojo.Supervision" table="cms_supervision">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="unit"/> <!--被监督机构-->
+			<!--漳州检察院-->
+		    <property name="source"/><!--来源-->
+		    <property name="otherSupervision"/><!--其他举报人-->
+		    <property name="unitCategory"/><!--被举报人主体类别-->
+		    <property name="mainSuspected"/><!--主要涉嫌性质-->
+		    <property name="secondarySuspected"/><!--次要涉嫌性质-->
+		</joined-subclass>
+		
+		<!--民意征集-->
+		<joined-subclass name="com.yuanluesoft.cms.advice.pojo.Advice" table="cms_advice">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="topicId"/> <!--主题ID-->
+			<many-to-one name="topic" class="com.yuanluesoft.cms.advice.pojo.AdviceTopic" column="topicId" update="false" insert="false"/>
+		</joined-subclass>
+		
+		<!--信息公开意见-->
+		<joined-subclass name="com.yuanluesoft.cms.infopublic.opinion.pojo.PublicOpinion" table="public_opinion">
+			<key>
+				<column name="id" />
+			</key>
+		</joined-subclass>
+		
+		<!--信息公开申请-->
+		<joined-subclass name="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest" table="public_request">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="proposerType"/> <!--申请人类型-->
+			<property name="code"/> <!--机构代码-->
+			<property name="legalRepresentative"/> <!--法人代表-->
+			<property name="unit"/> <!--涉及单位-->
+			<property name="unitId"/> <!--涉及单位ID-->
+			<property name="purpose"/> <!--用途-->
+			<property name="medium"/> <!--提供方式-->
+			<property name="receiveMode"/> <!--获取信息的方式-->
+			<property name="approvalResult"/> <!--审批结果,同意公开/同意部分公开/不公开-->
+			<property name="notPublicType"/> <!--不公开类别,信息不存在/非本部门掌握/申请内容不明确/免予公开/其他原因未能提供信息-->
+			<property name="notPublicReason"/> <!--其他未能提供信息的原因-->
+			<property name="doneMedium"/> <!--实际提供方式-->
+			<property name="doneReceiveMode"/> <!--实际获取信息的方式-->
+			<property name="approvalTime"/> <!-- 审批时间 -->
+			<property name="registrantId"/> <!--登记人ID,非网络申请时有效,numeric(20,0)-->
+			<property name="registrant"/> <!--登记人姓名,非网络申请时有效,varchar(50)-->
+			<property name="applyMode"/> <!--申请方式,电话、传真等，非网络申请时有效,varchar(50)-->
+			<set cascade="delete" inverse="true" lazy="true" name="notify" table="public_request_notify">
+				<key column="requestId" />
+				<one-to-many class="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequestNotify" />
+			</set>
+		</joined-subclass>
+		
+		<!--留言板-->
+		<joined-subclass name="com.yuanluesoft.cms.messageboard.pojo.MessageBoard" table="cms_message_board">
+			<key>
+				<column name="id" />
+			</key>
+		</joined-subclass>
+		
+		<!--在线访谈:主题征集-->
+		<joined-subclass name="com.yuanluesoft.cms.interview.collect.pojo.InterviewCollect" table="interview_collect">
+			<key>
+				<column name="id" />
+			</key>
+		</joined-subclass>
+		
+		<!--网上办事:在线投诉-->
+		<joined-subclass name="com.yuanluesoft.cms.onlineservice.interactive.complaint.pojo.OnlineServiceComplaint" table="onlineservice_complaint">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="itemId"/> <!--办理事项ID-->
+			<property name="itemName"/> <!--办理事项名称-->
+			<property name="creatorId"/> <!--创建人ID-->
+		</joined-subclass>
+		
+		<!--网上办事:在线咨询-->
+		<joined-subclass name="com.yuanluesoft.cms.onlineservice.interactive.consult.pojo.OnlineServiceConsult" table="onlineservice_consult">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="itemId"/> <!--办理事项ID-->
+			<property name="itemName"/> <!--办理事项名称-->
+			<property name="creatorId"/> <!--创建人ID-->
+		</joined-subclass>
+		
+		<!--图片征集-->
+		<joined-subclass name="com.yuanluesoft.cms.photocollect.pojo.PhotoCollect" table="cms_photo_collect">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="category"/> <!--图片分类-->
+			<property name="downloadable"/> <!--可否下载-->
+		</joined-subclass>
+		
+		<!--评论-->
+		<joined-subclass name="com.yuanluesoft.cms.comment.pojo.CmsComment" table="cms_comment">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="pageUrl"/> <!--页面URL-->
+			<property name="applicationName"/> <!--所在应用-->
+			<property name="pageName"/> <!--页面名称-->
+			<property name="pageTitle"/> <!--页面标题-->
+			<property name="siteId"/> <!--站点ID-->
+			<property name="recordId"/> <!--记录ID-->
+		</joined-subclass>
+		
+		<!--纠错-->
+		<joined-subclass name="com.yuanluesoft.cms.correction.pojo.CmsCorrection" table="cms_correction">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="pageUrl"/> <!--页面URL-->
+			<property name="applicationName"/> <!--所在应用-->
+			<property name="pageName"/> <!--页面名称-->
+			<property name="pageTitle"/> <!--页面标题-->
+			<property name="siteId"/> <!--站点ID-->
+			<property name="recordId"/> <!--记录ID-->
+		</joined-subclass>
+		
+		<!--岩土工程勘察项目-->
+		<joined-subclass name="com.yuanluesoft.cin.geotechnical.pojo.Geotechnical" table="cin_geotechnical">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="projectName"/> <!--项目名称-->
+			<property name="constructionUnit"/> <!--建设单位-->
+			<property name="constructionPlace"/> <!--建设地点-->
+			<property name="surveyUnit"/> <!--勘察单位-->
+			<property name="approachTime"/> <!--拟进场时间-->
+		</joined-subclass>
+		
+		<!--物流联盟:投诉-->
+		<joined-subclass name="com.yuanluesoft.logistics.complaint.pojo.LogisticsComplaint" table="logistics_complaint">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="compaintPersonId"/> <!--投诉人ID,numeric(20)-->
+			<property name="compaintPersonName"/> <!--投诉人,varchar(30)-->
+			<property name="supplyId"/> <!--被投诉货源ID,numeric(20)-->
+			<property name="vehicleSupplyId"/> <!--被投诉车源ID,numeric(20)-->
+			<property name="supplyDescription"/> <!--货源/车源描述,varchar(1000)-->
+			<property name="userId"/> <!--被投诉公司/个人ID,numeric(20)-->
+			<property name="userName"/> <!--被投诉公司/个人,varchar(200)-->
+			<property name="deleteSupply"/> <!--处理结果：删除货源/车源,char(1)-->
+			<property name="addBlacklist"/> <!--处理结果：公司/个人加入黑名单,char(1)-->
+		</joined-subclass>
+		
+		<!--96123:在线咨询-->
+		<joined-subclass name="com.yuanluesoft.asc.consult.pojo.AscConsult" table="asc_consult">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="itemId"/> <!--办理事项ID,NUMERIC(20,0)-->
+			<property name="itemName"/> <!--办理事项名称,VARCHAR(200)-->
+		</joined-subclass>
+		
+		<!--96123:在线投诉-->
+		<joined-subclass name="com.yuanluesoft.asc.complaint.pojo.AscComplaint" table="asc_complaint">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="itemId"/> <!--办理事项ID,NUMERIC(20,0)-->
+			<property name="itemName"/> <!--办理事项名称,VARCHAR(200)-->
+		</joined-subclass>
+		
+		<!--民情回应-->
+		<joined-subclass name="com.yuanluesoft.cms.situation.pojo.Situation" table="cms_situation">
+			<key>
+				<column name="id" />
+			</key>
+			<property name="category"/> <!--类型,预设“办事、咨询、建议、投诉、举报”,VARCHAR(20)-->
+			<property name="unitId"/> <!--受理部门ID,NUMERIC(20)-->
+			<property name="unitName"/> <!--受理部门,VARCHAR(100)-->
+			<property name="area"/> <!--所属区域,VARCHAR(30)-->
+			<property name="source"/> <!--受理渠道,网络平台、来信来访、服务热线、民情信息员、座谈会、便民服务受理点、民情回应平台、其他,VARCHAR(30)-->
+			<property name="receiver"/> <!--受理人,VARCHAR(30)-->
+			<property name="receiverTel"/> <!--受理人电话,VARCHAR(50)-->
+			<property name="receiveTime"/> <!--受理时间,TIMESTAMP null-->
+			<property name="transactOpinion"/> <!--民情办理意见,（1）由村、社区处理（2）提交镇党委、政府研究决定（3）由挂村领导协调职能部门处理（具体部门：          ）,VARCHAR(1000)-->
+			<property name="coordinateUnitId"/> <!--协调的部门ID,NUMERIC(20)-->
+			<property name="coordinateUnitName"/> <!--协调的部门名称,VARCHAR(100)-->
+			<property name="transactorId"/> <!--办理人ID,NUMERIC(20)-->
+			<property name="transactor"/> <!--办理人,VARCHAR(50)-->
+			<property name="transactTime"/> <!--办理时间,TIMESTAMP null-->
+			<property name="feedback"/> <!--民事办理结果,民情回应的最终办理结果，建议由各级接收民情回应信件的单位填写，形成最终的民事办理结果,VARCHAR(4000)-->
+			<property name="feedbackUnitId"/> <!--回应单位ID,NUMERIC(20)-->
+			<property name="feedbackUnit"/> <!--回应单位,VARCHAR(100)-->
+			<property name="feedbackTime"/> <!--回应时间,TIMESTAMP null-->
+			<property name="feedbackNumber"/> <!--回应函编号,VARCHAR(100)-->
+			<property name="feedbackSender"/> <!--回应函送达人,后台补录,VARCHAR(30)-->
+			<property name="feedbackSendTime"/> <!--回应函送达时间,后台补录,TIMESTAMP null-->
+			<property name="appraise"/> <!--办理评价,办理评价由各村（社区）、乡镇或部门回应函送达人将村民的办理评价补录到系统中，内容如下：（1）满意（2）比较满意（3）不满意,VARCHAR(30)-->
+			<property name="appraiser"/> <!--评价人,评价人由各村（社区）、乡镇或部门回应函送达人将填写在纸质上的评价村民姓名补录到系统中,VARCHAR(30)-->
+			<property name="appraiseTime"/> <!--评价时间,评价时间由各村（社区）、乡镇或部门回应函送达人将村民填写在纸质上的评价时间补录到系统中,TIMESTAMP null-->
+			<property name="appraiserTel"/> <!--联系方式,联系方式由各村（社区）、乡镇或部门回应函送达人将填写在纸质上的评价村民联系方式补录到系统中,VARCHAR(50)-->
+			<!-- 上报或协调其它单位 -->
+			<set name="coordinates" table="cms_situation_coordinate" lazy="true" inverse="true" cascade="delete" order-by="coordinateTime">
+				<key column="situationId" />
+				<one-to-many class="com.yuanluesoft.cms.situation.pojo.SituationCoordinate" />
+			</set>
+		</joined-subclass>
+ 	</class>
+
+	<!--公众服务:正文-->
+ 	<class name="com.yuanluesoft.cms.publicservice.pojo.PublicServiceBody" table="cms_publicservice_body">
+ 		<id name="id">
+ 			<generator class="assigned" />
+ 		</id>
+ 		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType" />
+ 	</class>
+
+ 	<!--公众服务:权限控制-->
+	<class name="com.yuanluesoft.cms.publicservice.pojo.PublicServicePrivilege" table="cms_publicservice_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--公众服务:办理意见-->
+	<class name="com.yuanluesoft.cms.publicservice.pojo.PublicServiceOpinion" table="cms_publicservice_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="created"/> <!--填写时间-->
+	</class>
+	
+	<!--公众服务:编号-->
+	<class name="com.yuanluesoft.cms.publicservice.pojo.PublicServiceSN" table="cms_publicservice_sn">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="day"/> <!--日期-->
+		<property name="sn"/> <!--编号-->
+	</class>
+	
+	<!--公众服务:流程绑定-->
+	<class name="com.yuanluesoft.cms.publicservice.pojo.WorkflowSetting" table="cms_publicservice_workflow">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="applicationName"/> <!--应用名称-->
+		<property name="siteId"/> <!--绑定的站点ID-->
+		<property name="workflowId"/> <!--绑定的流程ID-->
+		<property name="workflowName"/> <!--绑定的流程名称-->
+	</class>
+	
+	<!--公众服务:办结短信格式-->
+	<class name="com.yuanluesoft.cms.publicservice.pojo.PublicServiceSms" table="cms_publicservice_sms">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="applicationName"/> <!--应用名称-->
+		<property name="siteId"/> <!--绑定的站点ID-->
+		<property name="smsFormat"/> <!--短信格式-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<data-sources/>
+	<form-beans>
+		<form-bean name="parameter" type="com.yuanluesoft.customise.complaint.forms.Parameter"/>
+		<form-bean name="complaint" type="com.yuanluesoft.customise.complaint.forms.Complaint"/>
+	</form-beans>
+	<global-exceptions>
+		<exception key="exception" path="/../../jeaf/form/error.jsp" scope="request" type="java.lang.Exception"/>
+	</global-exceptions>
+	<global-forwards>
+		<forward name="result" path="/../../jeaf/form/result.jsp"/>
+	</global-forwards>
+	<action-mappings>
+		<action name="complaint" path="/complaint" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.workflow.Load" validate="false">
+			<forward name="load" path="/complaint.jsp"/>
+		</action>
+		<action input="/complaint.jsp" name="complaint" path="/saveComplaint" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.workflow.Save" validate="false"/>
+		<action input="/complaint.jsp" name="complaint" path="/deleteComplaint" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.workflow.Delete" validate="false"/>
+		<action name="complaint" path="/complaintAttachmentEditor" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.workflow.SelectAttachment" validate="false">
+			<forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+		</action>
+		<action name="complaint" path="/selectComplaintAttachment" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.workflow.SelectAttachment" validate="false">
+			<forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+		</action>
+		<action input="/complaint.jsp" name="complaint" path="/runComplaint" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.workflow.Run" validate="false"/>
+		<action input="/complaint.jsp" name="complaint" path="/writeOpinion" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.workflow.WriteOpinion" validate="false"/>
+		<action name="parameter" path="/parameter" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.normal.Load" validate="false">
+			<forward name="load" path="/parameter.jsp"/>
+		</action>
+		<action input="/parameter.jsp" name="parameter" path="/saveParameter" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.normal.Save" validate="false"/>
+		<action input="/parameter.jsp" name="parameter" path="/deleteParameter" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.normal.Delete" validate="false"/>
+		<action name="parameter" path="/parameterAttachmentEditor" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.normal.SelectAttachment" validate="false">
+			<forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+		</action>
+		<action name="parameter" path="/selectParameterAttachment" scope="request" type="com.yuanluesoft.jeaf.application.builder.actions.standardforms.normal.SelectAttachment" validate="false">
+			<forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+		</action>
+	</action-mappings>
+</struts-config>

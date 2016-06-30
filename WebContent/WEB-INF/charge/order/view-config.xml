@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views>
+	<view name="personalOrders" title="我订购的服务" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.servicemanage.pojo.PersonalOrder</pojo>
+			<where>PersonalOrder.personId={USERID}</where>
+			<orderBy>PersonalOrder.orderTime DESC</orderBy>
+			<quickFilter>PersonalOrder.orderTime like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>personalOrder.shtml?act=edit&amp;id={PARAMETER:id}</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="服务列表" name="orderItems.servicePriceName" length="5" separator="、" ellipsis="..."/>
+			<column title="订购时间" name="orderTime"  align="false" width="110"/>
+			<column title="服务截止时间" name="serviceEnd"  align="center" width="100"/>
+		</columns>
+	</view>
+</views>

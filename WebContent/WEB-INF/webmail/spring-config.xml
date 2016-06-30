@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>	
+	<!-- 邮件服务 -->
+	<bean id="webMailService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref local="webMailServiceImpl"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-MailException</prop>
+				<prop key="synchMailList">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="receiveMail">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="setReadFlag">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="copyMail">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="saveMail">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="moveMail">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="uploadAttachment">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="deleteAttachment">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="deleteMail">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="forwardMail">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="cleanTemporaryMail">PROPAGATION_REQUIRED,-MailException</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="webMailServiceImpl" class="com.yuanluesoft.webmail.service.spring.WebMailServiceImpl">
+		<property name="innerMailServer"><ref local="innerMailServer"/></property> <!--系统内部的邮件服务器-->
+		<property name="databaseService"><ref bean="databaseService"/></property> <!--数据库访问对象-->
+		<property name="attachmentService"><ref bean="webMailAttachmentService"/></property> <!--附件管理服务-->
+		<property name="imageService"><ref bean="imageService"/></property> <!--图片管理服务-->
+		<property name="mailFilterService"><ref bean="mailFilterServiceImpl"/></property> <!--邮件过滤服务-->
+		<property name="personalPOP3Service"><ref bean="personalPOP3Service"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="standardMailService"><ref bean="standardMailService"/></property>
+	</bean>
+	
+	<!-- 内置邮件服务器 -->
+	<bean id="innerMailServer" class="com.yuanluesoft.webmail.model.MailServer">
+		<property name="mailService"><ref local="jamesMailService"/></property> <!--邮件服务-->
+		<property name="mailDomain"><value>localhost</value></property> <!--邮件域名-->
+		<property name="serverHost"><value>localhost</value></property> <!--邮件服务器主机名-->
+		<property name="sendPort"><value>25</value></property> <!--邮件服务器发送端口-->
+		<property name="receivePort"><value>110</value></property> <!--邮件服务器接收端口-->
+		<property name="managePort"><value>4555</value></property> <!--邮件服务器管理端口-->
+		<property name="managerName"><value>root</value></property> <!--管理员帐号-->
+		<property name="managerPassword"><value>root</value></property> <!--管理员密码-->
+	</bean>
+	
+	<!-- 邮件视图服务 -->
+	<bean id="webMailViewServiceService" class="com.yuanluesoft.webmail.service.spring.WebMailViewServiceImpl">
+		<property name="webMailService"><ref local="webMailServiceImpl"/></property> <!--邮件服务-->
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="eaiClient"><ref bean="eaiClient"/></property>
+		<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+		<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+	</bean>
+
+	<!-- 邮箱服务 -->
+	<bean id="mailboxService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.webmail.service.spring.MailboxServiceImpl">
+				<property name="webMailService"><ref local="webMailServiceImpl"/></property> <!--邮件服务-->
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<property name="eaiClient"><ref bean="eaiClient"/></property>
+				<property name="viewCustomizeService"><ref bean="viewCustomizeService"/></property>
+				<property name="workflowExploitService"><ref bean="workflowExploitService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-MailException</prop>
+				<prop key="deleteMailbox">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="rename*">PROPAGATION_REQUIRED,-MailException</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 邮件过滤服务 -->
+	<bean id="mailFilterService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref local="mailFilterServiceImpl"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-MailException</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="doFilter">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="adjustFilterPriority">PROPAGATION_REQUIRED,-MailException</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="mailFilterServiceImpl" class="com.yuanluesoft.webmail.service.spring.MailFilterServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+		<property name="viewService"><ref bean="viewService"/></property>
+		<property name="viewDefineService"><ref bean="viewDefineService"/></property>
+		<property name="webMailService"><ref local="webMailServiceImpl"/></property>
+	</bean>
+	
+	<!-- WEB邮件附件管理服务 -->
+	<bean id="webMailAttachmentService" class="com.yuanluesoft.webmail.service.spring.WebMailAttachmentServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="fileDownloadCache"><ref bean="fileDownloadCache"/></property>
+		<property name="fileUploadService"><ref bean="fileUploadService"/></property>
+		<property name="baseDirectory"><ref bean="attachmentDirectory"/></property>
+		<property name="renameUploadedFile"><value>false</value></property>
+	</bean>
+
+	<!-- james 邮件接收服务 -->
+	<bean id="jamesMailService" class="com.yuanluesoft.webmail.service.mailservice.james.MailServiceImpl">
+		<property name="inboxDirectory"><value>C:/Software/james-2.3.2/apps/james/var/mail/inboxes/</value></property>
+	</bean>
+	
+	<!-- 标准邮件服务 -->
+	<bean id="standardMailService" class="com.yuanluesoft.webmail.service.mailservice.standard.MailServiceImpl"/>
+	
+	<!-- POP3代收服务 -->
+	<bean id="personalPOP3Service" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.webmail.service.spring.PersonalPOP3ServiceImpl">
+				<property name="cryptService"><ref bean="cryptService"/></property>
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-MailException</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-MailException</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-MailException</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 邮件用户同步服务 -->
+	<bean id="mailUserSynchService" class="com.yuanluesoft.webmail.service.spring.UserSynchServiceImpl">
+		<property name="innerMailServer"><ref bean="innerMailServer"/></property>
+	</bean>
+	
+	<!-- WEB邮件导航服务 -->
+	<bean id="webMailNavigatorService" class="com.yuanluesoft.webmail.service.spring.ApplicationNavigatorServiceImpl">
+		<property name="mailboxService"><ref bean="mailboxService"/></property>
+	</bean>
+</beans>

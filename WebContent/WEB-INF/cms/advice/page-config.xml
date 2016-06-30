@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 民意征集 -->
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/advice"/>
+		
+		<page name="adviceTopic" realtimeStaticPage="true" title="征集主题" url="/cms/advice/adviceTopic.shtml" systemLink="false" recordClass="com.yuanluesoft.cms.advice.pojo.AdviceTopic">
+			<link title="建议列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/advice&amp;pageName=advices&amp;topicId={PARAMETER:id}"/>
+			<link title="结果反馈" url="/cms/advice/adviceFeedback.shtml?topicId={PARAMETER:id}"/>
+		</page>
+		
+		<page name="advice" title="建议" url="/cms/advice/advice.shtml" systemLink="false" recordClass="com.yuanluesoft.cms.advice.pojo.Advice"/>
+		
+		<page name="adviceSubmitted" title="建议提交完成" systemLink="false"/>
+		
+		<page name="adviceTopics" title="民意征集主题列表(全部)" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/advice&amp;pageName=adviceTopics"/>
+		
+		<page name="processingAdviceTopics" title="民意征集主题列表(征集中)" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/advice&amp;pageName=processingAdviceTopics"/>
+		
+		<page name="completedAdviceTopics" title="民意征集主题列表(已结束)" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/advice&amp;pageName=completedAdviceTopics"/>
+		
+		<page name="advices" title="民意征集建议列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/advice&amp;pageName=advices">
+			<link title="查看主题" url="/cms/advice/adviceTopic.shtml?topicId={PARAMETER:topicId}"/>
+		</page>
+		
+		<page name="adviceFeedback" title="民意征集结果反馈" systemLink="false" recordClass="com.yuanluesoft.cms.advice.pojo.AdviceFeedback">
+			<link title="查看主题" url="/cms/advice/adviceTopic.shtml?topicId={PARAMETER:topicId}"/>
+		</page>
+	</pages>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="adviceTopics" processor="adviceTopicsProcessor"/> <!-- 民意征集主题(全部) -->
+		<pageElement name="processingAdviceTopics" processor="adviceTopicsProcessor"/> <!-- 民意征集主题(征集中) -->
+		<pageElement name="completedAdviceTopics" processor="adviceTopicsProcessor"/> <!-- 民意征集主题(已结束) -->
+		<pageElement name="feedbackAdviceTopics" processor="adviceTopicsProcessor"/> <!-- 民意征集主题(已反馈) -->
+		<pageElement name="advices" processor="publicServicesProcessor"/> <!-- 民意征集建议列表(按主题) -->
+		<pageElement name="advicesBySite" processor="publicServicesProcessor"/> <!-- 民意征集建议列表(按站点) -->
+	</pageElements>
+</application>

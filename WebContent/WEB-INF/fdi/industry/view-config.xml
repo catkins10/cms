@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="admin/industry" form="admin/industry" title="行业分类" hide="noPrivilege(application_manager)" pageRows="25" openFeatures="mode=dialog,width=500,height=300">
+		<data>
+			<pojo>com.yuanluesoft.fdi.industry.pojo.FdiIndustry</pojo>
+			<where>FdiIndustry.parentCategoryId=0</where>
+			<orderBy>FdiIndustry.category</orderBy>
+		</data>
+		<actions>
+			<action title="添加分类" hide="noPrivilege(application_manager)"  execute="PageUtils.newrecord('fdi/industry', 'admin/industry', 'mode=dialog,width=500,height=300')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="行业分类" name="category"/>
+		</columns>
+	</view>
+</views>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- WEBIM服务 -->
+	<bean id="webimService" class="com.yuanluesoft.im.webim.service.spring.WebimServiceImpl">
+		<property name="imService"><ref bean="imService"/></property>
+		<property name="pageService"><ref bean="pageService"/></property>
+	</bean>
+
+	<!-- WEBIM页面服务 -->
+	<bean id="webimPageService" class="com.yuanluesoft.im.webim.pages.WebimPageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+		<property name="imService"><ref bean="imService"/></property>
+	</bean>
+	
+	<!-- WEBIM对话页面服务 -->
+	<bean id="webimChatPageService" class="com.yuanluesoft.im.webim.pages.WebimChatPageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+		<property name="imService"><ref bean="imService"/></property>
+		<property name="htmlParser"><ref bean="htmlParser"/></property>
+	</bean>
+	
+	<!-- 系统消息页面服务 -->
+	<bean id="webimSystemMessagePageService" class="com.yuanluesoft.im.webim.pages.WebimSystemMessagePageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+		<property name="imService"><ref bean="imService"/></property>
+	</bean>
+	
+	<!-- WEBIM个人设置页面服务 -->
+	<bean id="webimPersonalSettingPageService" class="com.yuanluesoft.im.webim.pages.WebimPersonalSettingPageService">
+		<property name="pageBuilder"><ref bean="pageBuilder"/></property>
+		<property name="staticPageBuilder"><ref bean="staticPageBuilder"/></property>
+		<property name="pageDefineService"><ref bean="pageDefineService"/></property>
+		<property name="templateService"><ref bean="templateService"/></property>
+		<property name="imService"><ref bean="imService"/></property>
+	</bean>
+</beans>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.archives.administrative.forms.AdministrativeArchives"  title="文书档案" pojo="com.yuanluesoft.archives.administrative.pojo.AdministrativeArchives">
+		<formFields>
+			<field title="访问者" name="readers" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="javascript:window.close()"/>
+			<action title="保存" hide="isRead()" execute="javascript:submit()"/>
+			<action title="删除" hide="deleteDisable()" execute="javascript:if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('delete')"/>
+		</actions>
+	</form>
+</forms>

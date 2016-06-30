@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="工作量考核" class="com.yuanluesoft.enterprise.workload.pojo.WorkloadAssess">
+		<field name="assessYear" title="年度" length="4" required="true" type="number" inputMode="hidden"/>
+		<field name="assessMonth" title="月份" length="2" required="true" type="number" inputMode="hidden"/>
+		<field name="creatorId" title="考核人ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="考核人" length="60" type="string" inputMode="readonly"/>
+		<field name="created" title="考核时间" type="timestamp" inputMode="readonly"/>
+		<field name="results" title="成绩列表" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.workload.pojo.WorkloadAssessResult</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="工作量考核成绩" class="com.yuanluesoft.enterprise.workload.pojo.WorkloadAssessResult">
+		<field name="assessId" title="考核ID" length="20" type="number" inputMode="hidden"/>
+		<field name="personId" title="被考核人ID" length="20" type="number" inputMode="hidden"/>
+		<field name="personName" title="被考核人" length="60" type="string" inputMode="readonly"/>
+		<field name="workload" title="工作量" length="4,1" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">100\0 105\0 110\0 115\0 120\0 95\0 90\0 85\0 80\0 75\0 70\0 65\0 60</parameter>
+		</field>
+		<field name="remark" title="考核说明" length="2000" type="string" inputMode="text"/>
+		<field name="assess" title="工作量考核" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.enterprise.workload.pojo.WorkloadAssess</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

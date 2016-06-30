@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/industry" class="com.yuanluesoft.fdi.industry.forms.admin.Industry" title="行业分类" pojo="com.yuanluesoft.fdi.industry.pojo.FdiIndustry">
+		<formFields>
+			<field title="编辑权限" name="editors" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field title="查看权限" name="readers" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+			<field title="上级分类" name="parentCategory" type="string" inputMode="readonly"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="新建下一个" hide="isOld()" execute="FormUtils.doAction('createNextIndustry')"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteIndustry')"/>
+			<action title="添加下级分类" hide="isRead() or isNew()" execute="PageUtils.newrecord('fdi/industry', 'admin/industry', 'mode=dialog,width=500,height=300', 'parentCategoryId={PARAMETER:id}')"/>
+		</actions>
+	</form>
+</forms>

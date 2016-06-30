@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="主题" class="com.yuanluesoft.cms.interview.pojo.InterviewSubject" businessServiceName="interviewService">
+		<field name="subject" title="主题" length="200" required="true" type="string" inputMode="text">
+			<parameter name="rssTitleField">true</parameter>
+		</field>
+		<field name="background" title="访谈背景" type="html" inputMode="htmleditor">
+			<parameter name="rssDescriptionField">true</parameter>
+			<parameter name="attachmentSelector">/cms/interview/admin/selectAttachment.shtml</parameter>
+			<parameter name="height">330</parameter>
+		</field>
+		<field name="beginTime" title="开始时间" required="true" type="timestamp" inputMode="datetime">
+			<parameter name="rssPubDateField">true</parameter>
+		</field>
+		<field name="endTime" title="结束时间" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="guests" title="嘉宾" length="300" required="true" type="string" inputMode="text"/>
+		<field name="guestsIntro" title="嘉宾介绍" type="html" inputMode="htmleditor">
+			<parameter name="attachmentSelector">/cms/interview/admin/selectAttachment.shtml</parameter>
+			<parameter name="height">330</parameter>
+		</field>
+		<field name="guestsPassword" title="嘉宾登录密码" length="20" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="compereIds" title="主持人ID列表" length="100" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="compereNames" title="主持人姓名列表" length="100" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(600, 400, true, 'compereIds{id},compereNames{name|主持人|100%}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="speakFlow" title="网友发言审核顺序" length="300" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.openListDialog('角色选择', 'roleNames', 600, 400, true, 'speakFlow{value},speakFlow{value|角色|100%}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="compereSpeakFlow" title="主持人发言审核顺序" length="300" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.openListDialog('角色选择', 'roleNames', 600, 400, true, 'compereSpeakFlow{value},compereSpeakFlow{value|角色|100%}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="guestsSpeakFlow" title="嘉宾发言审核顺序" length="300" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.openListDialog('角色选择', 'roleNames', 600, 400, true, 'guestsSpeakFlow{value},guestsSpeakFlow{value|角色|100%}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="creator" title="创建人" length="30" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="创建人ID" type="number" inputMode="none"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="isEnding" title="是否结束" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">结束|1\0未结束|0</parameter>
+		</field>
+		<field name="siteId" title="站点ID" type="number" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="roles" title="访谈角色列表" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.interview.pojo.InterviewSubjectRole</parameter>
+		</field>
+		<field name="interviewSpeaks" title="访谈发言列表" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.interview.pojo.InterviewSpeak</parameter>
+		</field>
+		<field name="interviewImages" title="访谈图片列表" type="components">
+			<parameter name="class">com.yuanluesoft.cms.interview.pojo.InterviewImage</parameter>
+			<parameter name="url">/cms/interview/interview.shtml?id={PARAMETER:interviewSubjectId}</parameter>
+		</field>
+		<field name="interviewVideos" title="访谈视频列表" type="components">
+			<parameter name="class">com.yuanluesoft.cms.interview.pojo.InterviewVideo</parameter>
+			<parameter name="url">/cms/interview/interview.shtml?id={PARAMETER:interviewSubjectId}</parameter>
+		</field>
+		<field name="hasImages" title="是否有图" persistence="false" type="string" inputMode="readonly">
+			<parameter name="itemsText">图\0多图</parameter>
+			<parameter name="referenceFields">interviewImages</parameter>
+		</field>
+		<field name="hasVideos" title="是否有视频" persistence="false" type="string" inputMode="readonly">
+			<parameter name="itemsText">视频</parameter>
+			<parameter name="referenceFields">interviewVideos</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="recordList">false</parameter>
+			<parameter name="serviceName">siteImageService</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="recordList">false</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">1000000</parameter>
+			<parameter name="recordList">false</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">500000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="recordList">false</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+			<parameter name="serviceName">siteVideoService</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="发言审核顺序" class="com.yuanluesoft.cms.interview.pojo.InterviewSpeakFlow">
+		<field name="siteId" title="站点ID" type="number" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="speakFlow" title="网友发言审核顺序" length="300" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.openListDialog('角色选择', 'roles', 600, 400, true, 'speakFlow{value},speakFlow{value|角色|100%}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="compereSpeakFlow" title="主持人发言审核顺序" length="300" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.openListDialog('角色选择', 'roles', 600, 400, true, 'compereSpeakFlow{value},compereSpeakFlow{value|角色|100%}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="guestsSpeakFlow" title="嘉宾发言审核顺序" length="300" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.openListDialog('角色选择', 'roles', 600, 400, true, 'guestsSpeakFlow{value},guestsSpeakFlow{value|角色|100%}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="发言审核人角色" class="com.yuanluesoft.cms.interview.pojo.InterviewRole">
+		<field name="siteId" title="站点ID" type="number" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="role" title="角色名称" length="20" required="true" type="string" inputMode="text"/>
+		<field name="roleMemberIds" title="默认的人员ID列表" length="200" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="roleMemberNames" title="默认的人员姓名列表" length="200" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectPerson(600, 400, true, 'roleMemberIds{id},roleMemberNames{name|角色成员|100%}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="访谈发言" class="com.yuanluesoft.cms.interview.pojo.InterviewSpeak" businessServiceName="interviewService">
+		<field name="subjectId" title="主题ID" type="number" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="speaker" title="发言人姓名" length="200" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">interviewService</parameter>
+			<parameter name="valueField">interviewSpeak.speakerType</parameter>
+			<parameter name="itemsName">speakers</parameter>
+		</field>
+		<field name="speakerIP" title="发言人IP" length="30" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="speakerContacts" title="发言人联系方式" length="100" type="string" inputMode="text"/>
+		<field name="speakerType" title="发言人类型" type="string" inputMode="hidden"/>
+		<field name="content" title="内容" type="html" inputMode="htmleditor">
+			<parameter name="commandSet">outer</parameter>
+			<parameter name="attachmentSelector">/cms/interview/admin/selectAttachment.shtml</parameter>
+			<parameter name="height">180</parameter>
+			<parameter name="centerImage">false</parameter>
+		</field>
+		<field name="speakTime" title="发言时间" type="timestamp" inputMode="datetime"/>
+		<field name="isLeave" title="是否留言" length="1" type="char" inputMode="none"/>
+		<field name="approvalRole" title="当前审核人角色" length="20" type="string" inputMode="none"/>
+		<field name="publishTime" title="发布时间" type="timestamp" inputMode="datetime"/>
+		<field name="images" title="图片" type="image" inputMode="attachment"/>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+		</field>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">1000000</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">500000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="访谈图片" class="com.yuanluesoft.cms.interview.pojo.InterviewImage" businessServiceName="interviewService">
+		<field name="interviewSubjectId" title="主题ID" type="number" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="imageUrl" title="图片URL" length="800" required="true" type="string" inputMode="select">
+			<parameter name="execute">selectImage()</parameter>
+			<parameter name="singleByteCharacters">true</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="imageFileName" title="图片文件名称" type="imageName" inputMode="text">
+			<parameter name="referenceFields">images,imageUrl</parameter>
+		</field>
+		<field name="subject" title="标题" length="200" required="true" type="string" inputMode="text"/>
+		<field name="created" title="上传时间" length="100" type="timestamp" inputMode="readonly"/>
+		<field name="creatorId" title="创建人ID" type="string" inputMode="none"/>
+		<field name="creator" title="创建人" length="200" type="string" inputMode="text"/>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="recordList">false</parameter>
+			<parameter name="serviceName">siteImageService</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="访谈视频" class="com.yuanluesoft.cms.interview.pojo.InterviewVideo" businessServiceName="interviewService">
+		<field name="interviewSubjectId" title="主题ID" type="number" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="videoUrl" title="视频URL" length="800" required="true" type="string" inputMode="select">
+			<parameter name="execute">selectVideo()</parameter>
+			<parameter name="singleByteCharacters">true</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="videoFileName" title="视频文件名称" type="videoName" inputMode="text" persistence="false">
+			<parameter name="referenceFields">videos,videoUrl</parameter>
+		</field>
+		<field name="subject" title="标题" length="200" required="true" type="string" inputMode="text"/>
+		<field name="created" title="上传时间" length="100" type="string" inputMode="text"/>
+		<field name="creatorId" title="创建人ID" length="100" type="string" inputMode="text"/>
+		<field name="creator" title="创建人" length="200" type="string" inputMode="text"/>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">500000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+			<parameter name="serviceName">siteVideoService</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

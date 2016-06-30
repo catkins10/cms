@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping>
+	<!--组织机构:目录-->
+	<class name="com.yuanluesoft.jeaf.usermanage.pojo.Org" table="user_directory">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryName"/> <!--目录名称-->
+		<property name="parentDirectoryId"/> <!--上级目录ID-->
+		<property name="priority"/> <!--优先级-->
+		<property name="directoryType"/> <!--目录类型-->
+		<property name="creator"/> <!--创建人-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="created"/> <!--创建时间-->
+		<property name="remark"/> <!--备注-->
+		<property name="lastModified"/> <!--最后修改时间-->
+		<set cascade="delete" inverse="true" lazy="true" name="directoryPopedoms" table="user_directory_popedom" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.OrgPopedom" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="subjections" table="user_directory_subjection" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.OrgSubjection" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="childSubjections" table="user_directory_subjection">
+			<key column="parentDirectoryId" />
+			<one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.OrgSubjection" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="leaders" table="user_org_leader" order-by="id">
+			<key column="orgId" />
+			<one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.OrgLeader" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="supervisors" table="user_org_supervisor" order-by="id">
+			<key column="orgId" />
+			<one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.OrgSupervisor" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="userPageTemplates" table="user_personal_index_template">
+			<key column="userId" />
+			<one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.UserPageTemplate" />
+		</set>
+		<!-- 根组织 -->
+		<joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.OrgRoot" table="user_root">
+            <key>
+                <column name="id" />
+            </key>
+		</joined-subclass>
+        <!-- 组织机构分类 -->
+        <joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.OrgCategory" table="user_category">
+            <key>
+                <column name="id" />
+            </key>
+        </joined-subclass>
+        
+        <!--组织机构:组织机构引用-->
+        <joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.OrgLink" table="user_directory_link">
+            <key>
+                <column name="id" />
+            </key>
+            <property name="linkedDirectoryId"/> <!--引用的组织机构ID,NUMERIC(20)-->
+        </joined-subclass>
+        
+        <!-- 地区 -->
+        <joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.Area" table="user_area">
+            <key>
+                <column name="id" />
+            </key>
+        </joined-subclass>
+        <!-- 单位 -->
+        <joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.Unit" table="user_unit">
+            <key>
+                <column name="id" />
+            </key>
+            <property name="fullName"/>
+            <property name="unitCode"/> <!--单位编码-->
+            <property name="responsibility"/> <!--主要职责-->
+			<property name="address"/> <!--单位地址-->
+			<property name="postcode"/> <!--邮政编码-->
+			<property name="linkman"/> <!--联系人-->
+			<property name="tel"/> <!--联系电话-->
+			<property name="way"/> <!--交通线路-->
+			<property name="webSite"/> <!--网站-->
+			<property name="email"/> <!--EMAIL-->
+			<property name="subordinateUnitIds"/> <!--下级单位ID,VARCHAR(2000)-->
+			<property name="subordinateUnitNames"/> <!--下级单位名称,VARCHAR(2000)-->
+			<property name="secondaryUnitIds"/> <!--二级单位ID,如：公路局是交通局的二级单位,VARCHAR(2000)-->
+			<property name="secondaryUnitNames"/> <!--二级单位名称,VARCHAR(2000)-->
+		</joined-subclass>
+        <!-- 部门 -->
+        <joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.UnitDepartment" table="user_department">
+            <key>
+                <column name="id" />
+            </key>
+        </joined-subclass>
+        <!-- 学校 -->
+        <joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.School" table="user_school">
+            <key>
+                <column name="id" />
+            </key>
+            <property name="category"/>
+            <property name="fullName"/>
+        </joined-subclass>
+        <!-- 班级 -->
+        <joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.SchoolClass" table="user_class">
+            <key>
+                <column name="id" />
+            </key>
+            <property name="classNumber" />
+            <property name="enrollTime" />
+            <property name="lengthOfSchooling"/>
+            <property name="isGraduated" /> <!-- 是否毕业 -->
+            <set cascade="delete" inverse="true" lazy="true" name="teachers" table="user_class_teacher">
+	            <key column="classId" />
+	            <one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.ClassTeacher" />
+	        </set>
+        </joined-subclass>
+        <!-- 学校部门 -->
+        <joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.SchoolDepartment" table="user_school_department">
+            <key>
+                <column name="id" />
+            </key>
+        </joined-subclass>
+	</class>
+	
+	<!--组织机构:目录隶属关系-->
+	<class name="com.yuanluesoft.jeaf.usermanage.pojo.OrgSubjection" table="user_directory_subjection">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID-->
+		<property name="parentDirectoryId"/> <!--上级目录ID-->
+	</class>
+	
+	<!--组织机构:目录权限-->
+	<class name="com.yuanluesoft.jeaf.usermanage.pojo.OrgPopedom" table="user_directory_popedom">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID-->
+		<property name="userId"/> <!--用户ID-->
+		<property name="userName"/> <!--用户名-->
+		<property name="popedomName"/> <!--权限-->
+		<property name="isInherit"/> <!--是否从上级目录继承-->
+	</class>
+    
+    <!--用户:任课老师和班主任-->
+    <class name="com.yuanluesoft.jeaf.usermanage.pojo.ClassTeacher" table="user_class_teacher">
+        <id name="id">
+            <generator class="assigned" />
+        </id>
+        <property name="title" />
+        <property name="classId" />
+        <property name="teacherId" />
+        <many-to-one name="teacher"
+		   class="com.yuanluesoft.jeaf.usermanage.pojo.Teacher"
+		   column="teacherId" update="false" insert="false"/>
+    </class>
+    
+    <!--用户-->
+    <class name="com.yuanluesoft.jeaf.usermanage.pojo.Person" table="user_person">
+        <id name="id">
+            <generator class="assigned" />
+        </id>
+        <property name="sid"/> <!--SID-->
+		<property name="name"/> <!--姓名-->
+		<property name="loginName"/> <!--登录用户名-->
+		<property name="sex"/> <!--性别-->
+		<property name="type"/> <!--类别-->
+		<property name="password"/> <!--密码-->
+		<property name="priority"/> <!--优先级-->
+		<property name="creator"/> <!--注册人-->
+		<property name="creatorId"/> <!--注册人ID-->
+		<property name="created"/> <!--注册时间-->
+		<property name="lastModified"/> <!--最后修改时间-->
+		<property name="mailAddress"/> <!--邮件地址-->
+		<property name="tel"/> <!--电话-->
+		<property name="telFamily"/> <!--家庭电话-->
+		<property name="mobile"/> <!--手机-->
+		<property name="familyAddress"/> <!--家庭地址-->
+		<property name="identityCard"/> <!--身份证号码-->
+		<property name="identityCardName"/> <!--身份证姓名-->
+		<property name="deleteDisable"/> <!--禁止删除-->
+		<property name="preassign"/> <!--系统预置-->
+		<property name="remark"/> <!--备注-->
+        <set cascade="delete" inverse="true" lazy="true" name="subjections" table="user_person_subjection" order-by="id">
+            <key column="personId" />
+            <one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.PersonSubjection" />
+        </set>
+        <set cascade="delete" inverse="true" lazy="true" name="subjectionRoles" table="user_role_member">
+            <key column="memberId" />
+            <one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.RoleMember" />
+        </set>
+     	<set cascade="delete" inverse="true" lazy="true" name="agents" table="user_agent" order-by="id">
+            <key column="personId" />
+            <one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.Agent" />
+        </set>
+        <set cascade="delete" inverse="true" lazy="true" name="children" table="user_student_genearch">
+            <key column="genearchId" />
+            <one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.StudentGenearch" />
+        </set>
+        <set cascade="delete" inverse="true" lazy="true" name="supervisors" table="user_person_supervisor" order-by="id">
+            <key column="personId" />
+            <one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.PersonSupervisor" />
+        </set>
+        <set cascade="delete" inverse="true" lazy="true" name="supervisePersons" table="user_person_supervisor" order-by="id">
+            <key column="supervisorId" />
+            <one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.PersonSupervisor" />
+        </set>
+        <set cascade="delete" inverse="true" lazy="true" name="superviseOrgs" table="user_org_supervisor" order-by="id">
+			<key column="supervisorId" />
+			<one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.OrgSupervisor" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="leadOrgs" table="user_org_leader" order-by="id">
+			<key column="leaderId" />
+			<one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.OrgLeader" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="userPageTemplates" table="user_personal_index_template">
+			<key column="userId" />
+			<one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.UserPageTemplate" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="logins" table="stat_login">
+            <key column="personId" />
+            <one-to-many class="com.yuanluesoft.jeaf.stat.pojo.LoginStat" />
+        </set>
+        <!-- 普通用户 -->
+        <joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.Employee" table="user_employee">
+            <key>
+                <column name="id" />
+            </key>
+        </joined-subclass>
+        <!-- 教师 -->
+        <joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.Teacher" table="user_teacher">
+            <key>
+                <column name="id" />
+            </key>
+            <set cascade="delete" inverse="true" lazy="true" name="classes" table="user_class_teacher">
+	            <key column="teacherId" />
+	            <one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.ClassTeacher" />
+	        </set>
+        </joined-subclass>
+        <!-- 学生 -->
+        <joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.Student" table="user_student">
+            <key>
+                <column name="id" />
+            </key>
+            <property name="seatNumber" type="integer" />
+            <set cascade="delete" inverse="true" lazy="true" name="genearches" table="user_student_genearch">
+	            <key column="studentId" />
+	            <one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.StudentGenearch" />
+	        </set>
+        </joined-subclass>
+        <!-- 学生家长 -->
+        <joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.Genearch" table="user_genearch">
+        	<key>
+                <column name="id" />
+            </key>
+        </joined-subclass>
+        <!-- 引用 -->
+        <joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.PersonLink" table="user_person_link">
+        	<key>
+                <column name="id" />
+            </key>
+            <property name="userClassName"/> <!--用户类名称,VARCHAR(100)-->
+        </joined-subclass>
+    </class>
+    
+    <!--用户：用户所在机构-->
+    <class name="com.yuanluesoft.jeaf.usermanage.pojo.PersonSubjection" table="user_person_subjection">
+        <id name="id">
+            <generator class="assigned" />
+        </id>
+        <property name="personId"/> <!--用户ID-->
+		<property name="orgId"/> <!--机构ID-->
+    </class>
+     
+    <!-- 用户：学生和家长对应关系 -->
+    <class name="com.yuanluesoft.jeaf.usermanage.pojo.StudentGenearch" table="user_student_genearch">
+        <id name="id">
+            <generator class="assigned" />
+        </id>
+        <property name="genearchId" />
+        <property name="studentId" />
+        <property name="relation" />
+        <many-to-one name="genearch"
+		   class="com.yuanluesoft.jeaf.usermanage.pojo.Person"
+		   column="genearchId" update="false" insert="false"/>
+    </class>
+    
+    <!-- 用户：角色 -->
+    <class name="com.yuanluesoft.jeaf.usermanage.pojo.Role" table="user_role">
+        <id name="id">
+            <generator class="assigned" />
+        </id>
+        <property name="orgId" />
+        <property name="roleName" />
+        <property name="isPost" />
+        <property name="lastModified" /> <!-- 最后修改时间 -->
+        <property name="remark" /> <!-- 备注 -->
+        <set cascade="delete" inverse="true" lazy="true" name="members" table="user_role_member" order-by="id">
+            <key column="roleId" />
+            <one-to-many class="com.yuanluesoft.jeaf.usermanage.pojo.RoleMember" />
+        </set>
+    </class>
+    
+    <!-- 用户：角色人员 -->
+    <class name="com.yuanluesoft.jeaf.usermanage.pojo.RoleMember" table="user_role_member">
+        <id name="id">
+            <generator class="assigned" />
+        </id>
+        <property name="memberId" />
+        <property name="memberName" />
+        <property name="roleId" />
+    </class>
+    
+    <!-- 用户：代理人 -->
+    <class name="com.yuanluesoft.jeaf.usermanage.pojo.Agent" table="user_agent">
+        <id name="id">
+            <generator class="assigned" />
+        </id>
+        <property name="source" />
+        <property name="beginTime" />
+        <property name="agentId" />
+        <property name="personId" />
+        <property name="endTime" />
+    </class>
+    
+    <!--组织机构:主管领导-->
+	<class name="com.yuanluesoft.jeaf.usermanage.pojo.OrgSupervisor" table="user_org_supervisor">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="orgId"/> <!--组织机构ID-->
+		<property name="orgName"/> <!--组织机构名称-->
+		<property name="supervisorId"/> <!--分管领导ID-->
+		<property name="supervisor"/> <!--分管领导姓名-->
+	</class>
+	
+	<!--组织机构:部门领导-->
+	<class name="com.yuanluesoft.jeaf.usermanage.pojo.OrgLeader" table="user_org_leader">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="orgId"/> <!--组织机构ID-->
+		<property name="orgName"/> <!--组织机构名称-->
+		<property name="leaderId"/> <!--领导ID-->
+		<property name="leader"/> <!--领导姓名-->
+	</class>
+	
+	<!--用户:分管领导-->
+	<class name="com.yuanluesoft.jeaf.usermanage.pojo.PersonSupervisor" table="user_person_supervisor">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="personId"/> <!--用户ID-->
+		<property name="personName"/> <!--用户名-->
+		<property name="supervisorId"/> <!--分管领导ID-->
+		<property name="supervisor"/> <!--分管领导姓名-->
+	</class>
+	
+	<class name="com.yuanluesoft.jeaf.usermanage.pojo.RegistPerson" table="user_regist_person">
+        <id name="id">
+            <generator class="assigned" />
+        </id>
+        <property name="name" />
+        <property name="loginName" />
+        <property name="orgId" />
+        <property name="orgFullName" />
+        <property name="unitId" />
+        <property name="unitName" />
+        <property name="sex" />
+        <property name="type" />
+        <property name="password" />
+        <property name="created" />
+        <property name="mailAddress" />
+        <property name="tel" />
+        <property name="telFamily" />
+        <property name="mobile" />
+        <property name="familyAddress" />
+        <property name="approverId" />
+        <property name="approver" />
+        <property name="approvalTime" />
+        <property name="isPass" />
+        <property name="remark"/>
+        <joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.RegistStudent" table="user_regist_student">
+            <key>
+                <column name="id" />
+            </key>
+            <property name="seatNumber" />
+            <property name="genearchName" />
+            <property name="genearchTitle" />
+            <property name="genearchMobile" />
+            <property name="genearchMail" />
+            <property name="genearchValidateCode" />
+            <property name="genearchRegisted"/>
+        </joined-subclass>
+        <joined-subclass name="com.yuanluesoft.jeaf.usermanage.pojo.RegistTeacher" table="user_regist_teacher">
+            <key>
+                <column name="id" />
+            </key>
+            <property name="chargeClassName" />
+            <property name="chargeClassId" />
+        </joined-subclass>
+    </class>
+   	<class name="com.yuanluesoft.jeaf.usermanage.pojo.SchoolRegistCode" table="user_regist_school_code">
+        <id name="id">
+            <generator class="assigned" />
+        </id>
+        <property name="schoolId" />
+        <property name="code" />
+        <property name="authorId" />
+        <property name="authorName" />
+    </class>
+   	<class name="com.yuanluesoft.jeaf.usermanage.pojo.Questionnaire" table="user_regist_questionnaire">
+        <id name="id">
+            <generator class="assigned" />
+        </id>
+        <property name="hasComputer" />
+        <property name="connectInternet" />
+        <property name="whoUseInternet" />
+        <property name="internetPurpose" />
+        <property name="connectMode" />
+        <property name="bandwidth" />
+        <property name="connectLimit" />
+        <property name="carrier" />
+        <property name="connectBegin" />
+        <property name="connectEnd" />
+        <property name="timesPerWeek" />
+        <property name="useRate" />
+        <property name="connectInternetForSite" />
+        <property name="eduContent" />
+        <property name="internetProblem" />
+        <property name="whatEduSite" />
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="评论列表" name="comments">
+		<data>
+			<pojo>com.yuanluesoft.cms.comment.pojo.CmsComment</pojo>
+			<where>CmsComment.publicPass='1' and CmsComment.isDeleted=0</where>
+			<orderBy>CmsComment.created DESC</orderBy>
+			<quickFilter>CmsComment.subject like '%{KEY}%' or CmsComment.creator like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<!-- 引用:复制内容到评论正文框,删除上面的所有链接 -->
+			<link title="引用">javascript:citationComment('{PARAMETER:id}', '{PARAMETER:sitePageApplicationName}', '{PARAMETER:sitePageName}', '{PARAMETER:siteId}')</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/comment/templatemanage/insertComments.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="rssChannel">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="admin/todoComment" form="admin/comment" title="待办评论" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.comment.pojo.CmsComment</pojo>
+			<orderBy>CmsComment.created DESC</orderBy>
+			<quickFilter>CmsComment.subject like '%{KEY}%' or CmsComment.creator like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="页面标题" name="pageTitle"/>
+			<column title="评论" name="content" maxCharCount="120" ellipsis="..." displayExcept="portlet"/>
+			<column title="评论人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="评论时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessComment" form="admin/comment" title="在办评论" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.comment.pojo.CmsComment</pojo>
+			<where>CmsComment.isDeleted=0</where>
+			<orderBy>CmsComment.created DESC</orderBy>
+			<quickFilter>CmsComment.subject like '%{KEY}%' or CmsComment.creator like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="页面标题" name="pageTitle"/>
+			<column title="评论" name="content" maxCharCount="120" ellipsis="..." displayExcept="portlet"/>
+			<column title="评论人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="评论时间" name="created" align="center" width="108"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedComment" form="admin/comment" title="办结评论" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.comment.pojo.CmsComment</pojo>
+			<where>CmsComment.isDeleted=0</where>
+			<filter>COMPLETED</filter>
+			<orderBy>CmsComment.created DESC</orderBy>
+			<quickFilter>CmsComment.subject like '%{KEY}%' or CmsComment.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="页面标题" name="pageTitle"/>
+			<column title="评论" name="content" maxCharCount="120" ellipsis="..." displayExcept="portlet"/>
+			<column title="评论人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="评论时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allComment" form="admin/comment" title="所有评论" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.comment.pojo.CmsComment</pojo>
+			<where>CmsComment.isDeleted=0</where>
+			<filter>READABLE</filter>
+			<orderBy>CmsComment.created DESC</orderBy>
+			<quickFilter>CmsComment.subject like '%{KEY}%' or CmsComment.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="页面标题" name="pageTitle"/>
+			<column title="评论" name="content" maxCharCount="120" ellipsis="..." displayExcept="portlet"/>
+			<column title="评论人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="评论时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+</views>

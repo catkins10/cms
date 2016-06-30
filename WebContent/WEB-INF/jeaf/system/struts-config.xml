@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="initSystem" type="com.yuanluesoft.jeaf.system.forms.InitSystem"/>
+  <form-bean name="regist" type="com.yuanluesoft.jeaf.system.forms.Regist"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="initSystem" path="/initSystem" scope="request"
+   type="com.yuanluesoft.jeaf.system.actions.initsystem.Load" validate="false">
+   <forward name="load" path="/initSystem.jsp"/>
+  </action>
+  <action name="initSystem" path="/doInitSystem" scope="request"
+   type="com.yuanluesoft.jeaf.system.actions.initsystem.Submit" validate="false"/>
+  <action name="regist" path="/regist" scope="request"
+   type="com.yuanluesoft.jeaf.system.actions.regist.Load" validate="false">
+   <forward name="load" path="/regist.jsp"/>
+  </action>
+  <action input="/regist.jsp" name="regist" path="/doRegist"
+   scope="request"
+   type="com.yuanluesoft.jeaf.system.actions.regist.Regist" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

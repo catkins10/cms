@@ -1,0 +1,234 @@
+package com.yuanluesoft.cms.importdata.services.zzfet;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.List;
+
+import com.yuanluesoft.cms.importdata.ImportDataService;
+import com.yuanluesoft.jeaf.attachmentmanage.service.AttachmentManageService;
+import com.yuanluesoft.jeaf.base.exception.ServiceException;
+import com.yuanluesoft.jeaf.dao.BaseDAO;
+
+/**
+ * 
+ * @author yuanluesoft
+ *
+ */
+public class ImportStatInfoServiceImpl implements ImportDataService {
+	private BaseDAO baseDAO;
+	private String dbFileName = "D:/workspace/cms/documentation/zzfet/zzfet.mdb";
+	private AttachmentManageService cmsPageFileManageService;
+	private String imageUrl = "http://www.zzfet.gov.cn/";
+
+	/**
+	 * 创建连接
+	 * @return
+	 * @throws ServiceException
+	 */
+	private Connection createConnection() throws ServiceException {
+		String connectionUrl = "jdbc:odbc:Driver={MicroSoft Access Driver (*.mdb)};DBQ=" + dbFileName;
+		try {
+			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+			return DriverManager.getConnection(connectionUrl, "", "");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#listColumnsNotInNewCms()
+	 */
+	public List listColumnsNotInNewCms() throws ServiceException {
+		return null;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#importData(java.lang.String, boolean)
+	 */
+	public void importArticles(String columnMappings, boolean autoCreateColumn) throws ServiceException {
+		Connection con = createConnection();
+		Statement stmt = null;
+		ResultSet rs = null;
+		//String[] mapping = columnMappings.replaceAll(" ", "").split(",");
+		try {
+			// Create and execute an SQL statement that returns some data.
+			String sql = "select Title as subject," +
+						 " Content as body," +
+						 " Adder as creator," +
+						 " AddTime as issueTime" +
+						 " FROM tbStatInfo"; 
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			// Iterate through the data in the result set and display it.
+			//importData(rs, mapping);
+			rs.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try { 
+				rs.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try { 
+				stmt.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+			try {
+				con.close(); 
+			}
+			catch(Exception e) {
+				
+			}
+		}
+	}
+
+	/**
+	 * 从RS导入数据
+	 * @param rs
+	 * @throws ServiceException
+	 *
+	private void importData(ResultSet rs, String[] mapping) throws ServiceException {
+		try {
+			Site site = (Site)baseDAO.findObjectByHql("from Site Site where Site.id=10970801072000");
+			while(rs.next()) {
+				try {
+					String subject = rs.getString("subject");
+					Timestamp issueTime = rs.getTimestamp("issueTime");
+					System.out.println("ImportData: read a article, subject is " + subject + ".");
+					if(site==null) {
+						continue;
+					}
+					//检查相同标题和发布时间的记录是否已经存在
+					String hql = "from Article Article" + 
+								 " where Article.subject='" + subject + "'" +
+								 " and Article.issueTime=TIMESTAMP(" + DateTimeUtils.formatTimestamp(issueTime, null) + ")";
+					if(baseDAO.findObjectByHql(hql)!=null) {
+						continue;
+					}
+					Article article = new Article();
+					article.setId(UUIDLongGenerator.generateId()); //ID
+					//设置所在站点
+					SiteResourceSubjection subjection = new SiteResourceSubjection();
+					subjection.setId(UUIDLongGenerator.generateId());
+					subjection.setResourceId(article.getId());
+					subjection.setSiteId(site.getId());
+					baseDAO.saveObject(subjection);
+					//主题
+					article.setSubject(subject);
+					article.setEditor(rs.getString("creator"));
+					article.setIssueTime(issueTime);
+					article.setCreated(issueTime);
+					article.setIssue('1');
+					article.setIssuePersonId(100);
+					article.setBody(rs.getString("body"));
+					article.setOrgName(null);
+					article.setUnitName(null);
+					baseDAO.saveObject(article); //保存
+					//创建权限记录
+					SiteResourcePrivilege privilege = new SiteResourcePrivilege();
+					privilege.setId(UUIDLongGenerator.generateId());
+					privilege.setRecordId(article.getId());
+					privilege.setVisitorId(0);
+					privilege.setVisitorType(RecordControlService.VISITOR_TYPE_DEPARTMENT);
+					privilege.setAccessLevel(RecordControlService.ACCESS_LEVEL_READONLY);
+					baseDAO.saveObject(privilege);
+					System.out.println("ImportData: importted.");
+				}
+				catch(Exception e) {
+					Logger.exception(e);
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#importPublicInfos(java.lang.String, boolean)
+	 */
+	public void importPublicInfos(String directoryMappings, boolean autoCreateDirectory) throws ServiceException {
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#importOtherData()
+	 */
+	public void importOtherData() throws ServiceException {
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.importdata.ImportDataService#listPublicInfoDirectoriesNotInNewCms()
+	 */
+	public List listPublicInfoDirectoriesNotInNewCms() throws ServiceException {
+		return null;
+	}
+
+	/**
+	 * @return the baseDAO
+	 */
+	public BaseDAO getBaseDAO() {
+		return baseDAO;
+	}
+
+	/**
+	 * @param baseDAO the baseDAO to set
+	 */
+	public void setBaseDAO(BaseDAO baseDAO) {
+		this.baseDAO = baseDAO;
+	}
+
+	/**
+	 * @return the dbFileName
+	 */
+	public String getDbFileName() {
+		return dbFileName;
+	}
+
+	/**
+	 * @param dbFileName the dbFileName to set
+	 */
+	public void setDbFileName(String dbFileName) {
+		this.dbFileName = dbFileName;
+	}
+
+	/**
+	 * @return the imageUrl
+	 */
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	/**
+	 * @param imageUrl the imageUrl to set
+	 */
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	/**
+	 * @return the cmsPageFileManageService
+	 */
+	public AttachmentManageService getCmsPageFileManageService() {
+		return cmsPageFileManageService;
+	}
+
+	/**
+	 * @param cmsPageFileManageService the cmsPageFileManageService to set
+	 */
+	public void setCmsPageFileManageService(
+			AttachmentManageService cmsPageFileManageService) {
+		this.cmsPageFileManageService = cmsPageFileManageService;
+	}
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="打卡记录" class="com.yuanluesoft.j2oa.attendance.pojo.AttendanceRecord">
+		<field name="personId" title="用户ID" type="number" inputMode="none"/>
+		<field name="punchTime" title="打卡时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="补卡" class="com.yuanluesoft.j2oa.attendance.pojo.AttendanceMend">
+		<field name="personId" title="补卡人ID" type="number" inputMode="none"/>
+		<field name="personName" title="补卡人" length="50" type="string" inputMode="readonly"/>
+		<field name="reason" title="补卡原因" length="1000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="mendType" title="补卡类型" length="1" type="char" inputMode="text"/>
+		<field name="mendTime" title="补卡的时间" required="true" type="timestamp" inputMode="datetime"/>
+		<field name="pass" title="是否审核通过" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">通过|1\0不通过|0</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审核</parameter>
+			<parameter name="class">com.yuanluesoft.j2oa.attendance.pojo.AttendanceMendOpinion</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--待办/交办事宜-->
+	<class name="com.yuanluesoft.j2oa.todo.pojo.Todo" table="todo_todo">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="personId"/> <!--用户ID-->
+		<property name="personName"/> <!--用户名-->
+		<property name="subject"/> <!--主题-->
+		<property name="description" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--描述-->
+		<property name="category"/> <!--类别-->
+		<property name="important"/> <!--重要性-->
+		<property name="isHand"/> <!--是否交办事宜-->
+		<property name="isSent"/> <!--是否已交办-->
+		<property name="handTime"/> <!--交办时间-->
+		<property name="beginTime"/> <!--开始时间-->
+		<property name="endTime"/> <!--结束时间-->
+		<property name="completed"/> <!--是否完成-->
+		<property name="completeTime"/> <!--完成时间-->
+		<set name="handPersons" table="todo_hand_person" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="mainRecordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.j2oa.todo.pojo.HandPerson" />
+		</set>
+	</class>
+	
+	<!--交办事宜执行人-->
+	<class name="com.yuanluesoft.j2oa.todo.pojo.HandPerson" table="todo_hand_person">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="mainRecordId"/> <!--交办事宜ID-->
+		<property name="personId"/> <!--执行人ID-->
+		<property name="personName"/> <!--执行人姓名-->
+		<property name="feedback"/> <!--反馈-->
+		<property name="feedbackTime"/> <!--反馈时间-->
+	</class>
+	
+	<!--选项配置-->
+	<class name="com.yuanluesoft.j2oa.todo.pojo.TodoOptionConfig" table="todo_config_option">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="cetegories"/> <!--类别列表-->
+	</class>
+</hibernate-mapping>

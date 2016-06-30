@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="site" type="com.yuanluesoft.cms.sitemanage.forms.Site"/>
+  <form-bean name="select" type="com.yuanluesoft.cms.sitemanage.forms.Select"/>
+  <form-bean name="adjustPriority" type="com.yuanluesoft.jeaf.dialog.forms.AdjustPriority"/>
+  <form-bean name="siteApplicationConfigView" type="com.yuanluesoft.cms.sitemanage.forms.SiteApplicationConfigView"/>
+  <form-bean name="copy" type="com.yuanluesoft.cms.sitemanage.forms.CopyWebDirectory"/>
+  <form-bean name="column" type="com.yuanluesoft.cms.sitemanage.forms.Column"/>
+  <form-bean name="headline" type="com.yuanluesoft.cms.sitemanage.forms.Headline"/>
+  <form-bean name="selectPage" type="com.yuanluesoft.cms.sitemanage.forms.SelectPage"/>
+  <form-bean name="selectSiteLink" type="com.yuanluesoft.cms.sitemanage.forms.SelectSiteLink"/>
+  <form-bean name="selectForm" type="com.yuanluesoft.cms.sitemanage.forms.SelectForm"/>
+  <form-bean name="selectView" type="com.yuanluesoft.cms.sitemanage.forms.SelectView"/>
+  <form-bean name="template" type="com.yuanluesoft.cms.sitemanage.forms.Template"/>
+  <form-bean name="reference" type="com.yuanluesoft.cms.sitemanage.forms.Reference"/>
+  <form-bean name="selectSiteTemplateTheme" type="com.yuanluesoft.jeaf.dialog.forms.ViewSelectDialog"/>
+  <form-bean name="siteTemplateTheme" type="com.yuanluesoft.cms.sitemanage.forms.SiteTemplateTheme"/>
+  <form-bean name="relationLink" type="com.yuanluesoft.cms.sitemanage.forms.RelationLink"/>
+  <form-bean name="insertSites" type="com.yuanluesoft.cms.sitemanage.forms.InsertSites"/>
+  <form-bean name="insertColumns" type="com.yuanluesoft.cms.sitemanage.forms.InsertColumns"/>
+  <form-bean name="insertSiteLink" type="com.yuanluesoft.cms.sitemanage.forms.InsertSiteLink"/>
+  <form-bean name="insertHeadline" type="com.yuanluesoft.cms.sitemanage.forms.InsertHeadline"/>
+  <form-bean name="insertHeadlineImage" type="com.yuanluesoft.cms.sitemanage.forms.InsertHeadlineImage"/>
+  <form-bean name="insertSiteLocation" type="com.yuanluesoft.cms.sitemanage.forms.InsertSiteLocation"/>
+  <form-bean name="insertSiteRecordList" type="com.yuanluesoft.cms.sitemanage.forms.InsertSiteRecordList"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="select" path="/listChildSites" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.selectsite.ListChildSites" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action name="site" path="/site" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.site.Load" validate="false">
+   <forward name="load" path="/site.jsp"/>
+  </action>
+  <action input="/site.jsp" name="site" path="/saveSite" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.site.Save" validate="false"/>
+  <action input="/site.jsp" name="site" path="/deleteSite"
+   scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.site.Delete" validate="false"/>
+  <action name="select" path="/selectSite" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.selectsite.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action path="/index" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.index.Load" validate="false"/>
+  <action name="adjustPriority" path="/adjustSitePriority"
+   scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.adjustsitepriority.AdjustSitePriorityAction" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/adjustpriority/adjustPriority.jsp"/>
+  </action>
+  <action path="/applicationIndex" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.applicationindex.Load" validate="false"/>
+  <action name="siteApplicationConfigView"
+   path="/siteApplicationConfigView" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.siteapplicationconfigview.SiteApplicationConfigViewAction" validate="false">
+   <forward name="load" path="/siteApplicationConfigView.jsp"/>
+  </action>
+  <action path="/applicationSearch" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.applicationsearch.Load" validate="false"/>
+  <action name="selectPage" path="/selectPage" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.selectpageresource.SelectPage" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="copy" path="/copy" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.copy.Load" validate="false">
+   <forward name="load" path="/copy.jsp"/>
+  </action>
+  <action input="/copy.jsp" name="copy" path="/doCopy" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.copy.Copy" validate="false"/>
+  <action name="column" path="/column" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.column.Load" validate="false">
+   <forward name="load" path="/column.jsp"/>
+  </action>
+  <action input="/column.jsp" name="column" path="/saveColumn"
+   scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.column.Save" validate="false"/>
+  <action input="/column.jsp" name="column" path="/deleteColumn"
+   scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.column.Delete" validate="false"/>
+  <action input="/column.jsp" name="column" path="/createNextColumn"
+   scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.column.CreateNext" validate="false"/>
+  <action input="/site.jsp" name="site" path="/createNextSite"
+   scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.site.CreateNext" validate="false"/>
+  <action input="/site.jsp" name="site" path="/siteWorkflowConfig"
+   scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.site.WorkflowConfig" validate="false"/>
+  <action input="/column.jsp" name="column" path="/columnWorkflowConfig"
+   scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.column.WorkflowConfig" validate="false"/>
+  <action name="site" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.site.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="headline" path="/headline" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.headline.Load" validate="false">
+   <forward name="load" path="/headline.jsp"/>
+  </action>
+  <action input="/headline.jsp" name="headline" path="/saveHeadline"
+   scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.headline.Save" validate="false"/>
+  <action name="selectSiteLink" path="/selectSiteLink" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.selectpageresource.SelectSiteLink" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="selectView" path="/selectView" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.selectpageresource.SelectView" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="selectForm" path="/selectForm" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.selectpageresource.SelectForm" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="template" path="/template" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Load" validate="false">
+   <forward name="load" path="/../templatemanage/template.jsp"/>
+  </action>
+  <action input="/../templatemanage/template.jsp" name="template"
+   path="/saveTemplate" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Save" validate="false"/>
+  <action input="/../templatemanage/template.jsp" name="template"
+   path="/deleteTemplate" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Delete" validate="false"/>
+  <action path="/pageNotFound" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.pagenotfound.Load" validate="false"/>
+  <action name="reference" path="/reference" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.reference.Load" validate="false">
+   <forward name="load" path="/reference.jsp"/>
+  </action>
+  <action input="/reference.jsp" name="reference" path="/saveReference"
+   scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.reference.Save" validate="false"/>
+  <action input="/reference.jsp" name="reference"
+   path="/deleteReference" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.reference.Delete" validate="false"/>
+  <action input="/reference.jsp" name="reference"
+   path="/createNextReference" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.reference.CreateNext" validate="false"/>
+  <action name="selectSiteTemplateTheme" path="/selectSiteTemplateTheme"
+   scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.selectsitetemplatetheme.SelectTheme" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/viewselectdialog/viewSelectDialog.jsp"/>
+  </action>
+  <action name="siteTemplateTheme" path="/siteTemplateTheme"
+   scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.sitetemplatetheme.Load" validate="false">
+   <forward name="load" path="/siteTemplateTheme.jsp"/>
+  </action>
+  <action input="/siteTemplateTheme.jsp" name="siteTemplateTheme"
+   path="/saveSiteTemplateTheme" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.sitetemplatetheme.Save" validate="false"/>
+  <action input="/siteTemplateTheme.jsp" name="siteTemplateTheme"
+   path="/deleteSiteTemplateTheme" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.sitetemplatetheme.Delete" validate="false"/>
+  <action input="/siteTemplateTheme.jsp" name="siteTemplateTheme"
+   path="/setDefaultSiteTemplateTheme" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.sitetemplatetheme.SetDafaultTheme" validate="false"/>
+  <action path="/selectPhonePage" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.selectphonepage.Load" validate="false"/>
+  <action path="/savePhonePage" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.selectphonepage.Save" validate="false"/>
+  <action path="/videoPlayerLogo" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.videoplayerlogo.Download" validate="false"/>
+  <action path="/accessTotalChart" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.accesstotalchart.Write" validate="false"/>
+  <action name="relationLink" path="/relationLink" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.column.relationlink.Load" validate="false">
+   <forward name="load" path="/relationLink.jsp"/>
+  </action>
+  <action input="/relationLink.jsp" name="relationLink"
+   path="/admin/saveRelationLink" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.column.relationlink.Save" validate="false"/>
+  <action input="/relationLink.jsp" name="relationLink"
+   path="/admin/deleteRelationLink" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.column.relationlink.Delete" validate="false"/>
+  <action input="/column.jsp" name="column" path="/refreshColumn"
+   scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.column.Refresh" validate="false"/>
+  <action input="/column.jsp" name="column" path="/addRelationLinks"
+   scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.webdirectory.column.AddRelationLinks" validate="false"/>
+  <action path="/applicationPage" scope="request"
+   type="com.yuanluesoft.cms.sitemanage.actions.applicationpage.Load" validate="false"/>
+  <action name="insertSites" path="/templatemanage/insertSites"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertSites.jsp"/>
+  </action>
+  <action name="insertColumns" path="/templatemanage/insertColumns"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertColumns.jsp"/>
+  </action>
+  <action name="insertSiteLink" path="/templatemanage/insertSiteLink"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertSiteLink.jsp"/>
+  </action>
+  <action name="insertHeadline" path="/templatemanage/insertHeadline"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertHeadline.jsp"/>
+  </action>
+  <action name="insertHeadlineImage"
+   path="/templatemanage/insertHeadlineImage" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertHeadlineImage.jsp"/>
+  </action>
+  <action name="insertSiteLocation"
+   path="/templatemanage/insertSiteLocation" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertSiteLocation.jsp"/>
+  </action>
+  <action name="insertSiteRecordList"
+   path="/templatemanage/insertSiteRecordList" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertSiteRecordList.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

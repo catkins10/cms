@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 分布式服务 -->
+	<bean id="distributionService" class="com.yuanluesoft.jeaf.distribution.service.spring.DistributionServiceImpl">
+		<property name="cache"><ref bean="distributionCache"/></property>
+		<property name="soapConnectionPool"><ref bean="soapConnectionPool"/></property>
+		<property name="localSoapPassport"><ref bean="localSoapPassport"/></property>
+		<property name="webApplicationDistributeUrl"><ref bean="webApplicationDistributeUrl"/></property>
+	</bean>
+</beans>

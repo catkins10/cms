@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+
+	<!--计费:168充值卡-->
+	<class name="com.yuanluesoft.charge.thirdparty.telecom.pojo.Telecom168Card" table="charge_card_168">
+		<id name="cardNumber" column="cardNumber"> <!--充值卡号-->
+			<generator class="assigned"/>
+		</id>
+		<property name="cardPassword"/> <!--充值卡密码-->
+		<property name="money"/> <!--充值卡金额-->
+		<property name="tel"/> <!--充值的电话号码-->
+		<property name="created"/> <!--充值时间-->
+	</class>
+</hibernate-mapping>

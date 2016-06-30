@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="template" class="com.yuanluesoft.bbs.templatemanage.forms.Template" title="论坛模板" pojo="com.yuanluesoft.bbs.templatemanage.pojo.BbsTemplate"/>
+	
+	<form class="com.yuanluesoft.bbs.templatemanage.forms.InsertBbsArticles" title="插入主题列表">
+		<formFields>
+			<field name="directoryIds" title="论坛ID" type="string" inputMode="hidden"/>
+			<field name="directoryNames" title="论坛名称" type="string" inputMode="select">
+				<parameter name="js">/bbs/forum/js/forum.js</parameter>
+				<parameter name="execute">selectDirectory(600, 400, true, 'directoryIds{id},directoryNames{name|名称|100%}')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field name="containChildren" title="是否含子论坛主题" type="string" inputMode="checkbox">
+				<parameter name="label">含子论坛主题</parameter>
+				<parameter name="value">true</parameter>
+				<parameter name="defaultValue">true</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.bbs.templatemanage.forms.InsertBbsDirectoryLink" title="插入论坛目录链接">
+		<formFields>
+			<field title="目录ID" name="directoryId" type="string" inputMode="hidden"/>
+			<field title="目录名称" name="directoryName" type="string" inputMode="select">
+				<parameter name="js">/bbs/forum/js/forum.js</parameter>
+				<parameter name="execute">selectDirectory(500, 300, false, 'directoryId{id},directoryName{name}', '', '', '', 'bbs,forum')</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

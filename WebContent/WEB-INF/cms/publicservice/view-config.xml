@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/workflowSetting" form="admin/workflowSetting" title="流程设置" pageRows="20" openFeatures="width=760,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.publicservice.pojo.WorkflowSetting</pojo>
+			<quickFilter>WorkflowSetting.workflowName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="配置流程" execute="PageUtils.openurl('{WEBAPPLICATIONURL}/cms/publicservice/admin/workflowSetting.shtml?applicationName={PARAMETER:applicationName}&amp;siteId={PARAMETER:siteId}', 'mode=fullscreen', 'workflowSetting')"/>
+			<action title="刷新" execute="location.reload()"/>
+		</actions>
+		<links>
+			<link>javascript:PageUtils.openurl('{WEBAPPLICATIONURL}/cms/publicservice/admin/workflowSetting.shtml?applicationName={PARAMETER:applicationName}&amp;siteId={PARAMETER:siteId}', 'mode=fullscreen', 'workflowSetting')</link>
+		</links>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="办理流程" name="workflowName"/>
+		</columns>
+	</view>
+	
+	<view name="admin/smsFormat" form="admin/smsFormat" title="办结短信通知" pageRows="20" openFeatures="width=760,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.publicservice.pojo.PublicServiceSms</pojo>
+			<quickFilter>PublicServiceSms.smsFormat like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="配置短信格式" execute="PageUtils.openurl('{WEBAPPLICATIONURL}/cms/publicservice/admin/smsFormat.shtml?applicationName={PARAMETER:applicationName}&amp;siteId={PARAMETER:siteId}', 'width=760,height=480', 'smsFormat')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="短信格式" name="smsFormat"/>
+		</columns>
+	</view>
+</views>

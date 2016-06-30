@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="96123已受理投诉" name="ascComplaints">
+		<data>
+			<pojo>com.yuanluesoft.asc.complaint.pojo.AscComplaint</pojo>
+			<where>AscComplaint.siteId={PARAMETER:siteId} and AscComplaint.publicPass='1' and AscComplaint.isDeleted=0</where>
+			<orderBy>AscComplaint.created DESC</orderBy>
+			<quickFilter>AscComplaint.subject like '%{KEY}%' or AscComplaint.publicSubject like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="投诉">/asc/complaint/complaint.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=asc/complaint</link>
+		</links>
+	</view>
+	
+	<view name="admin/todoComplaint" form="admin/complaint" title="待办投诉" pageRows="25" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.asc.complaint.pojo.AscComplaint</pojo>
+			<where>AscComplaint.isDeleted=0</where>
+			<orderBy>AscComplaint.created DESC</orderBy>
+			<quickFilter>AscComplaint.itemName like '%{KEY}%' or AscComplaint.creator like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="投诉主题" name="subject"/>
+			<column title="办理事项名称" name="itemName" width="200px"/>
+			<column title="投诉人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="投诉时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessComplaint" form="admin/complaint" title="在办投诉" pageRows="25" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.asc.complaint.pojo.AscComplaint</pojo>
+			<where>AscComplaint.isDeleted=0</where>
+			<orderBy>AscComplaint.created DESC</orderBy>
+			<quickFilter>AscComplaint.itemName like '%{KEY}%' or AscComplaint.creator like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="投诉主题" name="subject"/>
+			<column title="办理事项名称" name="itemName" width="200px"/>
+			<column title="投诉人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="投诉时间" name="created" align="center" width="108"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedComplaint" form="admin/complaint" title="办结投诉" pageRows="20" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.asc.complaint.pojo.AscComplaint</pojo>
+			<where>AscComplaint.isDeleted=0</where>
+			<filter>COMPLETED</filter>
+			<orderBy>AscComplaint.created DESC</orderBy>
+			<quickFilter>AscComplaint.itemName like '%{KEY}%' or AscComplaint.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="投诉主题" name="subject"/>
+			<column title="办理事项名称" name="itemName" width="200px"/>
+			<column title="投诉人" name="creator" align="center" width="80"/>
+			<column title="投诉时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allComplaint" form="admin/complaint" title="所有投诉" pageRows="20" openFeatures="width=780,height=520">
+		<data>
+			<pojo>com.yuanluesoft.asc.complaint.pojo.AscComplaint</pojo>
+			<where>AscComplaint.isDeleted=0</where>
+			<filter>READABLE</filter>
+			<orderBy>AscComplaint.created DESC</orderBy>
+			<quickFilter>AscComplaint.itemName like '%{KEY}%' or AscComplaint.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="投诉授权" hide="noPrivilege(application_manager)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/publicservice/admin/readersModifyOption.shtml?applicationName={PARAMETER:applicationName}', 430, 200)"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="投诉主题" name="subject"/>
+			<column title="办理事项名称" name="itemName" width="200px"/>
+			<column title="投诉人" name="creator" align="center" width="80"/>
+			<column title="投诉时间" name="created" align="center" width="108"/>
+			<column title="办理状态" name="workflowStatus" width="100"/>
+		</columns>
+	</view>
+</views>

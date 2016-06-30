@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 个人账户服务列表 -->
+	<bean id="personalAccountServices" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<ref bean="personalAccountService"/>
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<!-- 个人在9191edu的账户服务 -->
+	<bean id="personalAccountService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.charge.account.service.local.PersonalAccountServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="personService"><ref bean="personService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

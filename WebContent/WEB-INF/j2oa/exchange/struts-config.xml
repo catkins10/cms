@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminDocument" type="com.yuanluesoft.j2oa.exchange.forms.admin.ExchangeDocument"/>
+  <form-bean name="adminMessage" type="com.yuanluesoft.j2oa.exchange.forms.admin.ExchangeMessage"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminDocument" path="/admin/document" scope="request"
+   type="com.yuanluesoft.j2oa.exchange.actions.document.admin.Load" validate="false">
+   <forward name="load" path="/admin/document.jsp"/>
+  </action>
+  <action input="/admin/document.jsp" name="adminDocument"
+   path="/admin/saveDocument" scope="request"
+   type="com.yuanluesoft.j2oa.exchange.actions.document.admin.Save" validate="false"/>
+  <action input="/admin/document.jsp" name="adminDocument"
+   path="/admin/deleteDocument" scope="request"
+   type="com.yuanluesoft.j2oa.exchange.actions.document.admin.Delete" validate="false"/>
+  <action input="/admin/document.jsp" name="adminDocument"
+   path="/admin/issueDocument" scope="request"
+   type="com.yuanluesoft.j2oa.exchange.actions.document.admin.Issue" validate="false"/>
+  <action input="/admin/document.jsp" name="adminDocument"
+   path="/admin/unissueDocument" scope="request"
+   type="com.yuanluesoft.j2oa.exchange.actions.document.admin.Unissue" validate="false"/>
+  <action input="/admin/document.jsp" name="adminDocument"
+   path="/admin/signDocument" scope="request"
+   type="com.yuanluesoft.j2oa.exchange.actions.document.admin.Sign" validate="false"/>
+  <action name="adminDocument" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.j2oa.exchange.actions.document.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="adminMessage" path="/admin/message" scope="request"
+   type="com.yuanluesoft.j2oa.exchange.actions.message.admin.Load" validate="false">
+   <forward name="load" path="/admin/message.jsp"/>
+  </action>
+  <action input="/admin/message.jsp" name="adminMessage"
+   path="/admin/saveMessage" scope="request"
+   type="com.yuanluesoft.j2oa.exchange.actions.message.admin.Save" validate="false"/>
+  <action input="/admin/message.jsp" name="adminMessage"
+   path="/admin/deleteMessage" scope="request"
+   type="com.yuanluesoft.j2oa.exchange.actions.message.admin.Delete" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

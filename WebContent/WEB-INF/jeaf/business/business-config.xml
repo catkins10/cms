@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="数据库记录" class="com.yuanluesoft.jeaf.database.Record">
+		<field name="id" title="ID" type="number" length="20" inputMode="hidden"/>
+	</businessObject>
+	
+	<businessObject title="权限控制" class="com.yuanluesoft.jeaf.security.pojo.RecordPrivilege">
+		<field name="visitorId" title="访问者ID" type="number" length="20" inputMode="none"/>
+		<field name="accessLevel" title="访问级别" type="char" length="1" inputMode="none"/>
+		<field name="recordId" title="主记录ID" type="number" length="20" inputMode="none"/>
+		<!-- 索引,供ApplicationBuilder使用 -->
+		<parameter name="index1">visitorId</parameter>
+		<parameter name="index2">recordId</parameter>
+		<parameter name="index3">visitorId,accessLevel,recordId</parameter>
+	</businessObject>
+	
+	<businessObject title="延迟加载的正文" class="com.yuanluesoft.jeaf.database.LazyBody">
+		<field name="body" title="正文" type="html" inputMode="htmleditor">
+			<parameter name="height">300</parameter>
+		</field>
+	</businessObject>
+
+	<businessObject title="文本参数" class="com.yuanluesoft.jeaf.business.model.parameter.StringParameter">
+		<field name="defaultValue" title="默认值" type="string" inputMode="dropdown">
+			<parameter name="itemsText">{用户名}|{USERNAME}\0{用户所在单位}|{UNITNAME}\0{用户所在部门}|{DEPARTMENTNAME}\0{编号}|{NUMERATION}</parameter>
+		</field>
+		<field name="numerationFormat" title="编号规则" type="string" inputMode="text"/>
+		<field name="singleByteCharacters" title="是否单字节文本" type="string" inputMode="radio">
+			<parameter name="itemsText">是|true\0不是|false</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="字符参数" class="com.yuanluesoft.jeaf.business.model.parameter.CharParameter">
+		<field name="defaultValue" title="默认值" type="string" inputMode="dropdown">
+			<parameter name="itemsText">0\0 1</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="数字参数" class="com.yuanluesoft.jeaf.business.model.parameter.NumberParameter">
+		<field name="minValue" title="最小值" type="string" inputMode="text"/>
+		<field name="maxValue" title="最大值" type="string" inputMode="text"/>
+		<field name="displayFormat" title="显示格式" type="string" inputMode="dropdown">
+			<parameter name="itemsText">#.#\0 ##.##%\0 0.00\0 ###,###.###</parameter>
+		</field>
+		<field name="defaultValue" title="默认值" type="string" inputMode="dropdown">
+			<parameter name="itemsText">{用户ID}|{USERID}\0{用户所在单位ID}|{UNITID}\0{用户所在部门ID}|{DEPARTMENTID}\0{年度}|{YEAR}\0{月份}|{MONTH}\0{日}|{DAY}\0{星期}|{WEEKDAY}\0{小时}|{HOUR}\0{分钟}|{MINUTE}\0{编号}|{NUMERATION}</parameter>
+		</field>
+		<field name="numerationFormat" title="编号规则" type="number" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="日期参数" class="com.yuanluesoft.jeaf.business.model.parameter.DateParameter">
+		<field name="displayFormat" title="显示格式" type="string" inputMode="dropdown">
+			<parameter name="itemsText">2005-07-18|yyyy-MM-dd\0 07-18|MM-dd\0 2005年7月18日 星期一|yyyy年M月d日 EEE\0 7月18日 星期一|M月d日 EEE\0 2005年7月18日|yyyy年M月d日\0 7月18日|M月d日</parameter>
+		</field>
+		<field name="defaultValue" title="默认值" type="string" inputMode="dropdown">
+			<parameter name="itemsText">{今天}|{TODAY}\0{本月第一天}|{FIRSTDAYOFMONTH}\0{本月最后一天}|{LASTDAYOFMONTH}\0{上月第一天}|{FIRSTDAYOFPREVIOUSMONTH}\0{上月最后一天}|{LASTDAYOFPREVIOUSMONTH}\0{次月第一天}|{FIRSTDAYOFNEXTMONTH}\0{次月最后一天}|{LASTDAYOFNEXTMONTH}\0{今年第一天}|{FIRSTDAYOFYEAR}\0{今年最后一天}|{LASTDAYOFYEAR}\0{本季度第一天}|{FIRSTDAYOFQUARTER}\0{本季度最后一天}|{LASTDAYOFQUARTER}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="时间参数" class="com.yuanluesoft.jeaf.business.model.parameter.TimestampParameter">
+		<field name="displayFormat" title="显示格式" type="string" inputMode="dropdown">
+			<parameter name="itemsText">2005-07-18 13:41|yyyy-MM-dd HH:mm\0 07-18 13:41|MM-dd HH:mm\0 13:41|HH:mm\0 2005年7月18日 星期一 13时41分|yyyy年M月d日 EEE HH时mm分\0 7月18日 星期一 13时41分|M月d日 EEE HH时mm分\0 2005年7月18日 13时41分|yyyy年M月d日 HH时mm分\0 7月18日 13时41分|M月d日 HH时mm分\0 2005-07-18|yyyy-MM-dd\0 07-18|MM-dd\0 2005年7月18日 星期一|yyyy年M月d日 EEE\0 7月18日 星期一|M月d日 EEE\0 2005年7月18日|yyyy年M月d日\0 7月18日|M月d日</parameter>
+		</field>
+		<field name="defaultValue" title="默认值" type="string" inputMode="dropdown">
+			<parameter name="itemsText">{当前时间}|{NOW}\0{今天的00:00:00}|{TODAY 00:00:00}\0{今天的23:59:59}|{TODAY 23:59:59}\0{第二天的00:00:00}|{NEXTDAY 00:00:00}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="组成部分参数" class="com.yuanluesoft.jeaf.business.model.parameter.ComponentParameter">
+		<field name="className" title="类名称" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="组成部分列表参数" class="com.yuanluesoft.jeaf.business.model.parameter.ComponentsParameter">
+		<field name="className" title="类名称" type="string" inputMode="text"/>
+		<field name="presettingOpinionTypes" title="预置的意见类型" type="string" inputMode="text"/>
+		<field name="lazyLoad" title="是否延迟加载" type="string" inputMode="radio">
+			<parameter name="itemsText">是|true\0不是|false</parameter>
+		</field>
+		<field name="url" title="显示组成元素详细信息的URL" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="意见参数" class="com.yuanluesoft.jeaf.business.model.parameter.OpinionParameter">
+		<field name="prompt" title="没有填写意见时的提示信息" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="多行文本输入框参数" class="com.yuanluesoft.jeaf.business.model.parameter.TextareaParameter">
+		<field name="rows" title="显示的行数" type="number" inputMode="dropdown">
+			<parameter name="itemsText">2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="HTML编辑器参数" class="com.yuanluesoft.jeaf.business.model.parameter.HtmlEditorParameter">
+		<field name="attachmentSelector" title="附件选择对话框URL" type="string" inputMode="text"/>
+		<field name="commandSet" title="工具栏名称" type="string" inputMode="dropdown">
+			<parameter name="itemsText">标准|standard\0简化|outer</parameter>
+		</field>
+		<field name="height" title="高度" type="string" inputMode="dropdown">
+			<parameter name="itemsText">160px\0 200px\0 300px\0 100%</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="单选框参数" class="com.yuanluesoft.jeaf.business.model.parameter.RadioParameter">
+		<field name="itemsText" title="选项列表" type="string" inputMode="text"/>
+		<field name="itemsHql" title="获取选项列表的HQL" type="string" inputMode="text"/>
+		<field name="itemsSql" title="获取选项列表的SQL" type="string" inputMode="text"/>
+		<field name="itemsServiceName" title="获取选项列表的服务名称" type="string" inputMode="text"/>
+		<field name="itemsName" title="选项列表名称" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="多选框参数" class="com.yuanluesoft.jeaf.business.model.parameter.MultiboxParameter"/>
+	
+	<businessObject title="复选框参数" class="com.yuanluesoft.jeaf.business.model.parameter.CheckboxParameter">
+		<field name="value" title="值" type="string" inputMode="text"/>
+		<field name="label" title="标题" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="下拉列表参数" class="com.yuanluesoft.jeaf.business.model.parameter.DropdownParameter">
+		<field name="valueField" title="值字段" type="string" inputMode="text"/>
+		<field name="titleField" title="标题字段" type="string" inputMode="text"/>
+		<field name="selectOnly" title="是否只能选择" type="string" inputMode="radio">
+			<parameter name="itemsText">是|true\0不是|false</parameter>
+		</field>
+		<field name="listPickerWidth" title="下拉列表宽度" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="选择对话框参数" class="com.yuanluesoft.jeaf.business.model.parameter.SelectParameter">
+		<field name="js" title="需要引入的js文件" type="string" inputMode="text"/>
+		<field name="execute" title="选择时执行的脚本" type="string" inputMode="dropdown">
+			<parameter name="itemsText">{用户选择}|{SELECTPERSON}\0{部门选择}|{SELECTDEPARTMENT}\0{单位选择}|{SELECTUNIT}</parameter>
+		</field>
+		<field name="multiSelect" title="是否多选" type="string" inputMode="radio">
+			<parameter name="itemsText">多选|true\0单选|false</parameter>
+		</field>
+		<field name="separator" title="分隔符" type="string" inputMode="text"/>
+		<field name="selectOnly" title="是否只能选择" type="string" inputMode="radio">
+			<parameter name="itemsText">是|true\0不是|false</parameter>
+		</field>
+		<field name="selectButtonStyleClass" title="选择按钮样式" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="隐藏域参数" class="com.yuanluesoft.jeaf.business.model.parameter.HiddenParameter">
+		<field name="newFormOnly" title="是否只在创建新记录时有效" type="string" inputMode="radio">
+			<parameter name="itemsText">是|true\0不是|false</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="时间输入框参数" class="com.yuanluesoft.jeaf.business.model.parameter.TimeInputParameter">
+		<field name="secondEnabled" title="是否要输入秒" type="string" inputMode="radio">
+			<parameter name="itemsText">要|true\0不要|false</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="附件参数" class="com.yuanluesoft.jeaf.business.model.parameter.AttachmentParameter">
+		<field name="attachmentEditor" title="附件编辑URL" type="string" inputMode="text"/>
+		<field name="maxUploadSize" title="附件最大大小" type="number" inputMode="text"/>
+		<field name="serviceName" title="使用的服务名称" type="string" inputMode="text"/>
+		<field name="fileExtension" title="文件后缀名列表" type="string" inputMode="text"/>
+		<field name="extendJs" title="附件扩展JS文件" type="string" inputMode="text"/>
+		<field name="dynamicUrl" title="是否生成动态的下载链接" type="string" inputMode="radio">
+			<parameter name="itemsText">要|true\0不要|false</parameter>
+		</field>
+		<field name="type" title="动态附件类型" type="string" inputMode="text"/>
+		<field name="simpleMode" title="是否启用精简模式" type="string" inputMode="radio">
+			<parameter name="itemsText">要|true\0不要|false</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="图片参数" class="com.yuanluesoft.jeaf.business.model.parameter.ImageParameter">
+		<field name="maxSaveSize" title="最大存储字节数" type="number" inputMode="text"/>
+		<field name="imageClipWidth" title="裁剪后的图片宽度" type="number" inputMode="text"/>
+		<field name="imageClipHeight" title="裁剪后的图片高度" type="number" inputMode="text"/>
+		<field name="clipEnabled" title="图片裁剪时是否允许切除图片" type="string" inputMode="radio">
+			<parameter name="itemsText">要|true\0不要|false</parameter>
+		</field>
+		<field name="maxMegaPixels" title="允许上传的最大像素(百万)" type="number" inputMode="text"/>
+	</businessObject>
+
+	<businessObject title="视频参数" class="com.yuanluesoft.jeaf.business.model.parameter.VideoParameter">
+		<field name="convertMp4" title="是否转换为MP4格式" type="string" inputMode="radio">
+			<parameter name="itemsText">转换|true\0不转换|false</parameter>
+		</field>
+		<field name="videoBitrate" title="视频比特率" type="number" inputMode="text"/>
+		<field name="videoFps" title="帧频" type="number" inputMode="text"/>
+		<field name="videoWidth" title="视频宽度" type="number" inputMode="text"/>
+		<field name="videoHeight" title="视频高度" type="number" inputMode="text"/>
+		<field name="audioBitrate" title="音频码率" type="number" inputMode="text"/>
+		<field name="audioFreq" title="音频采样率" type="number" inputMode="text"/>
+	</businessObject>
+</businessObjects>

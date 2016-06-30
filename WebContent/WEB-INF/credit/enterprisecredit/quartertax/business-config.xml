@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="龙海市纳税人欠税情况季报表(企业或单位类)" class="com.yuanluesoft.credit.enterprisecredit.quartertax.pojo.QuarterTax" >
+		<field name="nuit" title="单位" required="true" length="100" type="string" inputMode="text"/>
+		<field name="oweTime" title="欠税时间" required="true" length="100" type="string" inputMode="text"/>
+		<field name="department" title="基层管征单位" required="true" length="100" type="string" inputMode="text"/>
+		<field name="enterprise" title="企业或单位名称" required="true" length="100" type="string" inputMode="text"/>
+		<field name="number" title="纳税人识别号" required="true"  length="50" type="string" inputMode="text"/>
+		<field name="person" title="法定代表人或负责人姓名" required="true" length="100" type="string" inputMode="text"/>
+		<field name="cardNum" title="居民身份证或其他有效身份证件号码" required="true" length="50" type="string" inputMode="text"/>
+		<field name="addr" title="经营地点" required="true" length="200" type="string" inputMode="text"/>
+		<field name="taxType" title="欠税税种" required="true" length="50" type="string" inputMode="text"/>
+		<field name="total" title="累计欠税余额" required="true"  type="string" inputMode="text"/>
+		<field name="thisYear" title="本年欠税余额" required="true" type="string" inputMode="text"/>
+		
+		
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	
+</businessObjects>

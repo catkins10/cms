@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="preapproval" type="com.yuanluesoft.cms.preapproval.forms.Preapproval"/>
+  <form-bean name="adminPreapproval" type="com.yuanluesoft.cms.preapproval.forms.admin.Preapproval"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="preapproval" path="/preapproval" scope="request"
+   type="com.yuanluesoft.cms.preapproval.actions.preapproval.Load" validate="false">
+   <forward name="load" path="/preapproval.jsp"/>
+  </action>
+  <action name="adminPreapproval" path="/admin/preapproval"
+   scope="request"
+   type="com.yuanluesoft.cms.preapproval.actions.preapproval.admin.Load" validate="false">
+   <forward name="load" path="/admin/preapproval.jsp"/>
+  </action>
+  <action input="/preapproval.jsp" name="preapproval"
+   path="/savePreapproval" scope="request"
+   type="com.yuanluesoft.cms.preapproval.actions.preapproval.Save" validate="false">
+   <forward name="result" path="/preapprovalSubmited.jsp"/>
+  </action>
+  <action input="/admin/preapproval.jsp" name="adminPreapproval"
+   path="/admin/savePreapproval" scope="request"
+   type="com.yuanluesoft.cms.preapproval.actions.preapproval.admin.Save" validate="false"/>
+  <action input="/admin/preapproval.jsp" name="adminPreapproval"
+   path="/admin/runPreapproval" scope="request"
+   type="com.yuanluesoft.cms.preapproval.actions.preapproval.admin.Run" validate="false"/>
+  <action input="/admin/preapproval.jsp" name="adminPreapproval"
+   path="/admin/deletePreapproval" scope="request"
+   type="com.yuanluesoft.cms.preapproval.actions.preapproval.admin.Delete" validate="false"/>
+  <action input="/admin/preapproval.jsp" name="adminPreapproval"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.cms.preapproval.actions.preapproval.admin.WriteOpinion" validate="false"/>
+  <action input="/admin/preapproval.jsp" name="adminPreapproval"
+   path="/admin/setPublishOption" scope="request"
+   type="com.yuanluesoft.cms.preapproval.actions.preapproval.admin.SetPublishOption" validate="false"/>
+  <action input="/admin/preapproval.jsp" name="adminPreapproval"
+   path="/admin/publish" scope="request"
+   type="com.yuanluesoft.cms.preapproval.actions.preapproval.admin.Publish" validate="false"/>
+  <action name="preapproval" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.cms.preapproval.actions.preapproval.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

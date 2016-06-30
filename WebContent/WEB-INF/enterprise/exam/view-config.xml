@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="toTestExamPapers" title="待答试卷" pageRows="20" viewServiceName="examViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.pojo.ExamPaper</pojo>
+			<where>ExamPaper.status=1
+				   and ExamPaper.onComputer=1
+				   and (ExamPaper.beginTime is null or ExamPaper.beginTime&lt;=TIMESTAMP({NOW}))
+				   and (ExamPaper.endTime is null or ExamPaper.endTime>TIMESTAMP({NOW}))
+				   and (select min(ExamTest.id) from ExamTest ExamTest where ExamTest.paperId=ExamPaper.id and ExamTest.personId={USERID} and ExamTest.status>0) is null</where>
+			<orderBy>ExamPaper.releaseTime</orderBy>
+			<filter>READABLE</filter>
+		</data>
+		<links>
+			<link>/enterprise/exam/examTest.shtml?paperId={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view name="examTestPlan" title="考试安排" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.pojo.ExamPaper</pojo>
+			<where>ExamPaper.status=1
+				   and ExamPaper.onComputer=1
+				   and not ExamPaper.beginTime is null
+				   and ExamPaper.beginTime>TIMESTAMP({NOW})
+				   and (select min(ExamTest.id) from ExamTest ExamTest where ExamTest.paperId=ExamPaper.id and ExamTest.personId={USERID} and ExamTest.status>0) is null</where>
+			<orderBy>ExamPaper.beginTime</orderBy>
+			<filter>READABLE</filter>
+		</data>
+	</view>
+	
+	<view name="testedExamPapers" title="已答试卷" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.pojo.ExamTest</pojo>
+			<where>ExamTest.personId={USERID} and ExamTest.status>0</where>
+			<orderBy>ExamTest.endTime DESC</orderBy>
+		</data>
+		<links>
+			<link>/enterprise/exam/examTest.shtml</link>
+		</links>
+	</view>
+	
+	<view name="toCorrectExamPapers" title="待批改试卷" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.pojo.ExamTest</pojo>
+			<where>ExamTest.status=1
+				   and examPaper.examId in (select ExamCorrector.examId from ExamCorrector ExamCorrector where ExamCorrector.correctorId={USERID})</where>
+			<orderBy>ExamTest.endTime</orderBy>
+		</data>
+		<links>
+			<link>/enterprise/exam/examTest.shtml?correct=true</link>
+		</links>
+	</view>
+	
+	<view name="wrongQuestion" title="错题本" pageRows="20" viewServiceName="examViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.pojo.ExamWrongQuestion</pojo>
+			<where>ExamWrongQuestion.personId={USERID}</where>
+			<orderBy>ExamWrongQuestion.created DESC</orderBy>
+		</data>
+	</view>
+	
+	<view name="admin/exam" form="admin/exam" title="考试" pageRows="20" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create)" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.pojo.Exam</pojo>
+			<where>Exam.isDeleted!=1</where>
+			<orderBy>Exam.name</orderBy>
+			<quickFilter>Exam.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="创建考试" execute="PageUtils.newrecord('enterprise/exam', 'admin/exam', 'mode=fullscreen')" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="考试名称" name="name"/>
+			<column title="考试时长(分钟)" name="examTime" width="100" align="center"/>
+			<column title="适用的岗位" name="examPosts.post"/>
+		</columns>
+	</view>
+	
+	<view name="admin/examPaper" form="admin/examPaper" title="考卷" pageRows="20" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create)" openFeatures="mode=dialog,width=550,height=300" >
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.pojo.ExamPaper</pojo>
+			<where>exam.selfTest!=1</where>
+			<orderBy>ExamPaper.created DESC</orderBy>
+			<quickFilter>ExamPaper.examPaperName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="考卷名称" name="examPaperName"/>
+			<column title="开始时间" name="beginTime" align="center" width="110"/>
+			<column title="截止时间" name="endTime" align="center" width="110"/>
+			<column title="组卷时间" name="created" align="center" width="110"/>
+			<column title="发布时间" name="releaseTime" align="center" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="admin/knowledge" form="admin/knowledge" title="知识类别" pageRows="20" hide="noPrivilege(application_manager)" openFeatures="mode=dialog,width=350,height=200">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.pojo.ExamKnowledge</pojo>
+			<orderBy>ExamKnowledge.knowledge</orderBy>
+			<quickFilter>ExamKnowledge.knowledge like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加类别" execute="DialogUtils.openDialog('{CONTEXTPATH}/enterprise/exam/admin/knowledge.shtml', 350, 200)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="知识类别" name="knowledge"/>
+		</columns>
+	</view>
+	
+	<view name="admin/item" form="admin/item" title="项目分类" pageRows="20" hide="noPrivilege(application_manager)" openFeatures="mode=dialog,width=350,height=200">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.pojo.ExamItem</pojo>
+			<orderBy>ExamItem.item</orderBy>
+			<quickFilter>ExamItem.item like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加分类" execute="DialogUtils.openDialog('{CONTEXTPATH}/enterprise/exam/admin/item.shtml', 350, 200)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目分类" name="item"/>
+		</columns>
+	</view>
+	
+	<view name="admin/examStat" title="考试统计" pageRows="1000" url="/enterprise/exam/admin/examStatView.shtml" viewServiceName="examViewService" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create)">
+	    <data>
+			<pojo>com.yuanluesoft.enterprise.exam.model.ExamStat</pojo>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="30"/>
+			<column title="姓名" name="name" width="60"/>
+			<column title="单位" name="unit" width="100"/>
+			<column title="部门" name="department" width="100"/>
+			<column title="岗位" name="post" width="100"/>
+			<column title="考试名称" name="examName"/>
+			<column title="考试次数" name="times" align="center" width="55"/>
+			<column title="总分" name="totalScore" align="center" width="55"/>
+			<column title="考试状态" name="status" width="80"/>
+		</columns>
+		<extendParameters>
+			<parameter name="extendPage">/enterprise/exam/admin/examStat.jsp</parameter> <!-- 扩展页面 -->
+		</extendParameters>
+	</view>
+</views>

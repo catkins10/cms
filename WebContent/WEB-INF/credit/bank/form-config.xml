@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/bank" class="com.yuanluesoft.credit.bank.bank.forms.Bank" title="银行" pojo="com.yuanluesoft.credit.bank.bank.pojo.Bank">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteBank')"/>
+		</actions>
+	</form>
+	<form name="admin/product" class="com.yuanluesoft.credit.bank.financialproducts.forms.Product" title="金融产品" pojo="com.yuanluesoft.credit.bank.financialproducts.pojo.Product">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteProduct')"/>
+		</actions>
+	</form>
+	<form name="admin/loan" class="com.yuanluesoft.credit.bank.loan.forms.Loan" title="贷款信息" pojo="com.yuanluesoft.credit.bank.loan.pojo.BankLoan">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteLoan')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/apply" class="com.yuanluesoft.credit.bank.apply.forms.Apply" title="借款申请" pojo="com.yuanluesoft.credit.bank.apply.pojo.Apply">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteApply')"/>
+		</actions>
+	</form>
+	
+	<form name="apply"  action="/credit/bank/saveApply.shtml" class="com.yuanluesoft.credit.bank.apply.forms.Apply" title="借款申请" pojo="com.yuanluesoft.credit.bank.apply.pojo.Apply">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+	
+	
+	<!-- 是否前台表单是通过action属性判断的。貌似不能和action中pageName对应的页面插入表单。即不能自己提交给自己 -->
+	<form name="productQuery"
+		action="/cms/sitemanage/applicationSearch.shtml?applicationName=credit/bank&amp;pageName=productQueryResult"
+		title="金融产品查询表单" method="get"					      
+		class="com.yuanluesoft.credit.bank.financialproducts.forms.Product" ><!-- 这里若是写入pojo参数，则配置页面时会把所有的字段都列举出来.只是搜索的话只需写出需要的搜索字段即可 -->
+		<formFields>
+			<!-- 搜索关键字 -->
+			<field title="金融产品"  name="name" >
+			</field>
+			<field title="金融机构名称"  name="creator"><!-- 有指定searchCondition参数的他会按该参数的条件进行匹配。没写的只是匹配字段本身 -->
+			</field>
+		</formFields>
+		<actions>
+			<action title="查询" type="submit" /><!-- 这里的按钮动作在配置页面的表单中选择选择“插入按钮”时将会列出来 -->
+		</actions>
+	</form>
+	
+</forms>

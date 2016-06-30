@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="personinfo" form="personinfo" title="个人信息" pageRows="25" openFeatures="mode=fullscreen" >
+		<data>
+			<pojo>com.yuanluesoft.message.pojo.Personinfo</pojo>
+			<orderBy>Personinfo.name</orderBy>
+		</data>
+		<actions>
+			<action title="添加人物"  execute="PageUtils.newrecord('message', 'personinfo', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name"/>
+			<column title="性别" name="sex" width="50"/>
+			<column title="出生日期" name="birthday" format="yyyy-MM-dd" align="center" width="80"/>
+		</columns>
+	</view>
+</views>

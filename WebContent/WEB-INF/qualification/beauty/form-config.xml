@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="beauty" class="com.yuanluesoft.qualification.beauty.forms.Beauty" title="美容、化妆证书" pojo="com.yuanluesoft.qualification.beauty.pojo.Beauty">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteBeauty')"/>
+		</actions>
+	</form>
+	
+	<!-- Excel导入表单 -->
+	<form name="beautyImportData" class="com.yuanluesoft.qualification.beauty.forms.ImportDateExcel" title="美容、化妆证书">
+	   <formFields>
+	   		<field name="data" title="数据文件" type="attachment" inputMode="attachment" length="1"><!-- 附件操作，length是个数 -->
+				<parameter name="fileExtension">Excel表格|*.xls;*.xlsx|</parameter><!-- 指定过滤文件 -->
+				<parameter name="simpleMode">true</parameter><!-- 简单模式 -->
+			</field>
+	   </formFields>
+	   <actions>
+			<action title="导入" execute="FormUtils.submitForm()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

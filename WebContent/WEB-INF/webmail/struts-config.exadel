@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../jeaf/form/error.jsp" SHAPE="32,24,177,21"
+  TARGET="page18" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../jeaf/form/result.jsp" SHAPE="32,80,177,21" TARGET="page3"
+  TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#openview" NAME="action2"
+  PATH="/openview" SHAPE="32,176,177,41" TITLE="mailView" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../jeaf/application/applicationView.jsp"
+   TARGET="page1" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#mail" NAME="action10"
+  PATH="/mail" SHAPE="32,448,177,41" TITLE="mail" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/mail.jsp" TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4" PATH="/mail.jsp"
+  SHAPE="320,464,56,85" SUBTYPE="jsp" TITLE="mail.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/sendandsave" TARGET="action14" TITLE="sendandsave" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/send" SHAPE="375,504,480,504,480,600,511,600"
+   TARGET="action12" TITLE="send" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/deleteMail" SHAPE="375,520,472,520,472,664,511,664"
+   TARGET="action19" TITLE="deleteMail" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#send" NAME="action12"
+  PATH="/send" SHAPE="512,592,177,25" TITLE="mail" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveasdraft"
+  NAME="action13" PATH="/saveasdraft" SHAPE="512,480,177,25"
+  TITLE="mail" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#sendandsave"
+  NAME="action14" PATH="/sendandsave" SHAPE="512,536,177,25"
+  TITLE="mail" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../jeaf/application/applicationView.jsp" SHAPE="320,192,56,100"
+  SUBTYPE="jsp" TITLE="webmailView.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/batchdeletemail" TARGET="action20" TITLE="batchdeletemail" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/batchmovemail" TARGET="action21" TITLE="batchmovemail" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link4"
+   PATH="/addAddressList" TARGET="action35" TITLE="addAddressList" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteMail"
+  NAME="action19" PATH="/deleteMail" SHAPE="512,656,177,25" TITLE="mail" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#batchdeletemail"
+  NAME="action20" PATH="/batchdeletemail" SHAPE="512,208,177,25"
+  TITLE="mailView" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#batchmovemail"
+  NAME="action21" PATH="/batchmovemail" SHAPE="512,264,177,25"
+  TITLE="mailView" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#mailFilter"
+  NAME="action28" PATH="/mailFilter" SHAPE="32,1136,177,41"
+  TITLE="mailfilter" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/mailFilter.jsp" TARGET="page8" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page8"
+  PATH="/mailFilter.jsp" SHAPE="320,1152,56,55" SUBTYPE="jsp"
+  TITLE="mailFilter.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveMailFilter" TARGET="action29" TITLE="saveMailFilter" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteMailFilter" TARGET="action30" TITLE="deleteMailFilter" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveMailFilter"
+  NAME="action29" PATH="/saveMailFilter" SHAPE="512,1168,177,25"
+  TITLE="mailfilter" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteMailFilter"
+  NAME="action30" PATH="/deleteMailFilter" SHAPE="512,1224,177,25"
+  TITLE="mailfilter" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#adjustFilterPriority"
+  NAME="action31" PATH="/adjustFilterPriority" SHAPE="32,1272,177,25"
+  TITLE="mailView" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#batchDeleteMailFilter"
+  NAME="action32" PATH="/batchDeleteMailFilter" SHAPE="32,1336,177,25"
+  TITLE="mailView" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#replyMail"
+  NAME="action23" PATH="/replyMail" SHAPE="32,528,177,41" TITLE="mail" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/mail.jsp" TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#forwardMail"
+  NAME="action24" PATH="/forwardMail" SHAPE="32,600,177,41" TITLE="mail" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/mail.jsp" TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#addAddressList"
+  NAME="action35" PATH="/addAddressList" SHAPE="512,320,177,25"
+  TITLE="mailView" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#attachmentEditor"
+  NAME="action11" PATH="/attachmentEditor" SHAPE="32,704,177,41"
+  TITLE="mail" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../jeaf/attachment/attachment.jsp"
+   TARGET="page23" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page23"
+  PATH="/../jeaf/attachment/attachment.jsp" SHAPE="320,720,50,25"
+  SUBTYPE="jsp" TITLE="attachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page18"
+  PATH="/../jeaf/form/error.jsp" SHAPE="320,24,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/../jeaf/form/result.jsp" SHAPE="320,80,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#selectAttachment"
+  NAME="action0" PATH="/selectAttachment" SHAPE="32,792,177,41"
+  TITLE="mail" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../jeaf/attachment/selectAttachment.jsp"
+   TARGET="page0" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../jeaf/attachment/selectAttachment.jsp" SHAPE="320,808,50,25"
+  SUBTYPE="jsp" TITLE="selectAttachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#downloadAttachment"
+  NAME="action1" PATH="/downloadAttachment" SHAPE="32,872,177,25"
+  TITLE="downloadAttachment" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#mailbox" NAME="action5"
+  PATH="/mailbox" SHAPE="32,960,177,41" TITLE="mailbox" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/mailbox.jsp" TARGET="page5" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/mailbox.jsp" SHAPE="320,976,50,25" SUBTYPE="jsp"
+  TITLE="mailbox.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteMailbox" TARGET="action4"
+   TITLE="deleteMailbox" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveMailbox"
+  NAME="action3" PATH="/saveMailbox" SHAPE="512,992,177,25"
+  TITLE="mailbox" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteMailbox"
+  NAME="action4" PATH="/deleteMailbox" SHAPE="512,1056,177,25"
+  TITLE="mailbox" TYPE="action"/>
+</PROCESS>

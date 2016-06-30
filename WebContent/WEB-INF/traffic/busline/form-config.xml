@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/busLine" class="com.yuanluesoft.traffic.busline.forms.admin.BusLine" title="公交车" pojo="com.yuanluesoft.traffic.busline.pojo.BusLine">
+		<formFields>
+			<field name="uplinkStationNames" title="上行站点名称" type="string" inputMode="textarea" required="true">
+				<parameter name="rows">5</parameter>
+			</field>
+			<field name="downlinkStationNames" title="下行站点名称" type="string" inputMode="textarea" required="true">
+				<parameter name="rows">5</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="isNew()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteBusLine')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/station" class="com.yuanluesoft.traffic.busline.forms.admin.Station" title="公交站点" pojo="com.yuanluesoft.traffic.busline.pojo.BusLine">
+		<formFields>
+			<field name="station" title="公交站点" type="component">
+				<parameter name="class">com.yuanluesoft.traffic.busline.pojo.BusLineStation</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="isNew()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteStation')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/change" class="com.yuanluesoft.traffic.busline.forms.admin.LineChange" title="线路变更通知" pojo="com.yuanluesoft.traffic.busline.pojo.BusLine">
+		<formFields>
+			<field name="change" title="线路变更通知" type="component">
+				<parameter name="class">com.yuanluesoft.traffic.busline.pojo.BusLineChange</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="isNew()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteChange')"/>
+		</actions>
+	</form>
+	
+	<form name="busLineQuery" title="公交线路查询" method="get" action="/traffic/busline/busLineQuery.shtml">
+		<formFields>
+			<field title="查询方式" name="queryMode" type="string" inputMode="dropdown">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="itemsText">按线路名称\0按站点名称\0按起讫站点</parameter>
+				<parameter name="defaultValue">按线路名称</parameter>
+				<parameter name="onchange">document.getElementById('busLineQueryByKey').style.display = (value=='按起讫站点' ? 'none' : '');document.getElementById('busLineQueryByStation').style.display = (value=='按起讫站点' ? '' : 'none');</parameter>
+			</field>
+			<field title="名称" name="key"/>
+			<field title="起点站" name="startStationName"/>
+			<field title="终点站" name="finishStationName"/>
+		</formFields>
+		<actions>
+			<action title="查询" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+</forms>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="passportOrgSearch" title="船员证申办单位搜索" method="get" action="/cms/sitemanage/applicationIndex.shtml?applicationName=msa/seafarer&amp;pageName=passportOrgSearch">
+		<formFields>
+			<field name="name" title="单位名称" type="string" length="100" inputMode="text"/>
+			<field name="unitNo" title="单位编号" type="string" length="100" inputMode="text"/>
+			<field name="address" title="联系地址" type="string" length="100" inputMode="text"/>
+			<field name="legalRepresentative" title="法人代表" type="string" length="16" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="serviceOrgSearch" title="服务机构搜索" method="get" action="/cms/sitemanage/applicationIndex.shtml?applicationName=msa/seafarer&amp;pageName=serviceOrgSearch">
+		<formFields>
+			<field name="name" title="机构名称" type="string" length="100" inputMode="text"/>
+			<field name="serviceContent" title="服务内容" type="string" length="500" inputMode="text"/>
+			<field name="address" title="联系地址" type="string" length="100" inputMode="text"/>
+			<field name="legalRepresentative" title="法人代表" type="string" length="16" inputMode="text"/>
+			<field name="category" title="类型" type="string" length="25" inputMode="dropdown">
+				<parameter name="itemsServiceName">seafarerService</parameter>
+				<parameter name="itemsName">serviceOrgCategory</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="trainOrgSearch" title="培训机构搜索" method="get" action="/cms/sitemanage/applicationIndex.shtml?applicationName=msa/seafarer&amp;pageName=trainOrgSearch">
+		<formFields>
+			<field name="name" title="名称" type="string" length="100" inputMode="text"/>
+			<field name="address" title="地址" type="string" length="100" inputMode="text"/>
+			<field name="tel" title="联系电话" type="string" length="100" inputMode="text"/>
+			<field name="fax" title="传真" type="string" length="30" inputMode="text"/>
+			<field name="postalcode" title="邮编" type="string" length="10" inputMode="text"/>
+			<field name="legalRepresentative" title="法定代表人" type="string" length="16" inputMode="text"/>
+			<field name="kind" title="性质" type="string" length="25" inputMode="text"/>
+			<field name="licenseNumber" title="许可证号" type="string" length="100" inputMode="text"/>
+			<field name="summarize" title="详细介绍" type="html" inputMode="htmleditor"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="trainShipSearch" title="培训船舶搜索" method="get" action="/cms/sitemanage/applicationIndex.shtml?applicationName=msa/seafarer&amp;pageName=trainShipSearch">
+		<formFields>
+			<field name="name" title="名称" type="string" length="100" inputMode="text"/>
+			<field name="port" title="船籍港" type="string" length="100" inputMode="text"/>
+			<field name="category" title="船舶种类" type="string" length="50" inputMode="text"/>
+			<field name="tonnage" title="总吨位" type="string" length="50" inputMode="text"/>
+			<field name="power" title="功率" type="string" length="50" inputMode="text"/>
+			<field name="shipBelong" title="船舶所有人" type="string" length="50" inputMode="text"/>
+			<field name="practiceOrg" title="船上培训/见习单位" type="string" length="100" inputMode="dropdown">
+				<parameter name="itemsText">福州海事局\0厦门海事局\0泉州海事局\0莆田海事局\0宁德海事局\0漳州海事局</parameter>
+			</field>
+			<field name="orgBelong" title="单位所属海事机构" type="string" length="100" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+	
+	<form name="certificationExamineeSearch" title="合格证书搜索" method="get" action="/cms/sitemanage/applicationIndex.shtml?applicationName=msa/seafarer&amp;pageName=certificationExamineeSearch">
+		<formFields>
+			<field name="exam.speciality" title="专业" type="string" length="100" inputMode="text"/>
+			<field name="exam.category" title="类别" type="string" length="100" inputMode="text"/>
+			<field name="exam.period" title="期数" type="string" length="100" inputMode="text"/>
+			<field name="permit" title="准考证号码" type="string" length="50" inputMode="text"/>
+			<field name="identityCard" title="身份证号码" type="string" length="30" inputMode="text"/>
+			<field name="name" title="姓名" type="string" length="25" inputMode="text"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+		<extendedParameters>
+			<parameter name="staticPageSupport">true</parameter>
+		</extendedParameters>
+	</form>
+
+	<form name="admin/passportOrg" class="com.yuanluesoft.msa.seafarer.forms.admin.PassportOrg" title="船员证申办单位" pojo="com.yuanluesoft.msa.seafarer.pojo.MsaSeafarerPassportOrg">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deletePassportOrg')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/serviceOrg" class="com.yuanluesoft.msa.seafarer.forms.admin.ServiceOrg" title="服务机构" pojo="com.yuanluesoft.msa.seafarer.pojo.MsaServiceOrg">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteServiceOrg')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/trainOrg" class="com.yuanluesoft.msa.seafarer.forms.admin.TrainOrg" title="培训机构" pojo="com.yuanluesoft.msa.seafarer.pojo.MsaTrainOrg">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteTrainOrg')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/trainShip" class="com.yuanluesoft.msa.seafarer.forms.admin.TrainShip" title="培训船舶" pojo="com.yuanluesoft.msa.seafarer.pojo.MsaTrainShip">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteTrainShip')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/certificationExam" class="com.yuanluesoft.msa.seafarer.forms.admin.CertificationExam" title="合格证书" pojo="com.yuanluesoft.msa.seafarer.pojo.MsaCertificationExam">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteCertificationExam')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/certificationExaminee" class="com.yuanluesoft.msa.seafarer.forms.admin.CertificationExaminee" title="合格考生" pojo="com.yuanluesoft.msa.seafarer.pojo.MsaCertificationExam">
+		<formFields>
+			<field name="examinee" title="合格考生" type="component">
+				<parameter name="class">com.yuanluesoft.msa.seafarer.pojo.MsaCertificationExaminee</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteCertificationExaminee')"/>
+			<action title="关闭" execute="window.close()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/importData" title="数据导入" class="com.yuanluesoft.msa.seafarer.forms.admin.ImportData" pojo="com.yuanluesoft.msa.seafarer.pojo.MsaImportLog">
+		<actions>
+			<action title="导入" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="删除日志" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteImportData')"/>
+			<action title="删除日志和数据" hide="deleteDisable()" execute="if(confirm('同时删除导入日志和数据，且删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteImportData', 'deleteData=true')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+	
+	<form title="插入服务机构列表" class="com.yuanluesoft.msa.seafarer.forms.admin.InsertServiceOrgs">
+		<formFields>
+			<field name="category" title="分类" length="50" type="string" inputMode="dropdown">
+				<parameter name="itemsServiceName">seafarerService</parameter>
+				<parameter name="itemsName">serviceOrgCategory</parameter>
+			</field>
+		</formFields>
+	</form>
+	
+	<form title="插入服务机构分类链接" class="com.yuanluesoft.msa.seafarer.forms.admin.InsertServiceOrgCategoryLink">
+		<formFields>
+			<field name="category" title="类型" type="string" length="25" inputMode="dropdown">
+				<parameter name="itemsServiceName">seafarerService</parameter>
+				<parameter name="itemsName">serviceOrgCategory</parameter>
+				<parameter name="defaultValue">{FIRSTITEM}</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="确定" execute="doOk()"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

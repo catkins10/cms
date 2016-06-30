@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--在线访谈:主题-->
+	<class name="com.yuanluesoft.cms.interview.pojo.InterviewSubject" table="interview_subject">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="subject"/> <!--主题-->
+		<property name="background" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--访谈背景-->
+		<property name="beginTime"/> <!--开始时间-->
+		<property name="endTime"/> <!--结束时间-->
+		<property name="guests"/> <!--嘉宾-->
+		<property name="guestsIntro" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--嘉宾介绍-->
+		<property name="guestsPassword"/> <!--嘉宾登录密码-->
+		<property name="compereIds"/> <!--主持人ID列表-->
+		<property name="compereNames"/> <!--主持人姓名列表-->
+		<property name="speakFlow"/> <!--网友发言审核顺序-->
+		<property name="compereSpeakFlow"/> <!--主持人发言审核顺序-->
+		<property name="guestsSpeakFlow"/> <!--嘉宾发言审核顺序-->
+		<property name="creator"/> <!--创建人-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="created"/> <!--创建时间-->
+		<property name="isEnding"/> <!--是否结束-->
+		<property name="siteId"/> <!--站点ID-->
+		<!--访谈角色列表-->
+		<set cascade="delete" inverse="true" lazy="true" name="roles" table="interview_subject_role" order-by="id">
+			<key column="subjectId"/>
+			<one-to-many class="com.yuanluesoft.cms.interview.pojo.InterviewSubjectRole"/>
+		</set>
+		<!--访谈发言列表-->
+		<set cascade="delete" inverse="true" lazy="true" name="interviewSpeaks" table="interview_speak" where="publishTime is not null" order-by="speakTime">
+			<key column="subjectId"/>
+			<one-to-many class="com.yuanluesoft.cms.interview.pojo.InterviewSpeak"/>
+		</set>
+		<!--访谈图片列表-->
+		<set cascade="delete" inverse="true" lazy="true" name="interviewImages" table="interview_image" order-by="created">
+			<key column="interviewSubjectId"/>
+			<one-to-many class="com.yuanluesoft.cms.interview.pojo.InterviewImage"/>
+		</set>
+		<!--访谈视频列表-->
+		<set cascade="delete" inverse="true" lazy="true" name="interviewVideos" table="interview_video" order-by="created">
+			<key column="interviewSubjectId"/>
+			<one-to-many class="com.yuanluesoft.cms.interview.pojo.InterviewVideo"/>
+		</set>
+	</class>
+	
+	<!--在线访谈:角色的对应人员-->
+	<class name="com.yuanluesoft.cms.interview.pojo.InterviewSubjectRole" table="interview_subject_role">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="subjectId"/> <!--主题ID-->
+		<property name="role"/> <!--角色名称-->
+		<property name="roleMemberIds"/> <!--人员ID列表-->
+		<property name="roleMemberNames"/> <!--人员姓名列表-->
+	</class>
+	
+	<!--在线访谈:访谈发言-->
+	<class name="com.yuanluesoft.cms.interview.pojo.InterviewSpeak" table="interview_speak">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="subjectId"/> <!--主题ID-->
+		<property name="speaker"/> <!--发言人姓名-->
+		<property name="speakerIP"/> <!--发言人IP-->
+		<property name="speakerContacts"/> <!--发言人联系方式-->
+		<property name="speakerType"/> <!--发言人类型-->
+		<property name="content" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--内容-->
+		<property name="speakTime"/> <!--发言时间-->
+		<property name="isLeave"/> <!--是否留言-->
+		<property name="approvalRole"/> <!--当前审核人角色-->
+		<property name="publishTime"/> <!--发布时间-->
+	</class>
+	
+	<!--在线访谈:访谈图片-->
+	<class name="com.yuanluesoft.cms.interview.pojo.InterviewImage" table="interview_image">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="interviewSubjectId"/> <!--主题ID-->
+		<property name="imageUrl"/> <!--图片URL-->
+		<property name="subject"/> <!--标题-->
+		<property name="created"/> <!--上传时间-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="creator"/> <!--创建人-->
+	</class>
+	
+	<!--在线访谈:访谈视频-->
+	<class name="com.yuanluesoft.cms.interview.pojo.InterviewVideo" table="interview_video">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="interviewSubjectId"/> <!--主题ID-->
+		<property name="videoUrl"/> <!--视频URL-->
+		<property name="subject"/> <!--标题-->
+		<property name="created"/> <!--上传时间-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="creator"/> <!--创建人-->
+	</class>
+	
+	<!--在线访谈:站点角色定义-->
+	<class name="com.yuanluesoft.cms.interview.pojo.InterviewRole" table="interview_role">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="siteId"/> <!--站点ID-->
+		<property name="role"/> <!--角色名称-->
+		<property name="roleMemberIds"/> <!--默认的人员ID列表-->
+		<property name="roleMemberNames"/> <!--默认的人员姓名列表-->
+	</class>
+	
+	<!--在线访谈:站点发言审核顺序配置-->
+	<class name="com.yuanluesoft.cms.interview.pojo.InterviewSpeakFlow" table="interview_speak_flow">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="siteId"/> <!--站点ID-->
+		<property name="speakFlow"/> <!--网友发言审核顺序-->
+		<property name="compereSpeakFlow"/> <!--主持人发言审核顺序-->
+		<property name="guestsSpeakFlow"/> <!--嘉宾发言审核顺序-->
+	</class>
+</hibernate-mapping>

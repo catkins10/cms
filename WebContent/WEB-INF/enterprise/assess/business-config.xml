@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="绩效考核" class="com.yuanluesoft.enterprise.assess.pojo.Assess" businessServiceName="assessService">
+		<field name="teamId" title="项目组ID" type="number" inputMode="hidden"/>
+		<field name="projectName" title="项目名称" length="300" type="string" inputMode="readonly"/>
+		<field name="projectStage" title="项目阶段" length="50" type="string" inputMode="readonly"/>
+		<field name="projectTitle" title="项目" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">teamId,projectName,projectStage</parameter>
+		</field>
+		<field name="creatorId" title="创建人ID" type="number" inputMode="none"/>
+		<field name="creator" title="创建人" length="50" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="results" title="考核成绩" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.assess.pojo.AssessResult</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审核,审批</parameter>
+			<parameter name="class">com.yuanluesoft.enterprise.assess.pojo.AssessOpinion</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="考核成绩" class="com.yuanluesoft.enterprise.assess.pojo.AssessResult">
+		<field name="assessId" title="考核ID" type="number" inputMode="hidden"/>
+		<field name="personId" title="被考核人ID" type="number" inputMode="none"/>
+		<field name="personName" title="被考核人姓名" length="50" type="string" inputMode="readonly"/>
+		<field name="classifyId" title="考核类型ID" type="number" inputMode="none"/>
+		<field name="result" title="考核成绩" length="5,2" type="number" inputMode="readonly"/>
+		<field name="remark" title="备注" length="500" type="string" inputMode="text"/>
+		<field name="individualResults" title="各单项成绩" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.assess.pojo.AssessIndividualResult</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="各单项成绩" class="com.yuanluesoft.enterprise.assess.pojo.AssessIndividualResult">
+		<field name="resultId" title="个人考核ID" type="number" inputMode="none"/>
+		<field name="contentId" title="考核内容ID" type="number" inputMode="none"/>
+		<field name="activityId" title="考核步骤ID" type="number" inputMode="none"/>
+		<field name="result" title="考核成绩" length="5,2" type="number" inputMode="text"/>
+	</businessObject>
+	<businessObject title="考核类型" class="com.yuanluesoft.enterprise.assess.pojo.AssessClassify">
+		<field name="classify" title="类型" length="50" required="true" type="string" inputMode="text"/>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+		<field name="selfAssess" title="需要自评" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">需要|1\0不需要|0</parameter>
+		</field>
+		<field name="projectTeamAccess" title="只适用于项目组" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+		<field name="assessUsers" title="适用的用户" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.assess.pojo.AssessClassifyPrivilege</parameter>
+		</field>
+		<field name="standards" title="考核内容和标准" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.assess.pojo.AssessStandard</parameter>
+		</field>
+		<field name="activities" title="考核步骤" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.assess.pojo.AssessActivity</parameter>
+		</field>
+	</businessObject>
+	<businessObject title="考核内容和标准" class="com.yuanluesoft.enterprise.assess.pojo.AssessStandard">
+		<field name="classifyId" title="考核类型ID" type="number" inputMode="hidden"/>
+		<field name="content" title="考核内容" length="1000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="standard" title="说明及评分标准" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="maxValue" title="最大分值" length="4,1" type="number" inputMode="text"/>
+		<field name="priority" title="顺序号" length="7,4" type="number" inputMode="text"/>
+	</businessObject>
+	<businessObject title="考核步骤" class="com.yuanluesoft.enterprise.assess.pojo.AssessActivity">
+		<field name="classifyId" title="考核类型ID" type="number" inputMode="hidden"/>
+		<field name="activity" title="考核步骤" length="50" required="true" type="string" inputMode="text"/>
+		<field name="weight" title="权重" length="3,2" type="number" inputMode="text">
+			<parameter name="maxValue">1</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

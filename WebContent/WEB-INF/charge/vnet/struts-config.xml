@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="vnetOrder" type="com.yuanluesoft.charge.thirdparty.vnet.forms.VnetOrder"/>
+  <form-bean name="cancelVnetOrder" type="com.yuanluesoft.charge.thirdparty.vnet.forms.CancelVnetOrder"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action path="/vnetOrder" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.vnet.actions.personalorder.Load" validate="false"/>
+  <action name="vnetOrder" path="/completeVnetOrder" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.vnet.actions.personalorder.Complete" validate="false">
+   <forward name="failed" path="/vnetOrderFailed.jsp"/>
+  </action>
+  <action name="cancelVnetOrder" path="/cancelVnetOrder" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.vnet.actions.cancelorder.Load" validate="false">
+   <forward name="load" path="/cancelVnetOrder.jsp"/>
+  </action>
+  <action input="/cancelVnetOrder.jsp" name="cancelVnetOrder"
+   path="/doCancelVnetOrder" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.vnet.actions.cancelorder.Cancel" validate="false">
+   <forward name="result" path="/vnetOrderCanceled.jsp"/>
+  </action>
+  <action path="/vnetLogin" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.vnet.actions.login.Load" validate="false"/>
+  <action path="/vnetUserInfo" scope="request"
+   type="com.yuanluesoft.charge.thirdparty.vnet.actions.login.WriteUserInfo" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

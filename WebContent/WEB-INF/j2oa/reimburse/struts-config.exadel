@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,32,144,21" TARGET="page6"
+  TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,88,144,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#pay" NAME="action0"
+  PATH="/pay" SHAPE="496,384,144,25" TITLE="reimburse" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#reimburse" NAME="action2"
+  PATH="/reimburse" SHAPE="32,208,145,41" TITLE="reimburse" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/reimburse.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#run" NAME="action5"
+  PATH="/run" SHAPE="496,336,144,25" TITLE="reimburse" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#delete" NAME="action8"
+  PATH="/delete" SHAPE="496,288,144,25" TITLE="reimburse" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#save" NAME="action9"
+  PATH="/save" SHAPE="496,240,144,25" TITLE="reimburse" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/reimburse.jsp" SHAPE="288,224,56,85" SUBTYPE="jsp"
+  TITLE="reimburse.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/save" TARGET="action9" TITLE="save" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/delete" TARGET="action8" TITLE="delete" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/run" TARGET="action5" TITLE="run" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/pay" TARGET="action0" TITLE="pay" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link4"
+   PATH="/refreshReimburse" TARGET="action14"
+   TITLE="refreshReimburse" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#chargeCategory"
+  NAME="action1" PATH="/chargeCategory" SHAPE="32,896,144,41"
+  TITLE="chargeCategory" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/chargeCategory.jsp" TARGET="page3"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/chargeCategory.jsp" SHAPE="288,912,56,70" SUBTYPE="jsp"
+  TITLE="chargeCategory.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteChargeCategory" TARGET="action4"
+   TITLE="deleteChargeCategory" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/createNextChargeCategory" TARGET="action17"
+   TITLE="createNextChargeCategory" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveChargeCategory"
+  NAME="action3" PATH="/saveChargeCategory" SHAPE="504,928,145,25"
+  TITLE="chargeCategory" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteChargeCategory"
+  NAME="action4" PATH="/deleteChargeCategory" SHAPE="504,976,145,25"
+  TITLE="chargeCategory" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#chargeStandard"
+  NAME="action6" PATH="/chargeStandard" SHAPE="32,1088,144,41"
+  TITLE="chargeStandard" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/chargeStandard.jsp" TARGET="page4"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/chargeStandard.jsp" SHAPE="288,1104,56,70" SUBTYPE="jsp"
+  TITLE="chargeStandard.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteChargeStandard" TARGET="action10"
+   TITLE="deleteChargeStandard" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/createNextChargeStandard" TARGET="action18"
+   TITLE="createNextChargeStandard" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveChargeStandard"
+  NAME="action7" PATH="/saveChargeStandard" SHAPE="504,1120,152,25"
+  TITLE="chargeStandard" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteChargeStandard"
+  NAME="action10" PATH="/deleteChargeStandard" SHAPE="504,1168,152,25"
+  TITLE="chargeStandard" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveCharge"
+  NAME="action11" PATH="/saveCharge" SHAPE="496,544,144,25"
+  TITLE="charge" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteCharge"
+  NAME="action12" PATH="/deleteCharge" SHAPE="496,600,144,25"
+  TITLE="charge" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#charge" NAME="action16"
+  PATH="/charge" SHAPE="32,512,144,41" TITLE="charge" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/charge.jsp" TARGET="page7" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#createNextChargeCategory"
+  NAME="action17" PATH="/createNextChargeCategory"
+  SHAPE="504,1024,145,25" TITLE="chargeCategory" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#createNextChargeStandard"
+  NAME="action18" PATH="/createNextChargeStandard"
+  SHAPE="504,1216,152,25" TITLE="chargeStandard" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#getChargeStandard"
+  NAME="action19" PATH="/getChargeStandard" SHAPE="32,1248,145,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#reimburseConfig"
+  NAME="action20" PATH="/reimburseConfig" SHAPE="32,1328,144,41"
+  TITLE="reimburseConfig" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/reimburseConfig.jsp" TARGET="page5"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/reimburseConfig.jsp" SHAPE="288,1344,56,40" SUBTYPE="jsp"
+  TITLE="reimburseConfig.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveReimburseConfig"
+  NAME="action21" PATH="/saveReimburseConfig" SHAPE="504,1360,152,25"
+  TITLE="reimburseConfig" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="280,32,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="280,88,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#attachmentEditor"
+  NAME="action13" PATH="/attachmentEditor" SHAPE="32,688,145,41"
+  TITLE="charge" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/attachment.jsp"
+   TARGET="page1" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/attachment/attachment.jsp" SHAPE="288,704,50,25"
+  SUBTYPE="jsp" TITLE="attachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page7"
+  PATH="/charge.jsp" SHAPE="288,528,50,55" SUBTYPE="jsp"
+  TITLE="charge.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveCharge" TARGET="action11" TITLE="saveCharge" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteCharge" TARGET="action12"
+   TITLE="deleteCharge" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#refreshReimburse"
+  NAME="action14" PATH="/refreshReimburse" SHAPE="496,440,145,25"
+  TITLE="reimburse" TYPE="action"/>
+</PROCESS>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="document" class="com.yuanluesoft.enterprise.quality.forms.Document" title="项目" pojo="com.yuanluesoft.enterprise.quality.pojo.QualityDocument">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="作废" hide="isNew() or workflow() and noPrivilege(application_manager)" execute="if(confirm('作废后不可恢复，是否确定要作废？'))FormUtils.doAction('deleteDocument')"/>
+			<action title="文档起草" execute="DialogUtils.openSelectDialog('enterprise/quality', 'documentTemplate', 600, 400, false, '', 'FormUtils.doAction(&quot;appendDocument&quot;, &quot;qualityTemplateId={id}&quot;)')" hide="workflow()"/>
+		</actions>
+	</form>
+	
+	<form name="documentTemplate" class="com.yuanluesoft.enterprise.quality.forms.DocumentTemplate" title="文档模板" pojo="com.yuanluesoft.enterprise.quality.pojo.QualityDocumentTemplate"/>
+</forms>

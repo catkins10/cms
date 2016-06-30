@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views>
+	<view name="admin/todoStudent" form="admin/student" title="待办事宜" pageRows="25" openFeatures="width=760,height=520" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.educ.student.pojo.Stude</pojo>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="注册" execute="PageUtils.newrecord('educ/student', 'admin/student', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="学号" name="studentId" align="center" width="100"/>
+			<column title="姓名" name="name"/>
+			<column title="性别" name="sex" align="center" width="50"/>
+			<column title="专业" name="speciality" align="center" width="120"/>
+			<column title="事务类型" name="statusText" width="80" align="center"/>
+			<column title="是否本学院学生" name="isOurStudent" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="120"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="120" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessStudent" form="admin/student" title="在办事宜" pageRows="25" openFeatures="width=760,height=520" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.educ.student.pojo.Stude</pojo>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="注册" execute="PageUtils.newrecord('educ/student', 'admin/student', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="学号" name="studentId" align="center" width="100"/>
+			<column title="姓名" name="name"/>
+			<column title="性别" name="sex" align="center" width="50"/>
+			<column title="专业" name="speciality" align="center" width="120"/>
+			<column title="事务类型" name="statusText" width="80" align="center"/>
+			<column title="是否本学院学生" name="isOurStudent" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="120"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="120" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allStudent" form="admin/student" title="学生列表" pageRows="25" openFeatures="width=760,height=520" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.educ.student.pojo.Stude</pojo>
+			<where>Stude.isValid='1'</where>
+			<orderBy>Stude.studentId</orderBy>
+		</data>
+		<actions>
+			<action title="导入Excel文件" execute="PageUtils.newrecord('educ/student', 'admin/studentImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="注册" execute="PageUtils.newrecord('educ/student', 'admin/student', 'mode=fullscreen')"/>
+			<action title="批量删除" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/educ/student/batchOperate.shtml?pojoName=Stude')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="学号" name="studentId" align="center" width="100"/>
+			<column title="姓名" name="name"/>
+			<column title="性别" name="sex" align="center" width="50"/>
+			<column title="专业" name="speciality" align="center" width="120"/>
+			<column title="账号" name="loginId" align="center" width="120"/>
+			<column title="密码" name="password" align="center" width="80"/>
+			<column title="是否本学院学生" name="isOurStudent" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="120"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessStudent" form="admin/student" title="已审核学生注册" pageRows="25" openFeatures="width=760,height=520" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.educ.student.pojo.Stude</pojo>
+			<where>Stude.status=1 </where>
+		</data>
+		<actions>
+			<action title="注册" execute="PageUtils.newrecord('educ/student', 'admin/student', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="学号" name="studentId" align="center" width="100"/>
+			<column title="姓名" name="name"/>
+			<column title="性别" name="sex" align="center" width="50"/>
+			<column title="专业" name="speciality" align="center" width="120"/>
+			<column title="账号" name="loginId" align="center" width="120"/>
+			<column title="密码" name="password" align="center" width="80"/>
+			<column title="是否本学院学生" name="isOurStudent" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="120"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessStudent" form="admin/student" title="已审核学生修改资料" pageRows="25" openFeatures="width=760,height=520" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.educ.student.pojo.Stude</pojo>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="注册" execute="PageUtils.newrecord('educ/student', 'admin/student', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="学号" name="studentId" align="center" width="100"/>
+			<column title="姓名" name="name"/>
+			<column title="性别" name="sex" align="center" width="50"/>
+			<column title="专业" name="speciality" align="center" width="120"/>
+			<column title="账号" name="loginId" align="center" width="120"/>
+			<column title="密码" name="password" align="center" width="80"/>
+			<column title="是否本学院学生" name="isOurStudent" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="120"/>
+		</columns>
+	</view>
+	
+	<view name="student" form="student" title="我的资料" pageRows="25" openFeatures="width=760,height=520" hide="noPrivilege(manageUnit_student)">
+		<data>
+			<pojo>com.yuanluesoft.educ.student.pojo.Stude</pojo>
+			<where>Stude.id={USERID}</where>
+		</data>
+		<columns>
+			<column title="学号" name="studentId" align="center" width="100"/>
+			<column title="姓名" name="name"/>
+			<column title="性别" name="sex" align="center" width="50"/>
+			<column title="专业" name="speciality" align="center" width="120"/>
+			<column title="是否本学院学生" name="isOurStudent" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="120"/>
+		</columns>
+	</view>
+</views>

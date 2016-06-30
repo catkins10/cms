@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="文章" class="com.yuanluesoft.cms.siteresource.pojo.SiteResource" businessServiceName="siteResourceService">
+		<parameter name="captureConfigure">/cms/siteresource/capture/captureConfigure.jsp</parameter> <!-- 抓取配置页面 -->
+		<field name="subject" title="标题" length="200" required="true" type="string" inputMode="textarea">
+			<parameter name="singleByteCharacters">true</parameter>
+			<parameter name="rssTitleField">true</parameter>
+			<parameter name="rows">3</parameter>
+			<parameter name="color">{PARAMETER:subjectColor}</parameter>
+		</field>
+		<field name="subhead" title="副标题" length="100" type="string" inputMode="text"/>
+		<field name="body" title="正文" persistence="false" type="html" inputMode="htmleditor">
+			<parameter name="rssDescriptionField">true</parameter>
+			<parameter name="referenceFields">lazyBody</parameter>
+			<parameter name="autoIndentation">false</parameter> <!-- 自动缩进 -->
+			<parameter name="height">280</parameter>
+		</field>
+		<field name="source" title="来源" length="200" type="string" inputMode="text"/>
+		<field name="otherColumnIds" title="所属的其他栏目ID" length="4000" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="otherColumnNames" title="所属的其他栏目名称" length="4000" type="string" inputMode="select">
+			<parameter name="execute">selectSite(600, 400, true, 'otherColumnIds{id},otherColumnNames{fullName/site|所属其它栏目|100%}', '', '', '', 'column')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+		</field>
+		<field name="sourceRecordId" title="源记录ID" length="80" type="string" inputMode="none">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="sourceRecordClassName" title="源记录类名称" length="300" type="string" inputMode="none">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="sourceRecordUrl" title="源记录URL" length="300" type="string" inputMode="readonly">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="sourceRecordType" title="源记录类类型" type="string" inputMode="readonly">
+			<parameter name="itemsText">无\0网页抓取\0文章\0政府信息\0其它</parameter>
+		</field>
+		<field name="author" title="作者" length="100" type="string" inputMode="text"/>
+		<field name="translator" title="译者" length="100" type="string" inputMode="text"/>
+		<field name="review" title="校对" length="100" type="string" inputMode="text"/>
+		<field name="keyword" title="关键字" length="100" type="string" inputMode="text"/>
+		<field name="link" title="链接地址" length="500" required="true" type="string" inputMode="select">
+			<parameter name="js">/cms/js/reference.js</parameter>
+			<parameter name="execute">reference(this, 'link', 'subject', '', '', '/cms/siteresource/admin/selectLinkAttachment.shtml?id={PARAMETER:id}&amp;attachmentSelector.type=attachments')</parameter>
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="issueTime" title="发布时间" type="timestamp" inputMode="datetime">
+			<parameter name="rssPubDateField">true</parameter>
+		</field>
+		<field name="issueEndTime" title="发布截止时间" type="timestamp" inputMode="hidden"/>
+		<field name="mark" title="文号" length="60" type="string" inputMode="text"/>
+		<field name="anonymousLevel" title="匿名用户访问级别" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">不能访问|1\0仅标题|2\0完全访问|3</parameter>
+		</field>
+		<field name="firstImageName" title="记录图片" length="250" type="imageName" inputMode="select">
+			<parameter name="execute">selectFirstImage()</parameter>
+			<parameter name="referenceFields">images</parameter>
+		</field>
+		<field name="firstVideoName" title="记录视频" length="250" type="videoName" inputMode="text">
+			<parameter name="maxUploadSize">500000000</parameter>
+			<parameter name="referenceFields">videos</parameter>
+		</field>
+		<field name="subjectColor" title="标题颜色" length="20" type="string" inputMode="select">
+			<parameter name="singleByteCharacters">true</parameter>
+			<parameter name="execute">DialogUtils.openColorDialog('标题颜色', document.getElementsByName("subjectColor")[0].value, 'document.getElementsByName("subjectColor")[0].value="{colorValue}";')</parameter>
+		</field>
+		<field name="lastModified" title="最后修改时间" type="timestamp" inputMode="datetime"/>
+		<field name="editor" title="创建者" length="60" type="string" inputMode="readonly"/>
+		<field name="orgId" title="创建者所在部门ID" length="20" type="number" inputMode="none"/>
+		<field name="orgName" title="创建者所在部门名称" length="50" type="string" inputMode="readonly"/>
+		<field name="unitId" title="创建者所在单位ID" length="20" type="number" inputMode="none"/>
+		<field name="unitName" title="创建者所在单位名称" length="50" type="string" inputMode="readonly"/>
+		<field name="statusDescription" title="状态描述" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">workItems,status</parameter>
+		</field>
+		<field name="imageCount" title="图片数量" length="5" type="number" inputMode="readonly"/>
+		<field name="uploadImageCount" title="实际上传图片数量" length="5" type="number" inputMode="readonly"/>
+		<field name="videoCount" title="视频数量" length="5" type="number" inputMode="readonly"/>
+		<field name="uploadVideoCount" title="实际上传视频数量" length="5" type="number" inputMode="readonly"/>
+		<field name="attachmentCount" title="附件数量" length="5" type="number" inputMode="readonly"/>
+		<field name="uploadAttachmentCount" title="实际上传附件数量" length="5" type="number" inputMode="readonly"/>
+		<field name="hasImages" title="是否有图" persistence="false" type="string" inputMode="readonly">
+			<parameter name="itemsText">图\0多图</parameter>
+			<parameter name="referenceFields">imageCount</parameter>
+		</field>
+		<field name="hasVideos" title="是否有视频" persistence="false" type="string" inputMode="readonly">
+			<parameter name="itemsText">视频</parameter>
+			<parameter name="referenceFields">videoCount</parameter>
+		</field>
+		<field name="hasAttachments" title="是否有附件" persistence="false" type="string" inputMode="readonly">
+			<parameter name="itemsText">附件</parameter>
+			<parameter name="referenceFields">attachmentCount</parameter>
+		</field>
+		<field name="top" title="是否置顶" persistence="false" type="string" inputMode="readonly">
+			<parameter name="itemsText">置顶</parameter>
+			<parameter name="referenceFields">resourceTops</parameter>
+		</field>
+		<field name="columnName" title="所在栏目名称" length="200" type="string" inputMode="readonly">
+			<parameter name="referenceFields">subjections</parameter>
+		</field>
+		<field name="status" title="状态" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">撤销发布|0\0退回、取回修改|1\0待处理|2\0已发布|3\0办结未发布|4\0已删除|5</parameter>
+		</field>
+		<field name="subjections" title="隶属栏目" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.siteresource.pojo.SiteResourceSubjection</parameter>
+		</field>
+		<field name="lazyBody" title="正文" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.siteresource.pojo.SiteResourceBody</parameter>
+		</field>
+		<field name="relationLinks" title="相关链接" type="components">
+			<parameter name="class">com.yuanluesoft.cms.siteresource.pojo.SiteResourceRelationLink</parameter>
+			<parameter name="recordList">false</parameter>
+		</field>
+		<field name="validRelationLinks" title="相关链接(有效的)" type="components" persistence="false">
+			<parameter name="class">com.yuanluesoft.cms.siteresource.pojo.SiteResourceRelationLink</parameter>
+			<parameter name="url">{PARAMETER:url}</parameter>
+			<parameter name="referenceFields">relationLinks</parameter>
+		</field>
+		<field name="relatedLinks" title="被引用情况" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="lazyLoad">false</parameter>
+			<parameter name="class">com.yuanluesoft.cms.siteresource.pojo.SiteResourceRelationLink</parameter>
+		</field>
+		<field name="resourcePhotos" title="图集" type="components">
+			<parameter name="class">com.yuanluesoft.cms.siteresource.pojo.SiteResourcePhoto</parameter>
+		</field>
+		<field name="resourceVideos" title="视频集" type="components">
+			<parameter name="class">com.yuanluesoft.cms.siteresource.pojo.SiteResourceVideo</parameter>
+		</field>
+		<field name="resourceTops" title="置顶" type="components">
+			<parameter name="class">com.yuanluesoft.cms.siteresource.pojo.SiteResourceTop</parameter>
+		</field>
+		<field name="accessCount" title="点击数" persistence="false" type="number" inputMode="readonly">
+			<parameter name="referenceFields">accessStats</parameter>
+		</field>
+		<field name="accessStats" title="访问统计" type="components">
+			<parameter name="recordList">false</parameter>
+			<parameter name="lazyLoad">false</parameter>
+			<parameter name="class">com.yuanluesoft.jeaf.stat.pojo.AccessStat</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="serviceName">siteImageService</parameter>
+			<parameter name="maxSaveSize">10000000</parameter>
+		</field>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="fileExtension">FLASH文件|*.swf|</parameter>
+			<parameter name="maxUploadSize">2000000</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">500000000</parameter>
+			<parameter name="videoWidth">640</parameter>
+			<parameter name="videoHeight">480</parameter>
+			<parameter name="videoBitrate">1024</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="audioBitrate">112</parameter>
+			<parameter name="serviceName">videoService</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">审核</parameter>
+			<parameter name="class">com.yuanluesoft.cms.siteresource.pojo.SiteResourceOpinion</parameter>
+		</field>
+		<field name="resourceType" title="资源类型" persistence="false" type="string" inputMode="none"/>
+	</businessObject>
+	
+	<businessObject title="正文" class="com.yuanluesoft.cms.siteresource.pojo.SiteResourceBody">
+		<field name="body" title="正文" type="html" inputMode="htmleditor"/>
+		<parameter name="height">280</parameter>
+	</businessObject>
+	
+	<businessObject title="隶属栏目" class="com.yuanluesoft.cms.siteresource.pojo.SiteResourceSubjection">
+		<field name="siteId" title="栏目ID" type="hidden" inputMode="text"/>
+		<field name="resourceId" title="资源ID" type="number" inputMode="hidden"/>
+	</businessObject>
+	
+	<businessObject title="相关链接" class="com.yuanluesoft.cms.siteresource.pojo.SiteResourceRelationLink">
+		<field name="resourceId" title="资源ID" length="20" type="number" inputMode="hidden"/>
+		<field name="relationResourceId" title="关联资源ID" length="20" type="number" inputMode="hidden"/>
+		<field name="linkName" title="链接名称" length="300" type="string" inputMode="text" required="true"/>
+		<field name="linkUrl" title="链接地址" length="300" type="string" inputMode="text" required="true"/>
+		<field name="linkTime" title="发布时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+		<field name="halt" title="是否停用" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">启用|0\0停用|1</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="图集" class="com.yuanluesoft.cms.siteresource.pojo.SiteResourcePhoto">
+		<field name="resourceId" title="资源ID" length="20" type="number" inputMode="hidden"/>
+		<field name="name" title="图片" length="250" type="imageName" inputMode="select" required="true">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectAttachment('/cms/siteresource/admin/selectAttachment.shtml', '{PARAMETER:id}', 'images', 680, 400, 'document.getElementsByName("photo.name")[0].value=("{fileName}");document.getElementsByName("photo.subject")[0].value=("{fileShortName}");');</parameter>
+			<parameter name="referenceRecordClass">com.yuanluesoft.cms.siteresource.pojo.SiteResource</parameter>
+			<parameter name="referenceRecordField">images</parameter>
+			<parameter name="referenceFields">resourceId</parameter>
+		</field>
+		<field name="subject" title="标题" length="300" type="string" inputMode="textarea" required="true">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="description" title="描述" type="html" inputMode="htmleditor">
+			<parameter name="height">200</parameter>
+		</field>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+	</businessObject>
+	
+	<businessObject title="视频集" class="com.yuanluesoft.cms.siteresource.pojo.SiteResourceVideo">
+		<field name="resourceId" title="资源ID" length="20" type="number" inputMode="hidden"/>
+		<field name="name" title="视频" length="250" type="videoName" inputMode="select" required="true">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="execute">DialogUtils.selectAttachment('/cms/siteresource/admin/selectAttachment.shtml', '{PARAMETER:id}', 'videos', 680, 400, 'document.getElementsByName("video.name")[0].value=("{fileName}");document.getElementsByName("video.subject")[0].value=("{fileShortName}");');</parameter>
+			<parameter name="referenceRecordClass">com.yuanluesoft.cms.siteresource.pojo.SiteResource</parameter>
+			<parameter name="referenceRecordField">videos</parameter>
+			<parameter name="referenceFields">resourceId</parameter>
+		</field>
+		<field name="subject" title="标题" length="300" type="string" inputMode="textarea" required="true">
+			<parameter name="rows">3</parameter>
+		</field>
+		<field name="description" title="描述" type="html" inputMode="htmleditor">
+			<parameter name="height">200</parameter>
+		</field>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+	</businessObject>
+	
+	<businessObject title="置顶" name="com.yuanluesoft.cms.siteresource.pojo.SiteResourceTop">
+		<field name="resourceId" title="资源ID" length="20" type="number" inputMode="hidden"/>
+		<property name="siteId" title="站点/栏目ID" length="20" type="number" inputMode="hidden"/>
+		<property name="expire" title="有效期" type="date" inputMode="date"/>
+		<property name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="发布统计(包括站点资源和信息公开)" class="com.yuanluesoft.cms.siteresource.pojo.CmsStat">
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="issueTime" title="发布时间" type="timestamp" inputMode="readonly"/>
+		<field name="issue" title="是否发布" type="string" inputMode="readonly"/>
+		<field name="orgId" title="发布人机构ID" type="number" inputMode="readonly"/>
+		<field name="orgName" title="发布人机构名称" type="string" inputMode="readonly"/>
+		<field name="unitName" title="发布人单位名称" type="string" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="文章(用于数据交换)" class="com.yuanluesoft.cms.siteresource.model.Article" businessServiceName="siteResourceService"/>
+	
+	<businessObject title="信息保障报表:单位分类" class="com.yuanluesoft.cms.siteresource.report.pojo.EnsureUnitCategory">
+		<field name="siteId" title="站点ID" length="20" type="number" inputMode="hidden"/>
+		<field name="category" title="分类名称" length="30" required="true" type="string" inputMode="text"/>
+		<field name="unitIds" title="单位ID" length="4000" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="unitNames" title="单位名称" length="4000" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(600, 400, true, 'unitIds{id},unitNames{name|单位|100%}', '', 'unit')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+	</businessObject>
+	
+	<businessObject title="信息保障报表:栏目配置" class="com.yuanluesoft.cms.siteresource.report.pojo.EnsureColumnConfig">
+		<field name="siteId" title="站点ID" length="20" type="number" inputMode="hidden"/>
+		<field name="columnIds" title="栏目ID" length="4000" type="string" inputMode="hidden"/>
+		<field name="columnNames" title="栏目名称" length="4000" type="string" inputMode="select">
+			<parameter name="execute">selectSite(500, 350, true, 'columnIds{id},columnNames{name|栏目|100%}', '', '', '', 'column')</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="js">/cms/sitemanage/js/site.js</parameter>
+		</field>
+		<field name="mode" title="计分方式" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">按信息量|0\0按维护栏目数|1</parameter>
+		</field>
+		<field name="score" title="分数" length="3" required="true" type="number" inputMode="text"/>
+		<field name="captureScore" title="信息抓取分数" length="3" type="number" inputMode="text"/>
+	</businessObject>
+</businessObjects>

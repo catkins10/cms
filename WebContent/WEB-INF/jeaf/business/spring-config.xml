@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 业务逻辑服务 -->
+	<bean id="businessService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.jeaf.business.service.spring.BusinessServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 业务逻辑定义服务 -->	
+	<bean id="businessDefineService" class="com.yuanluesoft.jeaf.business.service.spring.BusinessDefineServiceImpl">
+		<property name="cache"><ref bean="modelCache"/></property>
+		<property name="businessDefineParser"><ref local="businessDefineParser"/></property>
+		<property name="opinionService"><ref bean="opinionService"/></property>
+	</bean>
+	
+	<!-- 业务逻辑定义解析器 -->
+	<bean id="businessDefineParser" class="com.yuanluesoft.jeaf.business.parser.dom4j.BusinessDefineParserImpl"/>
+	
+	<!-- SQL查询服务 -->
+	<bean id="sqlQueryService" class="com.yuanluesoft.jeaf.business.service.spring.SqlQueryServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+	</bean>
+</beans>

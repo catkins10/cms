@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="questionQuery" title="试题查询" method="get" action="/cms/sitemanage/applicationIndex.shtml?applicationName=enterprise/exam/learn&amp;pageName=questionQuery&amp;anonymous=false">
+		<formFields>
+			<field name="questionType" title="题型" type="string" inputMode="dropdown" length="10">
+				<parameter name="itemsText">单选题\0多选题\0判断题\0填空题\0计算题\0简答题\0问答题\0绘图题\0论述题</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+			<field title="试题内容" name="questionContents.questionContent"/>
+		</formFields>
+		<actions>
+			<action title="搜索" type="submit"/>
+		</actions>
+	</form>
+
+	<form name="admin/learnFile" class="com.yuanluesoft.enterprise.exam.learn.forms.admin.LearnFile" title="学习资料" pojo="com.yuanluesoft.enterprise.exam.learn.pojo.LearnFile">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteLearnFile')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/learnMission" class="com.yuanluesoft.enterprise.exam.learn.forms.admin.LearnMission" title="学习任务" pojo="com.yuanluesoft.enterprise.exam.learn.pojo.LearnMission">
+		<formFields>
+			<field title="参加学习人员" name="learners" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteLearnMission')"/>
+			<action title="查看完成情况" hide="isNew() or isRead()" execute="DialogUtils.openDialog('{CONTEXTPATH}/enterprise/exam/learn/admin/learnMissionReport.shtml?missionId={PARAMETER:id}', 600, 300)"/>
+		</actions>
+	</form>
+	
+	<form name="admin/learnMissionReport" class="com.yuanluesoft.enterprise.exam.learn.forms.admin.LearnMissionReport" title="学习任务完全情况 "/>
+</forms>

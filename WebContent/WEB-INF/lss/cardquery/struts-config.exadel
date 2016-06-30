@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,177,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="336,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,177,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="336,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#importData"
+  NAME="action0" PATH="/admin/importData" SHAPE="32,240,177,41"
+  TITLE="adminImportData" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/importData.jsp" TARGET="page2"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/admin/importData.jsp" SHAPE="336,256,50,40" SUBTYPE="jsp"
+  TITLE="importData.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/doImportData" TARGET="action1" TITLE="doImportData" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#doImportData"
+  NAME="action1" PATH="/admin/doImportData" SHAPE="512,272,177,25"
+  TITLE="adminImportData" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#attachmentEditor"
+  NAME="action2" PATH="/admin/attachmentEditor" SHAPE="32,352,177,41"
+  TITLE="adminImportData" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/attachment.jsp"
+   TARGET="page3" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/../../jeaf/attachment/attachment.jsp" SHAPE="336,368,50,25"
+  SUBTYPE="jsp" TITLE="attachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#config"
+  NAME="action3" PATH="/admin/config" SHAPE="24,592,115,41"
+  TITLE="adminconfig" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/config.jsp" TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/admin/config.jsp" SHAPE="232,608,50,25" SUBTYPE="jsp"
+  TITLE="config.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveConfig.do" TARGET="action4" TITLE="saveConfig.do" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteConfig.do" TARGET="action5"
+   TITLE="deleteConfig.do" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveConfig"
+  NAME="action4" PATH="/admin/saveConfig" SHAPE="432,584,115,25"
+  TITLE="adminconfig" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteConfig"
+  NAME="action5" PATH="/admin/deleteConfig" SHAPE="432,640,115,25"
+  TITLE="adminconfig" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#cardQuery"
+  NAME="action6" PATH="/admin/cardQuery" SHAPE="32,448,136,41"
+  TITLE="adminCardQuery" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/cardQuery.jsp" TARGET="page5"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/admin/cardQuery.jsp" SHAPE="240,464,50,25" SUBTYPE="jsp"
+  TITLE="cardQuery.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveCardQuery.do" TARGET="action7"
+   TITLE="saveCardQuery.do" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteCardQuery.do" TARGET="action8"
+   TITLE="deleteCardQuery.do" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveCardQuery"
+  NAME="action7" PATH="/admin/saveCardQuery" SHAPE="432,432,136,25"
+  TITLE="adminCardQuery" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteCardQuery"
+  NAME="action8" PATH="/admin/deleteCardQuery" SHAPE="432,496,136,25"
+  TITLE="adminCardQuery" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#cardQueryDetail"
+  NAME="action9" PATH="/cardQueryDetail" SHAPE="24,704,100,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#batchOperate"
+  NAME="action10" PATH="/batchOperate" SHAPE="24,752,143,25"
+  TITLE="applicationView" TYPE="action"/>
+</PROCESS>

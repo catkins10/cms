@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="执法人员" class="com.yuanluesoft.msa.lawmen.pojo.MsaLawmen" businessServiceName="msaLawmenService">
+		<field name="name" title="姓名" length="16" required="true" type="string" inputMode="text"/>
+		<field name="sex" title="性别" length="1" required="true" type="char" inputMode="radio">
+			<parameter name="itemsText">男|M\0女|F</parameter>
+		</field>
+		<field name="certificateDate" title="执法证发证日期" required="true" type="date" inputMode="date"/>
+		<field name="certificateNumber" title="执法证编号" length="16" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="priority" title="优先级" length="7,4" type="number" inputMode="none"/>
+	</businessObject>
+</businessObjects>

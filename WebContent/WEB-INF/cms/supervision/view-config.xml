@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="效能监督" name="supervisions">
+		<data>
+			<pojo>com.yuanluesoft.cms.supervision.pojo.Supervision</pojo>
+			<where>Supervision.publicPass='1'</where>
+			<orderBy>Supervision.created DESC</orderBy>
+			<quickFilter>Supervision.subject like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="效能监督">/cms/supervision/supervision.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/supervision</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSiteRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+
+	<view name="admin/todoSupervision" form="admin/supervision" title="待办" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.supervision.pojo.Supervision</pojo>
+			<orderBy>Supervision.created DESC</orderBy>
+			<filter>TODO</filter>
+			<quickFilter>Supervision.subject like '%{KEY}%' or Supervision.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="创建人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	<view name="admin/inProcessSupervision" form="admin/supervision" title="在办" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.supervision.pojo.Supervision</pojo>
+			<orderBy>Supervision.created DESC</orderBy>
+			<filter>INPROCESS</filter>
+			<quickFilter>Supervision.subject like '%{KEY}%' or Supervision.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="创建人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	<view name="admin/completedSupervision" form="admin/supervision" title="已办" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.supervision.pojo.Supervision</pojo>
+			<filter>COMPLETED</filter>
+			<orderBy>Supervision.created DESC</orderBy>
+			<quickFilter>Supervision.subject like '%{KEY}%' or Supervision.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="创建人" name="creator" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	<view name="admin/allSupervision" form="admin/supervision" title="所有" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.supervision.pojo.Supervision</pojo>
+			<filter>READABLE</filter>
+			<orderBy>Supervision.created DESC</orderBy>
+			<quickFilter>Supervision.subject like '%{KEY}%' or Supervision.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="监督授权" hide="noPrivilege(application_manager)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/publicservice/admin/readersModifyOption.shtml?applicationName={PARAMETER:applicationName}', 430, 200)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="创建人" name="creator" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+</views>

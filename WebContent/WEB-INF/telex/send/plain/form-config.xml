@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="sendTelegram" class="com.yuanluesoft.telex.send.plain.forms.SendPlainTelegram" title="发报登记" pojo="com.yuanluesoft.telex.send.base.pojo.SendTelegram">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteSendTelegram')"/>
+		</actions>
+	</form>
+</forms>

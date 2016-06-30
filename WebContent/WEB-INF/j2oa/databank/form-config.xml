@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.j2oa.databank.forms.Directory" title="目录" pojo="com.yuanluesoft.j2oa.databank.pojo.DatabankDirectory">
+		<formFields>
+			<field title="上级目录ID" name="parentDirectoryId" type="number" inputMode="hidden"/>
+			<field title="上级目录" name="parentDirectoryName" type="string" inputMode="select" length="25" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/j2oa/databank/js/directory.js</parameter>
+				<parameter name="execute">selectDirectory(600, 400, false, 'parentDirectoryId{id},parentDirectoryName{name}', '', '', '', 0, 'directory')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" execute="FormUtils.submitForm()"/>
+			<action title="创建下一个目录" hide="isOld()" execute="FormUtils.doAction('createNextDirectory')"/>
+			<action title="删除" hide="isNew()" execute="if(confirm('删除后，目录、子目录以及目录中的文件将不可恢复，是否确定要删除？'))FormUtils.doAction('deleteDirectory')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.databank.forms.Data" title="资料" pojo="com.yuanluesoft.j2oa.databank.pojo.DatabankData">
+		<formFields>
+			<field title="所在目录ID" name="directoryId" type="number" inputMode="hidden"/>
+			<field title="所在目录" name="directoryName" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/j2oa/databank/js/directory.js</parameter>
+				<parameter name="execute">selectDirectory(640, 480, false, 'directoryId{id},directoryName{name}')</parameter>
+			</field>
+			<field title="访问者" name="dataVisitors" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="isNew() or isRead()" execute="if(confirm('删除后，资料将不可恢复，是否确定要删除？'))FormUtils.doAction('deleteData')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.databank.forms.DataView" title="资料视图">
+		<formFields>
+			<field name="directoryId" title="目录ID" type="number" inputMode="hidden"/>
+		</formFields>
+	</form>
+	
+	<form class="com.yuanluesoft.j2oa.databank.forms.Import" title="导入">
+		<formFields>
+			<field name="systemDirectory" title="源目录" type="string" inputMode="text" required="true"/>
+			<field name="databankDirectoryName" title="资料库目录" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/j2oa/databank/js/directory.js</parameter>
+				<parameter name="execute">selectDirectory(550, 350, false, 'databankDirectoryId{id},databankDirectoryName{name}')</parameter>
+			</field>
+			<field name="databankDirectoryId" title="资料库目录ID" type="number" inputMode="hidden"/>
+		</formFields>
+	</form>
+</forms>

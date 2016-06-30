@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--指纹验证:指纹采集-->
+	<class name="com.yuanluesoft.jeaf.fingerprint.pojo.FingerprintTemplate" table="fingerprint_template">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="personId"/> <!--用户ID,NUMERIC(20)-->
+		<property name="personName"/> <!--用户名,VARCHAR(60)-->
+		<property name="finger"/> <!--手指,VARCHAR(20)-->
+		<property name="template"/> <!--指纹数据,VARCHAR(4000)-->
+		<property name="created"/> <!--采集时间,timestamp null-->
+	</class>
+	
+	<!--指纹验证:指纹比对-->
+	<class name="com.yuanluesoft.jeaf.fingerprint.pojo.FingerprintMatch" table="fingerprint_match">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="ip"/> <!--IP,VARCHAR(20)-->
+		<property name="personId"/> <!--用户ID,NUMERIC(20)-->
+		<property name="matchTimes"/> <!--比对成功次数,NUMERIC(5)-->
+	</class>
+</hibernate-mapping>

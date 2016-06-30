@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="book" form="book" title="图书" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.book.pojo.Book</pojo>
+			<orderBy>Book.title</orderBy>
+		</data>
+		<actions>
+			<action title="登记" execute="PageUtils.newrecord('j2oa/book','book','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="title" title="书籍名称"/>
+			<column name="serialNumber" title="书籍编号" width="60" align="center"/>
+			<column name="category" title="书籍类别" width="80" align="center"/>
+			<column name="author" title="作者姓名" width="60" align="center"/>
+			<column name="publishingHouse" title="出版社名称" width="120" align="center"/>
+			<column name="publicationDate" title="出版日期" width="75" align="center"/>
+			<column name="isBorrowingTitle" title="借出" width="32" align="center"/>
+		</columns>
+	</view>
+</views>

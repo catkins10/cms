@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="smsSend" class="com.yuanluesoft.cms.monitor.sms.forms.SmsSend" title="短信发送" pojo="com.yuanluesoft.cms.monitor.sms.pojo.MonitorSmsSend">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteSmsSend')"/>
+		</actions>
+	</form>
+
+	<form name="smsReceive" class="com.yuanluesoft.cms.monitor.sms.forms.SmsReceive" title="短信接收" pojo="com.yuanluesoft.cms.monitor.sms.pojo.MonitorSmsReceive">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteSmsReceive')"/>
+		</actions>
+	</form>
+</forms>

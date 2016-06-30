@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--图书-->
+	<class name="com.yuanluesoft.j2oa.book.pojo.Book" table="book_book">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="serialNumber"/> <!--书籍编号,varchar(50)-->
+		<property name="title"/> <!--书籍名称,varchar(200)-->
+		<property name="category"/> <!--书籍类别,varchar(50)-->
+		<property name="author"/> <!--作者姓名,varchar(100)-->
+		<property name="publishingHouse"/> <!--出版社名称,varchar(100)-->
+		<property name="publicationDate"/> <!--出版日期,date null-->
+		<property name="pages"/> <!--书籍页数,numeric(5)-->
+		<property name="keyword"/> <!--关键词,varchar(100)-->
+		<property name="creatorId"/> <!--登记人ID,bigint unsigned-->
+		<property name="creator"/> <!--登记人,varchar(30)-->
+		<property name="created"/> <!--登记时间,timestamp null-->
+		<property name="isBorrowing"/> <!--否是被借阅,char(1)-->
+		<property name="remark"/> <!--备注,varchar(500)-->
+		<!--借阅记录-->
+		<set name="borrows" table="book_borrow" lazy="true" inverse="true" cascade="delete" order-by="borrowTime desc">
+			<key column="bookId"/>
+			<one-to-many class="com.yuanluesoft.j2oa.book.pojo.BookBorrow"/>
+		</set>
+	</class>
+	
+	<!--借阅信息-->
+	<class name="com.yuanluesoft.j2oa.book.pojo.BookBorrow" table="book_borrow">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="bookId"/> <!--书籍ID,bigint unsigned-->
+		<property name="personId"/> <!--借阅人ID,bigint unsigned-->
+		<property name="personName"/> <!--借阅人,varchar(30)-->
+		<property name="borrowTime"/> <!--借阅时间,timestamp null-->
+		<property name="returnTime"/> <!--归还时间,timestamp null-->
+		<property name="isReturned"/> <!--是否已归还,char(1)-->
+		<property name="remark"/> <!--备注,varchar(200)-->
+	</class>
+</hibernate-mapping>

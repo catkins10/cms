@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="职位申请" class="com.yuanluesoft.job.apply.pojo.JobApply" businessServiceName="jobApplyService">
+		<field name="jobId" title="职位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="jobName" title="职位名称" length="100" type="string" inputMode="readonly"/>
+		<field name="companyId" title="公司ID" length="20" type="string" inputMode="none"/>
+		<field name="company" title="公司名称" length="100" type="string" inputMode="readonly"/>
+		<field name="talentId" title="求职人ID" length="20" type="number" inputMode="none"/>
+		<field name="talentName" title="求职人姓名" length="50" type="string" inputMode="readonly"/>
+		<field name="sex" title="性别" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">男|M\0女|F</parameter>
+		</field>
+		<field name="school" title="毕业院校" length="100" type="string" inputMode="readonly"/>
+		<field name="specialty" title="专业" length="50" type="string" inputMode="readonly"/>
+		<field name="qualification" title="学历" length="2" type="number" inputMode="radio">
+			<parameter name="itemsText">小学\0初中|1\0高中|2\0职业高中|3\0职业中专|4\0中专|5\0大专|6\0本科|7\0硕士研究生|8\0博士研究生|9</parameter>
+		</field>
+		<field name="workYear" title="工作年限" length="2" type="number" inputMode="radio">
+			<parameter name="itemsText">在读学生|-1\0应届毕业生|0</parameter>
+		</field>
+		<field name="created" title="求职时间" type="timestamp" inputMode="readonly"/>
+		<field name="status" title="状态" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">申请|0\0已删除|1\0拟面试|2\0已面试|3\0未录用|4\0已录用|5</parameter>
+		</field>
+		<field name="invitations" title="邀请函" type="components">
+			<parameter name="class">com.yuanluesoft.job.apply.pojo.JobApplyInvitation</parameter>
+		</field>
+		<field name="interviews" title="面试情况" type="components">
+			<parameter name="class">com.yuanluesoft.job.apply.pojo.JobApplyInterview</parameter>
+		</field>
+		<field name="offers" title="录用通知书" type="components">
+			<parameter name="class">com.yuanluesoft.job.apply.pojo.JobApplyOffer</parameter>
+		</field>
+		<field name="job" title="职位" type="component" persistence="false" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.job.company.pojo.Job</parameter>
+		</field>
+		<field name="talent" title="人才" type="component" persistence="false" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.job.talent.pojo.JobTalent</parameter>
+		</field>
+	</businessObject>
+
+	<businessObject title="邀请函" class="com.yuanluesoft.job.apply.pojo.JobApplyInvitation" businessServiceName="jobApplyService">
+		<field name="applyId" title="应聘ID" length="20" type="number" inputMode="hidden"/>
+		<field name="body" title="正文" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">12</parameter>
+			<parameter name="keepAllInRecordList">true</parameter>
+		</field>
+		<field name="sent" title="发送时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="apply" title="求职申请" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.job.apply.pojo.JobApply</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="面试情况" class="com.yuanluesoft.job.apply.pojo.JobApplyInterview" businessServiceName="jobApplyService">
+		<field name="applyId" title="应聘ID" length="20" type="number" inputMode="hidden"/>
+		<field name="interviewer" title="面试官" length="50" required="true" type="string" inputMode="text"/>
+		<field name="interviewTime" title="面试时间" type="timestamp" required="true" inputMode="datetime">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="description" title="面试情况" length="2000" type="string" inputMode="textarea">
+			<parameter name="rows">6</parameter>
+		</field>
+		<field name="opinion" title="面试意见" length="100" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="录用通知书" class="com.yuanluesoft.job.apply.pojo.JobApplyOffer" businessServiceName="jobApplyService">
+		<field name="applyId" title="应聘ID" length="20" type="number" inputMode="hidden"/>
+		<field name="body" title="正文" length="4000" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">12</parameter>
+			<parameter name="keepAllInRecordList">true</parameter>
+		</field>
+		<field name="sent" title="发送时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="apply" title="求职申请" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.job.apply.pojo.JobApply</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="职位收藏" class="com.yuanluesoft.job.apply.pojo.JobFavorite" businessServiceName="jobApplyService">
+		<field name="talentId" title="求职人ID" length="20" type="number" inputMode="hidden"/>
+		<field name="jobId" title="职位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="jobName" title="职位名称" length="100" type="string" inputMode="readonly"/>
+		<field name="companyId" title="公司ID" length="20" type="number" inputMode="hidden"/>
+		<field name="company" title="公司名称" length="100" type="string" inputMode="readonly"/>
+		<field name="department" title="招聘部门" length="100" type="string" inputMode="text"/>
+		<field name="recruitNumber" title="招聘人数" length="4" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">若干|0\0 1|1\0 2|2\0 3|3\0 4|4\0 5|5\0 6|6\0 7|7\0 8|8\0 9|9\0 10|10\0 20|20\0 30|30\0 50|50\0 100|100</parameter>
+		</field>
+		<field name="post" title="职能类别名称" length="200" required="true" type="string" inputMode="select">
+			<parameter name="js">/job/company/js/job.js</parameter>
+			<parameter name="execute">selectPost(600, 360, false, 'postId{id},post{name}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="language" title="语言要求" length="100" type="string" inputMode="text"/>
+		<field name="monthlyPayRange" title="月薪范围" type="string" length="100" inputMode="readonly"/>
+		<field name="target" title="招聘对象" length="100" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">社会人士\0应届毕业生\0实习生\0劳务工\0不限</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="qualification" title="学历要求" length="2" required="true" type="number" inputMode="dropdown">
+			<parameter name="itemsText">不限|-1\0小学|0\0初中|1\0高中|2\0职业高中|3\0职业中专|4\0中专|5\0大专|6\0本科|7\0硕士研究生|8\0博士研究生|9\0</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="workYear" title="工作年限" length="2" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">在读学生|-1\0应届毕业生|0\0 1年|1\0 2年|2\0 3年|3\0 4年|4\0 5年|5\0 6年|6\0 7年|7\0 8年|8\0 9年|9\0 10年以上|10\0不限|-2</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="ageRange" title="年龄范围" type="string" length="100" inputMode="readonly"/>
+		<field name="sex" title="性别要求" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">不限|A\0男|M\0女|F</parameter>
+			<parameter name="defaultValue">A</parameter>
+		</field>
+		<field name="rank" title="职称要求" length="10" type="string" inputMode="dropdown">
+			<parameter name="itemsText">不限\0初级职称\0中级职称\0副高级职称\0高级职称</parameter>
+			<parameter name="defaultValue">不限</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="endDate" title="到期时间" type="date" inputMode="date"/>
+		<field name="created" title="收藏时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

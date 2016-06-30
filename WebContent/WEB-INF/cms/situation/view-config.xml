@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="民情" name="situations">
+		<data>
+			<pojo>com.yuanluesoft.cms.situation.pojo.Situation</pojo>
+			<where>Situation.publicPass='1' and Situation.isDeleted=0</where>
+			<orderBy>Situation.created DESC</orderBy>
+			<quickFilter>Situation.subject like '%{KEY}%' or Situation.creator like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="民情">/cms/situation/situation.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/situation</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSiteRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view title="我的民情(客户端)" name="clientSituations">
+		<data>
+			<pojo>com.yuanluesoft.cms.situation.pojo.Situation</pojo>
+			<where>Situation.clientDeviceId='{PARAMETER:client.deviceId|-1}' and Situation.isDeleted=0</where>
+			<orderBy>Situation.created DESC</orderBy>
+			<quickFilter>Situation.subject like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="民情">/cms/situation/situation.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/situation</link>
+		</links>
+		<extendParameters>
+			<parameter name="encryptRequired">true</parameter> <!-- 必须加密 -->
+		</extendParameters>
+	</view>
+
+	<view name="admin/todoSituation" form="admin/situation" title="待办民情" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.situation.pojo.Situation</pojo>
+			<where>Situation.isDeleted=0</where>
+			<orderBy>Situation.created DESC</orderBy>
+			<quickFilter>Situation.subject like '%{KEY}%' or Situation.creator like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<group title="批量处理">
+				<action title="批量办理民情" groupTitle="办理民情" execute="batchSend('../../cms/situation/admin/runSituation')"/>
+				<action hide="noPrivilege(application_manager)" title="删除民情" groupTitle="删除民情" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/cms/publicservice/admin/batchDelete.shtml')"/>
+			</group>
+			<action title="民情登记" hide="noOrgPopedom(situationTransactor)" execute="PageUtils.newrecord('cms/situation','admin/situation','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="民情类型" name="category" align="center" width="80" displayExcept="portlet"/>
+			<column title="反应人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="反应时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/todoSituationBySite" form="admin/situation" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/situation&amp;viewName=admin/todoSituationBySite&amp;showChildSiteData=true" title="待办民情" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.situation.pojo.Situation</pojo>
+			<where>Situation.isDeleted=0</where>
+			<orderBy>Situation.created DESC</orderBy>
+			<quickFilter>Situation.subject like '%{KEY}%' or Situation.creator like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<group title="批量处理">
+				<action title="批量办理民情" groupTitle="办理民情" execute="batchSend('../../cms/situation/admin/runSituation')"/>
+				<action hide="noPrivilege(application_manager)" title="删除民情" groupTitle="删除民情" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/cms/publicservice/admin/batchDelete.shtml')"/>
+			</group>
+			<action title="民情登记" hide="noOrgPopedom(situationTransactor)" execute="PageUtils.newrecord('cms/situation','admin/situation','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="民情类型" name="category" align="center" width="80" displayExcept="portlet"/>
+			<column title="反应人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="反应时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessSituation" form="admin/situation" title="在办民情" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.situation.pojo.Situation</pojo>
+			<where>Situation.isDeleted=0</where>
+			<orderBy>Situation.created DESC</orderBy>
+			<quickFilter>Situation.subject like '%{KEY}%' or Situation.creator like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="民情登记" hide="noOrgPopedom(situationTransactor)" execute="PageUtils.newrecord('cms/situation','admin/situation','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="民情类型" name="category" align="center" width="80" displayExcept="portlet"/>
+			<column title="反应人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="反应时间" name="created" align="center" width="108"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedSituation" form="admin/situation" title="办结民情" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.situation.pojo.Situation</pojo>
+			<filter>COMPLETED</filter>
+			<where>Situation.isDeleted=0</where>
+			<orderBy>Situation.created DESC</orderBy>
+			<quickFilter>Situation.subject like '%{KEY}%' or Situation.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="民情登记" hide="noOrgPopedom(situationTransactor)" execute="PageUtils.newrecord('cms/situation','admin/situation','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="民情类型" name="category" align="center" width="80"/>
+			<column title="反应人" name="creator" align="center" width="80"/>
+			<column title="反应时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allSituation" form="admin/situation" title="所有民情" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.situation.pojo.Situation</pojo>
+			<filter>READABLE</filter>
+			<where>Situation.isDeleted=0</where>
+			<orderBy>Situation.created DESC</orderBy>
+			<quickFilter>Situation.subject like '%{KEY}%' or Situation.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<group title="批量处理">
+				<action title="民情授权" hide="noPrivilege(application_manager)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/publicservice/admin/readersModifyOption.shtml?applicationName={PARAMETER:applicationName}', 430, 200)"/>
+				<action hide="noPrivilege(application_manager)" title="删除民情" groupTitle="删除民情" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/cms/publicservice/admin/batchDelete.shtml')"/>
+			</group>
+			<action title="民情登记" hide="noOrgPopedom(situationTransactor)" execute="PageUtils.newrecord('cms/situation','admin/situation','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="民情类型" name="category" align="center" width="80"/>
+			<column title="反应人" name="creator" align="center" width="80"/>
+			<column title="反应时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+
+	<!--  hide="noPrivilege(application_manager) and isNotSiteManager()" -->	
+	<view name="admin/allSituationBySite" form="admin/situation" title="所有民情" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/situation&amp;viewName=admin/allSituationBySite&amp;showChildSiteData=true" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.situation.pojo.Situation</pojo>
+			<filter>READABLE</filter>
+			<where>Situation.isDeleted=0</where>
+			<orderBy>Situation.created DESC</orderBy>
+			<quickFilter>Situation.subject like '%{KEY}%' or Situation.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<group title="批量处理">
+				<action title="民情授权" hide="noPrivilege(application_manager)" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/publicservice/admin/readersModifyOption.shtml?applicationName={PARAMETER:applicationName}', 430, 200)"/>
+				<action hide="noPrivilege(application_manager)" title="删除民情" groupTitle="删除民情" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/cms/publicservice/admin/batchDelete.shtml')"/>
+			</group>
+			<action title="民情登记" hide="noOrgPopedom(situationTransactor)" execute="PageUtils.newrecord('cms/situation','admin/situation','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="民情类型" name="category" align="center" width="80"/>
+			<column title="反应人" name="creator" align="center" width="80"/>
+			<column title="反应时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/deleted" form="admin/situation" hide="noPrivilege(application_manager) and isNotSiteManager()" title="已删除民情" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.situation.pojo.Situation</pojo>
+			<filter>READABLE</filter>
+			<where>Situation.isDeleted=1</where>
+			<orderBy>Situation.created DESC</orderBy>
+			<quickFilter>Situation.subject like '%{KEY}%' or Situation.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="民情类型" name="category" align="center" width="80"/>
+			<column title="反应人" name="creator" align="center" width="80"/>
+			<column title="反应时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="selectSituation" form="admin/situation" title="民情选择" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.situation.pojo.Situation</pojo>
+			<filter>READABLE</filter>
+			<where>Situation.isDeleted=0</where>
+			<orderBy>Situation.created DESC</orderBy>
+			<quickFilter>Situation.subject like '%{KEY}%' or Situation.creator like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="主题" name="subject"/>
+			<column title="反应时间" name="created" align="center" width="70"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<statisticView name="admin/timeoutStatistics" hide="noPrivilege(application_manager) and isNotMyUnitManager()" title="超时统计" pageRows="200" viewServiceName="workItemTimeoutStatisticsViewService">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.workflow.pojo.WorkItemTimeout</pojo>
+			<where>WorkItemTimeout.recordListClassName='com.yuanluesoft.cms.situation.pojo.Situation' and WorkItemTimeout.timeout=1 and WorkItemTimeout.unitId={UNITID}</where>
+			<orderBy>WorkItemTimeout.participantName, WorkItemTimeout.participantId</orderBy>
+			<quickFilter>WorkItemTimeout.participantName like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.jeaf.workflow.pojo.WorkItemTimeout</pojo>
+			</data>
+			<category value="year(WorkItemTimeout.completed)"> <!--value必须有-->
+				<where>WorkItemTimeout.recordListClassName='com.yuanluesoft.cms.situation.pojo.Situation' and WorkItemTimeout.timeout=1 and WorkItemTimeout.unitId={UNITID}</where>
+				<data>year(WorkItemTimeout.completed)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(WorkItemTimeout.completed)"> <!--value必须有-->
+				<where>WorkItemTimeout.recordListClassName='com.yuanluesoft.cms.situation.pojo.Situation' and WorkItemTimeout.timeout=1 and WorkItemTimeout.unitId={UNITID} and year(WorkItemTimeout.completed)={CATEGORY1VALUE}</where> <!--  and PublicInfo.orgId>0 -->
+				<data>year(WorkItemTimeout.completed)={CATEGORY1VALUE} and month(WorkItemTimeout.completed)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<statistics>
+			<statistic title="{PARAMETER:rowIndex}、{PARAMETER:participantName}（{PARAMETER:timeoutCount}次）">
+				<groupFields>
+					<groupField name="participantName"/>
+					<groupField name="participantId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="timeoutCount" function="count(distinct WorkItemTimeout.id)"/>
+				</statisticColumns>
+			</statistic>
+			<statistic statisticAll="true" title="合计（{PARAMETER:timeoutCount}次）">
+				<statisticColumns>
+					<statisticColumn name="timeoutCount" function="count(distinct WorkItemTimeout.id)"/>
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<links>
+			<link title="民情">javascript:PageUtils.editrecord('cms/situation', 'admin/situation', '{PARAMETER:recordId}')</link>
+		</links>
+		<columns>
+			<column title="主题" name="record.subject" prefix="　 "/>
+			<column title="环节" name="activityName" width="100"/>
+			<column title="送达时间" name="created" width="110" align="center"/>
+			<column title="办理时间" name="completed" width="110" align="center"/>
+			<column title="时限" name="deadline" width="40" align="center"/>
+			<column title="用时" name="workDays" width="40" align="center"/>
+		</columns>
+	</statisticView>
+</views>

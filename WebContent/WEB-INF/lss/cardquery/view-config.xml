@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	
+	<view name="cardQuery" title="制卡查询" >
+	    <data>
+			<pojo>com.yuanluesoft.lss.cardquery.pojo.CardQuery</pojo>
+		</data>
+        <links>
+			<link>/lss/cardquery/cardQueryDetail.shtml?id={PARAMETER:id}</link>
+        </links>
+	</view>
+	
+	<view name="admin/query" title="制卡查询" pageRows="20" openFeatures="mode=fullscreen" form="admin/cardQuery">
+	    <data>
+			<pojo>com.yuanluesoft.lss.cardquery.pojo.CardQuery</pojo>
+			<orderBy>CardQuery.created desc</orderBy>
+			<quickFilter>CardQuery.securityNumber like '%{KEY}%' or CardQuery.name like '%{KEY}%' or CardQuery.cardType like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新增记录" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('lss/cardquery', 'admin/cardQuery', 'mode=fullscreen')"/>		
+			<action title="数据导入" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('lss/cardquery', 'admin/importData', 'mode=dialog,width=390,height=180')"/>
+			<action title="批量删除" hide="noPrivilege(application_manager)" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/lss/cardquery/batchOperate.shtml?operateMode=delete')"/>		
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true"  width="32"/>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="社会保障号" name="securityNumber" width="200"/>
+			<column title="姓名" name="name" width="150"/>
+			<column title="制卡类型" name="cardType" width="100"/>
+			<column title="创建时间" name="created" width="80" format="yyyy-MM-dd" />
+		</columns>
+	</view>
+	
+	<view name="admin/config" title="参数配置" pageRows="20" form="admin/config" openFeatures="mode=dialog,width=600,height=400">
+	    <data>
+			<pojo>com.yuanluesoft.lss.cardquery.pojo.CardQueryConfig</pojo>
+			<quickFilter>CardQueryConfig.cardType like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新增配置" hide="noPrivilege(application_manager)" execute="PageUtils.newrecord('lss/cardquery', 'admin/config', 'mode=dialog,width=600,height=400')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="制卡类型" name="cardType" />
+			<column title="创建时间" name="created" width="80" format="yyyy-MM-dd" />
+		</columns>
+	</view>
+	
+</views>

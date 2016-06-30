@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/inquiry"/>
+
+		<page name="inquirySubject" title="调查" systemLink="false" recordClass="com.yuanluesoft.cms.inquiry.pojo.InquirySubject" url="/cms/inquiry/inquirySubject.shtml">
+			<templateView name="admin/template" application="cms/inquiry"/>
+			<templatePlugin path="/cms/inquiry/templatemanage/plugin.js" private="true">
+				<templateActions>inquiryTemplateRange</templateActions> <!-- 扩展的模板操作 -->
+			</templatePlugin>
+			<subPage title="调查" name="inquirySubject" type="template"/>
+		</page>
+		
+		<page name="questionnaire" title="问卷" systemLink="false" recordClass="com.yuanluesoft.cms.inquiry.pojo.InquirySubject" url="/cms/inquiry/inquirySubject.shtml">
+			<templateView name="admin/template" application="cms/inquiry"/>
+			<templatePlugin path="/cms/inquiry/templatemanage/plugin.js" private="true">
+				<templateActions>inquiryTemplateRange</templateActions> <!-- 扩展的模板操作 -->
+			</templatePlugin>
+			<subPage title="调查" name="questionnaire" type="template"/>
+		</page>
+
+		<page name="inquiryOption" title="调查选项" recordClass="com.yuanluesoft.cms.inquiry.pojo.InquiryOption">
+			<subPage title="调查选项" name="inquiryOption" type="template"/>
+		</page>
+
+		<page name="inquiry" title="调查提交" systemLink="false">
+			<subPage title="调查提交" name="inquiry" type="template"/>
+		</page>
+
+		<page name="inquirySubmitted" title="调查提交完成" systemLink="false">
+			<subPage title="调查提交完成" name="inquirySubmitted" type="template"/>
+		</page>
+
+		<page name="inquiryResult" title="调查结果" systemLink="false">
+			<subPage title="调查结果" name="inquiryResult" type="template"/>
+			<subPage title="调查结果(多种统计)" name="inquiryResultRich"  type="iframe" iframeUrl="/cms/inquiry/inquiryResultRich.shtml" normalCssFile="/jeaf/form/css/form.css"/> 
+		</page>
+
+		<page name="questionnaireResult" title="问卷结果" systemLink="false">
+			<subPage title="问卷结果" name="questionnaireResult" type="template"/>
+			<subPage title="问卷结果(多种统计)" name="questionnaireResultRich"  type="iframe" iframeUrl="/cms/inquiry/inquiryResultRich.shtml" normalCssFile="/jeaf/form/css/form.css"/> 
+		</page>
+		
+		<page name="inquiryFeedback" title="结果反馈" systemLink="false" recordClass="com.yuanluesoft.cms.inquiry.pojo.InquiryFeedback">
+			<subPage title="结果反馈" name="inquiryFeedback" type="template"/>
+		</page>
+
+		<page name="inquiryNotEnd" title="调查未结束提示" systemLink="false">
+			<subPage title="调查未结束提示" name="inquiryNotEnd" type="template"/>
+		</page>
+		
+		<page name="inquiryDescription" title="调查说明" recordClass="com.yuanluesoft.cms.inquiry.pojo.InquirySubject"/>
+		
+		<page name="inquiries" title="调查主题列表(全部)" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/inquiry&amp;pageName=inquiries"/>
+		
+		<page name="processingInquiries" title="调查主题列表(调查中)" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/inquiry&amp;pageName=processingInquiries"/>
+		
+		<page name="completedInquiries" title="调查主题列表(已结束)" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/inquiry&amp;pageName=completedInquiries"/>
+	</pages>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="inquirySubjects" processor="inquiryRecordListProcessor"/> <!-- 调查主题(全部) -->
+		<pageElement name="processingInquirySubjects" processor="inquiryRecordListProcessor"/> <!-- 调查主题(调查中) -->
+		<pageElement name="processingInquiryAndQuestionnaires" processor="inquiryRecordListProcessor"/> <!-- 调查与问卷(调查中) -->
+		<pageElement name="completedInquirySubjects" processor="inquiryRecordListProcessor"/> <!-- 调查主题(已结束) -->
+		<!--<pageElement name="feedbackInquirySubjects" processor="inquiryRecordListProcessor"/>  调查主题(已反馈) 整合时注释-->
+		<pageElement name="inquiryResults" processor="inquiryRecordListProcessor"/> <!-- 调查结果 -->
+	</pageElements>
+</application>

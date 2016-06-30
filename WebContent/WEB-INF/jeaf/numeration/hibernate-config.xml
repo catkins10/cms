@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--编号服务:当前序号-->
+	<class name="com.yuanluesoft.jeaf.numeration.pojo.NumerationSequence" table="numeration_sequence">
+		<id name="id">
+			<generator class="assigned" />
+		</id>
+		<property name="application"/> <!--应用名称-->
+		<property name="name"/> <!--编号名称-->
+		<property name="numerationRange"/> <!--编号范围-->
+		<property name="sequence"/> <!--序号-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="myWorkloads" title="我的工作量" pageRows="20" viewServiceName="examViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.workload.pojo.WorkloadAssessResult</pojo>
+			<where>WorkloadAssessResult.personId={USERID}</where>
+			<orderBy>assess.assessYear DESC, assess.assessMonth DESC</orderBy>
+		</data>
+	</view>
+	
+	<view name="workloadAssesses" title="已完成考核" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.workload.pojo.WorkloadAssess</pojo>
+			<where>WorkloadAssess.creatorId={USERID}</where>
+			<orderBy>WorkloadAssess.assessYear DESC, WorkloadAssess.assessMonth DESC</orderBy>
+		</data>
+		<links>
+			<link>/enterprise/workload/workloadAssess.shtml</link>
+		</links>
+	</view>
+	
+	<view name="admin/workloadAssess" form="admin/workloadAssess" title="工作量考核" pageRows="20" hide="noPrivilege(application_manager)" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.workload.pojo.WorkloadAssess</pojo>
+			<orderBy>WorkloadAssess.assessYear DESC, WorkloadAssess.assessMonth DESC</orderBy>
+		</data>
+		<categories root="所有考核" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.enterprise.workload.pojo.WorkloadAssess</pojo>
+			</data>
+			<category value="WorkloadAssess.assessYear"> <!--value必须有-->
+				<data>WorkloadAssess.assessYear={CATEGORYVALUE}</data>
+			</category>
+			<category value="WorkloadAssess.assessMonth"> <!--value必须有-->
+				<where>WorkloadAssess.assessYear={PARENTVALUE}</where>
+				<data>WorkloadAssess.assessYear={CATEGORY1VALUE} and WorkloadAssess.assessMonth={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="考核年度" name="assessYear" width="100" align="center"/>
+			<column title="考核月份" name="assessMonth" width="100" align="center"/>
+			<column title="考核人" name="creator"/>
+			<column title="考核时间" name="created" width="110" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/workload" title="工作量" pageRows="20" hide="noPrivilege(application_manager)" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.workload.pojo.WorkloadAssessResult</pojo>
+			<orderBy>assess.assessYear DESC, assess.assessMonth DESC, WorkloadAssessResult.personName</orderBy>
+		</data>
+		<categories root="所有考核" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.enterprise.workload.pojo.WorkloadAssessResult</pojo>
+			</data>
+			<category value="WorkloadAssessResult.personId" title="WorkloadAssessResult.personName"> <!--value必须有-->
+				<data>WorkloadAssessResult.personId={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<links>
+			<link>javascript:PageUtils.editrecord('enterprise/workload', 'admin/workloadAssess', '{PARAMETER:assess.id}', 'mode=fullscreen')</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="考核年度" name="assess.assessYear" width="100" align="center"/>
+			<column title="考核月份" name="assess.assessMonth" width="100" align="center"/>
+			<column title="被考核人员" name="personName" width="150"/>
+			<column title="工作量" name="workload" width="150"/>
+			<column title="考核人" name="assess.creator"/>
+			<column title="考核时间" name="assess.created" width="110" align="center"/>
+		</columns>
+	</view>
+</views>

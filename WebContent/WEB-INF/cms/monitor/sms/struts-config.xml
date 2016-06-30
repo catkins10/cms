@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="smsSend" type="com.yuanluesoft.cms.monitor.sms.forms.SmsSend"/>
+  <form-bean name="smsReceive" type="com.yuanluesoft.cms.monitor.sms.forms.SmsReceive"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="smsSend" path="/smsSend" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Load" validate="false">
+   <forward name="load" path="/smsSend.jsp"/>
+  </action>
+  <action name="smsReceive" path="/smsReceive" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Load" validate="false">
+   <forward name="load" path="/smsReceive.jsp"/>
+  </action>
+  <action input="/smsSend.jsp" name="smsSend" path="/saveSmsSend"
+   scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Save" validate="false"/>
+  <action input="/smsSend.jsp" name="smsSend" path="/deleteSmsSend"
+   scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Delete" validate="false"/>
+  <action input="/smsReceive.jsp" name="smsReceive"
+   path="/saveSmsReceive" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Save" validate="false"/>
+  <action input="/smsReceive.jsp" name="smsReceive"
+   path="/deleteSmsReceive" scope="request"
+   type="com.yuanluesoft.cms.monitor.actions.monitorrecord.Delete" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

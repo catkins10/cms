@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/importRecipient" class="com.yuanluesoft.appraise.appraiser.forms.admin.ImportRecipient" title="导入服务对象" pojo="com.yuanluesoft.appraise.appraiser.pojo.AppraiserImport">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="重新导入" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteImportRecipient')"/>
+			<action title="送审核" hide="workflow()" execute="FormUtils.doAction('runImportRecipient', 'workflowAction=send')"/>
+			<action title="审核" hide="workflow()" execute="FormUtils.doAction('approvalImportRecipient', 'workflowAction=approval')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/importAppraiser" class="com.yuanluesoft.appraise.appraiser.forms.admin.ImportAppraiser" title="导入基础库评议员">
+		<formFields>
+			<field name="data" title="数据文件" type="attachment" inputMode="attachment">
+				<parameter name="fileExtension">Excel表格|*.xls|</parameter>
+				<parameter name="simpleMode">true</parameter>
+				<parameter name="attachmentEditor">importAppraiserAttachmentEditor.shtml</parameter>
+			</field>
+			<field name="orgId" title="地区ID" type="number" inputMode="hidden"/>
+			<field name="orgName" title="地区名称" type="number" inputMode="readonly"/>
+			<field name="expire" title="有效期" type="date" inputMode="date"/>
+			<field name="appraiserType" title="评议员类型" type="number" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="导入" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="admin/appraiser" class="com.yuanluesoft.appraise.appraiser.forms.admin.Appraiser" title="评议员" pojo="com.yuanluesoft.appraise.appraiser.pojo.Appraiser">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteAppraiser')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.appraise.appraiser.forms.admin.AppraiserView" title="评议员视图">
+		<formFields>
+			<field name="orgId" title="组织机构ID" type="number" inputMode="hidden"/>
+			<field name="direct" title="是否市直、县直" type="boolean" inputMode="hidden"/>
+		</formFields>
+	</form>
+</forms>

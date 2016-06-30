@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="在线访谈预告" name="todoInterviews">
+		<data>
+			<pojo>com.yuanluesoft.cms.interview.pojo.InterviewSubject</pojo>
+			<where>InterviewSubject.isEnding!='1'</where>
+			<orderBy>InterviewSubject.beginTime</orderBy>
+			<quickFilter>InterviewSubject.subject like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="在线访谈直播">/cms/interview/interviewLive.shtml</link>
+			<link title="查看全部发言">/cms/interview/interview.shtml</link>
+			<link title="查看访谈背景">/cms/interview/interviewBackground.shtml</link>
+			<link title="查看嘉宾介绍">/cms/interview/interviewGuestsIntro.shtml</link>
+			<link title="嘉宾、主持人登录">/cms/interview/interviewLiveLogin.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/interview</link>
+		</links>
+		<extendParameters>
+			<parameter name="totalSupport">false</parameter> <!-- 不支持统计 -->
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSiteRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+		
+	<view title="往期访谈" name="bypastInterviews">
+		<data>
+			<pojo>com.yuanluesoft.cms.interview.pojo.InterviewSubject</pojo>
+			<where>InterviewSubject.isEnding='1'</where>
+			<orderBy>InterviewSubject.beginTime DESC</orderBy>
+			<quickFilter>InterviewSubject.subject like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="访谈实录">/cms/interview/interview.shtml</link>
+			<link title="访谈图片">/cms/interview/listInterviewImages.shtml</link>
+			<link title="访谈视频">/cms/interview/listInterviewVideos.shtml</link>
+			<link title="查看访谈背景">/cms/interview/interviewBackground.shtml</link>
+			<link title="查看嘉宾介绍">/cms/interview/interviewGuestsIntro.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=cms/interview</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSiteRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view title="发言(访谈直播)" name="interviewLiveSpeaks">
+		<data>
+			<pojo>com.yuanluesoft.cms.interview.pojo.InterviewSpeak</pojo>
+			<where>not InterviewSpeak.publishTime is null</where>
+			<orderBy>InterviewSpeak.publishTime DESC</orderBy>
+			<quickFilter>InterviewSpeak.content like '%{KEY}%'</quickFilter>
+			<newestCheckBy>publishTime</newestCheckBy>
+		</data>
+	</view>
+	
+	<view title="发言(非直播)" name="interviewSpeaks">
+		<data>
+			<pojo>com.yuanluesoft.cms.interview.pojo.InterviewSpeak</pojo>
+			<where>({PARAMETER:id|0}=0 or InterviewSpeak.subjectId={PARAMETER:id|0}) and not InterviewSpeak.publishTime is null</where>
+			<orderBy>InterviewSpeak.publishTime</orderBy>
+			<quickFilter>InterviewSpeak.content like '%{KEY}%'</quickFilter>
+			<newestCheckBy>publishTime</newestCheckBy>
+		</data>
+	</view>
+	
+	<view title="待审核发言" name="toApprovalSpeaks">
+		<data>
+			<pojo>com.yuanluesoft.cms.interview.pojo.InterviewSpeak</pojo>
+			<orderBy>InterviewSpeak.speakerType, InterviewSpeak.isLeave, InterviewSpeak.speakTime</orderBy>
+			<quickFilter>InterviewSpeak.content like '%{KEY}%'</quickFilter>
+			<newestCheckBy>speakTime</newestCheckBy>
+		</data>
+		<links>
+			<link title="同意发布">javascript:approvalSpeak('{PARAMETER:id}', true)</link>
+			<link title="不同意发布">javascript:approvalSpeak('{PARAMETER:id}', false)</link>
+		</links>
+	</view>
+	
+	<view title="访谈图片" name="interviewImages">
+		<data>
+			<pojo>com.yuanluesoft.cms.interview.pojo.InterviewImage</pojo>
+			<where>{PARAMETER:id|0}=0 or InterviewImage.interviewSubjectId={PARAMETER:id|0}</where>
+			<orderBy>InterviewImage.created</orderBy>
+			<quickFilter>InterviewImage.subject like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link>/cms/interview/interviewImage.shtml</link>
+		</links>
+	</view>
+	
+	<view title="访谈视频" name="interviewVideos">
+		<data>
+			<pojo>com.yuanluesoft.cms.interview.pojo.InterviewVideo</pojo>
+			<where>{PARAMETER:id|0}=0 or InterviewVideo.interviewSubjectId={PARAMETER:id|0}</where>
+			<orderBy>InterviewVideo.created</orderBy>
+			<quickFilter>InterviewVideo.subject like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link>/cms/interview/interviewVideo.shtml</link>
+		</links>
+	</view>
+
+	<view name="admin/interviewSubject" form="admin/interviewSubject" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/interview&amp;viewName=admin/interviewSubject" hide="noPrivilege(application_manager) and isNotSiteManager() and isNotSiteEditor()" title="访谈主题" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.interview.pojo.InterviewSubject</pojo>
+			<orderBy>InterviewSubject.beginTime DESC</orderBy>
+			<quickFilter>InterviewSubject.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加访谈主题" execute="PageUtils.newrecord('cms/interview','admin/interviewSubject','mode=fullscreen', 'siteId={PARAMETER:siteId}')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject" width="60%"/>
+			<column title="嘉宾" name="guests" width="40%"/>
+			<column title="开始时间" name="beginTime" align="center" width="108"/>
+		</columns>
+	</view>
+
+	<view name="admin/interviewRole" form="admin/interviewRole" title="发言审核人角色" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/interview&amp;viewName=admin/interviewRole" hide="noPrivilege(application_manager) and isNotSiteManager()" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.interview.pojo.InterviewRole</pojo>
+			<orderBy>InterviewRole.role</orderBy>
+			<quickFilter>InterviewRole.role like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加发言审核人角色" execute="PageUtils.newrecord('cms/interview','admin/interviewRole','width=720,height=480', 'siteId={PARAMETER:siteId}')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="角色名称" name="role" width="100"/>
+			<column title="成员列表" name="roleMemberNames" displayExcept="portlet,select"/>
+		</columns>
+	</view>
+	
+	<view name="admin/speakFlow" form="admin/speakFlow" title="发言审核顺序" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/interview&amp;viewName=admin/speakFlow" hide="noPrivilege(application_manager) and isNotSiteManager()" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.interview.pojo.InterviewSpeakFlow</pojo>
+			<quickFilter>InterviewSpeakFlow.speakFlow like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="配置发言审核顺序" execute="PageUtils.newrecord('cms/interview','admin/speakFlow','width=720,height=480', 'siteId={PARAMETER:siteId}')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="发言审核顺序" name="speakFlow" displayExcept="portlet,select"/>
+		</columns>
+	</view>
+</views>

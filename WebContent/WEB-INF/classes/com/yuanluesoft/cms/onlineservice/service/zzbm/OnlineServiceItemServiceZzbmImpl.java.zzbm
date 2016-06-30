@@ -1,0 +1,591 @@
+package com.yuanluesoft.cms.onlineservice.service.zzbm;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectory;
+import com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceDirectoryPopedom;
+import com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItem;
+import com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemGuide;
+import com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemMaterial;
+import com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemSubjection;
+import com.yuanluesoft.cms.onlineservice.pojo.OnlineServiceItemUnit;
+import com.yuanluesoft.cms.onlineservice.service.spring.OnlineServiceItemServiceImpl;
+import com.yuanluesoft.cms.onlineservice.zzbm.ZzbmRecordParseCallback;
+import com.yuanluesoft.cms.onlineservice.zzbm.ZzbmRecordParser;
+import com.yuanluesoft.jeaf.attachmentmanage.model.Attachment;
+import com.yuanluesoft.jeaf.exception.ParseException;
+import com.yuanluesoft.jeaf.exception.ServiceException;
+import com.yuanluesoft.jeaf.logger.Logger;
+import com.yuanluesoft.jeaf.usermanage.pojo.Org;
+import com.yuanluesoft.jeaf.usermanage.service.OrgService;
+import com.yuanluesoft.jeaf.usermanage.service.PersonService;
+import com.yuanluesoft.jeaf.util.CnToSpell;
+import com.yuanluesoft.jeaf.util.ListUtils;
+import com.yuanluesoft.jeaf.util.JdbcUtils;
+import com.yuanluesoft.jeaf.util.UUIDLongGenerator;
+
+/**
+ * TODO: 1、部门导入用简称 depa_jc, 2、如果事项已经不在行政服务中心,导入时ID冲突
+ * @author linchuan
+ *
+ */
+public class OnlineServiceItemServiceZzbmImpl extends OnlineServiceItemServiceImpl {
+	private OrgService orgService; //组织机构服务
+	private PersonService personService; //用户服务
+	private long zzbmDirectoryId = 20229309033290000l;
+	
+	/* (non-Javadoc)
+	 * @see com.yuanluesoft.cms.onlineservice.service.spring.OnlineServiceItemServiceImpl#importServiceItems(java.util.List)
+	 */
+	public void importServiceItems(List uploadFiles) throws ServiceException {
+		if(uploadFiles==null || uploadFiles.isEmpty()) {
+			throw new ServiceException("数据文件未上传");
+		}
+		for(Iterator iterator = uploadFiles.iterator(); iterator.hasNext();) {
+			Attachment attachment = (Attachment)iterator.next();
+			if(attachment.getName().startsWith("department")) { //导入部门
+				importDepartments(attachment.getFilePath());
+			}
+		}
+		for(Iterator iterator = uploadFiles.iterator(); iterator.hasNext();) {
+			Attachment attachment = (Attachment)iterator.next();
+			if(attachment.getName().startsWith("service")) { //导入办理事项
+				importServiceItems(attachment.getFilePath());
+			}
+		}
+		for(Iterator iterator = uploadFiles.iterator(); iterator.hasNext();) {
+			Attachment attachment = (Attachment)iterator.next();
+			if(attachment.getName().startsWith("materialItem")) { //导入申报材料
+				importServiceItemMaterials(attachment.getFilePath());
+			}
+		}
+	}
+	
+	/**
+	 * 导入办理事项
+	 * @param dataFilePath
+	 * @throws ServiceException
+	 */
+	public void importServiceItems(String dataFilePath) throws ServiceException {
+		String[] fieldNames = new String[] {
+				"serv_id",
+				"serv_no",
+				"serv_name",
+				"serv_flow",
+				"serv_material",
+				"serv_TimeLimit",
+				"serv_WarnDay",
+				"serv_TimeLimitText",
+				"serv_priceb",
+				"serv_priceC",
+				"serv_PriceText",
+				"serv_dateEditFlag",
+				"serv_moneyEditFlag",
+				"serv_subDP",
+				"serv_Depa_No",
+				"serv_flag",
+				"serv_PriceRule",
+				"serv_LBWDepartment",
+				"serv_type",
+				"serv_paywindow_id",
+				"serv_contact",
+				"servAppCondition",
+				"servBack",
+				"serv_unit",
+				"serv_ifsp",
+				"serv_prop",
+				"serv_share",
+				"serv_fee",
+				"serv_ifinHall",
+				"serv_CbOrganName",
+				"serv_ifbm",
+				"serv_ifnetapp",
+				"exp_info",
+				"serv_countryWindows",
+				"serv_LawTimeLimit",
+				"workflowTemplate",
+				"ifStartPiont",
+				"subFlowName",
+				"ifcs",
+				"csdays",
+				"serv_allowZscl",
+				"serv_waitStatus",
+				"serv_lbflag",
+				"serv_buyanTimeLimit",
+				"ifsh",
+				"shdays",
+				"serv_ifFclb",
+				"serv_XmmcIfInput",
+				"serv_ifInform",
+				"serv_ifSMS",
+				"serv_ifCA",
+				"serv_parentNo",
+				"serv_parentName"
+		};
+		String[][] fieldMappings = {
+				{"serv_id", "id", null}, //ID
+				{"serv_no", "code", null}, //编码
+				{"serv_name", "name", null}, //名称
+				{"servBack", "remark", null}, //备注
+				{"serv_prop", "itemType", null}, //审批服务类型
+				{"servAppCondition", "serviceItemGuide.condition", null}, //申办条件
+				{"serv_PriceRule", "serviceItemGuide.according", null}, //办理依据
+				{"serv_flow", "serviceItemGuide.program", null}, //办理程序
+				{"serv_TimeLimitText", "serviceItemGuide.timeLimit", null}, //承诺时限
+				//{"", "serviceItemGuide.chargeAccording", null}, //收费依据
+				{"serv_PriceText", "serviceItemGuide.chargeStandard", null}, //收费标准
+				//{"", "serviceItemGuide.legalRight", null}, //法律权利,申请人法律权利及申诉途径
+				//{"", "serviceItemGuide.address", null}, //办理地点,漳州市行政服务中心
+				//{"", "serviceItemGuide.traffic", null}, //交通线路
+				//{"", "serviceItemGuide.transactor", null}, //经办人
+				{"serv_contact", "serviceItemGuide.transactorTel", null} //经办人联系电话
+				//{"", "serviceItemGuide.acceptLimit", null}, //受理数量限制
+				//{"", "serviceItemGuide.acceptTime", null}, //受理时间
+				//{"", "serviceItemGuide.complaintTel", null} //监督投诉对话
+		};
+	
+		final List itemCodes = new ArrayList();
+		//记录解析回调
+		ZzbmRecordParseCallback recordParseCallback = new ZzbmRecordParseCallback() {
+			/* (non-Javadoc)
+			 * @see com.yuanluesoft.cms.onlineservice.zzbm.ZzbmRecordParseCallback#processParsedRecord(java.util.Map, java.lang.Object)
+			 */
+			public void processParsedRecord(Map propertyTextValues, Object record) throws Exception {
+				OnlineServiceItem parsedItem = (OnlineServiceItem)record;
+				itemCodes.add(parsedItem.getCode());
+				//按编码查找事项
+				String hql = "select OnlineServiceItem" +
+							 " from OnlineServiceItem OnlineServiceItem, OnlineServiceItemSubjection OnlineServiceItemSubjection, OnlineServiceDirectorySubjection OnlineServiceDirectorySubjection" +
+							 " where OnlineServiceItemSubjection.itemId=OnlineServiceItem.id" +
+							 " and OnlineServiceDirectorySubjection.directoryId=OnlineServiceItemSubjection.directoryId" +
+							 " and OnlineServiceDirectorySubjection.parentDirectoryId=" + zzbmDirectoryId + //行政服务中心目录ID
+							 " and OnlineServiceItem.code='" + JdbcUtils.resetQuot(parsedItem.getCode()) + "'";
+				OnlineServiceItem item = (OnlineServiceItem)getDatabaseService().findRecordByHql(hql, ListUtils.generateList("guide,subjections", ","));
+				if(item==null) { //新记录
+					Logger.info("ZzbmOnlineService: append item " + parsedItem.getCode());
+					//按窗口编号获取网上办事目录
+					String deptNo = (String)propertyTextValues.get("serv_Depa_No");
+					hql = "from OnlineServiceDirectory OnlineServiceDirectory where OnlineServiceDirectory.remark='窗口编号:" + deptNo + "'";
+					OnlineServiceDirectory directory = (OnlineServiceDirectory)getDatabaseService().findRecordByHql(hql);
+					if(directory==null) {
+						return;
+					}
+					item = parsedItem;
+					save(item);
+					//保存办事指南
+					item.getServiceItemGuide().setId(UUIDLongGenerator.generateId());
+					item.getServiceItemGuide().setItemId(item.getId()); //事项ID
+					item.getServiceItemGuide().setTransactor("窗口工作人员"); //经办人
+					item.getServiceItemGuide().setAddress("漳州市行政服务中心"); //办理地点,漳州市行政服务中心
+					item.getServiceItemGuide().setTraffic("901路、3路、4路、8路、12路、13路、15路、16路、17路、20路、23路"); //交通线路
+					item.getServiceItemGuide().setAcceptTime("正常上班时间"); //受理时间
+					getDatabaseService().saveRecord(item.getServiceItemGuide());
+					//保存办理机构
+					OnlineServiceItemUnit unit = new OnlineServiceItemUnit(); //办理事项ID
+					unit.setId(UUIDLongGenerator.generateId()); //ID
+					unit.setItemId(item.getId()); //事项ID
+					//unit.setUnitId(unitId); //单位ID
+					unit.setUnitName(directory.getDirectoryName()); //单位名称
+					getDatabaseService().saveRecord(unit);
+					//保存目录隶属关系
+					OnlineServiceItemSubjection subjection = new OnlineServiceItemSubjection();
+					subjection.setId(UUIDLongGenerator.generateId());
+					subjection.setItemId(item.getId());
+					subjection.setDirectoryId(directory.getId());
+					getDatabaseService().saveRecord(subjection);
+				}
+				else { //旧记录
+					Logger.info("ZzbmOnlineService: update item " + parsedItem.getCode());
+					item.setName(parsedItem.getName()); //名称
+					item.setRemark(parsedItem.getRemark()); //备注
+					item.setItemType(parsedItem.getItemType()); //审批服务类型
+					update(item);
+					boolean newGuide = item.getGuide()==null || item.getGuide().isEmpty();
+					OnlineServiceItemGuide guide;
+					//更新办事指南
+					if(!newGuide) {
+						guide = (OnlineServiceItemGuide)item.getGuide().iterator().next();
+					}
+					else {
+						guide = new OnlineServiceItemGuide();
+						guide.setId(UUIDLongGenerator.generateId());
+						guide.setItemId(item.getId());
+					}
+					guide.setCondition(parsedItem.getServiceItemGuide().getCondition()); //申办条件
+					guide.setAccording(parsedItem.getServiceItemGuide().getAccording()); //办理依据
+					if(guide.getProgram()==null || guide.getProgram().isEmpty()) {
+						guide.setProgram(parsedItem.getServiceItemGuide().getProgram()); //办理程序
+					}
+					guide.setTimeLimit(parsedItem.getServiceItemGuide().getTimeLimit()); //承诺时限
+					guide.setChargeStandard(parsedItem.getServiceItemGuide().getChargeStandard()); //收费标准
+					guide.setTransactorTel(parsedItem.getServiceItemGuide().getTransactorTel()); //经办人联系电话
+					if(newGuide) {
+						getDatabaseService().saveRecord(guide);
+					}
+					else {
+						getDatabaseService().updateRecord(guide);
+					}
+				}
+			}
+		};
+		try {
+			ZzbmRecordParser.parseDataFile(dataFilePath, OnlineServiceItem.class, fieldNames, fieldMappings, recordParseCallback);
+		} 
+		catch (ParseException e) {
+			Logger.exception(e);
+			throw new ServiceException();
+		}
+		//删除编码不在itemCodes中的事项
+		Logger.info("ZzbmOnlineService: item codes are " + ListUtils.join(itemCodes, ",") + ".");
+		String hql = "select OnlineServiceItem" +
+					 " from OnlineServiceItem OnlineServiceItem, OnlineServiceItemSubjection OnlineServiceItemSubjection, OnlineServiceDirectorySubjection OnlineServiceDirectorySubjection" +
+					 " where OnlineServiceItemSubjection.itemId=OnlineServiceItem.id" +
+					 " and OnlineServiceDirectorySubjection.directoryId=OnlineServiceItemSubjection.directoryId" +
+					 " and OnlineServiceDirectorySubjection.parentDirectoryId=" + zzbmDirectoryId + //行政服务中心目录ID
+					 " and not OnlineServiceItem.code is null" +
+					 " order by OnlineServiceItem.id";
+		for(int i=0; ; i+=200) {
+			List items = getDatabaseService().findRecordsByHql(hql, i, 200);
+			if(items==null || items.isEmpty()) {
+				break;
+			}
+			for(Iterator iterator = items.iterator(); iterator.hasNext();) {
+				OnlineServiceItem item = (OnlineServiceItem)iterator.next();
+				if(item.getCode()==null || item.getCode().isEmpty() || itemCodes.indexOf(item.getCode())!=-1) {
+					continue;
+				}
+				Logger.info("ZzbmOnlineService: delete not exist item " + item.getCode());
+				delete(item);
+				i--;
+			}
+		}
+	}
+	
+	/**
+	 * 导入申报材料
+	 * @param dataFilePath
+	 * @throws ServiceException
+	 */
+	public void importServiceItemMaterials(String dataFilePath) throws ServiceException {
+		String[] fieldNames = new String[] {
+				"mItem_id",
+				"mItem_name",
+				"mItem_code",
+				"mItem_serv_id",
+				"mItem_type",
+				"mItem_typeIds",
+				"mItem_formModuleId",
+				"mItem_no"
+		};
+		String[][] fieldMappings = {
+				{"mItem_name", "name", null}, //申报材料名称
+				{"mItem_serv_id", "itemId", null}, //事项ID
+				{"mItem_code", "remark", null} //备注
+		};
+		
+		final Map materials = new HashMap();
+		//记录解析回调
+		ZzbmRecordParseCallback recordParseCallback = new ZzbmRecordParseCallback() {
+			/* (non-Javadoc)
+			 * @see com.yuanluesoft.cms.onlineservice.zzbm.ZzbmRecordParseCallback#processParsedRecord(java.util.Map, java.lang.Object)
+			 */
+			public void processParsedRecord(Map propertyTextValues, Object record) throws Exception {
+				OnlineServiceItemMaterial material = (OnlineServiceItemMaterial)record;
+				if(material.getName()!=null && material.getName().startsWith("：")) {
+					
+				}
+				List itemMaterials = (List)materials.get(new Long(material.getItemId()));
+				if(itemMaterials==null) {
+					itemMaterials = new ArrayList();
+					materials.put(new Long(material.getItemId()), itemMaterials);
+				}
+				itemMaterials.add(material);
+			}
+		};
+		try {
+			ZzbmRecordParser.parseDataFile(dataFilePath, OnlineServiceItemMaterial.class, fieldNames, fieldMappings, recordParseCallback);
+		} 
+		catch (ParseException e) {
+			Logger.exception(e);
+			throw new ServiceException();
+		}
+		//保存申报材料
+		List itmeIds = new ArrayList();
+		for(Iterator iterator = materials.keySet().iterator(); iterator.hasNext();) {
+			Long itemId = (Long)iterator.next();
+			List itemMaterials = (List)materials.get(itemId);
+			long id = saveMaterial(itemId.longValue(), itemMaterials);
+			if(id!=-1) {
+				itmeIds.add(new Long(id));
+			}
+		}
+		
+		//删除编码不在itmeIds中事项的申报材料
+		Logger.info("ZzbmOnlineService: item ids are " + ListUtils.join(itmeIds, ",") + ".");
+		String hql = "select OnlineServiceItem.id" +
+					 " from OnlineServiceItem OnlineServiceItem, OnlineServiceItemSubjection OnlineServiceItemSubjection, OnlineServiceDirectorySubjection OnlineServiceDirectorySubjection" +
+					 " where OnlineServiceItemSubjection.itemId=OnlineServiceItem.id" +
+					 " and OnlineServiceDirectorySubjection.directoryId=OnlineServiceItemSubjection.directoryId" +
+					 " and OnlineServiceDirectorySubjection.parentDirectoryId=" + zzbmDirectoryId + //行政服务中心目录ID
+					 " and not OnlineServiceItem.code is null order by OnlineServiceItem.id";
+		for(int i=0; ; i+=200) {
+			List items = getDatabaseService().findRecordsByHql(hql, i, 200);
+			if(items==null || items.isEmpty()) {
+				break;
+			}
+			for(Iterator iterator = items.iterator(); iterator.hasNext();) {
+				Number itemId = (Number)iterator.next();
+				if(itmeIds.indexOf(itemId)!=-1) {
+					continue;
+				}
+				OnlineServiceItem item = (OnlineServiceItem)load(OnlineServiceItem.class, itemId.longValue());
+				if(item.getCode()==null || item.getCode().isEmpty()) {
+					continue;
+				}
+				Logger.info("ZzbmOnlineService: delete materials of item " + item.getCode());
+				getDatabaseService().deleteRecordsByHql("from OnlineServiceItemMaterial OnlineServiceItemMaterial where OnlineServiceItemMaterial.itemId=" + item.getId());
+				update(item);
+				i--;
+			}
+		}
+	}
+	
+	/**
+	 * 保存申报材料
+	 * @param itemId
+	 * @param materials
+	 */
+	private long saveMaterial(long itemId, List materials) throws ServiceException {
+		if(materials.isEmpty()) {
+			return -1;
+		}
+		//按ID获取办理事项
+		OnlineServiceItem item = (OnlineServiceItem)load(OnlineServiceItem.class, itemId);
+		Logger.info("ZzbmOnlineService: save material of item " + itemId + "," + item);
+		if(item==null) {
+			//获取导入记录
+			String hql = "select ImportedRecord.localRecordId" +
+						 " from ImportedRecord ImportedRecord" +
+						 " where ImportedRecord.importDataName='网上办事'" +
+						 " and ImportedRecord.remoteRecordId='" + itemId + "'";
+			Number id = (Number)getDatabaseService().findRecordByHql(hql);
+			if(id==null) {
+				return -1;
+			}
+			item = (OnlineServiceItem)load(OnlineServiceItem.class, id.longValue());
+			Logger.info("ZzbmOnlineService: save material of item " + itemId + "," + item);
+			if(item==null) {
+				return -1;
+			}
+		}
+		List allMaterials = new ArrayList(materials);
+		//删除已经不需要的材料
+		boolean changed = false;
+		for(Iterator iterator = item.getMaterials()==null ? null : item.getMaterials().iterator(); iterator!=null && iterator.hasNext();) {
+			OnlineServiceItemMaterial material = (OnlineServiceItemMaterial)iterator.next();
+			if(material.getName()!=null && !material.getName().isEmpty()) {
+				OnlineServiceItemMaterial removed = (OnlineServiceItemMaterial)ListUtils.removeObjectByProperty(materials, "name", material.getName());
+				if(removed!=null) {
+					float priority = allMaterials.size() - allMaterials.indexOf(removed);
+					if(material.getPriority()!=priority || (removed.getRemark()!=null && !removed.getRemark().equals(material.getRemark()))) {
+						material.setRemark(removed.getRemark());
+						material.setPriority(priority);
+						getDatabaseService().updateRecord(material);
+						changed = true;
+					}
+				}
+				else { //if(material.getTableName()==null || material.getTableName().isEmpty()) {
+					getDatabaseService().deleteRecord(material);
+					changed = true;
+				}
+			}
+		}
+		//添加新增的材料
+		for(Iterator iterator = materials.iterator(); iterator.hasNext();) {
+			OnlineServiceItemMaterial material = (OnlineServiceItemMaterial)iterator.next();
+			material.setId(UUIDLongGenerator.generateId());
+			material.setItemId(item.getId());
+			material.setPriority(allMaterials.size() - allMaterials.indexOf(material));
+			getDatabaseService().saveRecord(material);
+			changed = true;
+		}
+		if(changed) {
+			update(item);
+		}
+		return item.getId();
+	}
+	
+	/**
+	 * 导入部门到“行政服务中心”
+	 * @param dataFilePath
+	 * @throws ServiceException
+	 */
+	public void importDepartments(String dataFilePath) throws ServiceException {
+		String[] fieldNames = new String[] {
+				"Depa_Id",
+				"Depa_No",
+				"Depa_Dist_No",
+				"Depa_Name",
+				"Depa_Flag",
+				"Depa_Leader",
+				"Depa_xz",
+				"depa_enabled",
+				"Depa_Statistics",
+				"Depa_Logo",
+				"Depa_Jc",
+				"Depa_px",
+				"depa_ifCandidate",
+				"depa_ifDaPing",
+				"depa_ifDaPingPUb",
+				"unkonwn",
+				"Depa_User1",
+				"Depa_User1Tel",
+				"Depa_User2",
+				"Depa_User2Tel"
+		};
+		String[][] fieldMappings = {
+				{"Depa_Name", "directoryName", null}, //部门名称
+				{"Depa_No", "remark", null} //备注,部门编号
+		};
+		
+		final OnlineServiceDirectory mainDirectory = (OnlineServiceDirectory)getOnlineServiceDirectoryService().getDirectoryByName(0, "行政服务中心", false);
+		final List departmentCodes = new ArrayList();
+		//记录解析回调
+		ZzbmRecordParseCallback recordParseCallback = new ZzbmRecordParseCallback() {
+			/* (non-Javadoc)
+			 * @see com.yuanluesoft.cms.onlineservice.zzbm.ZzbmRecordParseCallback#processParsedRecord(java.util.Map, java.lang.Object)
+			 */
+			public void processParsedRecord(Map propertyTextValues, Object record) throws Exception {
+				OnlineServiceDirectory onlineServiceDirectory = (OnlineServiceDirectory)record;
+				if(onlineServiceDirectory.getDirectoryName()==null || onlineServiceDirectory.getDirectoryName().isEmpty()) { //目录名称为空
+					return;
+				}
+				departmentCodes.add(onlineServiceDirectory.getRemark());
+				//查找部门是否已经存在
+				String hql = "from OnlineServiceDirectory OnlineServiceDirectory where OnlineServiceDirectory.remark='窗口编号:" + onlineServiceDirectory.getRemark() + "'";
+				OnlineServiceDirectory oldDirectory = (OnlineServiceDirectory)getDatabaseService().findRecordByHql(hql);
+				if(oldDirectory!=null) {
+					if(!oldDirectory.getDirectoryName().equals(onlineServiceDirectory.getDirectoryName())) {
+						oldDirectory.setDirectoryName(onlineServiceDirectory.getDirectoryName());
+						getDatabaseService().updateRecord(oldDirectory);
+					}
+					return;
+				}
+				//获取"行政服务中心"目录
+				if(mainDirectory==null) {
+					return;
+				}
+				//检查同名的部门是否已经存在
+				OnlineServiceDirectory directory = (OnlineServiceDirectory)getOnlineServiceDirectoryService().getDirectoryByName(mainDirectory.getId(), onlineServiceDirectory.getDirectoryName(), false);
+				if(directory!=null) {
+					directory.setRemark("窗口编号:" + onlineServiceDirectory.getRemark());
+					getDatabaseService().updateRecord(directory);
+					return;
+				}
+				//获取组织机构
+				Org mainOrg = (Org)orgService.getDirectoryByName(0, "行政服务中心", false);
+				if(mainOrg==null) {
+					return;
+				}
+				//检查部门是否已经存在
+				Org department = (Org)orgService.getDirectoryByName(mainOrg.getId(), onlineServiceDirectory.getDirectoryName(), false);
+				if(department==null) {
+					//在用户管理中添加部门
+					department = (Org)orgService.createDirectory(-1, mainOrg.getId(), onlineServiceDirectory.getDirectoryName(), "unitDepartment", null, 0, null);
+					//注册用户
+					String personLoginName = "ck_" + CnToSpell.getShortSpell(onlineServiceDirectory.getDirectoryName().toLowerCase());
+					for(int i=1; i<1000 && personService.isLoginNameInUse(personLoginName, 0); i++) {
+						personLoginName += i;
+					}
+					personService.addEmployee(UUIDLongGenerator.generateId(), "行政服务窗口-" + onlineServiceDirectory.getDirectoryName(), personLoginName, personLoginName, 'M', null, null, null, null, null, department.getId(), 0, null);
+				}
+				//创建网上办事目录
+				directory = (OnlineServiceDirectory)getOnlineServiceDirectoryService().createDirectory(-1, mainDirectory.getId(), onlineServiceDirectory.getDirectoryName(), "directory", "窗口编号:" + onlineServiceDirectory.getRemark(), 0, null);
+				//设置经办
+				OnlineServiceDirectoryPopedom popedom = new OnlineServiceDirectoryPopedom();
+				popedom.setId(UUIDLongGenerator.generateId()); //ID
+				popedom.setDirectoryId(directory.getId()); //目录ID
+				popedom.setUserId(department.getId()); //用户ID,用户、部门、角色和网上注册用户
+				popedom.setUserName(department.getDirectoryName()); //用户名
+				popedom.setPopedomName("transactor"); //权限
+				popedom.setIsInherit('0'); //是否从上级目录继承
+				getDatabaseService().saveRecord(popedom);
+			}
+		};
+		try {
+			ZzbmRecordParser.parseDataFile(dataFilePath, OnlineServiceDirectory.class, fieldNames, fieldMappings, recordParseCallback);
+		} 
+		catch (ParseException e) {
+			Logger.exception(e);
+			throw new ServiceException();
+		}
+		//删除编码不在departmentCodes中的窗口
+		Logger.info("ZzbmOnlineService: department codes are " + ListUtils.join(departmentCodes, ",") + ".");
+		String hql = "select OnlineServiceDirectory" +
+					 " from OnlineServiceDirectory OnlineServiceDirectory, OnlineServiceDirectorySubjection OnlineServiceDirectorySubjection" +
+					 " where OnlineServiceDirectory.id=OnlineServiceDirectorySubjection.directoryId" +
+					 " and OnlineServiceDirectorySubjection.parentDirectoryId=" + mainDirectory.getId() + //行政服务中心目录ID
+					 " and OnlineServiceDirectory.remark like '窗口编号:%'";
+		for(int i=0; ; i+=200) {
+			List departments = getDatabaseService().findRecordsByHql(hql, i, 200);
+			if(departments==null || departments.isEmpty()) {
+				break;
+			}
+			for(Iterator iterator = departments.iterator(); iterator.hasNext();) {
+				OnlineServiceDirectory directory = (OnlineServiceDirectory)iterator.next();
+				if(departmentCodes.indexOf(directory.getRemark().substring("窗口编号:".length()))!=-1) {
+					continue;
+				}
+				Logger.info("ZzbmOnlineService: delete not exist department " + directory.getRemark().substring("窗口编号:".length()));
+				getOnlineServiceDirectoryService().delete(directory);
+				i--;
+			}
+		}
+	}
+
+	/**
+	 * @return the orgService
+	 */
+	public OrgService getOrgService() {
+		return orgService;
+	}
+
+	/**
+	 * @param orgService the orgService to set
+	 */
+	public void setOrgService(OrgService orgService) {
+		this.orgService = orgService;
+	}
+
+	/**
+	 * @return the personService
+	 */
+	public PersonService getPersonService() {
+		return personService;
+	}
+
+	/**
+	 * @param personService the personService to set
+	 */
+	public void setPersonService(PersonService personService) {
+		this.personService = personService;
+	}
+
+	/**
+	 * @return the zzbmDirectoryId
+	 */
+	public long getZzbmDirectoryId() {
+		return zzbmDirectoryId;
+	}
+
+	/**
+	 * @param zzbmDirectoryId the zzbmDirectoryId to set
+	 */
+	public void setZzbmDirectoryId(long zzbmDirectoryId) {
+		this.zzbmDirectoryId = zzbmDirectoryId;
+	}
+}

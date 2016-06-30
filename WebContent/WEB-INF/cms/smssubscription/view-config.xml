@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view title="短信服务列表" name="smsServices">
+		<data>
+			<pojo>com.yuanluesoft.cms.smssubscription.pojo.SmsService</pojo>
+			<orderBy>SmsService.contentName</orderBy>
+			<where>SmsService.siteId={PARAMETER:siteId|0} and SmsService.isValid='1'</where>
+			<quickFilter>SmsService.contentName like '%{KEY}%' or SmsService.description like '%{KEY}%'</quickFilter>
+		</data>
+	</view>
+
+	<view name="admin/smsService" form="admin/smsService" title="短信服务" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/smssubscription&amp;viewName=admin/smsService" hide="noPrivilege(application_manager) and isNotSiteManager()" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.smssubscription.pojo.SmsService</pojo>
+			<orderBy>SmsService.contentName</orderBy>
+			<quickFilter>SmsService.contentName like '%{KEY}%' or SmsService.description like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加短信服务" execute="PageUtils.newrecord('cms/smssubscription','admin/smsService','width=720,height=480', 'siteId={PARAMETER:siteId}')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50" displayExcept="portlet"/>
+			<column title="短信内容" name="contentName" width="160"/>
+			<column title="描述" name="description"/>
+			<column title="订阅规则" name="subscribeRule" width="200"/>
+			<column title="退订规则" name="unsubscribeRule" width="120"/>
+		</columns>
+	</view>
+	
+	<view name="admin/smsSubscription" title="短信订阅情况" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=cms/smssubscription&amp;viewName=admin/smsSubscription" hide="noPrivilege(application_manager) and isNotSiteManager()" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.cms.smssubscription.pojo.SmsSubscription</pojo>
+			<orderBy>SmsSubscription.subscribeTime DESC</orderBy>
+			<quickFilter>SmsSubscription.subscriberNumber like '%{KEY}%' or SmsSubscription.serviceName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50" displayExcept="portlet"/>
+			<column title="订阅人号码" name="subscriberNumber" width="100"/>
+			<column title="订阅的服务名称" name="serviceName"/>
+			<column title="订阅时间" name="subscribeTime" width="110"/>
+			<column title="退订时间" name="unsubscribeTime" width="110"/>
+		</columns>
+	</view>
+</views>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="receiveTelegram" class="com.yuanluesoft.telex.receive.plain.forms.ReceivePlainTelegram" title="收报登记" pojo="com.yuanluesoft.telex.receive.base.pojo.ReceiveTelegram">
+		<formFields>
+			<field name="signId" title="签收记录ID" type="number" inputMode="hidden"/>
+			<field name="signPersonId" title="签收用户ID" type="number" inputMode="hidden"/>
+			<field name="signPersonName" title="签收用户名" type="string" inputMode="text"/>
+			<field name="isAgentSign" title="是否代签收" type="boolean" inputMode="hidden"/>
+			<field name="signTime" title="签收时间" type="timestamp" inputMode="datetime"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="保存并转办理" hide="isRead()" execute="FormUtils.doAction('synchSigns')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteReceiveTelegram')"/>
+			<action title="打印办理单" hide="isNew()" execute="printTransactionSheet(true, false)"/>
+			<action title="归档" hide="isRead() or isNew()" execute="if(confirm('是否确定要归档？'))FormUtils.doAction('archive')"/>
+			<action title="撤销归档" hide="isRead() or isNew()" execute="FormUtils.doAction('unarchive')"/>
+		</actions>
+	</form>
+</forms>

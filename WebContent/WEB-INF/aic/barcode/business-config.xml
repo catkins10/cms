@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="厂商" class="com.yuanluesoft.aic.barcode.pojo.BarcodeCompany" businessServiceName="barcodeCompanyService">
+		<field name="loginName" title="登录用户名" length="32" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="password" title="登录密码" length="50" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="isHalt" title="是否停用" length="1" required="true" type="char" inputMode="radio">
+			<parameter name="itemsText">停用|1\0启用|0</parameter>
+		</field>
+		<field name="code" title="厂商识别代码" length="13" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="name" title="名称" length="200" required="true" type="string" inputMode="text"/>
+		<field name="registrationNumber" title="企业注册号" length="100" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="address" title="地址" length="200" required="true" type="string" inputMode="text"/>
+		<field name="tel" title="联系电话" length="100" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="creatorId" title="注册人ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="注册人姓名" length="50" type="string" inputMode="readonly"/>
+		<field name="created" title="注册时间" type="timestamp" inputMode="readonly"/>
+		<field name="remark" title="备注" length="200" type="string" inputMode="text"/>
+	</businessObject>
+	<businessObject title="产品条码" class="com.yuanluesoft.aic.barcode.pojo.Barcode">
+		<field name="companyId" title="厂商ID" length="20" type="number" inputMode="hidden"/>
+		<field name="barcode" title="条码" length="13" required="true" type="string" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="company" title="厂商" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.aic.barcode.pojo.BarcodeCompany</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

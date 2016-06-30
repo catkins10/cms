@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 指纹认证服务 -->
+	<bean id="fingerprintService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.jeaf.fingerprint.service.spring.FingerprintServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="memberServiceList"><ref bean="memberServiceList"/></property>
+				<property name="fingerprintMatcher"><ref bean="fingerprintMatcher"/></property>
+				<property name="templateNumberPerPerson"><value>3</value></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="saveFingerprintTemplate">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="verifyFingerprint">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="remove*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="login*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 指纹比对 -->
+	<bean id="fingerprintMatcher" class="com.yuanluesoft.jeaf.fingerprint.matcher.digitalpersona.FingerprintMatcherImpl"/>
+</beans>

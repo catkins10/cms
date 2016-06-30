@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--企业-->
+	<class name="com.yuanluesoft.job.company.pojo.JobCompany" table="job_company">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--企业名称,VARCHAR(200)-->
+		<property name="loginName"/> <!--登录用户名,VARCHAR(50)-->
+		<property name="password"/> <!--登录密码,VARCHAR(200)-->
+		<property name="type"/> <!--公司性质,外资（欧美）,外资（非欧美）,合资,国企,民营公司,国内上市公司,外企代表处,政府机关,事业单位,非营利机构,其它性质,VARCHAR(30)-->
+		<property name="areaId"/> <!--所在地区ID,NUMERIC(20)-->
+		<property name="area"/> <!--所在地区名称,VARCHAR(30)-->
+		<property name="introduction"/> <!--单位简介,VARCHAR(4000)-->
+		<property name="representative"/> <!--法人代表,VARCHAR(30)-->
+		<property name="licenseNo"/> <!--营业执照号,VARCHAR(100)-->
+		<property name="scale"/> <!--企业规模,1~49人,50~99人,100~499人,500~999人,1000人以上,NUMERIC(1)-->
+		<property name="address"/> <!--单位地址,VARCHAR(200)-->
+		<property name="postalcode"/> <!--邮政编码,VARCHAR(10)-->
+		<property name="linkman"/> <!--联系人,VARCHAR(30)-->
+		<property name="linkmanJob"/> <!--联系人职务,VARCHAR(30)-->
+		<property name="linkmanPublic"/> <!--联系人是否公开,NUMERIC(1)-->
+		<property name="linkmanTel"/> <!--联系电话,VARCHAR(50)-->
+		<property name="linkmanTelPublic"/> <!--联系电话是否公开,NUMERIC(1)-->
+		<property name="fax"/> <!--传真号码,VARCHAR(50)-->
+		<property name="faxPublic"/> <!--传真号码是否公开,NUMERIC(1)-->
+		<property name="email"/> <!--电子邮箱,VARCHAR(100)-->
+		<property name="emailPublic"/> <!--电子邮箱是否公开,NUMERIC(1)-->
+		<property name="webSite"/> <!--网址,VARCHAR(100)-->
+		<property name="collegeBuddy"/> <!--是否校友企业,NUMERIC(1)-->
+		<property name="created"/> <!--注册时间,TIMESTAMP-->
+		<property name="ip"/> <!--注册IP,VARCHAR(100)-->
+		<property name="status"/> <!--状态,0/注册,1/审核通过,2/审核未通过,NUMERIC(1)-->
+		<property name="approverId"/> <!--审核人ID,NUMERIC(20)-->
+		<property name="approver"/> <!--审核人,VARCHAR(50)-->
+		<property name="approvalTime"/> <!--审核时间,TIMESTAMP null-->
+		<property name="failedReason"/> <!--审核未通过原因,VARCHAR(2000)-->
+		<!-- 所在行业 -->
+		<set cascade="delete" inverse="true" lazy="true" name="industries" table="job_company_industry" order-by="id">
+			<key column="companyId" />
+			<one-to-many class="com.yuanluesoft.job.company.pojo.JobCompanyIndustry" />
+		</set>
+		<!--邮件模板-->
+		<set cascade="delete" inverse="true" lazy="true" name="mailTemplates" table="job_company_mail_template" order-by="id">
+			<key column="companyId" />
+			<one-to-many class="com.yuanluesoft.job.company.pojo.JobCompanyMailTemplate" />
+		</set>
+		<!--职位-->
+		<set cascade="delete" inverse="true" lazy="true" name="jobs" table="job_job" order-by="priority DESC, name">
+			<key column="companyId" />
+			<one-to-many class="com.yuanluesoft.job.company.pojo.Job" />
+		</set>
+	</class>
+	
+	<!--企业:所在行业-->
+	<class name="com.yuanluesoft.job.company.pojo.JobCompanyIndustry" table="job_company_industry">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="companyId"/> <!--企业ID,NUMERIC(20)-->
+		<property name="industryId"/> <!--行业ID,NUMERIC(20)-->
+		<property name="industry"/> <!--行业,VARCHAR(100)-->
+	</class>
+	
+	<!--邮件模板-->
+	<class name="com.yuanluesoft.job.company.pojo.JobCompanyMailTemplate" table="job_company_mail_template">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="companyId"/> <!--企业ID,NUMERIC(20)-->
+		<property name="invitationMailSubject"/> <!--面试邀请函邮件标题,VARCHAR(200)-->
+		<property name="invitationMailTemplate"/> <!--面试邀请函邮件模板,VARCHAR(4000)-->
+		<property name="offerMailSubject"/> <!--录用通知书邮件标题,VARCHAR(200)-->
+		<property name="offerMailTemplate"/> <!--录用通知书邮件模板,VARCHAR(4000)-->
+		<property name="pushMailSubject"/> <!--职位推送邮件标题,VARCHAR(200)-->
+		<property name="pushMailTemplate"/> <!--职位推送邮件模板,VARCHAR(4000)-->
+	</class>
+	
+	<!--职位-->
+	<class name="com.yuanluesoft.job.company.pojo.Job" table="job_job">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="companyId"/> <!--企业ID,NUMERIC(20)-->
+		<property name="name"/> <!--职位名称,VARCHAR(100)-->
+		<property name="department"/> <!--招聘部门,VARCHAR(100)-->
+		<property name="recruitNumber"/> <!--招聘人数,NUMERIC(4)-->
+		<property name="description"/> <!--职位描述,VARCHAR(4000)-->
+		<property name="requirement"/> <!--职位要求,VARCHAR(4000)-->
+		<property name="postId"/> <!--职能类别ID,NUMERIC(20)-->
+		<property name="post"/> <!--职能类别名称,VARCHAR(200)-->
+		<property name="language"/> <!--语言要求,如:英语熟练,VARCHAR(100)-->
+		<property name="minMonthlyPay"/> <!--最低月薪,NUMERIC(8)-->
+		<property name="maxMonthlyPay"/> <!--最高月薪,NUMERIC(8)-->
+		<property name="target"/> <!--招聘对象,社会人士、应届毕业生、实习生、劳务工,VARCHAR(100)-->
+		<property name="qualification"/> <!--学历要求,初中,高中,职业高中,职业中专,中专,大专,本科,MBA,硕士,博士,NUMERIC(2)-->
+		<property name="workYear"/> <!--工作年限,在读学生/-1,应届毕业生/0,1年,2年,3年,4年,5年,6年,7年,8年,9年,10年以上,不限,NUMERIC(2)-->
+		<property name="minAge"/> <!--年龄下限,NUMERIC(2)-->
+		<property name="maxAge"/> <!--年龄上限,NUMERIC(2)-->
+		<property name="sex"/> <!--性别要求,不限制/A,男/M,女/F,CHAR(1)-->
+		<property name="rank"/> <!--职称要求,不限,初级职称,中级职称,副高级职称,高级职称,VARCHAR(10)-->
+		<property name="endDate"/> <!--到期时间,DATE-->
+		<property name="isPublic"/> <!--是否公开,NUMERIC(1)-->
+		<property name="urgent"/> <!--是否紧急职位,NUMERIC(1)-->
+		<property name="queryConnt"/> <!--查询次数,允许清零,NUMERIC(8)-->
+		<property name="applicantCount"/> <!--投递次数,NUMERIC(8)-->
+		<property name="priority"/> <!--优先级,NUMERIC(7,4)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP-->
+		<property name="publicTime"/> <!--发布时间,TIMESTAMP null-->
+		<property name="refreshTime"/> <!--刷新时间,TIMESTAMP-->
+		<property name="todayRefreshTimes"/> <!--当日刷新次数,NUMERIC(3)-->
+		<!--工作地点-->
+		<set cascade="delete" inverse="true" lazy="false" name="areas" table="job_job_area" order-by="id">
+			<key column="jobId" />
+			<one-to-many class="com.yuanluesoft.job.company.pojo.JobArea" />
+		</set>
+		<!--工作地点-->
+		<set cascade="delete" inverse="true" lazy="false" name="types" table="job_job_type" order-by="id">
+			<key column="jobId" />
+			<one-to-many class="com.yuanluesoft.job.company.pojo.JobType" />
+		</set>
+		<!--推送-->
+		<set cascade="delete" inverse="true" lazy="false" name="pushes" table="job_job_push" order-by="pushTime desc">
+			<key column="jobId" />
+			<one-to-many class="com.yuanluesoft.job.company.pojo.JobPush" />
+		</set>
+		<!-- 企业 -->
+		<many-to-one name="company" class="com.yuanluesoft.job.company.pojo.JobCompany" column="companyId" update="false" insert="false"/>
+	</class>
+	
+	<!--职位:工作地点-->
+	<class name="com.yuanluesoft.job.company.pojo.JobArea" table="job_job_area">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="jobId"/> <!--职位ID,NUMERIC(20)-->
+		<property name="areaId"/> <!--工作地点ID,NUMERIC(20)-->
+		<property name="area"/> <!--工作地点,VARCHAR(50)-->
+	</class>
+	
+	<!--职位:工作性质-->
+	<class name="com.yuanluesoft.job.company.pojo.JobType" table="job_job_type">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="jobId"/> <!--职位ID,NUMERIC(20)-->
+		<property name="type"/> <!--工作性质,全职,兼职,实习,暑期工,NUMERIC(1)-->
+	</class>
+	
+	<!--职位:推送-->
+	<class name="com.yuanluesoft.job.company.pojo.JobPush" table="job_job_push">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="jobId"/> <!--职位ID,NUMERIC(20)-->
+		<property name="jobName"/> <!--职位名称,VARCHAR(100)-->
+		<property name="companyId"/> <!--企业ID,NUMERIC(20)-->
+		<property name="companyName"/> <!--企业名称,VARCHAR(200)-->
+		<property name="pushTime"/> <!--推送时间,TIMESTAMP-->
+		<property name="receiverIds"/> <!--接收人ID,VARCHAR(4000)-->
+		<property name="receivers"/> <!--接收人,VARCHAR(4000)-->
+		<property name="pusherId"/> <!--推送人ID,NUMERIC(20)-->
+		<property name="pusher"/> <!--推送人,VARCHAR(200)-->
+	</class>
+	
+	<!--企业审核设置-->
+	<class name="com.yuanluesoft.job.company.pojo.JobCompanyApproval" table="job_company_approval">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="approvalRequired"/> <!--是否需要审核,NUMERIC(1)-->
+		<property name="passMailSubject"/> <!--审核通过邮件标题,VARCHAR(200)-->
+		<property name="passMailTemplate"/> <!--审核通过邮件模板,VARCHAR(4000)-->
+		<property name="failedMailSubject"/> <!--审核未通过邮件标题,VARCHAR(200)-->
+		<property name="failedMailTemplate"/> <!--审核未通过邮件模板,VARCHAR(4000)-->
+	</class>
+	
+	<!--参数配置:目录-->
+	<class name="com.yuanluesoft.job.company.pojo.JobParameterDirectory" table="job_parameter_directory">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryName"/> <!--目录名称,VARCHAR(200)-->
+		<property name="parentDirectoryId"/> <!--上级目录ID,NUMERIC(20,0)-->
+		<property name="priority"/> <!--优先级,NUMERIC(7,4)-->
+		<property name="directoryType"/> <!--目录类型,VARCHAR(20)-->
+		<property name="creator"/> <!--创建人,VARCHAR(30)-->
+		<property name="creatorId"/> <!--创建人ID,NUMERIC(20,0)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="remark"/> <!--备注,"备注"以上从目录管理继承,VARCHAR(200)-->
+		<set cascade="delete" inverse="true" lazy="true" name="subjections" table="job_parameter_dir_subjection" order-by="id">
+			<key column="directoryId" />
+			<one-to-many class="com.yuanluesoft.job.company.pojo.JobParameterDirectorySubjection" />
+		</set>
+		<set cascade="delete" inverse="true" lazy="true" name="childSubjections" table="job_parameter_dir_subjection">
+			<key column="parentDirectoryId" />
+			<one-to-many class="com.yuanluesoft.job.company.pojo.JobParameterDirectorySubjection" />
+		</set>
+	</class>
+	
+	<!--参数配置:目录隶属关系-->
+	<class name="com.yuanluesoft.job.company.pojo.JobParameterDirectorySubjection" table="job_parameter_dir_subjection">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="directoryId"/> <!--目录ID,NUMERIC(20,0)-->
+		<property name="parentDirectoryId"/> <!--上级目录ID,NUMERIC(20,0)-->
+	</class>
+</hibernate-mapping>

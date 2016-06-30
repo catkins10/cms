@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/onlineservice/accept"/>
+		<page name="onlineServiceAccept" title="提交申报材料" url="/cms/onlineservice/accept/accept.shtml?act=edit" systemLink="false">
+			<subPage name="base" title="申报"/>
+			<field title="办理事项名称" name="itemName"/>
+			<field title="编号" name="sn"/>
+			<field title="申报人" name="creator"/>
+			<field title="申报时间" name="created" type="timestamp"/>
+			<field title="当前状态" name="workflowStatus"/>
+		</page>
+		<page name="onlineServiceAcceptResult" title="申报完成提示" systemLink="false"/>
+		
+		<page name="onlineServiceAccepts" title="已受理申报列表" url="/cms/onlineservice/listInteractives.shtml?applicationName=cms/onlineservice/accept&amp;type=onlineServiceAccepts"/>
+		<page name="onlineServiceMyAccepts" title="我的申报列表" url="/cms/onlineservice/listInteractives.shtml?applicationName=cms/onlineservice/accept&amp;type=onlineServiceMyAccepts"/>
+	</pages>
+	
+	<recordLists>
+		<recordList title="网上办事已受理申报列表" name="onlineServiceAccepts" recordPage="onlineServiceAccept" hostPage="index"/>
+		<recordList title="我的网上办事申报列表" totalSupport="false" rssSupport="false" name="onlineServiceMyAccepts" recordPage="onlineServiceAccept" hostPage="index"/>
+	</recordLists>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="onlineServiceAccepts" processor="onlineServiceAcceptsProcessor"/> <!-- 网上办事已受理申报列表 -->
+		<pageElement name="onlineServiceMyAccepts" processor="onlineServiceAcceptsProcessor"/> <!-- 我的网上办事申报列表 -->
+	</pageElements>
+</application>

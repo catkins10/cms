@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="microblog" class="com.yuanluesoft.microblog.forms.Microblog" title="发微博" pojo="com.yuanluesoft.microblog.pojo.Microblog">
+	 	<formFields>
+			<field name="messageReceive" title="接收到的消息" type="component" inputMode="readonly">
+				<parameter name="class">com.yuanluesoft.microblog.pojo.MicroblogMessageReceive</parameter>
+			</field>
+			<field name="referenceUrl" title="引用记录的链接" type="string" inputMode="hidden"/>
+			<field name="referenceTitle" title="引用记录的标题" type="string" inputMode="hidden"/>
+			<field name="shortUrlMaxLength" title="短链接最大长度" type="number" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteMicroblog')"/>
+			<action title="送审核" hide="workflow()" execute="FormUtils.doAction('runMicroblog', 'workflowAction=send')"/>
+			<action title="审核" hide="workflow()" execute="FormUtils.doAction('approvalMicroblog', 'workflowAction=approval')"/>
+			<action title="完成审核" hide="workflow()" execute="FormUtils.doAction('runMicroblog', 'workflowAction=send')"/>
+			<action title="发布" hide="workflow()" execute="if(confirm('是否确定发布？'))FormUtils.doAction('issueMicroblog')"/>
+			<action title="撤销发布" execute="FormUtils.doAction('unissueMicroblog')"/>
+			<action title="重新发布" execute="FormUtils.doAction('reissueMicroblog')"/>
+			<action title="引用" hide="isRead()" execute="reference(this, 'referenceUrl', 'referenceTitle', 'FormUtils.doAction(&quot;microblog&quot;)', 'left')"/>
+		</actions>
+	</form>
+
+	<form name="receivedMessage" class="com.yuanluesoft.microblog.forms.ReceivedMessage" title="发送消息" pojo="com.yuanluesoft.microblog.pojo.MicroblogMessageReceive">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteReceivedMessage')"/>
+			<action title="发送客服消息" execute="location.href='microblog.shtml?receiveMessageId={PARAMETER:id}'"/>
+		</actions>
+	</form>
+	
+	<form name="userGroup" class="com.yuanluesoft.microblog.forms.UserGroup" title="用户分组" pojo="com.yuanluesoft.microblog.pojo.MicroblogUserGroup">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteUserGroup')"/>
+		</actions>
+	</form>
+	
+	<form name="responseMessage" class="com.yuanluesoft.microblog.forms.ResponseMessage" title="自动应答" pojo="com.yuanluesoft.microblog.pojo.MicroblogResponse">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteResponseMessage')"/>
+		</actions>
+	</form>
+	
+	<form name="account" class="com.yuanluesoft.microblog.forms.Account" title="帐号配置" pojo="com.yuanluesoft.microblog.pojo.MicroblogAccount">
+		<formFields>
+			<field name="unitName" title="单位名称" type="string" inputMode="readonly"/>
+			<field name="receiveMessageURL" title="消息接收URL" type="string" inputMode="readonly"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteAccount')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.microblog.forms.InsertMicroblogs" title="插入微博列表">
+	 	<formFields>
+	 		<field name="microblogAccountId" title="微博账号ID" type="string" inputMode="hidden"/>
+			<field name="microblogAccountName" title="微博账号名称" type="string" inputMode="select">
+				<parameter name="execute">selectMicroblogAccount()</parameter>
+				<parameter name="selectOnly">true</parameter>
+			</field>
+		</formFields>
+	</form>
+</forms>

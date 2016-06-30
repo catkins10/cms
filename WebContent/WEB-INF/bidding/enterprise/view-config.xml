@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view title="招标代理列表" name="biddingAgents">
+		<data>
+			<pojo>com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterpriseCert</pojo>
+			<where>BiddingEnterpriseCert.type='招标代理' and enterprise.isValid='1' and BiddingEnterpriseCert.lib like '%{PARAMETER:lib}%'</where>
+			<orderBy>enterprise.name</orderBy>
+			<quickFilter>enterprise.name like '%{KEY}%'</quickFilter>
+		</data>
+	</view>
+	
+	<view title="企业列表" name="biddingEnterprises">
+		<data>
+			<pojo>com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprise</pojo>
+			<where>BiddingEnterprise.isValid='1' and ('{PARAMETER:enterpriseCategory}' is null or '{PARAMETER:enterpriseCategory}'='' or certs.type='{PARAMETER:enterpriseCategory}')</where>
+			<orderBy>BiddingEnterprise.created DESC</orderBy>
+			<quickFilter>BiddingEnterprise.name like '%{KEY}%'</quickFilter>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/bidding/enterprise/templatemanage/insertEnterprises.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+		<links>
+			<link title="企业信息">/bidding/enterprise/enterprise.shtml</link>
+		</links>
+	</view>
+	
+	<view title="从业人员选择" name="selectFreeJobholder" viewServiceName="enterpriseViewService">
+		<data>
+			<pojo>com.yuanluesoft.bidding.enterprise.pojo.BiddingJobholder</pojo>
+			<where>BiddingJobholder.enterpriseId={DEPARTMENTID}
+				   and BiddingJobholder.category='{PARAMETER:jobholderCategory}'
+				   and BiddingJobholder.id not in (select BiddingSignUpJobholder.jobholderId from BiddingSignUpJobholder BiddingSignUpJobholder where BiddingSignUpJobholder.jobholderId=BiddingJobholder.id and BiddingSignUpJobholder.locked=1)</where>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="姓名" name="name" width="80"/>
+			<column title="等级" name="qualification"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+
+	<view name="admin/todo" form="admin/enterprise" title="待办" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseViewService">
+		<data>
+			<pojo>com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprise</pojo>
+			<where>BiddingEnterprise.isValid!='1'</where>
+			<orderBy>BiddingEnterprise.created DESC</orderBy>
+			<quickFilter>BiddingEnterprise.name like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="企业注册" execute="PageUtils.newrecord('bidding/enterprise', 'admin/enterprise', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="企业名称" name="name"/>
+			<column title="事务类型" name="statusText" width="80" align="center"/>
+			<column title="企业资质" name="certs.type" width="160"/>
+			<column title="创建时间" name="created" format="yyyy-MM-dd" width="80" align="center"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="120" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/processing" form="admin/enterprise" title="在办" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseViewService">
+		<data>
+			<pojo>com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprise</pojo>
+			<where>BiddingEnterprise.isValid!='1'</where>
+			<orderBy>BiddingEnterprise.created DESC</orderBy>
+			<quickFilter>BiddingEnterprise.name like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="企业注册" execute="PageUtils.newrecord('bidding/enterprise', 'admin/enterprise', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="企业名称" name="name"/>
+			<column title="事务类型" name="statusText" width="80" align="center"/>
+			<column title="企业资质" name="certs.type" width="160"/>
+			<column title="创建时间" name="created" format="yyyy-MM-dd" width="80" align="center"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="120" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/enterprise" form="admin/enterprise" title="已注册企业" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseViewService">
+		<data>
+			<pojo>com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprise</pojo>
+			<where>BiddingEnterprise.isValid='1'</where>
+			<orderBy>BiddingEnterprise.created DESC</orderBy>
+			<quickFilter>BiddingEnterprise.name like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterpriseCert</pojo>
+				<orderBy>BiddingEnterpriseCert.type</orderBy>
+			</data>
+			<category value="BiddingEnterpriseCert.type"> <!--value必须有-->
+				<data>certs.type={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="企业注册" execute="PageUtils.newrecord('bidding/enterprise', 'admin/enterprise', 'mode=fullscreen')"/>
+			<action title="打印" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="企业名称" name="name"/>
+			<column title="企业资质" name="certs.type" width="160"/>
+			<column title="所在地区" name="area" width="90" align="center"/>
+			<column title="联系人" name="linkman" width="90" align="center"/>
+			<column title="创建时间" name="created" format="yyyy-MM-dd" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allAlter" form="admin/enterprise" title="企业变更记录" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseViewService">
+		<data>
+			<pojo>com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprise</pojo>
+			<where>BiddingEnterprise.isAlter='1'</where>
+			<orderBy>BiddingEnterprise.created DESC</orderBy>
+			<quickFilter>BiddingEnterprise.name like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="企业注册" execute="PageUtils.newrecord('bidding/enterprise', 'admin/enterprise', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="企业名称" name="name"/>
+			<column title="企业资质" name="certs.type" width="160"/>
+			<column title="创建时间" name="created" format="yyyy-MM-dd" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allNullify" form="admin/enterprise" title="企业注销记录" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="enterpriseViewService">
+		<data>
+			<pojo>com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprise</pojo>
+			<where>BiddingEnterprise.isNullify='1'</where>
+			<orderBy>BiddingEnterprise.created DESC</orderBy>
+			<quickFilter>BiddingEnterprise.name like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="企业注册" execute="PageUtils.newrecord('bidding/enterprise', 'admin/enterprise', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="企业名称" name="name"/>
+			<column title="企业资质" name="certs.type" width="160"/>
+			<column title="创建时间" name="created" format="yyyy-MM-dd" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/ekeyLog" title="EKEY操作记录" pageRows="20" openFeatures="width=800,height=620">
+		<data>
+			<pojo>com.yuanluesoft.bidding.enterprise.pojo.BiddingEKeyLog</pojo>
+			<orderBy>BiddingEKeyLog.ekeyNO, BiddingEKeyLog.actionTime desc</orderBy>
+			<quickFilter>BiddingEKeyLog.ekeyNO like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="生成软件销售报表" hide="noPrivilege(manageUnit_registEmployee)" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/bidding/enterprise/admin/ekeyReport.shtml', 460, 280);"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="EKey编号" name="ekeyNO" width="120" align="center"/>
+			<column title="企业名称" name="enterpriseName"/>
+			<column title="用户名" name="name" width="80" align="center"/>
+			<column title="试用截止时间" name="tryEnd" width="80" align="center"/>
+			<column title="操作类型" name="actionType" width="130" align="center"/>
+			<column title="操作时间" name="actionTime" width="80" align="center" format="yyyy-MM-dd"/>
+		</columns>
+	</view>
+	
+	<view name="admin/agentLib" form="admin/agentLib" title="代理名录库配置" hide="noPrivilege(application_manager)" pageRows="20" openFeatures="width=800,height=620">
+		<data>
+			<pojo>com.yuanluesoft.bidding.enterprise.pojo.BiddingAgentLib</pojo>
+		</data>
+		<actions>
+			<action title="添加" execute="PageUtils.newrecord('bidding/enterprise', 'admin/agentLib', 'width=800,height=620')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="代理名录库" name="lib"/>
+		</columns>
+	</view>
+	
+	<view name="admin/bidEnterprise" form="admin/bidEnterprise" title="投标企业" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_bidEnterpriseManage)" pageRows="20" openFeatures="mode=dialog,width=430,height=200">
+		<data>
+			<pojo>com.yuanluesoft.bidding.enterprise.pojo.BiddingBidEnterprise</pojo>
+			<orderBy>BiddingBidEnterprise.name</orderBy>
+			<quickFilter>BiddingBidEnterprise.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="导入投标企业" execute="DialogUtils.openDialog('{CONTEXTPATH}/bidding/enterprise/admin/importBidEnterprise.shtml', 430, 200)"/>
+			<action title="新增投标企业" execute="DialogUtils.openDialog('{CONTEXTPATH}/bidding/enterprise/admin/bidEnterprise.shtml', 430, 200)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="企业名称" name="name"/>
+			<column title="开户行" name="bank"/>
+			<column title="帐号" name="account" width="200"/>
+		</columns>
+	</view>
+</views>

@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminPublicInfo" type="com.yuanluesoft.cms.infopublic.forms.admin.PublicInfo"/>
+  <form-bean name="adminMainDirectory" type="com.yuanluesoft.cms.infopublic.forms.admin.MainDirectory"/>
+  <form-bean name="adminPublicInfoView" type="com.yuanluesoft.cms.infopublic.forms.admin.PublicInfoView"/>
+  <form-bean name="select" type="com.yuanluesoft.cms.infopublic.forms.SelectDirectory"/>
+  <form-bean name="adjustPriority" type="com.yuanluesoft.jeaf.dialog.forms.AdjustPriority"/>
+  <form-bean name="adminExportPublicInfo" type="com.yuanluesoft.cms.infopublic.forms.admin.ExportPublicInfo"/>
+  <form-bean name="adminCopyDirectory" type="com.yuanluesoft.cms.infopublic.forms.admin.CopyDirectory"/>
+  <form-bean name="adminInfoPublicStat" type="com.yuanluesoft.cms.infopublic.forms.admin.InfoPublicStat"/>
+  <form-bean name="adminDirectoryCategory" type="com.yuanluesoft.cms.infopublic.forms.admin.DirectoryCategory"/>
+  <form-bean name="adminInfoDirectory" type="com.yuanluesoft.cms.infopublic.forms.admin.InfoDirectory"/>
+  <form-bean name="adminInfoReport" type="com.yuanluesoft.cms.infopublic.forms.admin.InfoReport"/>
+  <form-bean name="adminMonitoringReport" type="com.yuanluesoft.cms.infopublic.forms.admin.MonitoringReport"/>
+  <form-bean name="adminUnitCode" type="com.yuanluesoft.cms.infopublic.forms.admin.UnitCode"/>
+  <form-bean name="publicInfoView" type="com.yuanluesoft.cms.infopublic.forms.PublicInfoView"/>
+  <form-bean name="adminArticleDirectory" type="com.yuanluesoft.cms.infopublic.forms.admin.ArticleDirectory"/>
+  <form-bean name="adminModifyReaders" type="com.yuanluesoft.cms.infopublic.forms.admin.ModifyReaders"/>
+  <form-bean name="adminRegenerateIndex" type="com.yuanluesoft.cms.infopublic.forms.admin.RegenerateIndex"/>
+  <form-bean name="adminPortletEntity" type="com.yuanluesoft.cms.infopublic.forms.admin.PortletEntity"/>
+  <form-bean name="insertInfos" type="com.yuanluesoft.cms.infopublic.forms.admin.InsertInfos"/>
+  <form-bean name="insertInfoDirectoryLink" type="com.yuanluesoft.cms.infopublic.forms.admin.InsertInfoDirectoryLink"/>
+  <form-bean name="insertDirectoryLocation" type="com.yuanluesoft.cms.infopublic.forms.admin.InsertDirectoryLocation"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminPublicInfo" path="/admin/publicInfo"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfo.Load" validate="false">
+   <forward name="load" path="/admin/publicInfo.jsp"/>
+  </action>
+  <action input="/admin/publicInfo.jsp" name="adminPublicInfo"
+   path="/admin/savePublicInfo" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfo.Save" validate="false"/>
+  <action input="/admin/publicInfo.jsp" name="adminPublicInfo"
+   path="/admin/deletePublicInfo" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfo.Delete" validate="false"/>
+  <action name="select" path="/directoryTree" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.directorytree.Load" validate="false">
+   <forward name="load" path="/directoryTree.jsp"/>
+  </action>
+  <action path="/publicInfo" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.publicinfo.InfoAction" validate="false"/>
+  <action name="adminMainDirectory" path="/admin/mainDirectory"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.maindirectory.Load" validate="false">
+   <forward name="load" path="/admin/mainDirectory.jsp"/>
+  </action>
+  <action input="/admin/mainDirectory.jsp" name="adminMainDirectory"
+   path="/admin/saveMainDirectory" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.maindirectory.Save" validate="false"/>
+  <action input="/admin/mainDirectory.jsp" name="adminMainDirectory"
+   path="/admin/deleteMainDirectory" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.maindirectory.Delete" validate="false"/>
+  <action name="adminPublicInfoView" path="/admin/publicInfoView"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfoview.PublicInfoViewAction" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action name="select" path="/selectDirectory" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.selectdirectory.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="adminPublicInfo" path="/admin/selectAttachment"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfo.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action input="/admin/publicInfo.jsp" name="adminPublicInfo"
+   path="/admin/issuePublicInfo" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfo.Issue" validate="false"/>
+  <action input="/admin/publicInfo.jsp" name="adminPublicInfo"
+   path="/admin/unissuePublicInfo" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfo.Unissue" validate="false"/>
+  <action path="/index" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.index.IndexAction" validate="false"/>
+  <action path="/publicInfoView" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.publicinfoview.Load" validate="false"/>
+  <action name="select" path="/listChildDirectories" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.selectdirectory.ListChildDirectories" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action input="/admin/publicInfo.jsp" name="adminPublicInfo"
+   path="/admin/runInfoApproval" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfo.Run" validate="false"/>
+  <action input="/admin/publicInfo.jsp" name="adminPublicInfo"
+   path="/admin/reissuePublicInfo" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfo.Reissue" validate="false"/>
+  <action input="/admin/publicInfo.jsp" name="adminPublicInfo"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfo.WriteOpinion" validate="false"/>
+  <action path="/publicInfoQuery" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.publicinfoquery.Load" validate="false"/>
+  <action path="/admin/resynchAllInfos" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfo.ResynchAllInfos" validate="false"/>
+  <action name="adjustPriority" path="/admin/adjustDirectoryPriority"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.adjustdirectorypriority.AdjustDirectoryPriorityAction" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/adjustpriority/adjustPriority.jsp"/>
+  </action>
+  <action name="adminExportPublicInfo" path="/admin/exportPublicInfo"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.exportpublicinfo.ExportPublicInfoAction" validate="false">
+   <forward name="load" path="/admin/exportPublicInfo.jsp"/>
+  </action>
+  <action input="/admin/exportPublicInfo.jsp"
+   name="adminExportPublicInfo" path="/admin/doExportPublicInfo"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.exportpublicinfo.Export" validate="false"/>
+  <action input="/admin/exportPublicInfo.jsp"
+   name="adminExportPublicInfo" path="/admin/printPublicInfoCover"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.exportpublicinfo.PrintCover" validate="false">
+   <forward name="print" path="/admin/printPublicInfoCover.jsp"/>
+  </action>
+  <action input="/admin/exportPublicInfo.jsp"
+   name="adminExportPublicInfo" path="/admin/listExportPublicInfos"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.exportpublicinfo.ListExportPublicInfos" validate="false"/>
+  <action path="/guide" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.guide.Load" validate="false"/>
+  <action path="/articleDirectory" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.articledirectory.Load" validate="false"/>
+  <action path="/article" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.article.Load" validate="false"/>
+  <action name="adminCopyDirectory" path="/admin/copyDirectory"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.copydirectory.Load" validate="false">
+   <forward name="load" path="/admin/copyDirectory.jsp"/>
+  </action>
+  <action input="/admin/copyDirectory.jsp" name="adminCopyDirectory"
+   path="/admin/doCopyDirectory" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.copydirectory.Copy" validate="false"/>
+  <action name="adminInfoPublicStat" path="/admin/infoPublicStat"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.infopublicstat.Load" validate="false">
+   <forward name="load" path="/admin/infoPublicStat.jsp"/>
+  </action>
+  <action input="/admin/infoPublicStat.jsp" name="adminInfoPublicStat"
+   path="/admin/outputInfoPublicStat" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.infopublicstat.Stat" validate="false"/>
+  <action name="adminDirectoryCategory" path="/admin/directoryCategory"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.Load" validate="false">
+   <forward name="load" path="/admin/directoryCategory.jsp"/>
+  </action>
+  <action name="adminInfoDirectory" path="/admin/infoDirectory"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.Load" validate="false">
+   <forward name="load" path="/admin/infoDirectory.jsp"/>
+  </action>
+  <action input="/admin/infoDirectory.jsp" name="adminInfoDirectory"
+   path="/admin/saveInfoDirectory" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.Save" validate="false"/>
+  <action input="/admin/infoDirectory.jsp" name="adminInfoDirectory"
+   path="/admin/deleteInfoDirectory" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.Delete" validate="false"/>
+  <action input="/admin/directoryCategory.jsp"
+   name="adminDirectoryCategory" path="/admin/saveDirectoryCategory"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.Save" validate="false"/>
+  <action input="/admin/directoryCategory.jsp"
+   name="adminDirectoryCategory" path="/admin/deleteDirectoryCategory"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.Delete" validate="false"/>
+  <action input="/admin/infoDirectory.jsp" name="adminInfoDirectory"
+   path="/admin/createNextInfoDirectory" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.CreateNext" validate="false"/>
+  <action input="/admin/directoryCategory.jsp"
+   name="adminDirectoryCategory"
+   path="/admin/createNextDirectoryCategory" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.CreateNext" validate="false"/>
+  <action input="/admin/mainDirectory.jsp" name="adminMainDirectory"
+   path="/admin/createNextMainDirectory" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.maindirectory.CreateNext" validate="false"/>
+  <action input="/admin/mainDirectory.jsp" name="adminMainDirectory"
+   path="/admin/mainDirectoryWorkflowConfig" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.WorkflowConfig" validate="false"/>
+  <action input="/admin/directoryCategory.jsp"
+   name="adminDirectoryCategory"
+   path="/admin/directoryCategoryWorkflowConfig" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.WorkflowConfig" validate="false"/>
+  <action input="/admin/infoDirectory.jsp" name="adminInfoDirectory"
+   path="/admin/infoDirectoryWorkflowConfig" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.WorkflowConfig" validate="false"/>
+  <action name="adminInfoReport" path="/admin/infoReport"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.inforeport.Load" validate="false">
+   <forward name="load" path="/admin/infoReport.jsp"/>
+  </action>
+  <action input="/admin/infoReport.jsp" name="adminInfoReport"
+   path="/admin/writeInfoReport" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.inforeport.Write" validate="false"/>
+  <action name="adminMainDirectory" path="/admin/selectGuideAttachment"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.maindirectory.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="adminPublicInfoView" path="/admin/moveInfos" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfoview.MoveInfos" validate="false"/>
+  <action input="/admin/publicInfo.jsp" name="adminPublicInfo"
+   path="/admin/approvalPublicInfo" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfo.Approval" validate="false"/>
+  <action input="/admin/publicInfo.jsp" name="adminPublicInfo"
+   path="/admin/undeletePublicInfo" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfo.Undelete" validate="false"/>
+  <action name="adminMonitoringReport" path="/admin/monitoringReport"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.monitoringreport.Load" validate="false">
+   <forward name="load" path="/admin/monitoringReport.jsp"/>
+  </action>
+  <action input="/admin/monitoringReport.jsp"
+   name="adminMonitoringReport" path="/admin/writeMonitoringReport"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.monitoringreport.Write" validate="false"/>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="adminPublicInfoView" path="/admin/importResources"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfoview.ImportResources" validate="false"/>
+  <action name="adminUnitCode" path="/admin/unitCode" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.maindirectory.unitcode.Load" validate="false">
+   <forward name="load" path="/admin/unitCode.jsp"/>
+  </action>
+  <action input="/admin/unitCode.jsp" name="adminUnitCode"
+   path="/admin/saveUnitCode" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.maindirectory.unitcode.Save" validate="false"/>
+  <action input="/admin/unitCode.jsp" name="adminUnitCode"
+   path="/admin/deleteUnitCode" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.maindirectory.unitcode.Delete" validate="false"/>
+  <action input="/admin/mainDirectory.jsp" name="adminMainDirectory"
+   path="/admin/refreshMainDirectory" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.maindirectory.Refresh" validate="false"/>
+  <action input="/admin/publicInfo.jsp" name="adminPublicInfo"
+   path="/admin/sendApprovalPublicInfo" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfo.SendApproval" validate="false"/>
+  <action name="publicInfoView" path="/printInfoView" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.printinfoview.Print" validate="false"/>
+  <action name="adminArticleDirectory" path="/admin/articleDirectory"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.Load" validate="false">
+   <forward name="load" path="/admin/articleDirectory.jsp"/>
+  </action>
+  <action input="/admin/articleDirectory.jsp"
+   name="adminArticleDirectory" path="/admin/saveArticleDirectory"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.Save" validate="false"/>
+  <action input="/admin/articleDirectory.jsp"
+   name="adminArticleDirectory" path="/admin/deleteArticleDirectory"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.Delete" validate="false"/>
+  <action input="/admin/articleDirectory.jsp"
+   name="adminArticleDirectory" path="/admin/createNextArticleDirectory"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.CreateNext" validate="false"/>
+  <action input="/admin/articleDirectory.jsp"
+   name="adminArticleDirectory"
+   path="/admin/articleDirectoryWorkflowConfig" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.directory.WorkflowConfig" validate="false"/>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="adminPublicInfoView" path="/admin/exportInfosAsXML"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfoview.ExportXML" validate="false"/>
+  <action name="adminModifyReaders" path="/admin/readersModifyOption"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfoview.modifyreaders.SetOption" validate="false">
+   <forward name="load" path="/admin/readersModifyOption.jsp"/>
+  </action>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="adminPublicInfoView" path="/admin/modifyReaders"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfoview.modifyreaders.Submit" validate="false"/>
+  <action name="adminRegenerateIndex" path="/admin/regenerateIndex"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.publicinfo.RegenerateIndex" validate="false">
+   <forward name="load" path="/admin/regenerateIndex.jsp"/>
+  </action>
+  <action name="select" path="/selectInfo" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.selectinfo.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="select" path="/listInfos" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.selectinfo.ListInfos" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action name="adminPortletEntity" path="/admin/portletEntity"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.portletentity.Load" validate="false">
+   <forward name="load" path="/admin/portletEntity.jsp"/>
+  </action>
+  <action input="/admin/portletEntity.jsp" name="adminPortletEntity"
+   path="/admin/savePortletEntity" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.portletentity.Save" validate="false"/>
+  <action input="/admin/portletEntity.jsp" name="adminPortletEntity"
+   path="/admin/deletePortletEntity" scope="request"
+   type="com.yuanluesoft.cms.infopublic.actions.admin.portletentity.Delete" validate="false"/>
+  <action name="insertInfos" path="/templatemanage/insertInfos"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertInfos.jsp"/>
+  </action>
+  <action name="insertInfoDirectoryLink"
+   path="/templatemanage/insertInfoDirectoryLink" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertInfoDirectoryLink.jsp"/>
+  </action>
+  <action name="insertDirectoryLocation"
+   path="/templatemanage/insertDirectoryLocation" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertDirectoryLocation.jsp"/>
+  </action>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="20M"/>
+</struts-config>

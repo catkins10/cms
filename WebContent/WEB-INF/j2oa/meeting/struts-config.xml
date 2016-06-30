@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="meeting" type="com.yuanluesoft.j2oa.meeting.forms.Meeting"/>
+  <form-bean name="meetingRoom" type="com.yuanluesoft.j2oa.meeting.forms.MeetingRoom"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="meeting" path="/meeting" scope="request"
+   type="com.yuanluesoft.j2oa.meeting.actions.meeting.Load" validate="false">
+   <forward name="load" path="/meeting.jsp"/>
+  </action>
+  <action name="meetingRoom" path="/meetingRoom" scope="request"
+   type="com.yuanluesoft.j2oa.meeting.actions.meetingroom.Load" validate="false">
+   <forward name="load" path="/meetingRoom.jsp"/>
+  </action>
+  <action input="/meeting.jsp" name="meeting" path="/saveMeeting"
+   scope="request"
+   type="com.yuanluesoft.j2oa.meeting.actions.meeting.Save" validate="false"/>
+  <action input="/meeting.jsp" name="meeting" path="/deleteMeeting"
+   scope="request"
+   type="com.yuanluesoft.j2oa.meeting.actions.meeting.Delete" validate="false"/>
+  <action input="/meeting.jsp" name="meeting" path="/issueMeeting"
+   scope="request"
+   type="com.yuanluesoft.j2oa.meeting.actions.meeting.Issue" validate="false"/>
+  <action input="/meeting.jsp" name="meeting" path="/undoIssueMeeting"
+   scope="request"
+   type="com.yuanluesoft.j2oa.meeting.actions.meeting.UndoIssue" validate="false"/>
+  <action input="/meetingRoom.jsp" name="meetingRoom"
+   path="/saveMeetingRoom" scope="request"
+   type="com.yuanluesoft.j2oa.meeting.actions.meetingroom.Save" validate="false"/>
+  <action input="/meetingRoom.jsp" name="meetingRoom"
+   path="/deleteMeetingRoom" scope="request"
+   type="com.yuanluesoft.j2oa.meeting.actions.meetingroom.Delete" validate="false"/>
+  <action input="/meetingRoom.jsp" name="meetingRoom"
+   path="/createNextMeetingRoom" scope="request"
+   type="com.yuanluesoft.j2oa.meeting.actions.meetingroom.CreateNextMeetingRoom" validate="false"/>
+  <action input="/meeting.jsp" name="meeting" path="/runMeeting"
+   scope="request"
+   type="com.yuanluesoft.j2oa.meeting.actions.meeting.Run" validate="false"/>
+  <action input="/meeting.jsp" name="meeting" path="/writeOpinion"
+   scope="request"
+   type="com.yuanluesoft.j2oa.meeting.actions.meeting.WriteOpinion" validate="false"/>
+  <action input="/meeting.jsp" name="meeting" path="/redoIssueMeeting"
+   scope="request"
+   type="com.yuanluesoft.j2oa.meeting.actions.meeting.RedoIssue" validate="false"/>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="200M"/>
+</struts-config>

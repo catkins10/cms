@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="inquiry" title="提交调查" method="post" action="/cms/inquiry/submitInquiry.shtml" class="com.yuanluesoft.cms.inquiry.forms.Inquiry" js="/cms/inquiry/js/inquiry.js">
+		<formFields>
+			<field name="inquiryIds" title="调查ID列表" inputMode="hidden"/>
+			<field name="inquiryResult" title="用户选择的结果" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="提交" execute="submitInquiry('{FORMID}')"/>
+			<action title="查看结果" execute="showInquiryResult('{FORMID}')"/>
+			<action title="结果反馈" execute="showInquiryFeedback('{FORMID}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/inquirySubject" class="com.yuanluesoft.cms.inquiry.forms.admin.InquirySubject" title="调查主题" pojo="com.yuanluesoft.cms.inquiry.pojo.InquirySubject">
+		<formFields>
+			<field name="inquiry" title="调查" type="component">
+				<parameter name="class">com.yuanluesoft.cms.inquiry.pojo.Inquiry</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteInquirySubject')"/>
+			<action title="导出投票结果" hide="isRead()" execute="FormUtils.doAction('outputExcel')"/>
+			<action title="发布" hide="isRead()" execute="FormUtils.doAction('publishInquirySubject')"/>
+			<action title="撤销发布" hide="isRead()" execute="FormUtils.doAction('unpublishInquirySubject')"/>
+			<action title="结果反馈" hide="isNew() or isRead()" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/inquiry/admin/inquiryFeedback.shtml?id={PARAMETER:id}', 720, 400)"/>
+		</actions>
+	</form>
+	
+	<form name="admin/inquiry" class="com.yuanluesoft.cms.inquiry.forms.admin.Inquiry" title="调查" pojo="com.yuanluesoft.cms.inquiry.pojo.InquirySubject">
+		<formFields>
+			<field name="inquiry" title="调查" type="component">
+				<parameter name="class">com.yuanluesoft.cms.inquiry.pojo.Inquiry</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="添加选项" hide="isRead()" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/inquiry/admin/inquiryOption.shtml?id=' + document.getElementsByName('id')[0].value + '&amp;isQuestionnaire=' + document.getElementsByName('isQuestionnaire')[0].value + '&amp;option.inquiryId=' + document.getElementsByName('inquiry.id')[0].value + '&amp;siteId={PARAMETER:siteId}', 640, 400);"/>
+			<action title="调整选项优先级" hide="isRead() or isNew()" execute="DialogUtils.adjustPriority('cms/inquiry', 'admin/adjustOptionPriority', '选项优先级调整', 640, 400, 'inquiryId={PARAMETER:inquiry.id}');"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteInquiry')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/inquiryOption" class="com.yuanluesoft.cms.inquiry.forms.admin.InquiryOption" title="调查选项" pojo="com.yuanluesoft.cms.inquiry.pojo.InquirySubject">
+		<formFields>
+			<field name="option" title="选项" type="component">
+				<parameter name="class">com.yuanluesoft.cms.inquiry.pojo.InquiryOption</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="新建下一个" hide="isOld()" execute="FormUtils.doAction('createNextInquiryOption')"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteInquiryOption')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/inquiryFeedback" class="com.yuanluesoft.cms.inquiry.forms.admin.InquiryFeedback" title="结果反馈" pojo="com.yuanluesoft.cms.inquiry.pojo.InquirySubject">
+		<formFields>
+			<field name="inquiryFeedback" title="结果反馈" type="component">
+				<parameter name="class">com.yuanluesoft.cms.inquiry.pojo.InquiryFeedback</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteInquiryFeedback')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/template" class="com.yuanluesoft.cms.inquiry.forms.admin.Template" title="模板配置" pojo="com.yuanluesoft.cms.inquiry.pojo.InquiryTemplate"/>
+</forms>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<statisticView name="useFee" title="场地费统计" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectUseFee</pojo>
+			<orderBy>BiddingProjectUseFee.payTime</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.sitemanage.pojo.BiddingProjectUseFee</pojo>
+			</data>
+			<category value="year(BiddingProjectUseFee.payTime)"> <!--value必须有-->
+				<data>year(BiddingProjectUseFee.payTime)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(BiddingProjectUseFee.payTime)"> <!--value必须有-->
+				<where>year(BiddingProjectUseFee.payTime)={CATEGORY1VALUE}</where>
+				<data>year(BiddingProjectUseFee.payTime)={CATEGORY1VALUE} and month(BiddingProjectUseFee.payTime)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<statistics hideDetail="false">
+			<!--statistic title="月累计">
+				<groupFields>
+					<groupField name="payYear" field="year(BiddingProjectUseFee.payTime)"/>
+					<groupField name="payMonth" field="month(BiddingProjectUseFee.payTime)"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="money" function="sum(BiddingProjectUseFee.money)"/>
+				</statisticColumns>
+			</statistic>
+			<statistic title="年累计">
+				<groupFields>
+					<groupField name="payYear" field="year(BiddingProjectUseFee.payTime)"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="money" function="sum(BiddingProjectUseFee.money)"/>
+				</statisticColumns>
+			</statistic-->
+			<statistic statisticAll="true" title="合计">
+				<statisticColumns>
+					<statisticColumn name="money" function="sum(BiddingProjectUseFee.money)"/>
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<actions>
+			<action title="导出EXCEL" execute="printAsExcel()"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="项目名称" name="projectName"/>
+			<column title="缴费时间" name="payTime" width="160" align="center"/>
+			<column title="缴费金额" name="money" type="statistic" align="center" width="280"/>
+		</columns>
+	</statisticView>
+	
+	<statisticView name="pay" title="交易服务费统计" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.bidding.project.pojo.BiddingProjectPay</pojo>
+			<orderBy>BiddingProjectPay.payTime</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.sitemanage.pojo.BiddingProjectPay</pojo>
+			</data>
+			<category value="year(BiddingProjectPay.payTime)"> <!--value必须有-->
+				<data>year(BiddingProjectPay.payTime)={CATEGORYVALUE}</data>
+			</category>
+			<category value="month(BiddingProjectPay.payTime)"> <!--value必须有-->
+				<where>year(BiddingProjectPay.payTime)={CATEGORY1VALUE}</where>
+				<data>year(BiddingProjectPay.payTime)={CATEGORY1VALUE} and month(BiddingProjectPay.payTime)={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<statistics hideDetail="false">
+			<!--statistic title="月累计">
+				<groupFields>
+					<groupField name="payYear" field="year(BiddingProjectUseFee.payTime)"/>
+					<groupField name="payMonth" field="month(BiddingProjectUseFee.payTime)"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="money" function="sum(BiddingProjectUseFee.money)"/>
+				</statisticColumns>
+			</statistic>
+			<statistic title="年累计">
+				<groupFields>
+					<groupField name="payYear" field="year(BiddingProjectUseFee.payTime)"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="money" function="sum(BiddingProjectUseFee.money)"/>
+				</statisticColumns>
+			</statistic-->
+			<statistic statisticAll="true" title="合计">
+				<statisticColumns>
+					<statisticColumn name="tendereeMoney" function="sum(BiddingProjectPay.tendereeMoney)"/>
+					<statisticColumn name="pitchonMoney" function="sum(BiddingProjectPay.pitchonMoney)"/>
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="项目名称" name="projectName"/>
+			<column title="缴费时间" name="payTime" width="120" align="center"/>
+			<column title="建设单位缴费金额" name="tendereeMoney" type="statistic" align="center" width="200"/>
+			<column title="中标单位缴费金额" name="pitchonMoney" type="statistic" align="center" width="200"/>
+		</columns>
+	</statisticView>
+</views>

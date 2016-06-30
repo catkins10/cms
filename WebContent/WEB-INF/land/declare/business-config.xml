@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="采矿权" class="com.yuanluesoft.land.declare.pojo.MiningRights" businessServiceName="landDeclareService">
+		<field name="applicant" title="申请人"  type="string" required="true" inputMode="text"/>
+		<field name="subject" title="标题"  type="string" required="true" inputMode="text"/>
+		<field name="mineName" title="矿山名称"  type="string" required="true" inputMode="text"/>
+		<field name="address" title="地址"  type="string" inputMode="text" required="true"/>
+		<field name="licenseNum" title="许可证号"   type="string" required="true" inputMode="text"/>
+		<field name="mainMinerals" title="开采主矿种" type="string" required="true" inputMode="text"/>
+		<field name="projectType" title="项目类型" type="string" required="true" inputMode="text"/>
+		<field name="coordinate" title="坐标" type="string" required="true" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+        <field name="validFrom" title="有效期起" type="date" inputMode="date" required="true"/>
+		<field name="validEnd" title="有效期止" type="date" inputMode="date" required="true"/>
+		<field name="approvalTime" title="审批时间" type="date" inputMode="date" required="true">
+			<parameter name="displayFormat">yyyy年MM月</parameter>
+		</field>
+		<field name="miningArea" title="矿区面积" type="number" length="10,2" inputMode="text" required="true"/>
+		<field name="caps" title="采深上限" type="number" length="10,2" inputMode="text" required="true"/>
+		<field name="lower" title="采深下限" type="number" length="10,2" inputMode="text" required="true"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+    <businessObject title="探矿权" class="com.yuanluesoft.land.declare.pojo.ExplorationRights" businessServiceName="landDeclareService">
+		<field name="licenseNum" title="许可证号" type="string" required="true" inputMode="text"/>
+		<field name="projectName" title="项目名称" type="string" required="true" inputMode="text"/>		
+        <field name="issueDate" title="发证日期" type="date" inputMode="date" required="true"/>
+		<field name="applicant" title="申请人" type="string" required="true" inputMode="text"/>
+		<field name="investigationUnit" title="勘察单位"  type="string" required="true" inputMode="text"/>
+		<field name="location" title="地理位置"  type="string" inputMode="text" required="true"/>
+        <field name="validFrom" title="有效期起" type="date" inputMode="date" required="true"/>
+		<field name="validEnd" title="有效期止" type="date" inputMode="date" required="true"/>
+		<field name="approvalTime" title="审批时间" type="date" inputMode="date" required="true">
+		  <parameter name="displayFormat">yyyy年MM月</parameter>
+		</field>
+		<field name="area" title="总面积" type="number" length="10,2" inputMode="text" required="true"/>
+		<field name="projectType" title="项目类型"   type="string" required="true" inputMode="text"/>
+		<field name="minerals" title="勘察矿种"   type="string" required="true" inputMode="text"/>
+		<field name="coordinate" title="坐标"   type="string" required="true" inputMode="textarea">
+		  <parameter name="rows">5</parameter>
+		</field>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	 <businessObject title="地质灾害单位资质" class="com.yuanluesoft.land.declare.pojo.DisastersUnit" businessServiceName="landDeclareService">
+		<field name="investigationUnit" title="勘察单位"  type="string" required="true" inputMode="text"/>
+		<field name="approvalTime" title="审批时间" type="date" inputMode="date" required="true">
+		  <parameter name="displayFormat">yyyy年MM月</parameter>
+		</field>
+		<field name="qualificationType" title="资质类型"   type="string" required="true" inputMode="text"/>
+		<field name="qualificationLevel" title="资质等级"   type="string" required="true" inputMode="text"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="地质勘察单位资质" class="com.yuanluesoft.land.declare.pojo.InvestigateUnit" businessServiceName="landDeclareService">
+		<field name="unitName" title="单位名称"  type="string" required="true" inputMode="text"/>
+		<field name="certificateNum" title="证书编号"  type="string" required="true" inputMode="text"/>
+		<field name="applyType" title="申请类型"  type="string" required="true" inputMode="text"/>
+		<field name="validFrom" title="有效期起" type="date" inputMode="date" required="true">
+		  <parameter name="displayFormat">yyyy年MM月dd日</parameter>
+		</field>
+		<field name="validEnd" title="有效期止" type="date" inputMode="date" required="true">
+		   <parameter name="displayFormat">yyyy年MM月dd日</parameter>
+		</field>
+		<field name="residence" title="住所"  type="string" required="true" inputMode="text"/>
+		<field name="leader" title="法定代表人"  type="string" required="true" inputMode="text"/>
+		<field name="postal" title="邮编"  type="string" required="true" inputMode="text"/>
+		<field name="tel" title="联系电话"  type="string" required="true" inputMode="text"/>
+		<field name="qualificationTypeLeve" title="资质类别和等级"  type="string" required="true" inputMode="text"/>
+		<field name="issuingUnit" title="发证机关"  type="string" required="true" inputMode="text"/>
+		<field name="provinces" title="所属省份"  type="string" required="true" inputMode="text"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="地质公园" class="com.yuanluesoft.land.declare.pojo.Geopark" businessServiceName="landDeclareService">
+		<field name="parkName" title="公园名称"  type="string" required="true" inputMode="text"/>
+		<field name="level" title="级别"  type="string" required="true" inputMode="text"/>
+		<field name="location" title="公园位置"  type="string" required="true" inputMode="text"/>
+		<field name="area" title="面积"  type="number" length="10,2" required="true" inputMode="text"/>
+		<field name="approvalTime" title="批准时间"  type="number" required="true" inputMode="text"/>
+		<field name="enableTime" title="开园时间"  type="number" required="true" inputMode="text"/>
+		<field name="geologicalHeritage" title="地质遗迹"  type="string" required="true" inputMode="text"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="土地登记" class="com.yuanluesoft.land.declare.pojo.LandRegister" businessServiceName="landDeclareService">
+		<field name="personName" title="权利人名称"  type="string" required="true" inputMode="text"/>
+		<field name="location" title="土地坐落"  type="string" required="true" inputMode="text"/>
+		<field name="registerType" title="登记类型"  type="string" required="true" inputMode="text"/>
+		<field name="userType" title="使用权类型"  type="string" required="true" inputMode="text"/>
+		<field name="area" title="使用权面积"  type="number" length="10,3" required="true" inputMode="text"/>
+		<field name="registerDate" title="登记时间"  type="date" required="true" inputMode="date">
+			<parameter name="displayFormat">yyyy年MM月dd日</parameter>
+		</field>
+		<field name="oldCertificateNum" title="变更前土地证号"  type="string"  inputMode="text"/>
+		<field name="certificateNum" title="土地证号"  type="string" required="true" inputMode="text"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

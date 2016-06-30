@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="教师管理" class="com.yuanluesoft.educ.teach.pojo.Teach" businessServiceName="teachService">
+		<field name="name" title="姓名" length="200" required="true" type="string" inputMode="text"/>
+		<field name="sex" title="性别" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">男|M\0女|F</parameter>
+		</field>
+		<field name="idcardNumber" title="身份证号码" length="72" type="string" inputMode="text"/>
+ 		
+		<field name="department" title="系部" length="200" type="string" inputMode="text"/>
+		
+		<field name="loginId" title="账号/工号" length="200" required="true" type="string" inputMode="text"/>
+		<field name="password" title="密码" length="100" type="password" inputMode="text">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

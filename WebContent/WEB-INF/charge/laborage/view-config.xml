@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/todoMonthlyLaborage" form="admin/monthlyLaborage" title="待处理月结账单" pageRows="30" hide="noPrivilege(application_manager)" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.laborage.pojo.MonthlyLaborage</pojo>
+			<where>MonthlyLaborage.status='待付款'</where>
+			<orderBy>MonthlyLaborage.beginDate DESC</orderBy>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="30"/>
+			<column title="服务提供者" name="providerName" width="80"/>
+			<column title="银行帐号" name="bankAccount"/>
+			<column title="银行账户" name="bankAccountName" width="120" align="center"/>
+			<column title="转账银行" name="bank" width="120" align="center"/>
+			<column title="报酬(元)" name="totalLaborage" width="80" align="center"/>
+			<column title="税率" name="taxRateTitle" width="60" align="center"/>
+			<column title="实际支付金额(元)" name="moneyPay" width="100" align="center"/>
+			<column title="状态" name="status" width="120" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allMonthlyLaborage" form="admin/monthlyLaborage" title="全部月结账单" pageRows="30" hide="noPrivilege(application_manager)" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.laborage.pojo.MonthlyLaborage</pojo>
+			<orderBy>MonthlyLaborage.beginDate DESC</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.charge.laborage.pojo.MonthlyLaborage</pojo>
+			</data>
+			<category value="MonthlyLaborage.status"> <!--value必须有-->
+				<orderBy>MonthlyLaborage.status</orderBy>
+				<data>MonthlyLaborage.status={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="30"/>
+			<column title="服务提供者" name="providerName" width="80"/>
+			<column title="银行帐号" name="bankAccount"/>
+			<column title="银行账户" name="bankAccountName" width="120" align="center"/>
+			<column title="转账银行" name="bank" width="120" align="center"/>
+			<column title="报酬(元)" name="totalLaborage" width="80" align="center"/>
+			<column title="税率" name="taxRateTitle" width="60" align="center"/>
+			<column title="实际支付金额(元)" name="moneyPay" width="100" align="center"/>
+			<column title="状态" name="status" width="120" align="center"/>
+		</columns>
+	</view>
+	<view name="monthlyLaborage" form="monthlyLaborage" title="我的报酬" pageRows="30" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.charge.laborage.pojo.MonthlyLaborage</pojo>
+			<where>MonthlyLaborage.status='已完成'</where>
+			<orderBy>MonthlyLaborage.beginDate DESC</orderBy>
+		</data>
+		<links>
+			<link>monthlyLaborage.shtml?act=open&amp;id={PARAMETER:id}</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="30"/>
+			<column title="报酬(元)" name="totalLaborage" align="center"/>
+			<column title="税率" name="taxRateTitle" width="120" align="center"/>
+			<column title="实际报酬(元)" name="moneyPay" align="center"/>
+			<column title="开始时间" name="beginDate" width="120" align="center"/>
+			<column title="结束时间" name="endDate" width="120" align="center"/>
+			<column title="支付时间" name="payTime" width="120" align="center"/>
+		</columns>
+	</view>
+</views>

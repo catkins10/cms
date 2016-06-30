@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--互评-->
+	<class name="com.yuanluesoft.enterprise.evaluation.mutual.pojo.MutualEvaluation" table="evaluation_mutual">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="evaluationYear"/> <!--年度,NUMERIC(4)-->
+		<property name="evaluationMonth"/> <!--月份,NUMERIC(2)-->
+		<property name="orgId"/> <!--部门ID,NUMERIC(20)-->
+		<property name="orgName"/> <!--部门名称,VARCHAR(60)-->
+		<property name="voteNumber"/> <!--投票数,NUMERIC(3)-->
+		<property name="creatorId"/> <!--评价人ID,NUMERIC(20)-->
+		<property name="creator"/> <!--评价人,VARCHAR(60)-->
+		<property name="created"/> <!--评价时间,TIMESTAMP-->
+		<set name="results" table="evaluation_mutual_result" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="evaluationId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.enterprise.evaluation.mutual.pojo.MutualEvaluationResult"/>
+		</set>
+	</class>
+	
+	<!--互评:结果-->
+	<class name="com.yuanluesoft.enterprise.evaluation.mutual.pojo.MutualEvaluationResult" table="evaluation_mutual_result">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="evaluationId"/> <!--互评ID,NUMERIC(20)-->
+		<property name="personId"/> <!--被评价人ID,NUMERIC(20)-->
+		<property name="personName"/> <!--被评价人,VARCHAR(60)-->
+		<property name="evaluateLevel"/> <!--评价等级,0/靠后,1/居中,2/靠前,NUMERIC(1)-->
+		<!-- 互评 -->
+		<many-to-one name="evaluation" class="com.yuanluesoft.enterprise.evaluation.mutual.pojo.MutualEvaluation" column="evaluationId" update="false" insert="false"/>
+	</class>
+	
+	<!--互评:参数配置-->
+	<class name="com.yuanluesoft.enterprise.evaluation.mutual.pojo.MutualEvaluationParameter" table="evaluation_mutual_parameter">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="ratio"/> <!--比例,NUMERIC(3,1)-->
+		<property name="minPersonNumber"/> <!--最低人数要求,人数太少的部门不做互评,NUMERIC(3)-->
+		<property name="leaderEnabled"/> <!--部门领导是否参与,NUMERIC(1)-->
+		<property name="rejectPostIds"/> <!--不参与的岗位ID,VARCHAR(4000)-->
+		<property name="rejectPosts"/> <!--不参与的岗位名称,VARCHAR(4000)-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="person" form="person" title="用户信息" pageRows="30" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.usermanage.pojo.Person</pojo>
+			<where>Person.type!=4</where>
+			<orderBy>Person.priority DESC, Person.name</orderBy>
+			<quickFilter>Person.loginName like '%{KEY}%' or Person.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link>{PARAMETER:url}</link>
+		</links>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="用户名" name="name" width="200"/>
+			<column title="登录用户名" name="loginName" width="200" display="normal,condition"/>
+			<column title="邮件地址" name="mailAddress"/>
+			<column title="办公室电话" name="tel" width="120" displayExcept="select"/>
+			<column title="手机" name="mobile" width="100"/>
+		</columns>
+	</view>
+	
+	<view name="org" form="org" title="组织机构" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.usermanage.pojo.Org</pojo>
+			<orderBy>Org.directoryType, Org.priority DESC, Org.directoryName</orderBy>
+			<quickFilter>Org.directoryName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="directoryName"/>
+		</columns>
+	</view>
+	
+	<view name="role" form="admin/role" title="角色管理" pageRows="30" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.usermanage.pojo.Role</pojo>
+			<quickFilter>Role.roleName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action name="create" title="新建角色" execute="PageUtils.newrecord('jeaf/usermanage', 'admin/role', 'width=640,height=480', 'orgId={PARAMETER:orgId}')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="名称" name="roleName" width="100"/>
+			<column title="成员" name="members.memberName" length="30" ellipsis="等"/>
+		</columns>
+	</view>
+	
+	<view name="toApprovalTeachers" form="registTeacher" title="待审核注册教师" pageRows="100" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.usermanage.pojo.RegistTeacher</pojo>
+			<quickFilter>RegistTeacher.name like '%{KEY}%'</quickFilter>
+			<orderBy>RegistTeacher.created</orderBy>
+			<where>RegistTeacher.approverId=0</where>
+		</data>
+		<actions>
+			<action title="同意注册" execute="if(confirm('是否确定同意注册?'))FormUtils.doAction('approvalRegistTeachers', 'pass=true');"/>
+			<action title="不同意注册" execute="if(confirm('是否确定不同意注册?'))FormUtils.doAction('approvalRegistTeachers', 'pass=false');"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="姓名" name="name" width="80"/>
+			<column title="手机" name="mobile" width="120"/>
+			<column title="电子邮件" name="mailAddress"/>
+			<column title="所在部门/教研组" name="orgFullName" width="120"/>
+			<column title="任班主任的班级" name="chargeClassName" width="120"/>
+		</columns>
+	</view>
+	
+	<view name="schoolTeachers" form="teacher" title="我的学校的教师" pageRows="30" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.usermanage.pojo.Person</pojo>
+			<where>Person.type=2</where>
+			<quickFilter>Person.name like '%{KEY}%'</quickFilter>
+			<orderBy>Person.name</orderBy>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="姓名" name="name" width="80"/>
+			<column title="电话" name="tel" width="120"/>
+			<column title="手机" name="mobile" width="120"/>
+			<column title="电子邮件" name="mailAddress"/>
+		</columns>
+	</view>
+	
+	<view name="schoolDepartments" form="schoolDepartment" title="我的学校的部门列表" pageRows="30" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.usermanage.pojo.SchoolDepartment</pojo>
+			<quickFilter>SchoolDepartment.directoryName like '%{KEY}%'</quickFilter>
+			<orderBy>SchoolDepartment.directoryName</orderBy>
+		</data>
+		<actions>
+			<action title="注册部门" execute="PageUtils.newrecord('jeaf/usermanage','schoolDepartment','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="名称" name="directoryName"/>
+		</columns>
+	</view>
+	
+	<view name="schoolClasses" form="schoolClass" title="我的学校的班级列表" pageRows="30" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.usermanage.pojo.SchoolClass</pojo>
+			<quickFilter>SchoolClass.directoryName like '%{KEY}%'</quickFilter>
+			<orderBy>SchoolClass.isGraduated, SchoolClass.priority</orderBy>
+		</data>
+		<actions>
+			<action title="注册年段" execute="PageUtils.newrecord('jeaf/usermanage','schoolGrade','width=720,height=480')"/>
+			<action title="注册班级" execute="PageUtils.newrecord('jeaf/usermanage','schoolClass','width=720,height=480')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="班级名称" name="directoryName"/>
+		</columns>
+	</view>
+	
+	<view name="toApprovalStudents" form="registTeacher" title="待审核学生" pageRows="100" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.usermanage.pojo.RegistStudent</pojo>
+			<quickFilter>RegistStudent.name like '%{KEY}%'</quickFilter>
+			<orderBy>RegistStudent.seatNumber</orderBy>
+			<where>RegistStudent.approverId=0</where>
+		</data>
+		<actions>
+			<action title="同意注册" execute="if(confirm('是否确定同意注册?'))FormUtils.doAction('approvalRegistStudents', 'pass=true');"/>
+			<action title="不同意注册" execute="if(confirm('是否确定不同意注册?'))FormUtils.doAction('approvalRegistStudents', 'pass=false');"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="座号" name="seatNumber" width="50" align="center"/>
+			<column title="姓名" name="name" width="80"/>
+			<column title="登录用户名" name="loginName" width="100"/>
+			<column title="家长称谓" name="genearchTitle" width="80"/>
+			<column title="家长姓名" name="genearchName" width="80"/>
+			<column title="家长手机" name="genearchMobile"/>
+		</columns>
+	</view>
+	
+	<view name="classStudents" form="student" title="我的班级的学生" pageRows="30" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.usermanage.pojo.Student</pojo>
+			<quickFilter>Student.name like '%{KEY}%'</quickFilter>
+			<orderBy>Student.seatNumber</orderBy>
+		</data>
+		<columns>
+			<column title="座号" name="seatNumber" width="50" align="center"/>
+			<column title="姓名" name="name" width="80"/>
+			<column title="登录用户名" name="loginName" width="100"/>
+			<column title="电话" name="familyTel" width="120"/>
+			<column title="电子邮件" name="mailAddress"/>
+		</columns>
+	</view>
+	
+	<view name="admin/userPageTemplate" form="admin/template" title="模板配置" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.usermanage.pojo.UserPageTemplate</pojo>
+			<where>UserPageTemplate.userId={PARAMETER:userId} and UserPageTemplate.applicationName='{PARAMETER:applicationName}' and UserPageTemplate.pageName='{PARAMETER:pageName}'</where>
+			<orderBy>UserPageTemplate.isSelected DESC, UserPageTemplate.templateName</orderBy>
+			<quickFilter>UserPageTemplate.templateName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="templateName"/>
+			<column title="最后修改时间" name="lastModified" align="center" width="110"/>
+			<column title="最后修改人" name="lastModifier" align="center" width="110"/>
+			<column title="默认模板" name="isDefault" align="center" width="80"/>
+		</columns>
+	</view>
+	
+	<view name="admin/applicationTemplate" form="admin/template" title="模板配置" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.usermanage.pojo.UserPageTemplate</pojo>
+			<where>UserPageTemplate.userId={PARAMETER:userId} and UserPageTemplate.applicationName='{PARAMETER:applicationName}' and UserPageTemplate.pageName='{PARAMETER:pageName}'</where>
+			<orderBy>UserPageTemplate.isSelected DESC, UserPageTemplate.templateName</orderBy>
+			<quickFilter>UserPageTemplate.templateName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="templateName" width="120px"/>
+			<column title="作用范围" name="applicationTitles"/>
+			<column title="最后修改时间" name="lastModified" align="center" width="110"/>
+			<column title="最后修改人" name="lastModifier" align="center" width="110"/>
+			<column title="默认模板" name="isDefault" align="center" width="80"/>
+		</columns>
+	</view>
+	
+	<view name="admin/loginTemplate" form="admin/loginTemplate" title="登录模板配置" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.usermanage.pojo.UserLoginTemplate</pojo>
+			<orderBy>UserLoginTemplate.isSelected DESC, UserLoginTemplate.templateName</orderBy>
+			<quickFilter>UserLoginTemplate.templateName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="templateName" width="120px"/>
+			<column title="域名" name="hostNamesText"/>
+			<column title="最后修改时间" name="lastModified" align="center" width="110"/>
+			<column title="最后修改人" name="lastModifier" align="center" width="110"/>
+			<column title="默认模板" name="isDefault" align="center" width="80"/>
+		</columns>
+	</view>
+	
+	<view name="admin/eai" title="应用列表">
+		<data>
+			<pojo>com.yuanluesoft.eai.client.model.Link</pojo>
+		</data>
+		<links>
+			<link>{PARAMETER:url}</link>
+		</links>
+		<extendParameters>
+			<parameter name="navigatorSupport">true</parameter> <!-- 支持导航 -->
+		</extendParameters>
+	</view>
+</views>

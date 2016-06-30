@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--留言板:常见问题-->
+	<class name="com.yuanluesoft.cms.messageboard.pojo.MessageBoardFaq" table="cms_message_board_faq">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="question"/> <!--问题,VARCHAR(300)-->
+		<property name="answer" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--答案,TEXT-->
+		<property name="firstKeyword"/> <!--第一个关键词,VARCHAR(30)-->
+		<property name="otherKeywords"/> <!--其它关键词,VARCHAR(200)-->
+		<property name="siteId"/> <!--绑定的站点ID,NUMERIC(20,0)-->
+	</class>
+</hibernate-mapping>

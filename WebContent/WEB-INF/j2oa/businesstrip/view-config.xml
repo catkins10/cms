@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="todoBusinessTrip" form="businesstrip" title="待处理出差申请单" pageRows="25" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.businesstrip.pojo.Businesstrip</pojo>
+			<quickFilter>Businesstrip.reason like '%{KEY}%' 
+				or Businesstrip.remark like '%{KEY}%' 
+				or Businesstrip.projectName like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="新建申请单" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="出差目的" name="reason"/>
+			<column title="出差地点" name="address" align="center" width="60"/>
+			<column title="申请人" name="proposerName" align="center" width="80"/>
+			<column title="出差时间" name="beginTime" align="center" width="80" format="yyyy-MM-dd"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="110" display="normal,print,portlet"/>
+			<column title="发送人" name="workflowSender" align="center" width="50" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="120" display="normal,print"/>
+		</columns>
+	</view>
+	<view name="inProcessBusinessTrip" form="businesstrip" title="在办出差申请单" pageRows="25" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.businesstrip.pojo.Businesstrip</pojo>
+			<orderBy>Businesstrip.beginTime</orderBy>
+			<quickFilter>Businesstrip.reason like '%{KEY}%' 
+				or Businesstrip.remark like '%{KEY}%' 
+				or Businesstrip.projectName like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="新建申请单" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="出差目的" name="reason"/>
+			<column title="出差地点" name="address" align="center" width="60"/>
+			<column title="申请人" name="proposerName" align="center" width="80"/>
+			<column title="出差时间" name="beginTime" align="center" width="80" format="yyyy-MM-dd"/>
+			<column title="发送时间" name="workflowSendTime" align="center" width="110" display="normal,print,portlet"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	<view name="allBusinessTrip" form="businesstrip" title="所有出差申请单" pageRows="25" openFeatures="width=760,height=520">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.businesstrip.pojo.Businesstrip</pojo>
+			<orderBy>Businesstrip.beginTime</orderBy>
+			<quickFilter>Businesstrip.reason like '%{KEY}%' 
+				or Businesstrip.remark like '%{KEY}%' 
+				or Businesstrip.projectName like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="新建申请单" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="出差目的" name="reason"/>
+			<column title="出差地点" name="address" align="center" width="60"/>
+			<column title="申请人" name="proposerName" align="center" width="80"/>
+			<column title="出差时间" name="beginTime" align="center" width="80" format="yyyy-MM-dd"/>
+		</columns>
+	</view>
+</views>

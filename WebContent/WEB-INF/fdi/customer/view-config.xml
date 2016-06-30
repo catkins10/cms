@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="admin/company" form="admin/company" title="客户单位" pageRows="25" openFeatures="mode=fullscreen" viewServiceName="fdiCustomerViewService">
+		<data>
+			<pojo>com.yuanluesoft.fdi.customer.pojo.FdiCustomerCompany</pojo>
+			<orderBy>FdiCustomerCompany.name</orderBy>
+		</data>
+		<actions>
+			<action title="添加单位"  execute="PageUtils.newrecord('fdi/customer', 'admin/company', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="单位名称" name="name"/>
+			<column title="行业分类" name="industry" width="130"/>
+			<column title="500强" name="worldTop500" type="formula" formula="(worldTop500==1 ? &quot;√&quot; : &quot;&quot;)" formulaFields="worldTop500" width="50" align="center"/>
+			<column title="登记时间" name="created" format="yyyy-MM-dd" align="center" width="80"/>
+		</columns>
+	</view>
+	
+	<view name="admin/contact" form="admin/contact" title="客户联系人" pageRows="25" openFeatures="mode=fullscreen" viewServiceName="fdiCustomerViewService">
+		<data>
+			<pojo>com.yuanluesoft.fdi.customer.pojo.FdiCustomerContact</pojo>
+			<orderBy>FdiCustomerContact.name</orderBy>
+		</data>
+		<links>
+			<link>javascript:DialogUtils.openDialog('{CONTEXTPATH}/fdi/customer/admin/contact.shtml?id={PARAMETER:companyId}&amp;companyContact.id={PARAMETER:id}&amp;directOpenComponent=true', 720, 480);</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="姓名" name="name" width="60"/>
+			<column title="客户单位" name="companyName"/>
+			<column title="电话" name="tel" width="90"/>
+			<column title="手机" name="mobile" width="90"/>
+			<column title="E-mail" name="email" width="150"/>
+			<column title="收录时间" name="created" format="yyyy-MM-dd" align="center" width="80"/>
+		</columns>
+	</view>
+</views>

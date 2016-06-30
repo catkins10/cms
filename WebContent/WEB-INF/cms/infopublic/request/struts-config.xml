@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="personalRequest" type="com.yuanluesoft.cms.infopublic.request.forms.PersonalRequest"/>
+  <form-bean name="companyRequest" type="com.yuanluesoft.cms.infopublic.request.forms.CompanyRequest"/>
+  <form-bean name="adminRequest" type="com.yuanluesoft.cms.infopublic.request.forms.admin.Request"/>
+  <form-bean name="adminRequestNotify" type="com.yuanluesoft.cms.infopublic.request.forms.admin.RequestNotify"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminRequest" path="/admin/request" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.request.admin.Load" validate="false">
+   <forward name="load" path="/admin/request.jsp"/>
+  </action>
+  <action name="personalRequest" path="/personalRequest" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.personalrequest.Load" validate="false">
+   <forward name="load" path="/personalRequest.jsp"/>
+  </action>
+  <action input="/personalRequest.jsp" name="personalRequest"
+   path="/savePersonalRequest" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.personalrequest.Save" validate="false">
+   <forward name="result" path="/personRequestResult.jsp"/>
+  </action>
+  <action name="companyRequest" path="/companyRequest" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.companyrequest.Load" validate="false">
+   <forward name="load" path="/companyRequest.jsp"/>
+  </action>
+  <action input="/companyRequest.jsp" name="companyRequest"
+   path="/saveCompanyRequest" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.companyrequest.Save" validate="false">
+   <forward name="result" path="/companyRequestResult.jsp"/>
+  </action>
+  <action input="/admin/request.jsp" name="adminRequest"
+   path="/admin/saveRequest" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.request.admin.Save" validate="false"/>
+  <action input="/admin/request.jsp" name="adminRequest"
+   path="/admin/deleteRequest" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.request.admin.Delete" validate="false"/>
+  <action input="/admin/request.jsp" name="adminRequest"
+   path="/admin/runRequest" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.request.admin.Run" validate="false"/>
+  <action input="/admin/request.jsp" name="adminRequest"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.request.admin.WriteOpinion" validate="false"/>
+  <action input="/admin/request.jsp" name="adminRequest"
+   path="/admin/approvalRequest" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.request.admin.Approval" validate="false"/>
+  <action input="/admin/request.jsp" name="adminRequest"
+   path="/admin/sendInfo" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.request.admin.SendInfo" validate="false"/>
+  <action input="/admin/request.jsp" name="adminRequest"
+   path="/admin/doApprovalRequest" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.request.admin.DoApproval" validate="false"/>
+  <action input="/admin/request.jsp" name="adminRequest"
+   path="/admin/doSendInfo" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.request.admin.DoSendInfo" validate="false"/>
+  <action input="/admin/request.jsp" name="adminRequest"
+   path="/admin/approvalAndSend" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.request.admin.ApprovalAndSend" validate="false"/>
+  <action input="/admin/request.jsp" name="adminRequest"
+   path="/admin/doApprovalAndSend" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.request.admin.DoApprovalAndSend" validate="false"/>
+  <action input="/admin/request.jsp" name="adminRequest"
+   path="/admin/setPublishOption" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.request.admin.SetPublishOption" validate="false"/>
+  <action input="/admin/request.jsp" name="adminRequest"
+   path="/admin/publish" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.request.admin.Publish" validate="false"/>
+  <action name="adminRequestNotify" path="/admin/requestNotify"
+   scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.requestnotify.admin.Load" validate="false">
+   <forward name="load" path="/admin/requestNotify.jsp"/>
+  </action>
+  <action input="/admin/requestNotify.jsp" name="adminRequestNotify"
+   path="/admin/saveRequestNotify" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.requestnotify.admin.Save" validate="false"/>
+  <action input="/admin/request.jsp" name="adminRequest"
+   path="/admin/refreshRequest" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.request.admin.Refresh" validate="false"/>
+  <action name="adminRequest" path="/admin/printRequest" scope="request"
+   type="com.yuanluesoft.cms.infopublic.request.actions.request.admin.Print" validate="false">
+   <forward name="load" path="/admin/request.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminEvent" type="com.yuanluesoft.municipal.facilities.forms.admin.FacilitiesEvent"/>
+  <form-bean name="adminPdaUser" type="com.yuanluesoft.municipal.facilities.forms.admin.PdaUser"/>
+  <form-bean name="applicationView" type="com.yuanluesoft.jeaf.view.applicationview.forms.ApplicationView"/>
+  <form-bean name="adminEventParameter" type="com.yuanluesoft.municipal.facilities.forms.admin.FacilitiesEventParameter"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminEvent" path="/admin/event" scope="request"
+   type="com.yuanluesoft.municipal.facilities.actions.event.admin.Load" validate="false">
+   <forward name="load" path="/admin/event.jsp"/>
+  </action>
+  <action input="/admin/event.jsp" name="adminEvent"
+   path="/admin/saveEvent" scope="request"
+   type="com.yuanluesoft.municipal.facilities.actions.event.admin.Save" validate="false"/>
+  <action input="/admin/event.jsp" name="adminEvent"
+   path="/admin/deleteEvent" scope="request"
+   type="com.yuanluesoft.municipal.facilities.actions.event.admin.Delete" validate="false"/>
+  <action name="adminEvent" path="/admin/attachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.municipal.facilities.actions.event.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action input="/admin/event.jsp" name="adminEvent"
+   path="/admin/runEvent" scope="request"
+   type="com.yuanluesoft.municipal.facilities.actions.event.admin.Run" validate="false"/>
+  <action input="/admin/event.jsp" name="adminEvent"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.municipal.facilities.actions.event.admin.WriteOpinion" validate="false"/>
+  <action name="adminPdaUser" path="/admin/pdaUser" scope="request"
+   type="com.yuanluesoft.municipal.facilities.actions.pdauser.admin.Load" validate="false">
+   <forward name="load" path="/admin/pdaUser.jsp"/>
+  </action>
+  <action input="/admin/pdaUser.jsp" name="adminPdaUser"
+   path="/admin/savePdaUser" scope="request"
+   type="com.yuanluesoft.municipal.facilities.actions.pdauser.admin.Save" validate="false"/>
+  <action input="/admin/pdaUser.jsp" name="adminPdaUser"
+   path="/admin/deletePdaUser" scope="request"
+   type="com.yuanluesoft.municipal.facilities.actions.pdauser.admin.Delete" validate="false"/>
+  <action input="/admin/pdaUser.jsp" name="adminPdaUser"
+   path="/admin/createNextPdaUser" scope="request"
+   type="com.yuanluesoft.municipal.facilities.actions.pdauser.admin.CreateNext" validate="false"/>
+  <action input="/admin/event.jsp" name="adminEvent"
+   path="/admin/pdaValidate" scope="request"
+   type="com.yuanluesoft.municipal.facilities.actions.event.admin.PdaValidate" validate="false"/>
+  <action name="adminEventParameter" path="/admin/eventParameter"
+   scope="request"
+   type="com.yuanluesoft.municipal.facilities.actions.eventparameter.admin.Load" validate="false">
+   <forward name="load" path="/admin/eventParameter.jsp"/>
+  </action>
+  <action input="/admin/eventParameter.jsp" name="adminEventParameter"
+   path="/admin/saveEventParameter" scope="request"
+   type="com.yuanluesoft.municipal.facilities.actions.eventparameter.admin.Save" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

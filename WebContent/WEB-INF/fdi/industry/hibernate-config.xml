@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--行业分类配置-->
+	<class name="com.yuanluesoft.fdi.industry.pojo.FdiIndustry" table="fdi_industry">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="category"/> <!--分类名称,VARCHAR(100)-->
+		<property name="parentCategoryId"/> <!--父分类ID,NUMERIC(20)-->
+		<set name="visitors" table="fdi_industry_privilege" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="recordId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.fdi.industry.pojo.FdiIndustryPrivilege" />
+		</set>
+		<set name="childCategories" table="fdi_industry" lazy="true" inverse="true" cascade="delete" order-by="category">
+			<key column="parentCategoryId"/>
+			<one-to-many class="com.yuanluesoft.fdi.industry.pojo.FdiIndustry" />
+		</set>
+	</class>
+	
+	<!--行业分类配置:权限控制-->
+	<class name="com.yuanluesoft.fdi.industry.pojo.FdiIndustryPrivilege" table="fdi_industry_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="recordId"/> <!--主记录ID,NUMERIC(20,0)-->
+		<property name="visitorId"/> <!--访问者ID,NUMERIC(20,0)-->
+		<property name="accessLevel"/> <!--访问级别,CHAR(1)-->
+	</class>
+</hibernate-mapping>

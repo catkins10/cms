@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="customView" type="com.yuanluesoft.jeaf.view.viewcustomize.forms.ViewCustomize"/>
+  <form-bean name="categoryTree" type="com.yuanluesoft.jeaf.view.forms.CategoryTree"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../form/error.jsp" scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action input="/viewcustomize/customView.jsp" name="customView"
+   path="/saveViewCustom" scope="request"
+   type="com.yuanluesoft.jeaf.view.viewcustomize.actions.Save" validate="false"/>
+  <action name="customView" path="/customView" scope="request"
+   type="com.yuanluesoft.jeaf.view.viewcustomize.actions.Load" validate="false">
+   <forward name="load" path="/viewcustomize/customView.jsp"/>
+  </action>
+  <action input="/viewcustomize/customView.jsp" name="customView"
+   path="/resetViewCustom" scope="request"
+   type="com.yuanluesoft.jeaf.view.viewcustomize.actions.Delete" validate="false"/>
+  <action name="categoryTree" path="/listChildCategories"
+   scope="request"
+   type="com.yuanluesoft.jeaf.view.actions.categorytree.ListChildCategories" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action name="categoryTree" path="/categoryTree" scope="request"
+   type="com.yuanluesoft.jeaf.view.actions.categorytree.Load" validate="false">
+   <forward name="load" path="/categoryTree.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

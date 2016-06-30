@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adjustPriority" type="com.yuanluesoft.jeaf.dialog.forms.AdjustPriority"/>
+  <form-bean name="adminInquirySubject" type="com.yuanluesoft.cms.inquiry.forms.admin.InquirySubject"/>
+  <form-bean name="adminInquiryOption" type="com.yuanluesoft.cms.inquiry.forms.admin.InquiryOption"/>
+  <form-bean name="inquiry" type="com.yuanluesoft.cms.inquiry.forms.Inquiry"/>
+  <form-bean name="selectInquirySubject" type="com.yuanluesoft.cms.inquiry.forms.SelectInquirySubject"/>
+  <form-bean name="adminTemplate" type="com.yuanluesoft.cms.inquiry.forms.admin.Template"/>
+  <form-bean name="adminInquiry" type="com.yuanluesoft.cms.inquiry.forms.admin.Inquiry"/>
+  <form-bean name="adminInquiryFeedback" type="com.yuanluesoft.cms.inquiry.forms.admin.InquiryFeedback"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action input="/inquiry.jsp" name="inquiry" path="/inquiry"
+   scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiry.Load" validate="false">
+   <forward name="load" path="/inquiry.jsp"/>
+  </action>
+  <action input="/inquiry.jsp" name="inquiry" path="/submitInquiry"
+   scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiry.Submit" validate="false">
+   <forward name="result" path="/inquirySubmitted.jsp"/>
+  </action>
+  <action name="adminInquirySubject" path="/admin/inquirySubject"
+   scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquirysubject.admin.Load" validate="false">
+   <forward name="load" path="/admin/inquirySubject.jsp"/>
+  </action>
+  <!-- 云霄劳动模范评选，单个选项投票，返回json结果数据 -->
+  <action input="/inquiry.jsp" name="inquiry" path="/submitInquiryBySingleOption" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiry.SubmitInquiryBySingleOption" validate="false"/>
+  <action input="/admin/inquirySubject.jsp" name="adminInquirySubject"
+   path="/admin/saveInquirySubject" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquirysubject.admin.Save" validate="false"/>
+  <action input="/admin/inquirySubject.jsp" name="adminInquirySubject"
+   path="/admin/deleteInquirySubject" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquirysubject.admin.Delete" validate="false"/>
+  <action name="inquiry" path="/inquiryResult" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiryresult.Load" validate="false">
+   <forward name="load" path="/inquiryResult.jsp"/>
+   <forward name="inquiryNotEnd" path="/inquiryNotEnd.jsp"/>
+  </action>
+  <!-- 调查结果，多种统计方式 -->
+  <action name="adminInquirySubject" path="/inquiryResultRich" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiryresult.Load" validate="false">
+   <forward name="load" path="/inquiryResultRich.jsp"/>
+   <forward name="inquiryNotEnd" path="/inquiryNotEnd.jsp"/>
+  </action>
+  <action path="/inquirySubject" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquirysubject.Load" validate="false"/>
+  <action name="selectInquirySubject" path="/listInquirySubjects"
+   scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.selectinquirysubject.ListInquirySubjects" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action name="selectInquirySubject" path="/selectInquirySubject"
+   scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.selectinquirysubject.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="adminInquiryOption" path="/admin/inquiryOption"
+   scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiryoption.admin.Load" validate="false">
+   <forward name="load" path="/admin/inquiryOption.jsp"/>
+  </action>
+  <action input="/admin/inquiryOption.jsp" name="adminInquiryOption"
+   path="/admin/saveInquiryOption" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiryoption.admin.Save" validate="false"/>
+  <action input="/admin/inquirySubject.jsp" name="adminInquirySubject"
+   path="/admin/refreshInquirySubject" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquirysubject.admin.Refresh" validate="false"/>
+  <action path="/inquiryOption" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiryoption.Load" validate="false"/>
+  <action input="/admin/inquiryOption.jsp" name="adminInquiryOption"
+   path="/admin/deleteInquiryOption" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiryoption.admin.Delete" validate="false"/>
+  <action name="adminTemplate" path="/admin/template" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Load" validate="false">
+   <forward name="load" path="/../../cms/templatemanage/template.jsp"/>
+  </action>
+  <action input="/../../cms/templatemanage/template.jsp"
+   name="adminTemplate" path="/admin/saveTemplate" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Save" validate="false"/>
+  <action input="/../../cms/templatemanage/template.jsp"
+   name="adminTemplate" path="/admin/deleteTemplate" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Delete" validate="false"/>
+  <action input="/admin/inquiryOption.jsp" name="adminInquiryOption"
+   path="/admin/createNextInquiryOption" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiryoption.admin.CreateNext" validate="false"/>
+  <action input="/admin/inquirySubject.jsp" name="adminInquirySubject"
+   path="/admin/setVoteNumber" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquirysubject.admin.SetVoteNumber" validate="false"/>
+  <action name="adminInquirySubject" path="/admin/selectAttachment"
+   scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquirysubject.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="adminInquiry" path="/admin/inquiry" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiry.admin.Load" validate="false">
+   <forward name="load" path="/admin/inquiry.jsp"/>
+  </action>
+  <action input="/admin/inquiry.jsp" name="adminInquiry"
+   path="/admin/saveInquiry" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiry.admin.Save" validate="false"/>
+  <action input="/admin/inquiry.jsp" name="adminInquiry"
+   path="/admin/deleteInquiry" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiry.admin.Delete" validate="false"/>
+  <action input="/admin/inquiry.jsp" name="adminInquiry"
+   path="/admin/refreshInquiry" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiry.admin.Refresh" validate="false"/>
+  <action input="/admin/inquirySubject.jsp" name="adminInquirySubject"
+   path="/admin/publishInquirySubject" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquirysubject.admin.Publish" validate="false"/>
+  <action input="/admin/inquirySubject.jsp" name="adminInquirySubject"
+   path="/admin/unpublishInquirySubject" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquirysubject.admin.Unpublish" validate="false"/>
+  <action name="adminInquirySubject" path="/editorplugins/insertInquiry"
+   scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.insertinquiry.admin.Insert" validate="false">
+   <forward name="load" path="/editorplugins/insertInquiry.jsp"/>
+  </action>
+  <action name="adminInquiryFeedback" path="/admin/inquiryFeedback"
+   scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiryfeedback.admin.Load" validate="false">
+   <forward name="load" path="/admin/inquiryFeedback.jsp"/>
+  </action>
+  <action input="/admin/inquiryFeedback.jsp" name="adminInquiryFeedback"
+   path="/admin/saveInquiryFeedback" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiryfeedback.admin.Save" validate="false"/>
+  <action input="/admin/inquiryFeedback.jsp" name="adminInquiryFeedback"
+   path="/admin/deleteInquiryFeedback" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiryfeedback.admin.Delete" validate="false"/>
+  <action path="/inquiryFeedback" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiryfeedback.Load" validate="false"/>
+  <action path="/inquiryDescription" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquirydescription.Load" validate="false"/>
+  <action path="/inquiryResultChart" scope="request"
+   type="com.yuanluesoft.cms.inquiry.actions.inquiryresult.WriteChart" validate="false"/>
+   <action name="adminInquirySubject" path="/admin/outputExcel" scope="request" validate="false"
+  type="com.yuanluesoft.cms.inquiry.actions.inquiry.admin.outputExcel.OutputExcel"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

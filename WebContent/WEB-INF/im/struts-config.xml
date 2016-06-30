@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminChatHistory" type="com.yuanluesoft.im.forms.admin.ChatHistory"/>
+  <form-bean name="adminChat" type="com.yuanluesoft.im.forms.admin.Chat"/>
+  <form-bean name="personTree" type="com.yuanluesoft.im.forms.PersonTree"/>
+  <form-bean name="chat" type="com.yuanluesoft.im.forms.Chat"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../jeaf/form/error.jsp" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminChatHistory" path="/admin/chatHistory"
+   scope="request"
+   type="com.yuanluesoft.im.actions.chathistory.admin.ChatHistoryAction" validate="false">
+   <forward name="load" path="/../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action name="adminChat" path="/admin/chat" scope="request"
+   type="com.yuanluesoft.im.actions.chat.admin.Load" validate="false">
+   <forward name="load" path="/admin/chat.jsp"/>
+  </action>
+  <action input="/admin/chat.jsp" name="adminChat"
+   path="/admin/deleteChat" scope="request"
+   type="com.yuanluesoft.im.actions.chat.admin.Delete" validate="false"/>
+  <action path="/main" scope="request"
+   type="com.yuanluesoft.im.actions.main.Load" validate="false"/>
+  <action path="/login" scope="request"
+   type="com.yuanluesoft.im.actions.login.Load" validate="false"/>
+  <action path="/chat" scope="request"
+   type="com.yuanluesoft.im.actions.chat.Load" validate="false"/>
+  <action path="/systemMessage" scope="request"
+   type="com.yuanluesoft.im.actions.systemmessage.Load" validate="false"/>
+  <action path="/personalSetting" scope="request"
+   type="com.yuanluesoft.im.actions.chat.Load" validate="false"/>
+  <action path="/personSelect" scope="request"
+   type="com.yuanluesoft.im.actions.chat.Load" validate="false"/>
+  <action name="personTree" path="/selectPerson" scope="request"
+   type="com.yuanluesoft.im.actions.persontree.SelectPerson" validate="false">
+   <forward name="load" path="/selectPerson.jsp"/>
+  </action>
+  <action name="personTree" path="/personTree" scope="request"
+   type="com.yuanluesoft.im.actions.persontree.Load" validate="false">
+   <forward name="load" path="/personTree.jsp"/>
+  </action>
+  <action name="personTree" path="/listChildNodes" scope="request"
+   type="com.yuanluesoft.im.actions.persontree.ListChildNodes" validate="false">
+   <forward name="load" path="/../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action path="/keepAlive" scope="request"
+   type="com.yuanluesoft.im.actions.keepalive.Load" validate="false"/>
+  <action name="chat" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.im.actions.chat.SelectAttachment" validate="false">
+   <forward name="load" path="/../jeaf/attachment/attachment.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

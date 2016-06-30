@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--客服:参数设置-->
+	<class name="com.yuanluesoft.im.cs.pojo.CSParameter" table="im_cs_parameter">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="siteId"/> <!--站点ID,NUMERIC(20)-->
+		<property name="welcome"/> <!--欢迎辞,如：您好，我是客服001号，请问有什么可以帮助您！,VARCHAR(200)-->
+		<property name="chatTimeout"/> <!--客服对话超时时限,以对话的最后发言时间为基准，如果超时了，则不计入客服人员的并发对话数,NUMERIC(20)-->
+		<property name="evaluateLevels"/> <!--评价等级,如：好、一般、不好、差,VARCHAR(200)-->
+	</class>
+	
+	<!--客服:常用回复-->
+	<class name="com.yuanluesoft.im.cs.pojo.CSReply" table="im_cs_reply">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="siteId"/> <!--站点ID,NUMERIC(20)-->
+		<property name="specialistId"/> <!--客服ID,NUMERIC(20)-->
+		<property name="reply"/> <!--回复内容,如：您好，我是客服001号，请问有什么可以帮助您！,VARCHAR(200)-->
+	</class>
+
+	<!--客服:客服人员-->
+	<class name="com.yuanluesoft.im.cs.pojo.CSSpecialist" table="im_cs_specialist">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="siteId"/> <!--站点ID,NUMERIC(20)-->
+		<property name="personId"/> <!--用户ID,NUMERIC(20)-->
+		<property name="personName"/> <!--用户名,VARCHAR(50)-->
+		<property name="externalName"/> <!--对外显示的用户名,VARCHAR(50)-->
+		<property name="maxChat"/> <!--最大并发对话数量,超时对话不计算在内,NUMERIC(2)-->
+	</class>
+	
+	<!--客服:服务评价-->
+	<class name="com.yuanluesoft.im.cs.pojo.CSEvaluation" table="im_cs_evaluation">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="siteId"/> <!--站点ID,NUMERIC(20)-->
+		<property name="specialistId"/> <!--客服人员ID,NUMERIC(20)-->
+		<property name="specialistName"/> <!--客服人员姓名,VARCHAR(50)-->
+		<property name="level"/> <!--评价等级,VARCHAR(50)-->
+		<property name="evaluateIP"/> <!--评价人IP,VARCHAR(50)-->
+		<property name="evaluateTime"/> <!--评价时间,TIMESTAMP-->
+		<property name="remark"/> <!--补充说明,VARCHAR(200)-->
+	</class>
+</hibernate-mapping>

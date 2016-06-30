@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="报销单" class="com.yuanluesoft.j2oa.reimburse.pojo.Reimburse" businessServiceName="reimburseService">
+		<field name="projectId" title="项目ID" type="number" inputMode="hidden"/>
+		<field name="projectName" title="项目名称" length="50" type="string" inputMode="text"/>
+		<field name="personName" title="报销人姓名" length="20" type="string" inputMode="readonly"/>
+		<field name="departmentId" title="部门ID" type="number" inputMode="hidden"/>
+		<field name="departmentName" title="部门名称" length="32" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectOrg(500,300,false,'departmentName{name},departmentId{id}')</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="type" title="报销类别" length="16" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">reimburseService</parameter>
+		</field>
+		<field name="reimburseDate" title="报销时间" type="date" inputMode="readonly"/>
+		<field name="journey" title="出差路线" length="100" type="string" inputMode="text"/>
+		<field name="dayCount" title="总天数" length="4" type="number" inputMode="text"/>
+		<field name="beginTime" title="开始时间" type="timestamp" inputMode="datetime"/>
+		<field name="endTime" title="结束时间" type="timestamp" inputMode="datetime"/>
+		<field name="description" title="事件描述" length="250" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">5</parameter>
+		</field>
+		<field name="billCount" title="票据张数" length="4" type="number" inputMode="text"/>
+		<field name="money" title="总金额" length="8,2" type="number" inputMode="readonly"/>
+		<field name="moneyCapital" title="总金额(大写)" type="html" inputMode="readonly"/>
+		<field name="payMoney" title="实际支付金额" length="8,2" type="number" inputMode="readonly"/>
+		<field name="payMoneyCapital" title="实际支付金额(大写)" type="html" inputMode="readonly"/>
+		<field name="payDate" title="支付时间" type="date" inputMode="readonly"/>
+		<field name="remark" title="备注" length="250" type="string" inputMode="text"/>
+		<field name="charges" title="费用清单" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.reimburse.pojo.ReimburseCharge</parameter>
+		</field>
+		<field name="reimburseLoans" title="借款核销" type="components">
+			<parameter name="class">com.yuanluesoft.j2oa.reimburse.pojo.ReimburseLoan</parameter>
+		</field>
+		<parameter name="fillOpinionByActivity">false</parameter> <!-- 是否按环节来保存意见,默认true -->
+	</businessObject>
+	
+	<businessObject title="费用清单" class="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseCharge" businessServiceName="reimburseService">
+		<field name="projectId" title="项目ID" type="number" inputMode="hidden"/>
+		<field name="projectName" title="项目名称" length="50" type="string" inputMode="text"/>
+		<field name="chargeCategory" title="费用类别" length="50" required="true" type="string" inputMode="dropdown">
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="itemsServiceName">chargeCategoryService</parameter>
+		</field>
+		<field name="chargeStandard" title="费用标准" length="25" type="string" inputMode="text"/>
+		<field name="time" title="费用产生时间" type="timestamp" inputMode="datetime"/>
+		<field name="money" title="金额" length="8,2" required="true" type="number" inputMode="text"/>
+		<field name="purpose" title="用途" length="250" type="string" inputMode="text"/>
+		<field name="remark" title="备注" length="250" type="string" inputMode="text"/>
+		<field name="bills" title="票据" type="image" inputMode="attachment">
+			<parameter name="maxUploadSize">5000000</parameter>
+			<parameter name="dynamicUrl">true</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="费用类别" class="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseChargeCategory" businessServiceName="chargeCategoryService">
+		<field name="category" title="费用类别" length="50" required="true" type="string" inputMode="text"/>
+		<field name="money" title="默认标准" length="8,2" required="true" type="number" inputMode="text"/>
+		<field name="unit" title="单位" length="10" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="费用标准" class="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseChargeStandard" businessServiceName="chargeStandardService">
+		<field name="userId" title="用户ID" type="number" inputMode="hidden"/>
+		<field name="userName" title="用户" length="50" required="true" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.selectUser(this, 500, 300, false, "userId{id},userName{name}")</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="chargeCategoryId" title="费用类别ID" type="number" inputMode="hidden"/>
+		<field name="money" title="金额" length="8,2" required="true" type="number" inputMode="text"/>
+		<field name="chargeCategory" title="费用类别" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.j2oa.reimburse.pojo.ReimburseChargeCategory</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="报销配置" class="com.yuanluesoft.j2oa.reimburse.pojo.ReimburseConfig">
+		<field name="types" title="报销类别" length="250" required="true" type="string" inputMode="text"/>
+	</businessObject>
+</businessObjects>

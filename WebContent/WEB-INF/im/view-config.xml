@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="在线用户列表" name="imOnlinePersons">
+		<data>
+			<pojo>com.yuanluesoft.im.model.IMPerson</pojo>
+		</data>
+		<links>
+			<link title="发起对话">javascript:doHtmlDialogAction("CREATECHAT", "personId={PARAMETER:personId}")</link>
+		</links>
+	</view>
+	
+	<view title="最近联系用户列表" name="imRecentPersons">
+		<data>
+			<pojo>com.yuanluesoft.im.model.IMPerson</pojo>
+		</data>
+		<links>
+			<link title="发起对话">javascript:doHtmlDialogAction("LOADCHAT", "chatId={PARAMETER:chatId}")</link>
+		</links>
+	</view>
+
+	<view name="admin/chatHistory" title="对话记录" pageRows="30">
+		<data>
+			<pojo>com.yuanluesoft.im.pojo.IMChatTalk</pojo>
+			<where>IMChatTalk.chatId={PARAMETER:chatId|0}</where>
+			<orderBy>IMChatTalk.createdMillis</orderBy>
+			<quickFilter>IMChatTalk.content like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32" displayExcept="portlet"/>
+			<column title="发言人" name="creatorName" width="100"/>
+			<column title="发言时间" name="created" align="center" width="110"/>
+			<column title="发言内容" name="content"/>
+		</columns>
+	</view>
+</views>

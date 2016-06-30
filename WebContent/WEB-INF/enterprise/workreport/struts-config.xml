@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="workReport" type="com.yuanluesoft.enterprise.workreport.forms.WorkReport"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="workReport" path="/workReport" scope="request"
+   type="com.yuanluesoft.enterprise.workreport.actions.workreport.Load" validate="false">
+   <forward name="load" path="/workReport.jsp"/>
+  </action>
+  <action input="/workReport.jsp" name="workReport"
+   path="/saveWorkReport" scope="request"
+   type="com.yuanluesoft.enterprise.workreport.actions.workreport.Save" validate="false"/>
+  <action input="/workReport.jsp" name="workReport"
+   path="/deleteWorkReport" scope="request"
+   type="com.yuanluesoft.enterprise.workreport.actions.workreport.Delete" validate="false"/>
+  <action input="/workReport.jsp" name="workReport"
+   path="/runWorkReport" scope="request"
+   type="com.yuanluesoft.enterprise.workreport.actions.workreport.Run" validate="false"/>
+  <action input="/workReport.jsp" name="workReport" path="/writeOpinion"
+   scope="request"
+   type="com.yuanluesoft.enterprise.workreport.actions.workreport.WriteOpinion" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

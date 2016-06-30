@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--调查主题-->
+	<class name="com.yuanluesoft.cms.inquiry.pojo.InquirySubject" table="cms_inquiry_subject">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="subject"/> <!--主题,VARCHAR(200)-->
+		<property name="description" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--说明,TEXT-->
+		<property name="endTime"/> <!--调查截止时间,timestamp null-->
+		<property name="isAnonymous"/> <!--匿名投票,CHAR(1)-->
+		<property name="publishResult"/> <!--投票结果公示,0/不对外公开,1/投票结束后公开,2/总是公开,CHAR(1)-->
+		<property name="isQuestionnaire"/> <!--是否问卷,CHAR(1)-->
+		<property name="ipRestriction"/> <!--IP限制,0/不限制,1/指定时间内限制,2/一直限制,CHAR(1)-->
+		<property name="ipRestrictionHours"/> <!--IP限制时间,NUMERIC(3)-->
+		<property name="isPublic"/> <!--是否发布,CHAR(1)-->
+		<property name="siteId"/> <!--站点ID,NUMERIC(20,0)-->
+		<property name="creator"/> <!--创建人,VARCHAR(30)-->
+		<property name="creatorId"/> <!--创建人ID,NUMERIC(20,0)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<set inverse="true" lazy="true" name="inquiries" table="cms_inquiry" cascade="delete" order-by="priority DESC, created">
+			<key column="subjectId" />
+			<one-to-many class="com.yuanluesoft.cms.inquiry.pojo.Inquiry" />
+		</set>
+		<set inverse="true" lazy="true" name="feedbacks" table="cms_inquiry_feedback" cascade="delete">
+			<key column="subjectId" />
+			<one-to-many class="com.yuanluesoft.cms.inquiry.pojo.InquiryFeedback" />
+		</set>
+	</class>
+	
+	<!--调查-->
+	<class name="com.yuanluesoft.cms.inquiry.pojo.Inquiry" table="cms_inquiry">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="subjectId"/> <!--主题ID,NUMERIC(20)-->
+		<property name="description" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--描述,TEXT-->
+		<property name="isMultiSelect"/> <!--单选/多选,CHAR(1)-->
+		<property name="minVote"/> <!--最低投票数,NUMERIC(3,0)-->
+		<property name="maxVote"/> <!--最高投票数,NUMERIC(3,0)-->
+		<property name="created"/> <!--创建时间,TIMESTAMP null-->
+		<property name="priority"/> <!--优先级,NUMERIC(7,4)-->
+		<many-to-one name="inquirySubject" class="com.yuanluesoft.cms.inquiry.pojo.InquirySubject" column="subjectId" update="false" insert="false"/>
+		<set inverse="true" lazy="false" name="options" table="cms_inquiry_option" cascade="delete" order-by="priority DESC, id">
+			<key column="inquiryId" />
+			<one-to-many class="com.yuanluesoft.cms.inquiry.pojo.InquiryOption" />
+		</set>
+	</class>
+	
+	<!--调查选项-->
+	<class name="com.yuanluesoft.cms.inquiry.pojo.InquiryOption" table="cms_inquiry_option">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="inquiryId"/> <!--调查ID,NUMERIC(20,0)-->
+		<property name="inquiryOption"/> <!--选项,VARCHAR(100)-->
+		<property name="needSupplement"/> <!--是否需要补充说明,0/不需要,1/需要,NUMERIC(1)-->
+		<property name="description" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--选项说明,TEXT-->
+		<property name="priority"/> <!--优先级,NUMERIC(7,4)-->
+		<many-to-one name="inquiry" class="com.yuanluesoft.cms.inquiry.pojo.Inquiry" column="inquiryId" update="false" insert="false"/>
+		<set inverse="true" lazy="false" name="votes" table="cms_inquiry_vote" cascade="delete" order-by="id">
+			<key column="optionId" />
+			<one-to-many class="com.yuanluesoft.cms.inquiry.pojo.InquiryVote" />
+		</set>
+	</class>
+	
+	<!--投票-->
+	<class name="com.yuanluesoft.cms.inquiry.pojo.InquiryVote" table="cms_inquiry_vote">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="ip"/> <!--IP,VARCHAR(20)-->
+		<property name="optionId"/> <!--选项ID,NUMERIC(20,0)-->
+		<property name="voterId"/> <!--投票人ID,非匿名时有效,NUMERIC(2,0)-->
+		<property name="voter"/> <!--投票人姓名,非匿名时有效,VARCHAR(100)-->
+		<property name="supplement" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--补充说明,TEXT-->
+		<property name="created"/> <!--投票时间,timestamp-->
+	</class>
+	
+	<!--结果反馈-->
+	<class name="com.yuanluesoft.cms.inquiry.pojo.InquiryFeedback" table="cms_inquiry_feedback">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="subjectId"/> <!--主题ID,NUMERIC(20,0)-->
+		<property name="feedback" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--结果反馈,TEXT-->
+		<property name="creatorId"/> <!--反馈人ID,NUMERIC(20,0)-->
+		<property name="creator"/> <!--反馈人,VARCHAR(30)-->
+		<property name="created"/> <!--反馈时间,timestamp null-->
+		<many-to-one name="inquirySubject" class="com.yuanluesoft.cms.inquiry.pojo.InquirySubject" column="subjectId" update="false" insert="false"/>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!--汇报需要审核 -->
+<beans>
+	<!-- 重点项目服务 -->
+	<bean id="keyProjectService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">	
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="com.yuanluesoft.dpc.keyproject.service.spring.KeyProjectServiceImpl">
+				<property name="databaseService"><ref bean="databaseService"/></property>
+				<property name="businessDefineService"><ref bean="businessDefineService"/></property>
+				<!-- 用户需要的组成部分列表 -->
+				<property name="componentNames"><value>declares|申报情况,fiveYearPlans|五年计划,officialDocuments|批准文件,invests|总投资,annualObjectives|年度目标,investCompletes|实际完成投资,investPaids|资金到位,progresses|形象进度,problems|存在的问题及工作建议,units|参建单位,photos|进展实景</value></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="synch*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="upload*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="change*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="setAsKeyProject">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="declareProject">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="getKeyProjectParameter">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="complete*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

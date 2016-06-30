@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="apply" type="com.yuanluesoft.job.apply.forms.Apply"/>
+  <form-bean name="invitation" type="com.yuanluesoft.job.apply.forms.Invitation"/>
+  <form-bean name="offer" type="com.yuanluesoft.job.apply.forms.Offer"/>
+  <form-bean name="interview" type="com.yuanluesoft.job.apply.forms.Interview"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="apply" path="/apply" scope="request"
+   type="com.yuanluesoft.job.apply.actions.apply.Load" validate="false">
+   <forward name="load" path="/apply.jsp"/>
+  </action>
+  <action input="/apply.jsp" name="apply" path="/saveApply"
+   scope="request" type="com.yuanluesoft.job.apply.actions.apply.Save" validate="false">
+   <forward name="result" path="/applySubmitted.jsp"/>
+  </action>
+  <action input="/apply.jsp" name="apply" path="/changeApplyStatus"
+   scope="request"
+   type="com.yuanluesoft.job.apply.actions.apply.ChangeApplyStatus" validate="false"/>
+  <action name="invitation" path="/invitation" scope="request"
+   type="com.yuanluesoft.job.apply.actions.apply.invitation.Load" validate="false">
+   <forward name="load" path="/invitation.jsp"/>
+  </action>
+  <action input="/invitation.jsp" name="invitation"
+   path="/sendInvitation" scope="request"
+   type="com.yuanluesoft.job.apply.actions.apply.invitation.Send" validate="false"/>
+  <action name="offer" path="/offer" scope="request"
+   type="com.yuanluesoft.job.apply.actions.apply.offer.Load" validate="false">
+   <forward name="load" path="/offer.jsp"/>
+  </action>
+  <action input="/offer.jsp" name="offer" path="/sendOffer"
+   scope="request"
+   type="com.yuanluesoft.job.apply.actions.apply.offer.Send" validate="false"/>
+  <action name="interview" path="/interview" scope="request"
+   type="com.yuanluesoft.job.apply.actions.apply.interview.Load" validate="false">
+   <forward name="load" path="/interview.jsp"/>
+  </action>
+  <action input="/interview.jsp" name="interview" path="/saveInterview"
+   scope="request"
+   type="com.yuanluesoft.job.apply.actions.apply.interview.Save" validate="false"/>
+  <action input="/interview.jsp" name="interview"
+   path="/deleteInterview" scope="request"
+   type="com.yuanluesoft.job.apply.actions.apply.interview.Delete" validate="false"/>
+  <action input="/apply.jsp" name="apply" path="/refreshApply"
+   scope="request"
+   type="com.yuanluesoft.job.apply.actions.apply.ChangeApplyStatus" validate="false"/>
+  <action path="/addFavorite" scope="request"
+   type="com.yuanluesoft.job.apply.actions.favorite.Add" validate="false"/>
+  <action path="/removeFavorite" scope="request"
+   type="com.yuanluesoft.job.apply.actions.favorite.Remove" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

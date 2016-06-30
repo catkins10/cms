@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+ 	<form-bean name="adminImportCases" type="com.yuanluesoft.land.landcertificate.forms.admin.ImportCases"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+ <action name="adminImportCases" path="/admin/importCases"
+   scope="request"
+   type="com.yuanluesoft.land.landcertificate.actions.importcases.admin.Load" validate="false">
+   <forward name="load" path="/admin/importCases.jsp"/>
+  </action>
+  <action input="/admin/importCases.jsp" name="adminImportCases"
+   path="/admin/doImportCases" scope="request"
+   type="com.yuanluesoft.land.landcertificate.actions.importcases.admin.DoImport" validate="false"/>
+  <action name="adminImportCases"
+   path="/admin/importCasesAttachmentEditor" scope="request"
+   type="com.yuanluesoft.land.landcertificate.actions.importcases.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

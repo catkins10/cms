@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/serviceorg" class="com.yuanluesoft.credit.serviceorg.org.forms.ServiceOrg" title="服务机构" pojo="com.yuanluesoft.credit.serviceorg.org.pojo.ServiceOrg">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteServiceorg')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/serviceitem" class="com.yuanluesoft.credit.serviceorg.serviceitem.forms.ServiceItem" title="办事事项" pojo="com.yuanluesoft.credit.serviceorg.serviceitem.pojo.ServiceItem">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteServiceitem')"/>
+		</actions>
+	</form>
+</forms>

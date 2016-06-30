@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminProject" type="com.yuanluesoft.bidding.project.forms.admin.Project"/>
+  <form-bean name="project" type="com.yuanluesoft.bidding.project.forms.Project"/>
+  <form-bean name="adminParameterConfig" type="com.yuanluesoft.bidding.project.forms.admin.ParameterConfig"/>
+  <form-bean name="adminFileConfig" type="com.yuanluesoft.bidding.project.forms.admin.FileConfig"/>
+  <form-bean name="adminCityConfig" type="com.yuanluesoft.bidding.project.forms.admin.CityConfig"/>
+  <form-bean name="adminWorkflowConfig" type="com.yuanluesoft.bidding.project.forms.admin.WorkflowConfig"/>
+  <form-bean name="adminTemplate" type="com.yuanluesoft.bidding.project.forms.admin.Template"/>
+  <form-bean name="adminSetTemplateRange" type="com.yuanluesoft.bidding.project.forms.admin.SetTemplateRange"/>
+  <form-bean name="insertRecordList" type="com.yuanluesoft.bidding.project.forms.admin.InsertRecordList"/>
+  <form-bean name="accountComplement" type="com.yuanluesoft.bidding.project.forms.AccountComplement"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminProject" path="/admin/project" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.Load" validate="false">
+   <forward name="load" path="/admin/project.jsp"/>
+  </action>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/saveProject" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.Save" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/runProject" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.Run" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/completeCreate" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.CompleteCreate" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/publicAgent" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.PublicAgent" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/uploadBiddingDocuments" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.UploadBiddingDocuments" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/publicTender" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.PublicTender" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/publicPreapproval" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.PublicPreapproval" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/publicBidopening" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.PublicBidopening" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/publicPitchon" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.PublicPitchon" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/publicNotice" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.PublicNotice" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/deleteProject" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.Delete" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/writeOpinion" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.WriteOpinion" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/switchPage" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.SwitchPage" validate="false"/>
+  <action name="project" path="/project" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.Load" validate="false">
+   <forward name="load" path="/project.jsp"/>
+  </action>
+  <action input="/project.jsp" name="project" path="/saveProject"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.Save" validate="false"/>
+  <action input="/project.jsp" name="project"
+   path="/uploadBiddingDocuments" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.UploadBiddingDocuments" validate="false">
+   <forward name="submitted" path="/submitted.jsp"/>
+  </action>
+  <action input="/project.jsp" name="project" path="/runProject"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.Run" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/arrangeBidopeningRoom" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.ArrangeBidopeningRoom" validate="false"/>
+  <action path="/agentDraw" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.agentdraw.Load" validate="false"/>
+  <action path="/agent" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.agent.Load" validate="false"/>
+  <action path="/tender" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.tender.Load" validate="false"/>
+  <action input="/project.jsp" name="project" path="/submitPitchon"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.SubmitPitchon" validate="false">
+   <forward name="submitted" path="/submitted.jsp"/>
+  </action>
+  <action input="/project.jsp" name="project" path="/submitNotice"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.SubmitNotice" validate="false">
+   <forward name="submitted" path="/submitted.jsp"/>
+  </action>
+  <action path="/listProjects" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.listprojects.Load" validate="false"/>
+  <action path="/listNotices" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.listnotices.Load" validate="false"/>
+  <action name="adminParameterConfig" path="/admin/parameterConfig"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.configure.parameterconfig.Load" validate="false">
+   <forward name="load" path="/admin/parameterConfig.jsp"/>
+  </action>
+  <action input="/admin/parameterConfig.jsp" name="adminParameterConfig"
+   path="/admin/saveParameterConfig" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.configure.parameterconfig.Save" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/arrangeEvaluatingRoom" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.ArrangeEvaluatingRoom" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/archive" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.Archive" validate="false"/>
+  <action name="adminFileConfig" path="/admin/fileConfig"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.configure.fileconfig.Load" validate="false">
+   <forward name="load" path="/admin/fileConfig.jsp"/>
+  </action>
+  <action input="/admin/fileConfig.jsp" name="adminFileConfig"
+   path="/admin/saveFileConfig" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.configure.fileconfig.Save" validate="false"/>
+  <action input="/admin/fileConfig.jsp" name="adminFileConfig"
+   path="/admin/deleteFileConfig" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.configure.fileconfig.Delete" validate="false"/>
+  <action name="adminCityConfig" path="/admin/cityConfig"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.configure.cityconfig.Load" validate="false">
+   <forward name="load" path="/admin/cityConfig.jsp"/>
+  </action>
+  <action input="/admin/cityConfig.jsp" name="adminCityConfig"
+   path="/admin/saveCityConfig" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.configure.cityconfig.Save" validate="false"/>
+  <action input="/admin/cityConfig.jsp" name="adminCityConfig"
+   path="/admin/deleteCityConfig" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.configure.cityconfig.Delete" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/completeProphase" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.CompleteProphase" validate="false"/>
+  <action path="/projectInfo" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.projectinfo.Load" validate="false"/>
+  <action path="/pitchon" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.pitchon.Load" validate="false"/>
+  <action path="/notice" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.notice.Load" validate="false"/>
+  <action path="/preapproval" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.preapproval.Load" validate="false"/>
+  <action path="/bidopening" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.bidopening.Load" validate="false"/>
+  <action path="/material" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.material.Load" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/publicSupplement" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.PublicSupplement" validate="false"/>
+  <action input="/project.jsp" name="project" path="/submitSupplement"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.SubmitSupplement" validate="false">
+   <forward name="submitted" path="/submitted.jsp"/>
+  </action>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/publicAnswer" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.PublicAnswer" validate="false"/>
+  <action name="project" path="/selectAttachment" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action input="/project.jsp" name="project" path="/submitAnswer"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.SubmitAnswer" validate="false">
+   <forward name="submitted" path="/submitted.jsp"/>
+  </action>
+  <action path="/plan" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.plan.Load" validate="false"/>
+  <action path="/answer" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.answer.Load" validate="false"/>
+  <action path="/supplement" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.supplement.Load" validate="false"/>
+  <action input="/project.jsp" name="project" path="/publicNotice"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.PublicNotice" validate="false">
+   <forward name="submitted" path="/submitted.jsp"/>
+  </action>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/approvalNotice" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.ApprovalNotice" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/completePay" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.CompletePay" validate="false"/>
+  <action input="/admin/fileConfig.jsp" name="adminFileConfig"
+   path="/admin/addProphaseFile" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.configure.fileconfig.AddProphaseFile" validate="false"/>
+  <action input="/admin/fileConfig.jsp" name="adminFileConfig"
+   path="/admin/deleteProphaseFile" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.configure.fileconfig.DeleteProphaseFile" validate="false"/>
+  <action input="/admin/fileConfig.jsp" name="adminFileConfig"
+   path="/admin/addArchiveFile" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.configure.fileconfig.AddArchiveFile" validate="false"/>
+  <action input="/admin/fileConfig.jsp" name="adminFileConfig"
+   path="/admin/deleteArchiveFile" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.configure.fileconfig.DeleteArchiveFile" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/declareReceive" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.DeclareReceive" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/completeDeclare" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.CompleteDeclare" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/licence" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.Licence" validate="false"/>
+  <action path="/search" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.search.Load" validate="false"/>
+  <action input="/admin/parameterConfig.jsp" name="adminParameterConfig"
+   path="/admin/deleteParameterConfig" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.configure.parameterconfig.Delete" validate="false"/>
+  <action name="adminWorkflowConfig" path="/admin/workflowConfig"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.configure.workflowconfig.Load" validate="false">
+   <forward name="load" path="/admin/workflowConfig.jsp"/>
+  </action>
+  <action input="/admin/workflowConfig.jsp" name="adminWorkflowConfig"
+   path="/admin/saveWorkflowConfig" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.configure.workflowconfig.Save" validate="false"/>
+  <action input="/admin/workflowConfig.jsp" name="adminWorkflowConfig"
+   path="/admin/deleteWorkflowConfig" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.configure.workflowconfig.Delete" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/completeUseFee" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.CompleteUseFee" validate="false"/>
+  <action input="/project.jsp" name="project" path="/submitBidopening"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.SubmitBidopening" validate="false">
+   <forward name="submitted" path="/submitted.jsp"/>
+  </action>
+  <action name="adminTemplate" path="/admin/template" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Load" validate="false">
+   <forward name="load" path="/../../cms/templatemanage/template.jsp"/>
+  </action>
+  <action input="/../../cms/templatemanage/template.jsp"
+   name="adminTemplate" path="/admin/saveTemplate" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Save" validate="false"/>
+  <action input="/../../cms/templatemanage/template.jsp"
+   name="adminTemplate" path="/admin/deleteTemplate" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.template.Delete" validate="false"/>
+  <action name="adminSetTemplateRange"
+   path="/templatemanage/setTemplateRange" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/setTemplateRange.jsp"/>
+  </action>
+  <action name="adminProject" path="/admin/selectAttachment"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action path="/admin/importData" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.importdata.ImportData" validate="false"/>
+  <action path="/projectProgress" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.projectprogress.Load" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/biddingFailed" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.BiddingFailed" validate="false"/>
+  <action path="/printNotice" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.notice.Print" validate="false"/>
+  <action input="/project.jsp" name="project" path="/biddingFailed"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.BiddingFailed" validate="false">
+   <forward name="submitted" path="/submitted.jsp"/>
+  </action>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/changeBidopeningRoom" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.ChangeBidopeningRoom" validate="false"/>
+  <action name="project" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="adminProject" path="/admin/attachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/arrangeBidopeningRoomAndPublicTender" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.ArrangeBidopeningRoomAndPublicTender" validate="false"/>
+  <action input="/project.jsp" name="project" path="/completeCreate"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.CompleteCreate" validate="false">
+   <forward name="submitted" path="/submitted.jsp"/>
+  </action>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/undeleteProject" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.Undelete" validate="false"/>
+  <action input="/admin/workflowConfig.jsp" name="adminWorkflowConfig"
+   path="/admin/doWorkflowConfig" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.configure.workflowconfig.DoWorkflowConfig" validate="false"/>
+  <action name="insertRecordList"
+   path="/templatemanage/insertRecordList" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertRecordList.jsp"/>
+  </action>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/refreshProject" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.Refresh" validate="false"/>
+  <action input="/project.jsp" name="project" path="/refreshProject"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.Refresh" validate="false"/>
+  <action name="accountComplement" path="/accountComplement"
+   scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.AccountComplement" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/writePledgeTransferFile" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.WritePledgeTransferFile" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/pledgeReturnTransfer" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.PledgeReturnTransfer" validate="false"/>
+  <action input="/admin/project.jsp" name="adminProject"
+   path="/admin/publicCompletion" scope="request"
+   type="com.yuanluesoft.bidding.project.actions.project.admin.PublicCompletion" validate="false"/>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="20M"/>
+</struts-config>

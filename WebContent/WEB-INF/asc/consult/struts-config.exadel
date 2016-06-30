@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,40,161,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="288,40,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,161,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="288,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#saveConsult"
+  NAME="action0" PATH="/admin/saveConsult" SHAPE="464,480,161,25"
+  TITLE="adminConsult" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#consult" NAME="action1"
+  PATH="/consult" SHAPE="32,224,161,41" TITLE="consult" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/consult.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveConsult"
+  NAME="action2" PATH="/saveConsult" SHAPE="464,256,161,41"
+  TITLE="consult" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="result"
+   NAME="forward0" PATH="/consultSubmited.jsp" TARGET="page4"
+   TITLE="result" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#undeleteConsult"
+  NAME="action3" PATH="/admin/undeleteConsult" SHAPE="464,592,161,25"
+  TITLE="adminConsult" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#printConsult"
+  NAME="action4" PATH="/admin/printConsult" SHAPE="32,528,161,41"
+  TITLE="adminConsult" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/consult.jsp" TARGET="page3" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#deleteConsult"
+  NAME="action5" PATH="/admin/deleteConsult" SHAPE="464,536,161,25"
+  TITLE="adminConsult" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#writeOpinion"
+  NAME="action6" PATH="/admin/writeOpinion" SHAPE="464,704,161,25"
+  TITLE="adminConsult" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#publish"
+  NAME="action14" PATH="/admin/publish" SHAPE="464,816,161,25"
+  TITLE="adminConsult" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#setPublishOption"
+  NAME="action15" PATH="/admin/setPublishOption" SHAPE="464,760,161,25"
+  TITLE="adminConsult" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#runConsult"
+  NAME="action16" PATH="/admin/runConsult" SHAPE="464,648,161,25"
+  TITLE="adminConsult" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#admin#consult"
+  NAME="action7" PATH="/admin/consult" SHAPE="32,448,161,41"
+  TITLE="adminConsult" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/admin/consult.jsp" TARGET="page3" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#attachmentEditor"
+  NAME="action9" PATH="/attachmentEditor" SHAPE="32,344,161,41"
+  TITLE="consult" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/attachment.jsp"
+   TARGET="page8" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page8"
+  PATH="/../../jeaf/attachment/attachment.jsp" SHAPE="288,360,50,25"
+  SUBTYPE="jsp" TITLE="attachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/consult.jsp" SHAPE="288,240,50,25" SUBTYPE="jsp"
+  TITLE="consult.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveConsult.shtml" TARGET="action2" TITLE="saveConsult.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/admin/consult.jsp" SHAPE="296,464,50,25" SUBTYPE="jsp"
+  TITLE="consult.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/admin/saveConsult.shtml" TARGET="action0"
+   TITLE="saveConsult.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/admin/deleteConsult.shtml" TARGET="action5"
+   TITLE="undeleteConsult.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/admin/undeleteConsult.shtml" TARGET="action3"
+   TITLE="undeleteConsult.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link3"
+   PATH="/admin/runConsult.shtml" TARGET="action16"
+   TITLE="runConsult.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link4"
+   PATH="/admin/writeOpinion.shtml" TARGET="action6"
+   TITLE="writeOpinion.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link5"
+   PATH="/admin/setPublishOption.shtml" TARGET="action15"
+   TITLE="setPublishOption.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link6"
+   PATH="/admin/publish.shtml" TARGET="action14" TITLE="publish.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/consultSubmited.jsp" SHAPE="752,272,50,25" SUBTYPE="jsp"
+  TITLE="consultSubmited.jsp" TYPE="page"/>
+</PROCESS>

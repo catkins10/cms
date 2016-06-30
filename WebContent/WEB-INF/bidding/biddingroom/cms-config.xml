@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 开评标室管理-->
+<application>
+	<pages>
+		<page name="biddingroomSchedule" title="开标室安排" url="/bidding/biddingroom/schedule.shtml" systemLink="false">
+			<field title="项目名称" name="projectName"/>
+			<field title="招标编号" name="project.projectNumber"/>
+			<field title="开标室名称" name="roomName"/>
+			<field title="开始使用时间" name="beginTime" type="timestamp"/>
+			<field title="使用结束时间" name="endTime" type="timestamp"/>
+			
+			<field title="项目审批机关" name="tender.approvalUnit"/>
+			<field title="批名称及编号" name="tender.projectSn"/>
+			<field title="项目业主" name="tender.owner"/>
+			<field title="资金来源" name="tender.investSource"/>
+			<field title="招标人" name="tender.tenderee"/>
+			<field title="招标代理" name="tender.agent"/>
+			<field title="招标方式" name="tender.biddingMode"/>
+			<field title="建设地点" name="tender.projectAddress"/>
+			<field title="建设规模" name="tender.projectScale"/>
+			<field title="招标范围和内容" name="tender.biddingContent"/>
+			<field title="总工期" name="tender.timeLimit"/>
+			<field title="关键节点的工期要求" name="tender.keysTimeLimit"/>
+			<field title="工程质量要求" name="tender.quality"/>
+			<field title="咨询单位" name="tender.consultationUnit"/>
+			<field title="设计单位" name="tender.designUnit"/>
+			<field title="代建单位" name="tender.fillinUnit"/>
+			<field title="监理单位" name="tender.supervisorUnit"/>
+			<field title="资质类别及等级" name="tender.bidderLevel"/>
+			<field title="项目经理等级" name="tender.managerLevel"/>
+			<field title="项目经理专业" name="tender.managerSubject"/>
+			<field title="接受/不接受联合体投标" name="tender.unionBid"/>
+			<field title="联合体投标主办方" name="tender.majorBidder"/>
+			<field title="项目经理“类似工程业绩”要求" name="tender.managerAchievement"/>
+			<field title="类似工程业绩" name="tender.similarityProject"/>
+			<field title="资格审查采用的方式" name="tender.approvalMode"/>
+			<field title="招标文件每份售价" name="tender.documentPrice"/>
+			<field title="招标图纸每份售价" name="tender.drawingPrice"/>
+			<field title="采用的评标办法" name="tender.evaluateMethod"/>
+			<field title="保证金提交的时间" name="tender.pledgeTime"/>
+			<field title="保证金提交的方式" name="tender.pledgeMode"/>
+			<field title="保证金提交的金额" name="tender.pledgeMoney"/>
+			<field title="发布公告的媒体名称" name="tender.media"/>
+			<field title="招标人地址" name="tender.tendereeAddress"/>
+			<field title="招标人邮编" name="tender.tendereePostalCode"/>
+			<field title="招标人电话" name="tender.tendereeTel"/>
+			<field title="招标人传真" name="tender.tendereeFax"/>
+			<field title="招标人联系人" name="tender.tendereeLinkman"/>
+			<field title="招标代理机构地址" name="tender.agentAddress"/>
+			<field title="招标代理机构邮编" name="tender.agentPostalCode"/>
+			<field title="招标代理机构电话" name="tender.agentTel"/>
+			<field title="招标代理机构传真" name="tender.agentFax"/>
+			<field title="招标代理机构联系人" name="tender.agentLinkman"/>
+			<field title="开户银行" name="tender.bank"/>
+			<field title="帐户名称" name="tender.accountName"/>
+			<field title="帐号" name="tender.accounts"/>
+			<field title="交易中心名称" name="tender.tradingName"/>
+			<field title="地址" name="tender.tradingAddress"/>
+			
+			<link title="工程信息" url="/bidding/project/projectInfo.shtml?id={PARAMETER:projectId}"/>
+			<link title="前期资料备案" url="#"/>
+			<link title="代理抽签公示" url="/bidding/project/agentDraw.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴纳场地费" url="#"/>
+			<link title="开标室安排" url="/bidding/biddingroom/schedule.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="预审公示" url="/bidding/project/preapproval.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="招标文件" url="#"/>
+			<link title="招标公告" url="/bidding/project/tender.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="时间安排" url="/bidding/project/plan.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="答疑纪要" url="/bidding/project/answer.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="补充通知" url="/bidding/project/supplement.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="开标公示" url="/bidding/project/bidopening.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标公示" url="/bidding/project/pitchon.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="中标通知书" url="/bidding/project/notice.shtml?projectId={PARAMETER:projectId}"/>
+			<link title="缴费" url="#"/>
+			<link title="书面报告备案" url="#"/>
+			<link title="报建" url="#"/>
+			<link title="施工许可证" url="#"/>
+		</page>
+		<page name="biddingroomSchedules" title="开标室安排列表" url="/bidding/biddingroom/listSchedules.shtml"/>
+	</pages>
+	
+	<recordLists>
+		<recordList title="开标室安排列表" name="biddingroomSchedules" recordPage="biddingroomSchedule" hostPage="biddingroomSchedules"/>
+	</recordLists>
+	
+	<pageElements>
+		<pageElement name="biddingroomSchedules" processor="biddingroomSchedulesProcessor"/> <!-- 开标室安排列表处理器 -->
+	</pageElements>
+</application>

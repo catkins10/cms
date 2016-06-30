@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="prerequisitesData" class="com.yuanluesoft.chd.evaluation.data.forms.PrerequisitesData" title="必备条件完成情况">
+		<formFields>
+			<field name="plantId" title="发电企业ID" type="number" inputMode="hidden"/>
+			<field name="plant" title="发电企业名称" type="string" inputMode="readonly" length="100"/>
+			<field name="declareYear" title="年度" type="number" length="4"/>
+		</formFields>
+		<actions>
+			<action title="提交" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="indicatorData" class="com.yuanluesoft.chd.evaluation.data.forms.IndicatorData" title="指标完成情况">
+		<formFields>
+			<field name="directoryId" title="目录ID" type="number" inputMode="hidden"/>
+			<field name="dataYear" title="年度" type="number" length="4"/>
+			<field name="dataMonth" title="月份" type="number" inputMode="dropdown" length="2">
+				<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10\0 11\0 12</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="提交" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form name="data" class="com.yuanluesoft.chd.evaluation.data.forms.Data" title="资料" pojo="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationData">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteData')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/data" class="com.yuanluesoft.chd.evaluation.data.forms.admin.Data" title="资料" pojo="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationData">
+		<formFields>
+			<field name="directoryId" title="评价细则ID" type="number" inputMode="hidden"/>
+			<field name="directoryName" title="评价细则名称" type="string" inputMode="readonly"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteData')"/>
+		</actions>
+	</form>
+</forms>

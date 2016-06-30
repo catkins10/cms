@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--邮件-->
+	<class name="com.yuanluesoft.webmail.pojo.Mail" table="webmail_mail">
+		<id name="id">
+			<generator class="assigned" />
+		</id>
+		<property name="userId"/> <!--邮件用户ID-->
+		<property name="mailboxId"/> <!--邮箱ID-->
+		<property name="mailIdOnServer"/> <!--在邮件服务器中的ID-->
+		<property name="newMail"/> <!--是否新邮件-->
+		<property name="mailFrom"/> <!--邮件发送人-->
+		<property name="mailTo"/> <!--邮件接收人-->
+		<property name="mailCc"/> <!--抄送-->
+		<property name="mailBcc"/> <!--密送-->
+		<property name="replyTo"/> <!--回复-->
+		<property name="subject"/> <!--主题-->
+		<property name="receiveDate"/> <!--接收时间-->
+		<property name="priority"/> <!--优先级-->
+		<property name="size" column="mailSize"/> <!--大小-->
+		<property name="hasAttachment"/> <!--是否有附件-->
+		<property name="readLevel"/> <!--邮件读取等级-->
+		<property name="mailServer"/> <!--邮件服务器名称-->
+		<property name="lastModified"/> <!--最后修改时间-->
+		<set name="mailBodies" table="email_mail_body" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="mailId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.webmail.pojo.MailBody" />
+		</set>
+		<set name="mailAttachments" table="email_mail_attachment" lazy="true" inverse="true" cascade="delete" order-by="id">
+			<key column="mailId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.webmail.pojo.MailAttachment" />
+		</set>
+	</class>
+	
+	<!-- QMAIL -->
+	<class name="com.yuanluesoft.webmail.pojo.qmail.VpopMail" table="vpopmail.vpopmail">
+		<id name="id" column="pw_uid" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="name" type="java.lang.String" column="pw_name" />
+		<property name="domain" type="java.lang.String" column="pw_domain" />
+		<property name="password" type="java.lang.String" column="pw_clear_passwd" />
+		<property name="directory" type="java.lang.String" column="pw_dir" />
+	</class>
+	
+	<!--邮件正文-->
+	<class name="com.yuanluesoft.webmail.pojo.MailBody" table="webmail_mail_body">
+		<id name="id">
+			<generator class="assigned" />
+		</id>
+		<property name="mailId"/> <!--邮件记录ID-->
+		<property name="body" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--正文-->
+	</class>
+	
+	<!--邮件附件-->
+	<class name="com.yuanluesoft.webmail.pojo.MailAttachment" table="webmail_mail_attachment">
+		<id name="id">
+			<generator class="assigned" />
+		</id>
+		<property name="mailId"/> <!--邮件记录ID-->
+		<property name="contentType"/> <!--附件类型-->
+		<property name="name"/> <!--附件名称-->
+		<property name="size" column="attachmentSize"/> <!--附件大小-->
+		<property name="contentTransferEncoding"/> <!--传输编码-->
+		<property name="contentId"/> <!--内容ID-->
+		<property name="beginIndex"/> <!--在邮件中的起始位置-->
+		<property name="endIndex"/> <!--在邮件中的结束位置-->
+	</class>
+	
+	<!--邮箱-->
+	<class name="com.yuanluesoft.webmail.pojo.Mailbox" table="webmail_mailbox">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId"/> <!--邮件用户ID-->
+		<property name="mailboxName"/> <!--邮箱名称-->
+	</class>
+	
+	<!--邮件过滤-->
+	<class name="com.yuanluesoft.webmail.pojo.MailFilter" table="webmail_filter">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId"/> <!--用户ID-->
+		<property name="conditions" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--过虑条件-->
+		<property name="action"/> <!--执行的操作-->
+		<property name="enable"/> <!--是否生效-->
+		<property name="priority"/> <!--优先级-->
+	</class>
+	
+	<!--POP3代收-->
+	<class name="com.yuanluesoft.webmail.pojo.POP3Server" table="webmail_pop3_server">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="userId"/> <!--邮件用户ID-->
+		<property name="serverAddress"/> <!--服务器地址-->
+		<property name="serverPort"/> <!--POP3端口-->
+		<property name="mailAddress"/> <!--邮件地址-->
+		<property name="loginName"/> <!--用户名-->
+		<property name="password"/> <!--密码-->
+	</class>
+</hibernate-mapping>

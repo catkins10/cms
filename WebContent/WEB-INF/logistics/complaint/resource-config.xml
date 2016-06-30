@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Application>
+	<Actions>
+		<Action Name="批转" Send="true"/>
+		<Action Name="公布到网站"/>
+		<Action Name="办结" Send="true"/>
+		<Action Name="删除" DeleteAction="true"/>
+	</Actions>
+	<ProgrammingParticipants>
+		<ProgrammingParticipant Id="siteManager" Name="站点管理员"/>
+		<ProgrammingParticipant Id="siteEditor" Name="站点编辑"/>
+	</ProgrammingParticipants>
+	<SubForms>
+		<SubForm Id="Approval" Name="审核"/>
+		<SubForm Id="Read" Name="只读"/>
+	</SubForms>
+	<TypeDeclarations/>
+	<DataFields>
+		<DataField Id="subject" Name="主题">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+	</DataFields>
+	<Applications>
+		<!-- Application Id="publish" Name="发布到网站">
+			<FormalParameters>
+				<FormalParameter Id="isWorkflowTest" Index="1" Mode="IN">
+					<DataType>
+						<BasicType Type="BOOLEAN"/>
+					</DataType>
+					<Description>是否工作流测试</Description>
+				</FormalParameter>
+			</FormalParameters>
+			<ExtendedAttributes>
+				<ExtendedAttribute Name="type">procedure</ExtendedAttribute>
+				<ExtendedAttribute Name="finishMode">Automatic</ExtendedAttribute>
+				<ExtendedAttribute Name="service">complaintService</ExtendedAttribute>
+				<ExtendedAttribute Name="function">publish</ExtendedAttribute>
+			</ExtendedAttributes>
+		</Application-->
+	</Applications>
+</Application>

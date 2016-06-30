@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#keyword" NAME="action0"
+  PATH="/keyword" SHAPE="32,200,161,41" TITLE="keyword" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/keyword.jsp" TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,161,21" TARGET="page4" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,104,161,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveKeyword"
+  NAME="action3" PATH="/saveKeyword" SHAPE="512,232,177,25"
+  TITLE="keyword" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteKeyword"
+  NAME="action4" PATH="/deleteKeyword" SHAPE="512,288,179,25"
+  TITLE="keyword" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#createNextKeyword"
+  NAME="action7" PATH="/createNextKeyword" SHAPE="512,352,179,25"
+  TITLE="keyword" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#parseKeyword"
+  NAME="action9" PATH="/parseKeyword" SHAPE="32,312,161,25" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="320,48,56,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="320,104,56,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/keyword.jsp" SHAPE="320,216,56,70" SUBTYPE="jsp"
+  TITLE="keywordConfig.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveKeyword" TARGET="action3" TITLE="saveKeyword" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteKeyword" TARGET="action4" TITLE="deleteKeyword" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/createNextKeyword" TARGET="action7" TITLE="createNextKeyword" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#documentOption"
+  NAME="action2" PATH="/documentOption" SHAPE="32,440,161,41"
+  TITLE="documentOption" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/documentOption.jsp" TARGET="page3"
+   TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveDocumentOption"
+  NAME="action11" PATH="/saveDocumentOption" SHAPE="512,472,177,25"
+  TITLE="documentOption" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/documentOption.jsp" SHAPE="320,456,56,40" SUBTYPE="jsp"
+  TITLE="archivesOptionConfig.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveDocumentOption" TARGET="action11"
+   TITLE="saveArchivesOptionConfig" TYPE="link"/>
+ </PROCESS-ITEM>
+</PROCESS>

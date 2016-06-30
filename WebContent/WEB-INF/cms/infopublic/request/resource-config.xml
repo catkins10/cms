@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Application>
+	<Actions>
+		<Action Name="批转" Send="true"/>
+		<Action Name="审核申请" Send="true"/>
+		<Action Name="提供信息" Send="true"/>
+		<Action Name="审核并提供信息" Send="true"/>
+		<Action Name="告知"/>
+		<Action Name="公布到网站"/>
+		<Action Name="删除" DeleteAction="true"/>
+	</Actions>
+	<ProgrammingParticipants>
+		<ProgrammingParticipant Id="siteManager" Name="站点管理员"/>
+		<ProgrammingParticipant Id="siteEditor" Name="站点编辑"/>
+	</ProgrammingParticipants>
+	<SubForms>
+		<SubForm Id="Regist" Name="登记"/>
+		<SubForm Id="Approval" Name="审核"/>
+		<SubForm Id="Read" Name="只读"/>
+	</SubForms>
+	<TypeDeclarations>
+		<TypeDeclaration Id="result" Name="审批结果">
+			<SchemaType>
+				<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+					elementFormDefault="qualified" 
+					attributeFormDefault="unqualified">
+					<xsd:element name="result">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="同意公开"/>
+								<xsd:enumeration value="同意部分公开"/>
+								<xsd:enumeration value="不公开"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+	</TypeDeclarations>
+	<DataFields>
+		<DataField Id="approvalResult" Name="审批结果">
+			<DataType>
+				<DeclaredType Id="result"/>
+			</DataType>
+		</DataField>
+	</DataFields>
+	<Applications>
+		<!-- Application Id="publish" Name="发布到网站">
+			<FormalParameters>
+				<FormalParameter Id="isWorkflowTest" Index="1" Mode="IN">
+					<DataType>
+						<BasicType Type="BOOLEAN"/>
+					</DataType>
+					<Description>是否工作流测试</Description>
+				</FormalParameter>
+			</FormalParameters>
+			<ExtendedAttributes>
+				<ExtendedAttribute Name="type">procedure</ExtendedAttribute>
+				<ExtendedAttribute Name="finishMode">Automatic</ExtendedAttribute>
+				<ExtendedAttribute Name="service">complaintService</ExtendedAttribute>
+				<ExtendedAttribute Name="function">publish</ExtendedAttribute>
+			</ExtendedAttributes>
+		</Application-->
+	</Applications>
+</Application>

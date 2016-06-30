@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Application>
+	<Actions>
+		<Action Name="发布" Send="true"/>
+		<Action Name="送审核"  Send="true"/>
+		<Action Name="审核" Send="true"/>
+		<Action Name="完成审核"  Send="true"/>
+		<Action Name="删除" DeleteAction="true"/>
+	</Actions>
+	<ProgrammingParticipants>
+		<ProgrammingParticipant Id="directoryManager" Name="信息公开目录管理员"/>
+		<ProgrammingParticipant Id="directoryEditor" Name="信息公开目录编辑"/>
+	</ProgrammingParticipants>
+	<SubForms>
+		<SubForm Id="Edit" Name="起草"/>
+		<SubForm Id="Approval" Name="审核"/>
+		<SubForm Id="Read" Name="只读"/>
+		<SubForm Id="SingleColumnEdit" Name="起草(单列)"/>
+		<SubForm Id="SingleColumnRead" Name="只读(单列)"/>
+	</SubForms>
+	<TypeDeclarations>
+		<TypeDeclaration Id="result" Name="审核结果">
+			<SchemaType>
+				<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+					elementFormDefault="qualified" 
+					attributeFormDefault="unqualified">
+					<xsd:element name="result">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="同意发布"/>
+								<xsd:enumeration value="不发布"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+	</TypeDeclarations>
+	<DataFields>
+		<DataField Id="approvalResult" Name="审核结果">
+			<DataType>
+				<DeclaredType Id="result"/>
+			</DataType>
+		</DataField>
+		<DataField Id="sourceRecordUrl" Name="源记录URL">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+	</DataFields>
+	<Applications>
+		<Application Id="issue" Name="发布">
+			<FormalParameters>
+				<FormalParameter Id="sessionInfo" Index="1" Mode="IN">
+					<DataType>
+						<DeclaredType Type="SessionInfo"/>
+					</DataType>
+					<Description>用户会话</Description>
+				</FormalParameter>
+			</FormalParameters>
+			<ExtendedAttributes>
+				<!--类型:procedure/内部过程,application/外部应用,decision/判断-->
+				<ExtendedAttribute Name="type">procedure</ExtendedAttribute>
+				<!--结束方式:Automatic/自动,Manual/人工-->
+				<ExtendedAttribute Name="finishMode">Automatic</ExtendedAttribute>
+				<ExtendedAttribute Name="service">publicInfoService</ExtendedAttribute>
+				<ExtendedAttribute Name="function">issue</ExtendedAttribute>
+			</ExtendedAttributes>
+		</Application>
+	</Applications>
+</Application>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="webim" title="主窗口" recordClass="com.yuanluesoft.im.webim.model.Webim">
+			<templatePlugin path="/im/webim/templatemanage/plugin.js" private="true">
+				<pageElementActions>webim</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="chat" title="对话" recordClass="com.yuanluesoft.im.webim.model.WebimChat">
+			<templatePlugin path="/im/webim/templatemanage/plugin.js" private="true">
+				<pageElementActions>webimDialog,webimChat</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="chatOfSpecialist" title="客服对话" recordClass="com.yuanluesoft.im.webim.model.WebcsChat">
+			<templatePlugin path="/im/webim/templatemanage/plugin.js" private="true">
+				<pageElementActions>webimDialog,webimChat</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="onlinePersons" title="在线用户列表">
+			<templatePlugin path="/im/webim/templatemanage/plugin.js" private="true">
+				<pageElementActions>webimDialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="personTree" title="用户目录树">
+			<templatePlugin path="/im/webim/templatemanage/plugin.js" private="true">
+				<pageElementActions>webimDialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<subPage title="用户目录树" name="base"/>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="systemMessage" title="系统消息" recordClass="com.yuanluesoft.im.model.SystemMessageDetail">
+			<templatePlugin path="/im/webim/templatemanage/plugin.js" private="true">
+				<pageElementActions>webimDialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<link title="查看" url="{PARAMETER:webLink}"/>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="personalSetting" title="个人设置" recordClass="com.yuanluesoft.im.pojo.IMPersonalSetting">
+			<templatePlugin path="/im/webim/templatemanage/plugin.js" private="true">
+				<pageElementActions>webimDialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="personSelect" title="用户选择">
+			<templatePlugin path="/im/webim/templatemanage/plugin.js" private="true">
+				<pageElementActions>webimDialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<subPage title="用户目录树" name="base"/>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+	</pages>
+	
+	<!-- 模板插件,page也可以有自己的配置 -->
+	<templatePlugins>
+		<templatePlugin path="/im/webim/templatemanage/plugin.js" private="false">
+			<!-- 模板操作 -->
+			<templateActions>webimAddon</templateActions>
+		</templatePlugin>
+	</templatePlugins>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="webimOnlinePersons" processor="imPersonsProcessor"/> <!-- 在线用户列表 -->
+	</pageElements>
+</application>

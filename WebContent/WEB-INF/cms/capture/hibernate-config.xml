@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--抓取任务-->
+	<class name="com.yuanluesoft.cms.capture.pojo.CmsCaptureTask" table="cms_capture_task">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="siteId"/> <!--站点ID,numeric(20,0)-->
+		<property name="description"/> <!--任务说明,varchar(200)-->
+		<property name="category"/> <!--分类,varchar(60)-->
+		<property name="businessClassName"/> <!--业务对象类名称,varchar(50)-->
+		<property name="businessTitle"/> <!--业务对象标题,如:文章、政府信息,varchar(50)-->
+		<property name="websiteCharset"/> <!--字符集,VARCHAR(50)-->
+		<property name="captureURL"/> <!--列表页面URL,varchar(1000)-->
+		<property name="recordPageURLDirection"/> <!--记录页面URL获取方式,0/从页面获取,1/根据记录ID生成,char(1)-->
+		<property name="recordPageURL"/> <!--记录页面URL格式,varchar(1000)-->
+		<property name="nextPageDirection"/> <!--下一页链接方式,0/不抓取其它页,1/URL上加页码方式,2/链接方式,char(1)-->
+		<property name="nextPageURL"/> <!--分页URL格式,varchar(1000)-->
+		<property name="beginPage"/> <!--分页URL起始页码,从0开始或者从1开始,numeric(5,0)-->
+		<property name="extendedParameters"/> <!--扩展参数配置,由业务对象自定义,varchar(4000)-->
+		<property name="enabled"/> <!--是否启用,numeric(1,0)-->
+		<property name="schedule"/> <!--抓取安排,0/手动,1/指定时间,2/指定时间间隔,numeric(1,0)-->
+		<property name="captureTime"/> <!--抓取时间,varchar(5)-->
+		<property name="captureInterval"/> <!--抓取时间间隔,指定时间间隔时有效，以分钟为单位,numeric(2,0)-->
+		<property name="nextCaptureTime"/> <!--下一次抓取时间,timestamp null-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="creator"/> <!--创建人,varchar(30)-->
+		<property name="creatorId"/> <!--创建人ID,numeric(20,0)-->
+		<set cascade="delete" inverse="true" lazy="true" name="fields" table="cms_capture_field" order-by="priority, id">
+			<key column="taskId" />
+			<one-to-many class="com.yuanluesoft.cms.capture.pojo.CmsCaptureField" />
+		</set>
+	</class>
+	
+	<!--抓取任务:字段配置-->
+	<class name="com.yuanluesoft.cms.capture.pojo.CmsCaptureField" table="cms_capture_field">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="taskId"/> <!--任务ID,bigint unsigned-->
+		<property name="isListPage"/> <!--是否列表页面,列表页面/1,记录页面/0-->
+		<property name="fieldName"/> <!--字段名称,varchar(300)-->
+		<property name="fieldBegin"/> <!--开始位置,varchar(1000)-->
+		<property name="fieldEnd"/> <!--结束位置,varchar(1000)-->
+		<property name="arraySeparator"/> <!--数组分隔符,varchar(1000)-->
+		<property name="fieldFormat"/> <!--格式,日期格式化,varchar(100)-->
+		<property name="priority"/> <!--优先级,numeric(7,4)-->
+		<property name="value"/> <!--设定值,varchar(300)-->
+	</class>
+	
+	<!--抓取日志-->
+	<class name="com.yuanluesoft.cms.capture.pojo.CmsCaptureLog" table="cms_capture_log">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="captureTaskId"/> <!--任务ID,NUMERIC(20,0)-->
+		<property name="captureTaskDescription"/> <!--任务说明,VARCHAR(200)-->
+		<property name="captureTime"/> <!--抓取时间,timestamp null-->
+		<property name="captureHourMinute"/> <!--抓取时段,VARCHAR(5)-->
+		<property name="captureUrl"/> <!--抓取的URL,varchar(300)-->
+		<property name="captureSuccess"/> <!--抓取是否成功,char(1)-->
+	</class>	
+</hibernate-mapping>

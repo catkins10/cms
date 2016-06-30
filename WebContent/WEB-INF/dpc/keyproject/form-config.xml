@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.dpc.keyproject.forms.Project" title="项目" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProject">
+		<formFields>
+			<field name="area" title="区域" type="string" inputMode="select" required="true">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">selectArea(600, 400, true, 'area{title},area{title|所属区域|100%}')</parameter>
+			</field>
+			<field name="debriefYear" title="年份" type="number" inputMode="dropdown" length="4" required="true">
+				<parameter name="itemsText">2010\0 2011\0 2012\0 2013\0 2014\0 2015\0 2016\0 2017\0 2018\0 2019\0 2020\0 2021\0 2022\0 2023\0 2024\0 2025\0 2026\0 2027\0 2028\0 2029</parameter>
+			</field>
+			<field name="debriefMonth" title="月份" type="number" inputMode="dropdown" length="2" required="true">
+				<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10\0 11\0 12</parameter>
+			</field>
+			<field name="debriefTenDay" title="旬" type="string" inputMode="radio" required="true">
+				<parameter name="itemsText">上旬|1\0中旬|2\0下旬|3</parameter>
+			</field>
+			<field name="debriefProgress" title="进度" type="string" inputMode="textarea" length="2000">
+				<parameter name="rows">5</parameter>
+			</field>
+			<field name="debriefInvestPlan" title="月计划完成投资（万元）" type="number" inputMode="text" length="15,4"/>
+			<field name="debriefInvestComplete" title="完成投资（万元）" type="number" inputMode="text" length="15,4"/>
+			<field name="debriefProblem" title="问题描述" type="string" inputMode="textarea" length="2000">
+				<parameter name="rows">5</parameter>
+			</field>
+			<field name="declareYear" title="申报的年度" type="number" inputMode="hidden" length="4"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="打印" hide="isNew()" execute="window.open('projectPrint.shtml?id={PARAMETER:id}')"/>
+			<action title="台帐输出" hide="isNew()" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/dpc/keyproject/report/zzfetDetailReport.shtml?projectId={PARAMETER:id}', 460, 280);"/>
+			<action title="作废" hide="isNew() or workflow() and noPrivilege(application_manager)" execute="if(confirm('是否确定要作废？'))FormUtils.doAction('deleteProject')"/>
+			<action title="申报重点项目" hide="workflow()" execute="declare()"/>
+			<action title="列入重点项目" hide="workflow()" execute="FormUtils.doAction('approvalDeclare', 'workflowAction=approval')"/>
+			<action title="汇报项目情况" hide="workflow()" execute="FormUtils.doAction('submitDebrief')"/>
+			<action title="审核汇报" hide="workflow()" execute="FormUtils.doAction('approvalDebrief', 'workflowAction=approval')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.forms.AccountableInvest" title="项目总投资资金（责任制）" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProject">
+		<formFields>
+			<field name="projectAccountableInvest" title="项目总投资资金（责任制）" type="component">
+				<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectAccountableInvest</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteAccountableInvest')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.forms.AnnualObjective" title="年度目标" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProject">
+		<formFields>
+			<field name="annualObjective" title="年度目标" type="component">
+				<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectAnnualObjective</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteAnnualObjective')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.forms.FiveYearPlan" title="五年计划" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProject">
+		<formFields>
+			<field name="projectFiveYearPlan" title="五年计划" type="component">
+				<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectFiveYearPlan</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteFiveYearPlan')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.forms.Invest" title="总投资" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProject">
+		<formFields>
+			<field name="projectInvest" title="总投资" type="component">
+				<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvest</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteInvest')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.forms.InvestComplete" title="完成投资" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProject">
+		<formFields>
+			<field name="investComplete" title="完成投资" type="component">
+				<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvestComplete</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteInvestComplete')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.forms.InvestPaid" title="到位投资" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProject">
+		<formFields>
+			<field name="investPaid" title="到位投资" type="component">
+				<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvestPaid</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteInvestPaid')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.forms.OfficialDocument" title="项目审批文件" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProject">
+		<formFields>
+			<field name="officialDocument" title="项目审批文件" type="component">
+				<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectOfficialDocuments</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteOfficialDocument')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.forms.Photo" title="项目进展实景" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProject">
+		<formFields>
+			<field name="photo" title="项目进展实景" type="component">
+				<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectPhoto</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deletePhoto')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.forms.Plan" title="工作安排" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProject">
+		<formFields>
+			<field name="projectPlan" title="工作安排" type="component">
+				<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectPlan</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deletePlan')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.forms.Problem" title="问题" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProject">
+		<formFields>
+			<field name="problem" title="问题" type="component">
+				<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectProblem</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteProblem')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.forms.Progress" title="形象进度" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProject">
+		<formFields>
+			<field name="progress" title="形象进度" type="component">
+				<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectProgress</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteProgress')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.forms.StageProgress" title="关键节点安排" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProject">
+		<formFields>
+			<field name="stageProgress" title="关键节点安排" type="component">
+				<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectStageProgress</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteStageProgress')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.forms.Unit" title="参建单位" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProject">
+		<formFields>
+			<field name="projectUnit" title="参建单位" type="component">
+				<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectUnit</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteUnit')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.forms.Parameter" title="参数配置" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectParameter">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.forms.DevelopmentAreaCategory" title="开发区分类" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectParameter">
+		<formFields>
+			<field name="developmentAreaCategory" title="开发区分类" type="component">
+				<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectDevelopmentAreaCategory</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteDevelopmentAreaCategory')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.forms.Industry" title="行业配置" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectParameter">
+		<formFields>
+			<field name="industry" title="行业配置" type="component">
+				<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectIndustry</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteIndustry')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.dpc.keyproject.forms.InvestSource" title="资金来源配置" pojo="com.yuanluesoft.dpc.keyproject.pojo.KeyProjectParameter">
+		<formFields>
+			<field name="investSource" title="资金来源配置" type="component">
+				<parameter name="class">com.yuanluesoft.dpc.keyproject.pojo.KeyProjectInvestSource</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteInvestSource')"/>
+		</actions>
+	</form>
+</forms>

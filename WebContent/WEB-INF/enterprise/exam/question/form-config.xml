@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/question" class="com.yuanluesoft.enterprise.exam.question.forms.admin.Question" title="试题" pojo="com.yuanluesoft.enterprise.exam.question.pojo.Question">
+		<formFields>
+			<field title="试题内容" name="content" type="html" inputMode="htmleditor" required="true">
+				<parameter name="attachmentSelector">/enterprise/exam/question/admin/selectAttachment.shtml</parameter>
+				<parameter name="centerImage">false</parameter>
+				<parameter name="height">160</parameter>
+			</field>
+			<field title="作答提示" name="hint" type="html" inputMode="htmleditor">
+				<parameter name="attachmentSelector">/enterprise/exam/question/admin/selectAttachment.shtml</parameter>
+				<parameter name="centerImage">false</parameter>
+				<parameter name="height">300</parameter>
+			</field>
+			<field title="试题分析" name="analysis" type="html" inputMode="htmleditor">
+				<parameter name="attachmentSelector">/enterprise/exam/question/admin/selectAttachment.shtml</parameter>
+				<parameter name="centerImage">false</parameter>
+				<parameter name="height">300</parameter>
+			</field>
+			<field title="试题详解" name="detail" type="html" inputMode="htmleditor">
+				<parameter name="attachmentSelector">/enterprise/exam/question/admin/selectAttachment.shtml</parameter>
+				<parameter name="centerImage">false</parameter>
+				<parameter name="height">300</parameter>
+			</field>
+			<field title="答案" name="answers" type="string" inputMode="hidden"/>
+			<field title="问答题答案" name="essayAnswers" type="html" inputMode="htmleditor">
+				<parameter name="attachmentSelector">/enterprise/exam/question/admin/selectAttachment.shtml</parameter>
+				<parameter name="centerImage">false</parameter>
+				<parameter name="height">160</parameter>
+			</field>
+			<field title="答案是否区分大小写" name="answerCaseSensitive" type="string" inputMode="radio">
+				<parameter name="itemsText">区分|true\0不区分|false</parameter>
+			</field>
+			<field title="适用的岗位ID" name="postIds" type="string" inputMode="hidden"/>
+			<field title="适用的岗位" name="posts" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectRole(550, 360, true, 'postIds{id},posts{name|岗位|100%|}', '', '', ',', '', false, true)</parameter>
+			</field>
+			<field title="知识类别ID" name="knowledgeIds" type="string" inputMode="hidden"/>
+			<field title="知识类别" name="knowledges" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.openSelectDialog('enterprise/exam', 'admin/knowledge', 550, 360, true, 'knowledgeIds{id},knowledges{knowledge|知识分类|100%|}')</parameter>
+			</field>
+			<field title="项目分类ID" name="itemIds" type="string" inputMode="hidden"/>
+			<field title="项目分类" name="items" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.openSelectDialog('enterprise/exam', 'admin/item', 550, 360, true, 'itemIds{id},items{item|项目分类|100%|}')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="添加下一个试题" hide="isOld()" execute="FormUtils.doAction('createNextQuestion')"/>
+			<action title="删除" hide="deleteDisable()" execute="javascript:if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteQuestion')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/questionImport" class="com.yuanluesoft.enterprise.exam.question.forms.admin.QuestionImport" title="题库导入" pojo="com.yuanluesoft.enterprise.exam.question.pojo.QuestionImport">		
+		<formFields>
+	  		<field title="是否删除数据" name="deleteData" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="导入" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="删除日志" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteQuestionImport')"/>
+			<action title="删除日志和数据" hide="deleteDisable()" execute="if(confirm('同时删除导入日志和数据，且删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteQuestionImport', 'deleteData=true')"/>
+			<action title="取消" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application title="站点管理">
+	<!-- 模板视图 -->
+	<templateView name="template" application="cms/sitemanage"/>
+
+	<pages>
+		<!-- 站点页面, 当有字段时,name在所有应用中必须唯一 -->
+		<page name="index" title="首页" url="/cms/sitemanage/index.shtml" systemLink="false" recordPage="false" recordClass="com.yuanluesoft.cms.sitemanage.pojo.WebDirectory">
+			<extendedParameters>
+				<parameter name="columnSupport">true</parameter> <!-- 支持栏目 -->
+			</extendedParameters>
+			<subPage title="滚动图片(右侧小图)" name="slideWithRightImage" type="template"/>
+			<subPage title="滚动图片(底部小图)" name="slideWithBottomImage" type="template"/>
+			<subPage title="滚动图片(数字栏)" name="slideWithNumber" type="template"/>
+			<subPage title="在线调查" name="inquiryform" type="template"/>
+		</page>
+		
+		<page name="article" title="文章" recordClass="com.yuanluesoft.cms.siteresource.pojo.SiteResource" pagingSupport="true" url="/cms/siteresource/article.shtml" systemLink="false">
+			<extendedParameters>
+				<parameter name="columnSupport">true</parameter> <!-- 支持栏目 -->
+			</extendedParameters>
+		</page>
+		
+		<page name="articleHint" title="文章页面操作提示(客户端)" systemLink="false">
+			<templatePlugin path="/jeaf/client/templatemanage/plugin.js" private="false">
+				<pageElementActions>clientHintPage</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+		</page>
+		
+		<page name="photoSetArticle" title="文章(图集)" recordClass="com.yuanluesoft.cms.siteresource.pojo.SiteResource" pagingSupport="true" url="/cms/siteresource/article.shtml" systemLink="false">
+			<extendedParameters>
+				<parameter name="columnSupport">true</parameter> <!-- 支持栏目 -->
+			</extendedParameters>
+			<subPage title="图集" name="photoSet" type="template"/>
+		</page>
+		
+		<page name="videoSetArticle" title="文章(视频集)" recordClass="com.yuanluesoft.cms.siteresource.pojo.SiteResource" pagingSupport="true" url="/cms/siteresource/article.shtml" systemLink="false">
+			<extendedParameters>
+				<parameter name="columnSupport">true</parameter> <!-- 支持栏目 -->
+			</extendedParameters>
+		</page>
+		
+		<page name="branchColumn" title="栏目(非末级)" systemLink="false">
+			<extendedParameters>
+				<parameter name="columnSupport">true</parameter> <!-- 支持栏目 -->
+			</extendedParameters>
+			<templatePlugin path="/cms/sitemanage/templatemanage/plugin.js" private="false">
+				<templateActions>siteTemplateRange</templateActions> <!-- 模板操作 -->
+			</templatePlugin>
+			<subPage title="滚动图片(右侧小图)" name="slideWithRightImage" type="template"/>
+			<subPage title="滚动图片(底部小图)" name="slideWithBottomImage" type="template"/>
+			<subPage title="滚动图片(数字栏)" name="slideWithNumber" type="template"/>
+		</page>
+		
+		<page name="leafColumn" title="栏目(末级)" systemLink="false">
+			<extendedParameters>
+				<parameter name="columnSupport">true</parameter> <!-- 支持栏目 -->
+			</extendedParameters>
+			<templatePlugin path="/cms/sitemanage/templatemanage/plugin.js" private="false">
+				<templateActions>siteTemplateRange</templateActions> <!-- 模板操作 -->
+			</templatePlugin>
+			<subPage title="滚动图片(右侧小图)" name="slideWithRightImage" type="template"/>
+			<subPage title="滚动图片(底部小图)" name="slideWithBottomImage" type="template"/>
+			<subPage title="滚动图片(数字栏)" name="slideWithNumber" type="template"/>
+		</page>
+		
+		<page name="subTemplate" title="子模板">
+			<extendedParameters>
+				<parameter name="columnSupport">true</parameter> <!-- 支持栏目 -->
+			</extendedParameters>
+		</page>
+		
+		<page name="quickSiteSearch" title="搜索" searchPage="true" searchResults="resources" url="/cms/siteresource/search.shtml?pageName=quickSiteSearch">
+			<extendedParameters>
+				<parameter name="columnSupport">true</parameter> <!-- 支持栏目 -->
+			</extendedParameters>
+		</page>
+		
+		<page name="siteSearch" title="高级搜索" searchPage="true" searchResults="resources" url="/cms/siteresource/search.shtml?pageName=siteSearch">
+			<extendedParameters>
+				<parameter name="columnSupport">true</parameter> <!-- 支持栏目 -->
+			</extendedParameters>
+		</page>
+		
+		<page name="externalDialog" title="对话框"> <!-- 对外 -->
+			<templatePlugin path="/jeaf/dialog/templatemanage/plugin.js" private="true">
+				<pageElementActions>dialog</pageElementActions> <!-- 页面元素操作 -->
+			</templatePlugin>
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+				
+		<page name="rssSubscribe" title="RSS订阅" url="/cms/rsssubscription/rssSubscribe.shtml" systemLink="false">
+			<extendedParameters>
+				<parameter name="columnSupport">true</parameter> <!-- 支持栏目 -->
+			</extendedParameters>
+		</page>
+		
+		<page name="columnRssSubscribe" title="子栏目RSS订阅" url="/cms/sitemanage/rssSubscribe.shtml" systemLink="false">
+			<extendedParameters>
+				<parameter name="columnSupport">true</parameter> <!-- 支持栏目 -->
+			</extendedParameters>
+		</page>
+		
+		<page name="publicServiceIndex" title="公众服务首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/sitemanage&amp;pageName=publicServiceIndex"/>
+		
+		<page name="selectPhonePage" title="智能手机页面选择" recordClass="com.yuanluesoft.cms.sitemanage.model.PhonePageConfig">
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="phoneClientPilot" title="客户端使用引导页面"/>
+		
+		<page name="pageNotFoundPrompt" title="页面未找到提示" systemLink="false">
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+		
+		<page name="systemErrorPrompt" title="系统错误提示" systemLink="false">
+			<extendedParameters>
+				<parameter name="loggerSupport">false</parameter>
+				<parameter name="advertSupport">false</parameter>
+			</extendedParameters>
+		</page>
+	</pages>
+
+	<links>
+		<link title="自定义链接" dialogURL="/cms/templatemanage/dialog/insertLink.shtml"/>
+		<link title="设为首页" dialogURL="/cms/templatemanage/dialog/insertSetHomePage.shtml"/>
+		<link title="加入收藏" dialogURL="/cms/templatemanage/dialog/insertAddFavorite.shtml"/>
+		<link title="简/繁体转换" dialogURL="/cms/templatemanage/dialog/insertChineseConvert.shtml"/>
+		<link title="栏目/站点链接" dialogURL="/cms/sitemanage/templatemanage/insertSiteLink.shtml"/>
+		<link title="文章链接" dialogURL="/cms/siteresource/templatemanage/insertResourceLink.shtml"/>
+		<link title="头版头条" dialogURL="/cms/sitemanage/templatemanage/insertHeadline.shtml"/>
+	</links>
+	
+	<!-- 模板插件,page也可以有自己的配置 -->
+	<templatePlugins>
+		<templatePlugin path="/cms/templatemanage/editorplugins/plugin.js" private="false">
+			<!-- 模板操作 -->
+			<templateActions>
+				close,save,delete,|,
+				templateName,saveAsDefaultTemplate,|, 
+				uploadTemplate,export,copyTemplate,pasteTemplate,batchCopyTemplate,loadNormalTemplate,restore,insertSubTemplate,|,
+				editCss,editElementHtml
+			</templateActions>
+			
+			<!-- 页面元素操作 -->
+			<pageElementActions>
+				field,form,recordList,paging|templateLink,subPage,rss,|,
+				location,applicationTitle,-,advert,date,counter,user,-,tabstrip,navigator
+			</pageElementActions>
+		</templatePlugin>
+	</templatePlugins>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="systemDate" staticPageSupport="false" processor="systemDateProcessor"/> <!-- 日期时间 -->
+		<pageElement name="opinions" processor="opinionsProcessor"/> <!-- 意见列表 -->
+		<pageElement name="systemLink" processor="systemLinkProcessor"/> <!-- 系统预置链接 -->
+		<pageElement name="pageLink" processor="sitePageLinkProcessor"/> <!-- 页面专有链接 -->
+		<pageElement name="recordLink" processor="sitePageLinkProcessor"/> <!-- 页面专有链接 -->
+		<pageElement name="nextRecordLink" processor="recordPagingLinkProcessor"/> <!--"上一篇"链接 -->
+		<pageElement name="previousRecordLink" processor="recordPagingLinkProcessor"/> <!-- "下一篇"链接 -->
+		<pageElement name="viewAction" processor="viewActionProcessor"/> <!-- 视图操作链接 -->
+		<pageElement name="navigatorLink" processor="navigatorLinkProcessor"/> <!-- 导航栏链接 -->
+		<pageElement name="counter" processor="loggerProcessor"/> <!-- 访问次数 -->
+		<pageElement name="logger" processor="loggerProcessor"/> <!-- 日志 -->
+		<pageElement name="loginUserAction" processor="loginUserProcessor"/> <!-- 登录用户操作 -->
+		<pageElement name="siteLink" processor="siteLinkProcessor"/> <!-- 站点/栏目链接 -->
+		<pageElement name="resourceLink" processor="resourceLinkProcessor"/> <!-- 资源链接 -->
+		<pageElement name="recordList" processor="recordListProcessor"/> <!-- 记录列表 -->
+		<pageElement name="field" processor="recordFieldProcessor"/> <!-- 记录字段 -->
+		<pageElement name="resources" processor="siteResourcesProcessor"/> <!-- 文章列表 -->
+		<pageElement name="hotResources" staticPageSupport="false" processor="siteResourcesProcessor"/> <!-- 热门文章列表 -->
+		<pageElement name="hotColumns" staticPageSupport="false" processor="recordListProcessor"/> <!-- 热门栏目列表 -->
+		<pageElement name="sites" processor="siteColumnsProcessor"/> <!-- 站点列表 -->
+		<pageElement name="siteLogos" processor="siteColumnsProcessor"/> <!-- 站点LOGO -->
+		<pageElement name="columns" processor="siteColumnsProcessor"/> <!-- 栏目列表 -->
+		<pageElement name="columnRelationLinks" processor="columnRelationLinksProcessor"/> <!-- 相关栏目(链接)列表 -->
+		<pageElement name="columnsByResourceCount" staticPageSupport="false" processor="siteColumnsProcessor"/> <!-- 栏目排行(按文章数) -->
+		<pageElement name="form" processor="formProcessor"/> <!-- 表单,如果没有指定自己表单处理器,则调用默认的表单处理器 -->
+		<pageElement name="quickSiteSearch" processor="siteSearchFormProcessor"/> <!-- 站点搜索表单 -->
+		<pageElement name="siteSearch" processor="siteSearchFormProcessor"/> <!-- 站点高级搜索表单 -->
+		<pageElement name="siteLocation" processor="siteLocationProcessor"/> <!-- 站点/栏目位置 -->
+		<pageElement name="applicationTitle" processor="applicationTitleProcessor"/> <!-- 应用名称 -->
+		<pageElement name="searchKey" processor="searchProcessor" deprecated="true"/> <!-- 站点搜索:关键字(保持和旧系统兼容)  -->
+		<pageElement name="searchColumn" processor="searchProcessor" deprecated="true"/> <!-- 站点搜索:栏目选择(保持和旧系统兼容) -->
+		<pageElement name="searchButton" processor="searchProcessor" deprecated="true"/> <!-- 站点搜索:搜索按钮(保持和旧系统兼容) -->
+		<pageElement name="pageSwitch" processor="pagingElementProcessor"/> <!-- 分页:页面切换 -->
+		<pageElement name="pageSwitchButton" processor="pagingElementProcessor"/> <!-- 分页:页面切换按钮 -->
+		<pageElement name="pageAction" processor="pagingElementProcessor"/> <!-- 分页:页面操作,如上一页、下一页等 -->
+		<pageElement name="subPage" processor="subPageProcessor"/> <!-- 子页面 -->
+		<pageElement name="navigator" processor="navigatorProcessor"/> <!-- 导航栏 -->
+		<pageElement name="tabstripBody" processor="tabstripProcessor"/> <!-- TAB标签页 -->
+		<pageElement name="applicationPage" processor="subPageProcessor" deprecated="true"/> <!-- 子页面:保持和旧系统兼容,旧系统的子页面 -->
+		<pageElement name="rssSubscribeLink" processor="rssSubscribeLinkProcessor"/> <!-- RSS订阅链接 -->
+		<pageElement name="rssLink" processor="rssLinkProcessor"/> <!-- RSS频道链接 -->
+		<pageElement name="headline" processor="headlineProcessor"/> <!-- 头版头条 -->
+		<pageElement name="siteResourceField" processor="siteResourceFieldProcessor"/> <!-- 文章字段 -->
+		<pageElement name="totals" staticPageSupport="false" processor="totalsProcessor"/> <!-- 栏目排行(特定栏目) -->
+		<pageElement name="accessTotals" staticPageSupport="false" processor="totalsProcessor"/> <!-- 点击排行(特定页面) -->
+		<pageElement name="issueTotals" staticPageSupport="false" processor="totalsProcessor"/> <!-- 发布排行 -->
+		<pageElement name="advertSpace" staticPageSupport="false" processor="advertSpaceProcessor"/> <!-- 广告位 -->
+		<pageElement name="publicServices" staticPageSupport="false" processor="siteRecordListProcessor"/> <!-- 公众服务列表 -->
+	</pageElements>
+</application>

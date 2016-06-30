@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Application>
+	<Actions>
+		<Action Name="审批报销单" Send="true" Reverse="true"/>
+		<Action Name="作废" DeleteAction="true"/>
+		<Action Name="通知报销人领款"/>
+		<Action Name="支付报销款" Send="true"/>
+		<!--Action Name="领款确认"/-->
+	</Actions>
+	<SubForms>
+		<SubForm Id="Draft" Name="新建报销单"/>
+		<SubForm Id="Approval" Name="审批报销单"/>
+		<SubForm Id="Pay" Name="支付报销款"/>
+		<SubForm Id="Read" Name="只读"/>
+	</SubForms>
+	<TypeDeclarations>
+		<TypeDeclaration Id="result" Name="审批结果">
+			<SchemaType>
+				<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+					elementFormDefault="qualified" 
+					attributeFormDefault="unqualified">
+					<xsd:element name="result">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="同意"/>
+								<xsd:enumeration value="不同意"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+	</TypeDeclarations>
+	<DataFields>
+		<DataField Id="approvalResult" Name="审批结果">
+			<DataType>
+				<DeclaredType Id="result"/>
+			</DataType>
+		</DataField>
+		<DataField Id="type" Name="费用类别">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="description" Name="事件描述">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="money" Name="报销金额">
+			<DataType>
+				<BasicType Type="FLOAT"/>
+			</DataType>
+		</DataField>
+		<DataField Id="personName" Name="报销人">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="departmentName" Name="部门">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+		<DataField Id="project.name" Name="项目名称">
+			<DataType>
+				<BasicType Type="STRING"/>
+			</DataType>
+		</DataField>
+	</DataFields>
+</Application>

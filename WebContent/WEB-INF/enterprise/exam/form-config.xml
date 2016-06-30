@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="examTest" action="/enterprise/exam/submitExamTest.shtml" js="/enterprise/exam/js/examTest.js" class="com.yuanluesoft.enterprise.exam.forms.ExamTest" title="答卷" pojo="com.yuanluesoft.enterprise.exam.pojo.ExamTest">
+		<formFields>
+			<field title="是否批改试卷" name="correct" type="string" inputMode="hidden"/>
+			<field title="是否复核试卷" name="check" type="string" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="提交" execute="submitTest()"/>
+			<action title="放弃考试" execute="if(confirm('放弃后不可恢复，是否确定要放弃考试？'))FormUtils.doAction('cancelExamTest')"/>
+			<action title="完成批改" execute="correctTest()"/>
+			<action title="完成复核" execute="checkTest()"/>
+		</actions>
+	</form>
+
+	<form name="admin/exam" class="com.yuanluesoft.enterprise.exam.forms.admin.Exam" title="考试" pojo="com.yuanluesoft.enterprise.exam.pojo.Exam">
+		<formFields>
+			<field title="适用的岗位ID" name="examPostIds" type="string" inputMode="hidden"/>
+			<field title="适用的岗位" name="examPostNames" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectRole(550, 360, true, 'examPostIds{id},examPostNames{name|岗位|100%|}', '', '', ',', '', false, true)</parameter>
+			</field>
+			<field title="批改人ID" name="examCorrectorIds" type="string" inputMode="hidden"/>
+			<field title="批改人姓名" name="examCorrectorNames" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectPerson(550, 360, true, 'examCorrectorIds{id},examCorrectorNames{name|批改人|100%|}')</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteExam')"/>
+			<action title="组卷" hide="isRead() or isNew()" execute="PageUtils.newrecord('enterprise/exam', 'admin/examPaper', 'mode=dialog,width=550,height=200', 'examId={PARAMETER:id}')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/examPaper" class="com.yuanluesoft.enterprise.exam.forms.admin.ExamPaper" title="考卷" pojo="com.yuanluesoft.enterprise.exam.pojo.ExamPaper">
+		<formFields>
+			<field title="参加考试人员" name="testUsers" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.security.model.RecordVisitorList</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="组卷" hide="isOld()" execute="FormUtils.doAction('generateExamPaper')"/>
+			<action title="发布" hide="isNew() or isRead()" execute="if(confirm('是否确定发布试卷？'))FormUtils.doAction('releaseExamPaper')"/>
+			<action title="保存" hide="isNew() or isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteExamPaper')"/>
+			<action title="打印试卷" hide="isNew() or isRead()" execute="window.open('printExamPaper.shtml?id={PARAMETER:id}')"/>
+			<action title="打印试卷（含答案）" hide="isNew() or isRead()" execute="window.open('printExamPaper.shtml?id={PARAMETER:id}&amp;fullPrint=true')"/>
+			<action title="查看答卷" hide="isNew() or isRead()" execute="DialogUtils.openDialog('{CONTEXTPATH}/enterprise/exam/admin/examTestReport.shtml?examPaperId={PARAMETER:id}', 600, 300)"/>
+		</actions>
+	</form>
+	
+	<form name="admin/examTestReport" class="com.yuanluesoft.enterprise.exam.forms.admin.ExamTestReport" title="考试情况"/>
+
+	<form name="admin/knowledge" class="com.yuanluesoft.enterprise.exam.forms.admin.Knowledge" title="知识类别" pojo="com.yuanluesoft.enterprise.exam.pojo.ExamKnowledge">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="javascript:if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteKnowledge')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/item" class="com.yuanluesoft.enterprise.exam.forms.admin.Item" title="项目分类" pojo="com.yuanluesoft.enterprise.exam.pojo.ExamItem">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteItem')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.enterprise.exam.forms.admin.ExamStatView" title="考试统计视图">
+		<formFields>
+			<field title="部门ID" name="orgIds" type="string" inputMode="hidden"/>
+			<field title="部门名称" name="orgNames" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectOrg(550, 360, true, 'orgIds{id},orgNames{name|上级机构|100%}')</parameter>
+			</field>
+			<field title="岗位ID" name="postIds" type="string" inputMode="hidden"/>
+			<field title="岗位名称" name="postNames" type="string" inputMode="select">
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="execute">DialogUtils.selectRole(550, 360, true, 'postIds{id},postNames{name|岗位|100%|}', '', '', ',', '', false, true)</parameter>
+			</field>
+			<field title="年度" name="year" type="number" inputMode="dropdown">
+				<parameter name="itemsText">2012\0 2013\0 2014\0 2015\0 2016\0 2017\0 2018\0 2019\0 2020</parameter>
+			</field>
+			<field title="月份" name="month" type="number" inputMode="dropdown">
+				<parameter name="itemsText">1\0 2\0 3\0 4\0 5\0 6\0 7\0 8\0 9\0 10\0 11\0 12</parameter>
+			</field>
+		</formFields>
+	</form>
+</forms>

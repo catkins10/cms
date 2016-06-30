@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="todoTelegram" form="receiveTelegram" title="待办收报" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(manageUnit_create) and noPrivilege(manageUnit_sign) and noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.telex.receive.base.pojo.ReceiveTelegram</pojo>
+			<where>signs.id is null and ReceiveTelegram.archiveTime is null and ReceiveTelegram.isCryptic='1'</where>
+			<orderBy>ReceiveTelegram.receiveTime DESC</orderBy>
+			<quickFilter>ReceiveTelegram.subject like '%{KEY}%' or ReceiveTelegram.summary like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action name="create" title="收报登记(密文)" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create)" execute="PageUtils.newrecord('telex/receive/cryptic', 'receiveTelegram', 'mode=fullscreen')"/>
+			<action title="签收/清退" execute="DialogUtils.openDialog('{CONTEXTPATH}/telex/receive/cryptic/verifyFingerprint.shtml', 280, 200)" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_sign)"/>
+			<action title="打印核对清单" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/telex/receive/cryptic/exportListing.shtml', 280, 200)" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create) and noPrivilege(manageUnit_sign)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="榕机密收" name="sequence" width="60" align="center"/>
+			<column title="主题" name="subject"/>
+			<column title="接收时间" name="receiveTime" fieldType="date" width="80" align="center" format="yyyy-MM-dd"/>
+			<column title="收电单位" name="toUnitNames" width="180" align="center"/>
+			<column title="等级" name="telegramLevel" width="80" align="center"/>
+			<column title="密级" name="securityLevel" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="processingTelegram" form="receiveTelegram" title="在办收报" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(manageUnit_create) and noPrivilege(manageUnit_sign) and noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.telex.receive.base.pojo.ReceiveTelegram</pojo>
+			<where>not (signs.id is null) and ReceiveTelegram.archiveTime is null and ReceiveTelegram.isCryptic='1'</where>
+			<orderBy>ReceiveTelegram.receiveTime DESC</orderBy>
+			<quickFilter>ReceiveTelegram.subject like '%{KEY}%' or ReceiveTelegram.summary like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action name="create" title="收报登记(密文)" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create)" execute="PageUtils.newrecord('telex/receive/cryptic', 'receiveTelegram', 'mode=fullscreen')"/>
+			<action title="签收/清退" execute="DialogUtils.openDialog('{CONTEXTPATH}/telex/receive/cryptic/verifyFingerprint.shtml', 280, 200)" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_sign)"/>
+			<action title="打印核对清单" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/telex/receive/cryptic/exportListing.shtml', 280, 200)" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create) and noPrivilege(manageUnit_sign)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="榕机密收" name="sequence" width="60" align="center"/>
+			<column title="主题" name="subject" width="60%"/>
+			<column title="办理单位(个人)" name="signs.receiverName" collection="true" ellipsis="等" length="0" width="40%"/>
+			<column title="接收时间" name="receiveTime" fieldType="date" width="80" align="center" format="yyyy-MM-dd"/>
+			<column title="等级" name="telegramLevel" width="80" align="center"/>
+			<column title="密级" name="securityLevel" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="recentArchiveTelegram" form="receiveTelegram" title="归档收报(近期)" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(manageUnit_create) and noPrivilege(manageUnit_sign) and noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.telex.receive.base.pojo.ReceiveTelegram</pojo>
+			<join>left join ReceiveTelegram.signs signs</join>
+			<where>not (ReceiveTelegram.archiveTime is null) and ReceiveTelegram.isCryptic='1' and ReceiveTelegram.archiveTime>DATE({TODAY-730})</where>
+			<orderBy>ReceiveTelegram.receiveTime DESC</orderBy>
+			<quickFilter>ReceiveTelegram.subject like '%{KEY}%' or ReceiveTelegram.summary like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action name="create" title="收报登记(密文)" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create)" execute="PageUtils.newrecord('telex/receive/cryptic', 'receiveTelegram', 'mode=fullscreen')"/>
+			<action title="签收/清退" execute="DialogUtils.openDialog('{CONTEXTPATH}/telex/receive/cryptic/verifyFingerprint.shtml', 280, 200)" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_sign)"/>
+			<action title="打印核对清单" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/telex/receive/cryptic/exportListing.shtml', 280, 200)" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create) and noPrivilege(manageUnit_sign)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="榕机密收" name="sequence" width="60" align="center"/>
+			<column title="主题" name="subject" width="60%"/>
+			<column title="接收时间" name="receiveTime" fieldType="date" width="80" align="center" format="yyyy-MM-dd"/>
+			<!-- col title="收电单位" name="toUnitNames" width="180" align="center"/-->
+			<column title="办理单位(个人)" name="signs.receiverName" collection="true" ellipsis="等" length="0" width="40%"/>
+			<column title="等级" name="telegramLevel" width="80" align="center"/>
+			<column title="密级" name="securityLevel" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="archiveTelegram" form="receiveTelegram" title="归档收报(所有)" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(manageUnit_create) and noPrivilege(manageUnit_sign) and noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.telex.receive.base.pojo.ReceiveTelegram</pojo>
+			<join>left join ReceiveTelegram.signs signs</join>
+			<where>not (ReceiveTelegram.archiveTime is null) and ReceiveTelegram.isCryptic='1'</where>
+			<orderBy>ReceiveTelegram.receiveTime DESC</orderBy>
+			<quickFilter>ReceiveTelegram.subject like '%{KEY}%' or ReceiveTelegram.summary like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action name="create" title="收报登记(密文)" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create)" execute="PageUtils.newrecord('telex/receive/cryptic', 'receiveTelegram', 'mode=fullscreen')"/>
+			<action title="签收/清退" execute="DialogUtils.openDialog('{CONTEXTPATH}/telex/receive/cryptic/verifyFingerprint.shtml', 280, 200)" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_sign)"/>
+			<action title="打印核对清单" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/telex/receive/cryptic/exportListing.shtml', 280, 200)" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_create) and noPrivilege(manageUnit_sign)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="榕机密收" name="sequence" width="60" align="center"/>
+			<column title="主题" name="subject" width="60%"/>
+			<column title="接收时间" name="receiveTime" fieldType="date" width="80" align="center" format="yyyy-MM-dd"/>
+			<!-- col title="收电单位" name="toUnitNames" width="180" align="center"/-->
+			<column title="办理单位(个人)" name="signs.receiverName" collection="true" ellipsis="等" length="0" width="40%"/>
+			<column title="等级" name="telegramLevel" width="80" align="center"/>
+			<column title="密级" name="securityLevel" width="80" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="agentPerson" form="agentPerson" title="代签收人" pageRows="20" openFeatures="width=640,height=400" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.telex.receive.base.pojo.TelegramSignAgent</pojo>
+			<orderBy>TelegramSignAgent.name</orderBy>
+			<quickFilter>TelegramSignAgent.name like '%{KEY}%' or TelegramSignAgent.orgName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="姓名" name="name" width="120"/>
+			<column title="所在单位" name="orgName"/>
+		</columns>
+	</view>
+</views>

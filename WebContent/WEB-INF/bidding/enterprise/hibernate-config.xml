@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--企业:基本信息-->
+	<class name="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprise" table="bidding_enterprise">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="area"/> <!--所在地区-->
+		<property name="name"/> <!--企业名称-->
+		<property name="businessLicence"/> <!--营业执照号码-->
+		<property name="statisticsLicence"/> <!--单位统计证-->
+		<property name="safeLicence"/> <!--安全许可证-->
+		<property name="registDate"/> <!--注册时间-->
+		<property name="registeredCapital"/> <!--注册资金（万元）-->
+		<property name="kind"/> <!--企业性质-->
+		<property name="legalRepresentative"/> <!--法定代表人-->
+		<property name="representativeIdNumber"/> <!--法定代表人身份证号码-->
+		<property name="representativeTel"/> <!--法定代表人联系电话-->
+		<property name="manager"/> <!--企业经理-->
+		<property name="managerIdNumber"/> <!--企业经理身份证号码-->
+		<property name="managerTel"/> <!--企业经理联系电话-->
+		<property name="technicalLeader"/> <!--技术负责人-->
+		<property name="technicalLeaderIdNumner"/> <!--技术负责人身份证号码-->
+		<property name="technicalLeaderTel"/> <!--技术负责人电话-->
+		<property name="address"/> <!--通讯地址-->
+		<property name="postalcode"/> <!--邮政编码-->
+		<property name="linkman"/> <!--联系人-->
+		<property name="linkmanIdNumber"/> <!--联系人身份证号码-->
+		<property name="tel"/> <!--联系电话-->
+		<property name="mobile"/> <!--手机-->
+		<property name="fax"/> <!--传真-->
+		<property name="email"/> <!--电子邮件-->
+		<property name="website"/> <!--企业主页-->
+		<property name="bank"/> <!--开户银行-->
+		<property name="account"/> <!--开户帐号-->
+		<property name="introduction"/> <!--经营范围-->
+		<property name="created"/> <!--登记时间-->
+		<property name="isValid"/> <!--企业信息是否生效-->
+		<property name="isNullify"/> <!--是否注销审批记录-->
+		<property name="isAlter"/> <!--是否变更审批记录-->
+		<property name="alterEnterpriseId"/> <!--变更企业ID-->
+		<property name="alterDescription"/> <!--变更内容描述-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<property name="remark"/> <!--备注-->
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem"/>
+		</set>
+		<set name="opinions" table="bidding_enterprise_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterpriseOpinion"/>
+		</set>
+		<set name="visitors" table="bidding_enterprise_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprisePrivilege"/>
+		</set>
+		<set name="certs" table="bidding_enterprise_cert" lazy="true" inverse="true" cascade="delete" order-by="approvalDate">
+			<key column="enterpriseId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterpriseCert"/>
+		</set>
+		<set name="jobholders" table="bidding_jobholder" lazy="true" inverse="true" cascade="delete" order-by="category,name">
+			<key column="enterpriseId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.enterprise.pojo.BiddingJobholder"/>
+		</set>
+		<set name="employees" table="bidding_employee" lazy="true" inverse="true" cascade="delete" order-by="name">
+			<key column="enterpriseId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.enterprise.pojo.BiddingEmployee"/>
+		</set>
+	</class>
+	
+	<!--企业记录控制-->
+	<class name="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprisePrivilege" table="bidding_enterprise_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/>
+		<property name="recordId"/>
+		<property name="accessLevel"/>
+	</class>
+	
+	<!--企业:办理意见-->
+	<class name="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterpriseOpinion" table="bidding_enterprise_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="opinion"/>
+		<property name="created"/>
+		<property name="mainRecordId"/>
+		<property name="opinionType"/>
+		<property name="personId"/>
+		<property name="activityId"/>
+		<property name="workItemId"/>
+		<property name="activityName"/>
+		<property name="personName"/>
+		<property name="agentName"/>
+		<property name="agentId"/>
+	</class>
+	
+	<!--企业:资质-->
+	<class name="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterpriseCert" table="bidding_enterprise_cert">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="enterpriseId"/> <!--企业ID-->
+		<property name="type"/> <!--资质类型-->
+		<property name="certificateNumber"/> <!--资质证书编号-->
+		<property name="level" column="certLevel"/> <!--资质等级-->
+		<property name="approvalDate"/> <!--取得资质时间-->
+		<property name="approvalNumber"/> <!--批准文号-->
+		<property name="lib"/> <!--代理名录库-->
+		<property name="remark"/> <!--备注-->
+		<property name="alterId"/> <!--变更记录ID-->
+		<set name="surveies" table="bidding_enterprise_cert_survey" lazy="false" inverse="true" cascade="delete" order-by="surveyYear desc">
+			<key column="certId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterpriseCertSurvey"/>
+		</set>
+		<many-to-one name="enterprise" class="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterprise" column="enterpriseId" update="false" insert="false"/>
+	</class>
+	
+	<!--企业:代理名录库配置-->
+	<class name="com.yuanluesoft.bidding.enterprise.pojo.BiddingAgentLib" table="bidding_agent_lib">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="lib"/> <!--代理名录库-->
+	</class>
+	
+	<!--企业:资质年检-->
+	<class name="com.yuanluesoft.bidding.enterprise.pojo.BiddingEnterpriseCertSurvey" table="bidding_enterprise_cert_survey">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="certId"/> <!--资质ID-->
+		<property name="surveyDate"/> <!--年检时间-->
+		<property name="surveyResult"/> <!--年检情况-->
+		<property name="surveyYear"/> <!--年份-->
+		<property name="remark"/> <!--备注-->
+		<property name="alterId"/> <!--变更记录ID-->
+	</class>
+	
+	<!--从业人员-->
+	<class name="com.yuanluesoft.bidding.enterprise.pojo.BiddingJobholder" table="bidding_jobholder">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="enterpriseId"/> <!--工作单位ID-->
+		<property name="enterpriseName"/> <!--工作单位-->
+		<property name="name"/> <!--姓名-->
+		<property name="category"/> <!--类别-->
+		<property name="sex"/> <!--性别-->
+		<property name="identityCard"/> <!--身份证号码-->
+		<property name="school"/> <!--毕业（培训）院校-->
+		<property name="education"/> <!--学历-->
+		<property name="schoolProfessional"/> <!--毕业专业-->
+		<property name="professional"/> <!--专业-->
+		<property name="secondProfessional"/> <!--第二专业-->
+		<property name="otherProfessional"/> <!--其它专业-->
+		<property name="duty"/> <!--职务-->
+		<property name="job"/> <!--职称-->
+		<property name="qualification"/> <!--资质等级/人员类别-->
+		<property name="certificateNumber"/> <!--证书号码/培训证号-->
+		<property name="certificateCreated"/> <!--发证时间-->
+		<property name="certificateLimit"/> <!--有效期-->
+		<property name="tel"/> <!--电话-->
+		<property name="mobile"/> <!--手机-->
+		<property name="address"/> <!--通讯地址-->
+		<property name="postalCode"/> <!--邮编-->
+		<property name="remark"/> <!--备注-->
+		<property name="alterId"/> <!--变更记录ID-->
+	</class>
+	
+	<!--企业用户-->
+	<class name="com.yuanluesoft.bidding.enterprise.pojo.BiddingEmployee" table="bidding_employee">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="enterpriseId"/> <!--企业ID-->
+		<property name="enterpriseName"/> <!--企业名称-->
+		<property name="name"/> <!--用户姓名-->
+		<property name="loginName"/> <!--登录用户名-->
+		<property name="password"/> <!--登录密码-->
+		<property name="halt"/> <!--停用-->
+		<property name="isPermanent"/> <!--是否永久性用户-->
+		<property name="tryDays"/> <!--试用有效期(天)-->
+		<property name="tryEndDate"/> <!--试用截止时间-->
+		<property name="ekeyId"/> <!--EKeyID-->
+		<property name="ekeyNO"/> <!--EKey编号-->
+		<property name="lastTransactor"/> <!--最后经办人-->
+		<property name="lastTransactorId"/> <!--最后经办人ID-->
+		<property name="lastTransactTime"/> <!--最后办理时间-->
+		<property name="contractNo"/> <!--合同编号-->
+		<property name="enterpriseTransactor"/> <!--企业经办人-->
+		<property name="tel"/> <!--联系电话-->
+		<property name="deposit"/> <!--已收押金-->
+		<property name="depositBill"/> <!--押金收据号码-->
+		<property name="drawTime"/> <!--领取软件-->
+		<property name="damage"/> <!--损坏内容-->
+		<property name="damageMoney"/> <!--已收赔偿金额-->
+		<property name="saleMoney"/> <!--已收销售款-->
+		<property name="saleBill"/> <!--发票号码-->
+		<property name="receiptNo"/> <!--收据号码-->
+		<property name="remark"/> <!--备注-->
+	</class>
+	
+	<!--EKey操作记录-->
+	<class name="com.yuanluesoft.bidding.enterprise.pojo.BiddingEKeyLog" table="bidding_ekey_log">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="employeeId"/> <!--企业用户ID-->
+		<property name="ekeyNO"/> <!--EKey编号-->
+		<property name="enterpriseName"/> <!--企业名称-->
+		<property name="name"/> <!--用户姓名-->
+		<property name="loginName"/> <!--登录用户名-->
+		<property name="isPermanent"/> <!--是否永久性用户-->
+		<property name="tryDays"/> <!--试用有效期(天)-->
+		<property name="tryEndDate"/> <!--试用截止时间-->
+		<property name="actionType"/> <!--操作类型-->
+		<property name="actionTime"/> <!--操作时间-->
+		<property name="transactor"/> <!--经办人-->
+		<property name="transactorId"/> <!--经办人ID-->
+		<property name="contractNo"/> <!--合同编号-->
+		<property name="enterpriseTransactor"/> <!--企业经办人-->
+		<property name="tel"/> <!--联系电话-->
+		<property name="deposit"/> <!--已收押金-->
+		<property name="depositBill"/> <!--押金收据号码-->
+		<property name="drawTime"/> <!--领取软件-->
+		<property name="damage"/> <!--损坏内容-->
+		<property name="damageMoney"/> <!--已收赔偿金额-->
+		<property name="saleMoney"/> <!--已收销售款-->
+		<property name="saleBill"/> <!--发票号码-->
+		<property name="enterpriseCert"/> <!--企业资质-->
+		<property name="receiptNo"/> <!--收据号码-->
+		<property name="remark"/> <!--备注-->
+	</class>
+	
+	<!--企业:投标企业-->
+	<class name="com.yuanluesoft.bidding.enterprise.pojo.BiddingBidEnterprise" table="bidding_bid_enterprise">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--企业名称,VARCHAR2(100)-->
+		<property name="bank"/> <!--开户行,VARCHAR2(50)-->
+		<property name="account"/> <!--帐号,VARCHAR2(50)-->
+	</class>
+</hibernate-mapping>

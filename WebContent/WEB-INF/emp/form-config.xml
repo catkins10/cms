@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="employeea" class="com.yuanluesoft.emp.forms.Employeea" title="员工信息" pojo="com.yuanluesoft.emp.pojo.Department">
+		<formFields>
+			<field name="employ" title="员工信息" type="component">
+				<parameter name="class">com.yuanluesoft.emp.pojo.Employeea</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteEmployeea')"/>
+		</actions>
+	</form>
+	<form name="department" class="com.yuanluesoft.emp.forms.Department" title="部门信息" pojo="com.yuanluesoft.emp.pojo.Department">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteDepartment')"/>
+		</actions>
+	</form>
+</forms>

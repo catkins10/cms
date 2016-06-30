@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 创建时间允许修改 -->
+<businessObjects>
+	<businessObject title="民意征集主题" class="com.yuanluesoft.cms.advice.pojo.AdviceTopic" businessServiceName="adviceService">
+		<field name="subject" title="主题" length="200" required="true" type="string" inputMode="text">
+			<parameter name="rssTitleField">true</parameter>
+		</field>
+		<field name="status" title="状态" type="string" inputMode="readonly"/>
+		<field name="body" title="正文" required="true" type="html" inputMode="htmleditor">
+			<parameter name="rssDescriptionField">true</parameter>
+			<parameter name="height">300</parameter>
+		</field>
+		<field name="issue" title="是否发布" length="1" type="char" inputMode="radio">
+			<parameter name="itemsText">发布|1\0不发布|0</parameter>
+		</field>
+		<field name="endDate" title="征集截止日期" type="date" inputMode="date" required="true"/>
+		<field name="issueTime" title="发布时间" type="timestamp" inputMode="readonly">
+			<parameter name="rssPubDateField">true</parameter>
+		</field>
+		<field name="creator" title="创建者" length="30" type="string" inputMode="readonly"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="datetime"/>
+		<field name="siteId" title="站点ID" type="number" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="advices" title="建议列表" type="components">
+			<parameter name="class">com.yuanluesoft.cms.advice.pojo.Advice</parameter>
+		</field>
+		<field name="feedbacks" title="结果反馈" type="components">
+			<parameter name="class">com.yuanluesoft.cms.advice.pojo.AdviceFeedback</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="serviceName">siteImageService</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">1000000</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">100000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+			<parameter name="serviceName">siteVideoService</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="建议" class="com.yuanluesoft.cms.advice.pojo.Advice" businessServiceName="publicService">
+		<field name="topicId" title="主题ID" type="number" inputMode="hidden">
+			<parameter name="newFormOnly">true</parameter>
+		</field>
+		<field name="subject" title="建议主题" length="200" required="true" type="string" inputMode="text">
+			<parameter name="rssTitleField">true</parameter>
+		</field>
+		<field name="content" title="建议内容" persistence="false" type="html" inputMode="htmleditor">
+			<parameter name="rssDescriptionField">true</parameter>
+			<parameter name="referenceFields">lazyBody</parameter>
+			<parameter name="height">200</parameter>
+		</field>
+		<field name="topic" title="征集主题" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.cms.advice.pojo.AdviceTopic</parameter>
+		</field>
+		<field name="images" title="图片" type="image" inputMode="attachment">
+			<parameter name="serviceName">siteImageService</parameter>
+		</field>
+		<field name="attachments" title="附件" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">50000000</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="flashs" title="FLASH" type="attachment" inputMode="attachment">
+			<parameter name="maxUploadSize">1000000</parameter>
+			<parameter name="serviceName">siteAttachmentService</parameter>
+		</field>
+		<field name="videos" title="视频" type="video" inputMode="attachment">
+			<parameter name="maxUploadSize">100000000</parameter>
+			<parameter name="videoHeight">300</parameter>
+			<parameter name="videoBitrate">473</parameter>
+			<parameter name="audioFreq">22050</parameter>
+			<parameter name="videoFps">25</parameter>
+			<parameter name="videoWidth">400</parameter>
+			<parameter name="audioBitrate">56</parameter>
+			<parameter name="serviceName">siteVideoService</parameter>
+		</field>
+		<field name="opinions" title="办理意见" type="components">
+			<parameter name="presettingOpinionTypes">批转,部门办理|required,部门审核,回复审核,领导批示</parameter>
+			<parameter name="class">com.yuanluesoft.cms.publicservice.pojo.PublicServiceOpinion</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="结果反馈" class="com.yuanluesoft.cms.advice.pojo.AdviceFeedback" businessServiceName="adviceService">
+		<field name="topicId" title="主题ID" type="number" inputMode="hidden"/>
+		<field name="feedback" title="结果反馈" type="html" inputMode="htmleditor">
+			<parameter name="height">300</parameter>
+		</field>
+		<field name="creatorId" title="反馈人ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="反馈人" length="30" type="string" inputMode="readonly"/>
+		<field name="created" title="反馈时间" type="timestamp" inputMode="readonly"/>
+		<field name="adviceTopic" title="征集主题" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.cms.advice.pojo.AdviceTopic</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

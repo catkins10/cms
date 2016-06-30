@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<objectCache>
+	<!-- 模板缓存 -->
+    <cache name="template">
+		<property name="maxElementsInMemory">100</property> <!-- 内存中缓存100个模板 -->
+		<property name="maxElements">1000</property> <!-- 总共可以缓存1000个模板 -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">18000</property> <!-- 5小时内没有被使用,自动失效 -->
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+
+	<!-- 模型缓存 -->
+    <cache name="model">
+		<property name="maxElementsInMemory">200</property> <!-- 内存中缓存200个model -->
+		<property name="maxElements">2000</property> <!-- 总共可以缓存2000个model -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">false</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">18000</property> <!-- 5小时内没有被使用,自动失效 -->
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- 数据库记录缓存 -->
+    <cache name="record">
+		<property name="maxElementsInMemory">200</property> <!-- 内存中缓存200个记录 -->
+		<property name="maxElements">500</property> <!-- 总共可以缓存500个model -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">false</property> <!-- 不做磁盘缓存 -->
+		<property name="timeToIdleSeconds">18000</property> <!-- 5小时内没有被使用,自动失效 -->
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- EAI缓存 -->
+    <cache name="eai">
+		<property name="maxElementsInMemory">200</property> <!-- 内存中缓存200个model -->
+		<property name="maxElements">2000</property> <!-- 总共可以缓存2000个model -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">18000</property> <!-- 5小时内没有被使用,自动失效 -->
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- 工作流缓存 -->
+    <cache name="workflow">
+		<property name="maxElementsInMemory">200</property> <!-- 内存中缓存200个工作流实例 -->
+		<property name="maxElements">10000</property> <!-- 总共可以缓存10000个工作流实例 -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">36000</property> <!-- 10小时内没有被使用,自动失效 -->
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- 工作流配置许可证缓存 -->
+    <cache name="workflowPassport">
+		<property name="maxElementsInMemory">100</property> <!-- 内存中缓存500个工作流实例 -->
+		<property name="maxElements">100</property> <!-- 总共可以缓存10000个工作流实例 -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">false</property>
+		<property name="timeToIdleSeconds">3600</property> <!-- 60分钟内没有被使用,自动失效 -->
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- 记录锁缓存 -->
+    <cache name="recordLock">
+		<property name="maxElementsInMemory">200</property> <!-- 内存中缓存200个加锁动作 -->
+		<property name="maxElements">10000</property> <!-- 总共可以缓存10000个加锁动作 -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">18000</property> <!-- 5小时内没有被使用,自动失效 -->
+		<property name="saveToDiskOnShutdown">true</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- 会话信息缓存 -->
+    <cache name="sessionInfo">
+		<property name="maxElementsInMemory">200</property> <!-- 内存中缓存200个会话信息 -->
+		<property name="maxElements">10000</property> <!-- 总共可以缓存10000个会话信息 -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">false</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">3600</property> <!-- 1小时内没有被使用,自动失效 -->
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- SSO会话缓存 -->
+    <cache name="ssoSession">
+		<property name="maxElementsInMemory">300</property> <!-- 内存中缓存300个用户会话 -->
+		<property name="maxElements">1000000</property> <!-- 支持100万在线用户 -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">1800</property> <!-- 会话超时时间30分钟 -->
+		<property name="saveToDiskOnShutdown">true</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- TICKET缓存 -->
+    <cache name="ticket">
+		<property name="maxElementsInMemory">100</property> <!-- 内存中缓存100个ticket -->
+		<property name="maxElements">10000</property> <!-- 总共可以缓存10000个ticket -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToLiveSeconds">30</property> <!-- 要求30秒内必须响应 -->
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- 文件下载缓存 -->
+    <cache name="fileDownload">
+		<property name="maxElementsInMemory">500</property> <!-- 内存中存放500个下载 -->
+		<property name="maxElements">10000</property> <!-- 同时允许10000个下载 -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">600</property> <!-- 10分钟内没有下载动作,自动失效 -->
+		<property name="saveToDiskOnShutdown">true</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- 文件上传缓存 -->
+    <cache name="fileUpload">
+		<property name="maxElementsInMemory">500</property> <!-- 最多允许500个人上传 -->
+		<property name="maxElements">500</property>
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">false</property> <!-- 只在内存中缓存 -->
+		<property name="timeToIdleSeconds">120</property> <!-- 2分钟内没有任何数据上传,自动失效 -->
+		<property name="saveToDiskOnShutdown">true</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+	<!-- 远程文档缓存 -->
+    <cache name="remoteDocumentTask">
+		<property name="maxElementsInMemory">100</property> <!-- 内存中存放100个任务 -->
+		<property name="maxElements">10000</property> <!-- 最多允许10000个任务 -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">18000</property> <!-- 5小时内没有上传,自动失效 -->
+		<property name="saveToDiskOnShutdown">true</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- 访问控制列表缓存 -->
+    <cache name="acl">
+		<property name="maxElementsInMemory">300</property> <!-- 内存中缓存300个存取控制列表 -->
+		<property name="maxElements">5000</property> <!-- 总共缓存5000个存取控制列表 -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">3600</property> <!-- 1小时内没有被使用,自动失效 -->
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- 分布式服务缓存 -->
+    <cache name="distributionCache">
+		<property name="maxElementsInMemory">1</property>
+		<property name="maxElements">1</property>
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- 共享缓存 -->
+    <cache name="shareCache">
+		<property name="maxElementsInMemory">100</property>
+		<property name="maxElements">500</property>
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">1800</property>
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- 请求代码缓存 -->
+    <cache name="requestCode">
+		<property name="maxElementsInMemory">1000</property> <!-- 内存中缓存1000个请求 -->
+		<property name="maxElements">100000</property> <!-- 总共可以缓存10万个请求 -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">7200</property> <!-- 2小时内没有被使用,自动失效 -->
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- PORTLET定义缓存,给PORTAL服务器使用 -->
+    <cache name="portletDefinition">
+		<property name="maxElementsInMemory">300</property>
+		<property name="maxElements">2000</property>
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">false</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">1800</property>
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- PORTLET实例缓存,给PORTLET容器使用 -->
+    <cache name="portlet">
+		<property name="maxElementsInMemory">300</property>
+		<property name="maxElements">2000</property>
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">false</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">1800</property>
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- IM登录用户缓存 -->
+    <cache name="imSession">
+		<property name="maxElementsInMemory">5000</property> <!-- 内存中缓存5000个用户会话 -->
+		<property name="maxElements">1000000</property> <!-- 最多100万个用户会话 -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">30</property> <!-- 会话超时时间30秒 -->
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- IM对话缓存 -->
+    <cache name="imChat">
+		<property name="maxElementsInMemory">300</property> <!-- 内存中缓存300个对话 -->
+		<property name="maxElements">300</property>
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">false</property>
+		<property name="overflowToDisk">false</property>
+		<property name="timeToIdleSeconds">1800</property> <!-- 会话超时时间30分钟 -->
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- IM系统消息 -->
+    <cache name="imSystemMessage">
+		<property name="maxElementsInMemory">500</property> <!-- 内存中缓存500个消息 -->
+		<property name="maxElements">10000</property> <!-- 最多缓存1万条消息  -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">3600</property> <!-- 超时时间60分钟 -->
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- IM服务器信息缓存 -->
+    <cache name="imServerInfoCache">
+		<property name="maxElementsInMemory">1000</property>
+		<property name="maxElements">1000</property>
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+
+    <!-- IM连接缓存 -->
+    <cache name="imConnectionCache">
+		<property name="maxElementsInMemory">3000</property>
+		<property name="maxElements">100000</property> <!-- 5万个连接,每个连接占2个元素 -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">false</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">30</property> <!-- 超时时间30秒 -->
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- 广告 -->
+    <cache name="advert">
+		<property name="maxElementsInMemory">200</property> <!-- 内存中缓存200个页面 -->
+		<property name="maxElements">10000</property> <!-- 最多缓存1万个页面  -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">3600</property> <!-- 超时时间60分钟 -->
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- 短信接收及消息通知缓存 -->
+    <cache name="sms">
+		<property name="maxElementsInMemory">1</property> <!-- 内存中缓存1条记录,避免服务器出错时,短信漏处理 -->
+		<property name="maxElements">50000</property> <!-- 总共可以缓存50000条记录 -->
+		<property name="eternal">true</property>
+		<property name="distributionReplicate">true</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">172800</property> <!-- 48小时内没有被使用,自动失效 -->
+		<property name="saveToDiskOnShutdown">true</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- 微博缓存 -->
+    <cache name="microblog">
+		<property name="maxElementsInMemory">10</property> <!-- 内存中缓存10个账户的微博 -->
+		<property name="maxElements">100</property> <!-- 总共可以缓存100个账户的微博  -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">false</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">1800</property> <!-- 30分钟内没有被使用,自动失效 -->
+		<property name="saveToDiskOnShutdown">false</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+    
+    <!-- 民评缓存 -->
+    <cache name="appraise">
+		<property name="maxElementsInMemory">1000</property> <!-- 内存中存放1000次投票 -->
+		<property name="maxElements">300000</property> <!-- 最多缓存30万次投票 -->
+		<property name="eternal">false</property>
+		<property name="distributionReplicate">false</property>
+		<property name="overflowToDisk">true</property>
+		<property name="timeToIdleSeconds">172800</property> <!-- 48小时内没有处理,自动失效 -->
+		<property name="saveToDiskOnShutdown">true</property>
+		<property name="memoryPolicyClassName">com.yuanluesoft.objectcache.local.store.memorypolicy.LruPolicy</property>
+    </cache>
+
+	<!-- 磁盘缓存 -->
+    <diskStore>
+		<property name="path">f:/cms/cache</property>
+    </diskStore>
+
+	<!-- 分布式 -->
+    <distribution1>
+    	<!-- 点对点监视器 -->
+    	<cachePeerMonitor class="com.yuanluesoft.objectcache.distribution.peermonitor.multicast.MultiCastPeerMonitor">
+    		<property name="multicastGroupAddress">230.0.0.1</property>
+    		<property name="multicastGroupPort">6666</property>
+    		<property name="multicastTimeIntervalSeconds">60</property>
+    		<property name="multicastTimeToLive">10</property> <!-- TTL -->
+    	</cachePeerMonitor>
+    	
+    	<!-- 点对点信息解析器 -->
+    	<cachePeerParser class="com.yuanluesoft.objectcache.distribution.replicator.tcp.TCPCachePeerParser"/>
+    	
+    	<!-- 分布式复制器发送端 -->
+    	<replicatorSender class="com.yuanluesoft.objectcache.distribution.replicator.tcp.SynchronousTCPReplicatorSender">
+    		<property name="timeoutSeconds">10</property>
+    	</replicatorSender>
+    	
+    	<!-- 分布式复制器接收端 -->
+    	<replicatorReceiver class="com.yuanluesoft.objectcache.distribution.replicator.tcp.SynchronousTCPReplicatorReceiver">
+    		<!-- property name="listenIp">192.168.1.228</property -->
+    		<property name="listenPort">6588</property>
+    	</replicatorReceiver>
+    </distribution1>
+</objectCache>

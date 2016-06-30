@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--执法人员-->
+	<class name="com.yuanluesoft.msa.lawmen.pojo.MsaLawmen" table="msa_lawmen">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="name"/> <!--姓名,VARCHAR(16)-->
+		<property name="sex"/> <!--性别,NUMERIC(1)-->
+		<property name="certificateDate"/> <!--执法证发证日期,DATE-->
+		<property name="certificateNumber"/> <!--执法证编号,VARCHAR(16)-->
+		<property name="priority"/> <!--优先级,NUMERIC(7,4)-->
+	</class>
+</hibernate-mapping>

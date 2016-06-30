@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form class="com.yuanluesoft.workflow.server.configure.forms.WorkflowConfigure" title="流程配置">
+		<formFields>
+			<field name="ticket" title="工作流配置TCIKET" type="string" inputMode="hidden"/>
+			<field name="returnURL" title="配置完成后显示的URL" type="string" inputMode="hidden"/>
+			<field name="testURL" title="工作流测试URL" type="string" inputMode="hidden"/>
+			<field name="workflowId" title="流程ID" type="string" inputMode="hidden"/>
+			<field name="parentProcessId" title="子流程的父流程ID" type="string" inputMode="hidden"/>
+			<field name="parentActivityId" title="子流程的父环节ID" type="string" inputMode="hidden"/>
+			<field name="subFlowProcessId" title="子流程ID" type="string" inputMode="hidden"/>
+			<field name="pasteWorkflow" title="是否流程复制" type="boolean" inputMode="none"/>
+		</formFields>
+		<actions>
+			<action title="保存" execute="window.workflowEditor.saveWorkflow()" image="/workflow/configure/icons/save.gif"/>
+			<action title="全选" execute="window.workflowEditor.selectAll()" image="/workflow/configure/icons/select.gif"/>
+			<action title="删除" execute="window.workflowEditor.deleteElements()" image="/workflow/configure/icons/delete.gif"/>
+			<action title="工作流测试" execute="window.workflowEditor.workflowTest()" image="/workflow/configure/icons/test.gif"/>
+			<action title="删除流程" execute="window.workflowEditor.deleteWorkflow()" image="/workflow/configure/icons/delete.gif"/>
+			<action title="复制流程" execute="window.workflowEditor.copyWorkflow()" image="/workflow/configure/icons/copy.gif"/>
+			<action title="粘贴流程" execute="window.workflowEditor.pasteWorkflow()" image="/workflow/configure/icons/paste.gif"/>
+			<action title="返回" execute="window.workflowEditor.back()" image="/workflow/configure/icons/exit.gif"/>
+		</actions>
+	</form>
+</forms>

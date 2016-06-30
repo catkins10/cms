@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<class name="com.yuanluesoft.j2oa.dispatch.pojo.Dispatch" table="dispatch_dispatch">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="subject"/> <!--标题-->
+		<property name="docType"/> <!--发文种类-->
+		<property name="secureLevel"/> <!--秘密等级-->
+		<property name="secureTerm"/> <!--保密期限-->
+		<property name="priority"/> <!--紧急程度-->
+		<property name="mainSend"/> <!--主送机关-->
+		<property name="copySend"/> <!--抄送机关-->
+		<property name="keyword"/> <!--主题词-->
+		<property name="docMark"/> <!--机关代字-->
+		<property name="markYear"/> <!--机关代字年份-->
+		<property name="markSequence"/> <!--机关代字序号-->
+		<property name="docWord"/> <!--发文字号-->
+		<property name="printNumber"/> <!--打印份数-->
+		<property name="pageCount"/> <!--页数-->
+		<property name="queryLevel"/> <!--查询级别-->
+		<property name="distributeRange"/> <!--分发范围-->
+		<property name="draftDepartment"/> <!--起草部门-->
+		<property name="draftPerson"/> <!--起草人-->
+		<property name="draftDate"/> <!--起草时间-->
+		<property name="signPerson"/> <!--签发人-->
+		<property name="signDate"/> <!--签发时间-->
+		<property name="generateDate"/> <!--生成日期-->
+		<property name="distributeDate"/> <!--印发日期-->
+		<property name="filingTime"/> <!--归档时间-->
+		<property name="remark"/> <!--附注-->
+		<property name="publicType"/> <!--公开类型-->
+		<property name="publicReason"/> <!--不公开的理由-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<set name="bodies" table="dispatch_dispatch_body" lazy="true" inverse="true" cascade="delete">
+			<key column="dispatchId" foreign-key="id" />
+			<one-to-many class="com.yuanluesoft.j2oa.dispatch.pojo.DispatchBody" />
+		</set>
+		<set name="opinions" table="dispatch_dispatch_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.dispatch.pojo.DispatchOpinion"/>
+		</set>
+		<set name="visitors" table="dispatch_dispatch_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.j2oa.dispatch.pojo.DispatchPrivilege"/>
+		</set>
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+	</class>
+	
+	<!--发文单权限控制信息-->
+	<class name="com.yuanluesoft.j2oa.dispatch.pojo.DispatchPrivilege" table="dispatch_dispatch_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--发文:办理意见-->
+	<class name="com.yuanluesoft.j2oa.dispatch.pojo.DispatchOpinion" table="dispatch_dispatch_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="activityId"/> <!--环节ID-->
+		<property name="personId"/> <!--填写人ID-->
+		<property name="personName"/> <!--填写人姓名-->
+		<property name="agentId"/> <!--代理人ID-->
+		<property name="agentName"/> <!--代理人姓名-->
+		<property name="opinion"/> <!--意见内容-->
+		<property name="opinionType"/> <!--意见类型-->
+		<property name="created"/> <!--填写时间-->
+	</class>
+	
+	<!--发文正文-->
+	<class name="com.yuanluesoft.j2oa.dispatch.pojo.DispatchBody" table="dispatch_dispatch_body">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="dispatchId"/> <!--发文单ID-->
+		<property name="htmlBody" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--HTML正文-->
+	</class>
+	
+	<!--模板配置-->
+	<class name="com.yuanluesoft.j2oa.dispatch.pojo.DispatchTemplateConfig" table="dispatch_config_template">
+		<id name="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="docTypes"/> <!--适用的文件种类-->
+		<property name="docWords"/> <!--适用的文件字-->
+		<property name="handlingTemplate" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--办理单模板-->
+	</class>
+	
+	<!--文件字配置-->
+	<class name="com.yuanluesoft.j2oa.dispatch.pojo.DispatchDocWordConfig" table="dispatch_config_docword">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="docWord"/> <!--文件字名称-->
+		<property name="format"/> <!--文件字格式-->
+		<property name="groupId"/> <!--联合编号组ID-->
+	</class>
+	
+	<!--发文归档配置-->
+	<class name="com.yuanluesoft.j2oa.dispatch.pojo.DispatchFilingConfig" table="dispatch_config_filing">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="toArchives"/> <!--是否归档到文书档案-->
+		<property name="toDatabank"/> <!--是否归档到资料库-->
+		<property name="directoryId"/> <!--资料库归档目录ID-->
+		<property name="createDirectoryByYear"/> <!--是否自动按年创建目录-->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="linkDialog" type="com.yuanluesoft.jeaf.htmleditor.forms.EditorLinkDialog"/>
+  <form-bean name="imageDialog" type="com.yuanluesoft.jeaf.htmleditor.forms.EditorImageDialog"/>
+  <form-bean name="flashDialog" type="com.yuanluesoft.jeaf.htmleditor.forms.EditorFlashDialog"/>
+  <form-bean name="videoDialog" type="com.yuanluesoft.jeaf.htmleditor.forms.EditorVideoDialog"/>
+  <form-bean name="findDialog" type="com.yuanluesoft.jeaf.htmleditor.forms.EditorFindDialog"/>
+  <form-bean name="tableDialog" type="com.yuanluesoft.jeaf.htmleditor.forms.EditorTableDialog"/>
+  <form-bean name="tableCellDialog" type="com.yuanluesoft.jeaf.htmleditor.forms.EditorTableCellDialog"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="linkDialog" path="/dialog/link" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/link.jsp"/>
+  </action>
+  <action name="imageDialog" path="/dialog/image" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/image.jsp"/>
+  </action>
+  <action name="flashDialog" path="/dialog/flash" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/flash.jsp"/>
+  </action>
+  <action name="videoDialog" path="/dialog/video" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/video.jsp"/>
+  </action>
+  <action name="findDialog" path="/dialog/find" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/find.jsp"/>
+  </action>
+  <action name="tableDialog" path="/dialog/table" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/table.jsp"/>
+  </action>
+  <action name="tableCellDialog" path="/dialog/tableCell"
+   scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/dialog/tableCell.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

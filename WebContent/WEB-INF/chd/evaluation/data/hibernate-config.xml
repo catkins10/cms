@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--待办事项-->
+	<class name="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationTodo" table="chd_evaluation_todo">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="task"/> <!--事项名称,varchar(300)-->
+		<property name="directoryId"/> <!--目录ID,number(20)-->
+		<property name="directorName"/> <!--目录名称,varchar(200)-->
+		<property name="taskType"/> <!--事项类型,char(1)-->
+		<property name="created"/> <!--创建时间,timestamp null-->
+		<property name="actionName"/> <!--操作名称,varchar(20)-->
+		<property name="actionLink"/> <!--操作链接,varchar(300)-->
+		<set name="visitors" table="chd_eval_todo_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationTodoPrivilege"/>
+		</set>
+	</class>
+	
+	<!--待办事项:权限控制信息-->
+	<class name="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationTodoPrivilege" table="chd_eval_todo_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,numeric(20)-->
+		<property name="accessLevel"/> <!--访问级别,char(1)-->
+		<property name="recordId"/> <!--主记录ID,numeric(20)-->
+	</class>
+	
+	<!--必备条件完成情况-->
+	<class name="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationPrerequisitesData" table="chd_eval_prerequisites_data">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="plantId"/> <!--发电企业ID,numeric(20)-->
+		<property name="plant"/> <!--发电企业名称,varchar(200)-->
+		<property name="declareYear"/> <!--年度,numeric(4)-->
+		<property name="prerequisitesId"/> <!--必备条件ID,numeric(20)-->
+		<property name="prerequisites"/> <!--必备条件,varchar(1000)-->
+		<property name="result"/> <!--完成情况说明,varchar(200)-->
+		<property name="created"/> <!--提交时间,timestamp null-->
+		<property name="creatorId"/> <!--提交人ID,numeric(20)-->
+		<property name="creator"/> <!--提交人姓名,varchar(30)-->
+		<property name="remark"/> <!--备注,varchar(200)-->
+	</class>
+	
+	<!--资料-->
+	<class name="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationData" table="chd_eval_data">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="dataType"/> <!--资料类型,0/文件,1/链接,2/纸质文件,char(1)-->
+		<property name="point"/> <!--评价要点,varchar(2000)-->
+		<property name="name"/> <!--资料名称,varchar(300)-->
+		<property name="link"/> <!--链接地址,varchar(300)-->
+		<property name="place"/> <!--纸质文件存放位置,varchar(300)-->
+		<property name="created"/> <!--提交时间,timestamp null-->
+		<property name="creatorId"/> <!--提交人ID,numeric(20)-->
+		<property name="creator"/> <!--提交人姓名,varchar(30)-->
+		<property name="remark"/> <!--备注,varchar(200)-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID,varchar(32)-->
+		<!--资料:所属目录-->
+		<set cascade="delete" inverse="true" lazy="true" name="subjections" table="chd_eval_data_subjection" order-by="id">
+			<key column="dataId" />
+			<one-to-many class="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationDataSubjection" />
+		</set>
+		<set name="opinions" table="chd_eval_data_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationDataOpinion"/>
+		</set>
+		<set name="visitors" table="chd_eval_data_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationDataPrivilege"/>
+		</set>
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" />
+		</set>
+	</class>
+	
+	<!--资料:所属目录-->
+	<class name="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationDataSubjection" table="chd_eval_data_subjection">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="dataId"/> <!--资料ID,numeric(20)-->
+		<property name="directoryId"/> <!--目录ID,numeric(20)-->
+	</class>
+	
+	<!--资料:权限控制信息-->
+	<class name="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationDataPrivilege" table="chd_eval_data_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID,numeric(20)-->
+		<property name="accessLevel"/> <!--访问级别,char(1)-->
+		<property name="recordId"/> <!--主记录ID,numeric(20)-->
+	</class>
+	
+	<!--资料:办理意见-->
+	<class name="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationDataOpinion" table="chd_eval_data_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="mainRecordId"/> <!--主记录ID,numeric(20)-->
+		<property name="activityName"/> <!--环节名称,varchar(50)-->
+		<property name="workItemId"/> <!--工作项ID,varchar(32)-->
+		<property name="activityId"/> <!--环节ID,varchar(32)-->
+		<property name="personId"/> <!--填写人ID,numeric(20)-->
+		<property name="personName"/> <!--填写人姓名,varchar(32)-->
+		<property name="agentId"/> <!--代理人ID,numeric(20)-->
+		<property name="agentName"/> <!--代理人姓名,varchar(32)-->
+		<property name="opinion"/> <!--意见内容,varchar(1000)-->
+		<property name="opinionType"/> <!--意见类型,varchar(20)-->
+		<property name="created"/> <!--填写时间,timestamp null-->
+	</class>
+	
+	<!--指标完成情况-->
+	<class name="com.yuanluesoft.chd.evaluation.data.pojo.ChdEvaluationIndicatorData" table="chd_eval_indicator_data">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="dataYear"/> <!--年度,numeric(4)-->
+		<property name="dataMonth"/> <!--月份,numeric(4)-->
+		<property name="indicatorId"/> <!--指标ID,numeric(20)-->
+		<property name="indicator"/> <!--指标名称,varchar(200)-->
+		<property name="data"/> <!--完成情况,varchar(50)-->
+		<property name="creatorId"/> <!--填报人ID,numeric(20)-->
+		<property name="creator"/> <!--填报人,varchar(30)-->
+		<property name="remark"/> <!--备注,varchar(200)-->
+	</class>
+</hibernate-mapping>

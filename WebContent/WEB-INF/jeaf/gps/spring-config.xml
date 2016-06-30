@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- GPS服务 -->
+	<bean id="gpsService" class="com.yuanluesoft.jeaf.gps.service.spring.GpsServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="gpsProviders">
+			<list>
+				<!-- ip138 IP定位 -->
+				<bean class="com.yuanluesoft.jeaf.gps.provider.ip138.GpsProviderImpl">
+					<property name="databaseService"><ref bean="databaseService"/></property>
+				</bean>
+
+				<!-- 纯真IP定位 -->
+				<bean class="com.yuanluesoft.jeaf.gps.provider.qqwry.GpsProviderImpl" init-method="init">
+					<property name="databaseService"><ref bean="databaseService"/></property>
+					<property name="distributionService"><ref bean="distributionService"/></property>
+				</bean>
+				
+				<!-- geoip IP定位 -->
+				<bean class="com.yuanluesoft.jeaf.gps.provider.maxmind.GpsProviderImpl"/>
+	
+				<!-- 邮科GPS定位 -->
+				<!-- bean class="com.yuanluesoft.jeaf.gps.provider.fsti.GpsProviderImpl">
+					<property name="databaseService"><ref bean="databaseService"/></property>
+					<property name="locationServiceUrl"><value>http://220.162.239.162:9001/lbsp/cmd/xml.api</value></property>
+					<property name="serviceKey"><value>D22AA7283C619C60</value></property>
+				</bean -->
+			</list>
+		</property>
+		<property name="mapProviderName"><value>51ditu</value></property>
+		<property name="mapProviders">
+			<list>
+				<!-- 51ditu -->
+				<bean class="com.yuanluesoft.jeaf.gps.provider.lingtu.MapProviderImpl"/>
+				<!-- mapabc -->
+				<bean class="com.yuanluesoft.jeaf.gps.provider.mapabc.MapProviderImpl"/>
+				<!-- google -->
+				<bean class="com.yuanluesoft.jeaf.gps.provider.google.MapProviderImpl"/>
+			</list>
+		</property>
+	</bean>
+</beans>

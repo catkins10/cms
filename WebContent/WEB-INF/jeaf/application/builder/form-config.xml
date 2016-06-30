@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="application" class="com.yuanluesoft.jeaf.application.builder.forms.Application" title="应用" pojo="com.yuanluesoft.jeaf.application.builder.pojo.Application">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="生成应用" hide="isRead() or isNew()" execute="FormUtils.doAction('buildApplication')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteApplication')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.application.builder.forms.ApplicationNavigator" title="导航" pojo="com.yuanluesoft.jeaf.application.builder.pojo.Application">
+		<formFields>
+			<field name="navigator" title="导航" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.application.builder.pojo.ApplicationNavigator</parameter>
+			</field>
+			<field name="type" title="类型" type="string" inputMode="radio">
+				<parameter name="itemsText">视图|viewLink\0链接|link</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteApplicationNavigator')"/>
+		</actions>
+	</form>
+	
+	<form name="applicationForm" class="com.yuanluesoft.jeaf.application.builder.forms.ApplicationForm" title="表单" pojo="com.yuanluesoft.jeaf.application.builder.pojo.ApplicationForm">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="下一步" hide="isOld()" execute="FormUtils.submitForm()"/>
+			<action title="保存" hide="isRead() or isNew()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteApplicationForm')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.application.builder.forms.Field" title="字段" pojo="com.yuanluesoft.jeaf.application.builder.pojo.ApplicationForm">
+		<formFields>
+			<field name="field" title="字段" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.application.builder.pojo.ApplicationField</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteField')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.application.builder.forms.Index" title="索引" pojo="com.yuanluesoft.jeaf.application.builder.pojo.ApplicationForm">
+		<formFields>
+			<field name="index" title="索引" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.application.builder.pojo.ApplicationIndex</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteIndex')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.application.builder.forms.View" title="视图" pojo="com.yuanluesoft.jeaf.application.builder.pojo.ApplicationForm">
+		<formFields>
+			<field name="view" title="视图" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.application.builder.pojo.ApplicationView</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteView')"/>
+		</actions>
+	</form>
+	
+	<form class="com.yuanluesoft.jeaf.application.builder.forms.CreateViews" title="批量创建视图" pojo="com.yuanluesoft.jeaf.application.builder.pojo.ApplicationForm">
+		<formFields>
+			<field name="view" title="视图" type="component">
+				<parameter name="class">com.yuanluesoft.jeaf.application.builder.pojo.ApplicationView</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+			<action title="创建" hide="isRead()" execute="FormUtils.submitForm()"/>
+		</actions>
+	</form>
+</forms>

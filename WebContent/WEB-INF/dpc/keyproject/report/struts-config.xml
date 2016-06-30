@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="monthReport" type="com.yuanluesoft.dpc.keyproject.report.forms.MonthReport"/>
+  <form-bean name="unitReport" type="com.yuanluesoft.dpc.keyproject.report.forms.UnitReport"/>
+  <form-bean name="investReport" type="com.yuanluesoft.dpc.keyproject.report.forms.InvestReport"/>
+  <form-bean name="distributeGraph" type="com.yuanluesoft.dpc.keyproject.report.forms.DistributeGraph"/>
+  <form-bean name="investGraph" type="com.yuanluesoft.dpc.keyproject.report.forms.InvestGraph"/>
+  <form-bean name="yearReport" type="com.yuanluesoft.dpc.keyproject.report.forms.YearReport"/>
+  <form-bean name="fiveYearPlanReport" type="com.yuanluesoft.dpc.keyproject.report.forms.FiveYearPlanReport"/>
+  <form-bean name="zzfetProgressReport" type="com.yuanluesoft.dpc.keyproject.report.forms.ZzfetProgressReport"/>
+  <form-bean name="zzfetPillarReport" type="com.yuanluesoft.dpc.keyproject.report.forms.ZzfetPillarReport"/>
+  <form-bean name="zzfetYearReport" type="com.yuanluesoft.dpc.keyproject.report.forms.ZzfetYearReport"/>
+  <form-bean name="zzfetAccountableReport" type="com.yuanluesoft.dpc.keyproject.report.forms.ZzfetAccountableReport"/>
+  <form-bean name="zzfetTenDayReport" type="com.yuanluesoft.dpc.keyproject.report.forms.ZzfetTenDayReport"/>
+  <form-bean name="zzfetDetailReport" type="com.yuanluesoft.dpc.keyproject.report.forms.ZzfetDetailReport"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="monthReport" path="/monthReport" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.monthreport.Load" validate="false">
+   <forward name="load" path="/monthReport.jsp"/>
+  </action>
+  <action input="/monthReport.jsp" name="monthReport"
+   path="/writeMonthReport" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.monthreport.Write" validate="false"/>
+  <action name="unitReport" path="/unitReport" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.unitreport.Load" validate="false">
+   <forward name="load" path="/unitReport.jsp"/>
+  </action>
+  <action input="/unitReport.jsp" name="unitReport"
+   path="/writeUnitReport" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.unitreport.Write" validate="false"/>
+  <action name="investReport" path="/investReport" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.investreport.Load" validate="false">
+   <forward name="load" path="/investReport.jsp"/>
+  </action>
+  <action input="/investReport.jsp" name="investReport"
+   path="/writeInvestReport" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.investreport.Write" validate="false"/>
+  <action name="distributeGraph" path="/distributeGraph" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.distributegraph.Load" validate="false">
+   <forward name="load" path="/distributeGraph.jsp"/>
+  </action>
+  <action input="/distributeGraph.jsp" name="distributeGraph"
+   path="/writeDistributeGraph" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.distributegraph.Write" validate="false"/>
+  <action name="investGraph" path="/investGraph" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.investgraph.Load" validate="false">
+   <forward name="load" path="/investGraph.jsp"/>
+  </action>
+  <action input="/investGraph.jsp" name="investGraph"
+   path="/writeInvestGraph" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.investgraph.Write" validate="false"/>
+  <action name="yearReport" path="/yearReport" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.yearreport.Load" validate="false">
+   <forward name="load" path="/yearReport.jsp"/>
+  </action>
+  <action input="/yearReport.jsp" name="yearReport"
+   path="/writeYearReport" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.yearreport.Write" validate="false"/>
+  <action name="fiveYearPlanReport" path="/fiveYearPlanReport"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.fiveyearplanreport.Load" validate="false">
+   <forward name="load" path="/fiveYearPlanReport.jsp"/>
+  </action>
+  <action input="/fiveYearPlanReport.jsp" name="fiveYearPlanReport"
+   path="/writeFiveYearPlanReport" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.fiveyearplanreport.Write" validate="false"/>
+  <action name="zzfetProgressReport" path="/zzfetProgressReport"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.zzfetprogressreport.Load" validate="false">
+   <forward name="load" path="/zzfetProgressReport.jsp"/>
+  </action>
+  <action name="zzfetPillarReport" path="/zzfetPillarReport"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.zzfetpillarreport.Load" validate="false">
+   <forward name="load" path="/zzfetPillarReport.jsp"/>
+  </action>
+  <action name="zzfetYearReport" path="/zzfetYearReport" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.zzfetyearreport.Load" validate="false">
+   <forward name="load" path="/zzfetYearReport.jsp"/>
+  </action>
+  <action input="/zzfetProgressReport.jsp" name="zzfetProgressReport"
+   path="/writeZzfetProgressReport" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.zzfetprogressreport.Write" validate="false"/>
+  <action input="/zzfetPillarReport.jsp" name="zzfetPillarReport"
+   path="/writeZzfetPillarReport" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.zzfetpillarreport.Write" validate="false"/>
+  <action input="/zzfetYearReport.jsp" name="zzfetYearReport"
+   path="/writeZzfetYearReport" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.zzfetyearreport.Write" validate="false"/>
+  <action name="zzfetAccountableReport" path="/zzfetAccountableReport"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.zzfetaccountablereport.Load" validate="false">
+   <forward name="load" path="/zzfetAccountableReport.jsp"/>
+  </action>
+  <action input="/zzfetAccountableReport.jsp"
+   name="zzfetAccountableReport" path="/writeZzfetAccountableReport"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.zzfetaccountablereport.Write" validate="false"/>
+  <action name="zzfetTenDayReport" path="/zzfetTenDayReport"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.zzfettendayreport.Load" validate="false">
+   <forward name="load" path="/zzfetTenDayReport.jsp"/>
+  </action>
+  <action input="/zzfetTenDayReport.jsp" name="zzfetTenDayReport"
+   path="/writeZzfetTenDayReport" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.zzfettendayreport.Write" validate="false"/>
+  <action name="zzfetDetailReport" path="/zzfetDetailReport"
+   scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.zzfetdatailreport.Load" validate="false">
+   <forward name="load" path="/zzfetDetailReport.jsp"/>
+  </action>
+  <action input="/zzfetDetailReport.jsp" name="zzfetDetailReport"
+   path="/writeZzfetDetailReport" scope="request"
+   type="com.yuanluesoft.dpc.keyproject.report.actions.zzfetdatailreport.Write" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

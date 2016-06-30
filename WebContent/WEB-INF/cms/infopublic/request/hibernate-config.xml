@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--信息公开:申请告知书-->
+	<class name="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequestNotify" table="public_request_notify">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="requestId"/> <!--申请ID,numeric(20,0)-->
+		<property name="notify" type="com.yuanluesoft.jeaf.database.hibernate.StringClobType"/> <!--申请告知书,mediumtext-->
+		<property name="created"/> <!--告知时间,timestamp null-->
+		<property name="creatorId"/> <!--告知人ID,numeric(20,0)-->
+		<property name="creator"/> <!--告知人,varchar(30)-->
+		<property name="creatorUnit"/> <!--告知人所在单位,varchar(100)-->
+		<many-to-one name="publicRequest" class="com.yuanluesoft.cms.infopublic.request.pojo.PublicRequest" column="requestId" update="false" insert="false"/>
+	</class>
+</hibernate-mapping>

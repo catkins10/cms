@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--作息时间-->
+	<class name="com.yuanluesoft.jeaf.timetable.pojo.Timetable" table="timetable_timetable">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="description"/> <!--描述-->
+		<property name="effectiveDate"/> <!--生效时间-->
+		<property name="priority"/> <!--优先级-->
+		<!-- 适用的用户列表 -->
+		<set name="visitors" table="timetable_timetable_privilege" lazy="true" cascade="delete" inverse="true" order-by="id">
+			<key column="recordId" />
+			<one-to-many class="com.yuanluesoft.jeaf.timetable.pojo.TimetablePrivilege" />
+		</set>
+		<!-- 上下班时间列表 -->
+		<set name="commuteTimes" table="timetable_commute_time" lazy="true" cascade="delete" inverse="true" order-by="onDutyTime">
+			<key column="timetableId" />
+			<one-to-many class="com.yuanluesoft.jeaf.timetable.pojo.TimetableCommuteTime" />
+		</set>
+		<!-- 休息日列表 -->
+		<set name="offDays" table="timetable_off_day" lazy="true" cascade="delete" inverse="true" order-by="offDayOfWeek">
+			<key column="timetableId" />
+			<one-to-many class="com.yuanluesoft.jeaf.timetable.pojo.TimetableOffDay" />
+		</set>
+		<!-- 节日列表 -->
+		<set name="festivals" table="timetable_festival" lazy="true" cascade="delete" inverse="true" order-by="beginTime">
+			<key column="timetableId" />
+			<one-to-many class="com.yuanluesoft.jeaf.timetable.pojo.TimetableFestival" />
+		</set>
+		<!-- 加班时长配置列表 -->
+		<set name="overtimes" table="timetable_overtime" lazy="true" cascade="delete" inverse="true" order-by="onDutyTime">
+			<key column="timetableId" />
+			<one-to-many class="com.yuanluesoft.jeaf.timetable.pojo.TimetableOvertime" />
+		</set>
+	</class>
+	
+	<!--作息时间:适用的范围-->
+	<class name="com.yuanluesoft.jeaf.timetable.pojo.TimetablePrivilege" table="timetable_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/> <!--访问者ID-->
+		<property name="accessLevel"/> <!--访问级别-->
+		<property name="recordId"/> <!--主记录ID-->
+	</class>
+	
+	<!--作息时间:日常休息时间-->
+	<class name="com.yuanluesoft.jeaf.timetable.pojo.TimetableOffDay" table="timetable_off_day">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="timetableId"/> <!--作息时间配置ID-->
+		<property name="offDayOfWeek"/> <!--星期-->
+		<property name="beginTime"/> <!--开始时间-->
+		<property name="endTime"/> <!--结束时间-->
+	</class>
+	
+	<!--作息时间:上下班时间-->
+	<class name="com.yuanluesoft.jeaf.timetable.pojo.TimetableCommuteTime" table="timetable_commute_time">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="timetableId"/> <!--作息时间配置ID-->
+		<property name="shiftNumber"/> <!--班次-->
+		<property name="description"/> <!--描述-->
+		<property name="isOvertime"/> <!--是否属于加班-->
+		<property name="onDutyTime"/> <!--上班时间-->
+		<property name="offDutyTime"/> <!--下班时间-->
+		<property name="clockInBegin"/> <!--上班打卡开始时间-->
+		<property name="clockInEnd"/> <!--上班打卡结束时间-->
+		<property name="clockOutBegin"/> <!--下班打卡开始时间-->
+		<property name="clockOutEnd"/> <!--下班打卡结束时间-->
+		<property name="lateMiniutes"/> <!--迟到多长时间算缺勤-->
+		<property name="earlyMiniutes"/> <!--早退多长时间算缺勤-->
+		<property name="absentDay"/> <!--缺勤天数-->
+		<property name="effectiveBegin"/> <!--启用时间-->
+		<property name="effectiveEnd"/> <!--停用时间-->
+	</class>
+	
+	<!--作息时间:加班时长设置-->
+	<class name="com.yuanluesoft.jeaf.timetable.pojo.TimetableOvertime" table="timetable_overtime">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="timetableId"/> <!--作息时间配置ID-->
+		<property name="onDutyTime"/> <!--加班小时数-->
+		<property name="absentDay"/> <!--换算的加班天数-->
+	</class>
+	
+	<!--作息时间:节日-->
+	<class name="com.yuanluesoft.jeaf.timetable.pojo.TimetableFestival" table="timetable_festival">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="timetableId"/> <!--作息时间配置ID-->
+		<property name="name"/> <!--节日名称-->
+		<property name="beginTime"/> <!--放假开始日期-->
+		<property name="endTime"/> <!--放假结束日期-->
+		<property name="legalBeginTime"/> <!--法定开始时间-->
+		<property name="legalEndTime"/> <!--法定结束时间-->
+		<!-- 调休列表 -->
+		<set name="adjusts" table="timetable_festival_adjust" lazy="false" cascade="delete" inverse="true" order-by="beginTime">
+			<key column="festivalId" />
+			<one-to-many class="com.yuanluesoft.jeaf.timetable.pojo.TimetableFestivalAdjust" />
+		</set>
+	</class>
+	
+	<!--节日:调休-->
+	<class name="com.yuanluesoft.jeaf.timetable.pojo.TimetableFestivalAdjust" table="timetable_festival_adjust">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="festivalId"/> <!--节假日ID,NUMERIC(20)-->
+		<property name="beginTime"/> <!--开始时间,TIMESTAMP null-->
+		<property name="endTime"/> <!--结束时间,TIMESTAMP null-->
+	</class>
+	
+	<!--作息时间:工作日调整任务-->
+	<class name="com.yuanluesoft.jeaf.timetable.pojo.TimetableWorkDayTask" table="timetable_work_day_task">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="beginDate"/> <!--开始时间,DATE-->
+		<property name="endDate"/> <!--结束时间,DATE null-->
+		<property name="created"/> <!--登记时间,TIMESTAMP-->
+	</class>
+</hibernate-mapping>

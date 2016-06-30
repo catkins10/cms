@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminBank" type="com.yuanluesoft.credit.bank.bank.forms.Bank"/>
+  <form-bean name="adminProduct" type="com.yuanluesoft.credit.bank.financialproducts.forms.Product"/>
+  <form-bean name="adminLoan" type="com.yuanluesoft.credit.bank.loan.forms.Loan"/>
+  <form-bean name="adminApply" type="com.yuanluesoft.credit.bank.apply.forms.Apply"/>
+  <form-bean name="apply" type="com.yuanluesoft.credit.bank.apply.forms.Apply"/>
+  <form-bean name="creditStat" type="com.yuanluesoft.credit.stat.forms.CreditStat"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminBank" path="/admin/bank" scope="request"
+   type="com.yuanluesoft.credit.bank.bank.actions.Load" validate="false">
+   <forward name="load" path="/admin/bank.jsp"/>
+  </action>
+  <action input="/admin/bank.jsp" name="adminBank" path="/admin/saveBank" scope="request"
+   type="com.yuanluesoft.credit.bank.bank.actions.Save" validate="false"/>
+  <action input="/admin/bank.jsp" name="adminBank" path="/admin/deleteBank"
+   scope="request" type="com.yuanluesoft.credit.bank.bank.actions.Delete" validate="false"/>
+   <action name="adminBank" path="/admin/bankAttachment" scope="request"
+   type="com.yuanluesoft.credit.bank.bank.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="adminBank" path="/admin/bankAttachmentEditor" scope="request"
+   type="com.yuanluesoft.credit.bank.financialproducts.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+   <!-- 金融产品 -->
+   <action name="adminProduct" path="/admin/product" scope="request"
+   type="com.yuanluesoft.credit.bank.financialproducts.actions.Load" validate="false">
+   <forward name="load" path="/admin/product.jsp"/>
+  </action>
+  <action input="/admin/product.jsp" name="adminProduct" path="/admin/saveProduct" scope="request"
+   type="com.yuanluesoft.credit.bank.financialproducts.actions.Save" validate="false"/>
+  <action input="/admin/product.jsp" name="adminProduct" path="/admin/deleteProduct"
+   scope="request" type="com.yuanluesoft.credit.bank.financialproducts.actions.Delete" validate="false"/>
+   <action name="adminProduct" path="/admin/productAttachment" scope="request"
+   type="com.yuanluesoft.credit.bank.financialproducts.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action name="adminProduct" path="/admin/attachmentEditor" scope="request"
+   type="com.yuanluesoft.credit.bank.financialproducts.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+   
+   <!-- 贷款信息 -->
+   <action name="adminLoan" path="/admin/loan" scope="request"
+   type="com.yuanluesoft.credit.bank.loan.actions.Load" validate="false">
+   <forward name="load" path="/admin/loan.jsp"/>
+  </action>
+  <action input="/admin/loan.jsp" name="adminLoan" path="/admin/saveLoan" scope="request"
+   type="com.yuanluesoft.credit.bank.loan.actions.Save" validate="false"/>
+  <action input="/admin/loan.jsp" name="adminLoan" path="/admin/deleteLoan"
+   scope="request" type="com.yuanluesoft.credit.bank.loan.actions.Delete" validate="false"/>
+   <!-- 申请贷款 后台-->
+   <action name="adminApply" path="/admin/apply" scope="request"
+   type="com.yuanluesoft.credit.bank.apply.actions.admin.Load" validate="false">
+   <forward name="load" path="/admin/apply.jsp"/>
+  </action>
+  <action input="/admin/apply.jsp" name="adminApply" path="/admin/saveApply" scope="request"
+   type="com.yuanluesoft.credit.bank.apply.actions.admin.Save" validate="false"/>
+  <action input="/admin/apply.jsp" name="adminApply" path="/admin/deleteApply"
+   scope="request" type="com.yuanluesoft.credit.bank.apply.actions.admin.Delete" validate="false"/>
+   
+   <!-- 申请贷款 前台-->
+   <action name="apply" path="/apply" scope="request"
+   type="com.yuanluesoft.credit.bank.apply.actions.Load" validate="false">
+   <forward name="load" path="/apply.jsp"/>
+  </action>
+  <action input="/apply.jsp" name="apply" path="/saveApply" scope="request"
+   type="com.yuanluesoft.credit.bank.apply.actions.Save" validate="false">
+   	<forward name="result" path="/applySubmitted.jsp"/>
+   </action>
+   
+   <action name="creditStat" path="/creditStat" scope="request"
+   type="com.yuanluesoft.credit.stat.action.Load" validate="false">
+   <forward name="load" path="/creditStat.jsp"/>
+  </action>
+   
+ </action-mappings>
+ <controller/>
+</struts-config>

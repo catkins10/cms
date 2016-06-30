@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="邮件帐号" class="com.yuanluesoft.jeaf.mail.pojo.MailAccount" businessServiceName="mailService">
+		<field name="orgId" title="单位ID" type="number" length="20" inputMode="hidden"/>
+		<field name="orgName" title="单位名称" type="string" length="100" inputMode="readonly"/>
+		<field name="mailAddress" title="邮箱" type="string" length="100" inputMode="text" required="true"/>
+		<field name="name" title="名称" type="string" length="100" inputMode="text" required="true"/>
+		<field name="smtpHost" title="SMTP主机" type="string" length="100" inputMode="text" required="true"/>
+		<field name="smtpPort" title="SMTP端口" type="number" length="5" inputMode="text" required="true"/>
+		<field name="smtpUserName" title="SMTP用户名" type="string" length="100" inputMode="text" required="true"/>
+		<field name="smtpPassword" title="SMTP密码" type="string" length="100" inputMode="text" required="true"/>
+	</businessObject>
+	
+	<businessObject title="邮件发送记录" class="com.yuanluesoft.jeaf.mail.pojo.MailSend">
+		<field name="orgId" title="单位ID" type="number" length="20" inputMode="none"/>
+		<field name="orgName" title="单位名称" type="string" length="100" inputMode="readonly"/>
+		<field name="mailAddress" title="邮箱" type="string" length="100" inputMode="readonly"/>
+		<field name="subject" title="主题" type="string" length="2000" inputMode="readonly"/>
+		<field name="receivers" title="接收人" type="string" length="2000" inputMode="readonly"/>
+		<field name="body" title="内容" type="html" inputMode="readonly"/>
+		<field name="sent" title="发送时间" type="timestamp" inputMode="readonly"/>
+		<field name="senderId" title="发送人ID" type="number" length="20" inputMode="none"/>
+		<field name="sender" title="发送人" type="string" length="100" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

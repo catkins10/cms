@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="测评主题(全部)" name="evaluationTopics">
+		<data>
+			<pojo>com.yuanluesoft.cms.evaluation.pojo.EvaluationTopic</pojo>
+			<where>EvaluationTopic.issue='1'</where>
+			<orderBy>EvaluationTopic.created DESC</orderBy>
+			<quickFilter>EvaluationTopic.name like '%{KEY}%' or EvaluationTopic.description like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="测评主题">/cms/evaluation/evaluationTopic.shtml?id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view title="测评主题(测评中)" name="processingEvaluationTopics">
+		<data>
+			<pojo>com.yuanluesoft.cms.evaluation.pojo.EvaluationTopic</pojo>
+			<where>EvaluationTopic.issue='1' and (EvaluationTopic.endTime is null or EvaluationTopic.endTime>=TIMESTAMP({NOW}))</where>
+			<orderBy>EvaluationTopic.created DESC</orderBy>
+			<quickFilter>EvaluationTopic.name like '%{KEY}%' or EvaluationTopic.description like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="测评主题">/cms/evaluation/evaluationTopic.shtml?id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view title="测评主题(已结束)" name="completedEvaluationTopics">
+		<data>
+			<pojo>com.yuanluesoft.cms.evaluation.pojo.EvaluationTopic</pojo>
+			<where>EvaluationTopic.issue='1' and (EvaluationTopic.endTime is null or EvaluationTopic.endTime&lt;TIMESTAMP({NOW}))</where>
+			<orderBy>EvaluationTopic.created DESC</orderBy>
+			<quickFilter>EvaluationTopic.name like '%{KEY}%' or EvaluationTopic.description like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="测评主题">/cms/evaluation/evaluationTopic.shtml?id={PARAMETER:id}</link>
+		</links>
+	</view>
+	
+	<view name="admin/evaluationTopic" form="admin/evaluationTopic" title="测评主题" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.evaluation.pojo.EvaluationTopic</pojo>
+			<filter>READABLE</filter>
+			<orderBy>EvaluationTopic.created DESC</orderBy>
+			<quickFilter>EvaluationTopic.name like '%{KEY}%' or EvaluationTopic.description like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="创建测评主题" hide="noPrivilege(manageUnit_transact)" execute="PageUtils.newrecord('cms/evaluation','admin/evaluationTopic','mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="name"/>
+			<column title="创建人" name="creator" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/evaluationItem" title="测评项目优先级" pageRows="100" openFeatures="mode=fullscreen" hide="noPrivilege(manageUnit_transact)">
+		<data>
+			<pojo>com.yuanluesoft.cms.evaluation.pojo.EvaluationItem</pojo>
+			<orderBy>EvaluationItem.priority DESC, EvaluationItem.id</orderBy>
+			<where>EvaluationItem.topicId={PARAMETER:topicId}</where>
+			<quickFilter>EvaluationItem.name like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="name"/>
+		</columns>
+	</view>
+	
+	<view name="admin/evaluation" title="测评记录" pageRows="100" openFeatures="mode=fullscreen" hide="noPrivilege(manageUnit_transact)">
+		<data>
+			<pojo>com.yuanluesoft.cms.evaluation.pojo.EvaluationMark</pojo>
+			<orderBy>EvaluationMark.evaluateTime DESC</orderBy>
+			<where>EvaluationMark.topicId={PARAMETER:topicId} and EvaluationMark.targetPersonId={PARAMETER:targetPersonId} and ({PARAMETER:optionId|0}=0 or scores.optionId={PARAMETER:optionId|0})</where>
+			<quickFilter>EvaluationItem.evaluatePersonName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="测评结果" name="optionCount"/>
+			<column title="测评人" name="evaluatePersonName" width="80px"/>
+			<column title="测评时间" name="evaluateTime" align="center" width="120px"/>
+		</columns>
+	</view>
+</views>

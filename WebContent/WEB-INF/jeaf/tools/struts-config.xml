@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="tools" type="com.yuanluesoft.jeaf.tools.forms.Tools"/>
+  <form-bean name="fileBrowse" type="com.yuanluesoft.jeaf.tools.filebrowse.forms.FileBrowse"/>
+  <form-bean name="blob2Text" type="com.yuanluesoft.jeaf.tools.blob2text.forms.Blob2Text"/>
+  <form-bean name="fileTransferTest" type="com.yuanluesoft.jeaf.tools.filetransfertest.forms.FileTransferTest"/>
+  <form-bean name="regenerateStaticPages" type="com.yuanluesoft.jeaf.tools.regeneratestaticpages.forms.RegenerateStaticPages"/>
+  <form-bean name="databaseBrowse" type="com.yuanluesoft.jeaf.tools.databasebrowse.forms.DatabaseBrowse"/>
+  <form-bean name="executeSql" type="com.yuanluesoft.jeaf.tools.databasebrowse.forms.ExecuteSql"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../form/error.jsp" scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action path="/clearCache" scope="request"
+   type="com.yuanluesoft.jeaf.tools.clearcache.actions.ClearCache" validate="false"/>
+  <action name="tools" path="/remoteServiceStart" scope="request"
+   type="com.yuanluesoft.jeaf.tools.remoterun.actions.RemoteServiceStart" validate="false"/>
+  <action name="tools" path="/remoteServiceStop" scope="request"
+   type="com.yuanluesoft.jeaf.tools.remoterun.actions.RemoteServiceStop" validate="false"/>
+  <action path="/cachetest/get" scope="request"
+   type="com.yuanluesoft.jeaf.tools.cachetest.actions.Get" validate="false"/>
+  <action path="/cachetest/put" scope="request"
+   type="com.yuanluesoft.jeaf.tools.cachetest.actions.Put" validate="false"/>
+  <action path="/cachetest/remove" scope="request"
+   type="com.yuanluesoft.jeaf.tools.cachetest.actions.Remove" validate="false"/>
+  <action name="fileBrowse" path="/fileBrowse" scope="request"
+   type="com.yuanluesoft.jeaf.tools.filebrowse.actions.Load" validate="false">
+   <forward name="load" path="/filebrowse/fileBrowse.jsp"/>
+  </action>
+  <action input="/filebrowse/fileBrowse.jsp" name="fileBrowse"
+   path="/processUploadedFiles" scope="request"
+   type="com.yuanluesoft.jeaf.tools.filebrowse.actions.ProcessUploadedFiles" validate="false"/>
+  <action name="tools" path="/restartTomcatService" scope="request"
+   type="com.yuanluesoft.jeaf.tools.remoterun.actions.RestartTomcatService" validate="false"/>
+  <action input="/filebrowse/fileBrowse.jsp" name="fileBrowse"
+   path="/runOnServer" scope="request"
+   type="com.yuanluesoft.jeaf.tools.filebrowse.actions.RunOnServer" validate="false"/>
+  <action name="blob2Text" path="/blob2text" scope="request"
+   type="com.yuanluesoft.jeaf.tools.blob2text.actions.Load" validate="false">
+   <forward name="load" path="/blob2text/blob2Text.jsp"/>
+  </action>
+  <action name="blob2Text" path="/convert" scope="request"
+   type="com.yuanluesoft.jeaf.tools.blob2text.actions.Convert" validate="false"/>
+  <action name="fileTransferTest" path="/fileTransferTest"
+   scope="request"
+   type="com.yuanluesoft.jeaf.tools.filetransfertest.actions.Load" validate="false">
+   <forward name="load" path="/filetransfertest/fileTransferTest.jsp"/>
+  </action>
+  <action name="regenerateStaticPages" path="/regenerateStaticPages"
+   scope="request"
+   type="com.yuanluesoft.jeaf.tools.regeneratestaticpages.actions.Load" validate="false">
+   <forward name="load" path="/staticpages/regenerateStaticPages.jsp"/>
+  </action>
+  <action path="/upgradetemplate" scope="request"
+   type="com.yuanluesoft.jeaf.tools.upgradetemplate.actions.Upgrade" validate="false"/>
+  <action path="/upgradeeai" scope="request"
+   type="com.yuanluesoft.jeaf.tools.upgradeeai.actions.Upgrade" validate="false"/>
+  <action input="/staticpages/regenerateStaticPages.jsp"
+   name="regenerateStaticPages" path="/doRegenerateStaticPages"
+   scope="request"
+   type="com.yuanluesoft.jeaf.tools.regeneratestaticpages.actions.Regenerate" validate="false"/>
+  <action path="/updatePassword" scope="request"
+   type="com.yuanluesoft.jeaf.tools.updatepassword.actions.UpdatePassword" validate="false"/>
+  <action path="/deleteEmptyInfoDirectory" scope="request"
+   type="com.yuanluesoft.jeaf.tools.deleteemptyinfodirectory.actions.Delete" validate="false"/>
+  <action path="/updateHostPageMapping" scope="request"
+   type="com.yuanluesoft.jeaf.tools.updatehostpagemapping.actions.Update" validate="false"/>
+  <action name="databaseBrowse" path="/databaseBrowse" scope="request"
+   type="com.yuanluesoft.jeaf.tools.databasebrowse.actions.Load" validate="false">
+   <forward name="load" path="/databasebrowse/databaseBrowse.jsp"/>
+  </action>
+  <action input="/databasebrowse/databaseBrowse.jsp" name="executeSql"
+   path="/executeSql" scope="request"
+   type="com.yuanluesoft.jeaf.tools.databasebrowse.actions.ExecuteSql" validate="false">
+   <forward name="load" path="/databasebrowse/executeSql.jsp"/>
+  </action>
+  <action path="/upgradeVideoPlayer" scope="request"
+   type="com.yuanluesoft.jeaf.tools.upgradevideoplayer.actions.Upgrade" validate="false"/>
+  <action name="fileBrowse" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.jeaf.tools.filebrowse.actions.SelectAttachment" validate="false">
+   <forward name="load" path="/../attachment/attachment.jsp"/>
+  </action>
+  <action name="databaseBrowse" path="/databaseBrowseLogin"
+   scope="request"
+   type="com.yuanluesoft.jeaf.tools.databasebrowse.actions.Login" validate="false">
+   <forward name="load" path="/databasebrowse/databaseLogin.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

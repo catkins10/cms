@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="account" type="com.yuanluesoft.microblog.forms.Account"/>
+  <form-bean name="microblog" type="com.yuanluesoft.microblog.forms.Microblog"/>
+  <form-bean name="privateMessage" type="com.yuanluesoft.microblog.forms.PrivateMessage"/>
+  <form-bean name="userGroup" type="com.yuanluesoft.microblog.forms.UserGroup"/>
+  <form-bean name="responseMessage" type="com.yuanluesoft.microblog.forms.ResponseMessage"/>
+  <form-bean name="insertMicroblogs" type="com.yuanluesoft.microblog.forms.InsertMicroblogs"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action path="/receiveMessage" scope="request"
+   type="com.yuanluesoft.microblog.actions.privatemessage.Load" validate="false"/>
+  <action name="account" path="/account" scope="request"
+   type="com.yuanluesoft.microblog.actions.account.Load" validate="false">
+   <forward name="load" path="/account.jsp"/>
+  </action>
+  <action input="/account.jsp" name="account" path="/saveAccount"
+   scope="request" type="com.yuanluesoft.microblog.actions.account.Save" validate="false"/>
+  <action path="/workflowConfig" scope="request"
+   type="com.yuanluesoft.microblog.actions.workflow.Load" validate="false"/>
+  <action name="microblog" path="/microblog" scope="request"
+   type="com.yuanluesoft.microblog.actions.microblog.Load" validate="false">
+   <forward name="load" path="/microblog.jsp"/>
+  </action>
+  <action input="/microblog.jsp" name="microblog" path="/saveMicroblog"
+   scope="request"
+   type="com.yuanluesoft.microblog.actions.microblog.Save" validate="false"/>
+  <action input="/microblog.jsp" name="microblog"
+   path="/deleteMicroblog" scope="request"
+   type="com.yuanluesoft.microblog.actions.microblog.Delete" validate="false"/>
+  <action input="/microblog.jsp" name="microblog" path="/runMicroblog"
+   scope="request"
+   type="com.yuanluesoft.microblog.actions.microblog.Run" validate="false"/>
+  <action input="/microblog.jsp" name="microblog" path="/writeOpinion"
+   scope="request"
+   type="com.yuanluesoft.microblog.actions.microblog.WriteOpinion" validate="false"/>
+  <action input="/microblog.jsp" name="microblog"
+   path="/approvalMicroblog" scope="request"
+   type="com.yuanluesoft.microblog.actions.microblog.Approval" validate="false"/>
+  <action input="/microblog.jsp" name="microblog" path="/issueMicroblog"
+   scope="request"
+   type="com.yuanluesoft.microblog.actions.microblog.Issue" validate="false"/>
+  <action name="userGroup" path="/userGroup" scope="request"
+   type="com.yuanluesoft.microblog.actions.usergroup.Load" validate="false">
+   <forward name="load" path="/userGroup.jsp"/>
+  </action>
+  <action input="/userGroup.jsp" name="userGroup" path="/saveUserGroup"
+   scope="request"
+   type="com.yuanluesoft.microblog.actions.usergroup.Save" validate="false"/>
+  <action input="/userGroup.jsp" name="userGroup"
+   path="/deleteUserGroup" scope="request"
+   type="com.yuanluesoft.microblog.actions.usergroup.Delete" validate="false"/>
+  <action name="privateMessage" path="/privateMessage" scope="request"
+   type="com.yuanluesoft.microblog.actions.receivedmessage.Load" validate="false">
+   <forward name="load" path="/privateMessage.jsp"/>
+  </action>
+  <action input="/privateMessage.jsp" name="privateMessage"
+   path="/savePrivateMessage" scope="request"
+   type="com.yuanluesoft.microblog.actions.receivedmessage.Save" validate="false"/>
+  <action input="/privateMessage.jsp" name="privateMessage"
+   path="/deletePrivateMessage" scope="request"
+   type="com.yuanluesoft.microblog.actions.receivedmessage.Delete" validate="false"/>
+  <action name="responseMessage" path="/responseMessage" scope="request"
+   type="com.yuanluesoft.microblog.actions.responsemessage.Load" validate="false">
+   <forward name="load" path="/responseMessage.jsp"/>
+  </action>
+  <action input="/responseMessage.jsp" name="responseMessage"
+   path="/saveResponseMessage" scope="request"
+   type="com.yuanluesoft.microblog.actions.responsemessage.Save" validate="false"/>
+  <action input="/responseMessage.jsp" name="responseMessage"
+   path="/deleteResponseMessage" scope="request"
+   type="com.yuanluesoft.microblog.actions.responsemessage.Delete" validate="false"/>
+  <action name="responseMessage" path="/responseMessageAttachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.microblog.actions.responsemessage.SelectAttachment" validate="false">
+   <forward name="load" path="/../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="microblog" path="/microblogAttachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.microblog.actions.microblog.SelectAttachment" validate="false">
+   <forward name="load" path="/../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action input="/account.jsp" name="account" path="/deleteAccount"
+   scope="request"
+   type="com.yuanluesoft.microblog.actions.account.Delete" validate="false"/>
+  <action input="/microblog.jsp" name="microblog"
+   path="/unissueMicroblog" scope="request"
+   type="com.yuanluesoft.microblog.actions.microblog.Unissue" validate="false"/>
+  <action input="/microblog.jsp" name="microblog"
+   path="/reissueMicroblog" scope="request"
+   type="com.yuanluesoft.microblog.actions.microblog.Reissue" validate="false"/>
+  <action name="insertMicroblogs"
+   path="/templatemanage/insertMicroblogs" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertMicroblogs.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

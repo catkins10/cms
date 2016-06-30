@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="project" type="com.yuanluesoft.enterprise.project.forms.Project"/>
+  <form-bean name="parameter" type="com.yuanluesoft.enterprise.project.forms.Parameter"/>
+  <form-bean name="projectType" type="com.yuanluesoft.enterprise.project.forms.ProjectType"/>
+  <form-bean name="contractTemplate" type="com.yuanluesoft.enterprise.project.forms.ContractTemplate"/>
+  <form-bean name="projectContract" type="com.yuanluesoft.enterprise.project.forms.ProjectContract"/>
+  <form-bean name="projectTeamPlan" type="com.yuanluesoft.enterprise.project.forms.ProjectTeamPlan"/>
+  <form-bean name="projectCollect" type="com.yuanluesoft.enterprise.project.forms.ProjectCollect"/>
+  <form-bean name="projectPay" type="com.yuanluesoft.enterprise.project.forms.ProjectPay"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="project" path="/project" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.Load" validate="false">
+   <forward name="load" path="/project.jsp"/>
+  </action>
+  <action input="/project.jsp" name="project" path="/saveProject"
+   scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.Save" validate="false"/>
+  <action input="/project.jsp" name="project" path="/deleteProject"
+   scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.Delete" validate="false"/>
+  <action input="/project.jsp" name="project" path="/runProject"
+   scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.Run" validate="false"/>
+  <action input="/project.jsp" name="project" path="/writeOpinion"
+   scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.WriteOpinion" validate="false"/>
+  <action input="/project.jsp" name="project" path="/switchPage"
+   scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.SwitchPage" validate="false"/>
+  <action name="projectType" path="/projectType" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.projecttype.Load" validate="false">
+   <forward name="load" path="/projectType.jsp"/>
+  </action>
+  <action input="/projectType.jsp" name="projectType"
+   path="/saveProjectType" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.projecttype.Save" validate="false"/>
+  <action input="/projectType.jsp" name="projectType"
+   path="/deleteProjectType" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.projecttype.Delete" validate="false"/>
+  <action name="contractTemplate" path="/contractTemplate"
+   scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.contracttemplate.Load" validate="false">
+   <forward name="load" path="/contractTemplate.jsp"/>
+  </action>
+  <action input="/contractTemplate.jsp" name="contractTemplate"
+   path="/saveContractTemplate" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.contracttemplate.Save" validate="false"/>
+  <action input="/contractTemplate.jsp" name="contractTemplate"
+   path="/deleteContractTemplate" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.contracttemplate.Delete" validate="false"/>
+  <action input="/projectType.jsp" name="projectType"
+   path="/workflowConfig" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.projecttype.WorkflowConfig" validate="false"/>
+  <action name="project" path="/attachmentEditor" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="projectContract" path="/projectContract" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.projectcontract.Load" validate="false">
+   <forward name="load" path="/projectContract.jsp"/>
+  </action>
+  <action input="/projectContract.jsp" name="projectContract"
+   path="/saveProjectContract" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.projectcontract.Save" validate="false"/>
+  <action input="/projectContract.jsp" name="projectContract"
+   path="/deleteProjectContract" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.projectcontract.Delete" validate="false"/>
+  <action name="projectContract" path="/contractAttachmentEditor"
+   scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.projectcontract.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action input="/project.jsp" name="project" path="/refreshProject"
+   scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.Refresh" validate="false"/>
+  <action input="/projectContract.jsp" name="projectContract"
+   path="/saveProjectContractBody" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.projectcontract.SaveBody" validate="false"/>
+  <action input="/project.jsp" name="project" path="/completeSeal"
+   scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.CompleteSeal" validate="false"/>
+  <action input="/project.jsp" name="project" path="/completeSign"
+   scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.CompleteSign" validate="false"/>
+  <action input="/project.jsp" name="project" path="/completeArchive"
+   scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.CompleteArchive" validate="false"/>
+  <action name="project" path="/teamAttachmentEditor" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.SelectTeamAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  <action name="projectTeamPlan" path="/projectTeamPlan" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.projectteamplan.Load" validate="false">
+   <forward name="load" path="/projectTeamPlan.jsp"/>
+  </action>
+  <action input="/projectTeamPlan.jsp" name="projectTeamPlan"
+   path="/saveProjectTeamPlan" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.projectteamplan.Save" validate="false"/>
+  <action input="/projectTeamPlan.jsp" name="projectTeamPlan"
+   path="/deleteProjectTeamPlan" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.projectteamplan.Delete" validate="false"/>
+  <action input="/project.jsp" name="project" path="/doApprovalDesign"
+   scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.DoApprovalDesign" validate="false"/>
+  <action name="projectCollect" path="/projectCollect" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.projectcollect.Load" validate="false">
+   <forward name="load" path="/projectCollect.jsp"/>
+  </action>
+  <action name="projectPay" path="/projectPay" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.projectpay.Load" validate="false">
+   <forward name="load" path="/projectPay.jsp"/>
+  </action>
+  <action input="/projectCollect.jsp" name="projectCollect"
+   path="/saveProjectCollect" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.projectcollect.Save" validate="false"/>
+  <action input="/projectPay.jsp" name="projectPay"
+   path="/saveProjectPay" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.projectpay.Save" validate="false"/>
+  <action input="/projectCollect.jsp" name="projectCollect"
+   path="/deleteProjectCollect" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.projectcollect.Delete" validate="false"/>
+  <action input="/projectPay.jsp" name="projectPay"
+   path="/deleteProjectPay" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.projectpay.Delete" validate="false"/>
+  <action input="/project.jsp" name="project" path="/schedule"
+   scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.Schedule" validate="false"/>
+  <action input="/project.jsp" name="project" path="/completeSchedule"
+   scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.CompleteSchedule" validate="false"/>
+  <action input="/project.jsp" name="project" path="/completeDesign"
+   scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.CompleteDesign" validate="false"/>
+  <action input="/project.jsp" name="project" path="/doCompleteDesign"
+   scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.DoCompleteDesign" validate="false"/>
+  <action name="project" path="/projectPrint" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.Print" validate="false">
+   <forward name="load" path="/projectPrint.jsp"/>
+  </action>
+  <action input="/contractTemplate.jsp" name="contractTemplate"
+   path="/editTemplate" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.contracttemplate.EditTemplate" validate="false"/>
+  <action input="/contractTemplate.jsp" name="contractTemplate"
+   path="/saveTemplate" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.contracttemplate.SaveTemplate" validate="false"/>
+  <action input="/projectContract.jsp" name="projectContract"
+   path="/editProjectContractBody" scope="request"
+   type="com.yuanluesoft.enterprise.project.actions.project.projectcontract.EditBody" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

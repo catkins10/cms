@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<statisticView name="publicInfoMonitor" title="信息公开监察统计" url="/cms/monitor/monitorStat.shtml?applicationName=cms/monitor/infopublic&amp;viewName=publicInfoMonitor" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorStatViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfo</pojo>
+		</data>
+		<statistics hideDetail="true">
+			<statistic> <!-- 单位统计 -->
+				<groupFields>
+					<groupField name="unitName"/>
+					<groupField name="unitId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="count" function="count(distinct MonitorPublicInfo.id)"/> <!-- 总数 -->
+					<statisticColumn name="ontimeCount" function="count(distinct MonitorPublicInfo.id)" whereExtend="MonitorPublicInfo.timeoutLevel=0"/> <!-- 合格数量 -->
+					<statisticColumn name="timeoutLevel1Count" function="count(distinct MonitorPublicInfo.id)" whereExtend="MonitorPublicInfo.timeoutLevel=1"/> <!-- 超时等级1数量 -->
+					<statisticColumn name="timeoutLevel2Count" function="count(distinct MonitorPublicInfo.id)" whereExtend="MonitorPublicInfo.timeoutLevel=2"/> <!-- 超时等级2数量 -->
+					<statisticColumn name="timeoutLevel3Count" function="count(distinct MonitorPublicInfo.id)" whereExtend="MonitorPublicInfo.timeoutLevel>=3"/> <!-- 超时等级3数量 -->
+					<statisticColumn name="timeoutCount" function="count(distinct MonitorPublicInfo.id)" whereExtend="MonitorPublicInfo.timeoutLevel>0"/> <!-- 超时信息数量 -->
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<scripts>
+			<script>/cms/monitor/js/monitor.js</script>
+		</scripts>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位名称" name="unitName">
+				<link>monitorStat.shtml?applicationName={PARAMETER:applicationName}&amp;viewName={PARAMETER:viewName}&amp;viewPackage.categories={PARAMETER:viewPackage.categories}&amp;beginDate={PARAMETER:beginDate}&amp;endDate={PARAMETER:endDate}&amp;parentOrgId={PARAMETER:unitId}</link>
+			</column>
+			<column title="信息总数" name="count" type="statistic" align="center" width="70">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoMonitor', 'count', 'publicInfo', 'publicInfo', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+			<column title="超时信息总数" name="timeoutCount" type="statistic" align="center" width="90">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoMonitor', 'timeoutCount', 'publicInfo', 'publicInfo', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+			<column title="合格信息数量" name="ontimeCount" type="statistic" align="center" width="90">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoMonitor', 'ontimeCount', 'publicInfo', 'publicInfo', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+			<column title="超时信息百分比" name="timeoutPercentage" type="formula" formula="(timeoutCount + 0.0)/count" formulaFields="timeoutCount,count" format="#.##%" align="center" width="100"/>
+		</columns>
+		<extendParameters>
+			<parameter name="statTimeFieldName">issueTime</parameter> <!-- 统计时间字段 -->
+			<parameter name="extendPage">/cms/monitor/monitorStat.jsp</parameter> <!-- 扩展页面 -->
+		</extendParameters>
+	</statisticView>
+	
+	<view name="publicInfo" form="publicInfo" title="信息公开列表" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfo</pojo>
+			<orderBy>MonitorPublicInfo.captureTime DESC</orderBy>
+			<quickFilter>MonitorPublicInfo.subject like '%{KEY}%' or MonitorPublicInfo.unitName like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfo</pojo>
+			</data>
+			<category value="MonitorPublicInfo.unitName"> <!--value必须有-->
+				<data>MonitorPublicInfo.unitName={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="subject"/>
+			<column title="单位名称" name="unitName" width="100"/>
+			<column title="生成日期" name="generateDate" align="center" width="72"/>
+			<column title="发布时间" name="issueTime" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="采集时间" name="captureTime" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="状态" name="monitorStatus" width="70" align="center"/>
+		</columns>
+	</view>
+	
+	<statisticView name="partyInfoMonitor" title="党务公开监察统计" url="/cms/monitor/monitorStat.shtml?applicationName=cms/monitor/infopublic&amp;viewName=partyInfoMonitor" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorStatViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPartyInfo</pojo>
+		</data>
+		<statistics hideDetail="true">
+			<statistic> <!-- 单位统计 -->
+				<groupFields>
+					<groupField name="unitName"/>
+					<groupField name="unitId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="count" function="count(distinct MonitorPartyInfo.id)"/> <!-- 总数 -->
+					<statisticColumn name="ontimeCount" function="count(distinct MonitorPartyInfo.id)" whereExtend="MonitorPartyInfo.timeoutLevel=0"/> <!-- 合格数量 -->
+					<statisticColumn name="timeoutLevel1Count" function="count(distinct MonitorPartyInfo.id)" whereExtend="MonitorPartyInfo.timeoutLevel=1"/> <!-- 超时等级1数量 -->
+					<statisticColumn name="timeoutLevel2Count" function="count(distinct MonitorPartyInfo.id)" whereExtend="MonitorPartyInfo.timeoutLevel=2"/> <!-- 超时等级2数量 -->
+					<statisticColumn name="timeoutLevel3Count" function="count(distinct MonitorPartyInfo.id)" whereExtend="MonitorPartyInfo.timeoutLevel>=3"/> <!-- 超时等级3数量 -->
+					<statisticColumn name="timeoutCount" function="count(distinct MonitorPartyInfo.id)" whereExtend="MonitorPartyInfo.timeoutLevel>0"/> <!-- 超时信息数量 -->
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<scripts>
+			<script>/cms/monitor/js/monitor.js</script>
+		</scripts>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位名称" name="unitName">
+				<link>monitorStat.shtml?applicationName={PARAMETER:applicationName}&amp;viewName={PARAMETER:viewName}&amp;viewPackage.categories={PARAMETER:viewPackage.categories}&amp;beginDate={PARAMETER:beginDate}&amp;endDate={PARAMETER:endDate}&amp;parentOrgId={PARAMETER:unitId}</link>
+			</column>
+			<column title="信息数量" name="count" type="statistic" align="center" width="70"/>
+			<column title="&lt;image align=&quot;absmiddle&quot; src=&quot;{CONTEXTPATH}/cms/monitor/icons/green.gif&quot;&gt; 绿灯" name="ontimeCount" type="statistic" align="center" width="70"/>
+			<column title="&lt;image align=&quot;absmiddle&quot; src=&quot;{CONTEXTPATH}/cms/monitor/icons/ring.gif&quot;&gt; 预警" name="timeoutLevel1Count" type="statistic" align="center" width="70"/>
+			<column title="&lt;image align=&quot;absmiddle&quot; src=&quot;{CONTEXTPATH}/cms/monitor/icons/yellow.gif&quot;&gt; 黄灯" name="timeoutLevel2Count" type="statistic" align="center" width="70"/>
+			<column title="&lt;image align=&quot;absmiddle&quot; src=&quot;{CONTEXTPATH}/cms/monitor/icons/red.gif&quot;&gt; 红灯" name="timeoutLevel3Count" type="statistic" align="center" width="70"/>
+			<column title="超时信息总数" name="timeoutCount" type="statistic" align="center" width="90"/>
+			<column title="超时信息百分比" name="timeoutPercentage" type="formula" formula="(timeoutCount + 0.0)/count" formulaFields="timeoutCount,count" format="#.##%" align="center" width="100"/>
+		</columns>
+		<extendParameters>
+			<parameter name="statTimeFieldName">issueTime</parameter> <!-- 统计时间字段 -->
+			<parameter name="extendPage">/cms/monitor/monitorStat.jsp</parameter> <!-- 扩展页面 -->
+		</extendParameters>
+	</statisticView>
+	
+	<view name="partyInfo" form="partyInfo" title="党务公开列表" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPartyInfo</pojo>
+			<orderBy>MonitorPartyInfo.captureTime DESC</orderBy>
+			<quickFilter>MonitorPartyInfo.subject like '%{KEY}%' or MonitorPartyInfo.unitName like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPartyInfo</pojo>
+			</data>
+			<category value="MonitorPartyInfo.unitName"> <!--value必须有-->
+				<data>MonitorPartyInfo.unitName={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="subject"/>
+			<column title="单位名称" name="unitName" width="100"/>
+			<column title="生成日期" name="generateDate" align="center" width="72"/>
+			<column title="发布时间" name="issueTime" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="采集时间" name="captureTime" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="状态" name="monitorStatus" width="70" align="center"/>
+		</columns>
+	</view>
+	
+	<statisticView name="publicInfoOpinionMonitor" title="信息公开意见箱监察统计" url="/cms/monitor/monitorStat.shtml?applicationName=cms/monitor/infopublic&amp;viewName=publicInfoOpinionMonitor" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorStatViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoOpinion</pojo>
+		</data>
+		<statistics hideDetail="true">
+			<statistic> <!-- 单位统计 -->
+				<groupFields>
+					<groupField name="unitName"/>
+					<groupField name="unitId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="count" function="count(distinct MonitorPublicInfoOpinion.id)"/> <!-- 总数 -->
+					<statisticColumn name="timeoutLevel1Count" function="count(distinct MonitorPublicInfoOpinion.id)" whereExtend="MonitorPublicInfoOpinion.transactTime is null"/> <!-- 未答复数 -->
+					<statisticColumn name="ontimeCount" function="count(distinct MonitorPublicInfoOpinion.id)" whereExtend="MonitorPublicInfoOpinion.timeoutLevel=0 and MonitorPublicInfoOpinion.transactTime is not null"/> <!-- 合格数量 -->
+					<statisticColumn name="timeoutCount" function="count(distinct MonitorPublicInfoOpinion.id)" whereExtend="MonitorPublicInfoOpinion.timeoutLevel>0"/> <!-- 超时信息数量 -->
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<scripts>
+			<script>/cms/monitor/js/monitor.js</script>
+		</scripts>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位名称" name="unitName">
+				<link>monitorStat.shtml?applicationName={PARAMETER:applicationName}&amp;viewName={PARAMETER:viewName}&amp;viewPackage.categories={PARAMETER:viewPackage.categories}&amp;beginDate={PARAMETER:beginDate}&amp;endDate={PARAMETER:endDate}&amp;parentOrgId={PARAMETER:unitId}</link>
+			</column>
+			<column title="意见数量" name="count" type="statistic" align="center" width="70">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoOpinionMonitor', 'count', 'publicInfoOpinion', 'publicInfoOpinion', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+			<column title="未答复数量" name="timeoutLevel1Count" type="statistic" align="center" width="70">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoOpinionMonitor', 'timeoutLevel1Count', 'publicInfoOpinion', 'publicInfoOpinion', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+			<column title="及时答复数量" name="ontimeCount" type="statistic" align="center" width="90">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoOpinionMonitor', 'ontimeCount', 'publicInfoOpinion', 'publicInfoOpinion', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+			<column title="超时答复数量" name="timeoutCount" type="statistic" align="center" width="90">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoOpinionMonitor', 'timeoutCount', 'publicInfoOpinion', 'publicInfoOpinion', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+			<column title="超时百分比" name="timeoutPercentage" type="formula" formula="(timeoutCount + 0.0)/count" formulaFields="timeoutCount,count" format="#.##%" align="center" width="100"/>
+		</columns>
+		<extendParameters>
+			<parameter name="statTimeFieldName">created</parameter> <!-- 统计时间字段 -->
+			<parameter name="extendPage">/cms/monitor/monitorStat.jsp</parameter> <!-- 扩展页面 -->
+		</extendParameters>
+	</statisticView>
+	
+	<view name="publicInfoOpinion" form="publicInfoOpinion" title="信息公开意见列表" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoOpinion</pojo>
+			<orderBy>MonitorPublicInfoOpinion.captureTime DESC</orderBy>
+			<quickFilter>MonitorPublicInfoOpinion.subject like '%{KEY}%' or MonitorPublicInfoOpinion.unitName like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoOpinion</pojo>
+			</data>
+			<category value="MonitorPublicInfoOpinion.unitName"> <!--value必须有-->
+				<data>MonitorPublicInfoOpinion.unitName={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="主题" name="subject"/>
+			<column title="单位名称" name="unitName" width="100"/>
+			<column title="提交时间" name="created" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="办理时间" name="transactTime" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="采集时间" name="captureTime" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="状态" name="monitorStatus" width="70" align="center"/>
+		</columns>
+	</view>
+	
+	<statisticView name="publicInfoRequestMonitor" title="依申请公开监察统计" url="/cms/monitor/monitorStat.shtml?applicationName=cms/monitor/infopublic&amp;viewName=publicInfoRequestMonitor" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorStatViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoRequest</pojo>
+		</data>
+		<statistics hideDetail="true">
+			<statistic> <!-- 单位统计 -->
+				<groupFields>
+					<groupField name="unitName"/>
+					<groupField name="unitId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="count" function="count(distinct MonitorPublicInfoRequest.id)"/> <!-- 总数 -->
+					<statisticColumn name="timeoutLevel1Count" function="count(distinct MonitorPublicInfoRequest.id)" whereExtend="MonitorPublicInfoRequest.approvalTime is null"/> <!-- 未答复数 -->
+					<statisticColumn name="ontime15Count" function="count(distinct MonitorPublicInfoRequest.id)" whereExtend="MonitorPublicInfoRequest.processDays&lt;=15 and MonitorPublicInfoRequest.approvalTime is not null"/> <!-- 合格数量 -->
+					<statisticColumn name="ontime30Count" function="count(distinct MonitorPublicInfoRequest.id)" whereExtend="MonitorPublicInfoRequest.processDays&gt;=15 and MonitorPublicInfoRequest.processDays&lt;=30 and MonitorPublicInfoRequest.approvalTime is not null"/> <!-- 合格数量 -->
+					<statisticColumn name="timeoutCount" function="count(distinct MonitorPublicInfoRequest.id)" whereExtend="MonitorPublicInfoRequest.timeoutLevel>0"/> <!-- 超时信息数量 -->
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<scripts>
+			<script>/cms/monitor/js/monitor.js</script>
+		</scripts>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位名称" name="unitName">
+				<link>monitorStat.shtml?applicationName={PARAMETER:applicationName}&amp;viewName={PARAMETER:viewName}&amp;viewPackage.categories={PARAMETER:viewPackage.categories}&amp;beginDate={PARAMETER:beginDate}&amp;endDate={PARAMETER:endDate}&amp;parentOrgId={PARAMETER:unitId}</link>
+			</column>
+			<column title="申请数量" name="count" type="statistic" align="center" width="70">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoRequestMonitor', 'count', 'publicInfoRequest', 'publicInfoRequest', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+			<column title="未答复数量" name="timeoutLevel1Count" type="statistic" align="center" width="70">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoRequestMonitor', 'timeoutLevel1Count', 'publicInfoRequest', 'publicInfoRequest', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+			<column title="15个工作日内答复数量" name="ontime15Count" type="statistic" align="center" width="130">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoRequestMonitor', 'ontime15Count', 'publicInfoRequest', 'publicInfoRequest', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+			<column title="30个工作日内答复数量" name="ontime30Count" type="statistic" align="center" width="130">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoRequestMonitor', 'ontime30Count', 'publicInfoRequest', 'publicInfoRequest', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+			<column title="超时答复数量" name="timeoutCount" type="statistic" align="center" width="80">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoRequestMonitor', 'timeoutCount', 'publicInfoRequest', 'publicInfoRequest', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+			<column title="超时百分比" name="timeoutPercentage" type="formula" formula="(timeoutCount + 0.0)/count" formulaFields="timeoutCount,count" format="#.##%" align="center" width="80"/>
+		</columns>
+		<extendParameters>
+			<parameter name="statTimeFieldName">created</parameter> <!-- 统计时间字段 -->
+			<parameter name="extendPage">/cms/monitor/monitorStat.jsp</parameter> <!-- 扩展页面 -->
+		</extendParameters>
+	</statisticView>
+	
+	<view name="publicInfoRequest" form="publicInfoRequest" title="依申请公开列表" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoRequest</pojo>
+			<orderBy>MonitorPublicInfoRequest.captureTime DESC</orderBy>
+			<quickFilter>MonitorPublicInfoRequest.content like '%{KEY}%' or MonitorPublicInfoRequest.unitName like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoRequest</pojo>
+			</data>
+			<category value="MonitorPublicInfoRequest.unitName"> <!--value必须有-->
+				<data>MonitorPublicInfoRequest.unitName={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="内容描述" name="content" maxCharCount="150" ellipsis="..."/>
+			<column title="单位名称" name="unitName" width="100"/>
+			<column title="申请时间" name="created" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="办理时间" name="approvalTime" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="采集时间" name="captureTime" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="状态" name="monitorStatus" width="70" align="center"/>
+		</columns>
+	</view>
+	
+	<statisticView name="publicInfoReportMonitor" title="信息公开年度报告监察统计" url="/cms/monitor/monitorStat.shtml?applicationName=cms/monitor/infopublic&amp;viewName=publicInfoReportMonitor" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorStatViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoReport</pojo>
+		</data>
+		<statistics hideDetail="true">
+			<statistic> <!-- 单位统计 -->
+				<groupFields>
+					<groupField name="unitName"/>
+					<groupField name="unitId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="count" function="count(distinct MonitorPublicInfoReport.id)"/> <!-- 总数 -->
+					<statisticColumn name="ontimeCount" function="count(distinct MonitorPublicInfoReport.id)" whereExtend="MonitorPublicInfoReport.timeoutLevel=0"/> <!-- 合格报告数 -->
+					<statisticColumn name="timeoutCount" function="count(distinct MonitorPublicInfoReport.id)" whereExtend="MonitorPublicInfoReport.timeoutLevel&gt;0"/> <!-- 超期报告数 -->
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<scripts>
+			<script>/cms/monitor/js/monitor.js</script>
+		</scripts>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位名称" name="unitName">
+				<link>monitorStat.shtml?applicationName={PARAMETER:applicationName}&amp;viewName={PARAMETER:viewName}&amp;viewPackage.categories={PARAMETER:viewPackage.categories}&amp;beginDate={PARAMETER:beginDate}&amp;endDate={PARAMETER:endDate}&amp;parentOrgId={PARAMETER:unitId}</link>
+			</column>
+			<column title="报告总数" name="count" type="statistic" align="center" width="150">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoReportMonitor', 'count', 'publicInfoReport', 'publicInfoReport', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+			<column title="超期报告数" name="timeoutCount" type="statistic" align="center" width="150">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoReportMonitor', 'timeoutCount', 'publicInfoReport', 'publicInfoReport', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+			<column title="合格报告数" name="ontimeCount" type="statistic" align="center" width="150">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoReportMonitor', 'ontimeCount', 'publicInfoReport', 'publicInfoReport', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+			<column title="超时百分比" name="timeoutPercentage" type="formula" formula="(timeoutCount + 0.0)/count" formulaFields="timeoutCount,count" format="#.##%" align="center" width="80"/>
+		</columns>
+		<extendParameters>
+			<parameter name="statTimeFieldName">issueTime</parameter> <!-- 统计时间字段 -->
+			<parameter name="statByYear">true</parameter> <!-- 按年统计 -->
+			<parameter name="extendPage">/cms/monitor/monitorStat.jsp</parameter> <!-- 扩展页面 -->
+		</extendParameters>
+	</statisticView>
+	
+	<view name="publicInfoReport" form="publicInfoReport" title="信息公开年度报告列表" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoReport</pojo>
+			<orderBy>MonitorPublicInfoReport.captureTime DESC</orderBy>
+			<quickFilter>MonitorPublicInfoReport.subject like '%{KEY}%' or MonitorPublicInfoReport.unitName like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoReport</pojo>
+			</data>
+			<category value="MonitorPublicInfoReport.unitName"> <!--value必须有-->
+				<data>MonitorPublicInfoReport.unitName={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="subject"/>
+			<column title="单位名称" name="unitName" width="100"/>
+			<column title="发布时间" name="issueTime" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="采集时间" name="captureTime" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="状态" name="monitorStatus" width="70" align="center"/>
+		</columns>
+	</view>
+	
+	<statisticView name="publicInfoRuleMonitor" title="信息公开制度监察统计" url="/cms/monitor/monitorStat.shtml?applicationName=cms/monitor/infopublic&amp;viewName=publicInfoRuleMonitor" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorStatViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoRule</pojo>
+		</data>
+		<statistics hideDetail="true">
+			<statistic> <!-- 单位统计 -->
+				<groupFields>
+					<groupField name="unitName"/>
+					<groupField name="unitId"/>
+				</groupFields>
+				<statisticColumns>
+					<statisticColumn name="count" function="count(distinct MonitorPublicInfoRule.id)"/> <!-- 总数 -->
+					<statisticColumn name="currentYearCount" function="count(distinct MonitorPublicInfoRule.id)" whereExtend="MonitorPublicInfoRule.timeoutLevel=0 and year(MonitorPublicInfoRule.issueTime)={YEAR}"/> <!-- 本年度新增报告数 -->
+					<statisticColumn name="lastYearCount" function="count(distinct MonitorPublicInfoRule.id)" whereExtend="MonitorPublicInfoRule.timeoutLevel=0 and year(MonitorPublicInfoRule.issueTime)={YEAR}-1"/> <!-- 去年报告数 -->
+				</statisticColumns>
+			</statistic>
+		</statistics>
+		<scripts>
+			<script>/cms/monitor/js/monitor.js</script>
+		</scripts>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="单位名称" name="unitName">
+				<link>monitorStat.shtml?applicationName={PARAMETER:applicationName}&amp;viewName={PARAMETER:viewName}&amp;viewPackage.categories={PARAMETER:viewPackage.categories}&amp;beginDate={PARAMETER:beginDate}&amp;endDate={PARAMETER:endDate}&amp;parentOrgId={PARAMETER:unitId}</link>
+			</column>
+			<column title="报告总数" name="count" type="statistic" align="center" width="150">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoRuleMonitor', 'count', 'publicInfoRule', 'publicInfoRule', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+			<column title="本年度新增报告数" name="currentYearCount" type="statistic" align="center" width="150">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoRuleMonitor', 'currentYearCount', 'publicInfoRule', 'publicInfoRule', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+			<column title="去年报告数" name="lastYearCount" type="statistic" align="center" width="150">
+				<link>javascript:listMonitorRecords('cms/monitor/infopublic', 'publicInfoRuleMonitor', 'lastYearCount', 'publicInfoRule', 'publicInfoRule', '{PARAMETER:unitId}', '{PARAMETER:beginDate}', '{PARAMETER:endDate}', '{PARAMETER:viewPackage.categories}', '{PARAMETER:viewPackage.searchConditions}')</link>
+			</column>
+		</columns>
+	</statisticView>
+	
+	<view name="publicInfoRule" form="publicInfoRule" title="信息公开制度列表" pageRows="25" width="100%" openFeatures="mode=fullscreen" viewServiceName="monitorViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoRule</pojo>
+			<orderBy>MonitorPublicInfoRule.captureTime DESC</orderBy>
+			<quickFilter>MonitorPublicInfoRule.subject like '%{KEY}%' or MonitorPublicInfoRule.unitName like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.monitor.infopublic.pojo.MonitorPublicInfoRule</pojo>
+			</data>
+			<category value="MonitorPublicInfoRule.unitName"> <!--value必须有-->
+				<data>MonitorPublicInfoRule.unitName={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="名称" name="subject"/>
+			<column title="单位名称" name="unitName" width="100"/>
+			<column title="发布时间" name="issueTime" align="center" width="70" format="yyyy-MM-dd"/>
+			<column title="采集时间" name="captureTime" align="center" width="70" format="yyyy-MM-dd"/>
+		</columns>
+	</view>
+</views>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="访问统计" class="com.yuanluesoft.jeaf.stat.pojo.AccessStat">
+		<field name="applicationName" title="应用名称" length="50" type="string" inputMode="none"/>
+		<field name="pageName" title="页面名称" length="250" type="string" inputMode="none"/>
+		<field name="recordId" title="记录ID" type="string" inputMode="none"/>
+		<field name="times" title="访问次数" type="number" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="日访问统计" class="com.yuanluesoft.jeaf.stat.pojo.DayAccessStat">
+		<field name="applicationName" title="应用名称" length="50" type="string" inputMode="none"/>
+		<field name="pageName" title="页面名称" length="250" type="string" inputMode="none"/>
+		<field name="recordId" title="记录ID" type="string" inputMode="none"/>
+		<field name="accessDate" title="日期" type="date" inputMode="readonly"/>
+		<field name="times" title="访问次数" type="number" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="时间段访问统计" class="com.yuanluesoft.jeaf.stat.pojo.HourAccessStat">
+		<field name="accessDate" title="日期" type="date" inputMode="readonly"/>
+		<field name="accessHour" title="访问时间" type="number" inputMode="readonly"/>
+		<field name="week" title="星期" type="number" inputMode="readonly"/>
+		<field name="times" title="访问次数" type="number" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="登录统计" class="com.yuanluesoft.jeaf.stat.pojo.LoginStat">
+		<field name="personId" title="用户ID" type="number" inputMode="none"/>
+		<field name="personName" title="用户名" length="30" type="string" inputMode="readonly"/>
+		<field name="loginDate" title="日期" type="date" inputMode="readonly"/>
+		<field name="times" title="访问次数" type="number" inputMode="readonly"/>
+		<field name="lastLogin" title="最后登录时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="今天登录统计" class="com.yuanluesoft.jeaf.stat.pojo.TodayLoginStat">
+		<field name="personId" title="用户ID" type="number" inputMode="none"/>
+	</businessObject>
+	
+	<businessObject title="学校登录统计" class="com.yuanluesoft.jeaf.stat.pojo.SchoolLoginStat">
+		<field name="schoolId" title="学校ID" type="number" inputMode="none"/>
+		<field name="schoolName" title="学校名称" length="30" type="string" inputMode="readonly"/>
+		<field name="loginDay" title="日期" type="string" inputMode="readonly"/>
+		<field name="studentNumber" title="学生登录人数" type="number" inputMode="readonly"/>
+		<field name="teacherNumber" title="教师登录人数" type="number" inputMode="readonly"/>
+		<field name="studentTimes" title="学生登录次数" type="number" inputMode="readonly"/>
+		<field name="teacherTimes" title="教师登录次数" type="number" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="学生登录统计" class="com.yuanluesoft.jeaf.stat.pojo.StudentLoginStat">
+		<field name="personId" title="用户ID" type="number" inputMode="readonly"/>
+		<field name="personName" title="姓名" length="30" type="string" inputMode="readonly"/>
+		<field name="times" title="登录次数" type="number" inputMode="readonly"/>
+		<field name="loginDate" title="日期" type="date" inputMode="readonly"/>
+	</businessObject>
+	
+	<businessObject title="用户访问记录" class="com.yuanluesoft.jeaf.stat.pojo.UserAccessStat">
+		<field name="applicationName" title="应用名称" length="50" type="string" inputMode="none"/>
+		<field name="recordId" title="记录ID" type="number" inputMode="none"/>
+		<field name="pageName" title="页面名称" length="250" type="string" inputMode="readonly"/>
+		<field name="userId" title="用户ID" type="number" inputMode="none"/>
+		<field name="userName" title="用户名" length="100" type="string" inputMode="readonly"/>
+		<field name="accessTime" title="访问时间" type="timestamp" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

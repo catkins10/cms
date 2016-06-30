@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=enterprise/exam&amp;anonymous=false"/>
+		
+		<page name="toTestExamPapers" title="待答试卷列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=enterprise/exam&amp;pageName=toTestExamPapers&amp;anonymous=false"/>
+
+		<page name="testedExamPapers" title="已答试卷列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=enterprise/exam&amp;pageName=testedExamPapers&amp;anonymous=false"/>
+
+		<page name="toCorrectExamPapers" title="待批改试卷列表" url="/cms/sitemanage/applicationIndex.shtml?applicationName=enterprise/exam&amp;pageName=toCorrectExamPapers&amp;anonymous=false"/>
+
+		<page name="wrongQuestions" title="错题本" url="/cms/sitemanage/applicationIndex.shtml?applicationName=enterprise/exam&amp;pageName=wrongQuestions&amp;anonymous=false"/>
+
+		<page name="examTest" title="答卷" recordClass="com.yuanluesoft.enterprise.exam.pojo.ExamTest"/>
+		
+		<page name="examTestRead" title="答卷(已作答)" recordClass="com.yuanluesoft.enterprise.exam.pojo.ExamTest"/>
+		
+		<page name="examTestCorrect" title="批改试卷" recordClass="com.yuanluesoft.enterprise.exam.pojo.ExamTest"/>
+
+		<page name="examTestNotExist" title="试卷不存在提示"/>
+
+		<page name="examPaperPrint" title="考卷打印(后台)" recordClass="com.yuanluesoft.enterprise.exam.pojo.ExamTest"/>
+		
+		<page name="examPaperFullPrint" title="考卷(含答案)打印(后台)" recordClass="com.yuanluesoft.enterprise.exam.pojo.ExamTest"/>
+		
+		<page name="examTestCheck" title="答卷复核(后台)" recordClass="com.yuanluesoft.enterprise.exam.pojo.ExamTest"/>
+	</pages>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="examTestQuestions" processor="examTestQuestionsProcessor"/> <!-- 出题列表 -->
+	</pageElements>
+</application>

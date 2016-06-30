@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="adminEnterprise" type="com.yuanluesoft.credit.enterprise.searchenterprise.forms.Enterprise"/>
+  <form-bean name="adminEnterprisein" type="com.yuanluesoft.credit.enterprise.searchenterprise.forms.EnterpriseIn"/>
+  <form-bean name="adminEnterpriseout" type="com.yuanluesoft.credit.enterprise.searchenterprise.forms.EnterpriseOut"/>
+  <form-bean name="adminFinancing" type="com.yuanluesoft.credit.enterprise.searchfinancing.forms.Financing"/>
+  
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="adminEnterprise" path="/admin/enterprise" scope="request"
+   type="com.yuanluesoft.credit.enterprise.searchenterprise.actions.Load" validate="false">
+   <forward name="load" path="/enterprise.jsp"/>
+  </action>
+  
+  <action name="adminEnterprisein" path="/admin/enterprise" scope="request"
+   type="com.yuanluesoft.credit.enterprise.searchenterprise.actions.in.Load" validate="false">
+   <forward name="load" path="/enterprisein.jsp"/>
+  </action>
+  
+  <action name="adminEnterpriseout" path="/admin/enterprise" scope="request"
+   type="com.yuanluesoft.credit.enterprise.searchenterprise.actions.out.Load" validate="false">
+   <forward name="load" path="/enterpriseout.jsp"/>
+  </action>
+   
+   <action name="adminFinancing" path="/admin/financing" scope="request"
+   type="com.yuanluesoft.credit.enterprise.searchfinancing.actions.Load" validate="false">
+   <forward name="load" path="/financing.jsp"/>
+  </action>
+  
+  
+  
+ </action-mappings>
+ <controller/>
+</struts-config>

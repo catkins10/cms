@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="collect" title="主题征集" method="post" action="/cms/interview/collect/submitCollect.shtml" class="com.yuanluesoft.cms.interview.collect.forms.Collect" pojo="com.yuanluesoft.cms.interview.collect.pojo.InterviewCollect">
+		<actions>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="admin/collectPrologue" class="com.yuanluesoft.cms.interview.collect.forms.admin.CollectPrologue" title="主题征集说明" pojo="com.yuanluesoft.cms.interview.collect.pojo.InterviewCollectPrologue">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteCollectPrologue')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/collect" class="com.yuanluesoft.cms.interview.collect.forms.admin.Collect" title="主题" pojo="com.yuanluesoft.cms.interview.collect.pojo.InterviewCollect">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="批转" hide="workflow()" execute="FormUtils.doAction('runCollect', 'workflowAction=send')"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteCollect')"/>
+			<action title="永久删除" hide="isNew()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteCollect', 'physical=true')"/>
+			<action title="撤销删除" hide="isNew()" execute="FormUtils.doAction('undeleteCollect')"/>
+		</actions>
+	</form>
+</forms>

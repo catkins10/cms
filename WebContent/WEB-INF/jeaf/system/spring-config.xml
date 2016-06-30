@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 系统服务 -->
+	<bean id="systemService" class="com.yuanluesoft.jeaf.system.services.spring.SystemServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="webApplicationUrl"><ref bean="webApplicationUrl"/></property>
+	</bean>
+</beans>

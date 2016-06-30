@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--投诉-->
+	<class name="投诉" table="投诉">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="ID"/> <!--ID-->
+		<property name="投诉人ID"/> <!--投诉人ID-->
+		<property name="投诉人"/> <!--投诉人-->
+		<property name="投诉货源还是车源"/> <!--投诉货源还是车源-->
+		<property name="被投诉货源ID"/> <!--被投诉货源ID-->
+		<property name="被投诉车源ID"/> <!--被投诉车源ID-->
+		<property name="投诉内容"/> <!--投诉内容-->
+		<property name="投诉事件"/> <!--投诉事件-->
+		<property name="工作流实例ID"/> <!--工作流实例ID-->
+	</class>
+</hibernate-mapping>

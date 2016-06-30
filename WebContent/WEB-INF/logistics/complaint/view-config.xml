@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="投诉" name="complaints">
+		<data>
+			<pojo>com.yuanluesoft.logistics.complaint.pojo.LogisticsComplaint</pojo>
+			<where>LogisticsComplaint.siteId={PARAMETER:siteId} and LogisticsComplaint.publicPass='1'</where>
+			<orderBy>LogisticsComplaint.created DESC</orderBy>
+			<quickFilter>LogisticsComplaint.subject like '%{KEY}%' or LogisticsComplaint.creator like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="投诉">/logistics/complaint/complaint.shtml</link>
+			<link type="hostLink">/cms/sitemanage/applicationIndex.shtml?applicationName=logistics/complaint</link>
+		</links>
+	</view>
+
+	<view name="admin/todoComplaint" form="admin/complaint" title="待办投诉" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.logistics.complaint.pojo.LogisticsComplaint</pojo>
+			<orderBy>LogisticsComplaint.created DESC</orderBy>
+			<quickFilter>LogisticsComplaint.subject like '%{KEY}%' or LogisticsComplaint.creator like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.logistics.complaint.pojo.LogisticsComplaintType</pojo>
+				<orderBy>ComplaintType.type</orderBy>
+			</data>
+			<category value="ComplaintType.type"> <!--value必须有-->
+				<data>LogisticsComplaint.type={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="被投诉的货源(车源)" name="supplyDescription"/>
+			<column title="投诉人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="投诉时间" name="created" align="center" width="108"/>
+		</columns>
+	</view>
+	
+	<view name="admin/inProcessComplaint" form="admin/complaint" title="在办投诉" pageRows="25" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.logistics.complaint.pojo.LogisticsComplaint</pojo>
+			<orderBy>LogisticsComplaint.created DESC</orderBy>
+			<quickFilter>LogisticsComplaint.subject like '%{KEY}%' or LogisticsComplaint.creator like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.logistics.complaint.pojo.LogisticsComplaintType</pojo>
+				<orderBy>ComplaintType.type</orderBy>
+			</data>
+			<category value="ComplaintType.type"> <!--value必须有-->
+				<data>LogisticsComplaint.type={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="被投诉的货源(车源)" name="supplyDescription"/>
+			<column title="投诉人" name="creator" align="center" width="80" displayExcept="portlet"/>
+			<column title="投诉时间" name="created" align="center" width="108"/>
+			<column title="办理人" name="workflowParticipants" align="center" width="120" display="normal,print"/>
+			<column title="状态" name="workflowStatus" align="center" width="80" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completedComplaint" form="admin/complaint" title="办结投诉" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.logistics.complaint.pojo.LogisticsComplaint</pojo>
+			<filter>COMPLETED</filter>
+			<quickFilter>LogisticsComplaint.subject like '%{KEY}%' or LogisticsComplaint.creator like '%{KEY}%'</quickFilter>
+			<orderBy>LogisticsComplaint.created DESC</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.logistics.complaint.pojo.LogisticsComplaintType</pojo>
+				<orderBy>ComplaintType.type</orderBy>
+			</data>
+			<category value="ComplaintType.type"> <!--value必须有-->
+				<data>LogisticsComplaint.type={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="被投诉的货源(车源)" name="supplyDescription"/>
+			<column title="投诉人" name="creator" align="center" width="80"/>
+			<column title="投诉时间" name="created" align="center" width="108"/>
+			<column title="处理结果" name="result"/>
+		</columns>
+	</view>
+	
+	<view name="admin/allComplaint" form="admin/complaint" title="所有投诉" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.logistics.complaint.pojo.LogisticsComplaint</pojo>
+			<filter>READABLE</filter>
+			<quickFilter>LogisticsComplaint.subject like '%{KEY}%' or LogisticsComplaint.creator like '%{KEY}%'</quickFilter>
+			<orderBy>LogisticsComplaint.created DESC</orderBy>
+		</data>
+		<categories root="全部" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.logistics.complaint.pojo.LogisticsComplaintType</pojo>
+				<orderBy>ComplaintType.type</orderBy>
+			</data>
+			<category value="ComplaintType.type"> <!--value必须有-->
+				<data>LogisticsComplaint.type={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="subject"/>
+			<column title="被投诉的货源(车源)" name="supplyDescription"/>
+			<column title="投诉人" name="creator" align="center" width="80"/>
+			<column title="投诉时间" name="created" align="center" width="108"/>
+			<column title="处理结果" name="result"/>
+		</columns>
+	</view>
+</views>

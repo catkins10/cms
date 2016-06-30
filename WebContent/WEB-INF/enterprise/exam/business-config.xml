@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="考试" class="com.yuanluesoft.enterprise.exam.pojo.Exam" businessServiceName="examService">
+		<field name="name" title="名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="selfTest" title="是否自助方式" length="1" required="true" type="number" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+		<field name="monthQuestionNumber" title="每月考试题数" length="5" type="number" inputMode="text"/>
+		<field name="yearQuestionNumber" title="年度考试题数" length="5" type="number" inputMode="text"/>
+		<field name="examDayLimit" title="日考试次数上限" length="3" type="number" inputMode="text"/>
+		<field name="score" title="总分" length="3" required="true" type="number" inputMode="text"/>
+		<field name="examTime" title="考试时长" length="3" required="true" type="number" inputMode="text"/>
+		<field name="questionTypes" title="考试题型" length="50" type="string" inputMode="text"/>
+		<field name="questionTypeNumbers" title="各题型题目数" length="100" type="string" inputMode="text"/>
+		<field name="questionTypeScores" title="各题型题目分值" length="100" type="string" inputMode="text"/>
+		<field name="difficultyLevels" title="难易程度" length="100" type="string" inputMode="text"/>
+		<field name="difficultyLevelRatios" title="难易程度比例" length="100" type="string" inputMode="text"/>
+		<field name="knowledgeIds" title="知识类别ID" length="600" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="knowledges" title="知识类别" length="600" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.openSelectDialog('enterprise/exam', 'admin/knowledge', 550, 360, true, 'knowledgeIds{id},knowledges{knowledge|知识类别|100%|}')</parameter>
+			<parameter name="singleByteCharacters">true</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="itemIds" title="项目分类ID" length="600" type="string" inputMode="hidden">
+			<parameter name="singleByteCharacters">true</parameter>
+		</field>
+		<field name="items" title="项目分类" length="600" type="string" inputMode="select">
+			<parameter name="execute">DialogUtils.openSelectDialog('enterprise/exam', 'admin/item', 550, 360, true, 'itemIds{id},items{item|项目分类|100%|}')</parameter>
+			<parameter name="singleByteCharacters">true</parameter>
+			<parameter name="selectOnly">true</parameter>
+		</field>
+		<field name="isDeleted" title="是否已删除" length="1" type="number" inputMode="none"/>
+		<field name="creator" title="创建人" length="60" type="string" inputMode="readonly"/>
+		<field name="creatorId" title="创建人ID" length="20" type="number" inputMode="none"/>
+		<field name="created" title="创建时间" type="timestamp" inputMode="readonly"/>
+		<field name="examQuestionTypes" title="考试题型" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.exam.pojo.ExamQuestionType</parameter>
+		</field>
+		<field name="examDifficultyLevels" title="考试难度等级" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.exam.pojo.ExamDifficultyLevel</parameter>
+		</field>
+		<field name="examCorrectors" title="批改人" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.exam.pojo.ExamCorrector</parameter>
+		</field>
+		<field name="examPosts" title="适用的岗位" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.exam.pojo.ExamPost</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="考试题型" class="com.yuanluesoft.enterprise.exam.pojo.ExamQuestionType">
+		<field name="examId" title="考试ID" length="20" type="number" inputMode="hidden"/>
+		<field name="questionType" title="考试题型" length="10" type="string" inputMode="text"/>
+		<field name="questionNumber" title="题目数" length="3" type="number" inputMode="text"/>
+		<field name="questionScore" title="分数" length="4,1" type="number" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="考试难度" class="com.yuanluesoft.enterprise.exam.pojo.ExamDifficultyLevel">
+		<field name="examId" title="考试ID" length="20" type="number" inputMode="hidden"/>
+		<field name="difficulty" title="难度" length="10" type="string" inputMode="text"/>
+		<field name="ratio" title="比例" length="4,1" type="number" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="批改人员" class="com.yuanluesoft.enterprise.exam.pojo.ExamCorrector">
+		<field name="examId" title="考试ID" length="20" type="number" inputMode="hidden"/>
+		<field name="correctorId" title="批改人ID" length="20" type="number" inputMode="hidden"/>
+		<field name="corrector" title="批改人姓名" length="60" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="适用的岗位" class="com.yuanluesoft.enterprise.exam.pojo.ExamPost">
+		<field name="examId" title="考试ID" length="20" type="number" inputMode="hidden"/>
+		<field name="postId" title="岗位ID" length="20" type="number" inputMode="hidden"/>
+		<field name="post" title="岗位名称" length="60" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="考卷" class="com.yuanluesoft.enterprise.exam.pojo.ExamPaper" businessServiceName="examService">
+		<field name="examId" title="考试ID" length="20" type="number" inputMode="hidden"/>
+		<field name="examPaperName" title="考卷名称" length="100" required="true" type="string" inputMode="text"/>
+		<field name="resit" title="是否补考" length="1" type="number" inputMode="readonly">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+		<field name="beginTime" title="开始时间" type="timestamp" inputMode="datetime"/>
+		<field name="endTime" title="截止时间" type="timestamp" inputMode="datetime"/>
+		<field name="onComputer" title="计算机作答" length="1" type="number" inputMode="radio">
+			<parameter name="itemsText">是|1\0不是|0</parameter>
+		</field>
+		<field name="score" title="总分" length="4,1" type="number" inputMode="readonly"/>
+		<field name="status" title="状态" length="1" type="number" inputMode="readonly">
+			<parameter name="itemsText">未发布|0\0已发布|1</parameter>
+		</field>
+		<field name="created" title="出卷时间" type="timestamp" inputMode="readonly"/>
+		<field name="creatorId" title="出卷人ID" length="20" type="number" inputMode="none"/>
+		<field name="creator" title="出卷人" length="60" type="string" inputMode="readonly"/>
+		<field name="releaseTime" title="发布时间" type="timestamp" inputMode="readonly"/>
+		<field name="releasePersonId" title="发布人ID" length="20" type="number" inputMode="none"/>
+		<field name="releasePerson" title="发布人" length="60" type="string" inputMode="readonly"/>
+		<field name="paperQuestions" title="出题记录" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.exam.pojo.ExamPaperQuestion</parameter>
+		</field>
+		<field name="visitors" title="参加人员" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.exam.pojo.ExamPaperPrivilege</parameter>
+		</field>
+		<field name="exam" title="考试" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.enterprise.exam.pojo.Exam</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="考卷题目" class="com.yuanluesoft.enterprise.exam.pojo.ExamPaperQuestion">
+		<field name="paperId" title="考卷ID" length="20" type="number" inputMode="hidden"/>
+		<field name="questionId" title="题目ID" length="20" type="number" inputMode="hidden"/>
+		<field name="questionScore" title="题目分值" length="4,1" type="number" inputMode="text"/>
+		<field name="question" title="题目" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.enterprise.exam.question.pojo.Question</parameter>
+		</field>
+		<field name="examTestAnswer" title="作答" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.enterprise.exam.pojo.ExamTestAnswer</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="答卷" class="com.yuanluesoft.enterprise.exam.pojo.ExamTest" businessServiceName="examService">
+		<field name="paperId" title="考卷ID" length="20" type="number" inputMode="hidden"/>
+		<field name="personId" title="用户ID" length="20" type="number" inputMode="none"/>
+		<field name="personName" title="用户名" length="60" type="string" inputMode="readonly"/>
+		<field name="score" title="成绩" length="4,1" type="number" inputMode="none"/>
+		<field name="scoreAsText" title="成绩(文本格式)" persistence="false" type="string" inputMode="readonly">
+			<parameter name="referenceFields">score,status</parameter>
+		</field>
+		<field name="beginTime" title="答卷开始时间" type="timestamp" inputMode="hidden"/>
+		<field name="endTime" title="答卷完成时间" type="timestamp" inputMode="readonly"/>
+		<field name="timeLeft" title="剩余时间" persistence="false" type="string" inputMode="readonly"/>
+		<field name="questionTypeNumber" title="题型数" persistence="false" type="number" inputMode="readonly"/>
+		<field name="status" title="答卷状态" length="1" type="number" inputMode="readonly">
+			<parameter name="itemsText">在考|0\0待批改|1\0完成|2\0放弃|3</parameter>
+		</field>
+		<field name="examPaper" title="考卷" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.enterprise.exam.pojo.ExamPaper</parameter>
+		</field>
+		<field name="exam" title="考试" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.enterprise.exam.pojo.Exam</parameter>
+		</field>
+		<field name="examTestQuestionTypes" title="题型列表" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.exam.model.ExamTestQuestionType</parameter>
+		</field>
+		<field name="testAnswers" title="答案列表" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.exam.pojo.ExamTestAnswer</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="答题" class="com.yuanluesoft.enterprise.exam.pojo.ExamTestAnswer">
+		<field name="testId" title="答卷ID" length="20" type="number" inputMode="hidden"/>
+		<field name="paperQuestionId" title="出题记录ID" length="20" type="number" inputMode="hidden"/>
+		<field name="answer" title="答案" type="string" inputMode="text"/>
+		<field name="score" title="得分" length="4,1" type="number" inputMode="text"/>
+		<field name="correctorId" title="批改人ID" length="20" type="number" inputMode="none"/>
+		<field name="corrector" title="批改人姓名" length="60" type="string" inputMode="readonly"/>
+		<field name="remark" title="批改说明" length="1000" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="错题本" class="com.yuanluesoft.enterprise.exam.pojo.ExamWrongQuestion">
+		<field name="personId" title="用户ID" length="20" type="number" inputMode="none"/>
+		<field name="answerId" title="答题记录ID" length="20" type="number" inputMode="none"/>
+		<field name="questionId" title="题目ID" length="20" type="number" inputMode="none"/>
+		<field name="created" title="加入时间" type="timestamp" inputMode="readonly"/>
+		<field name="reason" title="答错原因" length="100" type="string" inputMode="dropdown">
+			<parameter name="itemsText">粗心大意\0题目没看清</parameter>
+		</field>
+		<field name="testAnswer" title="答题记录" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.enterprise.exam.pojo.ExamTestAnswer</parameter>
+		</field>
+		<field name="question" title="试题" type="component" inputMode="readonly">
+			<parameter name="class">com.yuanluesoft.enterprise.exam.question.pojo.Question</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="知识类别" class="com.yuanluesoft.enterprise.exam.pojo.ExamKnowledge">
+		<field name="knowledge" title="知识类别" length="100" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="项目分类" class="com.yuanluesoft.enterprise.exam.pojo.ExamItem">
+		<field name="item" title="项目分类" length="100" required="true" type="string" inputMode="text"/>
+	</businessObject>
+	
+	<businessObject title="题型" class="com.yuanluesoft.enterprise.exam.model.ExamTestQuestionType">
+		<field name="questionType" title="题型" type="string" inputMode="readonly"/>
+		<field name="score" title="分数" type="number" inputMode="readonly"/>
+		<field name="questionNumber" title="题目数" type="number" inputMode="readonly"/>
+		<field name="testScore" title="得分" type="string" inputMode="readonly"/>
+		<field name="correctors" title="批改人" type="string" inputMode="readonly"/>
+		<field name="examTestQuestions" title="出题记录" type="components">
+			<parameter name="class">com.yuanluesoft.enterprise.exam.pojo.ExamPaperQuestion</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="考试统计" class="com.yuanluesoft.enterprise.exam.model.ExamStat">
+		<field name="name" title="姓名" type="string" inputMode="readonly"/>
+		<field name="unit" title="单位" type="string" inputMode="readonly"/>
+		<field name="department" title="部门" type="string" inputMode="none"/>
+		<field name="post" title="岗位" type="string" inputMode="readonly"/>
+		<field name="examName" title="考试名称" type="string" inputMode="none"/>
+		<field name="times" title="考试次数" type="number" inputMode="readonly"/>
+		<field name="totalScore" title="总分" type="number" inputMode="none"/>
+		<field name="status" title="考试状态" type="string" inputMode="readonly"/>
+	</businessObject>
+</businessObjects>

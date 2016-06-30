@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="todoProject" form="project" title="待办项目" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.dpc.keyproject.pojo.KeyProject</pojo>
+			<where>KeyProject.fiveYearPlan='1'</where>
+			<orderBy>KeyProject.created DESC</orderBy>
+			<quickFilter>KeyProject.name like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="新建项目" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="name"/>
+			<column title="项目级别" name="level" align="center" width="68"/>
+			<column title="所属行业" name="industry" align="center" width="68"/>
+			<column title="项目状态" name="status" align="center" width="68"/>
+			<column title="所属区域" name="areas.area" align="center" width="90"/>
+			<column title="投资主体" name="investmentSubject" align="center" width="120"/>
+			<column title="项目总投资" name="invest" align="center" width="68"/>
+			<column title="办理状态" name="workflowStatus" align="center" width="150" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="inProcessProject" form="project" title="在办项目" pageRows="25" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.dpc.keyproject.pojo.KeyProject</pojo>
+			<where>KeyProject.fiveYearPlan='1'</where>
+			<orderBy>KeyProject.created DESC</orderBy>
+			<quickFilter>KeyProject.name like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="新建项目" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="name"/>
+			<column title="项目级别" name="level" align="center" width="68"/>
+			<column title="所属行业" name="industry" align="center" width="68"/>
+			<column title="项目状态" name="status" align="center" width="68"/>
+			<column title="所属区域" name="areas.area" align="center" width="90"/>
+			<column title="投资主体" name="investmentSubject" align="center" width="120"/>
+			<column title="项目总投资" name="invest" align="center" width="68"/>
+			<column title="办理状态" name="workflowStatus" align="center" width="150" display="normal,print"/>
+		</columns>
+	</view>
+	
+	<view name="allProject" form="project" title="所有项目" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.dpc.keyproject.pojo.KeyProject</pojo>
+			<where>KeyProject.fiveYearPlan='1'</where>
+			<filter>READABLE</filter>
+			<orderBy>KeyProject.created DESC</orderBy>
+			<quickFilter>KeyProject.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="新建项目" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="项目名称" name="name"/>
+			<column title="项目级别" name="level" align="center" width="68"/>
+			<column title="所属行业" name="industry" align="center" width="68"/>
+			<column title="项目状态" name="status" align="center" width="68"/>
+			<column title="所属区域" name="areas.area" align="center" width="90"/>
+			<column title="投资主体" name="investmentSubject" align="center" width="120"/>
+			<column title="项目总投资" name="invest" align="center" width="68"/>
+		</columns>
+	</view>
+</views>

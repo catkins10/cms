@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 民意征集 -->
+<application>
+	<pages>
+		<page name="index" title="首页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=cms/advice"/>
+		
+		<page name="adviceTopic" title="征集主题" url="/cms/advice/adviceTopic.shtml" systemLink="false">
+			<field title="主题" name="subject"/>
+			<field title="正文" name="body" type="html"/>
+			<field title="创建时间" name="created" type="timestamp"/>
+			<field title="征集截止日期" name="endDate" type="date"/>
+		</page>
+		
+		<page name="advice" title="建议" url="/cms/advice/advice.shtml" systemLink="false">
+			<field title="建议主题" name="subject"/>
+			<field title="建议内容" name="content" type="html"/>
+			<field title="征集主题" name="topic.subject"/>
+			<field title="征集主题内容" name="topic.body" type="html"/>
+			<field title="建议人姓名" name="creator"/>
+			<field title="建议人邮箱" name="creatorMail"/>
+			<field title="创建时间" name="created" type="timestamp"/>
+		</page>
+		
+		<page name="adviceSubmitted" title="建议提交完成" systemLink="false"/>
+	</pages>
+	
+	<recordLists>
+		<recordList title="民意征集主题列表" name="adviceTopics" recordPage="adviceTopic" hostPage="index" dialogExtendURL="/cms/advice/templatemanage/dialog/insertAdviceTopics.jsp"/>
+		<recordList title="民意征集建议列表" name="advices" hostPage="index" recordPage="advice"/>
+	</recordLists>
+	
+	<!-- 扩展的页面元素处理器列表 -->
+	<pageElements>
+		<pageElement name="adviceTopics" processor="adviceTopicsProcessor"/> <!-- 民意征集主题列表处理器 -->
+		<pageElement name="advices" processor="advicesProcessor"/> <!-- 民意征集建议列表处理器 -->
+	</pageElements>
+</application>

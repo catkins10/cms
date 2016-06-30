@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="java.lang.Exception"
+  NAME="exception0" PATH="/../../jeaf/form/error.jsp"
+  SHAPE="32,48,161,21" TARGET="page0" TITLE="Exception" TYPE="exception"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/../../jeaf/form/error.jsp" SHAPE="336,48,50,25" SUBTYPE="jsp"
+  TITLE="error.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="result" NAME="forward0"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="32,128,161,21"
+  TARGET="page1" TITLE="result" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/../../jeaf/form/result.jsp" SHAPE="336,128,50,25" SUBTYPE="jsp"
+  TITLE="result.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#info" NAME="action0"
+  PATH="/info" SHAPE="32,240,161,25" TITLE="info" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/info.jsp" TARGET="page3" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3" PATH="/info.jsp"
+  SHAPE="336,256,50,70" SUBTYPE="jsp" TITLE="info.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/saveInfo.shtml" TARGET="action1" TITLE="saveInfo.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link1"
+   PATH="/deleteInfo.shtml" TARGET="action2" TITLE="deleteInfo.shtml" TYPE="link"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link2"
+   PATH="/contributeInfo.shtml" TARGET="action3"
+   TITLE="contributeInfo.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#saveInfo" NAME="action1"
+  PATH="/saveInfo" SHAPE="560,272,161,25" TITLE="info" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#deleteInfo"
+  NAME="action2" PATH="/deleteInfo" SHAPE="560,328,161,25" TITLE="info" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#contributeInfo"
+  NAME="action3" PATH="/contributeInfo" SHAPE="560,384,161,25"
+  TITLE="info" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#attachmentEditor"
+  NAME="action4" PATH="/attachmentEditor" SHAPE="32,480,161,41"
+  TITLE="info" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/../../jeaf/attachment/attachment.jsp"
+   TARGET="page2" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/../../jeaf/attachment/attachment.jsp" SHAPE="336,496,50,25"
+  SUBTYPE="jsp" TITLE="attachment.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#reviseInfo"
+  NAME="action5" PATH="/reviseInfo" SHAPE="32,576,161,41"
+  TITLE="reviseInfo" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="load"
+   NAME="forward0" PATH="/reviseInfo.jsp" TARGET="page4" TITLE="load" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page4"
+  PATH="/reviseInfo.jsp" SHAPE="336,592,50,25" SUBTYPE="jsp"
+  TITLE="reviseInfo.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/submitReviseInfo.shtml" TARGET="action6"
+   TITLE="ModifyReviseInfo.shtml" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#submitReviseInfo"
+  NAME="action6" PATH="/submitReviseInfo" SHAPE="560,608,161,25"
+  TITLE="reviseInfo" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#magazine" NAME="action7"
+  PATH="/magazine" SHAPE="32,672,161,25" TYPE="action"/>
+</PROCESS>

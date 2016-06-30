@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!-- 工作项,从工作流服务器同步 -->
+	<class name="com.yuanluesoft.jeaf.workflow.pojo.WorkItem" table="workflow_workitem">
+		<id name="id" column="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="workflowName"/> <!--流程名称-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="participantId"/> <!--办理人ID-->
+		<property name="participantName"/> <!--办理人姓名-->
+		<property name="participantType"/> <!--办理人类型-->
+		<property name="previousParticipantName"/> <!--上一办理人姓名-->
+		<property name="created"/> <!--创建时间-->
+		<property name="recordId"/> <!--主记录ID-->
+		<property name="deadline"/> <!--办理期限-->
+		<property name="isReverse"/> <!--是否被回退-->
+		<property name="isUndo"/> <!--是否是取回-->
+	</class>
+	
+	<!--工作项:超时工作项-->
+	<class name="com.yuanluesoft.jeaf.workflow.pojo.WorkItemTimeout" table="workflow_workitem_timeout">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="recordListClassName"/> <!--主记录类名称-->
+		<property name="workItemId"/> <!--工作项ID-->
+		<property name="workflowName"/> <!--流程名称-->
+		<property name="activityName"/> <!--环节名称-->
+		<property name="participantId"/> <!--办理人ID-->
+		<property name="participantName"/> <!--办理人姓名-->
+		<property name="participantType"/> <!--办理人类型-->
+		<property name="previousParticipantName"/> <!--上一办理人姓名-->
+		<property name="created"/> <!--创建时间-->
+		<property name="recordId"/> <!--主记录ID-->
+		<property name="deadline"/> <!--办理期限-->
+		<property name="unitId"/> <!--单位ID-->
+		<property name="completed"/> <!--完成时间-->
+		<property name="workDays"/> <!--办理用时-->
+		<property name="timeout"/> <!--是否超时-->
+	</class>
+</hibernate-mapping>

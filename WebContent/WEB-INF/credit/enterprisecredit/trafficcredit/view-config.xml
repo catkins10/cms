@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="admin/trafficCredit" form="admin/trafficCredit" title="龙海市公民信用记录登记表（交通肇事逃逸类）" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.trafficcredit.pojo.TrafficCredit</pojo>
+			<orderBy>TrafficCredit.created</orderBy>
+			<quickFilter>TrafficCredit.person like '%{KEY}%' or TrafficCredit.idCard like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_trafficcredit)" execute="PageUtils.newrecord('credit/enterprisecredit/trafficcredit', 'admin/trafficImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_trafficcredit)" execute="PageUtils.newrecord('credit/enterprisecredit/trafficcredit','admin/trafficCredit','mode=fullscreen')"/>
+			<action title="批量删除" hide="noPrivilege(manageUnit_trafficcredit)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/trafficCredit/batchOperate.shtml?pojoName=TrafficCredit')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="person" title="当事人姓名"/>
+			<column name="idCard" title="身份证号码"  align="center"/>
+			<column name="nature" title="性质" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/carCredit" form="admin/carCredit" title="综合行政执法大队处罚信息" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.credit.enterprisecredit.trafficcredit.pojo.CarCredit</pojo>
+			<orderBy>CarCredit.created desc</orderBy>
+			<quickFilter>CarCredit.bookCode like '%{KEY}%' or CarCredit.person like '%{KEY}%' or CarCredit.carNo like '%{KEY}%' </quickFilter>
+		</data>
+		<actions>
+			<action title="导入Excel文件" hide="noPrivilege(manageUnit_trafficcredit)" execute="PageUtils.newrecord('credit/enterprisecredit/trafficcredit', 'admin/carImportData', 'mode=dialog,width=390,height=180')"/>
+			<action title="新增" hide="noPrivilege(manageUnit_trafficcredit)" execute="PageUtils.newrecord('credit/enterprisecredit/trafficcredit','admin/carCredit','mode=fullscreen')"/>
+			<action title="批量删除" hide="noPrivilege(manageUnit_trafficcredit)" execute="if(confirm('是否确定删除？'))FormUtils.doAction('{CONTEXTPATH}/credit/enterprisecredit/trafficcredit/batchOperate.shtml?pojoName=CarCredit')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" />
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column name="bookCode" title="处罚决定书案号"/>
+			<column name="person" title="当事人"  align="center"/>
+			<column name="carNo" title="车号" align="center"/>
+		</columns>
+	</view>
+	
+	
+</views>

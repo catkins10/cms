@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="龙海市公民信用记录登记表（交通肇事逃逸类）" class="com.yuanluesoft.credit.enterprisecredit.trafficcredit.pojo.TrafficCredit" >
+		<field name="person" title="当事人姓名" required="true" length="50" type="string" inputMode="text"/>
+		<field name="idCard" title="身份证号码" required="true" length="30" type="string" inputMode="text"/>
+		<field name="nature" title="性质" required="true" length="50" type="string" inputMode="text"/>
+		<field name="summary" title="交通肇事简要情况" required="true" length="500" type="string" inputMode="textarea">
+			<parameter name="rows">4</parameter>
+		</field>
+		<field name="remark" title="备注" required="true" length="500" type="string" inputMode="textarea">
+			<parameter name="rows">4</parameter>
+		</field>
+		<field name="deparment" title="填报单位" required="true" length="100" type="string" inputMode="text"/>
+		<field name="writer" title="填报人" required="true" length="100" type="string" inputMode="text"/>
+		<field name="auditor" title="审核人" required="true" length="100" type="string" inputMode="text"/>
+
+
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	
+	<businessObject title="龙海交通综合行政执法大队处罚信息公开一览表" class="com.yuanluesoft.credit.enterprisecredit.trafficcredit.pojo.CarCredit" >
+		<field name="bookCode" title="处罚决定书案号" required="true"  type="string" inputMode="text"/>
+		<field name="unit" title="单位" required="true"  type="string" inputMode="text"/>
+		<field name="person" title="当事人" required="true"  type="string" inputMode="text"/>
+		<field name="carNo" title="车号" required="true"  type="string" inputMode="text"/>
+		<field name="reson" title="案由" required="true"  type="string" inputMode="text"/>
+		<field name="happenTime" title="案发时间" required="true"  type="string" inputMode="text"/>
+		<field name="payTime" title="缴款日期" required="true"  type="string" inputMode="text"/>
+		<field name="auditor" title="强制措施" required="true"  type="string" inputMode="text"/>
+		<field name="transfer" title="移交中队" required="true"  type="string" inputMode="text"/>
+		<field name="basis" title="处罚依据" required="true"  type="string" inputMode="text"/>
+		<field name="department" title="处罚机关" required="true"  type="string" inputMode="text"/>
+		<field name="money" title="罚款金额" required="true"  type="number" inputMode="text"/>
+
+
+		<field name="creatorId" title="登记人ID" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+	</businessObject>
+	
+	
+</businessObjects>

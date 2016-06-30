@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="article" type="com.yuanluesoft.cms.siteresource.forms.Article"/>
+  <form-bean name="resourceView" type="com.yuanluesoft.cms.siteresource.forms.ResourceView"/>
+  <form-bean name="select" type="com.yuanluesoft.cms.sitemanage.forms.Select"/>
+  <form-bean name="link" type="com.yuanluesoft.cms.siteresource.forms.Link"/>
+  <form-bean name="issueStat" type="com.yuanluesoft.cms.siteresource.forms.IssueStat"/>
+  <form-bean name="insertResources" type="com.yuanluesoft.cms.siteresource.forms.InsertResources"/>
+  <form-bean name="columnStatReport" type="com.yuanluesoft.cms.siteresource.report.forms.ColumnStat"/>
+  <form-bean name="captureColumn" type="com.yuanluesoft.cms.siteresource.forms.CaptureColumn"/>
+  <form-bean name="modifyReaders" type="com.yuanluesoft.cms.siteresource.forms.ModifyReaders"/>
+  <form-bean name="listEnsureUnitCategories" type="com.yuanluesoft.cms.siteresource.report.forms.ListEnsureUnitCategories"/>
+  <form-bean name="listEnsureColumnConfigs" type="com.yuanluesoft.cms.siteresource.report.forms.ListEnsureColumnConfigs"/>
+  <form-bean name="ensureUnitCategory" type="com.yuanluesoft.cms.siteresource.report.forms.EnsureUnitCategory"/>
+  <form-bean name="ensureColumnConfig" type="com.yuanluesoft.cms.siteresource.report.forms.EnsureColumnConfig"/>
+  <form-bean name="ensureReport" type="com.yuanluesoft.cms.siteresource.report.forms.EnsureReport"/>
+  <form-bean name="relationLink" type="com.yuanluesoft.cms.siteresource.forms.RelationLink"/>
+  <form-bean name="portletEntity" type="com.yuanluesoft.cms.siteresource.forms.PortletEntity"/>
+  <form-bean name="issueOption" type="com.yuanluesoft.cms.siteresource.forms.IssueOption"/>
+  <form-bean name="insertSiteSearchForm" type="com.yuanluesoft.cms.siteresource.forms.InsertSiteSearchForm"/>
+  <form-bean name="insertResourceLink" type="com.yuanluesoft.cms.siteresource.forms.InsertResourceLink"/>
+  <form-bean name="photo" type="com.yuanluesoft.cms.siteresource.forms.Photo"/>
+  <form-bean name="video" type="com.yuanluesoft.cms.siteresource.forms.Video"/>
+  <form-bean name="setTop" type="com.yuanluesoft.cms.siteresource.forms.SetTop"/>
+  <form-bean name="insertSearchSiteField" type="com.yuanluesoft.cms.siteresource.forms.InsertSearchSiteField"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="article" path="/admin/article" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.Load" validate="false">
+   <forward name="load" path="/article.jsp"/>
+  </action>
+  <action input="/article.jsp" name="article" path="/admin/saveArticle"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.Save" validate="false"/>
+  <action input="/article.jsp" name="article"
+   path="/admin/deleteArticle" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.Delete" validate="false"/>
+  <action input="/article.jsp" name="article" path="/admin/issueArticle"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.Issue" validate="false"/>
+  <action input="/article.jsp" name="article"
+   path="/admin/unissueArticle" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.Unissue" validate="false"/>
+  <action name="article" path="/admin/selectAttachment" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action input="/article.jsp" name="article"
+   path="/admin/runArticleApproval" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.Run" validate="false"/>
+  <action input="/article.jsp" name="article"
+   path="/admin/reissueArticle" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.Reissue" validate="false"/>
+  <action input="/article.jsp" name="article" path="/admin/writeOpinion"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.WriteOpinion" validate="false"/>
+  <action path="/article" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.article.Load" validate="false"/>
+  <action path="/search" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.search.Load" validate="false"/>
+  <action name="resourceView" path="/admin/resourceView" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.resourceview.ResourceViewAction" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action name="select" path="/selectResource" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.selectresource.Load" validate="false">
+   <forward name="load" path="/../../jeaf/dialog/treedialog/treeDialog.jsp"/>
+  </action>
+  <action name="select" path="/listResources" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.selectresource.ListResources" validate="false">
+   <forward name="load" path="/../../jeaf/tree/listChildNodes.jsp"/>
+  </action>
+  <action name="link" path="/admin/link" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.link.Load" validate="false">
+   <forward name="load" path="/link.jsp"/>
+  </action>
+  <action input="/link.jsp" name="link" path="/admin/saveLink"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.link.Save" validate="false"/>
+  <action input="/link.jsp" name="link" path="/admin/runLinkApproval"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.link.Run" validate="false"/>
+  <action input="/link.jsp" name="link" path="/admin/deleteLink"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.link.Delete" validate="false"/>
+  <action input="/link.jsp" name="link" path="/admin/issueLink"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.link.Issue" validate="false"/>
+  <action input="/link.jsp" name="link" path="/admin/unissueLink"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.link.Unissue" validate="false"/>
+  <action input="/link.jsp" name="link" path="/admin/reissueLink"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.link.Reissue" validate="false"/>
+  <action input="/link.jsp" name="link" path="/admin/writeLinkOpinion"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.link.WriteOpinion" validate="false"/>
+  <action name="link" path="/admin/selectLinkAttachment" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.link.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="resourceView" path="/admin/moveResources" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.resourceview.MoveResources" validate="false"/>
+  <action input="/article.jsp" name="article"
+   path="/admin/approvalArticle" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.Approval" validate="false"/>
+  <action input="/link.jsp" name="link" path="/admin/approvalLink"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.link.Approval" validate="false"/>
+  <action input="/article.jsp" name="article"
+   path="/admin/undeleteArticle" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.Undelete" validate="false"/>
+  <action input="/link.jsp" name="link" path="/admin/undeleteLink"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.link.Undelete" validate="false"/>
+  <action name="issueStat" path="/admin/issueStat" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.issuestat.IssueStatAction" validate="false">
+   <forward name="load" path="/../../jeaf/application/applicationView.jsp"/>
+  </action>
+  <action path="/templatemanage/updateResourcesView.js" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.getresourcesviewjs.Load" validate="false"/>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="resourceView" path="/admin/importResources" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.resourceview.ImportResources" validate="false"/>
+  <action name="columnStatReport" path="/report/columnStat"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.report.actions.columnstat.Load" validate="false">
+   <forward name="load" path="/report/columnStat.jsp"/>
+  </action>
+  <action input="/report/columnStat.jsp" name="columnStatReport"
+   path="/report/writeColumnStatReport" scope="request"
+   type="com.yuanluesoft.cms.siteresource.report.actions.columnstat.WriteReport" validate="false"/>
+  <action path="/admin/openCopy" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.OpenCopy" validate="false"/>
+  <action name="captureColumn" path="/admin/captureColumn"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.capturecolumn.Load" validate="false">
+   <forward name="load" path="/capture/captureColumn.jsp"/>
+  </action>
+  <action name="modifyReaders" path="/admin/readersModifyOption"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.resourceview.modifyreaders.SetOption" validate="false">
+   <forward name="load" path="/readersModifyOption.jsp"/>
+  </action>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="resourceView" path="/admin/modifyReaders" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.resourceview.modifyreaders.Submit" validate="false"/>
+  <action name="listEnsureUnitCategories"
+   path="/report/listEnsureUnitCategories" scope="request"
+   type="com.yuanluesoft.cms.siteresource.report.actions.listensureunitcategories.Load" validate="false">
+   <forward name="load" path="/report/listEnsureUnitCategories.jsp"/>
+  </action>
+  <action name="listEnsureColumnConfigs"
+   path="/report/listEnsureColumnConfigs" scope="request"
+   type="com.yuanluesoft.cms.siteresource.report.actions.listensurecolumnconfigs.Load" validate="false">
+   <forward name="load" path="/report/listEnsureColumnConfigs.jsp"/>
+  </action>
+  <action name="ensureUnitCategory" path="/report/ensureUnitCategory"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.report.actions.ensureunitcategory.Load" validate="false">
+   <forward name="load" path="/report/ensureUnitCategory.jsp"/>
+  </action>
+  <action name="ensureColumnConfig" path="/report/ensureColumnConfig"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.report.actions.ensurecolumnconfig.Load" validate="false">
+   <forward name="load" path="/report/ensureColumnConfig.jsp"/>
+  </action>
+  <action input="/report/ensureColumnConfig.jsp"
+   name="ensureColumnConfig" path="/report/saveEnsureColumnConfig"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.report.actions.ensurecolumnconfig.Save" validate="false"/>
+  <action input="/report/ensureColumnConfig.jsp"
+   name="ensureColumnConfig" path="/report/deleteEnsureColumnConfig"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.report.actions.ensurecolumnconfig.Delete" validate="false"/>
+  <action input="/report/ensureUnitCategory.jsp"
+   name="ensureUnitCategory" path="/report/saveEnsureUnitCategory"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.report.actions.ensureunitcategory.Save" validate="false"/>
+  <action input="/report/ensureUnitCategory.jsp"
+   name="ensureUnitCategory" path="/report/deleteEnsureUnitCategory"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.report.actions.ensureunitcategory.Delete" validate="false"/>
+  <action name="ensureReport" path="/report/ensureReport"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.report.actions.ensurereport.Load" validate="false">
+   <forward name="load" path="/report/ensureReport.jsp"/>
+  </action>
+  <action input="/report/ensureReport.jsp" name="ensureReport"
+   path="/report/writeEnsureReport" scope="request"
+   type="com.yuanluesoft.cms.siteresource.report.actions.ensurereport.Write" validate="false"/>
+  <action name="relationLink" path="/admin/relationLink" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.relationlink.Load" validate="false">
+   <forward name="load" path="/relationLink.jsp"/>
+  </action>
+  <action input="/relationLink.jsp" name="relationLink"
+   path="/admin/saveRelationLink" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.relationlink.Save" validate="false"/>
+  <action input="/relationLink.jsp" name="relationLink"
+   path="/admin/deleteRelationLink" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.relationlink.Delete" validate="false"/>
+  <action input="/article.jsp" name="article"
+   path="/admin/refreshArticle" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.Refresh" validate="false"/>
+  <action input="/article.jsp" name="article"
+   path="/admin/addRelationLinks" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.AddRelationLinks" validate="false"/>
+  <action name="portletEntity" path="/portletEntity" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.portletentity.Load" validate="false">
+   <forward name="load" path="/portletEntity.jsp"/>
+  </action>
+  <action input="/portletEntity.jsp" name="portletEntity"
+   path="/savePortletEntity" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.portletentity.Save" validate="false"/>
+  <action input="/portletEntity.jsp" name="portletEntity"
+   path="/deletePortletEntity" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.portletentity.Delete" validate="false"/>
+  <action name="issueOption" path="/admin/issueOption" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.SetIssueOption" validate="false">
+   <forward name="load" path="/issueOption.jsp"/>
+  </action>
+  <action name="insertResources" path="/templatemanage/insertResources"
+   scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertResources.jsp"/>
+  </action>
+  <action name="insertSiteSearchForm"
+   path="/templatemanage/insertSiteSearchForm" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertSiteSearchForm.jsp"/>
+  </action>
+  <action name="insertResourceLink"
+   path="/templatemanage/insertResourceLink" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertResourceLink.jsp"/>
+  </action>
+  <action name="photo" path="/admin/photo" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.photo.Load" validate="false">
+   <forward name="load" path="/photo.jsp"/>
+  </action>
+  <action name="video" path="/admin/video" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.video.Load" validate="false">
+   <forward name="load" path="/video.jsp"/>
+  </action>
+  <action input="/photo.jsp" name="photo" path="/admin/savePhoto"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.photo.Save" validate="false"/>
+  <action input="/photo.jsp" name="photo" path="/admin/deletePhoto"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.photo.Delete" validate="false"/>
+  <action input="/video.jsp" name="video" path="/admin/saveVideo"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.video.Save" validate="false"/>
+  <action input="/video.jsp" name="video" path="/admin/deleteVideo"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.article.video.Delete" validate="false"/>
+  <action name="setTop" path="/admin/setTop" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.settop.Load" validate="false">
+   <forward name="load" path="/setTop.jsp"/>
+  </action>
+  <action input="/setTop.jsp" name="setTop" path="/admin/saveSetTop"
+   scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.settop.Save" validate="false"/>
+  <action input="/../../jeaf/application/applicationView.jsp"
+   name="resourceView" path="/admin/sendToWechat" scope="request"
+   type="com.yuanluesoft.cms.siteresource.actions.admin.resourceview.SendToWechat" validate="false"/>
+  <action name="insertSearchSiteField"
+   path="/templatemanage/insertSearchSiteField" scope="request"
+   type="com.yuanluesoft.cms.templatemanage.actions.insertrecordlist.LoadExtendPage" validate="false">
+   <forward name="load" path="/templatemanage/insertSearchSiteField.jsp"/>
+  </action>
+ </action-mappings>
+ <controller bufferSize="4096" maxFileSize="20M"/>
+</struts-config>

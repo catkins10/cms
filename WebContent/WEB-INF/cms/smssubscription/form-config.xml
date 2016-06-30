@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="subscribe" title="短信订阅" method="post" action="/cms/smssubscription/completeSubscribe.shtml" class="com.yuanluesoft.cms.smssubscription.forms.Subscribe" pojo="com.yuanluesoft.cms.smssubscription.pojo.SmsSubscription">
+		<formFields>
+			<field name="description" title="订阅内容描述" type="string" inputMode="readonly"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+	
+	<form name="unsubscribe" title="短信退订" method="post" action="/cms/smssubscription/completeUnsubscribe.shtml" class="com.yuanluesoft.cms.smssubscription.forms.Unsubscribe" pojo="com.yuanluesoft.cms.smssubscription.pojo.SmsSubscription">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="提交" type="submit"/>
+		</actions>
+	</form>
+
+	<form name="admin/smsService" class="com.yuanluesoft.cms.smssubscription.forms.admin.SmsService" title="短信服务" pojo="com.yuanluesoft.cms.smssubscription.pojo.SmsService">
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteSmsService')"/>
+		</actions>
+	</form>
+</forms>

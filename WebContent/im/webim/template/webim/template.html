@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html dir="ltr">
+    <head>
+        <title>WEBIM</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+        <script type="text/javascript">window.onerror=function(){return true;}</script>
+        <style type="text/css">
+			html, body {
+				cursor: pointer;
+				height: 26px
+			}
+			body, div, td {
+				font-family: 宋体;
+				font-size: 12px;
+				cursor: pointer;
+			}
+			.action {
+				background-image:url({CONTEXTPATH}/im/webim/template/webim/images/im_bg.gif);
+				border: #999 1px solid;
+				border-right-style: none;
+				padding-top: 3px;
+			}
+			.rightAction {
+				border-right: #b3c3d0 1px solid;
+			}
+			.chat {
+				background-image:url({CONTEXTPATH}/im/webim/template/webim/images/im_bg.gif);
+				border: #999999 1px solid;
+				border-right-style: none;
+			}
+			.unreadPrompt {
+				background-image: url({CONTEXTPATH}/im/webim/template/webim/images/im_talk_count.gif);
+				background-position: center;
+				width: 22px;
+				height: 16px;
+				display: inline-block;
+				background-repeat: no-repeat;
+				color: #ffffff;
+				text-align:center;
+				font-size: 11px;
+				font-family: 黑体;
+				padding-top: 0px !important;
+				padding-top: 2px;
+				position: relative;
+				top: -5px;
+			}
+		</style>
+    </head>
+    <body onselectstart="return false;">
+        <table border="0" cellpadding="0" cellspacing="0" height="26px" style="table-layout:fixed;">
+            <tr valign="middle">
+                <td width="130px" class="chat" id="webimAction" name="webimAction" nowrap="nowrap" title="对话" urn="action=对话&amp;dialogWidth=268&amp;dialogHeight=329&amp;dialogAlign=right&amp;selectedStyle=background-image: none;background-color:#F8FAFA;border-top: #eeeeee 1px solid;filter: alpha(opacity%3D100);opacity: 1;&amp;mouseoverStyle=background-image:url({CONTEXTPATH}/im/webim/template/webim/images/im_bg_over.gif);filter: alpha(opacity%3D100);opacity: 1;"><span style="display: inline-block; float: left">&nbsp;<a id="field" urn="name=chat.chatPersonNames&amp;maxLength=12">&lt;对话_对话用户姓名&gt;</a>&nbsp;<a id="field" urn="name=chat.chatPersonStatusText&amp;imageInstead_chat.chatPersonStatusText_离线={CONTEXTPATH}/im/webim/template/webim/images/offline.gif&amp;imageInstead_chat.chatPersonStatusText_在线={CONTEXTPATH}/im/webim/template/webim/images/online.gif&amp;imageInstead_chat.chatPersonStatusText_忙碌={CONTEXTPATH}/im/webim/template/webim/images/busy.gif&amp;imageInstead_chat.chatPersonStatusText_离开={CONTEXTPATH}/im/webim/template/webim/images/leave.gif&amp;insteadImageWidth=7&amp;insteadImageHeight=7&amp;insteadImageAlign=absmiddle">&lt;对话_用户状态说明&gt;</a>&nbsp;<a class="unreadPrompt" id="field" urn="name=chat.unreadTalkCount">&lt;对话_未读发言数量&gt;</a></span><span style="padding-right: 3px; display: inline-block; float: right"><img alt="" height="11" onclick="window.webim.closeChat(this);" onmouseout="src='{CONTEXTPATH}/im/webim/template/webim/images/close_gray.gif';" onmouseover="src='{CONTEXTPATH}/im/webim/template/webim/images/close_blue.gif';" src="{CONTEXTPATH}/im/webim/template/webim/images/close_gray.gif" width="11"></span></td>
+                <td width="140px" class="action" id="webimAction" name="webimAction" nowrap="nowrap" title="在线用户" urn="action=在线用户&amp;dialogWidth=250&amp;dialogHeight=320&amp;dialogAlign=left&amp;selectedStyle=background-image: none;background-color:#F8FAFA; border-top: #eeeeee 1px solid;filter: alpha(opacity%3D100);opacity: 1;&amp;mouseoverStyle=background-image:url({CONTEXTPATH}/im/webim/template/webim/images/im_bg_over.gif);filter: alpha(opacity%3D100);opacity: 1;&amp;onlineStyle=5">&nbsp;<img align="absMiddle" alt="" height="16" src="{CONTEXTPATH}/im/webim/template/webim/images/onlinePersons.gif" title="在线用户" width="16">&nbsp;在线用户(<a id="field" urn="name=onlinePersonCount">&lt;在线用户数&gt;</a>)</td>
+                <td width="28px" align="center" class="action" id="webimAction" name="webimAction" nowrap="nowrap" title="用户目录树" urn="action=用户目录树&amp;dialogWidth=250&amp;dialogHeight=320&amp;dialogAlign=left&amp;selectedStyle=background-image: none;background-color:#F8FAFA;border-top: #eeeeee 1px solid;filter: alpha(opacity%3D100);opacity: 1;&amp;mouseoverStyle=background-image:url({CONTEXTPATH}/im/webim/template/webim/images/im_bg_over.gif);filter: alpha(opacity%3D100);opacity: 1;"><img alt="" height="16" src="{CONTEXTPATH}/im/webim/template/webim/images/personTree.gif" title="用户目录树" width="16"></td>
+                <td width="49px" align="center" class="action" id="webimAction" name="webimAction" nowrap="nowrap" title="系统消息" urn="action=系统消息&amp;dialogWidth=250&amp;dialogHeight=200&amp;dialogAlign=left&amp;selectedStyle=background-image: none;background-color:#F8FAFA;border-top: #eeeeee 1px solid;filter: alpha(opacity%3D100);opacity: 1;&amp;mouseoverStyle=background-image:url({CONTEXTPATH}/im/webim/template/webim/images/im_bg_over.gif);filter: alpha(opacity%3D100);opacity: 1;"><img alt="" height="16" src="{CONTEXTPATH}/im/webim/template/webim/images/systemMessage.gif" title="系统消息" width="16" align="top"><a id="field" class="unreadPrompt" urn="name=unreadSystemMessageCount">&lt;未读系统消息数量&gt;</a></td>
+                <td width="28px" align="center" class="action rightAction" id="webimAction" name="webimAction" nowrap="nowrap" title="个人设置" urn="action=个人设置&amp;dialogWidth=250&amp;dialogHeight=170&amp;dialogAlign=left&amp;selectedStyle=background-image: none;background-color:#F8FAFA; border-top: #eeeeee 1px solid;filter: alpha(opacity%3D100);opacity: 1;&amp;mouseoverStyle=background-image:url({CONTEXTPATH}/im/webim/template/webim/images/im_bg_over.gif);filter: alpha(opacity%3D100);opacity: 1;"><img alt="" height="16" src="{CONTEXTPATH}/im/webim/template/webim/images/personalSetting.gif" title="个人设置" width="16"></td>
+            </tr>
+        </table>
+	</body>
+</html>

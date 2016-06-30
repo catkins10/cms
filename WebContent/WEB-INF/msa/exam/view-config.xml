@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="exam" title="考试">
+	    <data>
+			<pojo>com.yuanluesoft.msa.exam.pojo.MsaExam</pojo>
+			<orderBy>MsaExam.created DESC</orderBy>
+			<quickFilter>MsaExam.name like '%{KEY}%'</quickFilter>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="记录链接">/msa/exam/exam.shtml</link>
+		</links>
+	</view>
+	
+	<view name="transcripts" title="成绩单">
+		<data>
+			<pojo>com.yuanluesoft.msa.exam.pojo.MsaExamTranscript</pojo>
+			<where>{PARAMETER:id|0}=0 or MsaExamTranscript.examId={PARAMETER:id|0}</where>
+			<orderBy>MsaExamTranscript.id</orderBy>
+		</data>
+	</view>
+	
+	<view name="scores" title="各科目成绩">
+		<data>
+			<pojo>com.yuanluesoft.msa.exam.pojo.MsaExamScore</pojo>
+			<where>MsaExamScore.transcriptId={PARAMETER:parentRecord.id|0}</where>
+			<orderBy>MsaExamScore.id</orderBy>
+		</data>
+	</view>
+    
+    <view name="admin/exam" form="admin/exam" title="考试" pageRows="20" openFeatures="mode=fullscreen">
+	    <data>
+			<pojo>com.yuanluesoft.msa.exam.pojo.MsaExam</pojo>
+			<orderBy>MsaExam.created DESC</orderBy>
+			<quickFilter>MsaExam.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<!-- action title="发布考试成绩" execute="PageUtils.newrecord('msa/exam', 'admin/exam', 'mode=fullscreen')"/ -->
+			<action title="导入考试成绩" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_regist)" execute="DialogUtils.openDialog('{CONTEXTPATH}/msa/exam/admin/importData.shtml?act=create', 430, 180)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="名称" name="name"/>
+			<column title="期数" name="period" width="110"/>
+			<column title="试卷代码" name="examPaperCode" width="60"/>
+			<column title="专业" name="speciality" width="150"/>
+			<column title="登记时间" name="created" align="center" width="120"/>
+		</columns>
+	</view>
+    
+    <view name="admin/transcript" form="admin/transcript" title="考试成绩" pageRows="20" openFeatures="mode=fullscreen">
+	    <data>
+			<pojo>com.yuanluesoft.msa.exam.pojo.MsaExamTranscript</pojo>
+			<orderBy>MsaExamTranscript.id DESC</orderBy>
+			<quickFilter>MsaExamTranscript.name like '%{KEY}%' or MsaExamTranscript.identityCard like '%{KEY}%' or MsaExamTranscript.permit like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="导入考试成绩" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_regist)" execute="DialogUtils.openDialog('{CONTEXTPATH}/msa/exam/admin/importData.shtml?act=create', 430, 180)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="姓名" name="name" align="center" width="60"/>
+			<column title="身份证" name="identityCard" align="center" width="120"/>
+			<column title="准考证" name="permit" width="200"/>
+			<column title="考试名称" name="exam.name"/>
+			<column title="总成绩" name="totalScore" align="center" width="60"/>
+			<column title="是否通过" name="pass" align="center" width="60"/>
+		</columns>
+	</view>
+	
+    <view name="admin/importLog" form="admin/importData" title="考试成绩导入日志" pageRows="20" openFeatures="mode=fullscreen">
+	    <data>
+			<pojo>com.yuanluesoft.msa.exam.pojo.MsaExamImportLog</pojo>
+			<orderBy>MsaExamImportLog.created DESC</orderBy>
+			<quickFilter>MsaExamImportLog.name like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link title="记录链接">javascript:DialogUtils.openDialog('{CONTEXTPATH}/msa/exam/admin/importData.shtml?act=edit&amp;id={PARAMETER:id}', 430, 180)</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="考试名称" name="examName"/>
+			<column title="导入时间" name="created" align="center" width="110"/>
+		</columns>
+	</view>
+</views>

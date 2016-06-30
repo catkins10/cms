@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="admin/company" class="com.yuanluesoft.fdi.customer.forms.admin.Company" title="客户单位" pojo="com.yuanluesoft.fdi.customer.pojo.FdiCustomerCompany">
+		<formFields>
+			<field name="industryIds" title="行业分类ID" length="20" type="number" inputMode="hidden"/>
+			<field name="industryNames" title="行业分类名称" length="200" required="true" type="string" inputMode="select">
+				<parameter name="execute">selectIndustry(600, 380, true, 'industryIds{id},industryNames{name|行业|100%}', '', '', '', true, true, false)</parameter>
+				<parameter name="selectOnly">true</parameter>
+				<parameter name="js">/fdi/industry/js/industry.js</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteCompany')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/contact" class="com.yuanluesoft.fdi.customer.forms.admin.Contact" title="联系人" pojo="com.yuanluesoft.fdi.customer.pojo.FdiCustomerCompany">
+		<formFields>
+			<field title="联系人" name="companyContact" type="component">
+				<parameter name="class">com.yuanluesoft.fdi.customer.pojo.FdiCustomerContact</parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="登记往来情况" hide="isRead() or isNew()" execute="PageUtils.newrecord('fdi/customer', 'admin/discuss', 'mode=dialog,width=600,height=300', 'id={PARAMETER:companyId}&amp;discuss.contactId={PARAMETER:id}&amp;openFromContact=true')"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteContact')"/>
+		</actions>
+	</form>
+	
+	<form name="admin/discuss" class="com.yuanluesoft.fdi.customer.forms.admin.Discuss" title="往来情况" pojo="com.yuanluesoft.fdi.customer.pojo.FdiCustomerCompany">
+		<formFields>
+			<field title="往来情况" name="discuss" type="component">
+				<parameter name="class">com.yuanluesoft.fdi.customer.pojo.FdiCustomerContactDiscuss</parameter>
+			</field>
+			<field title="是否从联系人页面打开 " name="openFromContact" inputMode="hidden"/>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('删除后不可恢复，是否确定要删除？'))FormUtils.doAction('deleteDiscuss')"/>
+		</actions>
+	</form>
+</forms>

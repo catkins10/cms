@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<forms>
+	<form name="task" class="com.yuanluesoft.cms.capture.forms.Task" title="抓取任务" pojo="com.yuanluesoft.cms.capture.pojo.CmsCaptureTask">
+		<formFields>
+			<field name="listPageURL" title="列表页面URL" type="string" inputMode="hidden"/>
+			<field name="listPageHtml" title="列表页面HTML" type="string" inputMode="hidden"/>
+			<field name="contentPageURL" title="内容页面URL" type="string" inputMode="hidden"/>
+			<field name="contentPageHtml" title="内容页面HTML" type="string" inputMode="hidden"/>
+			<field name="listFieldBegin" title="列表页面字段开始位置" type="string" length="500" inputMode="textarea">
+				<parameter name="rows">3</parameter>
+			</field>
+			<field name="listFieldEnd" title="列表页面字段结束位置" type="string" length="500" inputMode="textarea">
+				<parameter name="rows">3</parameter>
+			</field>
+			<field name="listFieldValue" title="列表页面字段指定值" type="string" length="500" inputMode="textarea">
+				<parameter name="rows">2</parameter>
+			</field>
+			<field name="listArraySeparator" title="列表页面数组分隔符" type="string" length="500" inputMode="textarea">
+				<parameter name="rows">3</parameter>
+			</field>
+			<field name="listFieldFormat" title="列表页面字段格式" type="string" inputMode="dropdown">
+				<parameter name="itemsText">2005-07-18|yyyy-MM-dd\0 07-18|MM-dd\0 2005年7月18日 星期一|yyyy年M月d日 EEE\0 7月18日 星期一|M月d日 EEE\0 2005年7月18日|yyyy年M月d日\0 7月18日|M月d日\0 2005-07-18 13:41|yyyy-MM-dd HH:mm\0 2005-07-18 13:41:10|yyyy-MM-dd HH:mm:ss\0 07-18 13:41|MM-dd HH:mm\0 13:41|HH:mm\0 2005年7月18日 星期一 13时41分|yyyy年M月d日 EEE HH时mm分\0 7月18日 星期一 13时41分|M月d日 EEE HH时mm分\0 2005年7月18日 13时41分|yyyy年M月d日 HH时mm分\0 7月18日 13时41分|M月d日 HH时mm分</parameter>
+				<parameter name="valueField">listFieldFormat</parameter>
+				<parameter name="titleField"></parameter>
+			</field>
+			<field name="contentFieldBegin" title="内容页面字段开始位置" type="string" length="500" inputMode="textarea">
+				<parameter name="rows">3</parameter>
+			</field>
+			<field name="contentFieldEnd" title="内容页面字段结束位置" type="string" length="500" inputMode="textarea">
+				<parameter name="rows">3</parameter>
+			</field>
+			<field name="contentFieldValue" title="内容页面字段指定值" type="string" length="500" inputMode="textarea">
+				<parameter name="rows">2</parameter>
+			</field>
+			<field name="contentArraySeparator" title="内容页面数组分隔符" type="string" length="500" inputMode="textarea">
+				<parameter name="rows">3</parameter>
+			</field>
+			<field name="contentFieldFormat" title="内容页面字段格式" type="string" inputMode="dropdown">
+				<parameter name="itemsText">2005-07-18|yyyy-MM-dd\0 07-18|MM-dd\0 2005年7月18日 星期一|yyyy年M月d日 EEE\0 7月18日 星期一|M月d日 EEE\0 2005年7月18日|yyyy年M月d日\0 7月18日|M月d日\0 2005-07-18 13:41|yyyy-MM-dd HH:mm\0 2005-07-18 13:41:10|yyyy-MM-dd HH:mm:ss\0 07-18 13:41|MM-dd HH:mm\0 13:41|HH:mm\0 2005年7月18日 星期一 13时41分|yyyy年M月d日 EEE HH时mm分\0 7月18日 星期一 13时41分|M月d日 EEE HH时mm分\0 2005年7月18日 13时41分|yyyy年M月d日 HH时mm分\0 7月18日 13时41分|M月d日 HH时mm分</parameter>
+				<parameter name="valueField">contentFieldFormat</parameter>
+				<parameter name="titleField"></parameter>
+			</field>
+		</formFields>
+		<actions>
+			<action title="关闭" execute="window.close()"/>
+			<action title="保存" hide="isRead()" execute="FormUtils.submitForm()"/>
+			<action title="删除" hide="deleteDisable()" execute="if(confirm('是否确定要删除？'))FormUtils.doAction('deleteTask')"/>
+			<action title="复制任务" hide="isRead() or isNew()" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/capture/copyTask.shtml?id={PARAMETER:id}', 390, 160)"/>
+			<action title="抓取测试" hide="isRead()" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/capture/listCaptureTest.shtml?id={PARAMETER:id}', 800, 500)"/>
+			<action title="启动抓取" hide="isRead()" execute="DialogUtils.openDialog('{CONTEXTPATH}/cms/capture/startupCapture.shtml?id={PARAMETER:id}', 360, 160)"/>
+			<action title="下一步" hide="isRead()" execute="FormUtils.doAction('nextStep')"/>
+		</actions>
+	</form>
+	
+	<form name="startupTasks" class="com.yuanluesoft.cms.capture.forms.StartupTasks" title="启动抓取任务">
+		<actions>
+			<action title="确定" execute="FormUtils.submitForm()"/>
+			<action title="关闭" execute="DialogUtils.closeDialog()"/>
+		</actions>
+	</form>
+</forms>

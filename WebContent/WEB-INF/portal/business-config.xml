@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="个性定制" class="com.yuanluesoft.portal.server.pojo.PortalCustomise">
+		<field name="userId" title="用户/组织机构ID" length="20" type="number" inputMode="hidden"/>
+		<field name="siteId" title="站点ID" length="20" type="number" inputMode="hidden"/>
+		<field name="applicationName" title="应用名称" length="100" type="string" inputMode="hidden"/>
+		<field name="pageName" title="页面名称" length="100" type="string" inputMode="hidden"/>
+		<field name="portalXml" title="PORTAL配置XML" type="string" inputMode="none"/>
+	</businessObject>
+	
+	<businessObject title="PORTLET实体" class="com.yuanluesoft.portal.container.pojo.PortletEntity" businessServiceName="portletDefinitionService">
+		<field name="orgId" title="组织机构ID" length="20" type="number" inputMode="hidden"/>
+		<field name="siteId" title="站点ID" length="20" type="number" inputMode="hidden"/>
+		<field name="category" title="分类" length="30" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsServiceName">portletDefinitionService</parameter>
+			<parameter name="itemsName">portletEntityCategory</parameter>
+		</field>
+		<field name="entityName" title="实体名称" length="30" required="true" type="string" inputMode="text"/>
+		<field name="description" title="描述" length="1000" required="true" type="string" inputMode="text"/>
+		<field name="portletApplication" title="PORTLET应用名称" length="100" type="string" inputMode="hidden"/>
+		<field name="portletName" title="PORTLET名称" length="100" type="string" inputMode="hidden"/>
+		<field name="preferences" title="默认的个性化设置" type="components">
+			<parameter name="class">com.yuanluesoft.portal.container.pojo.PortletEntityPreference</parameter>
+		</field>
+		<field name="visitors" title="访问者" type="components">
+			<parameter name="class">com.yuanluesoft.portal.container.pojo.PortletEntityPrivilege</parameter>
+		</field>
+		<field name="templates" title="模板" type="components">
+			<parameter name="class">com.yuanluesoft.portal.container.pojo.PortletEntityTemplate</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="个性设置" class="com.yuanluesoft.portal.container.pojo.PortletEntityPreference">
+		<field name="entityId" title="PORTLET实体ID" length="20" type="number" inputMode="hidden"/>
+		<field name="name" title="参数名称" length="100" type="string" inputMode="hidden"/>
+		<field name="value" title="参数值" length="4000" type="string" inputMode="hidden"/>
+	</businessObject>
+	
+	<businessObject title="模板" class="com.yuanluesoft.portal.container.pojo.PortletEntityTemplate" businessServiceName="portletTemplateService">
+		<field name="entityId" title="PORTLET实体ID" length="20" type="number" inputMode="hidden"/>
+	</businessObject>
+	
+	<businessObject title="PORTAL页面" class="com.yuanluesoft.portal.server.model.PortalPage">
+		<field name="id" title="ID" length="20" type="number" inputMode="hidden"/>
+		<field name="title" title="页面名称" type="string" required="true"/>
+		<field name="style" title="界面主题" type="string" inputMode="hidden"/>
+		<field name="layout" title="页面布局" type="string" inputMode="hidden"/>
+		<field name="alwaysDisplayPortletButtons" title="PORTLET按钮" type="boolean" inputMode="radio">
+			<parameter name="itemsText">总是显示|true\0鼠标经过时显示|false</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="timetable" type="com.yuanluesoft.j2oa.attendance.forms.Timetable"/>
+  <form-bean name="offDay" type="com.yuanluesoft.j2oa.attendance.forms.OffDay"/>
+  <form-bean name="commuteTime" type="com.yuanluesoft.j2oa.attendance.forms.CommuteTime"/>
+  <form-bean name="overtime" type="com.yuanluesoft.j2oa.attendance.forms.Overtime"/>
+  <form-bean name="festival" type="com.yuanluesoft.j2oa.attendance.forms.Festival"/>
+  <form-bean name="attendanceReport" type="com.yuanluesoft.j2oa.attendance.forms.AttendanceReport"/>
+  <form-bean name="punchCard" type="com.yuanluesoft.j2oa.attendance.forms.PunchCard"/>
+  <form-bean name="mend" type="com.yuanluesoft.j2oa.attendance.forms.Mend"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="punchCard" path="/punchCard" scope="request"
+   type="com.yuanluesoft.j2oa.attendance.actions.punchcard.Load" validate="false">
+   <forward name="load" path="/punchCard.jsp"/>
+  </action>
+  <action name="attendanceReport" path="/attendanceReport"
+   scope="request"
+   type="com.yuanluesoft.j2oa.attendance.actions.attendancereport.Load" validate="false">
+   <forward name="load" path="/attendanceReport.jsp"/>
+  </action>
+  <action input="/attendanceReport.jsp" name="attendanceReport"
+   path="/writeAttendanceReport" scope="request"
+   type="com.yuanluesoft.j2oa.attendance.actions.attendancereport.Write" validate="false"/>
+  <action input="/punchCard.jsp" name="punchCard"
+   path="/completePunchCard" scope="request"
+   type="com.yuanluesoft.j2oa.attendance.actions.punchcard.Complete" validate="false"/>
+  <action name="mend" path="/mend" scope="request"
+   type="com.yuanluesoft.j2oa.attendance.actions.mend.Load" validate="false">
+   <forward name="load" path="/mend.jsp"/>
+  </action>
+  <action input="/mend.jsp" name="mend" path="/saveMend" scope="request"
+   type="com.yuanluesoft.j2oa.attendance.actions.mend.Save" validate="false"/>
+  <action input="/mend.jsp" name="mend" path="/deleteMend"
+   scope="request"
+   type="com.yuanluesoft.j2oa.attendance.actions.mend.Detele" validate="false"/>
+  <action input="/mend.jsp" name="mend" path="/runMend" scope="request"
+   type="com.yuanluesoft.j2oa.attendance.actions.mend.Run" validate="false"/>
+  <action input="/mend.jsp" name="mend" path="/writeOpinion"
+   scope="request"
+   type="com.yuanluesoft.j2oa.attendance.actions.mend.WriteOpinion" validate="false"/>
+  <action input="/mend.jsp" name="mend" path="/approvalMend"
+   scope="request"
+   type="com.yuanluesoft.j2oa.attendance.actions.mend.Approval" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

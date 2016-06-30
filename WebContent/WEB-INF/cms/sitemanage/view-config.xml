@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view title="文章列表" name="resources">
+		<data>
+			<pojo>com.yuanluesoft.cms.siteresource.pojo.SiteResource</pojo>
+			<where>SiteResource.status='3'</where>
+			<orderBy>resourceTops.created DESC, SiteResource.issueTime DESC, SiteResource.created DESC, SiteResource.id DESC</orderBy>
+			<newestCheckBy>issueTime</newestCheckBy>
+			<quickFilter>SiteResource.subject like '%{KEY}%'</quickFilter> <!--  or lazyBody.body like '%{KEY}%' -->
+		</data>
+		<links>
+			<link type="recordLink" title="记录链接">{PARAMETER:recordURL}</link>
+			<link type="hostLink" title="宿主页面">/cms/sitemanage/index.shtml?siteId={PARAMETER:siteIds}</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/siteresource/templatemanage/insertResources.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+	
+	<view title="文章点击数排行" name="hotResources">
+		<data>
+			<pojo>com.yuanluesoft.cms.siteresource.pojo.SiteResource</pojo>
+			<where>SiteResource.status='3'</where>
+			<orderBy>accessStats.times DESC, SiteResource.created DESC</orderBy>
+			<newestCheckBy>issueTime</newestCheckBy>
+			<quickFilter>SiteResource.subject like '%{KEY}%' or lazyBody.body like '%{KEY}%'</quickFilter>
+		</data>
+		<links>
+			<link type="recordLink" title="记录链接">{PARAMETER:recordURL}</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/siteresource/templatemanage/insertResources.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="totalSupport">false</parameter> <!-- 不支持统计 -->
+			<parameter name="rssChannel">false</parameter> <!-- 不支持RSS -->
+		</extendParameters>
+	</view>
+	
+	<view title="站点列表" name="sites">
+		<data>
+			<pojo>com.yuanluesoft.cms.sitemanage.pojo.WebSite</pojo>
+			<where>WebSite.halt!='1'</where>
+			<orderBy>WebSite.priority DESC, WebSite.directoryName</orderBy>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="网站首页">{PARAMETER:url}</link>
+			<link title="信息公开目录">/cms/infopublic/index.shtml?siteId={PARAMETER:id}</link>
+			<link title="信息公开申请">/cms/infopublic/request/personalRequest.shtml?siteId={PARAMETER:id}</link>
+			<link title="信息公开意见提交">/cms/infopublic/opinion/opinion.shtml?siteId={PARAMETER:id}</link>
+			<link title="领导信箱信件提交">/cms/leadermail/leaderMail.shtml?siteId={PARAMETER:id}</link>
+			<link title="投诉提交">/cms/complaint/complaint.shtml?siteId={PARAMETER:id}</link>
+			<link title="留言提交">/cms/messageboard/message.shtml?siteId={PARAMETER:id}</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSites.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="totalSupport">false</parameter> <!-- 不支持统计 -->
+			<parameter name="rssChannel">false</parameter> <!-- 不支持RSS -->
+		</extendParameters>
+	</view>
+	
+	<view title="站点LOGO" name="siteLogos">
+		<data>
+			<pojo>com.yuanluesoft.jeaf.image.model.Image</pojo>
+		</data>
+	</view>
+	
+	<view title="栏目列表" name="columns">
+		<data>
+			<pojo>com.yuanluesoft.cms.sitemanage.pojo.WebDirectory</pojo>
+			<where>WebDirectory.halt!='1'</where>
+			<orderBy>WebDirectory.priority DESC, WebDirectory.directoryName</orderBy>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="栏目首页">{PARAMETER:url}</link>
+			<link title="RSS订阅">/cms/rsssubscription/rssSubscribe.shtml?siteId={PARAMETER:id}</link>
+			<link title="RSS频道">/cms/rsssubscription/rss.shtml?extendProperties=siteIds%3D{PARAMETER:id}%26amp;resourceTypes%3Dall%26amp;containChildren%3Dtrue&amp;applicationName=cms/sitemanage&amp;channel=resources&amp;ttl=60</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertColumns.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="embedViews">resources,columns</parameter> <!-- 可以内嵌的其他记录列表,允许多个,用逗号分隔,格式:应用名称_视图名称,如:cms/sitemanage_resources或者resources(默认就是当前应用) -->
+			<parameter name="totalSupport">false</parameter> <!-- 不支持统计 -->
+			<parameter name="rssChannel">false</parameter> <!-- 不支持RSS -->
+			<parameter name="navigatorSupport">true</parameter> <!-- 支持导航 -->
+		</extendParameters>
+	</view>
+	
+	<view title="相关栏目(链接)" name="columnRelationLinks">
+		<data>
+			<pojo>com.yuanluesoft.cms.sitemanage.pojo.WebColumnRelationLink</pojo>
+			<where>WebColumnRelationLink.halt!='1' and WebColumnRelationLink.columnId={PARAMETER:columnId}</where>
+			<orderBy>WebColumnRelationLink.priority DESC, WebColumnRelationLink.id</orderBy>
+		</data>
+		<links>
+			<link>{PARAMETER:url}</link>
+		</links>
+	</view>
+	
+	<view title="栏目排行(按文章数)" name="columnsByResourceCount">
+		<data>
+			<pojo>com.yuanluesoft.cms.sitemanage.pojo.WebDirectory</pojo>
+			<where>WebDirectory.halt!='1'</where>
+			<orderBy>WebDirectory.directoryName</orderBy>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="栏目首页">{PARAMETER:url}</link>
+			<link title="RSS订阅">/cms/rsssubscription/rssSubscribe.shtml?siteId={PARAMETER:id}</link>
+			<link title="RSS频道">/cms/rsssubscription/rss.shtml?extendProperties=siteIds%3D{PARAMETER:id}%26amp;resourceTypes%3Dall%26amp;containChildren%3Dtrue&amp;applicationName=cms/sitemanage&amp;channel=resources&amp;ttl=60</link>
+		</links>
+		<extendParameters>
+			<parameter name="totalSupport">false</parameter> <!-- 不支持统计 -->
+			<parameter name="rssChannel">false</parameter> <!-- 不支持RSS -->
+		</extendParameters>
+	</view>
+	
+	<view title="栏目排行(特定栏目)" name="totals">
+		<data>
+			<pojo>com.yuanluesoft.cms.sitemanage.model.TotalColumn</pojo>
+		</data>
+		<links>
+			<link>{PARAMETER:link}</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/templatemanage/dialog/total/insertTotals.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="totalSupport">false</parameter> <!-- 不支持统计 -->
+			<parameter name="rssChannel">false</parameter> <!-- 不支持RSS -->
+		</extendParameters>
+	</view>
+	
+	<view title="栏目排行(按点击数)" name="hotColumns">
+		<data>
+			<pojo>com.yuanluesoft.cms.sitemanage.pojo.WebDirectory</pojo>
+			<where>WebDirectory.directoryType='column' 
+				   and (WebDirectory.parentDirectoryId={PARAMETER:siteId}
+				  	 or WebDirectory.id in (
+					   select WebDirectorySubjection.directoryId
+						from WebDirectory WebDirectory, WebDirectorySubjection WebDirectorySubjection
+						where WebDirectory.directoryType='column'
+						and WebDirectory.parentDirectoryId={PARAMETER:siteId}
+						and WebDirectorySubjection.parentDirectoryId=WebDirectory.id))
+			</where>
+			<orderBy>accessStats.times DESC</orderBy>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<links>
+			<link title="栏目首页">{PARAMETER:url}</link>
+			<link title="RSS订阅">/cms/rsssubscription/rssSubscribe.shtml?siteId={PARAMETER:id}</link>
+			<link title="RSS频道">/cms/rsssubscription/rss.shtml?extendProperties=siteIds%3D{PARAMETER:id}%26amp;resourceTypes%3Dall%26amp;containChildren%3Dtrue&amp;applicationName=cms/sitemanage&amp;channel=resources&amp;ttl=60</link>
+		</links>
+		<extendParameters>
+			<parameter name="totalSupport">false</parameter> <!-- 不支持统计 -->
+			<parameter name="rssChannel">false</parameter> <!-- 不支持RSS -->
+		</extendParameters>
+	</view>
+	
+	<view title="点击排行(特定页面)" name="accessTotals">
+		<data>
+			<pojo>com.yuanluesoft.cms.sitemanage.model.TotalColumn</pojo>
+		</data>
+		<links>
+			<link>{PARAMETER:link}</link>
+		</links>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/templatemanage/dialog/total/insertAccessTotals.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="totalSupport">false</parameter> <!-- 不支持统计 -->
+			<parameter name="rssChannel">false</parameter> <!-- 不支持RSS -->
+		</extendParameters>
+	</view>
+	
+	<view title="发布排行" name="issueTotals">
+		<data>
+			<pojo>com.yuanluesoft.cms.sitemanage.model.IssueTotal</pojo>
+		</data>
+		<extendParameters>
+			<parameter name="templateExtendURL">/cms/templatemanage/dialog/total/insertIssueTotals.shtml</parameter> <!-- 模板配置对话框扩展 -->
+			<parameter name="totalSupport">false</parameter> <!-- 不支持统计 -->
+			<parameter name="rssChannel">false</parameter> <!-- 不支持RSS -->
+		</extendParameters>
+	</view>
+	
+	<!-- 只做统计用 -->
+	<view title="公众服务列表" name="publicServices">
+		<data>
+			<pojo>com.yuanluesoft.cms.publicservice.pojo.PublicService</pojo>
+			<newestCheckBy>created</newestCheckBy>
+		</data>
+		<extendParameters>
+			<parameter name="totalOnly">true</parameter>
+			<parameter name="rssChannel">false</parameter> <!-- 不支持RSS -->
+			<parameter name="templateExtendURL">/cms/sitemanage/templatemanage/insertSiteRecordList.shtml</parameter> <!-- 模板配置对话框扩展 -->
+		</extendParameters>
+	</view>
+
+	<view name="site" title="站点/栏目优先级调整" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.cms.sitemanage.pojo.WebDirectory</pojo>
+			<orderBy>WebDirectory.priority DESC, WebDirectory.directoryName</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" /> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="名称" name="directoryName"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="admin/todo" form="admin/article" title="待处理文章" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.cms.siteresource.pojo.SiteResource</pojo>
+			<where>SiteResource.status&lt;'5'</where>
+			<orderBy>SiteResource.created DESC</orderBy>
+			<quickFilter>SiteResource.subject like '%{KEY}%' or lazyBody.body like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="添加文章" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/cms/sitemanage/selectSite.shtml?selectNodeTypes=column&amp;displayRecentUsed=true&amp;script=PageUtils.newrecord(&quot;cms/siteresource&quot;, &quot;admin/article&quot;, &quot;mode=fullscreen&quot;, &quot;columnId={id}&quot;)', 600, 350)"/>
+			<action title="添加链接" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/cms/sitemanage/selectSite.shtml?selectNodeTypes=column&amp;displayRecentUsed=true&amp;script=PageUtils.newrecord(&quot;cms/siteresource&quot;, &quot;admin/link&quot;, &quot;mode=fullscreen&quot;, &quot;columnId={id}&quot;)', 600, 350)"/>
+			<action title="批量处理" execute="batchSend('../siteresource/admin/runArticleApproval')"/>
+		</actions>
+		<links>
+			<link type="recordLink" title="编辑文章">javascript:PageUtils.editrecord('cms/siteresource', 'admin/{PARAMETER:resourceType}', '{PARAMETER:id}', 'mode=fullscreen')</link>
+		</links>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="主题" name="subject"/>
+			<column title="所在栏目" name="columnName" width="100"/>
+			<column title="创建时间" name="created" format="yyyy-MM-dd" width="80" align="center"/>
+			<column title="创建人" name="editor" width="100" align="center"/>
+			<column title="状态" name="statusDescription" width="80" align="center" displayExcept="portlet"/>
+		</columns>
+	</view>
+	
+	<view name="admin/processing" form="admin/article" title="在处理文章" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.cms.siteresource.pojo.SiteResource</pojo>
+			<where>SiteResource.status&lt;'5'</where>
+			<orderBy>SiteResource.created DESC</orderBy>
+			<quickFilter>SiteResource.subject like '%{KEY}%' or lazyBody.body like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="添加文章" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/cms/sitemanage/selectSite.shtml?selectNodeTypes=column&amp;displayRecentUsed=true&amp;script=PageUtils.newrecord(&quot;cms/siteresource&quot;, &quot;admin/article&quot;, &quot;mode=fullscreen&quot;, &quot;columnId={id}&quot;)', 600, 350)"/>
+			<action title="添加链接" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/cms/sitemanage/selectSite.shtml?selectNodeTypes=column&amp;displayRecentUsed=true&amp;script=PageUtils.newrecord(&quot;cms/siteresource&quot;, &quot;admin/link&quot;, &quot;mode=fullscreen&quot;, &quot;columnId={id}&quot;)', 600, 350)"/>
+		</actions>
+		<links>
+			<link title="编辑文章">javascript:PageUtils.editrecord('cms/siteresource', 'admin/{PARAMETER:resourceType}', '{PARAMETER:id}', 'mode=fullscreen')</link>
+		</links>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="主题" name="subject"/>
+			<column title="所在栏目" name="columnName" width="100"/>
+			<column title="创建时间" name="created" format="yyyy-MM-dd" width="80" align="center"/>
+			<column title="创建人" name="editor" width="100" align="center"/>
+			<column title="状态" name="statusDescription" width="80" align="center" displayExcept="portlet"/>
+		</columns>
+	</view>
+	
+	<view name="admin/completed" form="admin/article" title="已处理文章" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.cms.siteresource.pojo.SiteResource</pojo>
+			<where>SiteResource.status&lt;'5'</where>
+			<orderBy>SiteResource.created DESC</orderBy>
+			<quickFilter>SiteResource.subject like '%{KEY}%' or lazyBody.body like '%{KEY}%'</quickFilter>
+			<filter>COMPLETED</filter>
+		</data>
+		<actions>
+			<action title="添加文章" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/cms/sitemanage/selectSite.shtml?selectNodeTypes=column&amp;displayRecentUsed=true&amp;script=PageUtils.newrecord(&quot;cms/siteresource&quot;, &quot;admin/article&quot;, &quot;mode=fullscreen&quot;, &quot;columnId={id}&quot;)', 600, 350)"/>
+			<action title="添加链接" execute="DialogUtils.openDialog('{WEBAPPLICATIONURL}/cms/sitemanage/selectSite.shtml?selectNodeTypes=column&amp;displayRecentUsed=true&amp;script=PageUtils.newrecord(&quot;cms/siteresource&quot;, &quot;admin/link&quot;, &quot;mode=fullscreen&quot;, &quot;columnId={id}&quot;)', 600, 350)"/>
+		</actions>
+		<links>
+			<link title="编辑文章">javascript:PageUtils.editrecord('cms/siteresource', 'admin/{PARAMETER:resourceType}', '{PARAMETER:id}', 'mode=fullscreen')</link>
+		</links>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="主题" name="subject"/>
+			<column title="所在栏目" name="columnName" width="100"/>
+			<column title="创建时间" name="created" format="yyyy-MM-dd" width="80" align="center"/>
+			<column title="创建人" name="editor" width="100" align="center"/>
+			<column title="状态" name="statusDescription" width="80" align="center" displayExcept="portlet"/>
+		</columns>
+	</view>
+	
+	<view name="admin/deleted" form="admin/article" title="已删除文章" pageRows="20" hide="noPrivilege(application_manager)">
+		<data>
+			<pojo>com.yuanluesoft.cms.siteresource.pojo.SiteResource</pojo>
+			<where>SiteResource.status&gt;'4'</where>
+			<orderBy>SiteResource.created DESC</orderBy>
+			<quickFilter>SiteResource.subject like '%{KEY}%' or lazyBody.body like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<links>
+			<link type="recordLink" title="编辑文章">javascript:PageUtils.editrecord('cms/siteresource', 'admin/{PARAMETER:resourceType}', '{PARAMETER:id}', 'mode=fullscreen')</link>
+		</links>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="主题" name="subject"/>
+			<column title="所在栏目" name="columnName" width="100"/>
+			<column title="创建时间" name="created" format="yyyy-MM-dd" width="80" align="center"/>
+			<column title="创建人" name="editor" width="100" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/resource" form="resource" title="文章" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.cms.siteresource.pojo.SiteResource</pojo>
+			<where>SiteResource.status&lt;'5'</where>
+			<orderBy>SiteResource.status, SiteResource.issueTime DESC, SiteResource.created DESC</orderBy>
+			<quickFilter>SiteResource.subject like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<categories root="所有文章" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.cms.siteresource.pojo.SiteResource</pojo>
+			</data>
+			<category value="status"> <!--value必须有-->
+				<where>SiteResource.status between '0' and '4'</where>
+				<data>SiteResource.status={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<scripts>
+			<script>/cms/sitemanage/js/site.js</script>
+		</scripts>
+		<links>
+			<link title="编辑文章">javascript:PageUtils.editrecord('cms/siteresource', 'admin/{PARAMETER:resourceType}', '{PARAMETER:id}', 'mode=fullscreen')</link>
+		</links>
+		<actions>
+			<action title="推送到微信" execute="if(document.getElementsByName('viewPackage.selectedIds')[0].value!='')PageUtils.openurl('{CONTEXTPATH}/cms/siteresource/admin/sendToWechat.shtml?ids=' + document.getElementsByName('viewPackage.selectedIds')[0].value, 'mode=fullscreen');" hide="noMyUnitPopedom(wechatMessageManager)"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="主题" name="subject"/>
+			<column title="所在栏目" name="columnName" width="100"/>
+			<column title="创建时间" name="created" width="110" align="center"/>
+			<column title="发布时间" name="issueTime" width="110" align="center"/>
+			<column title="创建人" name="editor" width="100" align="center"/>
+			<column title="状态" name="statusDescription" width="80" align="center"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="selectRelationResources" title="添加关联文章" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.cms.siteresource.pojo.SiteResource</pojo>
+			<join>, WebDirectorySubjection WebDirectorySubjection</join>
+			<where>SiteResource.id!={PARAMETER:currentResorceId|0} and SiteResource.status='3' and subjections.siteId=WebDirectorySubjection.directoryId and WebDirectorySubjection.parentDirectoryId in ({PARAMETER:columnIds})</where>
+			<orderBy>SiteResource.status, SiteResource.issueTime DESC, SiteResource.created DESC</orderBy>
+			<quickFilter>SiteResource.subject like '%{KEY}%' or SiteResource.keyword like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="主题" name="subject"/>
+			<column title="所在栏目" name="columnName" width="80"/>
+			<column title="发布时间" name="issueTime" width="70" format="yyyy-MM-dd" align="center"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="admin/adjustRelationLinkPriority" title="调整相关链接优先级" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.cms.siteresource.pojo.SiteResourceRelationLink</pojo>
+			<where>SiteResourceRelationLink.resourceId={PARAMETER:resourceId}</where>
+			<orderBy>SiteResourceRelationLink.priority DESC, SiteResourceRelationLink.id</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="名称" name="linkName"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="admin/adjustPhotoPriority" title="调整图集优先级" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.cms.siteresource.pojo.SiteResourcePhoto</pojo>
+			<where>SiteResourcePhoto.resourceId={PARAMETER:resourceId}</where>
+			<orderBy>SiteResourcePhoto.priority DESC, SiteResourcePhoto.id</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="标题" name="subject"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="admin/adjustVideoPriority" title="调整视频集优先级" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.cms.siteresource.pojo.SiteResourceVideo</pojo>
+			<where>SiteResourceVideo.resourceId={PARAMETER:resourceId}</where>
+			<orderBy>SiteResourceVideo.priority DESC, SiteResourceVideo.id</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="标题" name="subject"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="admin/adjustColumnRelationLinkPriority" title="调整相关链接优先级" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.cms.sitemanage.pojo.WebColumnRelationLink</pojo>
+			<where>WebColumnRelationLink.columnId={PARAMETER:columnId}</where>
+			<orderBy>WebColumnRelationLink.priority DESC, WebColumnRelationLink.id</orderBy>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="名称" name="linkName"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="siteTemplateTheme" form="siteTemplateTheme" title="主题" pageRows="20" openFeatures="mode=fullscreen" viewServiceName="siteTemplateThemeViewService">
+		<data>
+			<pojo>com.yuanluesoft.cms.sitemanage.pojo.SiteTemplateTheme</pojo>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="名称" name="name"/>
+			<column title="适用的浏览器类型" name="typeAsText" width="230"/>
+			<column title="默认主题" name="defaultTheme" type="formula" formula="(defaultTheme ? &quot;√&quot; : &quot;&quot;)" formulaFields="defaultTheme" align="center" width="68"/>
+			<column title="临时启用" name="temporaryOpening" type="formula" formula="(temporaryOpening ? &quot;√&quot; : &quot;&quot;)" formulaFields="temporaryOpening" align="center" width="68"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+	
+	<view name="template" form="template" title="模板配置" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.cms.templatemanage.pojo.Template</pojo>
+			<orderBy>Template.isSelected DESC,Template.templateName</orderBy>
+			<quickFilter>Template.templateName like '%{KEY}%'</quickFilter>
+		</data>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="36"/>
+			<column title="名称" name="templateName"/>
+			<column title="最后修改时间" name="lastModified" align="center" width="110"/>
+			<column title="最后修改人" name="lastModifier" align="center" width="110"/>
+			<column title="模板作用范围" name="formattedColumnNames" width="160" align="center"/>
+			<column title="默认模板" name="isDefault" align="center" width="80"/>
+		</columns>
+		<extendParameters>
+			<parameter name="recordList">false</parameter>
+		</extendParameters>
+	</view>
+</views>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<views>
+	<view name="attendanceRecord" title="打卡记录" pageRows="20" openFeatures="mode=fullscreen">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.attendance.pojo.AttendanceRecord</pojo>
+			<where>AttendanceRecord.personId={USERID}</where>
+			<orderBy>AttendanceRecord.punchTime DESC</orderBy>
+		</data>
+		<actions>
+			<action title="上班" execute="DialogUtils.openDialog('{CONTEXTPATH}/j2oa/attendance/punchCard.shtml?onDuty=true', 400, 180)"/>
+			<action title="下班" execute="DialogUtils.openDialog('{CONTEXTPATH}/j2oa/attendance/punchCard.shtml?onDuty=false', 400, 180)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="打卡时间" name="punchTime"/>
+		</columns>
+	</view>
+	
+	<view name="todoMend" form="mend" title="待办补卡申请" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.attendance.pojo.AttendanceMend</pojo>
+			<orderBy>AttendanceMend.mendTime DESC</orderBy>
+			<quickFilter>Assess.creator like '%{KEY}%'</quickFilter>
+			<filter>TODO</filter>
+		</data>
+		<actions>
+			<action title="申请补卡" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="补卡人" name="personName" width="80"/>
+			<column title="补卡时间" name="mendTime" width="110" align="center"/>
+			<column title="补卡原因" name="reason"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="100" display="normal,print,portlet"/>
+		</columns>
+	</view>
+	
+	<view name="processingMend" form="mend" title="在办补卡申请" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.attendance.pojo.AttendanceMend</pojo>
+			<orderBy>AttendanceMend.mendTime DESC</orderBy>
+			<quickFilter>AttendanceMend.personName like '%{KEY}%' or AttendanceMend.reason like '%{KEY}%'</quickFilter>
+			<filter>INPROCESS</filter>
+		</data>
+		<actions>
+			<action title="补卡申请" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="序号" type="rownum" align="center" width="50"/>
+			<column title="补卡人" name="personName" width="80"/>
+			<column title="补卡时间" name="mendTime" width="110" align="center"/>
+			<column title="补卡原因" name="reason"/>
+			<column title="流程状态" name="workflowStatus" align="center" width="100" display="normal,print,portlet"/>
+		</columns>
+	</view>
+	
+	<view name="completedMend" form="mend" title="办结补卡申请" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.attendance.pojo.AttendanceMend</pojo>
+			<orderBy>AttendanceMend.mendTime DESC</orderBy>
+			<quickFilter>AttendanceMend.personName like '%{KEY}%' or AttendanceMend.reason like '%{KEY}%'</quickFilter>
+			<filter>COMPLETED</filter>
+		</data>
+		<actions>
+			<action title="补卡申请" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="补卡人" name="personName" width="80"/>
+			<column title="补卡时间" name="mendTime" width="110" align="center"/>
+			<column title="补卡原因" name="reason"/>
+		</columns>
+	</view>
+	
+	<view name="allMend" form="mend" title="所有补卡申请" pageRows="20" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.j2oa.attendance.pojo.AttendanceMend</pojo>
+			<orderBy>AttendanceMend.mendTime DESC</orderBy>
+			<quickFilter>AttendanceMend.personName like '%{KEY}%' or AttendanceMend.reason like '%{KEY}%'</quickFilter>
+			<filter>READABLE</filter>
+		</data>
+		<actions>
+			<action title="补卡申请" type="workflow"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32" display="select"/> <!-- display指定在何种条件下显示该列, all/全部,condition/搜索条件,portlet/portal,view/视图数据,select/选择,不设置则表示all-->
+			<column title="补卡人" name="personName" width="80"/>
+			<column title="补卡时间" name="mendTime" width="110" align="center"/>
+			<column title="补卡原因" name="reason"/>
+		</columns>
+	</view>
+</views>

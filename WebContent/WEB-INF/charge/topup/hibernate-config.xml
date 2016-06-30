@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--计费:创建充值卡-->
+	<class name="com.yuanluesoft.charge.topup.pojo.CardOrder" table="charge_card_order">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="cardName"/> <!--充值卡名称-->
+		<property name="cardMoney"/> <!--充值卡面额-->
+		<property name="cardNumber"/> <!--充值卡数量-->
+		<property name="servicePriceIds"/> <!--绑定的服务报价ID列表-->
+		<property name="serviceSelect"/> <!-- 1/单选,2/多选,3/全选 -->
+		<property name="paymentEnable"/> <!--充值卡是否允许用于增值消费-->
+		<property name="topUpEnd"/> <!--有效期(结束)-->
+		<property name="type"/> <!--类型,如预购、普通-->
+		<property name="creatorId"/> <!--创建人ID-->
+		<property name="creator"/> <!--创建人-->
+		<property name="created"/> <!--创建时间-->
+		<property name="remark"/> <!--备注-->
+	</class>
+	
+	<!--计费:充值卡-->
+	<class name="com.yuanluesoft.charge.topup.pojo.Card" table="charge_card">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="money"/> <!--金额-->
+		<property name="cardNumber"/> <!--充值卡序列号-->
+		<property name="cardPassword"/> <!--充值卡密码-->
+		<property name="created"/> <!--创建时间-->
+		<property name="orderId"/> <!--创建充值卡的单据ID-->
+		<property name="topUpId"/> <!--充值单据ID-->
+	</class>
+	
+	<!--计费:代缴费月结账单-->
+	<class name="com.yuanluesoft.charge.topup.pojo.AgencyTopUpBalance" table="charge_top_up_agency_balance">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="carrierId"/> <!--运营商账户ID-->
+		<property name="carrierName"/> <!--运营商名称-->
+		<property name="beginDate"/> <!--开始时间-->
+		<property name="endDate"/> <!--结束时间-->
+		<property name="moneyPay"/> <!--需要划款的金额-->
+		<property name="reallyPay"/> <!--实际划款的金额-->
+		<property name="status"/> <!--状态-->
+		<property name="transactor"/> <!--经办人-->
+		<property name="transactorId"/> <!--经办人ID-->
+		<property name="transactTime"/> <!--办理时间-->
+		<property name="payTime"/> <!--划款时间-->
+		<property name="remark"/> <!--备注-->
+	</class>
+</hibernate-mapping>

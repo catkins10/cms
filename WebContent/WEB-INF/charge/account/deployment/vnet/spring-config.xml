@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 个人账户服务列表 -->
+	<bean id="personalAccountServices" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<ref bean="vnetAccountService"/>
+			</list>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 互联星空账户服务 -->
+	<bean id="vnetAccountService" class="com.yuanluesoft.charge.thirdparty.vnet.service.spring.VnetPersonalAccountServiceImpl">
+		<property name="databaseService"><ref bean="databaseService"/></property>
+		<property name="vnetService"><ref bean="vnetService"/></property>
+		<property name="serviceManage"><ref bean="serviceManage"/></property>
+		<property name="vnetPersonalOrderService"><ref bean="personalOrderServiceImpl"/></property>
+	</bean>
+</beans>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="bbsUser" type="com.yuanluesoft.bbs.usermanage.forms.BbsUser"/>
+  <form-bean name="login" type="com.yuanluesoft.jeaf.sso.forms.LoginForm"/>
+  <form-bean name="personalPanel" type="com.yuanluesoft.bbs.usermanage.forms.PersonalPanel"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="bbsUser" path="/bbsUser" scope="request"
+   type="com.yuanluesoft.bbs.usermanage.actions.bbsuser.Load" validate="false">
+   <forward name="load" path="/bbsUser.jsp"/>
+  </action>
+  <action input="/bbsUser.jsp" name="bbsUser" path="/saveBbsUser"
+   scope="request"
+   type="com.yuanluesoft.bbs.usermanage.actions.bbsuser.Save" validate="false">
+   <forward name="result" path="/actionResult.jsp"/>
+  </action>
+  <action input="/bbsUser.jsp" name="bbsUser" path="/uploadPortrait"
+   scope="request"
+   type="com.yuanluesoft.bbs.usermanage.actions.bbsuser.UploadPortrait" validate="false"/>
+  <action name="login" path="/login" scope="request"
+   type="com.yuanluesoft.bbs.usermanage.actions.login.Load" validate="false">
+   <forward name="load" path="/login.jsp"/>
+  </action>
+  <action name="personalPanel" path="/personalPanel" scope="request"
+   type="com.yuanluesoft.bbs.usermanage.actions.personalpanel.Load" validate="false">
+   <forward name="load" path="/personalPanel.jsp"/>
+  </action>
+  <action name="bbsUser" path="/member" scope="request"
+   type="com.yuanluesoft.bbs.usermanage.actions.member.Load" validate="false">
+   <forward name="load" path="/member.jsp"/>
+  </action>
+  <action name="bbsUser" path="/dislpayMember" scope="request" validate="false"/>
+ </action-mappings>
+ <controller/>
+</struts-config>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Application>
+	<Actions>
+		<Action Name="完成登记" Send="true"/>
+		<Action Name="完成修改" Send="true"/>
+		<Action Name="完成销毁" Send="true"/>
+		<Action Name="删除" DeleteAction="true"/>
+	</Actions>
+	<ProgrammingParticipants>
+		<ProgrammingParticipant Id="manager" Name="管理员"/>
+		<ProgrammingParticipant Id="verifier" Name="审核人"/>
+		<ProgrammingParticipant Id="approver" Name="批准人"/>
+		<ProgrammingParticipant Id="modifyApprover" Name="修改批准人"/>
+		<ProgrammingParticipant Id="loanApprover" Name="借阅批准人"/>
+		<ProgrammingParticipant Id="destroyApprover" Name="销毁批准人"/>
+	</ProgrammingParticipants>
+	<SubForms>
+		<SubForm Id="Create" Name="登记"/>
+		<SubForm Id="Approval" Name="审核"/>
+		<SubForm Id="Read" Name="只读"/>
+	</SubForms>
+	<TypeDeclarations>
+		<TypeDeclaration Id="yesOrNo" Name="是/否">
+			<SchemaType>
+				<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"  attributeFormDefault="unqualified">
+					<xsd:element name="yesOrNo">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:NMTOKEN">
+								<xsd:enumeration value="是"/>
+								<xsd:enumeration value="否"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:schema>
+			</SchemaType>
+		</TypeDeclaration>
+	</TypeDeclarations>
+	<DataFields>
+		<DataField Id="control" Name="受控状态">
+			<DataType><BasicType Type="STRING"/></DataType>
+		</DataField>
+		<DataField Id="urgency" Name="紧急程度">
+			<DataType><BasicType Type="STRING"/></DataType>
+		</DataField>
+		<DataField Id="security" Name="文件密级">
+			<DataType><BasicType Type="STRING"/></DataType>
+		</DataField>
+		<DataField Id="storage" Name="保存期限">
+			<DataType><BasicType Type="STRING"/></DataType>
+		</DataField>
+	</DataFields>
+	<Applications/>
+</Application>

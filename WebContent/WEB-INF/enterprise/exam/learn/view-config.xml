@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="toLearnMissions" title="待学习任务" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.learn.pojo.LearnMission</pojo>
+			<where>(LearnMission.beginTime is null or LearnMission.beginTime&lt;=TIMESTAMP({NOW}))
+				   and (LearnMission.endTime is null or LearnMission.endTime>=TIMESTAMP({NOW}))
+				   and (select min(LearnMissionAccomplish.missionId)
+					 from LearnMissionAccomplish LearnMissionAccomplish
+					 where LearnMissionAccomplish.missionId=LearnMission.id
+					 and LearnMissionAccomplish.personId={USERID}
+					 and LearnMissionAccomplish.learnSeconds>=LearnMission.learnTime*60) is null</where>
+			<orderBy>LearnMission.endTime DESC, LearnMission.created DESC</orderBy>
+			<filter>READABLE</filter>
+		</data>
+		<links>
+			<link>/enterprise/exam/learn/learnMission.shtml</link>
+		</links>
+	</view>
+	
+	<view name="learnedMissions" title="已学习任务" pageRows="20">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.learn.pojo.LearnMissionAccomplish</pojo>
+			<where>LearnMissionAccomplish.personId={USERID}
+				   and LearnMissionAccomplish.learnSeconds>=mission.learnTime*60</where>
+			<orderBy>LearnMissionAccomplish.lastTime DESC</orderBy>
+		</data>
+		<links>
+			<link>/enterprise/exam/learn/learnMission.shtml?id={PARAMETER:missionId}</link>
+		</links>
+	</view>
+	
+	<view name="learnQuestion" title="试题浏览" pageRows="20" viewServiceName="learnViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.question.pojo.Question</pojo>
+			<where>questionPosts.postId in ({ROLEIDS|0})
+				   and (select min(LearnQuestion)
+					from LearnQuestion LearnQuestion
+					where LearnQuestion.questionId=Question.id
+					and LearnQuestion.personId={USERID}) is null
+				   and (select min(ExamPaperQuestion.id)
+				    from ExamPaper ExamPaper left join ExamPaper.paperQuestions ExamPaperQuestion left join ExamPaper.visitors ExamPaperPrivilege
+				    where ExamPaperQuestion.questionId=Question.id
+				    and ExamPaperPrivilege.visitorId in ({USERIDS})
+				    and ExamPaper.status=1
+				    and (ExamPaper.beginTime is null or ExamPaper.beginTime&lt;=TIMESTAMP({NOW}))
+				    and (ExamPaper.endTime is null or ExamPaper.endTime>TIMESTAMP({NOW}))
+				    and (select min(ExamTest.id) from ExamTest ExamTest where ExamTest.paperId=ExamPaper.id and ExamTest.personId={USERID} and ExamTest.status>0) is null
+				    ) is null</where>
+			<orderBy>Question.created DESC</orderBy>
+		</data>
+	</view>
+	
+	<view name="questionQuery" title="试题查询" pageRows="20" viewServiceName="learnViewService">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.question.pojo.Question</pojo>
+			<where>questionPosts.postId in ({ROLEIDS|0})
+				   and (select min(ExamPaperQuestion.id)
+				    from ExamPaper ExamPaper left join ExamPaper.paperQuestions ExamPaperQuestion left join ExamPaper.visitors ExamPaperPrivilege
+				    where ExamPaperQuestion.questionId=Question.id
+				    and ExamPaperPrivilege.visitorId in ({USERIDS})
+				    and ExamPaper.status=1
+				    and (ExamPaper.beginTime is null or ExamPaper.beginTime&lt;=TIMESTAMP({NOW}))
+				    and (ExamPaper.endTime is null or ExamPaper.endTime>TIMESTAMP({NOW}))
+				    and (select min(ExamTest.id) from ExamTest ExamTest where ExamTest.paperId=ExamPaper.id and ExamTest.personId={USERID} and ExamTest.status>0) is null
+				    ) is null</where>
+			<orderBy>Question.created DESC</orderBy>
+		</data>
+	</view>
+
+	<view name="admin/learnFile" form="admin/learnFile" title="学习资料" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_mission)">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.learn.pojo.LearnFile</pojo>
+			<orderBy>LearnFile.created DESC</orderBy>
+			<quickFilter>LearnFile.name like '%{KEY}%' or LearnFile.body like '%{KEY}%'</quickFilter>
+		</data>
+		<categories root="所有分类" beginCategory="ROOT" loop="false">
+			<data>
+				<pojo>com.yuanluesoft.enterprise.exam.learn.pojo.LearnFile</pojo>
+			</data>
+			<category value="LearnFile.category"> <!--value必须有-->
+				<data>LearnFile.category={CATEGORYVALUE}</data>
+			</category>
+		</categories>
+		<actions>
+			<action title="添加学习资料" execute="PageUtils.newrecord('enterprise/exam/learn', 'admin/learnFile', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name"/>
+			<column title="分类" name="category" width="110"/>
+			<column title="创建人" name="creator" align="center" width="110" hide="select"/>
+			<column title="创建时间" name="created" align="center" width="110" hide="select"/>
+		</columns>
+	</view>
+	
+	<view name="admin/learnMission" form="admin/learnMission" title="学习任务" pageRows="20" openFeatures="mode=fullscreen" hide="noPrivilege(application_manager) and noPrivilege(manageUnit_mission)">
+		<data>
+			<pojo>com.yuanluesoft.enterprise.exam.learn.pojo.LearnMission</pojo>
+			<orderBy>LearnMission.created DESC</orderBy>
+			<quickFilter>LearnMission.name like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加学习任务" execute="PageUtils.newrecord('enterprise/exam/learn', 'admin/learnMission', 'mode=fullscreen')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="名称" name="name"/>
+			<column title="开始时间" name="beginTime" width="110" align="center"/>
+			<column title="结束时间" name="endTime" width="110" align="center"/>
+			<column title="时长(分钟)" name="learnTime" width="80" align="center"/>
+			<column title="创建人" name="creator" align="center" width="110"/>
+			<column title="创建时间" name="created" align="center" width="110"/>
+		</columns>
+	</view>
+</views>

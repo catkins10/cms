@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <data-sources/>
+ <form-beans>
+  <form-bean name="workloadAssess" type="com.yuanluesoft.enterprise.workload.forms.WorkloadAssess"/>
+  <form-bean name="adminWorkloadAssess" type="com.yuanluesoft.enterprise.workload.forms.admin.WorkloadAssess"/>
+  <form-bean name="insertAssessLink" type="com.yuanluesoft.enterprise.workload.forms.admin.InsertAssessLink"/>
+ </form-beans>
+ <global-exceptions>
+  <exception key="exception" path="/../../jeaf/form/error.jsp"
+   scope="request" type="java.lang.Exception"/>
+ </global-exceptions>
+ <global-forwards>
+  <forward name="result" path="/../../jeaf/form/result.jsp"/>
+ </global-forwards>
+ <action-mappings>
+  <action name="workloadAssess" path="/workloadAssess" scope="request"
+   type="com.yuanluesoft.enterprise.workload.actions.workloadassess.Load" validate="false">
+   <forward name="load" path="/workloadAssess.jsp"/>
+  </action>
+  <action input="/workloadAssess.jsp" name="workloadAssess"
+   path="/saveWorkloadAssess" scope="request"
+   type="com.yuanluesoft.enterprise.workload.actions.workloadassess.Save" validate="false">
+   <forward name="result" path="/workloadAssessSubmitted.jsp"/>
+  </action>
+  <action name="adminWorkloadAssess" path="/admin/workloadAssess"
+   scope="request"
+   type="com.yuanluesoft.enterprise.workload.actions.workloadassess.admin.Load" validate="false">
+   <forward name="load" path="/admin/workloadAssess.jsp"/>
+  </action>
+  <action input="/admin/workloadAssess.jsp" name="adminWorkloadAssess"
+   path="/admin/saveWorkloadAssess" scope="request"
+   type="com.yuanluesoft.enterprise.workload.actions.workloadassess.admin.Save" validate="false"/>
+  <action name="insertAssessLink"
+   path="/templatemanage/insertAssessLink" scope="request"
+   type="com.yuanluesoft.jeaf.htmleditor.actions.editordialog.Load" validate="false">
+   <forward name="load" path="/templatemanage/insertAssessLink.jsp"/>
+  </action>
+ </action-mappings>
+ <controller/>
+</struts-config>

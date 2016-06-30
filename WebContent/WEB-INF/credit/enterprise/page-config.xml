@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<pages>
+		<page name="enterprise" title="个体企业信息列表页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=credit/enterprise&amp;pageName=enterprise"/>
+		<page name="enterpriseDetail" title="个体企业信息详情" recordClass="com.yuanluesoft.credit.enterprise.pojo.Enterprise"/>
+		<page name="enterpriseQueryResult" title="个体企业信息查询结果" searchPage="true" searchResults="enterpriseQueryResults" 
+		url="/cms/sitemanage/applicationSearch.shtml?applicationName=credit/enterprise&amp;pageName=enterpriseQueryResult"/>
+		
+		<page name="enterpriseIn" title="内资企业信息列表页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=credit/enterprise&amp;pageName=enterpriseIn"/>
+		<page name="enterpriseInDetail" title="内资企业信息详情" recordClass="com.yuanluesoft.credit.enterprise.pojo.EnterpriseIn"/>
+		<page name="enterpriseInQueryResult" title="内资企业信息查询结果" searchPage="true" searchResults="enterpriseInQueryResults" 
+		url="/cms/sitemanage/applicationSearch.shtml?applicationName=credit/enterprise&amp;pageName=enterpriseInQueryResult"/>
+		
+		<page name="enterpriseOut" title="外资企业信息列表页" url="/cms/sitemanage/applicationIndex.shtml?applicationName=credit/enterprise&amp;pageName=enterpriseOut"/>
+		<page name="enterpriseOutDetail" title="外资企业信息详情" recordClass="com.yuanluesoft.credit.enterprise.pojo.EnterpriseOut"/>
+		<page name="enterpriseOutQueryResult" title="外资企业信息查询结果" searchPage="true" searchResults="enterpriseOutQueryResults" 
+		url="/cms/sitemanage/applicationSearch.shtml?applicationName=credit/enterprise&amp;pageName=enterpriseOutQueryResult"/>
+		
+	</pages>
+	
+	<!-- 页面元素 -->
+	<pageElements>
+		<pageElement name="enterpriseQueryResults" processor="enterpriseQueryProcessor"/>  <!--查询结果 -->
+		<pageElement name="enterpriseInQueryResults" processor="enterpriseInQueryProcessor"/>  <!--查询结果 -->
+		<pageElement name="enterpriseOutQueryResults" processor="enterpriseOutQueryProcessor"/>  <!--查询结果 -->
+	</pageElements>
+</application>

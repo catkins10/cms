@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<businessObjects>
+	<businessObject title="意向项目" class="com.yuanluesoft.fdi.project.pojo.FdiProject">
+		<field name="chinaCompanyName" title="中方单位名称" length="300" required="true" type="string" inputMode="text"/>
+		<field name="chinaCompanyAddress" title="中方单位地址" length="300" type="string" inputMode="text"/>
+		<field name="chinaCompanyPostal" title="中方单位邮编" length="30" type="string" inputMode="text"/>
+		<field name="chinaCompanySite" title="中方单位网址" length="300" type="string" inputMode="text"/>
+		<field name="chinaContactName" title="中方联系人姓名" length="100" required="true" type="string" inputMode="text"/>
+		<field name="chinaContactSex" title="中方联系人性别" type="string" inputMode="radio">
+			<parameter name="itemsText">男|M\0女|F</parameter>
+		</field>
+		<field name="chinaContactTel" title="中方联系人电话" length="100" type="string" inputMode="text"/>
+		<field name="chinaContactMobile" title="中方联系人手机" length="100" type="string" inputMode="text"/>
+		<field name="chinaContactFax" title="中方联系人传真" length="100" type="string" inputMode="text"/>
+		<field name="chinaContactEmail" title="中方联系人E-mail" length="100" type="string" inputMode="text"/>
+		<field name="chinaContactIm" title="中方联系人QQ\MSN" length="100" type="string" inputMode="text"/>
+		<field name="chinaContactPost" title="中方联系人所在部门及职务" length="300" type="string" inputMode="text"/>
+		<field name="fdiContact1" title="招商办联系人1" length="100" type="string" inputMode="text"/>
+		<field name="fdiContact2" title="招商办联系人2" length="100" type="string" inputMode="text"/>
+		<field name="foreignCompanyName" title="外方单位中文名称" length="300" required="true" type="string" inputMode="text"/>
+		<field name="foreignCompanyEnglishName" title="外方单位英文名称" length="300" type="string" inputMode="text"/>
+		<field name="foreignCompanyAddress" title="外方单位地址" length="300" type="string" inputMode="text"/>
+		<field name="foreignCompanyPostal" title="外方单位邮编" length="30" type="string" inputMode="text"/>
+		<field name="foreignCompanyIntroduction" title="外方单位简介" length="4000" type="string" inputMode="textarea">
+			<parameter name="rows">4</parameter>
+		</field>
+		<field name="foreignCompanySite" title="外方单位网址" length="300" type="string" inputMode="text"/>
+		<field name="foreignContactName" title="外方洽谈人姓名" length="100" type="string" inputMode="text"/>
+		<field name="foreignContactPost" title="外方洽谈人职务" length="100" type="string" inputMode="text"/>
+		<field name="foreignContactSex" title="外方洽谈人性别" type="string" inputMode="radio">
+			<parameter name="itemsText">男|M\0女|F</parameter>
+		</field>
+		<field name="foreignContactTel" title="外方洽谈人电话" length="100" type="string" inputMode="text"/>
+		<field name="foreignContactMobile" title="外方洽谈人手机" length="100" type="string" inputMode="text"/>
+		<field name="foreignContactFax" title="外方洽谈人传真" length="100" type="string" inputMode="text"/>
+		<field name="foreignContactEmail" title="外方洽谈人E-mail" length="100" type="string" inputMode="text"/>
+		<field name="foreignContactIm" title="外方洽谈人QQ\MSN" length="100" type="string" inputMode="text"/>
+		<field name="projectName" title="项目名称" length="300" required="true" type="string" inputMode="text"/>
+		<field name="projectCategory" title="项目归类" length="100" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">电子信息\0机械装备\0石油化工\0生物医药\0闽台合作\0侨商项目\0基础设施\0服务业\0农林牧渔\0纺织轻工\0其他</parameter>
+		</field>
+		<field name="industryId" title="行业分类ID" length="20" type="number" inputMode="hidden"/>
+		<field name="industry" title="行业分类名称" length="200" required="true" type="string" inputMode="select">
+			<parameter name="execute">selectIndustry(500, 350, false, 'industryId{id},industry{name}', '', '', '', true, true, false)</parameter>
+			<parameter name="selectOnly">true</parameter>
+			<parameter name="js">/fdi/industry/js/industry.js</parameter>
+		</field>
+		<field name="cooperateMode" title="拟合作方式" length="200" required="true" type="string" inputMode="dropdown">
+			<parameter name="itemsText">合资\0独资\0合作\0技术引进\0设备引进\0补偿贸易\0其他</parameter>
+		</field>
+		<field name="summary" title="项目概述" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">4</parameter>
+		</field>
+		<field name="totalInvestment" title="项目总投资(万元)" length="12,4" required="true" type="number" inputMode="text"/>
+		<field name="creatorId" title="登记人ID" length="20" type="number" inputMode="none">
+			<parameter name="defaultValue">{USERID}</parameter>
+		</field>
+		<field name="creator" title="登记人" length="100" type="string" inputMode="readonly">
+			<parameter name="defaultValue">{USERNAME}</parameter>
+		</field>
+		<field name="created" title="登记时间" type="timestamp" inputMode="readonly">
+			<parameter name="defaultValue">{NOW}</parameter>
+		</field>
+		<field name="pushs" title="推进情况" type="components">
+			<parameter name="class">com.yuanluesoft.fdi.project.pojo.FdiProjectPush</parameter>
+		</field>
+	</businessObject>
+	
+	<businessObject title="推进情况" class="com.yuanluesoft.fdi.project.pojo.FdiProjectPush">
+		<field name="projectId" title="项目ID" length="20" type="number" inputMode="hidden"/>
+		<field name="pushTime" title="时间" type="timestamp" inputMode="datetime" required="true"/>
+		<field name="transactor" title="经办人" length="100" required="true" type="string" inputMode="text"/>
+		<field name="content" title="洽谈与推进内容" required="true" type="string" inputMode="textarea">
+			<parameter name="rows">8</parameter>
+		</field>
+	</businessObject>
+</businessObjects>

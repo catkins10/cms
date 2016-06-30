@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--中文词库-->
+	<class name="com.yuanluesoft.jeaf.word.pojo.ChineseWord" table="chinese_word">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="word"/> <!--词语,VARCHAR(20)-->
+		<property name="wordLength"/> <!--长度,NUMERIC(2)-->
+		<property name="isNoun"/> <!--是否名词,NUMERIC(1)-->
+		<property name="isVerb"/> <!--是否动词,NUMERIC(1)-->
+		<property name="isAdjective"/> <!--是否形容词,NUMERIC(1)-->
+		<property name="isAdverb"/> <!--是否副词,NUMERIC(1)-->
+		<property name="isMeasure"/> <!--是否量词,NUMERIC(1)-->
+		<property name="isOnomatopoeia"/> <!--是否拟声词,NUMERIC(1)-->
+		<property name="isStructural"/> <!--是否结构助词,NUMERIC(1)-->
+		<property name="isAuxiliary"/> <!--是否助词,NUMERIC(1)-->
+		<property name="isCoordinating"/> <!--是否并列连词,NUMERIC(1)-->
+		<property name="isConjunction"/> <!--是否连词,NUMERIC(1)-->
+		<property name="isPreposition"/> <!--是否介词,NUMERIC(1)-->
+		<property name="isPronoun"/> <!--是否代词,NUMERIC(1)-->
+		<property name="isInterrogative"/> <!--是否疑问词,NUMERIC(1)-->
+		<property name="isNumeral"/> <!--是否数词,NUMERIC(1)-->
+		<property name="isProverbs"/> <!--是否成语,NUMERIC(1)-->
+	</class>
+</hibernate-mapping>

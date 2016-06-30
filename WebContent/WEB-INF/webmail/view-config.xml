@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view name="inbox" form="mail" title="收邮件" pageRows="20" openFeatures="width=780,height=560" viewServiceName="webMailViewServiceService">
+		<data>
+			<pojo>com.yuanluesoft.webmail.pojo.Mail</pojo>
+			<orderBy>Mail.receiveDate DESC</orderBy>
+			<where>Mail.userId={USERID}</where>
+			<quickFilter>Mail.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="回复" execute="if(document.getElementsByName('viewPackage.selectedIds')[0].value!='')PageUtils.openurl('replyMail.shtml?mailId=' + document.getElementsByName('viewPackage.selectedIds')[0].value, 'width=780,height=560', 'mail');"/>
+			<action title="转发" execute="if(document.getElementsByName('viewPackage.selectedIds')[0].value!='')PageUtils.openurl('forwardMail.shtml?mailId=' + document.getElementsByName('viewPackage.selectedIds')[0].value.split(',')[0], 'width=780,height=560', 'mail');"/>
+			<action title="删除" execute="if(document.getElementsByName('viewPackage.selectedIds')[0].value!='')FormUtils.doAction('batchmovemail', 'moveto=11')"/>
+			<action title="永久删除" execute="if(document.getElementsByName('viewPackage.selectedIds')[0].value!='' &amp;&amp; confirm('删除后将不能恢复，是否确定删除？'))FormUtils.doAction('batchdeletemail');"/>
+			<action title="移动邮件" execute="if(document.getElementsByName('viewPackage.selectedIds')[0].value!='')DialogUtils.openSelectDialog('webmail', 'receiveMailbox', 500, 300, false, 'moveto{id}', 'FormUtils.doAction(&quot;batchmovemail&quot;)')"/>
+			<!--action title="标记为已读"/-->
+			<action title="追加到通讯录" execute="FormUtils.doAction('addAddressList');"/>
+		</actions>
+		<columns>
+			<column title="附件" type="image" name="attachmentImg" align="center" hideTitle="true" width="16" display="normal,print,portlet"/>
+			<column title="新邮件" type="image" name="newMailImg" align="center" hideTitle="true" width="21" display="normal,print,portlet"/>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="发件人" name="sender" width="120" display="normal,print,portlet">
+				<!-- href>javascript:replyMail('{PARAMETER:id}')</href-->
+			</column>
+			<column title="主题" name="viewSubject" display="normal,print,portlet"/>
+			<column title="接收时间" name="receiveDate" align="center" width="110"/>
+			<column title="大小" name="sizeKBytes" width="80" display="normal,print,portlet" align="center"/>
+			<column title="重要等级" name="priority" width="60" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="newMail" form="mail" title="新邮件" pageRows="20" openFeatures="width=780,height=560" viewServiceName="webMailViewServiceService">
+		<data>
+			<pojo>com.yuanluesoft.webmail.pojo.Mail</pojo>
+			<orderBy>Mail.receiveDate DESC</orderBy>
+			<where>Mail.userId={USERID} and Mail.newMail=1</where>
+		</data>
+		<actions>
+			<action title="发邮件" execute="PageUtils.newrecord('webmail', 'mail', 'width=780,height=560')"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32" displayExcept="portlet"/>
+			<column title="主题" name="viewSubject"/>
+			<column title="发件人" name="sender" width="120"/>
+			<column title="接收时间" name="receiveDate" align="center" width="110"/>
+		</columns>
+	</view>
+	
+	<view name="outbox" form="mail" title="发件箱" pageRows="20" openFeatures="width=780,height=560">
+		<data>
+			<pojo>com.yuanluesoft.webmail.pojo.Mail</pojo>
+			<orderBy>Mail.lastModified DESC</orderBy>
+			<where>Mail.userId={USERID} and Mail.mailboxId=1</where>
+			<quickFilter>Mail.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="发邮件" execute="PageUtils.newrecord('webmail', 'mail', 'width=780,height=560')"/>
+			<action title="删除" execute="if(document.getElementsByName('viewPackage.selectedIds')[0].value!='' &amp;&amp; confirm('删除后将不能恢复，是否确定删除？'))FormUtils.doAction('batchdeletemail');"/>
+		</actions>
+		<columns>
+			<column title="附件" type="image" name="attachmentImg" align="center" hideTitle="true" width="16"/>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="viewSubject" display="normal,print,portlet"/>
+			<column title="收件人" name="mailTo" width="200"/>
+			<column title="最后修改时间" name="lastModified" align="center" width="110"/>
+			<column title="重要等级" name="priority" width="60" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="draftbox" form="mail" title="草稿箱" pageRows="20" openFeatures="width=780,height=560">
+		<data>
+			<pojo>com.yuanluesoft.webmail.pojo.Mail</pojo>
+			<orderBy>Mail.lastModified DESC</orderBy>
+			<where>Mail.userId={USERID} and Mail.mailboxId=2</where>
+			<quickFilter>Mail.subject like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="发邮件" execute="PageUtils.newrecord('webmail', 'mail', 'width=780,height=560')"/>
+			<action title="删除" execute="if(document.getElementsByName('viewPackage.selectedIds')[0].value!='' &amp;&amp; confirm('删除后将不能恢复，是否确定删除？'))FormUtils.doAction('batchdeletemail');"/>
+		</actions>
+		<columns>
+			<column title="附件" type="image" name="attachmentImg" align="center" hideTitle="true" width="16"/>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="主题" name="viewSubject" display="normal,print,portlet"/>
+			<column title="收件人" name="mailTo" width="200"/>
+			<column title="最后修改时间" name="lastModified" align="center" width="110"/>
+			<column title="重要等级" name="priority" width="60" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="mailbox" form="mailbox" title="邮箱管理" pageRows="20" openFeatures="mode=dialog,width=360,height=130" viewServiceName="mailboxService">
+		<data>
+			<pojo>com.yuanluesoft.webmail.pojo.Mailbox</pojo>
+		</data>
+		<actions>
+			<action title="新建邮箱" execute="DialogUtils.openDialog('{CONTEXTPATH}/webmail/mailbox.shtml?act=create', 360, 130)"/>
+		</actions>
+		<columns>
+			<column title="名称" name="mailboxName"/>
+			<column title="大小" name="size" align="center" width="120"/>
+			<column title="邮件数" name="mailCount" align="center" width="100"/>
+			<column title="新邮件数" name="newMailCount" align="center" width="100"/>
+		</columns>
+	</view>
+	
+	<view name="receiveMailbox" form="mailbox" title="收件箱" pageRows="20" openFeatures="width=720,height=480" viewServiceName="mailboxService">
+		<data>
+			<pojo>com.yuanluesoft.webmail.pojo.Mailbox</pojo>
+		</data>
+		<actions/>
+		<columns>
+			<column title="名称" name="mailboxName"/>
+			<column title="大小" name="size" align="center" width="120"/>
+			<column title="邮件数" name="mailCount" align="center" width="100"/>
+			<column title="新邮件数" name="newMailCount" align="center" width="100"/>
+		</columns>
+	</view>
+	
+	<view name="mailfilter" form="mailFilter" title="邮件过滤" pageRows="12" openFeatures="width=720,height=480">
+		<data>
+			<pojo>com.yuanluesoft.webmail.pojo.MailFilter</pojo>
+			<where>MailFilter.userId={USERID}</where>
+			<orderBy>MailFilter.priority</orderBy>
+		</data>
+		<actions>
+			<action title="增加过滤规则" execute="PageUtils.newrecord('webmail', 'mailFilter', 'width=720,height=480')"/>
+			<action title="提高优先级" execute="FormUtils.doAction('adjustFilterPriority', 'action=up')"/>
+			<action title="降低优先级" execute="FormUtils.doAction('adjustFilterPriority', 'action=down')"/>
+			<action title="删除" execute="if(confirm('删除后不可恢复，是否确定删除？'))FormUtils.doAction('batchDeleteMailFilter')"/>
+		</actions>
+		<columns>
+			<column title="选择" type="select" align="center" hideTitle="true" width="32"/>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="过滤条件" name="conditionsDescribe"/>
+			<column title="执行操作" name="actionDescribe" width="180"/>
+			<column title="是否启用" name="enable" width="60" align="center"/>
+			<column title="优先级" name="priority" width="55" align="center"/>
+		</columns>
+	</view>
+</views>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<views>
+	<view title="客服列表" name="customerServiceSpecialists">
+		<data>
+			<pojo>com.yuanluesoft.im.model.IMPerson</pojo>
+		</data>
+		<links>
+			<link title="发起对话">javascript:window.webim.createCustomerServiceChat('{PARAMETER:personId}', '{PARAMETER:siteId}')</link>
+		</links>
+	</view>
+	
+	<view name="admin/specialist" form="admin/specialist" title="客服人员" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=im/cs&amp;viewName=admin/specialist" hide="noPrivilege(application_manager) and isNotSiteManager()" pageRows="20" openFeatures="mode=dialog,width=400,height=320">
+		<data>
+			<pojo>com.yuanluesoft.im.cs.pojo.CSSpecialist</pojo>
+			<orderBy>CSSpecialist.externalName</orderBy>
+			<quickFilter>CSSpecialist.externalName like '%{KEY}%' or CSSpecialist.personName like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加客服人员" execute="DialogUtils.openDialog('{CONTEXTPATH}/im/cs/admin/specialist.shtml?siteId={PARAMETER:siteId}', 400, 320)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="对外显示的用户名" name="externalName"/>
+			<column title="用户名" name="personName"/>
+			<column title="最大并发对话数量" name="maxChat" width="120" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/parameter" form="admin/parameter" title="参数配置" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=im/cs&amp;viewName=admin/parameter" hide="noPrivilege(application_manager) and isNotSiteManager()" pageRows="20" openFeatures="mode=dialog,width=400,height=320">
+		<data>
+			<pojo>com.yuanluesoft.im.cs.pojo.CSParameter</pojo>
+			<quickFilter>CSParameter.welcome like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="参数配置" execute="DialogUtils.openDialog('{CONTEXTPATH}/im/cs/admin/parameter.shtml?siteId={PARAMETER:siteId}', 400, 320)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="欢迎辞" name="welcome"/>
+			<column title="客服对话超时时限" name="chatTimeout" width="120" align="center"/>
+		</columns>
+	</view>
+	
+	<view name="admin/reply" form="admin/reply" title="常用回复" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=im/cs&amp;viewName=admin/reply" hide="noPrivilege(application_manager) and isNotSiteManager()" pageRows="20" openFeatures="mode=dialog,width=360,height=320">
+		<data>
+			<pojo>com.yuanluesoft.im.cs.pojo.CSReply</pojo>
+			<orderBy>CSReply.reply</orderBy>
+			<quickFilter>CSReply.reply like '%{KEY}%'</quickFilter>
+		</data>
+		<actions>
+			<action title="添加回复" execute="DialogUtils.openDialog('{CONTEXTPATH}/im/cs/admin/reply.shtml?siteId={PARAMETER:siteId}', 360, 320)"/>
+		</actions>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="回复内容" name="reply"/>
+		</columns>
+	</view>
+	
+	<view title="客服对话" name="admin/customerServiceChats" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=im/cs&amp;viewName=admin/customerServiceChats" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		<data>
+			<pojo>com.yuanluesoft.im.pojo.IMChat</pojo>
+			<orderBy>IMChat.created DESC</orderBy>
+		</data>
+		<links>
+			<link>javascript:PageUtils.editrecord('im', 'admin/chat', '{PARAMETER:id}', 'mode=fullscreen')</link>
+		</links>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="客服人员" name="specialistName"/>
+			<column title="创建时间" name="created" width="110"/>
+		</columns>
+	</view>
+	
+	<view title="服务评价" name="admin/customerServiceEvaluation" url="/cms/sitemanage/siteApplicationConfigView.shtml?applicationName=im/cs&amp;viewName=admin/customerServiceEvaluation" hide="noPrivilege(application_manager) and isNotSiteManager()">
+		<data>
+			<pojo>com.yuanluesoft.im.cs.pojo.CSEvaluation</pojo>
+			<orderBy>CSEvaluation.evaluateTime DESC</orderBy>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" hideTitle="true" width="32"/>
+			<column title="客服人员" name="specialistName" width="100"/>
+			<column title="评价等级" name="level" width="100"/>
+			<column title="评价时间" name="evaluateTime" width="110"/>
+			<column title="评价人IP" name="evaluateIP" width="110"/>
+			<column title="补充说明" name="remark"/>
+		</columns>
+	</view>
+</views>

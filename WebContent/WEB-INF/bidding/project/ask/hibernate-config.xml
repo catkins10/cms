@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<!--提问-->
+	<class name="com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAsk" table="bidding_project_ask">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="projectId"/> <!--工程ID-->
+		<property name="projectName"/> <!--工程名称-->
+		<property name="enterpriseId"/> <!--企业ID-->
+		<property name="enterpriseName"/> <!--企业名称-->
+		<property name="askPersonId"/> <!--提问用户ID-->
+		<property name="askPersonName"/> <!--提问用户名称-->
+		<property name="askFrom"/> <!--发起点,如:招标公告、中标公示等-->
+		<property name="askTime"/> <!--提问时间-->
+		<property name="question"/> <!--内容-->
+		<property name="reply"/> <!--答复-->
+		<property name="replierId"/> <!--答复人ID-->
+		<property name="replierName"/> <!--答复人-->
+		<property name="isPublic"/> <!--是否公开-->
+		<property name="workflowInstanceId"/> <!--工作流实例ID-->
+		<set name="workItems" table="workflow_workitem" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId"/>
+			<one-to-many class="com.yuanluesoft.jeaf.workflow.pojo.WorkItem"/>
+		</set>
+		<set name="opinions" table="bidding_project_ask_opinion" lazy="true" inverse="true" cascade="delete" order-by="created desc">
+			<key column="mainRecordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAskOpinion"/>
+		</set>
+		<set name="visitors" table="bidding_project_ask_privilege" lazy="true" inverse="true" cascade="delete">
+			<key column="recordId" foreign-key="id"/>
+			<one-to-many class="com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAskPrivilege"/>
+		</set>
+	</class>
+	
+	<!--提问:权限控制-->
+	<class name="com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAskPrivilege" table="bidding_project_ask_privilege">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="visitorId"/>
+		<property name="recordId"/>
+		<property name="accessLevel"/>
+	</class>
+	
+	<!--提问:审核意见-->
+	<class name="com.yuanluesoft.bidding.project.ask.pojo.BiddingProjectAskOpinion" table="bidding_project_ask_opinion">
+		<id name="id" column="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="opinion"/>
+		<property name="created"/>
+		<property name="mainRecordId"/>
+		<property name="opinionType"/>
+		<property name="personId"/>
+		<property name="activityId"/>
+		<property name="workItemId"/>
+		<property name="activityName"/>
+		<property name="personName"/>
+		<property name="agentName"/>
+		<property name="agentId"/>
+	</class>
+</hibernate-mapping>
