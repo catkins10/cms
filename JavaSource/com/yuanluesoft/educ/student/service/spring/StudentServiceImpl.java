@@ -7,13 +7,11 @@ import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
-import com.yuanluesoft.cms.leadermail.pojo.LeaderMailType;
 import com.yuanluesoft.cms.pagebuilder.PageService;
 import com.yuanluesoft.cms.pagebuilder.StaticPageBuilder;
 import com.yuanluesoft.cms.publicservice.service.spring.PublicServiceImpl;
 import com.yuanluesoft.educ.student.pojo.Stude;
 import com.yuanluesoft.educ.student.service.StudentService;
-import com.yuanluesoft.educ.teach.pojo.Teach;
 import com.yuanluesoft.jeaf.base.model.Element;
 import com.yuanluesoft.jeaf.business.service.BusinessService;
 import com.yuanluesoft.jeaf.database.Record;
