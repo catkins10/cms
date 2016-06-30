@@ -100,9 +100,10 @@ public class StudentAction extends PublicServiceAdminAction {
 	
 	public Record saveRecord(ActionForm form, Record record, String openMode, HttpServletRequest request, HttpServletResponse response, SessionInfo sessionInfo) throws Exception {
 		// TODO 自动生成方法存根
+
 		StudentForm studentForm = (StudentForm)form;
 		DatabaseService databaseService = (DatabaseService)getService("databaseService");
-		Stude studeFind= (Stude)databaseService.findRecordByHql("from com.yuanluesoft.educ.student.pojo.Stude Stude where Stude.idcardNumber = '"+studentForm.getIdcardNumber()+"'");
+		Stude studeFind= (Stude)databaseService.findRecordByHql("from com.yuanluesoft.educ.student.pojo.Stude Stude where Stude.isValid='1' and Stude.idcardNumber = '"+studentForm.getIdcardNumber()+"'");
 		if(studeFind!=null){
 			studentForm.setError("您已提交过了！");
 			throw new ValidateException();
@@ -123,6 +124,12 @@ public class StudentAction extends PublicServiceAdminAction {
 			e.printStackTrace();
 		}
 		
+		//后台需设置默认密码
+		String password=stude.getPassword();
+		if(password==null || "".equals(password)){
+			stude.setPassword("123456");
+		}
+		
 		return super.saveRecord(form, record, openMode, request, response, sessionInfo);
 	}
 	
@@ -136,7 +143,7 @@ public class StudentAction extends PublicServiceAdminAction {
 		long personId = stude.getId();
 		
 		//检查用户是否被使用
-		if(memberServiceList.isLoginNameInUse(stude.getLoginId(),personId)) {
+		if(memberServiceList.isLoginNameInUse(stude.getIdcardNumber(),personId)) {
 			studentForm.setError("账号已经被使用");
 			throw new ValidateException();
 		}

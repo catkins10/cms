@@ -28,7 +28,6 @@ import com.yuanluesoft.jeaf.usermanage.service.PersonService;
 import com.yuanluesoft.jeaf.util.ListUtils;
 import com.yuanluesoft.jeaf.util.StringUtils;
 import com.yuanluesoft.jeaf.util.UUIDLongGenerator;
-import com.yuanluesoft.jeaf.workflow.service.WorkflowExploitService;
 import com.yuanluesoft.workflow.client.model.runtime.WorkflowEntry;
 
 /**
@@ -37,14 +36,14 @@ import com.yuanluesoft.workflow.client.model.runtime.WorkflowEntry;
  *
  */
 public class StudentServiceImpl extends PublicServiceImpl implements StudentService {
-	private WorkflowExploitService workflowExploitService; //工作流利用服务
+//	private WorkflowExploitService workflowExploitService; //工作流利用服务
 	private PersonService personService ;
 	private BusinessService businessService;
 	private CryptService cryptService; //加/解密服务
 	private OrgService orgService; //组织机构服务
 	private String mainOrgId;
-	private SessionService sessionService;
-	private PageService pageService;
+//	private SessionService sessionService;
+//	private PageService pageService;
 	
 	public BusinessService getBusinessService() {
 		return businessService;
@@ -78,30 +77,30 @@ public class StudentServiceImpl extends PublicServiceImpl implements StudentServ
 		this.personService = personService;
 	}
 
-	public SessionService getSessionService() {
-		return sessionService;
-	}
+//	public SessionService getSessionService() {
+//		return sessionService;
+//	}
+//
+//	public void setSessionService(SessionService sessionService) {
+//		this.sessionService = sessionService;
+//	}
 
-	public void setSessionService(SessionService sessionService) {
-		this.sessionService = sessionService;
-	}
+//	public WorkflowExploitService getWorkflowExploitService() {
+//		return workflowExploitService;
+//	}
+//
+//	public void setWorkflowExploitService(
+//			WorkflowExploitService workflowExploitService) {
+//		this.workflowExploitService = workflowExploitService;
+//	}
 
-	public WorkflowExploitService getWorkflowExploitService() {
-		return workflowExploitService;
-	}
-
-	public void setWorkflowExploitService(
-			WorkflowExploitService workflowExploitService) {
-		this.workflowExploitService = workflowExploitService;
-	}
-
-	public PageService getPageService() {
-		return pageService;
-	}
-
-	public void setPageService(PageService pageService) {
-		this.pageService = pageService;
-	}
+//	public PageService getPageService() {
+//		return pageService;
+//	}
+//
+//	public void setPageService(PageService pageService) {
+//		this.pageService = pageService;
+//	}
 
 	public CryptService getCryptService() {
 		return cryptService;
@@ -117,19 +116,10 @@ public class StudentServiceImpl extends PublicServiceImpl implements StudentServ
 	public Record save(Record record) throws ServiceException {
 		//注册学生使之成为系统用户，组织目录为“学生”
 		Stude stude = (Stude) record;
-		if(stude.getIsValid()=='1'){
-			Org department = null;
-			String directoryName = "学生";
-			department = (Org)orgService.createDirectory(-1, Long.valueOf(mainOrgId).longValue(), directoryName, "unitDepartment", null, 0, null);                   
 			
-			//注册用户
-			personService.addEmployee(record.getId(), stude.getName(), stude.getLoginId(), stude.getPassword(), stude.getSex(), null, null, null, null, null, department.getId()+"", record.getId(), stude.getName());
-			
-		}
-		stude.setLoginId(stude.getLoginId().toLowerCase()); //转换为小写
-		stude.setPassword(encryptPersonPassword(stude.getId(), stude.getLoginId(), stude.getPassword())); //加密口令
+		stude.setPassword(encryptPersonPassword(stude.getId(), stude.getIdcardNumber(), stude.getPassword())); //加密口令
 		
-		pageService.rebuildStaticPageForModifiedObject(record, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
+		getPageService().rebuildStaticPageForModifiedObject(record, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
 		return super.save(record);
 	}
 	
@@ -166,31 +156,27 @@ public class StudentServiceImpl extends PublicServiceImpl implements StudentServ
 		
 		//用户在系统的信息变更
 		Stude studeOld = (Stude)load(Stude.class, record.getId());
-		if(!studeOld.getName().equals(stude.getName()) || !studeOld.getLoginId().equals(stude.getLoginId()) || !studeOld.getPassword().equals(stude.getPassword())){
+		
+		if(!studeOld.getName().equals(stude.getName()) || !studeOld.getIdcardNumber().equals(stude.getIdcardNumber())){
 			Person person = (Person)load(Person.class, record.getId());
-			if(person!=null){
-				if(!studeOld.getName().equals(stude.getName())
-				person.setName(stude.getName());
-				person.setLoginName(stude.getLoginId().toLowerCase()); //转换为小写
-				String oldLoginName = (String)getDatabaseService().findRecordByHql("select Person.loginName from Person Person where Person.id=" + person.getId());
-				person.setPassword(encryptPersonPassword(person.getId(), person.getLoginName(), stude.getPassword())); //加密口令
-				businessService.update(person);
-				try {
-					if(!oldLoginName.equals(person.getLoginName())) { //登录用户名已修改
-						sessionService.removeSessionInfo(oldLoginName); //删除原用户名的session info
-					}
-					else {
-						sessionService.removeSessionInfo(person.getLoginName()); //删除当前用户的session info
-					}
+			person.setName(stude.getName());
+			person.setLoginName(stude.getIdcardNumber());
+
+			String oldLoginName = (String)getDatabaseService().findRecordByHql("select Person.loginName from Person Person where Person.id=" + person.getId());
+			businessService.update(person);
+			try {
+				if(!oldLoginName.equals(person.getLoginName())) { //登录用户名已修改
+					getSessionService().removeSessionInfo(oldLoginName); //删除原用户名的session info
 				}
-				catch (SessionException e) {
-					Logger.exception(e);
+				else {
+					getSessionService().removeSessionInfo(person.getLoginName()); //删除当前用户的session info
 				}
 			}
+			catch (SessionException e) {
+				Logger.exception(e);
+			}
 		}
-		stude.setLoginId(stude.getLoginId().toLowerCase()); //转换为小写
-		stude.setPassword(encryptPersonPassword(stude.getId(), stude.getLoginId(), stude.getPassword())); //加密口令
-		pageService.rebuildStaticPageForModifiedObject(record, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
+		getPageService().rebuildStaticPageForModifiedObject(record, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
 		
 		return super.update(record);
 	}
@@ -205,7 +191,7 @@ public class StudentServiceImpl extends PublicServiceImpl implements StudentServ
 		if(person!=null){
 			personService.delete(person);
 		}
-		pageService.rebuildStaticPageForModifiedObject(record, StaticPageBuilder.OBJECT_MODIFY_ACTION_PHYSICAL_DELETE);
+		getPageService().rebuildStaticPageForModifiedObject(record, StaticPageBuilder.OBJECT_MODIFY_ACTION_PHYSICAL_DELETE);
 		super.delete(record);
 	}
 	
@@ -284,7 +270,7 @@ public class StudentServiceImpl extends PublicServiceImpl implements StudentServ
 			
 			studeAlter.setIsValid('C');
 			//重新生成和学生关联的静态页面
-			pageService.rebuildStaticPageForModifiedObject(stude, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
+			getPageService().rebuildStaticPageForModifiedObject(stude, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
 		} catch (Exception e) {
 			Logger.exception(e);
 			throw new ServiceException(e.getMessage());
@@ -294,8 +280,14 @@ public class StudentServiceImpl extends PublicServiceImpl implements StudentServ
 	public void completeRegist(Stude stude, SessionInfo sessionInfo) throws ServiceException {
 		// TODO 自动生成方法存根
 		stude.setIsValid('1');
+		Org department = null;
+		String directoryName = "学生";
+		department = (Org)orgService.createDirectory(-1, Long.valueOf(mainOrgId).longValue(), directoryName, "unitDepartment", null, 0, null);                   
+		
+		//注册用户
+		personService.addEmployee(stude.getId(), stude.getName(), stude.getIdcardNumber(), decryptPassword(stude.getId(),stude.getPassword()), stude.getSex(), null, null, null, null, null, department.getId()+"", stude.getId(), stude.getName());
 		//重新生成静态页面
-		pageService.rebuildStaticPageForModifiedObject(stude, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
+		getPageService().rebuildStaticPageForModifiedObject(stude, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
 	}
 
 	public Stude createAlter(long studeId, SessionInfo sessionInfo) throws ServiceException {
@@ -303,7 +295,7 @@ public class StudentServiceImpl extends PublicServiceImpl implements StudentServ
 		String workflowInstanceId = null;
 		try {
 			//获取工作流入口列表
-			List workflowEntries = workflowExploitService.listWorkflowEntries("educ/student", null, sessionInfo);
+			List workflowEntries = getWorkflowExploitService().listWorkflowEntries("educ/student", null, sessionInfo);
 			if(workflowEntries==null || workflowEntries.isEmpty()) {
 				throw new ServiceException("no privilege");
 			}
@@ -321,7 +313,7 @@ public class StudentServiceImpl extends PublicServiceImpl implements StudentServ
 			//获取流程
 			WorkflowEntry workflowEntry = (WorkflowEntry)ListUtils.findObjectByProperty(workflowEntries, "workflowName", "学生变更");
 			//创建工作流实例
-			workflowInstanceId = workflowExploitService.createWorkflowInstance(workflowEntry.getWorkflowId(), ((Element)workflowEntry.getActivityEntries().get(0)).getId(), false, studeAlter, null, sessionInfo);
+			workflowInstanceId = getWorkflowExploitService().createWorkflowInstance(workflowEntry.getWorkflowId(), ((Element)workflowEntry.getActivityEntries().get(0)).getId(), false, studeAlter, null, sessionInfo);
 
 	    	studeAlter.setWorkflowInstanceId(workflowInstanceId);
 	    	getDatabaseService().saveRecord(studeAlter); //工作流实例ID
@@ -331,7 +323,7 @@ public class StudentServiceImpl extends PublicServiceImpl implements StudentServ
 			Logger.exception(e);
 			try {
 				//删除流程实例
-				workflowExploitService.removeWorkflowInstance(workflowInstanceId, null, sessionInfo);
+				getWorkflowExploitService().removeWorkflowInstance(workflowInstanceId, null, sessionInfo);
 			}
 			catch(Exception we) {
 				
@@ -499,19 +491,19 @@ public class StudentServiceImpl extends PublicServiceImpl implements StudentServ
 //	    }
 //	}
 //
-//	/**
-//	 * 口令解密
-//	 * @param userId
-//	 * @param password
-//	 * @return
-//	 * @throws ServiceException
-//	 */
-//	private String decryptPassword(long userId, String password) throws ServiceException {
-//		try {
-//			return cryptService.decrypt(password, "" + userId, false);
-//		}
-//		catch (SecurityException e) {
-//			throw new ServiceException();
-//		}
-//	}
+	/**
+	 * 口令解密
+	 * @param userId
+	 * @param password
+	 * @return
+	 * @throws ServiceException
+	 */
+	private String decryptPassword(long userId, String password) throws ServiceException {
+		try {
+			return cryptService.decrypt(password, "" + userId, false);
+		}
+		catch (SecurityException e) {
+			throw new ServiceException();
+		}
+	}
 }

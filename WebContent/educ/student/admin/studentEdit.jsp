@@ -14,7 +14,7 @@
 		<td class="tdcontent"><ext:field property="sex"/></td>
 	</tr>
 	<tr>
-		<td class="tdtitle" nowrap="nowrap">身份证号码</td>
+		<td class="tdtitle" nowrap="nowrap">身份证号码（账号）</td>
 		<td class="tdcontent"><ext:field property="idcardNumber"/></td>
 		<td class="tdtitle" nowrap="nowrap">民族</td>
 		<td class="tdcontent"><ext:field property="nation"/></td>
@@ -46,12 +46,6 @@
 	<tr>
 		<td class="tdtitle" nowrap="nowrap">是否我们学院学生</td>
 		<td class="tdcontent"><ext:field property="isOurStudent"/></td>
-		<td class="tdtitle" nowrap="nowrap">账号</td>
-		<td class="tdcontent"><ext:field property="loginId"/></td>
-	</tr>
-	<tr>
-		<td class="tdtitle" nowrap="nowrap">密码</td>
-		<td class="tdcontent"><ext:field property="password"/></td>
 		<td class="tdtitle" nowrap="nowrap">备注</td>
 		<td class="tdcontent"><ext:field property="remark"/></td>
 	</tr>

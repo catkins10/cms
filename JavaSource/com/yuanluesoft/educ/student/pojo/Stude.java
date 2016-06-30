@@ -7,7 +7,7 @@ import com.yuanluesoft.cms.publicservice.pojo.PublicService;
 public class Stude extends PublicService {
 	private String name;	//姓名
 	private char sex='M';	//性别
-	private String idcardNumber;	//身份证号码
+	private String idcardNumber;	//身份证号码,即账号
 	private String imageName;	//照片名称
 	private String nation;	//民族
 	private String studentId;	//学号
@@ -19,7 +19,6 @@ public class Stude extends PublicService {
 	private String houseAddress;	//家庭地址
 	private long phone;	//联系电话
 	private char isOurStudent = '1';	//是否我们学院学生
-	private String loginId;	//账号
 	private String password;	//密码
 	private String remark;	//备注
 	private Timestamp created;	//创建时间
@@ -132,13 +131,7 @@ public class Stude extends PublicService {
 		this.isOurStudent = isOurStudent;
 	}
 
-	public String getLoginId() {
-		return loginId;
-	}
-
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
-	}
+	
 
 	public String getName() {
 		return name;

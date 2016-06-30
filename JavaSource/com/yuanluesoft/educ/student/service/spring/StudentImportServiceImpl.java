@@ -19,7 +19,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.yuanluesoft.cms.pagebuilder.PageService;
-import com.yuanluesoft.cms.pagebuilder.StaticPageBuilder;
 import com.yuanluesoft.educ.student.forms.admin.ImportDateExcel;
 import com.yuanluesoft.educ.student.pojo.Stude;
 import com.yuanluesoft.jeaf.attachmentmanage.model.Attachment;
@@ -30,10 +29,8 @@ import com.yuanluesoft.jeaf.logger.Logger;
 import com.yuanluesoft.jeaf.membermanage.service.MemberServiceList;
 import com.yuanluesoft.jeaf.security.service.CryptService;
 import com.yuanluesoft.jeaf.sessionmanage.model.SessionInfo;
-import com.yuanluesoft.jeaf.usermanage.pojo.Org;
 import com.yuanluesoft.jeaf.usermanage.service.OrgService;
 import com.yuanluesoft.jeaf.usermanage.service.PersonService;
-import com.yuanluesoft.jeaf.util.CnToSpell;
 import com.yuanluesoft.jeaf.util.DateTimeUtils;
 import com.yuanluesoft.jeaf.util.JdbcUtils;
 import com.yuanluesoft.jeaf.util.StringUtils;
@@ -136,8 +133,6 @@ public class StudentImportServiceImpl extends BusinessServiceImpl {
 			String idcardNumber=getStringValue(content.getCell(colNum[6]));
 			String studentId=getStringValue(content.getCell(colNum[4]));
 			
-			student.setLoginId(idcardNumber);//用户名设为身份证号
-			student.setPassword("123456");//密码
 			student.setDepartment(getStringValue(content.getCell(colNum[0])));//系部
 			student.setSpeciality(getStringValue(content.getCell(colNum[1])));//专业
 			student.setStuclass(getStringValue(content.getCell(colNum[2])));//班级

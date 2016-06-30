@@ -22,10 +22,10 @@ import com.yuanluesoft.jeaf.system.exception.SystemUnregistException;
 
 public class StudentAction extends PublicServiceAction {
 
-	
-	
-    
-	
+	public StudentAction() {
+		super();
+		anonymousEnable = true;
+	}
 	
 	public Record saveRecord(ActionForm form, Record record, String openMode, HttpServletRequest request, HttpServletResponse response, SessionInfo sessionInfo) throws Exception {
 		// TODO 自动生成方法存根
@@ -73,7 +73,7 @@ public class StudentAction extends PublicServiceAction {
 		long personId = stude.getId();
 		
 		//检查用户是否被使用
-		if(memberServiceList.isLoginNameInUse(stude.getLoginId(),personId)) {
+		if(memberServiceList.isLoginNameInUse(stude.getIdcardNumber(),personId)) {
 			studentForm.setError("账号已经被使用");
 			throw new ValidateException();
 		}

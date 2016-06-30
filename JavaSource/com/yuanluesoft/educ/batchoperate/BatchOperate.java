@@ -8,6 +8,7 @@ import org.apache.struts.action.ActionMapping;
 
 
 import com.yuanluesoft.educ.student.pojo.Stude;
+import com.yuanluesoft.educ.student.service.StudentService;
 import com.yuanluesoft.educ.teach.pojo.Teach;
 import com.yuanluesoft.jeaf.application.action.applicationview.ApplicationViewAction;
 import com.yuanluesoft.jeaf.business.service.BusinessService;
@@ -27,11 +28,12 @@ public class BatchOperate extends ApplicationViewAction{
 	
 	public void delete(String pojoName,String[] ids) throws SystemUnregistException{
 		BusinessService businessService = (BusinessService)getService("businessService");
+		StudentService studentService = (StudentService)getService("studentService");
 		if(pojoName.equals("Stude")){//学生信息表
 			try{
 				for(int i = 0; i<ids.length; i++){
 					Stude student  = (Stude)businessService.load(Stude.class, Long.parseLong(ids[i]));
-					businessService.delete(student);
+					studentService.delete(student);
 				}
 			}catch(Exception e){
 				Logger.info(e);
@@ -40,7 +42,7 @@ public class BatchOperate extends ApplicationViewAction{
 				try{
 					for(int i = 0; i<ids.length; i++){
 						Teach teach  = (Teach)businessService.load(Teach.class, Long.parseLong(ids[i]));
-						businessService.delete(teach);
+						studentService.delete(teach);
 					}
 				}catch(Exception e){
 					Logger.info(e);
