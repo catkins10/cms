@@ -9,7 +9,7 @@ import org.apache.struts.action.ActionMapping;
 
 public class Delete extends StudentAction {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// TODO 自动生成方法存根
+		// TODO 自动生成方法存根	
 		return executeDeleteAction(mapping, form, request, response, null, null);
 	}
 }
