@@ -10,7 +10,6 @@ import com.yuanluesoft.educ.student.forms.StudentForm;
 import com.yuanluesoft.educ.student.pojo.Stude;
 import com.yuanluesoft.jeaf.attachmentmanage.model.Attachment;
 import com.yuanluesoft.jeaf.attachmentmanage.service.AttachmentService;
-import com.yuanluesoft.jeaf.base.model.Element;
 import com.yuanluesoft.jeaf.business.service.BusinessService;
 import com.yuanluesoft.jeaf.database.DatabaseService;
 import com.yuanluesoft.jeaf.database.Record;
@@ -20,24 +19,8 @@ import com.yuanluesoft.jeaf.form.ActionForm;
 import com.yuanluesoft.jeaf.membermanage.service.MemberServiceList;
 import com.yuanluesoft.jeaf.sessionmanage.model.SessionInfo;
 import com.yuanluesoft.jeaf.system.exception.SystemUnregistException;
-import com.yuanluesoft.jeaf.util.ListUtils;
-import com.yuanluesoft.jeaf.workflow.actions.WorkflowAction.WorkflowActionParticipantCallback;
-import com.yuanluesoft.jeaf.workflow.form.WorkflowForm;
-import com.yuanluesoft.jeaf.workflow.service.WorkflowExploitService;
-import com.yuanluesoft.workflow.client.model.runtime.WorkflowEntry;
 
 public class StudentAction extends PublicServiceAction {
-
-	private WorkflowExploitService workflowExploitService; //工作流利用服务
-	
-	public WorkflowExploitService getWorkflowExploitService() {
-		return workflowExploitService;
-	}
-
-	public void setWorkflowExploitService(
-			WorkflowExploitService workflowExploitService) {
-		this.workflowExploitService = workflowExploitService;
-	}
 
 	public StudentAction() {
 		super();
@@ -72,42 +55,12 @@ public class StudentAction extends PublicServiceAction {
 		return super.saveRecord(form, record, openMode, request, response, sessionInfo);
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see com.yuanluesoft.jeaf.form.workflowform.actions.WorkflowAction#getWorkflowEntry(com.yuanluesoft.jeaf.form.workflowform.WorkflowForm, javax.servlet.http.HttpServletRequest, java.lang.Object, java.lang.String, boolean, com.yuanluesoft.jeaf.sessionmanage.model.SessionInfo)
-	 */
-	protected com.yuanluesoft.jeaf.workflow.model.WorkflowEntry getWorkflowEntry(WorkflowForm workflowForm, HttpServletRequest request, Record record, String openMode, boolean forCreateWorkflowInstance, WorkflowActionParticipantCallback participantCallback, SessionInfo sessionInfo) throws Exception {
-		//获取工作流人口列表
-		List workflowEntries = workflowExploitService.listWorkflowEntries(workflowForm.getFormDefine().getApplicationName(), null, sessionInfo);
-		if(workflowEntries==null || workflowEntries.isEmpty()) {
-			throw new Exception("Approval workflows are not exists.");
-		}
-		//获取流程
-		WorkflowEntry workflowEntry = (WorkflowEntry)ListUtils.findObjectByProperty(workflowEntries, "workflowName", "学生注册");
-		return new com.yuanluesoft.jeaf.workflow.model.WorkflowEntry(workflowEntry.getWorkflowId(), ((Element)workflowEntry.getActivityEntries().get(0)).getId());
-	}
-	
 	public void loadResource(ActionForm form, Record record, List acl, char accessLevel, boolean deleteEnable, String openMode, HttpServletRequest request, SessionInfo sessionInfo) throws Exception {
 		// TODO 自动生成方法存根
 		super.loadResource(form, record, acl, accessLevel, deleteEnable, openMode,
 				request, sessionInfo);
 		StudentForm studentForm = (StudentForm)form;
 		studentForm.setSubForm("student"); //提交页面
-		
-		Stude stude = (Stude)record;
-		
-		boolean alterEnabled = false; //是否允许变更
-		if(stude!=null && stude.getIsValid()=='1' && stude.getIsAlter()!='1') {
-			//检查流程配置,判断是否允许变更
-			List workflowEntries = workflowExploitService.listWorkflowEntries("educ/student", null, sessionInfo);
-			if(workflowEntries!=null && !workflowEntries.isEmpty()) { //有流程入口
-				alterEnabled = ListUtils.findObjectByProperty(workflowEntries, "workflowName", "学生变更")!=null;
-			}
-		}
-		//删除"学生变更"按钮
-		if(!alterEnabled) {
-			studentForm.getFormActions().removeFormAction("学生变更");
-		}
 	}
 	
 	public void validateBusiness(BusinessService validateService, org.apache.struts.action.ActionForm form, String openMode, Record record, SessionInfo sessionInfo, HttpServletRequest request) throws ValidateException, ServiceException, SystemUnregistException {

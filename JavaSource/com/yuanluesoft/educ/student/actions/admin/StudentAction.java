@@ -18,13 +18,11 @@ import com.yuanluesoft.jeaf.exception.PrivilegeException;
 import com.yuanluesoft.jeaf.exception.ServiceException;
 import com.yuanluesoft.jeaf.exception.ValidateException;
 import com.yuanluesoft.jeaf.form.ActionForm;
-import com.yuanluesoft.jeaf.form.model.Form;
 import com.yuanluesoft.jeaf.membermanage.service.MemberServiceList;
 import com.yuanluesoft.jeaf.security.service.RecordControlService;
 import com.yuanluesoft.jeaf.sessionmanage.model.SessionInfo;
 import com.yuanluesoft.jeaf.system.exception.SystemUnregistException;
 import com.yuanluesoft.jeaf.util.ListUtils;
-import com.yuanluesoft.jeaf.workflow.actions.WorkflowAction;
 import com.yuanluesoft.jeaf.workflow.form.WorkflowForm;
 import com.yuanluesoft.workflow.client.model.runtime.WorkflowEntry;
 
@@ -102,15 +100,13 @@ public class StudentAction extends PublicServiceAdminAction {
 	
 	public Record saveRecord(ActionForm form, Record record, String openMode, HttpServletRequest request, HttpServletResponse response, SessionInfo sessionInfo) throws Exception {
 		// TODO 自动生成方法存根
+
 		StudentForm studentForm = (StudentForm)form;
-		if(OPEN_MODE_CREATE.equals(openMode)){
-			
-			DatabaseService databaseService = (DatabaseService)getService("databaseService");
-			Stude studeFind= (Stude)databaseService.findRecordByHql("from com.yuanluesoft.educ.student.pojo.Stude Stude where Stude.idcardNumber = '"+studentForm.getIdcardNumber()+"'");
-			if(studeFind!=null){
-				studentForm.setError("您已提交过了！");
-				throw new ValidateException();
-			}
+		DatabaseService databaseService = (DatabaseService)getService("databaseService");
+		Stude studeFind= (Stude)databaseService.findRecordByHql("from com.yuanluesoft.educ.student.pojo.Stude Stude where Stude.isValid='1' and Stude.idcardNumber = '"+studentForm.getIdcardNumber()+"'");
+		if(studeFind!=null){
+			studentForm.setError("您已提交过了！");
+			throw new ValidateException();
 		}
 		
 		AttachmentService attachmentService=(AttachmentService)getService("attachmentService");
@@ -137,16 +133,6 @@ public class StudentAction extends PublicServiceAdminAction {
 		return super.saveRecord(form, record, openMode, request, response, sessionInfo);
 	}
 	
-	
-	
-	/* （非 Javadoc）
-	 * @see com.yuanluesoft.cms.publicservice.actions.PublicServiceAdminAction#deleteRecord(com.yuanluesoft.jeaf.form.ActionForm, com.yuanluesoft.jeaf.form.model.Form, com.yuanluesoft.jeaf.database.Record, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, com.yuanluesoft.jeaf.sessionmanage.model.SessionInfo)
-	 */
-	public void deleteRecord(ActionForm form, Form formDefine, Record record, HttpServletRequest request, HttpServletResponse response, SessionInfo sessionInfo) throws Exception {
-		// TODO 自动生成方法存根
-		super.deleteRecord(form, formDefine, record, request, response, sessionInfo);
-	}
-
 	public void validateBusiness(BusinessService validateService, org.apache.struts.action.ActionForm form, String openMode, Record record, SessionInfo sessionInfo, HttpServletRequest request) throws ValidateException, ServiceException, SystemUnregistException {
 		// TODO 自动生成方法存根
 		super.validateBusiness(validateService, form, openMode, record, sessionInfo,
