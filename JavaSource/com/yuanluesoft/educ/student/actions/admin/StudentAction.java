@@ -41,7 +41,7 @@ public class StudentAction extends PublicServiceAdminAction {
 	public char checkLoadPrivilege(ActionForm form, HttpServletRequest request, Record record, String openMode, List acl, SessionInfo sessionInfo) throws PrivilegeException, SystemUnregistException {
 		if(!OPEN_MODE_CREATE.equals(openMode)) {
 			Stude stude = (Stude)record;
-			if(stude.getWorkflowInstanceId()==null || stude.getWorkflowInstanceId().isEmpty()) {
+			if(stude.getWorkflowInstanceId()==null || stude.getWorkflowInstanceId().isEmpty() || sessionInfo.getUserId()==record.getId()) {
 				return RecordControlService.ACCESS_LEVEL_READONLY;
 			}
 		}
@@ -132,20 +132,25 @@ public class StudentAction extends PublicServiceAdminAction {
 		
 		return super.saveRecord(form, record, openMode, request, response, sessionInfo);
 	}
-	
+
 	public void validateBusiness(BusinessService validateService, org.apache.struts.action.ActionForm form, String openMode, Record record, SessionInfo sessionInfo, HttpServletRequest request) throws ValidateException, ServiceException, SystemUnregistException {
 		// TODO 自动生成方法存根
 		super.validateBusiness(validateService, form, openMode, record, sessionInfo,
 				request);
-		MemberServiceList memberServiceList = (MemberServiceList)getService("memberServiceList");
-		StudentForm studentForm = (StudentForm)form;
+		BusinessService businessService=(BusinessService)getService("businessService");
+		Record recordStude=businessService.load(Stude.class, record.getId());
 		Stude stude=(Stude)record;
-		long personId = stude.getId();
-		
-		//检查用户是否被使用
-		if(memberServiceList.isLoginNameInUse(stude.getIdcardNumber(),personId)) {
-			studentForm.setError("账号已经被使用");
-			throw new ValidateException();
+		if(stude.getIsAlter()=='0' || (stude.getIsAlter()=='1' && !((Stude)recordStude).getIdcardNumber().equals(stude.getIdcardNumber()))){
+			MemberServiceList memberServiceList = (MemberServiceList)getService("memberServiceList");
+			StudentForm studentForm = (StudentForm)form;
+			
+			long personId = stude.getId();
+			
+			//检查用户是否被使用
+			if(memberServiceList.isLoginNameInUse(stude.getIdcardNumber(),personId)) {
+				studentForm.setError("账号已经被使用");
+				throw new ValidateException();
+			}
 		}
 	}
 	

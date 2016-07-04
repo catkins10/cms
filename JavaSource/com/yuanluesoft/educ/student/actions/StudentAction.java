@@ -13,10 +13,12 @@ import com.yuanluesoft.jeaf.attachmentmanage.service.AttachmentService;
 import com.yuanluesoft.jeaf.business.service.BusinessService;
 import com.yuanluesoft.jeaf.database.DatabaseService;
 import com.yuanluesoft.jeaf.database.Record;
+import com.yuanluesoft.jeaf.exception.PrivilegeException;
 import com.yuanluesoft.jeaf.exception.ServiceException;
 import com.yuanluesoft.jeaf.exception.ValidateException;
 import com.yuanluesoft.jeaf.form.ActionForm;
 import com.yuanluesoft.jeaf.membermanage.service.MemberServiceList;
+import com.yuanluesoft.jeaf.security.service.RecordControlService;
 import com.yuanluesoft.jeaf.sessionmanage.model.SessionInfo;
 import com.yuanluesoft.jeaf.system.exception.SystemUnregistException;
 
@@ -27,11 +29,15 @@ public class StudentAction extends PublicServiceAction {
 		anonymousEnable = true;
 	}
 	
+	public char checkLoadPrivilege(ActionForm form, HttpServletRequest request, Record record, String openMode, List acl, SessionInfo sessionInfo) throws PrivilegeException, SystemUnregistException {
+		return RecordControlService.ACCESS_LEVEL_EDITABLE;
+	}
+	
 	public Record saveRecord(ActionForm form, Record record, String openMode, HttpServletRequest request, HttpServletResponse response, SessionInfo sessionInfo) throws Exception {
 		// TODO 自动生成方法存根
 		StudentForm studentForm = (StudentForm)form;
 		DatabaseService databaseService = (DatabaseService)getService("databaseService");
-		Stude studeFind= (Stude)databaseService.findRecordByHql("from com.yuanluesoft.educ.student.pojo.Stude Stude where Stude.idcardNumber = '"+studentForm.getIdcardNumber()+"'");
+		Stude studeFind= (Stude)databaseService.findRecordByHql("from com.yuanluesoft.educ.student.pojo.Stude Stude where Stude.isAlter='0' and Stude.idcardNumber = '"+studentForm.getIdcardNumber()+"'");
 		if(studeFind!=null){
 			studentForm.setError("您已提交过了！");
 			throw new ValidateException();
@@ -67,15 +73,18 @@ public class StudentAction extends PublicServiceAction {
 		// TODO 自动生成方法存根
 		super.validateBusiness(validateService, form, openMode, record, sessionInfo,
 				request);
-		MemberServiceList memberServiceList = (MemberServiceList)getService("memberServiceList");
-		StudentForm studentForm = (StudentForm)form;
 		Stude stude=(Stude)record;
-		long personId = stude.getId();
-		
-		//检查用户是否被使用
-		if(memberServiceList.isLoginNameInUse(stude.getIdcardNumber(),personId)) {
-			studentForm.setError("账号已经被使用");
-			throw new ValidateException();
+		if(stude.getIsAlter()=='0'){
+			MemberServiceList memberServiceList = (MemberServiceList)getService("memberServiceList");
+			StudentForm studentForm = (StudentForm)form;
+			
+			long personId = stude.getId();
+			
+			//检查用户是否被使用
+			if(memberServiceList.isLoginNameInUse(stude.getIdcardNumber(),personId)) {
+				studentForm.setError("账号已经被使用");
+				throw new ValidateException();
+			}
 		}
 	}
 	

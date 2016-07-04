@@ -154,32 +154,10 @@ public class StudentServiceImpl extends PublicServiceImpl implements StudentServ
 			}
 		}
 		
-		//用户在系统的信息变更
-		Stude studeOld = (Stude)load(Stude.class, record.getId());
-		
-		if(!studeOld.getName().equals(stude.getName()) || !studeOld.getIdcardNumber().equals(stude.getIdcardNumber())){
-			Person person = (Person)load(Person.class, record.getId());
-			person.setName(stude.getName());
-			person.setLoginName(stude.getIdcardNumber());
-
-			String oldLoginName = (String)getDatabaseService().findRecordByHql("select Person.loginName from Person Person where Person.id=" + person.getId());
-			businessService.update(person);
-			try {
-				if(!oldLoginName.equals(person.getLoginName())) { //登录用户名已修改
-					getSessionService().removeSessionInfo(oldLoginName); //删除原用户名的session info
-				}
-				else {
-					getSessionService().removeSessionInfo(person.getLoginName()); //删除当前用户的session info
-				}
-			}
-			catch (SessionException e) {
-				Logger.exception(e);
-			}
-		}
-		getPageService().rebuildStaticPageForModifiedObject(record, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
 		
 		return super.update(record);
 	}
+
 	
 	/* (non-Javadoc)
 	 * @see com.yuanluesoft.cms.publicservice.service.spring.PublicServiceImpl#delete(com.yuanluesoft.jeaf.database.Record)
@@ -246,9 +224,32 @@ public class StudentServiceImpl extends PublicServiceImpl implements StudentServ
 
 	public void completeAlter(Stude studeAlter, SessionInfo sessionInfo) throws ServiceException {
 		// TODO 自动生成方法存根
+		//1.更新登录用户信息
+		Stude stude = (Stude)load(Stude.class, studeAlter.getAlterStudentId());
+		String oldLoginName=stude.getIdcardNumber();
+		
+		if(!stude.getName().equals(studeAlter.getName()) || !oldLoginName.equals(studeAlter.getIdcardNumber())){
+			Person person = (Person)load(Person.class, studeAlter.getAlterStudentId());
+			person.setName(studeAlter.getName());
+			person.setLoginName(studeAlter.getIdcardNumber());
+
+			businessService.update(person);
+			try {
+				if(!oldLoginName.equals(person.getLoginName())) { //登录用户名已修改
+					getSessionService().removeSessionInfo(oldLoginName); //删除原用户名的session info
+				}
+				else {
+					getSessionService().removeSessionInfo(person.getLoginName()); //删除当前用户的session info
+				}
+			}
+			catch (SessionException e) {
+				Logger.exception(e);
+			}
+		}
+		
 		try {
-			//获取企业记录
-			Stude stude = (Stude)load(Stude.class, studeAlter.getAlterStudentId());
+			//2.将变更学生记录拷贝回原始学生记录，并执行更新操作
+			
 			if(stude==null) {
 				studeAlter.setIsValid('C');
 				return;
