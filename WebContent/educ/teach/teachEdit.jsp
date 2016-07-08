@@ -6,7 +6,6 @@
 	<col valign="middle" width="50%">
 	<col valign="middle">
 	<col valign="middle" width="50%">
-	<col valign="middle">
 	<tr>
 		<td class="tdtitle" nowrap="nowrap">姓名</td>
 		<td class="tdcontent"><ext:field property="name"/></td>
@@ -22,10 +21,6 @@
 	<tr>
 		<td class="tdtitle" nowrap="nowrap">账号/工号</td>
 		<td class="tdcontent"><ext:field property="loginId"/></td>
-		<td class="tdtitle" nowrap="nowrap">密码</td>
-		<td class="tdcontent"><ext:field property="password"/></td>
-	</tr>
-	<tr>
 		<td class="tdtitle" nowrap="nowrap">创建日期</td>
 		<td class="tdcontent" colspan="3"><ext:field property="created"/></td>
 	</tr>

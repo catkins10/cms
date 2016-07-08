@@ -34,13 +34,10 @@
 		<field name="created" title="创建时间" type="timestamp" inputMode="readonly">
 			<parameter name="defaultValue">{NOW}</parameter>
 		</field>
-		<field name="imageName" title="学生照片" length="100" persistence="false"  type="imageName" inputMode="text">
+		<field name="imageName" title="照片"  type="imageName" inputMode="text">
 			<parameter name="referenceFields">images</parameter>
 		</field>
-		<field name="images" title="图片" persistence="false" type="image" inputMode="attachment" length="1">
-			<parameter name="maxSaveSize">2000000</parameter>
-			<parameter name="serviceName">imageService</parameter>
-		</field>
+		<field name="images" title="图片附件" persistence="false" type="image" inputMode="attachment" length="1"/>
 		<field name="alterDescription" title="变更内容描述" length="1000" type="string" inputMode="readonly"/>
 	</businessObject>
 </businessObjects>

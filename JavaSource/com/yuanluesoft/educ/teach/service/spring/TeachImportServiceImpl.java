@@ -18,22 +18,15 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.yuanluesoft.cms.pagebuilder.PageService;
-import com.yuanluesoft.cms.pagebuilder.StaticPageBuilder;
 import com.yuanluesoft.educ.teach.forms.ImportDateExcel;
 import com.yuanluesoft.educ.teach.pojo.Teach;
+import com.yuanluesoft.educ.teach.service.TeachService;
 import com.yuanluesoft.jeaf.attachmentmanage.model.Attachment;
 import com.yuanluesoft.jeaf.attachmentmanage.service.AttachmentService;
 import com.yuanluesoft.jeaf.business.service.spring.BusinessServiceImpl;
 import com.yuanluesoft.jeaf.exception.ServiceException;
 import com.yuanluesoft.jeaf.logger.Logger;
-import com.yuanluesoft.jeaf.membermanage.service.MemberServiceList;
-import com.yuanluesoft.jeaf.security.service.CryptService;
 import com.yuanluesoft.jeaf.sessionmanage.model.SessionInfo;
-import com.yuanluesoft.jeaf.usermanage.pojo.Org;
-import com.yuanluesoft.jeaf.usermanage.service.OrgService;
-import com.yuanluesoft.jeaf.usermanage.service.PersonService;
-import com.yuanluesoft.jeaf.util.CnToSpell;
 import com.yuanluesoft.jeaf.util.DateTimeUtils;
 import com.yuanluesoft.jeaf.util.JdbcUtils;
 import com.yuanluesoft.jeaf.util.StringUtils;
@@ -42,12 +35,21 @@ import com.yuanluesoft.jeaf.util.UUIDLongGenerator;
 public class TeachImportServiceImpl extends BusinessServiceImpl {
 
 	private AttachmentService attachmentService; //附件服务
-	private OrgService orgService;
-	private PersonService personService;
-	private CryptService cryptService;
-	private String mainOrgId;
-	private MemberServiceList memberServiceList;
-	private PageService pageService;
+	private TeachService teachService;
+
+	/**
+	 * @return teachService
+	 */
+	public TeachService getTeachService() {
+		return teachService;
+	}
+
+	/**
+	 * @param teachService 要设置的 teachService
+	 */
+	public void setTeachService(TeachService teachService) {
+		this.teachService = teachService;
+	}
 
 	public AttachmentService getAttachmentService() {
 		return attachmentService;
@@ -149,11 +151,9 @@ public class TeachImportServiceImpl extends BusinessServiceImpl {
 				old.setName(getStringValue(content.getCell(colNum[1])));
 				old.setSex(charSex);
 				old.setIdcardNumber(getStringValue(content.getCell(colNum[4])));
-				update(old);
-//				pageService.rebuildStaticPageForModifiedObject(old, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
+				teachService.update(old);
 			}else{
-				save(teach);
-//				pageService.rebuildStaticPageForModifiedObject(student, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
+				teachService.save(teach);
 			}
 		}
 
@@ -312,78 +312,6 @@ public class TeachImportServiceImpl extends BusinessServiceImpl {
 			return 0;
 		}
 	}
-	/**
-	 * 加密用户口令
-	 * @param person
-	 * @throws ServiceException
-	 */
-	private String encryptPersonPassword(long personId, String personLoginName, String password) throws ServiceException {
-		if(password==null || password.equals("")) { //口令未设置,则以用户登录名为口令
-		    password = personLoginName;
-		}
-		else if(password.startsWith("{") && password.endsWith("}")) { //口令解密
-			return password.substring(1, password.length() - 1);
-		}
-		//加密口令
-		return encryptPassword(personId, password);
-	}
-	/**
-	 * 口令加密
-	 * @param userId
-	 * @param password
-	 * @return
-	 * @throws ServiceException
-	 */
-	private String encryptPassword(long userId, String password) throws ServiceException {
-		return cryptService.encrypt(password, "" + userId, false);
-		
-	}
-
-	public OrgService getOrgService() {
-		return orgService;
-	}
-
-	public void setOrgService(OrgService orgService) {
-		this.orgService = orgService;
-	}
-
-	public PersonService getPersonService() {
-		return personService;
-	}
-
-	public void setPersonService(PersonService personService) {
-		this.personService = personService;
-	}
-
-	public CryptService getCryptService() {
-		return cryptService;
-	}
-
-	public void setCryptService(CryptService cryptService) {
-		this.cryptService = cryptService;
-	}
-
-	public String getMainOrgId() {
-		return mainOrgId;
-	}
-
-	public void setMainOrgId(String mainOrgId) {
-		this.mainOrgId = mainOrgId;
-	}
-
-	public MemberServiceList getMemberServiceList() {
-		return memberServiceList;
-	}
-
-	public void setMemberServiceList(MemberServiceList memberServiceList) {
-		this.memberServiceList = memberServiceList;
-	}
-
-	public PageService getPageService() {
-		return pageService;
-	}
-
-	public void setPageService(PageService pageService) {
-		this.pageService = pageService;
-	}
+	
+	
 }

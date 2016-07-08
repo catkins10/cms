@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <views>
-	<view name="trainInfo" form="trainInfo" title="培训基本信息" pageRows="25" openFeatures="width=760,height=520">
+	<view name="admin/trainInfo" form="admin/trainInfo" title="培训基本信息" pageRows="25" openFeatures="width=760,height=520"  hide="noPrivilege(application_manager)">
 		<data>
 			<pojo>com.yuanluesoft.educ.train.pojo.TrainInfo</pojo>
 			<orderBy>TrainInfo.name</orderBy>
@@ -10,10 +10,36 @@
 		</actions>
 		<columns>
 			<column title="序号" type="rownum" align="center" width="32"/>
-			<column title="工号" name="loginId" align="center" width="100"/>
-			<column title="姓名" name="name"/>
-			<column title="性别" name="sex" align="center" width="50"/>
-			<column title="创建时间" name="created" align="center" width="80"/>
+			<column title="课程名称" name="name"/>
+			<column title="培训人员" name="personType" align="center" width="80"/>
+			<column title="培训开始日期" name="trainStart" align="center" width="120"/>
+			<column title="培训截止日期" name="trainStop" align="center" width="120"/>
+		</columns>
+	</view>
+	<view name="admin/studentTrain" form="admin/trainInfo" title="学生培训信息" pageRows="25" openFeatures="width=760,height=520" hide="noPrivilege(manageUnit_student)">
+		<data>
+			<pojo>com.yuanluesoft.educ.train.pojo.TrainInfo</pojo>
+			<where>TrainInfo.personType='S'</where>
+			<orderBy>TrainInfo.name</orderBy>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="课程名称" name="name"/>
+			<column title="培训开始日期" name="trainStart" align="center" width="120"/>
+			<column title="培训截止日期" name="trainStop" align="center" width="120"/>
+		</columns>
+	</view>
+	<view name="admin/teachTrain" form="admin/trainInfo" title="教师培训信息" pageRows="25" openFeatures="width=760,height=520" hide="noPrivilege(manageUnit_teach)">
+		<data>
+			<pojo>com.yuanluesoft.educ.train.pojo.TrainInfo</pojo>
+			<where>TrainInfo.personType='T'</where>
+			<orderBy>TrainInfo.name</orderBy>
+		</data>
+		<columns>
+			<column title="序号" type="rownum" align="center" width="32"/>
+			<column title="课程名称" name="name"/>
+			<column title="培训开始日期" name="trainStart" align="center" width="120"/>
+			<column title="培训截止日期" name="trainStop" align="center" width="120"/>
 		</columns>
 	</view>
 </views>

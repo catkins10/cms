@@ -18,7 +18,7 @@ public class Stude extends PublicService {
 	private String idcardAddress;	//身份证地址
 	private String houseAddress;	//家庭地址
 	private long phone;	//联系电话
-	private char isOurStudent = '1';	//是否我们学院学生
+	private char isOurStudent = '0';	//是否我们学院学生,默认不是
 	private String password;	//密码
 	private String remark;	//备注
 	private Timestamp created;	//创建时间

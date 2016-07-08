@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <views>
-	<view name="admin/teach" form="teach" title="教师信息" pageRows="25" openFeatures="width=760,height=520">
+	<view name="admin/teach" form="teach" title="教师信息" pageRows="25" openFeatures="width=760,height=520" hide="noPrivilege(application_manager)">
 		<data>
 			<pojo>com.yuanluesoft.educ.teach.pojo.Teach</pojo>
 			<orderBy>Teach.loginId</orderBy>
@@ -16,21 +16,20 @@
 			<column title="工号" name="loginId" align="center" width="100"/>
 			<column title="姓名" name="name"/>
 			<column title="性别" name="sex" align="center" width="50"/>
-			<column title="创建时间" name="created" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="120"/>
 		</columns>
 	</view>
 	
-	<view name="teach" form="teach" title="我的信息" pageRows="25" openFeatures="width=760,height=520">
+	<view name="admin/myInfo" form="teach" title="我的信息" pageRows="25" openFeatures="width=760,height=520" hide="noPrivilege(manageUnit_teach)">
 		<data>
 			<pojo>com.yuanluesoft.educ.teach.pojo.Teach</pojo>
 			<where>Teach.id={USERID}</where>
 		</data>
 		<columns>
-			<column title="序号" type="rownum" align="center" width="32"/>
 			<column title="工号" name="loginId" align="center" width="100"/>
 			<column title="姓名" name="name"/>
 			<column title="性别" name="sex" align="center" width="50"/>
-			<column title="创建时间" name="created" align="center" width="80"/>
+			<column title="创建时间" name="created" align="center" width="120"/>
 		</columns>
 	</view>
 </views>

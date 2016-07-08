@@ -2,7 +2,6 @@ package com.yuanluesoft.educ.teach.service.spring;
 
 import com.yuanluesoft.cms.pagebuilder.PageService;
 import com.yuanluesoft.cms.pagebuilder.StaticPageBuilder;
-import com.yuanluesoft.educ.student.pojo.Stude;
 import com.yuanluesoft.educ.teach.pojo.Teach;
 import com.yuanluesoft.educ.teach.service.TeachService;
 import com.yuanluesoft.jeaf.business.service.BusinessService;
@@ -38,11 +37,11 @@ public class TeachServiceImpl extends BusinessServiceImpl implements
 		directoryName = "教师";
 		department = (Org)orgService.createDirectory(-1,Long.valueOf(mainOrgId).longValue(), directoryName, "unitDepartment", null, 0, null);
 		Teach teach= (Teach)record;
+		teach.setPassword("123456");
 		//注册用户
 		personService.addEmployee(record.getId(), teach.getName(), teach.getLoginId(), teach.getPassword(), teach.getSex(), null, null, null, null, null, department.getId()+"", record.getId(), teach.getName());
 		teach.setLoginId(teach.getLoginId().toLowerCase()); //转换为小写
 		teach.setPassword(encryptPersonPassword(teach.getId(), teach.getLoginId(), teach.getPassword())); //加密口令
-		
 		
 		pageService.rebuildStaticPageForModifiedObject(record, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
 		return super.save(record);
@@ -80,7 +79,6 @@ public class TeachServiceImpl extends BusinessServiceImpl implements
 			}
 		}
 		teachNew.setLoginId(teachNew.getLoginId().toLowerCase()); //转换为小写
-		teachNew.setPassword(encryptPersonPassword(teachNew.getId(), teachNew.getLoginId(), teachNew.getPassword())); //加密口令
 		
 		pageService.rebuildStaticPageForModifiedObject(record, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
 		return super.update(record);

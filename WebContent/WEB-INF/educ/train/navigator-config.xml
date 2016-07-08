@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<application name="train/trainInfo" title="培训基本信息管理">
+<application name="educ/train" title="培训基本信息管理">
 	<viewLink local="admin/trainInfo" title="培训基本信息"/>
-	<viewLink local="admin/trainConfig" title="培训参数配置"/>
+	<viewLink local="admin/studentTrain" title="学生培训信息"/>
+	<viewLink local="admin/teachTrain" title="教师培训信息"/>
+	<link name="trainConfig" title="参数配置" hide="noPrivilege(application_manager)">
+		javascript:PageUtils.openurl('{WEBAPPLICATIONURL}/educ/train/admin/trainConfig.shtml', 'width=640,height=480', 'trainConfig')
+	</link>
 </application>

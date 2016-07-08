@@ -8,6 +8,7 @@ public class StudentForm extends PublicServiceAdminForm {
 	private String name;	//姓名
 	private char sex = 'M';	//性别
 	private String idcardNumber;	//身份证号码
+	private String imageName;
 	private String nation;	//民族
 	private String studentId;	//学号
 	private String department;	//系部
@@ -17,7 +18,7 @@ public class StudentForm extends PublicServiceAdminForm {
 	private String idcardAddress;	//身份证地址
 	private String houseAddress;	//家庭地址
 	private long phone;	//联系电话
-	private char isOurStudent='1';	//是否我们学院学生
+	private char isOurStudent='0';	//是否我们学院学生
 	private String password;	//密码
 	private String remark;	//备注
 	private Timestamp created;	//创建时间
@@ -25,6 +26,20 @@ public class StudentForm extends PublicServiceAdminForm {
 	private char isAlter = '0'; //是否变更审批记录
 	private String alterDescription;	//学生修改资料详情
 	private long alterStudentId; //变更学生ID
+
+	/**
+	 * @return imageName
+	 */
+	public String getImageName() {
+		return imageName;
+	}
+
+	/**
+	 * @param imageName 要设置的 imageName
+	 */
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
 
 	public long getAlterStudentId() {
 		return alterStudentId;

@@ -47,6 +47,7 @@
 			<pojo>com.yuanluesoft.educ.student.pojo.Stude</pojo>
 			<where>Stude.isValid='1'</where>
 			<orderBy>Stude.studentId</orderBy>
+			<quickFilter>Stude.name like '%{KEY}%'</quickFilter>
 		</data>
 		<actions>
 			<action title="导入Excel文件" execute="PageUtils.newrecord('educ/student', 'admin/studentImportData', 'mode=dialog,width=390,height=180')"/>
@@ -60,17 +61,15 @@
 			<column title="姓名" name="name"/>
 			<column title="性别" name="sex" align="center" width="50"/>
 			<column title="专业" name="speciality" align="center" width="120"/>
-			<column title="账号" name="loginId" align="center" width="120"/>
-			<column title="密码" name="password" align="center" width="80"/>
 			<column title="是否本学院学生" name="isOurStudent" align="center" width="80"/>
 			<column title="创建时间" name="created" align="center" width="120"/>
 		</columns>
 	</view>
 	
-	<view name="admin/inProcessStudent" form="admin/student" title="已审核学生注册" pageRows="25" openFeatures="width=760,height=520" hide="noPrivilege(application_manager)">
+	<view name="admin/registedStudent" form="admin/student" title="学生注册记录" pageRows="25" openFeatures="width=760,height=520" hide="noPrivilege(application_manager)">
 		<data>
 			<pojo>com.yuanluesoft.educ.student.pojo.Stude</pojo>
-			<where>Stude.status=1 </where>
+			<where>Stude.isValid='1' and Stude.isOurStudent='0'</where>
 		</data>
 		<actions>
 			<action title="注册" execute="PageUtils.newrecord('educ/student', 'admin/student', 'mode=fullscreen')"/>
@@ -81,17 +80,15 @@
 			<column title="姓名" name="name"/>
 			<column title="性别" name="sex" align="center" width="50"/>
 			<column title="专业" name="speciality" align="center" width="120"/>
-			<column title="账号" name="loginId" align="center" width="120"/>
-			<column title="密码" name="password" align="center" width="80"/>
 			<column title="是否本学院学生" name="isOurStudent" align="center" width="80"/>
 			<column title="创建时间" name="created" align="center" width="120"/>
 		</columns>
 	</view>
 	
-	<view name="admin/inProcessStudent" form="admin/student" title="已审核学生修改资料" pageRows="25" openFeatures="width=760,height=520" hide="noPrivilege(application_manager)">
+	<view name="admin/alteredStudent" form="admin/student" title="学生变更记录" pageRows="25" openFeatures="width=760,height=520" hide="noPrivilege(application_manager)">
 		<data>
 			<pojo>com.yuanluesoft.educ.student.pojo.Stude</pojo>
-			<filter>INPROCESS</filter>
+			<where>Stude.isAlter='1' and Stude.isValid='C'</where>
 		</data>
 		<actions>
 			<action title="注册" execute="PageUtils.newrecord('educ/student', 'admin/student', 'mode=fullscreen')"/>
@@ -102,14 +99,12 @@
 			<column title="姓名" name="name"/>
 			<column title="性别" name="sex" align="center" width="50"/>
 			<column title="专业" name="speciality" align="center" width="120"/>
-			<column title="账号" name="loginId" align="center" width="120"/>
-			<column title="密码" name="password" align="center" width="80"/>
 			<column title="是否本学院学生" name="isOurStudent" align="center" width="80"/>
 			<column title="创建时间" name="created" align="center" width="120"/>
 		</columns>
 	</view>
 	
-	<view name="admin/student" form="admin/student" title="我的资料" pageRows="25" openFeatures="width=760,height=520">
+	<view name="admin/student" form="admin/student" title="我的资料" pageRows="25" openFeatures="width=760,height=520" hide="noPrivilege(manageUnit_student)">
 		<data>
 			<pojo>com.yuanluesoft.educ.student.pojo.Stude</pojo>
 			<where>Stude.id={USERID}</where>

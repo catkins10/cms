@@ -36,14 +36,11 @@ import com.yuanluesoft.workflow.client.model.runtime.WorkflowEntry;
  *
  */
 public class StudentServiceImpl extends PublicServiceImpl implements StudentService {
-//	private WorkflowExploitService workflowExploitService; //工作流利用服务
 	private PersonService personService ;
 	private BusinessService businessService;
 	private CryptService cryptService; //加/解密服务
 	private OrgService orgService; //组织机构服务
 	private String mainOrgId;
-//	private SessionService sessionService;
-//	private PageService pageService;
 	
 	public BusinessService getBusinessService() {
 		return businessService;
@@ -76,31 +73,6 @@ public class StudentServiceImpl extends PublicServiceImpl implements StudentServ
 	public void setPersonService(PersonService personService) {
 		this.personService = personService;
 	}
-
-//	public SessionService getSessionService() {
-//		return sessionService;
-//	}
-//
-//	public void setSessionService(SessionService sessionService) {
-//		this.sessionService = sessionService;
-//	}
-
-//	public WorkflowExploitService getWorkflowExploitService() {
-//		return workflowExploitService;
-//	}
-//
-//	public void setWorkflowExploitService(
-//			WorkflowExploitService workflowExploitService) {
-//		this.workflowExploitService = workflowExploitService;
-//	}
-
-//	public PageService getPageService() {
-//		return pageService;
-//	}
-//
-//	public void setPageService(PageService pageService) {
-//		this.pageService = pageService;
-//	}
 
 	public CryptService getCryptService() {
 		return cryptService;
@@ -176,6 +148,7 @@ public class StudentServiceImpl extends PublicServiceImpl implements StudentServ
 	private List compareStude(Stude stude, Stude originalStude) throws Exception {
 		String[] properties = {"name", "姓名",
 							   "sex", "性别",
+							   "imageName", "照片",
 							   "idcardNumber", "身份证号",
 							   "nation", "民族",
 							   "studentId", "学号",
@@ -271,6 +244,10 @@ public class StudentServiceImpl extends PublicServiceImpl implements StudentServ
 			
 			studeAlter.setIsValid('C');
 			//重新生成和学生关联的静态页面
+			
+			//3.若照片有修改，则
+			
+			
 			getPageService().rebuildStaticPageForModifiedObject(stude, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
 		} catch (Exception e) {
 			Logger.exception(e);
@@ -368,130 +345,7 @@ public class StudentServiceImpl extends PublicServiceImpl implements StudentServ
 		
 	}
 
-/*	public boolean changePassword(String loginName, String oldPassword, String newPassword, boolean validateOldPassword) throws ServiceException, WrongPasswordException {
-		// TODO 自动生成方法存根
-		Stude stude = (Stude)getDatabaseService().findRecordByHql("from Stude Stude where Stude.loginId='" + JdbcUtils.resetQuot(loginName.toLowerCase()) + "'"); //按登录用户名查找用户
-		if(stude==null) {
-			return false;
-		}
-		if(validateOldPassword) {
-			if(stude.getPassword()==null || stude.getPassword().equals("")) {
-			    if(!oldPassword.equals(stude.getLoginId())) {
-			        throw(new WrongPasswordException()); //密码错误
-			    }
-			}
-			else if(!encryptPassword(stude.getId(), oldPassword).equals(stude.getPassword())) {
-				throw(new WrongPasswordException()); //密码错误
-			}
-		}
-		//设置新密码
-		stude.setPassword(encryptPassword(stude.getId(), newPassword));
-		getDatabaseService().updateRecord(stude);
-		return true;
-	}
 
-	public SessionInfo createSessionInfo(String loginName) throws SessionException {
-		// TODO 自动生成方法存根
-		try {
-			SessionInfo sessionInfo = new SessionInfo();
-			Stude stude = (Stude)getDatabaseService().findRecordByHql("from Stude Stude where Stude.loginId='" + JdbcUtils.resetQuot(loginName) + "'"); //按登录用户名查找用户
-			if(stude==null) { //不是企业用户
-				return null;
-			}
-			//设置用户信息
-			sessionInfo.setLoginName(stude.getLoginId());
-			sessionInfo.setUserType(PersonService.PERSON_TYPE_OTHER);
-			String password = stude.getPassword();
-			if(password==null || password.equals("")) {
-				password = stude.getLoginId();
-			}
-			else {//口令解密
-				password = decryptPassword(stude.getId(), password);
-			}
-			sessionInfo.setPassword(password);
-			sessionInfo.setUserName(stude.getName());
-			sessionInfo.setUserId(stude.getId());
-			sessionInfo.setDepartmentName(stude.getDepartment());
-			
-			return sessionInfo;
-		}
-		catch(ServiceException e) {
-			Logger.exception(e);
-			throw new SessionException(e.getMessage());
-		}
-	}
-
-	public Member getMember(long memberId) throws ServiceException {
-		// TODO 自动生成方法存根
-		Stude stude = (Stude)load(Stude.class, memberId);
-		if(stude==null) {
-			return null;
-		}
-		Member member = new Member();
-		try {
-			PropertyUtils.copyProperties(member, stude);
-		}
-		catch(Exception e) {
-			
-		}
-		member.setMemberType(PersonService.PERSON_TYPE_OTHER);
-		member.setOriginalRecord(stude);
-		return member;
-	}
-
-	public boolean isLoginNameInUse(String loginName, long personId) throws ServiceException {
-		// TODO 自动生成方法存根
-		//		检查用户表
-		loginName = loginName.toLowerCase(); //用户名不区分大小写
-		Number id = (Number)getDatabaseService().findRecordByHql("select Stude.id from Stude Stude where Stude.loginId='" + JdbcUtils.resetQuot(loginName) + "'");
-		if(id!=null) {
-			return (id.longValue()!=personId);
-		}
-		return false;
-	}
-
-	public MemberLogin login(String loginName, String password, Matcher passwordMatcher, HttpServletRequest request) throws LoginException, ServiceException {
-		// TODO 自动生成方法存根
-		if(loginName==null || loginName.equals("") || password==null || password.equals("")) {
-    		return null;
-    	}
-		loginName = loginName.toLowerCase();
-    	//用户校验
-    	Stude stude = (Stude)getDatabaseService().findRecordByHql("from Stude Stude where Stude.loginId='" + JdbcUtils.resetQuot(loginName) + "'"); //按登录用户名查找用户
-    	if(stude==null) {
-    		return null;
-    	}
-    	//检查用户id是否正确
-    	if(stude.getId()!=Long.parseLong(request.getParameter("userId"))) {
-    		throw new LoginException(MemberService.LOGIN_INVALID_USERNAME_OR_PASSWORD);
-    	}
-    	String correctPassword = loginName; //正确的密码
-		//密码校验
-	    if(stude.getPassword()!=null && !stude.getPassword().equals("")) { //注:密码为空时,要求用户输入的密码必须和用户名相同
-	    	correctPassword =  cryptService.decrypt(stude.getPassword(), "" + stude.getId(), false);
-	    }
-		return new MemberLogin(stude.getLoginId(), stude.getId(), PersonService.PERSON_TYPE_OTHER, correctPassword, !passwordMatcher.matching(correctPassword, password));
-	}*/
-	
-//	/**
-//	 * 口令加密
-//	 * @param userId
-//	 * @param password
-//	 * @return
-//	 * @throws ServiceException
-//	 */
-//	private String encryptPassword(long userId, String password) throws ServiceException {
-//		if(password.startsWith("{") && password.endsWith("}")) { //口令解密
-//			return password.substring(1, password.length() - 1);
-//		}
-//	    try {
-//	        return cryptService.encrypt(password, "" + userId, false);
-//	    } 
-//	    catch (SecurityException e) {
-//	        throw new ServiceException();
-//	    }
-//	}
-//
 	/**
 	 * 口令解密
 	 * @param userId

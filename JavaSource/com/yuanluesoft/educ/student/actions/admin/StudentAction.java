@@ -28,10 +28,6 @@ import com.yuanluesoft.workflow.client.model.runtime.WorkflowEntry;
 
 public class StudentAction extends PublicServiceAdminAction {
 
-	public StudentAction() {
-		super();
-		anonymousEnable = true;
-	}
 
 	public String getWorkflowActionName(WorkflowForm workflowForm) {
 		// TODO 自动生成方法存根
@@ -102,11 +98,14 @@ public class StudentAction extends PublicServiceAdminAction {
 		// TODO 自动生成方法存根
 
 		StudentForm studentForm = (StudentForm)form;
-		DatabaseService databaseService = (DatabaseService)getService("databaseService");
-		Stude studeFind= (Stude)databaseService.findRecordByHql("from com.yuanluesoft.educ.student.pojo.Stude Stude where Stude.isValid='1' and Stude.idcardNumber = '"+studentForm.getIdcardNumber()+"'");
-		if(studeFind!=null){
-			studentForm.setError("您已提交过了！");
-			throw new ValidateException();
+		if(OPEN_MODE_CREATE.equals(openMode)){
+		
+				DatabaseService databaseService = (DatabaseService)getService("databaseService");
+				Stude studeFind= (Stude)databaseService.findRecordByHql("from com.yuanluesoft.educ.student.pojo.Stude Stude where Stude.idcardNumber = '"+studentForm.getIdcardNumber()+"'");
+				if(studeFind!=null){
+					studentForm.setError("您已提交过了！");
+					throw new ValidateException();
+				}
 		}
 		
 		AttachmentService attachmentService=(AttachmentService)getService("attachmentService");
@@ -154,15 +153,5 @@ public class StudentAction extends PublicServiceAdminAction {
 		}
 	}
 	
-	public void fillForm(ActionForm form, Record record, char accessLevel, List acl, SessionInfo sessionInfo, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// TODO 自动生成方法存根
-		super.fillForm(form, record, accessLevel, acl, sessionInfo, request, response);
-		StudentForm studentForm = (StudentForm)form;
-		if(studentForm.getPassword()!=null &&
-				   !"".equals(studentForm.getPassword()) &&
-				   (!studentForm.getPassword().startsWith("{") ||
-				    !studentForm.getPassword().endsWith("}"))) {
-			studentForm.setPassword("{" + studentForm.getPassword() + "}");
-				}
-	}
+	
 }

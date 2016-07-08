@@ -19,6 +19,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.yuanluesoft.cms.pagebuilder.PageService;
+import com.yuanluesoft.cms.pagebuilder.StaticPageBuilder;
 import com.yuanluesoft.educ.student.forms.admin.ImportDateExcel;
 import com.yuanluesoft.educ.student.pojo.Stude;
 import com.yuanluesoft.jeaf.attachmentmanage.model.Attachment;
@@ -29,10 +30,10 @@ import com.yuanluesoft.jeaf.logger.Logger;
 import com.yuanluesoft.jeaf.membermanage.service.MemberServiceList;
 import com.yuanluesoft.jeaf.security.service.CryptService;
 import com.yuanluesoft.jeaf.sessionmanage.model.SessionInfo;
+import com.yuanluesoft.jeaf.usermanage.pojo.Org;
 import com.yuanluesoft.jeaf.usermanage.service.OrgService;
 import com.yuanluesoft.jeaf.usermanage.service.PersonService;
 import com.yuanluesoft.jeaf.util.DateTimeUtils;
-import com.yuanluesoft.jeaf.util.JdbcUtils;
 import com.yuanluesoft.jeaf.util.StringUtils;
 import com.yuanluesoft.jeaf.util.UUIDLongGenerator;
 
@@ -129,6 +130,7 @@ public class StudentImportServiceImpl extends BusinessServiceImpl {
 			student.setCreated(DateTimeUtils.now());
 			student.setId(UUIDLongGenerator.generateId());
 			student.setIsOurStudent('1');	//通过excel导入的默认是我们学院学生
+			student.setPassword("123456");
 			
 			String idcardNumber=getStringValue(content.getCell(colNum[6]));
 			String studentId=getStringValue(content.getCell(colNum[4]));
@@ -144,7 +146,7 @@ public class StudentImportServiceImpl extends BusinessServiceImpl {
 			student.setIdcardNumber(idcardNumber);//身份证号
 			student.setNation(getStringValue(content.getCell(colNum[7])));//民族
 			
-			String hql = "from Stude Stude where Stude.studentId = '"+studentId+"'";
+			String hql = "from Stude Stude where Stude.isAlter='0' and Stude.studentId = '"+studentId+"'";
 			Stude old = (Stude)getDatabaseService().findRecordByHql(hql);
 			if(old!=null){
 				old.setDepartment(getStringValue(content.getCell(colNum[0])));//系部
@@ -156,23 +158,24 @@ public class StudentImportServiceImpl extends BusinessServiceImpl {
 				old.setIdcardNumber(idcardNumber);//身份证号
 				old.setNation(getStringValue(content.getCell(colNum[7])));//民族
 				update(old);
-//				pageService.rebuildStaticPageForModifiedObject(old, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
+				pageService.rebuildStaticPageForModifiedObject(old, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
 			}else{
+				student.setIsValid('1');
+				Org department = null;
+				String directoryName = "学生";
+				department = (Org)orgService.createDirectory(-1, Long.valueOf(mainOrgId).longValue(), directoryName, "unitDepartment", null, 0, null);                   
+				
+				//注册用户
+				personService.addEmployee(student.getId(), student.getName(), student.getIdcardNumber(), student.getPassword(), student.getSex(), null, null, null, null, null, department.getId()+"", student.getId(), student.getName());
+				
+				student.setPassword(encryptPersonPassword(student.getId(), idcardNumber, student.getPassword()));
 				save(student);
-//				pageService.rebuildStaticPageForModifiedObject(student, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
+				pageService.rebuildStaticPageForModifiedObject(student, StaticPageBuilder.OBJECT_MODIFY_ACTION_UPDATE);
 			}
 		}
 
 	}
-	public boolean isLoginNameInUse(String loginName, long personId) throws ServiceException {
-		//检查用户表
-		loginName = loginName.toLowerCase(); //用户名不区分大小写
-		Number id = (Number)getDatabaseService().findRecordByHql("select Person.id from Person Person where Person.loginName='" + JdbcUtils.resetQuot(loginName) + "'");
-		if(id!=null) {
-			return (id.longValue()!=personId);
-		}
-		return false;
-	}
+	
 
 	/**
 	 * 查找表头对应的列序号，不存在的列序号为-1.返回的序号和给定的列名顺序一致

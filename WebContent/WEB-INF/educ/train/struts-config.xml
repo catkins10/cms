@@ -4,8 +4,8 @@
 <struts-config>
  <data-sources/>
  <form-beans>
-  <form-bean name="trainInfo" type="com.yuanluesoft.educ.train.forms.admin.TrainInfoForm"/>
-  <form-bean name="trainConfig" type="com.yuanluesoft.educ.train.forms.admin.TrainConfigForm"/>
+  <form-bean name="adminTrainInfo" type="com.yuanluesoft.educ.train.forms.admin.TrainInfoForm"/>
+  <form-bean name="adminTrainConfig" type="com.yuanluesoft.educ.train.forms.admin.TrainConfigForm"/>
  </form-beans>
  <global-exceptions>
   <exception key="exception" path="/../../jeaf/form/error.jsp"
@@ -17,18 +17,18 @@
  <action-mappings>
   <action name="adminTrainInfo" path="/admin/trainInfo" scope="request"
    type="com.yuanluesoft.educ.train.actions.admin.Load" validate="false">
-   <forward name="load" path="admin/trainInfo.jsp"/>
+   <forward name="load" path="/admin/trainInfo.jsp"/>
   </action>
-  <action input="/admin/trainInfo.jsp" name="adminTrainInfo" path="/admin/saveTrainInfo" scope="request"
+  <action input="/admin/trainInfo.jsp" name="adminTrainInfo" path="/saveTrainInfo" scope="request"
    type="com.yuanluesoft.educ.train.actions.admin.Save" validate="false"/>
-  <action input="/admin/trainInfo.jsp" name="adminTrainInfo" path="/admin/deleteTrainInfo" scope="request"
+  <action input="/admin/trainInfo.jsp" name="adminTrainInfo" path="/deleteTrainInfo" scope="request"
    type="com.yuanluesoft.educ.train.actions.admin.Delete" validate="false"/>
    
    <action name="adminTrainConfig" path="/admin/trainConfig" scope="request"
    type="com.yuanluesoft.educ.train.actions.admin.config.Load" validate="false">
-   <forward name="load" path="admin/trainConfig.jsp"/>
+   <forward name="load" path="/admin/trainConfig.jsp"/>
   </action>
-  <action input="/admin/trainConfig.jsp" name="adminTrainConfig" path="/admin/saveTrainConfig" scope="request"
+  <action input="/admin/trainConfig.jsp" name="adminTrainConfig" path="/saveTrainConfig" scope="request"
    type="com.yuanluesoft.educ.train.actions.admin.config.Save" validate="false"/>
    
  </action-mappings>

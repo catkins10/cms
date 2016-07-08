@@ -1,4 +1,4 @@
-package com.yuanluesoft.educ.train.actions.config;
+package com.yuanluesoft.educ.train.actions.admin.config;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,9 +13,9 @@ import org.apache.struts.action.ActionMapping;
  * @author linchuan
  *
  */
-public class Load extends TrainConfigAction {
+public class Save extends TrainConfigAction {
 	
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return executeLoadAction(mapping, form, request, response);
+        return executeSaveAction(mapping, form, request, response, false, null, null, null);
     }
 }

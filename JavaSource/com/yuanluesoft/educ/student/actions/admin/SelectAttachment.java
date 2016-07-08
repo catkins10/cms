@@ -7,6 +7,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import com.yuanluesoft.educ.student.forms.admin.StudentForm;
+
 
 /**
  * 
@@ -16,6 +18,6 @@ import org.apache.struts.action.ActionMapping;
 public class SelectAttachment extends StudentAction {
     
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return executeAttachmentAction(mapping, form, request, response);
+    	return executeAttachmentAction(mapping, form, request, response);
     }
 }

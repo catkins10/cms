@@ -1,4 +1,4 @@
-package com.yuanluesoft.educ.train.actions.config;
+package com.yuanluesoft.educ.train.actions.admin.config;
 
 import java.util.List;
 
@@ -28,10 +28,7 @@ public class TrainConfigAction extends FormAction {
 	 * @see com.yuanluesoft.jeaf.form.actions.FormAction#checkLoadPrivilege(com.yuanluesoft.jeaf.form.ActionForm, javax.servlet.http.HttpServletRequest, java.lang.Object, java.lang.String, java.util.List, com.yuanluesoft.jeaf.sessionmanage.model.SessionInfo)
 	 */
 	public char checkLoadPrivilege(ActionForm form, HttpServletRequest request, Record record, String openMode, List acl, SessionInfo sessionInfo) throws PrivilegeException, SystemUnregistException {
-		if(acl.contains(AccessControlService.ACL_APPLICATION_MANAGER)) {
-			return RecordControlService.ACCESS_LEVEL_EDITABLE;
-		}
-		throw new PrivilegeException();
+		return RecordControlService.ACCESS_LEVEL_EDITABLE;
 	}
 
 	/* (non-Javadoc)

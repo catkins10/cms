@@ -58,14 +58,25 @@
    </action>
    
    <!-- 附件选择处理。页面的data标签加载时跳转该path调用相应action处理附件页面 -->
-  <action name="studentImportData" path="/admin/attachmentEditor" scope="request"
+  <action name="adminStudent" path="/admin/attachmentEditor" scope="request"
    type="com.yuanluesoft.educ.student.actions.admin.SelectAttachment" validate="false">
    <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
   </action>
+  <action name="adminStudent" path="/admin/selectAttachment" scope="request"
+   type="com.yuanluesoft.educ.student.actions.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/selectAttachment.jsp"/>
+  </action>
+  
   <action name="studentImportData" path="/attachmentEditor" scope="request"
    type="com.yuanluesoft.educ.student.actions.admin.SelectAttachment" validate="false">
    <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
   </action>
+  
+  <action name="studentImportData" path="/admin/studentAttachmentEditor" scope="request"
+   type="com.yuanluesoft.educ.student.actions.admin.SelectAttachment" validate="false">
+   <forward name="load" path="/../../jeaf/attachment/attachment.jsp"/>
+  </action>
+  
   <!-- excel数据导入页面加载 -->
    <action name="studentImportData" path="/admin/studentImportData" scope="request" validate="false"
    type="com.yuanluesoft.educ.student.actions.admin.excelimport.Load">
